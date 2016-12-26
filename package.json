@@ -1,0 +1,52 @@
+{
+  "name": "bee-table",
+  "version": "0.0.1",
+  "description": "Table ui component for react",
+  "keywords": [
+    "react",
+    "react-component",
+    "bee-table",
+    "iuap-design",
+    "tinper-bee",
+    "Table"
+  ],
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "homepage": "https://github.com/tinper-bee/bee-table.git",
+  "author": "Yonyou FED",
+    "repository": "http://github.com/tinper-bee/bee-table",
+    "bugs": "https://github.com/tinper-bee/bee-table.git/issues",
+    "license": "MIT",
+
+    "main":"./build/index.js",
+    "config":{
+    "port": 3000
+    },
+    "scripts": {
+    "dev": "bee-tools run start",
+    "build": "bee-tools run build",
+    "lint": "bee-tools run lint",
+    "test": "bee-tools run test",
+    "chrome": "bee-tools run chrome",
+    "coveralls": "bee-tools run coverage",
+    "browsers": "bee-tools run browsers",
+    "pub": "bee-tools run pub"
+    },
+    "dependencies": {
+      "classnames": "^2.2.5",
+      "tinper-bee-core": "latest"
+    },
+    "devDependencies": {
+      "chai": "^3.5.0",
+      "enzyme": "^2.4.1",
+      "react": "~0.14.0",
+      "react-addons-test-utils": "15.3.2",
+      "react-dom": "~0.14.0",
+      "console-polyfill": "~0.2.1",
+      "es5-shim": "~4.1.10",
+      "bee-panel": "latest",
+      "bee-layout": "latest",
+      "bee-button": "latest"
+    }
+}
