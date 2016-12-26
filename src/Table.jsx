@@ -53,7 +53,7 @@ const Table = React.createClass({
       onExpandedRowsChange() {},
       onRowClick() {},
       onRowDoubleClick() {},
-      prefixCls: 'rc-table',
+      prefixCls: 'u-table',
       bodyStyle: {},
       style: {},
       childrenColumnName: 'children',

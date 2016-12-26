@@ -1,7 +1,6 @@
 import { Component, PropTypes } from 'react';
 
-export default class Column extends Component {
-  static propTypes = {
+const propTypes = {
     className: PropTypes.string,
     colSpan: PropTypes.number,
     title: PropTypes.node,
@@ -16,6 +15,13 @@ export default class Column extends Component {
       'right',
     ]),
     render: PropTypes.func,
-    onCellClick: PropTypes.func,
-  }
+    onCellClick: PropTypes.func
 }
+
+class Column extends Component {
+
+}
+
+Column.propTypes = propTypes;
+
+export default Column;

@@ -15,15 +15,14 @@
   },
   "homepage": "https://github.com/tinper-bee/bee-table.git",
   "author": "Yonyou FED",
-    "repository": "http://github.com/tinper-bee/bee-table",
-    "bugs": "https://github.com/tinper-bee/bee-table.git/issues",
-    "license": "MIT",
-
-    "main":"./build/index.js",
-    "config":{
+  "repository": "http://github.com/tinper-bee/bee-table",
+  "bugs": "https://github.com/tinper-bee/bee-table.git/issues",
+  "license": "MIT",
+  "main": "./build/index.js",
+  "config": {
     "port": 3000
-    },
-    "scripts": {
+  },
+  "scripts": {
     "dev": "bee-tools run start",
     "build": "bee-tools run build",
     "lint": "bee-tools run lint",
@@ -32,21 +31,28 @@
     "coveralls": "bee-tools run coverage",
     "browsers": "bee-tools run browsers",
     "pub": "bee-tools run pub"
-    },
-    "dependencies": {
-      "classnames": "^2.2.5",
-      "tinper-bee-core": "latest"
-    },
-    "devDependencies": {
-      "chai": "^3.5.0",
-      "enzyme": "^2.4.1",
-      "react": "~0.14.0",
-      "react-addons-test-utils": "15.3.2",
-      "react-dom": "~0.14.0",
-      "console-polyfill": "~0.2.1",
-      "es5-shim": "~4.1.10",
-      "bee-panel": "latest",
-      "bee-layout": "latest",
-      "bee-button": "latest"
-    }
+  },
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "object-path": "^0.11.3",
+    "rc-util": "^4.0.2",
+    "shallowequal": "^0.2.2",
+    "tinper-bee-core": "latest",
+    "warning": "^3.0.0"
+  },
+  "devDependencies": {
+    "bee-animate": "0.0.3",
+    "bee-button": "latest",
+    "bee-dropdown": "^0.1.4",
+    "bee-layout": "latest",
+    "bee-menus": "0.0.5",
+    "bee-panel": "latest",
+    "chai": "^3.5.0",
+    "console-polyfill": "~0.2.1",
+    "enzyme": "^2.4.1",
+    "es5-shim": "~4.1.10",
+    "react": "~0.14.0",
+    "react-addons-test-utils": "15.3.2",
+    "react-dom": "~0.14.0"
+  }
 }
