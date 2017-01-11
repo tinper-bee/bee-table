@@ -1,19 +1,23 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 import shallowequal from 'shallowequal';
 
-export default React.createClass({
-  propTypes: {
-    prefixCls: PropTypes.string,
+const propTypes = {
+    clsPrefix: PropTypes.string,
     rowStyle: PropTypes.object,
     rows: PropTypes.array,
-  },
+}
+
+class TableHeader extends Component{
+    constructor(props){
+        super(props);
+    }
   shouldComponentUpdate(nextProps) {
     return !shallowequal(nextProps, this.props);
-  },
+  }
   render() {
-    const { prefixCls, rowStyle, rows } = this.props;
+    const { clsPrefix, rowStyle, rows } = this.props;
     return (
-      <thead className={`${prefixCls}-thead`}>
+      <thead className={`${clsPrefix}-thead`}>
         {
           rows.map((row, index) => (
             <tr key={index} style={rowStyle}>
@@ -23,5 +27,9 @@ export default React.createClass({
         }
       </thead>
     );
-  },
-});
+  }
+};
+
+TableHeader.propTypes = propTypes;
+
+export default TableHeader;

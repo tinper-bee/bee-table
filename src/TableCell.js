@@ -1,28 +1,34 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 import objectPath from 'object-path';
 
-const TableCell = React.createClass({
-  propTypes: {
+const propTypes = {
     record: PropTypes.object,
-    prefixCls: PropTypes.string,
+    clsPrefix: PropTypes.string,
     index: PropTypes.number,
     indent: PropTypes.number,
     indentSize: PropTypes.number,
     column: PropTypes.object,
-    expandIcon: PropTypes.node,
-  },
+    expandIcon: PropTypes.node
+};
+
+class TableCell extends Component{
+ constructor(props){
+     super(props);
+     this.isInvalidRenderCellText = this.isInvalidRenderCellText.bind(this);
+     this.handleClick = this.handleClick.bind(this);
+ }
   isInvalidRenderCellText(text) {
     return text && !React.isValidElement(text) &&
       Object.prototype.toString.call(text) === '[object Object]';
-  },
+  }
   handleClick(e) {
     const { record, column: { onCellClick } } = this.props;
     if (onCellClick) {
       onCellClick(record, e);
     }
-  },
+  }
   render() {
-    const { record, indentSize, prefixCls, indent,
+    const { record, indentSize, clsPrefix, indent,
             index, expandIcon, column } = this.props;
     const { dataIndex, render, className = '' } = column;
 
@@ -41,7 +47,7 @@ const TableCell = React.createClass({
       }
     }
 
-    // Fix https://github.com/ant-design/ant-design/issues/1202
+
     if (this.isInvalidRenderCellText(text)) {
       text = null;
     }
@@ -49,7 +55,7 @@ const TableCell = React.createClass({
     const indentText = expandIcon ? (
       <span
         style={{ paddingLeft: `${indentSize * indent}px` }}
-        className={`${prefixCls}-indent indent-level-${indent}`}
+        className={`${clsPrefix}-indent indent-level-${indent}`}
       />
     ) : null;
 
@@ -68,7 +74,9 @@ const TableCell = React.createClass({
         {text}
       </td>
     );
-  },
-});
+  }
+};
+
+TableCell.propTypes = propTypes;
 
 export default TableCell;

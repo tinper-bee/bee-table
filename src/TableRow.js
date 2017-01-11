@@ -1,14 +1,13 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 import TableCell from './TableCell';
 import ExpandIcon from './ExpandIcon';
 
-const TableRow = React.createClass({
-  propTypes: {
+const propTypes = {
     onDestroy: PropTypes.func,
     onRowClick: PropTypes.func,
     onRowDoubleClick: PropTypes.func,
     record: PropTypes.object,
-    prefixCls: PropTypes.string,
+    clsPrefix: PropTypes.string,
     expandIconColumnIndex: PropTypes.number,
     onHover: PropTypes.func,
     columns: PropTypes.array,
@@ -29,24 +28,30 @@ const TableRow = React.createClass({
     expandIconAsCell: PropTypes.bool,
     expandRowByClick: PropTypes.bool,
     store: PropTypes.object.isRequired,
-  },
+};
 
-  getDefaultProps() {
-    return {
-      onRowClick() {},
-      onRowDoubleClick() {},
-      onDestroy() {},
-      expandIconColumnIndex: 0,
-      expandRowByClick: false,
-      onHover() {},
-    };
-  },
+const defaultProps = {
+    onRowClick() {},
+    onRowDoubleClick() {},
+    onDestroy() {},
+    expandIconColumnIndex: 0,
+    expandRowByClick: false,
+    onHover() {},
+};
 
-  getInitialState() {
-    return {
-      hovered: false,
-    };
-  },
+class TableRow extends Component{
+ constructor(props){
+     super(props);
+     this.state = {
+         hovered: false,
+     };
+     this.onRowClick = this.onRowClick.bind(this);
+     this.onRowDoubleClick = this.onRowDoubleClick.bind(this);
+     this.onMouseEnter = this.onMouseEnter.bind(this);
+     this.onMouseLeave = this.onMouseLeave.bind(this);
+
+ }
+
 
   componentDidMount() {
     const { store, hoverKey } = this.props;
@@ -57,7 +62,7 @@ const TableRow = React.createClass({
         this.setState({ hovered: false });
       }
     });
-  },
+  }
 
   componentWillUnmount() {
     const { record, onDestroy, index } = this.props;
@@ -65,7 +70,7 @@ const TableRow = React.createClass({
     if (this.unsubscribe) {
       this.unsubscribe();
     }
-  },
+  }
 
   onRowClick(event) {
     const {
@@ -81,26 +86,26 @@ const TableRow = React.createClass({
       onExpand(!expanded, record, index);
     }
     onRowClick(record, index, event);
-  },
+  }
 
   onRowDoubleClick(event) {
     const { record, index, onRowDoubleClick } = this.props;
     onRowDoubleClick(record, index, event);
-  },
+  }
 
   onMouseEnter() {
     const { onHover, hoverKey } = this.props;
     onHover(true, hoverKey);
-  },
+  }
 
   onMouseLeave() {
     const { onHover, hoverKey } = this.props;
     onHover(false, hoverKey);
-  },
+  }
 
   render() {
     const {
-      prefixCls, columns, record, height, visible, index,
+      clsPrefix, columns, record, height, visible, index,
       expandIconColumnIndex, expandIconAsCell, expanded, expandRowByClick,
       expandable, onExpand, needIndentSpaced, indent, indentSize,
     } = this.props;
@@ -108,7 +113,7 @@ const TableRow = React.createClass({
     let { className } = this.props;
 
     if (this.state.hovered) {
-      className += ` ${prefixCls}-hover`;
+      className += ` ${clsPrefix}-hover`;
     }
 
     const cells = [];
@@ -116,7 +121,7 @@ const TableRow = React.createClass({
     const expandIcon = (
       <ExpandIcon
         expandable={expandable}
-        prefixCls={prefixCls}
+        clsPrefix={clsPrefix}
         onExpand={onExpand}
         needIndentSpaced={needIndentSpaced}
         expanded={expanded}
@@ -128,7 +133,7 @@ const TableRow = React.createClass({
       if (expandIconAsCell && i === 0) {
         cells.push(
           <td
-            className={`${prefixCls}-expand-icon-cell`}
+            className={`${clsPrefix}-expand-icon-cell`}
             key="rc-table-expand-icon-cell"
           >
             {expandIcon}
@@ -139,7 +144,7 @@ const TableRow = React.createClass({
         ? false : (i === expandIconColumnIndex);
       cells.push(
         <TableCell
-          prefixCls={prefixCls}
+          clsPrefix={clsPrefix}
           record={record}
           indentSize={indentSize}
           indent={indent}
@@ -161,13 +166,16 @@ const TableRow = React.createClass({
         onDoubleClick={this.onRowDoubleClick}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
-        className={`${prefixCls} ${className} ${prefixCls}-level-${indent}`}
+        className={`${clsPrefix} ${className} ${clsPrefix}-level-${indent}`}
         style={style}
       >
         {cells}
       </tr>
     );
-  },
-});
+  }
+};
+
+TableRow.propTypes = propTypes;
+TableRow.defaultProps = defaultProps;
 
 export default TableRow;

@@ -5,86 +5,166 @@
 *
 */
 
-const columns1 = [{
-  title: 'Name',
-  dataIndex: 'name',
-  key: 'name',
-  width: 400,
-}, {
-  title: 'Age',
-  dataIndex: 'age',
-  key: 'age',
-  width: 100,
-}, {
-  title: 'Address',
-  dataIndex: 'address',
-  key: 'address',
-  width: 200,
-}, {
-  title: 'Operations',
-  dataIndex: 'operation',
-  key: 'x',
-  width: 150,
-}];
-
-const data1 = [{
-  key: 1,
-  name: 'a',
-  age: 32,
-  address: 'I am a',
-  children: [{
-    key: 11,
-    name: 'aa',
-    age: 33,
-    address: 'I am aa',
-  }, {
-    key: 12,
-    name: 'ab',
-    age: 33,
-    address: 'I am ab',
-    children: [{
-      key: 121,
-      name: 'aba',
-      age: 33,
-      address: 'I am aba',
-    }],
-  }, {
-    key: 13,
-    name: 'ac',
-    age: 33,
-    address: 'I am ac',
-    children: [{
-      key: 131,
-      name: 'aca',
-      age: 33,
-      address: 'I am aca',
-      children: [{
-        key: 1311,
-        name: 'acaa',
-        age: 33,
-        address: 'I am acaa',
-      }, {
-        key: 1312,
-        name: 'acab',
-        age: 33,
-        address: 'I am acab',
-      }],
-    }],
-  }],
-}, {
-  key: 2,
-  name: 'b',
-  age: 32,
-  address: 'I am b',
-}];
-
-function onExpand(expanded, record) {
-  console.log('onExpand', expanded, record);
-}
-class Demo2 extends Component {
-    render () {
-        return (
-            <Table defaultExpandAllRows columns={columns1} data={data1} indentSize={30} onExpand={onExpand} />
-        )
+class EditableCell extends React.Component {
+  state = {
+    value: this.props.value,
+    editable: false,
+  }
+  handleChange = (e) => {
+    const value = e.target.value;
+    this.setState({ value });
+  }
+  check = () => {
+    this.setState({ editable: false });
+    if (this.props.onChange) {
+      this.props.onChange(this.state.value);
     }
+  }
+  edit = () => {
+    this.setState({ editable: true });
+  }
+  handleKeydown = (event) => {
+      console.log(event);
+      if(event.keyCode == 13){
+          this.check();
+      }
+
+  }
+  render() {
+    const { value, editable } = this.state;
+    return (<div className="editable-cell">
+      {
+        editable ?
+        <div className="editable-cell-input-wrapper">
+          <Input
+            value={value}
+            onChange={this.handleChange}
+            onKeyDown = {this.handleKeydown}
+          />
+          <Icon
+            type="uf-correct"
+            className="editable-cell-icon-check"
+            onClick={this.check}
+          />
+        </div>
+        :
+        <div className="editable-cell-text-wrapper">
+          {value || ' '}
+          <Icon
+            type="uf-pencil"
+            className="editable-cell-icon"
+            onClick={this.edit}
+          />
+        </div>
+      }
+    </div>);
+  }
+}
+
+class Demo2 extends React.Component {
+  constructor(props) {
+    super(props);
+    this.columns = [{
+      title: '姓名',
+      dataIndex: 'name',
+      key:'name',
+      width: '30%',
+      render: (text, record, index) => (
+        <EditableCell
+          value={text}
+          onChange={this.onCellChange(index, 'name')}
+        />
+      ),
+    }, {
+      title: '年龄',
+      dataIndex: 'age',
+       key:'age',
+    }, {
+      title: '你懂的',
+      dataIndex: 'address',
+       key:'address',
+    }, {
+      title: '操作',
+      dataIndex: 'operation',
+      key: 'operation',
+      render: (text, record, index) => {
+        return (
+          this.state.dataSource.length > 1 ?
+          (
+            <Popconfirm content="确认删除?" id='aa' onClose={this.onDelete(index)}>
+              <Icon type="uf-del"></Icon>
+            </Popconfirm>
+          ) : null
+        );
+      },
+    }];
+
+    this.state = {
+      dataSource: [{
+        key: '0',
+        name: '沉鱼',
+        age: '18',
+        address: '96, 77, 89',
+      }, {
+        key: '1',
+        name: '落雁',
+        age: '16',
+        address: '90, 70, 80',
+      }, {
+        key: '2',
+        name: '闭月',
+        age: '17',
+        address: '80, 60, 80',
+      }, {
+        key: '3',
+        name: '羞花',
+        age: '20',
+        address: '120, 60, 90',
+      }],
+      count: 4,
+    };
+  }
+  onCellChange = (index, key) => {
+    return (value) => {
+      const dataSource = [...this.state.dataSource];
+      dataSource[index][key] = value;
+      this.setState({ dataSource });
+    };
+  }
+  onDelete = (index) => {
+    return () => {
+      const dataSource = [...this.state.dataSource];
+      dataSource.splice(index, 1);
+      this.setState({ dataSource });
+    };
+  }
+  handleAdd = () => {
+    const { count, dataSource } = this.state;
+    const newData = {
+      key: count,
+      name: `凤姐 ${count}`,
+      age: 32,
+      address: `100 100 100`,
+    };
+    this.setState({
+      dataSource: [...dataSource, newData],
+      count: count + 1,
+    });
+  }
+
+  getBodyWrapper = (body) => {
+    return (
+      <Animate transitionName="move" component="tbody" className={body.props.className}>
+        {body.props.children}
+      </Animate>
+    );
+  }
+  render() {
+    const { dataSource } = this.state;
+    const columns = this.columns;
+    return (<div>
+      <Button className="editable-add-btn" type="ghost" onClick={this.handleAdd}>添加</Button>
+      <Table bordered data={dataSource} columns={columns} getBodyWrapper={this.getBodyWrapper} />
+    </div>);
+  }
 }

@@ -3,8 +3,51 @@
 @import "../node_modules/bee-layout/src/Layout.scss";
 @import "../node_modules/bee-button/src/Button.scss";
 @import "../node_modules/bee-transition/src/Transition.scss";
-@import "../src/animation.scss";
-@import "../src/bordered.scss";
 @import "../src/index.scss";
 @import "../node_modules/bee-dropdown/src/Dropdown.scss";
 @import "../node_modules/bee-menus/src/Menus.scss";
+@import "../node_modules/bee-popconfirm/src/Popconfirm.scss";
+@import "../node_modules/bee-form-control/src/FormControl.scss";
+
+.editable-cell {
+  position: relative;
+}
+
+.editable-cell-input-wrapper,
+.editable-cell-text-wrapper {
+  padding-right: 24px;
+}
+
+.editable-cell-text-wrapper {
+  padding: 5px 24px 5px 5px;
+}
+
+.editable-cell-icon,
+.editable-cell-icon-check {
+  position: absolute;
+  right: 0;
+  width: 20px;
+  cursor: pointer;
+}
+
+.editable-cell-icon {
+  line-height: 18px;
+  display: none;
+}
+
+.editable-cell-icon-check {
+  line-height: 28px;
+}
+
+.editable-cell:hover .editable-cell-icon {
+  display: inline-block;
+}
+
+.editable-cell-icon:hover,
+.editable-cell-icon-check:hover {
+  color:#2db7f5;
+}
+
+.editable-add-btn {
+  margin-bottom: 8px;
+}

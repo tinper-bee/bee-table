@@ -1,67 +1,36 @@
 /**
 *
-* @title 这是标题
-* @description 这是描述
+* @title 简单表格
+* @description
 *
 */
-class Demo1 extends React.Component {
-  constructor(props) {
-    super(props);
-    this.columns = [
-      { title: 'title1', dataIndex: 'a', key: 'a', width: 100 },
-      { id: '123', title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
-      { title: 'title3', dataIndex: 'c', key: 'c', width: 200 },
-      {
-        title: 'Operations', dataIndex: '', key: 'd', render: (text, record) =>
-        <a onClick={e => this.onDelete(record.key, e)} href="#">Delete</a>,
-      },
-    ];
-    this.state = {
-      data: [
-        { a: '123', key: '1' },
-        { a: 'cdd', b: 'edd', key: '2' },
-        { a: '1333', c: 'eee', key: '3' },
-      ],
-    };
-  }
 
-  onDelete(key, e) {
-    console.log('Delete', key);
-    e.preventDefault();
-    const data = this.state.data.filter(item => item.key !== key);
-    this.setState({ data });
-  }
+const columns = [
+  { title: '用户名', dataIndex: 'a', key: 'a', width: 100 },
+  { id: '123', title: '性别', dataIndex: 'b', key: 'b', width: 100 },
+  { title: '年龄', dataIndex: 'c', key: 'c', width: 200 },
+  {
+    title: '操作', dataIndex: '', key: 'd', render() {
+      return <a href="#">一些操作</a>;
+    },
+  },
+];
 
-  onAdd() {
-    const data = [...this.state.data];
-    data.push({
-      a: 'new data',
-      b: 'new data',
-      c: 'new data',
-      key: Date.now(),
-    });
-    this.setState({ data });
-  }
+const data = [
+  { a: '令狐冲', b: '男', c: 41, key: '1' },
+  { a: '杨过', b: '男', c: 67, key: '2' },
+  { a: '郭靖', b: '男', c: 25, key: '3' },
+];
 
-  getBodyWrapper(body) {
-    return (
-      <Animate transitionName="move" component="tbody" className={body.props.className}>
-        {body.props.children}
-      </Animate>
-    );
-  }
-
-  render() {
-    return (
-      <div style={{ margin: 20 }}>
-        <h2>Table row with animation</h2>
-        <button onClick={() => this.onAdd()}>添加</button>
-        <Table
-          columns={this.columns}
-          data={this.state.data}
-          getBodyWrapper={this.getBodyWrapper}
-        />
-      </div>
-    );
-  }
+class Demo1 extends Component {
+    render () {
+        return (
+              <Table
+              columns={columns}
+              data={data}
+              title={currentData => <div>标题: {currentData.length} 个元素</div>}
+              footer={currentData => <div>表尾: {currentData.length} 个元素</div>}
+              />
+        )
+    }
 }

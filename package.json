@@ -41,18 +41,19 @@
     "warning": "^3.0.0"
   },
   "devDependencies": {
-    "bee-animate": "0.0.3",
+    "bee-animate": "latest",
     "bee-button": "latest",
-    "bee-dropdown": "^0.1.4",
+    "bee-form-control": "^0.1.7",
+    "bee-icon": "0.0.5",
     "bee-layout": "latest",
-    "bee-menus": "0.0.5",
     "bee-panel": "latest",
+    "bee-popconfirm": "^0.2.1",
     "chai": "^3.5.0",
     "console-polyfill": "~0.2.1",
     "enzyme": "^2.4.1",
     "es5-shim": "~4.1.10",
-    "react": "~0.14.0",
+    "react": "15.3.2",
     "react-addons-test-utils": "15.3.2",
-    "react-dom": "~0.14.0"
+    "react-dom": "15.3.2"
   }
 }

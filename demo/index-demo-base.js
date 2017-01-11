@@ -8,11 +8,13 @@ import Table from '../src';
 import Animate from 'bee-animate';
 import Menu, { Item, Divider } from 'bee-menus';
 import DropDown from 'bee-dropdown';
+import Icon from "bee-icon";
+import Input from 'bee-form-control';
+import Popconfirm from 'bee-popconfirm';
 
+const CARET = <i className="uf uf-arrow-down"></i>;
 
-const CARET = <i className="uf uf-chevronarrowdown"></i>;
-
-const CARETUP = <i className="uf uf-chevronarrowup"></i>;
+const CARETUP = <i className="uf uf-arrow-up"></i>;
 
 
 {demolist}
@@ -42,13 +44,8 @@ class Demo extends Component {
         );
         const header = (
             <Row>
-                <Col md={11}>
+                <Col md={12}>
                 { example }
-                </Col>
-                <Col md={1}>
-                <Button shape="icon" onClick={ this.handleClick }>
-                    { caret }
-                </Button>
                 </Col>
             </Row>
         );

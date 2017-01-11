@@ -1,33 +1,39 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 import shallowequal from 'shallowequal';
 
-const ExpandIcon = React.createClass({
-  propTypes: {
+const propTypes = {
     record: PropTypes.object,
-    prefixCls: PropTypes.string,
+    clsPrefix: PropTypes.string,
     expandable: PropTypes.any,
     expanded: PropTypes.bool,
     needIndentSpaced: PropTypes.bool,
     onExpand: PropTypes.func,
-  },
+};
+
+class ExpandIcon extends Component{
+  constructor(props){
+      super(props);
+  }
   shouldComponentUpdate(nextProps) {
     return !shallowequal(nextProps, this.props);
-  },
+  }
   render() {
-    const { expandable, prefixCls, onExpand, needIndentSpaced, expanded, record } = this.props;
+    const { expandable, clsPrefix, onExpand, needIndentSpaced, expanded, record } = this.props;
     if (expandable) {
       const expandClassName = expanded ? 'expanded' : 'collapsed';
       return (
         <span
-          className={`${prefixCls}-expand-icon ${prefixCls}-${expandClassName}`}
+          className={`${clsPrefix}-expand-icon ${clsPrefix}-${expandClassName}`}
           onClick={(e) => onExpand(!expanded, record, e)}
         />
       );
     } else if (needIndentSpaced) {
-      return <span className={`${prefixCls}-expand-icon ${prefixCls}-spaced`} />;
+      return <span className={`${clsPrefix}-expand-icon ${clsPrefix}-spaced`} />;
     }
     return null;
-  },
-});
+  }
+};
+
+ExpandIcon.propTypes = propTypes;
 
 export default ExpandIcon;

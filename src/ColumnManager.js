@@ -2,6 +2,8 @@ import React from 'react';
 import Column from './Column';
 import ColumnGroup from './ColumnGroup';
 
+//行控制管理
+
 export default class ColumnManager {
   _cached = {}
 
