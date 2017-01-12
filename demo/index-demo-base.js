@@ -6,8 +6,6 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Table from '../src';
 import Animate from 'bee-animate';
-import Menu, { Item, Divider } from 'bee-menus';
-import DropDown from 'bee-dropdown';
 import Icon from "bee-icon";
 import Input from 'bee-form-control';
 import Popconfirm from 'bee-popconfirm';

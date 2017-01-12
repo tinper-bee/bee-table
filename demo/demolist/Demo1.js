@@ -28,8 +28,8 @@ class Demo1 extends Component {
               <Table
               columns={columns}
               data={data}
-              title={currentData => <div>标题: {currentData.length} 个元素</div>}
-              footer={currentData => <div>表尾: {currentData.length} 个元素</div>}
+              title={currentData => <div>标题: 这是一个标题</div>}
+              footer={currentData => <div>表尾: 我是小尾巴</div>}
               />
         )
     }

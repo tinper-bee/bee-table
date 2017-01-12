@@ -1,7 +1,7 @@
 /**
 *
-* @title 这是标题
-* @description 这是描述
+* @title 增删改表格
+* @description 这是带有增删改功能的表格
 *
 */
 
@@ -24,7 +24,7 @@ class EditableCell extends React.Component {
     this.setState({ editable: true });
   }
   handleKeydown = (event) => {
-      console.log(event);
+      console.log(event.keyCode);
       if(event.keyCode == 13){
           this.check();
       }
