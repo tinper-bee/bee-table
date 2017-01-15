@@ -221,7 +221,7 @@ class Table extends Component{
 
     if (expandIconAsCell && fixed !== 'right') {
       rows[0].unshift({
-        key: 'rc-table-expandIconAsCell',
+        key: 'u-table-expandIconAsCell',
         className: `${clsPrefix}-expand-icon-th`,
         title: '',
         rowSpan: rows.length,
@@ -411,7 +411,7 @@ class Table extends Component{
       cols.push(
         <col
           className={`${this.props.clsPrefix}-expand-icon-col`}
-          key="rc-table-expand-icon-col"
+          key="u-table-expand-icon-col"
         />
       );
     }
