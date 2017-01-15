@@ -3,7 +3,7 @@ import TableRow from './TableRow';
 import TableHeader from './TableHeader';
 import { measureScrollbar, debounce, warningOnce } from './utils';
 import shallowequal from 'shallowequal';
-import addEventListener from 'rc-util/lib/Dom/addEventListener';
+import addEventListener from 'tinper-bee-core/lib/addEventListener';
 import ColumnManager from './ColumnManager';
 import createStore from './createStore';
 
