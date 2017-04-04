@@ -83,7 +83,7 @@ class TableRow extends Component{
       onExpand,
     } = this.props;
     if (expandable && expandRowByClick) {
-      onExpand(!expanded, record, index);
+      onExpand(!expanded, record, index,event);
     }
     onRowClick(record, index, event);
   }

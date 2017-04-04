@@ -168,7 +168,7 @@ class Table extends Component{
     this.props.onExpandedRowsChange(expandedRowKeys);
   }
 
-  onExpanded(expanded, record, e, index) {
+  onExpanded(expanded, record, index,e ) {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
