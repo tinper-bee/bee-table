@@ -100,7 +100,6 @@ class Demo extends Component {
 #### 开发调试
 
 ```sh
-$ npm install -g bee-tools
 $ git clone https://github.com/tinper-bee/bee-table
 $ cd bee-table
 $ npm install
