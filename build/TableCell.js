@@ -8,6 +8,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _objectPath = require('object-path');
 
 var _objectPath2 = _interopRequireDefault(_objectPath);
@@ -23,13 +27,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 
 var propTypes = {
-  record: _react.PropTypes.object,
-  clsPrefix: _react.PropTypes.string,
-  index: _react.PropTypes.number,
-  indent: _react.PropTypes.number,
-  indentSize: _react.PropTypes.number,
-  column: _react.PropTypes.object,
-  expandIcon: _react.PropTypes.node
+  record: _propTypes2["default"].object,
+  clsPrefix: _propTypes2["default"].string,
+  index: _propTypes2["default"].number,
+  indent: _propTypes2["default"].number,
+  indentSize: _propTypes2["default"].number,
+  column: _propTypes2["default"].object,
+  expandIcon: _propTypes2["default"].node
 };
 
 var TableCell = function (_Component) {

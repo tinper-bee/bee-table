@@ -8,6 +8,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _shallowequal = require('shallowequal');
 
 var _shallowequal2 = _interopRequireDefault(_shallowequal);
@@ -23,12 +27,12 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 
 var propTypes = {
-  record: _react.PropTypes.object,
-  clsPrefix: _react.PropTypes.string,
-  expandable: _react.PropTypes.any,
-  expanded: _react.PropTypes.bool,
-  needIndentSpaced: _react.PropTypes.bool,
-  onExpand: _react.PropTypes.func
+  record: _propTypes2["default"].object,
+  clsPrefix: _propTypes2["default"].string,
+  expandable: _propTypes2["default"].any,
+  expanded: _propTypes2["default"].bool,
+  needIndentSpaced: _propTypes2["default"].bool,
+  onExpand: _propTypes2["default"].func
 };
 
 var ExpandIcon = function (_Component) {

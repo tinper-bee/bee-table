@@ -8,6 +8,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _TableCell = require('./TableCell');
 
 var _TableCell2 = _interopRequireDefault(_TableCell);
@@ -27,28 +31,28 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 
 var propTypes = {
-  onDestroy: _react.PropTypes.func,
-  onRowClick: _react.PropTypes.func,
-  onRowDoubleClick: _react.PropTypes.func,
-  record: _react.PropTypes.object,
-  clsPrefix: _react.PropTypes.string,
-  expandIconColumnIndex: _react.PropTypes.number,
-  onHover: _react.PropTypes.func,
-  columns: _react.PropTypes.array,
-  height: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
-  visible: _react.PropTypes.bool,
-  index: _react.PropTypes.number,
-  hoverKey: _react.PropTypes.any,
-  expanded: _react.PropTypes.bool,
-  expandable: _react.PropTypes.any,
-  onExpand: _react.PropTypes.func,
-  needIndentSpaced: _react.PropTypes.bool,
-  className: _react.PropTypes.string,
-  indent: _react.PropTypes.number,
-  indentSize: _react.PropTypes.number,
-  expandIconAsCell: _react.PropTypes.bool,
-  expandRowByClick: _react.PropTypes.bool,
-  store: _react.PropTypes.object.isRequired
+  onDestroy: _propTypes2["default"].func,
+  onRowClick: _propTypes2["default"].func,
+  onRowDoubleClick: _propTypes2["default"].func,
+  record: _propTypes2["default"].object,
+  clsPrefix: _propTypes2["default"].string,
+  expandIconColumnIndex: _propTypes2["default"].number,
+  onHover: _propTypes2["default"].func,
+  columns: _propTypes2["default"].array,
+  height: _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].number]),
+  visible: _propTypes2["default"].bool,
+  index: _propTypes2["default"].number,
+  hoverKey: _propTypes2["default"].any,
+  expanded: _propTypes2["default"].bool,
+  expandable: _propTypes2["default"].any,
+  onExpand: _propTypes2["default"].func,
+  needIndentSpaced: _propTypes2["default"].bool,
+  className: _propTypes2["default"].string,
+  indent: _propTypes2["default"].number,
+  indentSize: _propTypes2["default"].number,
+  expandIconAsCell: _propTypes2["default"].bool,
+  expandRowByClick: _propTypes2["default"].bool,
+  store: _propTypes2["default"].object.isRequired
 };
 
 var defaultProps = {
@@ -119,7 +123,7 @@ var TableRow = function (_Component) {
         onExpand = _props3.onExpand;
 
     if (expandable && expandRowByClick) {
-      onExpand(!expanded, record, index);
+      onExpand(!expanded, record, index, event);
     }
     onRowClick(record, index, event);
   };

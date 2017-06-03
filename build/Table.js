@@ -10,6 +10,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _TableRow = require('./TableRow');
 
 var _TableRow2 = _interopRequireDefault(_TableRow);
@@ -24,7 +28,7 @@ var _shallowequal = require('shallowequal');
 
 var _shallowequal2 = _interopRequireDefault(_shallowequal);
 
-var _addEventListener = require('rc-util/lib/Dom/addEventListener');
+var _addEventListener = require('tinper-bee-core/lib/addEventListener');
 
 var _addEventListener2 = _interopRequireDefault(_addEventListener);
 
@@ -49,36 +53,36 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 
 var propTypes = {
-  data: _react.PropTypes.array,
-  expandIconAsCell: _react.PropTypes.bool,
-  defaultExpandAllRows: _react.PropTypes.bool,
-  expandedRowKeys: _react.PropTypes.array,
-  defaultExpandedRowKeys: _react.PropTypes.array,
-  useFixedHeader: _react.PropTypes.bool,
-  columns: _react.PropTypes.array,
-  clsPrefix: _react.PropTypes.string,
-  bodyStyle: _react.PropTypes.object,
-  style: _react.PropTypes.object,
+  data: _propTypes2["default"].array,
+  expandIconAsCell: _propTypes2["default"].bool,
+  defaultExpandAllRows: _propTypes2["default"].bool,
+  expandedRowKeys: _propTypes2["default"].array,
+  defaultExpandedRowKeys: _propTypes2["default"].array,
+  useFixedHeader: _propTypes2["default"].bool,
+  columns: _propTypes2["default"].array,
+  clsPrefix: _propTypes2["default"].string,
+  bodyStyle: _propTypes2["default"].object,
+  style: _propTypes2["default"].object,
   //特殊的渲染规则的key值
-  rowKey: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.func]),
-  rowClassName: _react.PropTypes.func,
-  expandedRowClassName: _react.PropTypes.func,
-  childrenColumnName: _react.PropTypes.string,
-  onExpand: _react.PropTypes.func,
-  onExpandedRowsChange: _react.PropTypes.func,
-  indentSize: _react.PropTypes.number,
-  onRowClick: _react.PropTypes.func,
-  onRowDoubleClick: _react.PropTypes.func,
-  expandIconColumnIndex: _react.PropTypes.number,
+  rowKey: _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].func]),
+  rowClassName: _propTypes2["default"].func,
+  expandedRowClassName: _propTypes2["default"].func,
+  childrenColumnName: _propTypes2["default"].string,
+  onExpand: _propTypes2["default"].func,
+  onExpandedRowsChange: _propTypes2["default"].func,
+  indentSize: _propTypes2["default"].number,
+  onRowClick: _propTypes2["default"].func,
+  onRowDoubleClick: _propTypes2["default"].func,
+  expandIconColumnIndex: _propTypes2["default"].number,
   //是否显示表头
-  showHeader: _react.PropTypes.bool,
-  title: _react.PropTypes.func,
-  footer: _react.PropTypes.func,
-  emptyText: _react.PropTypes.func,
-  scroll: _react.PropTypes.object,
-  rowRef: _react.PropTypes.func,
-  getBodyWrapper: _react.PropTypes.func,
-  children: _react.PropTypes.node
+  showHeader: _propTypes2["default"].bool,
+  title: _propTypes2["default"].func,
+  footer: _propTypes2["default"].func,
+  emptyText: _propTypes2["default"].func,
+  scroll: _propTypes2["default"].object,
+  rowRef: _propTypes2["default"].func,
+  getBodyWrapper: _propTypes2["default"].func,
+  children: _propTypes2["default"].node
 };
 
 var defaultProps = {
@@ -224,7 +228,7 @@ var Table = function (_Component) {
     this.props.onExpandedRowsChange(expandedRowKeys);
   };
 
-  Table.prototype.onExpanded = function onExpanded(expanded, record, e, index) {
+  Table.prototype.onExpanded = function onExpanded(expanded, record, index, e) {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
@@ -276,7 +280,7 @@ var Table = function (_Component) {
 
     if (expandIconAsCell && fixed !== 'right') {
       rows[0].unshift({
-        key: 'rc-table-expandIconAsCell',
+        key: 'u-table-expandIconAsCell',
         className: clsPrefix + '-expand-icon-th',
         title: '',
         rowSpan: rows.length
@@ -470,7 +474,7 @@ var Table = function (_Component) {
     if (this.props.expandIconAsCell && fixed !== 'right') {
       cols.push(_react2["default"].createElement('col', {
         className: this.props.clsPrefix + '-expand-icon-col',
-        key: 'rc-table-expand-icon-col'
+        key: 'u-table-expand-icon-col'
       }));
     }
     var leafColumns = void 0;
