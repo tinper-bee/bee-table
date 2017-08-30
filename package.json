@@ -49,7 +49,7 @@
     "bee-pagination": "^0.1.7",
     "bee-panel": "latest",
     "bee-popconfirm": "^0.2.2",
-    "bee-tools": "^0.2.1",
+    "bee-tools": "^0.3.0",
     "chai": "^3.5.0",
     "console-polyfill": "~0.2.1",
     "enzyme": "^2.4.1",

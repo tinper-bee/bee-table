@@ -5,6 +5,11 @@
 *
 */
 
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import Table from '../../src';
+
+
 const columns = [
   { title: '用户名', dataIndex: 'a', key: 'a', width: 100 },
   { id: '123', title: '性别', dataIndex: 'b', key: 'b', width: 100 },
@@ -34,3 +39,6 @@ class Demo1 extends Component {
         )
     }
 }
+
+
+export default Demo1;

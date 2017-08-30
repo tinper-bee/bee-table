@@ -5,6 +5,14 @@
 *
 */
 
+import React, { Component } from 'react';
+import Button from 'bee-button';
+import Table from '../../src';
+import Animate from 'bee-animate';
+import Icon from "bee-icon";
+import Input from 'bee-form-control';
+import Popconfirm from 'bee-popconfirm';
+
 const { ColumnGroup, Column } = Table;
 
 const data3 = [
@@ -51,3 +59,5 @@ class Demo3 extends Component {
         )
     }
 }
+
+export default Demo3;

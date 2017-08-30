@@ -5,6 +5,11 @@
 *
 */
 
+import React, { Component } from 'react';
+import Table from '../../src';
+
+
+
 const columns4 = [
   {
     title: "Name",
@@ -94,3 +99,5 @@ class Demo4 extends Component {
     return <Table columns={columns4} data={data4} />;
   }
 }
+
+export default Demo4;

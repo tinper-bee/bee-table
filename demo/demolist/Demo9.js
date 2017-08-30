@@ -5,6 +5,14 @@
 *
 */
 
+import React, { Component } from 'react';
+import Table from '../../src';
+import Icon from "bee-icon";
+import InputGroup from 'bee-input-group';
+import FormControl from 'bee-form-control';
+
+
+
 class Search extends Component {
   state = {
     searchValue: "",
@@ -77,7 +85,6 @@ class Search extends Component {
   }
 }
 
-export default Search;
 const columns9 = [
   { title: "用户名", dataIndex: "a", key: "a", width: 100 },
   { id: "123", title: "性别", dataIndex: "b", key: "b", width: 100 },
@@ -121,3 +128,6 @@ class Demo9 extends Component {
     );
   }
 }
+
+export default Demo9;
+

@@ -5,6 +5,11 @@
 *
 */
 
+import React, { Component } from 'react';
+import Table from '../../src';
+
+
+
 const columns6 = [
   {
     title: "Full Name",
@@ -78,3 +83,5 @@ class Demo6 extends Component {
     return <Table columns={columns6} data={data6} scroll={{ y: 150 }} />;
   }
 }
+
+export default Demo6;

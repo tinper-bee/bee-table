@@ -5,6 +5,9 @@
 *
 */
 
+import React, { Component } from 'react';
+import Table from '../../src';
+
 const columns10 = [
     {
       title: "Name",
@@ -36,4 +39,6 @@ const columns10 = [
       return <Table columns={columns10} data={data10} emptyText={emptyFunc} />;
     }
   }
-  
+
+  export default Demo10;
+
