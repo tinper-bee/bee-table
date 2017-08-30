@@ -6,6 +6,7 @@
 @import "../src/Table.scss";
 @import "../node_modules/bee-popconfirm/src/Popconfirm.scss";
 @import "../node_modules/bee-form-control/src/FormControl.scss";
+@import "../node_modules/bee-pagination/src/Pagination.scss";
 
 .editable-cell {
   position: relative;
@@ -43,9 +44,35 @@
 
 .editable-cell-icon:hover,
 .editable-cell-icon-check:hover {
-  color:#2db7f5;
+  color: #2db7f5;
 }
 
 .editable-add-btn {
   margin-bottom: 8px;
+}
+
+.search-component {
+  margin-bottom: 20px;
+  .empty-search {
+    position: absolute;
+    right: 45px;
+    z-index: 20;
+    top: 5px;
+    color: #524e4e;
+    cursor: pointer;
+  }
+  &.u-input-group.simple {
+    float: right;
+  }
+  &.u-input-group.simple .u-form-control {
+    width: 251px;
+    background: #f5f5f5;
+    border-color: #f5f5f5;
+    border-radius: 20px;
+  }
+  &.u-input-group.simple .u-input-group-btn {
+    top: 3px;
+    right: 20px;
+    position: absolute;
+  }
 }

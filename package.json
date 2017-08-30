@@ -42,9 +42,11 @@
   "devDependencies": {
     "bee-animate": "latest",
     "bee-button": "latest",
-    "bee-form-control": "^0.1.7",
+    "bee-form-control": "^0.1.8",
     "bee-icon": "0.0.5",
+    "bee-input-group": "^0.1.12",
     "bee-layout": "latest",
+    "bee-pagination": "^0.1.7",
     "bee-panel": "latest",
     "bee-popconfirm": "^0.2.2",
     "bee-tools": "^0.2.1",

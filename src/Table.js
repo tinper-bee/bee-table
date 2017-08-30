@@ -706,7 +706,6 @@ class Table extends Component{
     const isTableScroll = this.columnManager.isAnyColumnsFixed() ||
                           props.scroll.x ||
                           props.scroll.y;
-
     return (
       <div className={className} style={props.style}>
         {this.getTitle()}
