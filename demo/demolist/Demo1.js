@@ -5,10 +5,6 @@
 *
 */
 
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import Table from '../../src';
-
 
 const columns = [
   { title: '用户名', dataIndex: 'a', key: 'a', width: 100 },
@@ -27,7 +23,7 @@ const data = [
   { a: '郭靖', b: '男', c: 25, key: '3' },
 ];
 
-class Demo1 extends Component {
+export class Demo1 extends Component {
     render () {
         return (
               <Table
@@ -40,5 +36,3 @@ class Demo1 extends Component {
     }
 }
 
-
-export default Demo1;

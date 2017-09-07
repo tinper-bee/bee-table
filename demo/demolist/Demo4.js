@@ -5,10 +5,6 @@
 *
 */
 
-import React, { Component } from 'react';
-import Table from '../../src';
-
-
 
 const columns4 = [
   {
@@ -94,10 +90,8 @@ const data4 = [
     address: "Sidney No. 1 Lake Park"
   }
 ];
-class Demo4 extends Component {
+export class Demo4 extends Component {
   render() {
     return <Table columns={columns4} data={data4} />;
   }
 }
-
-export default Demo4;

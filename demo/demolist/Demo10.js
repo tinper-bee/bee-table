@@ -5,9 +5,6 @@
 *
 */
 
-import React, { Component } from 'react';
-import Table from '../../src';
-
 const columns10 = [
     {
       title: "Name",
@@ -34,11 +31,9 @@ const columns10 = [
 
   const emptyFunc = () => <span>这里没有数据！</span>
   
-  class Demo10 extends Component {
+  export class Demo10 extends Component {
     render() {
       return <Table columns={columns10} data={data10} emptyText={emptyFunc} />;
     }
   }
-
-  export default Demo10;
 

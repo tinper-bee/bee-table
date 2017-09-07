@@ -5,9 +5,6 @@
 *
 */
 
-import React, { Component } from 'react';
-import Table from '../../src';
-
 
 
 const columns5 = [
@@ -56,10 +53,8 @@ const data5 = [
   }
 ];
 
-class Demo5 extends Component {
+export class Demo5 extends Component {
   render() {
     return <Table columns={columns5} data={data5} scroll={{ x: 1500 }} />;
   }
 }
-
-export default Demo5;

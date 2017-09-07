@@ -5,10 +5,6 @@
 *
 */
 
-import React, { Component } from 'react';
-import Table from '../../src';
-
-
 
 const columns7 = [
   { title: "用户名", dataIndex: "a", key: "a"},
@@ -36,7 +32,7 @@ const columns7_1 = [
   { title: "系别", dataIndex: "c", key: "c"}
 ];
 
-class Demo7 extends Component {
+export class Demo7 extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -84,6 +80,4 @@ class Demo7 extends Component {
     );
   }
 }
-
-export default Demo7;
 

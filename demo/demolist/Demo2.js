@@ -5,13 +5,6 @@
 *
 */
 
-import React, { Component } from 'react';
-import Button from 'bee-button';
-import Table from '../../src';
-import Animate from 'bee-animate';
-import Icon from "bee-icon";
-import Input from 'bee-form-control';
-import Popconfirm from 'bee-popconfirm';
 
 class EditableCell extends React.Component {
   state = {
@@ -69,7 +62,7 @@ class EditableCell extends React.Component {
   }
 }
 
-export default class Demo2 extends React.Component {
+export class Demo2 extends React.Component {
   constructor(props) {
     super(props);
     this.columns = [{

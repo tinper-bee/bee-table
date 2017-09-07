@@ -5,11 +5,6 @@
 *
 */
 
-import React, { Component } from 'react';
-import Table from '../../src';
-import Pagination from 'bee-pagination';
-
-
 const columns8 = [
   { title: "用户名", dataIndex: "a", key: "a", width: 100 },
   { id: "123", title: "性别", dataIndex: "b", key: "b", width: 100 },
@@ -24,7 +19,7 @@ const columns8 = [
   }
 ];
 
-class Demo8 extends Component {
+export class Demo8 extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -74,5 +69,3 @@ class Demo8 extends Component {
     );
   }
 }
-
-export default Demo8;

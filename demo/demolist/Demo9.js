@@ -5,13 +5,6 @@
 *
 */
 
-import React, { Component } from 'react';
-import Table from '../../src';
-import Icon from "bee-icon";
-import InputGroup from 'bee-input-group';
-import FormControl from 'bee-form-control';
-
-
 
 class Search extends Component {
   state = {
@@ -99,7 +92,7 @@ const columns9 = [
   }
 ];
 
-class Demo9 extends Component {
+export class Demo9 extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -128,6 +121,4 @@ class Demo9 extends Component {
     );
   }
 }
-
-export default Demo9;
 
