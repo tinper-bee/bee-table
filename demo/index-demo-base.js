@@ -8,6 +8,7 @@ import Table from '../src';
 import Animate from 'bee-animate';
 import Pagination from "bee-pagination";
 import Icon from "bee-icon";
+import Checkbox from "bee-checkbox";
 import InputGroup from 'bee-input-group';
 import FormControl from 'bee-form-control';
 import Input from 'bee-form-control';

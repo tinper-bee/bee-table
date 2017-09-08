@@ -41,10 +41,10 @@ const data11 = [
   { a: "郭靖", b: "男", c: 25, key: "3" }
 ];
 
-const defaultProps = {
+const defaultProps11 = {
   prefixCls: "bee-table"
 };
-class Demo11 extends Component {
+export class Demo11 extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -52,7 +52,7 @@ class Demo11 extends Component {
       data: data11
     };
   }
-  toggleSortOrder(order, column) {
+  toggleSortOrder=(order, column)=> {
     let { sortOrder, data, oldData } = this.state;
     let ascend_sort = function(key) {
       return function(a, b) {
@@ -68,8 +68,6 @@ class Demo11 extends Component {
       // 切换为未排序状态
       order = "";
     }
-    debugger;
-    console.log(oldData);
     if (!oldData) {
       oldData = data.concat();
     }
@@ -137,6 +135,4 @@ class Demo11 extends Component {
     return <Table columns={columns} data={this.state.data} />;
   }
 }
-Demo11.defaultProps = defaultProps;
-
-export default Demo11;
+Demo11.defaultProps = defaultProps11;
