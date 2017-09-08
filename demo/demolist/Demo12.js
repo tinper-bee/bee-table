@@ -5,6 +5,11 @@
 *
 */
 
+
+import React, { Component } from 'react';
+import Table from '../../src';
+import Checkbox from "bee-checkbox";
+
 const columns12 = [
   {
     title: "名字",
@@ -160,3 +165,5 @@ export class Demo12 extends Component {
   }
 }
 Demo12.defaultProps = defaultProps12;
+
+export default Demo12;

@@ -6,6 +6,11 @@
 */
 
 
+import React, { Component } from 'react';
+import Table from '../../src';
+
+
+
 const columns7 = [
   { title: "用户名", dataIndex: "a", key: "a"},
   { id: "123", title: "性别", dataIndex: "b", key: "b"},
@@ -81,3 +86,4 @@ export class Demo7 extends Component {
   }
 }
 
+export default Demo7;

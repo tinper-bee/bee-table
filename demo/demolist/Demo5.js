@@ -7,6 +7,11 @@
 
 
 
+import React, { Component } from 'react';
+import Table from '../../src';
+
+
+
 const columns5 = [
   {
     title: "Full Name",
@@ -58,3 +63,5 @@ export class Demo5 extends Component {
     return <Table columns={columns5} data={data5} scroll={{ x: 1500 }} />;
   }
 }
+
+export default Demo5;

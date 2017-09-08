@@ -5,6 +5,11 @@
 *
 */
 
+
+import React, { Component } from 'react';
+import Table from '../../src';
+import Icon from "bee-icon";
+
 const columns11 = [
   {
     title: "名字",
@@ -136,3 +141,6 @@ export class Demo11 extends Component {
   }
 }
 Demo11.defaultProps = defaultProps11;
+
+
+export default Demo11;

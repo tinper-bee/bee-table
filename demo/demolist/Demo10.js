@@ -5,6 +5,11 @@
 *
 */
 
+
+import React, { Component } from 'react';
+import Table from '../../src';
+
+
 const columns10 = [
     {
       title: "Name",
@@ -37,3 +42,4 @@ const columns10 = [
     }
   }
 
+export default Demo10;

@@ -6,6 +6,10 @@
 */
 
 
+import Button from 'bee-button';
+import React, { Component } from 'react';
+import Table from '../../src';
+
 const { ColumnGroup, Column } = Table;
 
 const data3 = [
@@ -52,3 +56,5 @@ export class Demo3 extends Component {
         )
     }
 }
+
+export default Demo3;
