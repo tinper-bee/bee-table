@@ -113,26 +113,26 @@ export class Demo12 extends Component {
     // self.props.onSelIds(selIds);
   };
   renderColumnsMultiSelect(columns) {
-    // const { data,checkedArray } = this.state;
+    const { data,checkedArray } = this.state;
     const { multiSelect } = this.props;
     let select_column = {};
-    // let indeterminate_bool = false;
+    let indeterminate_bool = false;
     // let indeterminate_bool1 = true;
     if (multiSelect && multiSelect.type === "checkbox") {
-      // let i = checkedArray.length;
-      // while(i--){
-      //     if(checkedArray[i]){
-      //       indeterminate_bool = true;
-      //       break;
-      //     }
-      // }
+      let i = checkedArray.length;
+      while(i--){
+          if(checkedArray[i]){
+            indeterminate_bool = true;
+            break;
+          }
+      }
       let defaultColumns = [
         {
           title: (
             <Checkbox
               className="table-checkbox"
               checked={this.state.checkedAll}
-              
+              indeterminate={indeterminate_bool&&!this.state.checkedAll}
               onHandleChange={this.onAllCheckChange}
             />
           ),
