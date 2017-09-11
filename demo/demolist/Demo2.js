@@ -71,7 +71,7 @@ class EditableCell extends React.Component {
   }
 }
 
-export class Demo2 extends React.Component {
+class Demo2 extends React.Component {
   constructor(props) {
     super(props);
     this.columns = [{

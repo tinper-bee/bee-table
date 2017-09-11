@@ -58,7 +58,7 @@ const data5 = [
   }
 ];
 
-export class Demo5 extends Component {
+class Demo5 extends Component {
   render() {
     return <Table columns={columns5} data={data5} scroll={{ x: 1500 }} />;
   }

@@ -37,7 +37,7 @@ const columns7_1 = [
   { title: "系别", dataIndex: "c", key: "c"}
 ];
 
-export class Demo7 extends Component {
+class Demo7 extends Component {
   constructor(props){
     super(props);
     this.state = {

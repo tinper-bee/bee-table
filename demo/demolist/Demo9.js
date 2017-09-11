@@ -100,7 +100,7 @@ const columns9 = [
   }
 ];
 
-export class Demo9 extends Component {
+class Demo9 extends Component {
   constructor(props) {
     super(props);
     this.state = {

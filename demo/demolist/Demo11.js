@@ -49,7 +49,7 @@ const data11 = [
 const defaultProps11 = {
   prefixCls: "bee-table"
 };
-export class Demo11 extends Component {
+class Demo11 extends Component {
   constructor(props) {
     super(props);
     this.state = {

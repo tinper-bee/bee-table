@@ -53,7 +53,7 @@ const defaultProps12 = {
     param: "key"
   }
 };
-export class Demo12 extends Component {
+class Demo12 extends Component {
   constructor(props) {
     super(props);
     this.state = {

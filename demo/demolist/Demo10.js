@@ -36,7 +36,7 @@ const columns10 = [
 
   const emptyFunc = () => <span>这里没有数据！</span>
   
-  export class Demo10 extends Component {
+  class Demo10 extends Component {
     render() {
       return <Table columns={columns10} data={data10} emptyText={emptyFunc} />;
     }

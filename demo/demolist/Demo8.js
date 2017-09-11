@@ -25,7 +25,7 @@ const columns8 = [
   }
 ];
 
-export class Demo8 extends Component {
+class Demo8 extends Component {
   constructor(props) {
     super(props);
     this.state = {

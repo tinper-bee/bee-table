@@ -78,7 +78,7 @@ const data6 = [
   }
 ];
 
-export class Demo6 extends Component {
+class Demo6 extends Component {
   render() {
     return <Table columns={columns6} data={data6} scroll={{ y: 150 }} />;
   }

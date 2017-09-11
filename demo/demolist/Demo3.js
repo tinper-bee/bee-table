@@ -16,7 +16,7 @@ const data3 = [
   { a: '北京', b: '北京', c: '250', d: 2, key: '1' },
 ];
 
-export class Demo3 extends Component {
+class Demo3 extends Component {
     render () {
         return (
 

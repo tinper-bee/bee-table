@@ -94,7 +94,7 @@ const data4 = [
     address: "Sidney No. 1 Lake Park"
   }
 ];
-export class Demo4 extends Component {
+class Demo4 extends Component {
   render() {
     return <Table columns={columns4} data={data4} />;
   }

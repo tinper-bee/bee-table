@@ -5,8 +5,6 @@
 *
 */
 
-
-
 import React, { Component } from 'react';
 import Table from '../../src';
 
@@ -28,7 +26,7 @@ const data = [
   { a: '郭靖', b: '男', c: 25, key: '3' },
 ];
 
-export class Demo1 extends Component {
+class Demo1 extends Component {
     render () {
         return (
               <Table
