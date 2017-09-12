@@ -100,7 +100,6 @@ class Demo12 extends Component {
     // } else {
       // selIds.push(record[id]);
     // }
-    debugger;
     checkedArray[index] = !self.state.checkedArray[index];
     for (var i = 0; i < self.state.checkedArray.length; i++) {
       if (!checkedArray[i]) {
@@ -138,7 +137,7 @@ class Demo12 extends Component {
               className="table-checkbox"
               checked={this.state.checkedAll}
               indeterminate={indeterminate_bool&&!this.state.checkedAll}
-              onHandleChange={this.onAllCheckChange}
+              onChange={this.onAllCheckChange}
             />
           ),
           key: "checkbox",
@@ -149,7 +148,7 @@ class Demo12 extends Component {
               <Checkbox
                 className="table-checkbox"
                 checked={this.state.checkedArray[index]}
-                onHandleChange={this.onCheckboxChange.bind(this, text, record, index)}
+                onChange={this.onCheckboxChange.bind(this, text, record, index)}
               />
             );
           }
