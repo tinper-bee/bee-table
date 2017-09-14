@@ -141,9 +141,8 @@ module.exports = function multiTable(Table) {
       return columns;
     }
     render() {
-      let { data } = this.props;
       let columns = this.renderColumnsMultiSelect(this.props.columns).concat();
-      return <Table {...this.props} columns={columns} data={data} />;
+      return <Table {...this.props} columns={columns} />;
     }
   };
 };

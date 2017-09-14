@@ -47,9 +47,6 @@ const data13 = [
   { a: "郭靖", b: "男", c: 25, key: "3" }
 ];
 class Demo13 extends Component {
-  getCheckedObj = () => {
-    console.log(this.state);
-  };
   setCheckedOjb = (data) =>{
     console.log(data)
   }
@@ -68,7 +65,6 @@ class Demo13 extends Component {
           prefixCls="bee-table"
           getSelectedDataFunc={this.setCheckedOjb}
         />
-        <button onClick={this.getCheckedObj}>xxxx</button>
       </div>
     );
   }
