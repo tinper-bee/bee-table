@@ -6,7 +6,7 @@ import Icon from 'bee-icon';
  * 参数：prefixCls，默认bee-table,用于设置图标的样式
  * @param {*} Table 
  */
-export default function sortTable(Table) {
+export default function sortFunc(Table) {
   return class Demo11 extends Component {
     constructor(props) {
       super(props);

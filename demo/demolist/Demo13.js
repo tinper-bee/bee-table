@@ -1,15 +1,15 @@
 /**
 *
-* @title 全选功能
-* @description 全选功能
+* @title 列排序、全选功能
+* @description 列排序、全选功能
 *
 */
 
 import React, { Component } from "react";
 import Table from "../../src";
 import Checkbox from "bee-checkbox";
-import multiTable from "../../src/lib/multiSelectFunc.js";
-import sortTable from "../../src/lib/sortFunc.js";
+import multiSelectFunc from "../../src/lib/multiSelectFunc.js";
+import sortFunc from "../../src/lib/sortFunc.js";
 
 const columns13 = [
   {
@@ -47,7 +47,7 @@ const data13 = [
   { a: "郭靖", b: "男", c: 25, key: "3" }
 ];
 class Demo13 extends Component {
-  setCheckedOjb = (data) =>{
+  getSelectedDataFunc = (data) =>{
     console.log(data)
   }
   render() {
@@ -55,15 +55,14 @@ class Demo13 extends Component {
       type: "checkbox",
       param: "key"
     };
-    let ComplexTable = multiTable(sortTable(Table));
+    let ComplexTable = multiSelectFunc(sortFunc(Table));
     return (
       <div>
         <ComplexTable
           columns={columns13}
           data={data13}
           multiSelect={multiObj}
-          prefixCls="bee-table"
-          getSelectedDataFunc={this.setCheckedOjb}
+          getSelectedDataFunc={this.getSelectedDataFunc}
         />
       </div>
     );
