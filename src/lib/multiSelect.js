@@ -8,7 +8,7 @@ import Checkbox from "bee-checkbox";
  * getSelectedDataFunc--function，能获取到选中的数据
  * 使用全选时得注意，data中的key值一定要是唯一值
  */
-module.exports = function multiSelectFunc(Table) {
+module.exports = function multiSelect(Table) {
   Array.prototype.indexOf = function(val) {
     for (var i = 0; i < this.length; i++) {
       if (this[i] == val) return i;

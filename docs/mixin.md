@@ -1,12 +1,9 @@
-## util
+## mixin
 
 Table拓展功能方法
 
-### 如何使用
-xxx
 
-
-### multiSelectFunc
+### multiSelect
 
 全选功能
 
@@ -21,7 +18,7 @@ xxx
 
 
 
-### sortFunc
+### sort
 
 排序功能
 

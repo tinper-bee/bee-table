@@ -8,8 +8,8 @@
 import React, { Component } from "react";
 import Table from "../../src";
 import Checkbox from "bee-checkbox";
-import multiSelectFunc from "../../src/lib/multiSelectFunc.js";
-import sortFunc from "../../src/lib/sortFunc.js";
+import multiSelect from "../../src/lib/multiSelect.js";
+import sort from "../../src/lib/sort.js";
 
 const columns13 = [
   {
@@ -55,7 +55,7 @@ class Demo13 extends Component {
       type: "checkbox",
       param: "key"
     };
-    let ComplexTable = multiSelectFunc(sortFunc(Table));
+    let ComplexTable = multiSelect(sort(Table));
     return (
       <div>
         <ComplexTable
