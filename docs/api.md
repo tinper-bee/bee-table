@@ -53,3 +53,6 @@
 
 
 {% include "mixin.md"%}
+
+
+{% include "rendertype.md"%}
