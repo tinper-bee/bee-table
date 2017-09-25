@@ -19,8 +19,6 @@ import InputRender from "../../src/render/InputRender.js";
 //日期控件引入
 import DatePicker from 'bee-datepicker';
 import MonthPicker,{ WeekPicker, RangePicker } from 'bee-datepicker';
-import zhCN from 'rc-calendar/lib/locale/zh_CN';
-import enUS from 'rc-calendar/lib/locale/en_US';
 
 const format = 'YYYY-MM-DD';
 const format2 = 'YYYY-MM';
@@ -118,8 +116,6 @@ class Demo15 extends React.Component {
     
               onChange={this.onChange}
     
-              locale={zhCN}
-    
               placeholder = {dateInputPlaceholder}>
               </DatePicker>
          ) 
@@ -134,8 +130,6 @@ class Demo15 extends React.Component {
               onSelect={this.onSelect}
     
               onChange={this.onChange}
-    
-              locale={zhCN}
     
               placeholder = {dateInputPlaceholder2}>
               </MonthPicker>
@@ -159,8 +153,6 @@ class Demo15 extends React.Component {
               onSelect={this.onSelect}
 
               onChange={this.onChange}
-
-              locale={zhCN}
 
               placeholder={'选择年月'}
 
