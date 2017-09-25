@@ -805,7 +805,6 @@ var Table = function (_Component) {
     className += ' ' + clsPrefix + '-scroll-position-' + this.state.scrollPosition;
 
     var isTableScroll = this.columnManager.isAnyColumnsFixed() || props.scroll.x || props.scroll.y;
-
     return _react2["default"].createElement(
       'div',
       { className: className, style: props.style },
