@@ -16,6 +16,15 @@ import Select from 'bee-select';
 import Popconfirm from "bee-popconfirm";
 import InputRender from "../../src/render/InputRender.js";
 
+//日期控件引入
+import DatePicker from 'bee-datepicker';
+import zhCN from 'rc-calendar/lib/locale/zh_CN';
+import enUS from 'rc-calendar/lib/locale/en_US';
+
+const format = 'YYYY-MM-DD';
+
+const dateInputPlaceholder = '选择日期';
+
 class Demo15 extends React.Component {
   constructor(props) {
     super(props);
@@ -94,6 +103,23 @@ class Demo15 extends React.Component {
           );
         }
       },
+      { title: '日期', dataIndex: 'datepicker', key: 'datepicker', width: 200,
+      render:()=>{
+         return(
+           <DatePicker
+              format={format}
+            
+              onSelect={this.onSelect}
+    
+              onChange={this.onChange}
+    
+              locale={zhCN}
+    
+              placeholder = {dateInputPlaceholder}>
+              </DatePicker>
+         ) 
+        }
+      },
       {
         title: "操作",
         dataIndex: "operation",
@@ -157,6 +183,15 @@ class Demo15 extends React.Component {
       </Animate>
     );
   };
+  
+  onSelect = (d) =>{
+      console.log(d)
+  };
+
+  onChange = (d) => {
+      console.log(d)
+  };
+
   render() {
     const { dataSource } = this.state;
     const columns = this.columns;
