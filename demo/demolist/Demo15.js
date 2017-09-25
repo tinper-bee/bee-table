@@ -18,12 +18,15 @@ import InputRender from "../../src/render/InputRender.js";
 
 //日期控件引入
 import DatePicker from 'bee-datepicker';
+import MonthPicker,{ WeekPicker, RangePicker } from 'bee-datepicker';
 import zhCN from 'rc-calendar/lib/locale/zh_CN';
 import enUS from 'rc-calendar/lib/locale/en_US';
 
 const format = 'YYYY-MM-DD';
+const format2 = 'YYYY-MM';
 
 const dateInputPlaceholder = '选择日期';
+const dateInputPlaceholder2 = '选择年月';
 
 class Demo15 extends React.Component {
   constructor(props) {
@@ -62,7 +65,7 @@ class Demo15 extends React.Component {
         title: "姓名",
         dataIndex: "name",
         key: "name",
-        width: "30%",
+        width: "10%",
         render: (text, record, index) => (
           <InputRender
             value={text}
@@ -75,6 +78,7 @@ class Demo15 extends React.Component {
         title: "年龄",
         dataIndex: "age",
         key: "age",
+        width: "10%",
         render: (text, record, index) => (
           <Checkbox
             checked={record.age}
@@ -86,11 +90,12 @@ class Demo15 extends React.Component {
         title: "你懂的",
         dataIndex: "address",
         key: "address",
+        width: "10%",
         render: (text, record, index) => {
           return (
             <Select
               defaultValue="lucy"
-              style={{ width: 200, marginRight: 6 }}
+              style={{ width: 100, marginRight: 6 }}
               onChange={this.handleChange}
             >
               <Option value="jack">boyuzhou</Option>
@@ -103,7 +108,7 @@ class Demo15 extends React.Component {
           );
         }
       },
-      { title: '日期', dataIndex: 'datepicker', key: 'datepicker', width: 200,
+      { title: '日期', dataIndex: 'datepicker', key: 'datepicker', width: "10%",
       render:()=>{
          return(
            <DatePicker
@@ -120,18 +125,50 @@ class Demo15 extends React.Component {
          ) 
         }
       },
-      {
-        title: "操作",
-        dataIndex: "operation",
-        key: "operation",
-        render: (text, record, index) => {
-          return this.state.dataSource.length > 1 ? (
-            <Popconfirm content="确认删除?" id="aa" onClose={this.onDelete(index)}>
-              <Icon type="uf-del" />
-            </Popconfirm>
-          ) : null;
+      { title: '年月', dataIndex: 'MonthPicker', key: 'MonthPicker', width: "10%",
+      render:()=>{
+         return(
+           <MonthPicker
+              format={format2}
+            
+              onSelect={this.onSelect}
+    
+              onChange={this.onChange}
+    
+              locale={zhCN}
+    
+              placeholder = {dateInputPlaceholder2}>
+              </MonthPicker>
+         ) 
+        }
+      },
+      { title: '周', dataIndex: 'WeekPicker', key: 'WeekPicker', width: "10%",
+      render:()=>{
+         return(
+          <WeekPicker placeholder="选择周"/>
+         ) 
+        }
+      },
+      { title: '日期范围', dataIndex: 'RangePicker', key: 'RangePicker', width: "10%",
+      render:()=>{
+         return(
+          <RangePicker
+          
+              format={format}
+
+              onSelect={this.onSelect}
+
+              onChange={this.onChange}
+
+              locale={zhCN}
+
+              placeholder={'选择年月'}
+
+          />
+         ) 
         }
       }
+      
     ];
   }
   handleChange = value => {
