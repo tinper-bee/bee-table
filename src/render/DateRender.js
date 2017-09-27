@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Icon from "bee-icon";
 import DatePicker from "bee-datepicker";
+import moment from "moment";
 
 export default class DateRender extends Component {
   state = {
@@ -8,9 +9,15 @@ export default class DateRender extends Component {
     editable: false
   };
   handleChange = e => {
-      debugger;
-    const value = e.target.value;
+    let { format } = this.props || "YYYY-MM-DD";
+    const value = e.format(format);
     this.setState({ value });
+    if (this.props.onChange) {
+      this.props.onChange(this.state.value);
+    }
+    setTimeout(() => {
+      this.setState({ editable: false });
+    }, 0);
   };
   check = () => {
     this.setState({ editable: false });
@@ -31,14 +38,28 @@ export default class DateRender extends Component {
     const { value, editable } = this.state;
     let { isclickTrigger } = this.props;
     let cellContent = "";
+    let date_value = moment(value);
     if (editable) {
       cellContent = isclickTrigger ? (
         <div className="editable-cell-input-wrapper">
-          <DatePicker onChange={this.handleChange} />
+          <DatePicker
+            {...this.props}
+            value={date_value}
+            onChange={this.handleChange}
+          />
+          <Icon
+            type="uf-correct"
+            className="editable-cell-icon-check"
+            onClick={this.check}
+          />
         </div>
       ) : (
         <div className="editable-cell-input-wrapper">
-          <DatePicker {...this.props} onChange={this.handleChange}/>
+          <DatePicker
+            {...this.props}
+            value={date_value}
+            onChange={this.handleChange}
+          />
           <Icon
             type="uf-correct"
             className="editable-cell-icon-check"

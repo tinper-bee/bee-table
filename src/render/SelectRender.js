@@ -9,13 +9,12 @@ export default class SelectRender extends Component {
   };
   handleChange = e => {
     const value = e;
-    let self = this;
-    if (self.props.onChange) {
-      self.props.onChange(value);
+    if (this.props.onChange) {
+      this.props.onChange(value);
     }
     this.setState({ value: value });
-    setTimeout(function() {
-      self.setState({ editable: false });
+    setTimeout(()=> {
+      this.setState({ editable: false });
     }, 0);
   };
   check = () => {

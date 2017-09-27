@@ -24,6 +24,7 @@ import MonthPicker, { WeekPicker, RangePicker } from "bee-datepicker";
 
 const format = "YYYY-MM-DD";
 const format2 = "YYYY-MM";
+const format3 = "YYYY-MM-DD HH:mm:ss";
 
 const dateInputPlaceholder = "选择日期";
 const dateInputPlaceholder2 = "选择年月";
@@ -37,25 +38,37 @@ class Demo15 extends React.Component {
           key: "0",
           name: "沉鱼",
           age: "y",
-          address: "96, 77, 89"
+          address: "96, 77, 89",
+          datepicker: "2017-06-12",
+          MonthPicker: "2017-02",
+          TimePicker: "2017-09-15 15:24:48"
         },
         {
           key: "1",
           name: "落雁",
           age: "y",
-          address: "90, 70, 80"
+          address: "90, 70, 80",
+          datepicker: "2017-06-12",
+          MonthPicker: "2017-02",
+          TimePicker: "2017-09-15 15:24:48"
         },
         {
           key: "2",
           name: "闭月",
           age: "n",
-          address: "80, 60, 80"
+          address: "80, 60, 80",
+          datepicker: "2017-06-12",
+          MonthPicker: "2017-02",
+          TimePicker: "2017-09-15 15:24:48"
         },
         {
           key: "3",
           name: "羞花",
           age: "y",
-          address: "120, 60, 90"
+          address: "120, 60, 90",
+          datepicker: "2017-06-12",
+          MonthPicker: "2017-02",
+          TimePicker: "2017-09-15 15:24:48"
         }
       ],
       count: 4
@@ -109,16 +122,18 @@ class Demo15 extends React.Component {
         }
       },
       {
-        title: "日期",
+        title: "年月日",
         dataIndex: "datepicker",
         key: "datepicker",
         width: "200px",
-        render: () => {
+        render: (text, record, index) => {
           return (
-            <DatePicker
+            <DateRender
+              value={text}
+              isclickTrigger={true}
               format={format}
-              onSelect={this.onSelect}
-              onChange={this.onChange}
+              onSelect={this.onDateSelect}
+              onChange={this.onDateChange}
               placeholder={dateInputPlaceholder}
             />
           );
@@ -129,9 +144,11 @@ class Demo15 extends React.Component {
         dataIndex: "MonthPicker",
         key: "MonthPicker",
         width: "200px",
-        render: () => {
+        render: (text, record, index) => {
           return (
-            <MonthPicker
+            <DateRender
+              value={text}
+              isclickTrigger={true}
               format={format2}
               onSelect={this.onSelect}
               onChange={this.onChange}
@@ -141,11 +158,20 @@ class Demo15 extends React.Component {
         }
       },
       {
-        title: "周",
-        dataIndex: "WeekPicker",
-        key: "WeekPicker",
-        render: () => {
-          return <WeekPicker placeholder="选择周" />;
+        title: "日期",
+        dataIndex: "TimePicker",
+        key: "TimePicker",
+        render: (text, record, index) => {
+          return (
+            <DateRender
+              value={text}
+              format={format3}
+              isclickTrigger={true}
+              onSelect={this.onDateSelect}
+              onChange={this.onDateChange}
+              placeholder={dateInputPlaceholder}
+            />
+          );
         }
       }
     ];
@@ -167,6 +193,12 @@ class Demo15 extends React.Component {
   };
   onSelectChange = value => {
     console.log(`selected ${value}`);
+  };
+  onDateChange = d => {
+    console.log(d);
+  };
+  onDateSelect = d => {
+    console.log(d);
   };
   onDelete = index => {
     return () => {
@@ -200,15 +232,6 @@ class Demo15 extends React.Component {
       </Animate>
     );
   };
-
-  onSelect = d => {
-    console.log(d);
-  };
-
-  onChange = d => {
-    console.log(d);
-  };
-
   render() {
     const { dataSource } = this.state;
     const columns = this.columns;
