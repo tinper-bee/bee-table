@@ -1,15 +1,22 @@
 import React, { Component } from "react";
 import Icon from "bee-icon";
-import Input from "bee-form-control";
+import Select from "bee-select";
 
-export default class InputRender extends Component {
+export default class SelectRender extends Component {
   state = {
     value: this.props.value,
     editable: false
   };
   handleChange = e => {
     const value = e;
-    this.setState({ value });
+    let self = this;
+    if (self.props.onChange) {
+      self.props.onChange(value);
+    }
+    this.setState({ value: value });
+    setTimeout(function() {
+      self.setState({ editable: false });
+    }, 0);
   };
   check = () => {
     this.setState({ editable: false });
@@ -20,11 +27,6 @@ export default class InputRender extends Component {
   edit = () => {
     this.setState({ editable: true });
   };
-  handleKeydown = event => {
-    if (event.keyCode == 13) {
-      this.check();
-    }
-  };
   render() {
     const { value, editable } = this.state;
     let { isclickTrigger } = this.props;
@@ -32,21 +34,28 @@ export default class InputRender extends Component {
     if (editable) {
       cellContent = isclickTrigger ? (
         <div className="editable-cell-input-wrapper">
-          <Input
+          <Select
+            {...this.props}
+            value={this.state.value}
             onChange={this.handleChange}
-            onKeyDown={this.handleKeydown}
-            onBlur={this.check}
-            autoFocus
-            value={value}
+          >
+            {this.props.children}
+          </Select>
+          <Icon
+            type="uf-correct"
+            className="editable-cell-icon-check"
+            onClick={this.check}
           />
         </div>
       ) : (
         <div className="editable-cell-input-wrapper">
-          <Input
-            value={value}
+          <Select
+            {...this.props}
+            value={this.state.value}
             onChange={this.handleChange}
-            onKeyDown={this.handleKeydown}
-          />
+          >
+            {this.props.children}
+          </Select>
           <Icon
             type="uf-correct"
             className="editable-cell-icon-check"

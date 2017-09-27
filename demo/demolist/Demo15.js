@@ -12,19 +12,21 @@ import Animate from "bee-animate";
 import Icon from "bee-icon";
 import Input from "bee-form-control";
 import Checkbox from "bee-checkbox";
-import Select from 'bee-select';
+import Select from "bee-select";
 import Popconfirm from "bee-popconfirm";
 import InputRender from "../../src/render/InputRender.js";
+import DateRender from "../../src/render/DateRender.js";
+import SelectRender from "../../src/render/SelectRender.js";
 
 //日期控件引入
-import DatePicker from 'bee-datepicker';
-import MonthPicker,{ WeekPicker, RangePicker } from 'bee-datepicker';
+import DatePicker from "bee-datepicker";
+import MonthPicker, { WeekPicker, RangePicker } from "bee-datepicker";
 
-const format = 'YYYY-MM-DD';
-const format2 = 'YYYY-MM';
+const format = "YYYY-MM-DD";
+const format2 = "YYYY-MM";
 
-const dateInputPlaceholder = '选择日期';
-const dateInputPlaceholder2 = '选择年月';
+const dateInputPlaceholder = "选择日期";
+const dateInputPlaceholder2 = "选择年月";
 
 class Demo15 extends React.Component {
   constructor(props) {
@@ -63,12 +65,12 @@ class Demo15 extends React.Component {
         title: "姓名",
         dataIndex: "name",
         key: "name",
-        width: "10%",
+        width: "100px",
         render: (text, record, index) => (
           <InputRender
             value={text}
             isclickTrigger={true}
-            onChange={this.onCellChange(index, "name")}
+            onChange={this.onInputChange(index, "name")}
           />
         )
       },
@@ -76,7 +78,7 @@ class Demo15 extends React.Component {
         title: "年龄",
         dataIndex: "age",
         key: "age",
-        width: "10%",
+        width: "100px",
         render: (text, record, index) => (
           <Checkbox
             checked={record.age}
@@ -88,13 +90,13 @@ class Demo15 extends React.Component {
         title: "你懂的",
         dataIndex: "address",
         key: "address",
-        width: "10%",
+        width: "200px",
         render: (text, record, index) => {
           return (
-            <Select
-              defaultValue="lucy"
-              style={{ width: 100, marginRight: 6 }}
-              onChange={this.handleChange}
+            <SelectRender
+              isclickTrigger={true}
+              value="lucy"
+              onChange={this.onSelectChange}
             >
               <Option value="jack">boyuzhou</Option>
               <Option value="lucy">renhualiu</Option>
@@ -102,69 +104,59 @@ class Demo15 extends React.Component {
                 Disabled
               </Option>
               <Option value="yiminghe">yuzhao</Option>
-            </Select>
+            </SelectRender>
           );
         }
       },
-      { title: '日期', dataIndex: 'datepicker', key: 'datepicker', width: "10%",
-      render:()=>{
-         return(
-           <DatePicker
+      {
+        title: "日期",
+        dataIndex: "datepicker",
+        key: "datepicker",
+        width: "200px",
+        render: () => {
+          return (
+            <DatePicker
               format={format}
-            
               onSelect={this.onSelect}
-    
               onChange={this.onChange}
-    
-              placeholder = {dateInputPlaceholder}>
-              </DatePicker>
-         ) 
+              placeholder={dateInputPlaceholder}
+            />
+          );
         }
       },
-      { title: '年月', dataIndex: 'MonthPicker', key: 'MonthPicker', width: "10%",
-      render:()=>{
-         return(
-           <MonthPicker
+      {
+        title: "年月",
+        dataIndex: "MonthPicker",
+        key: "MonthPicker",
+        width: "200px",
+        render: () => {
+          return (
+            <MonthPicker
               format={format2}
-            
               onSelect={this.onSelect}
-    
               onChange={this.onChange}
-    
-              placeholder = {dateInputPlaceholder2}>
-              </MonthPicker>
-         ) 
+              placeholder={dateInputPlaceholder2}
+            />
+          );
         }
       },
-      { title: '周', dataIndex: 'WeekPicker', key: 'WeekPicker', width: "10%",
-      render:()=>{
-         return(
-          <WeekPicker placeholder="选择周"/>
-         ) 
-        }
-      },
-      { title: '日期范围', dataIndex: 'RangePicker', key: 'RangePicker', width: "10%",
-      render:()=>{
-         return(
-          <RangePicker
-          
-              format={format}
-
-              onSelect={this.onSelect}
-
-              onChange={this.onChange}
-
-              placeholder={'选择年月'}
-
-          />
-         ) 
+      {
+        title: "周",
+        dataIndex: "WeekPicker",
+        key: "WeekPicker",
+        render: () => {
+          return <WeekPicker placeholder="选择周" />;
         }
       }
-      
     ];
   }
-  handleChange = value => {
-    console.log(`selected ${value}`);
+
+  onInputChange = (index, key) => {
+    return value => {
+      const dataSource = [...this.state.dataSource];
+      dataSource[index][key] = value;
+      this.setState({ dataSource });
+    };
   };
   onCheckChange = (index, key) => {
     return value => {
@@ -173,12 +165,8 @@ class Demo15 extends React.Component {
       this.setState({ dataSource });
     };
   };
-  onCellChange = (index, key) => {
-    return value => {
-      const dataSource = [...this.state.dataSource];
-      dataSource[index][key] = value;
-      this.setState({ dataSource });
-    };
+  onSelectChange = value => {
+    console.log(`selected ${value}`);
   };
   onDelete = index => {
     return () => {
@@ -212,13 +200,13 @@ class Demo15 extends React.Component {
       </Animate>
     );
   };
-  
-  onSelect = (d) =>{
-      console.log(d)
+
+  onSelect = d => {
+    console.log(d);
   };
 
-  onChange = (d) => {
-      console.log(d)
+  onChange = d => {
+    console.log(d);
   };
 
   render() {
