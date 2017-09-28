@@ -13,7 +13,7 @@ export default class DateRender extends Component {
     const value = e.format(format);
     this.setState({ value });
     if (this.props.onChange) {
-      this.props.onChange(this.state.value);
+      this.props.onChange(value);
     }
     setTimeout(() => {
       this.setState({ editable: false });
