@@ -56,7 +56,7 @@ class Demo13 extends Component {
       type: "checkbox",
       param: "key"
     };
-    let ComplexTable = multiSelect(Sum(sort(Table)));
+    let ComplexTable = multiSelect(sum(sort(Table)));
     return (
       <div>
         <ComplexTable

@@ -7,7 +7,7 @@ let columns2 = {
   dataIndex: "showSum"
 };
 
-let Sum = Table => {
+let sum = Table => {
   return class SumTable extends React.Component {
     //无状态
     constructor(props) {
@@ -56,4 +56,4 @@ let Sum = Table => {
   };
 };
 
-export default Sum;
+export default sum;
