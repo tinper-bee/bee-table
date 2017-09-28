@@ -1,28 +1,25 @@
 import React from "react";
-import Table from "../../src";
 
 //创建新列存放  “合计”  字段
-let columns2 = {};
-columns2 = {
+let columns2 = {
   title: "合计",
   key: "showSum",
   dataIndex: "showSum"
 };
 
-var Sum = Table => {
-  class SumTable extends React.Component {
+let Sum = Table => {
+  return class SumTable extends React.Component {
     //无状态
     constructor(props) {
       super(props);
     }
-
     currentTitle = () => {
       return <div>{this.props.title}</div>;
     };
-
     //合计数字列,并将计算所得数据存储到一个obj对象中
     currentFooter = () => {
       let data_2 = this.props.data;
+      let columns_sum = this.props.columns;
       //用一个对象存储合计数据，这里合计对象的属性对应每列字段
       let obj = {};
       if (Array.isArray(data_2)) {
@@ -38,16 +35,11 @@ var Sum = Table => {
           }
         }
       }
-      //加key
       obj.key = "sumData";
-      //设置新建列的名称
       obj.showSum = "合计";
       obj = [obj];
-      //添加合计行
-      let columns_sum = this.props.columns;
-      //针对多选除去多选框，即第一列，换为新建的列
-      columns_sum[0] = Object.assign({},columns_sum[0],columns2);
-      console.log(columns_sum);
+      //将设置的和用户传入的合并属性
+      columns_sum[0] = Object.assign({}, columns_sum[0], columns2);
       //除去列为特殊渲染的，避免像a标签这种html代码写入到合计中
       columns_sum = columns_sum.map((item, index) => {
         if (typeof item.render == "function") {
@@ -55,7 +47,6 @@ var Sum = Table => {
         }
         return item;
       });
-
       return (
         <Table
           showHeader={false}
@@ -76,8 +67,7 @@ var Sum = Table => {
         />
       );
     }
-  }
-  return SumTable;
+  };
 };
 
 export default Sum;
