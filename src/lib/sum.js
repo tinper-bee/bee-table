@@ -13,9 +13,6 @@ let Sum = Table => {
     constructor(props) {
       super(props);
     }
-    currentTitle = () => {
-      return <div>{this.props.title}</div>;
-    };
     //合计数字列,并将计算所得数据存储到一个obj对象中
     currentFooter = () => {
       let data_2 = this.props.data;
@@ -39,7 +36,11 @@ let Sum = Table => {
       obj.showSum = "合计";
       obj = [obj];
       //将设置的和用户传入的合并属性
-      columns_sum[0] = Object.assign({}, columns_sum[0], columns2);
+    //   if (columns_sum[0].dataIndex === "checkbox") {
+        // columns_sum[1] = Object.assign({}, columns_sum[1], columns2);
+    //   } else {
+        columns_sum[0] = Object.assign({}, columns_sum[0], columns2);
+    //   }
       //除去列为特殊渲染的，避免像a标签这种html代码写入到合计中
       columns_sum = columns_sum.map((item, index) => {
         if (typeof item.render == "function") {
@@ -47,25 +48,10 @@ let Sum = Table => {
         }
         return item;
       });
-      return (
-        <Table
-          showHeader={false}
-          columns={columns_sum}
-          data={obj}
-          heji={true}
-        />
-      );
+      return <Table showHeader={false} columns={columns_sum} data={obj} />;
     };
     render() {
-      return (
-        <Table
-          columns={this.props.columns}
-          data={this.props.data}
-          heji={true}
-          title={this.currentTitle}
-          footer={this.currentFooter}
-        />
-      );
+      return <Table {...this.props} footer={this.currentFooter} />;
     }
   };
 };

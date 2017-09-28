@@ -93,8 +93,11 @@ $table-move-in-color: $bg-color-base;
   }
 
   &-footer {
-    // padding: $vertical-padding $horizontal-padding;
-    // border-bottom: 1px solid $table-border-color;
+    padding: $vertical-padding $horizontal-padding;
+    border-bottom: 1px solid $table-border-color;
+  }
+  &-footer &{
+    margin: (-$vertical-padding) (-$horizontal-padding);
   }
 
   &-placeholder {
