@@ -1,6 +1,5 @@
-
-import React, { Component } from 'react';
-import Icon from 'bee-icon';
+import React, { Component } from "react";
+import Icon from "bee-icon";
 
 /**
  * 参数：prefixCls，默认bee-table,用于设置图标的样式
@@ -17,13 +16,13 @@ export default function sort(Table) {
     }
     toggleSortOrder = (order, column) => {
       let { sortOrder, data, oldData } = this.state;
-      let ascend_sort = function (key) {
-        return function (a, b) {
+      let ascend_sort = function(key) {
+        return function(a, b) {
           return a.key - b.key;
         };
       };
-      let descend_sort = function (key) {
-        return function (a, b) {
+      let descend_sort = function(key) {
+        return function(a, b) {
           return b.key - a.key;
         };
       };
@@ -35,11 +34,11 @@ export default function sort(Table) {
         oldData = data.concat();
       }
       if (order === "ascend") {
-        data = data.sort(function (a, b) {
+        data = data.sort(function(a, b) {
           return column.sorter(a, b);
         });
       } else if (order === "descend") {
-        data = data.sort(function (a, b) {
+        data = data.sort(function(a, b) {
           return column.sorter(b, a);
         });
       } else {
@@ -50,10 +49,10 @@ export default function sort(Table) {
         data: data,
         oldData: oldData
       });
-    }
+    };
     renderColumnsDropdown(columns) {
       const { sortOrder } = this.state;
-      const prefixCls = this.props.prefixCls || 'bee-table';
+      const prefixCls = this.props.prefixCls || "bee-table";
       return columns.map(originColumn => {
         let column = Object.assign({}, originColumn);
         let sortButton;
@@ -93,8 +92,8 @@ export default function sort(Table) {
       });
     }
     render() {
-      let columns = this.renderColumnsDropdown(this.props.columns).concat();
-      return <Table{...this.props} columns={columns} data={this.state.data}/>;
+      let columns = this.renderColumnsDropdown(this.props.columns.concat());
+      return <Table {...this.props} columns={columns} data={this.state.data} />;
     }
-  }
+  };
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import clonedeep from "lodash.clonedeep";
 
 //创建新列存放  “合计”  字段
 let columns2 = {
@@ -16,7 +17,7 @@ let sum = Table => {
     //合计数字列,并将计算所得数据存储到一个obj对象中
     currentFooter = () => {
       let data_2 = this.props.data;
-      let columns_sum = this.props.columns;
+      let columns_sum = clonedeep(this.props.columns);
       //用一个对象存储合计数据，这里合计对象的属性对应每列字段
       let obj = {};
       if (Array.isArray(data_2)) {
@@ -42,16 +43,20 @@ let sum = Table => {
         columns_sum[0] = Object.assign({}, columns_sum[0], columns2);
     //   }
       //除去列为特殊渲染的，避免像a标签这种html代码写入到合计中
-      columns_sum = columns_sum.map((item, index) => {
+      columns_sum.map((item, index) => {
         if (typeof item.render == "function") {
-          delete item.render;
+          item.render = '';
         }
         return item;
       });
       return <Table showHeader={false} columns={columns_sum} data={obj} />;
     };
     render() {
-      return <Table {...this.props} footer={this.currentFooter} />;
+      return <Table
+      columns={this.props.columns}
+      data={this.props.data}
+      footer={this.currentFooter}
+    />;
     }
   };
 };

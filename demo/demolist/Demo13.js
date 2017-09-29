@@ -10,7 +10,7 @@ import Table from "../../src";
 import Checkbox from "bee-checkbox";
 import multiSelect from "../../src/lib/multiSelect.js";
 import sort from "../../src/lib/sort.js";
-import Sum from "../../src/lib/sum.js";
+import sum from "../../src/lib/sum.js";
 
 const columns13 = [
   {
@@ -54,7 +54,6 @@ class Demo13 extends Component {
   render() {
     let multiObj = {
       type: "checkbox",
-      param: "key"
     };
     let ComplexTable = multiSelect(sum(sort(Table)));
     return (
