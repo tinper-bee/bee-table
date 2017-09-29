@@ -30,6 +30,7 @@ const columns13 = [
     dataIndex: "c",
     key: "c",
     width: 200,
+    sumCol:true,
     sorter: (a, b) => a.c - b.c
   },
   {

@@ -29,7 +29,7 @@ const format3 = "YYYY-MM-DD HH:mm:ss";
 const dateInputPlaceholder = "选择日期";
 const dateInputPlaceholder2 = "选择年月";
 
-class Demo15 extends React.Component {
+class Demo14 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -41,7 +41,7 @@ class Demo15 extends React.Component {
           address: "96, 77, 89",
           datepicker: "2017-06-12",
           MonthPicker: "2017-02",
-          TimePicker: "2017-09-15 15:24:48"
+          TimePicker: "2017-09-14 14:24:48"
         },
         {
           key: "1",
@@ -50,7 +50,7 @@ class Demo15 extends React.Component {
           address: "90, 70, 80",
           datepicker: "2017-06-12",
           MonthPicker: "2017-02",
-          TimePicker: "2017-09-15 15:24:48"
+          TimePicker: "2017-09-14 14:24:48"
         },
         {
           key: "2",
@@ -59,7 +59,7 @@ class Demo15 extends React.Component {
           address: "80, 60, 80",
           datepicker: "2017-06-12",
           MonthPicker: "2017-02",
-          TimePicker: "2017-09-15 15:24:48"
+          TimePicker: "2017-09-14 14:24:48"
         },
         {
           key: "3",
@@ -68,7 +68,7 @@ class Demo15 extends React.Component {
           address: "120, 60, 90",
           datepicker: "2017-06-12",
           MonthPicker: "2017-02",
-          TimePicker: "2017-09-15 15:24:48"
+          TimePicker: "2017-09-14 14:24:48"
         }
       ],
       count: 4
@@ -255,4 +255,4 @@ class Demo15 extends React.Component {
   }
 }
 
-export default Demo15;
+export default Demo14;
