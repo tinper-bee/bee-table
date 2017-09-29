@@ -2,7 +2,8 @@
 *
 * @title 无数据时显示
 * @description 无数据时显示效果展示
-*
+ *
+* import {Table} from 'tinper-bee';
 */
 
 import React, { Component } from 'react';
