@@ -5,9 +5,9 @@
 *
 */
 
+
 import React, { Component } from 'react';
 import Table from '../../src';
-
 
 
 const columns6 = [

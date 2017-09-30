@@ -5,6 +5,7 @@
  *
  */
 
+
 import React, {Component} from 'react';
 import Table from '../../src';
 
@@ -24,6 +25,7 @@ const columns7 = [
 ];
 
 const data7 = [
+
     {a: "02级一班", b: "2", c: "欧阳锋", key: "1"},
     {a: "03级二班", b: "3", c: "归海一刀", key: "2"},
     {a: "05级三班", b: "1", c: "一拳超人", key: "3"}
@@ -79,7 +81,7 @@ class Demo7 extends Component {
                     title={currentData => <div>标题: 我是主表</div>}
                 />
                 <Table
-                    style={{ marginTop: 40 }}
+                    style={{marginTop: 40}}
                     columns={columns7_1}
                     data={this.state.children_data}
                     title={currentData => <div>标题: 我是子表</div>}
@@ -89,5 +91,5 @@ class Demo7 extends Component {
     }
 }
 
-export default Demo7;
 
+export default Demo7;

@@ -6,7 +6,6 @@
 */
 
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import Table from '../../src';
 
 
@@ -40,5 +39,5 @@ class Demo1 extends Component {
     }
 }
 
-
 export default Demo1;
+

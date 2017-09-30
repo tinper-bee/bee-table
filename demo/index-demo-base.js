@@ -4,14 +4,7 @@ import { Panel } from 'bee-panel';
 import Button from 'bee-button';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Table from '../src';
-import Animate from 'bee-animate';
-import Pagination from "bee-pagination";
-import Icon from "bee-icon";
-import InputGroup from 'bee-input-group';
-import FormControl from 'bee-form-control';
-import Input from 'bee-form-control';
-import Popconfirm from 'bee-popconfirm';
+
 
 const CARET = <i className="uf uf-arrow-down"></i>;
 

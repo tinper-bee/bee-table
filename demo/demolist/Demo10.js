@@ -6,8 +6,10 @@
 * import {Table} from 'tinper-bee';
 */
 
+
 import React, { Component } from 'react';
 import Table from '../../src';
+
 
 const columns10 = [
     {
@@ -41,5 +43,4 @@ const columns10 = [
     }
   }
 
-  export default Demo10;
-
+export default Demo10;

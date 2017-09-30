@@ -96,6 +96,9 @@ $table-move-in-color: $bg-color-base;
     padding: $vertical-padding $horizontal-padding;
     border-bottom: 1px solid $table-border-color;
   }
+  &-footer &{
+    margin: (-$vertical-padding) (-$horizontal-padding);
+  }
 
   &-placeholder {
     padding: 16px 8px;
@@ -112,6 +115,7 @@ $table-move-in-color: $bg-color-base;
     &-expand-icon {
       cursor: pointer;
       display: inline-block;
+      margin-right: 10px;
       width: 16px;
       height: 16px;
       text-align: center;

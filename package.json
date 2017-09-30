@@ -34,14 +34,17 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "lodash.clonedeep": "^4.5.0",
     "object-path": "^0.11.3",
     "shallowequal": "^0.2.2",
-    "tinper-bee-core": "latest",
+    "tinper-bee-core": "^0.1.6",
     "warning": "^3.0.0"
   },
   "devDependencies": {
     "bee-animate": "latest",
     "bee-button": "latest",
+    "bee-checkbox": "^0.2.4",
+    "bee-datepicker": "^0.1.7",
     "bee-form-control": "^0.1.8",
     "bee-icon": "0.0.5",
     "bee-input-group": "^0.1.12",
@@ -49,6 +52,8 @@
     "bee-pagination": "^0.1.7",
     "bee-panel": "latest",
     "bee-popconfirm": "^0.2.2",
+    "bee-select": "^0.1.6",
+    "bee-tools": "^0.3.2",
     "chai": "^3.5.0",
     "console-polyfill": "~0.2.1",
     "enzyme": "^2.4.1",

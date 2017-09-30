@@ -6,9 +6,11 @@
  *import {Table} from 'tinper-bee';
  */
 
+
 import React, {Component} from 'react';
+
 import Table from '../../src';
-import Pagination from 'bee-pagination';
+import Pagination from "bee-pagination";
 
 
 const columns8 = [
@@ -73,5 +75,4 @@ class Demo8 extends Component {
         );
     }
 }
-
 export default Demo8;

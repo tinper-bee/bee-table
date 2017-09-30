@@ -8,6 +8,7 @@
  */
 
 import React, {Component} from 'react';
+
 import Table from '../../src';
 import Icon from "bee-icon";
 import InputGroup from 'bee-input-group';
@@ -167,4 +168,3 @@ class Demo9 extends Component {
 }
 
 export default Demo9;
-
