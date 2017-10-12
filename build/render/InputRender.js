@@ -42,7 +42,7 @@ var InputRender = function (_Component) {
       value: _this.props.value,
       editable: false
     }, _this.handleChange = function (e) {
-      var value = e.target.value;
+      var value = e;
       _this.setState({ value: value });
     }, _this.check = function () {
       _this.setState({ editable: false });
@@ -52,7 +52,6 @@ var InputRender = function (_Component) {
     }, _this.edit = function () {
       _this.setState({ editable: true });
     }, _this.handleKeydown = function (event) {
-      console.log(event.keyCode);
       if (event.keyCode == 13) {
         _this.check();
       }

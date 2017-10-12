@@ -1,7 +1,7 @@
 /**
 *
-* @title edittype表格
-* @description 这是带有增删改功能的表格
+* @title 编辑态表格
+* @description 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）
 *
 */
 
@@ -38,7 +38,7 @@ class Demo14 extends React.Component {
           key: "0",
           name: "沉鱼",
           age: "y",
-          address: "96, 77, 89",
+          address: "111",
           datepicker: "2017-06-12",
           MonthPicker: "2017-02",
           TimePicker: "2017-09-14 14:24:48"
@@ -47,7 +47,7 @@ class Demo14 extends React.Component {
           key: "1",
           name: "落雁",
           age: "y",
-          address: "90, 70, 80",
+          address: "lucy",
           datepicker: "2017-06-12",
           MonthPicker: "2017-02",
           TimePicker: "2017-09-14 14:24:48"
@@ -56,7 +56,7 @@ class Demo14 extends React.Component {
           key: "2",
           name: "闭月",
           age: "n",
-          address: "80, 60, 80",
+          address: "lucy",
           datepicker: "2017-06-12",
           MonthPicker: "2017-02",
           TimePicker: "2017-09-14 14:24:48"
@@ -65,7 +65,7 @@ class Demo14 extends React.Component {
           key: "3",
           name: "羞花",
           age: "y",
-          address: "120, 60, 90",
+          address: "lucy",
           datepicker: "2017-06-12",
           MonthPicker: "2017-02",
           TimePicker: "2017-09-14 14:24:48"
@@ -75,7 +75,7 @@ class Demo14 extends React.Component {
     };
     this.columns = [
       {
-        title: "姓名",
+        title: "普通输入",
         dataIndex: "name",
         key: "name",
         width: "100px",
@@ -88,7 +88,7 @@ class Demo14 extends React.Component {
         )
       },
       {
-        title: "年龄",
+        title: "复选",
         dataIndex: "age",
         key: "age",
         width: "100px",
@@ -100,7 +100,7 @@ class Demo14 extends React.Component {
         )
       },
       {
-        title: "你懂的",
+        title: "下拉框",
         dataIndex: "address",
         key: "address",
         width: "200px",
@@ -108,7 +108,7 @@ class Demo14 extends React.Component {
           return (
             <SelectRender
               isclickTrigger={true}
-              value="lucy"
+              value={text}
               onChange={this.onSelectChange}
             >
               <Option value="jack">boyuzhou</Option>
@@ -213,7 +213,10 @@ class Demo14 extends React.Component {
       key: count,
       name: `凤姐 ${count}`,
       age: 32,
-      address: `100 100 100`
+      address: "jack",
+      datepicker: "2017-06-12",
+      MonthPicker: "2017-02",
+      TimePicker: "2017-09-14 14:24:48"
     };
     this.setState({
       dataSource: [...dataSource, newData],

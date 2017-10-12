@@ -1,16 +1,18 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
-var _react = require('react');
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _src = require('../../src');
+var _lodash = require("lodash.clonedeep");
 
-var _src2 = _interopRequireDefault(_src);
+var _lodash2 = _interopRequireDefault(_lodash);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -22,63 +24,80 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 
-exports["default"] = Sum = function Sum(Table) {
-    var SumTable = function (_React$Component) {
-        _inherits(SumTable, _React$Component);
-
-        function SumTable(props) {
-            var _temp, _this;
-
-            _classCallCheck(this, SumTable);
-
-            (_temp = (_this = _possibleConstructorReturn(this, _React$Component.call(this, props)), _this), _this.currentData = function (testTitle) {
-                return _react2["default"].createElement(
-                    'div',
-                    null,
-                    testTitle
-                );
-            }, _this.currentData2 = function () {
-                data_2 = _this.state.data;
-                var obj = {};
-                if (data.isArray()) {
-                    for (var i = 0; i < data_2.length; i++) {
-                        for (var item in data[i]) {
-                            if (obj[item] === 'undefined') {
-                                obj[item] = data[i][item];
-                            } else if (typeof data[i][item] == 'Number') {
-                                obj[item] += data[i][item];
-                            }
-                        }
-                    }
-                }
-                return _react2["default"].createElement(Table, {
-                    showHeader: false,
-                    columns: _this.props.columns,
-                    data: obj,
-                    heji: true
-                });
-            }, _temp), _this.state = {
-                data: _this.props.data
-            };
-            return _this;
-        }
-
-        SumTable.prototype.render = function render() {
-            var a = this.currentData;
-            var b = this.currentData2;
-            return _react2["default"].createElement(Table, {
-                columns: this.props.columns,
-                data: this.state.data,
-                heji: true,
-                title: a,
-                footer: b
-            });
-        };
-
-        return SumTable;
-    }(_react2["default"].Component);
-
-    return SumTable;
+//创建新列存放  “合计”  字段
+var columns2 = {
+  title: "合计",
+  key: "showSum",
+  dataIndex: "showSum"
 };
 
-module.exports = exports['default'];
+var sum = function sum(Table) {
+  return function (_React$Component) {
+    _inherits(SumTable, _React$Component);
+
+    //无状态
+    function SumTable(props) {
+      _classCallCheck(this, SumTable);
+
+      var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+
+      _this.currentFooter = function () {
+        var data_2 = _this.props.data;
+        var columns_sum = (0, _lodash2["default"])(_this.props.columns);
+        var sumCol_index = void 0;
+        //用一个对象存储合计数据，这里合计对象的属性对应每列字段
+        for (var i = 0; i < columns_sum.length; i++) {
+          if (columns_sum[i].sumCol) {
+            sumCol_index = columns_sum[i].dataIndex;
+            break;
+          }
+        }
+        var obj = {};
+        obj[sumCol_index] = 0;
+        if (Array.isArray(data_2)) {
+          for (var _i = 0; _i < data_2.length; _i++) {
+            if (typeof data_2[_i][sumCol_index] == "number") {
+              obj[sumCol_index] += data_2[_i][sumCol_index];
+            } else {
+              obj[sumCol_index] = "";
+            }
+          }
+        }
+        obj.key = "sumData";
+        obj.showSum = "合计";
+        obj = [obj];
+        //将设置的和用户传入的合并属性
+        //   if (columns_sum[0].dataIndex === "checkbox") {
+        // columns_sum[1] = Object.assign({}, columns_sum[1], columns2);
+        //   } else {
+        columns_sum[0] = _extends({}, columns_sum[0], columns2);
+        //   }
+        //除去列为特殊渲染的，避免像a标签这种html代码写入到合计中
+        columns_sum.map(function (item, index) {
+          if (typeof item.render == "function") {
+            item.render = "";
+          }
+          return item;
+        });
+        return _react2["default"].createElement(Table, { showHeader: false, columns: columns_sum, data: obj });
+      };
+
+      return _this;
+    }
+    //合计数字列,并将计算所得数据存储到一个obj对象中
+
+
+    SumTable.prototype.render = function render() {
+      return _react2["default"].createElement(Table, {
+        columns: this.props.columns,
+        data: this.props.data,
+        footer: this.currentFooter
+      });
+    };
+
+    return SumTable;
+  }(_react2["default"].Component);
+};
+
+exports["default"] = sum;
+module.exports = exports["default"];

@@ -50,6 +50,8 @@
   .u-table-footer {
     padding: 16px 8px;
     border-bottom: 1px solid #e9e9e9; }
+  .u-table-footer .u-table {
+    margin: -16px -8px; }
   .u-table-placeholder {
     padding: 16px 8px;
     background: #fff;
@@ -61,6 +63,7 @@
   .u-table-row-expand-icon, .u-table-expanded-row-expand-icon {
     cursor: pointer;
     display: inline-block;
+    margin-right: 10px;
     width: 16px;
     height: 16px;
     text-align: center;

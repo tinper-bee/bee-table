@@ -1,7 +1,7 @@
 /**
 *
 * @title 固定表头
-* @description 方便一页内展示大量数据。需要指定 column 的 width 属性，否则列头和内容可能不对齐。
+* @description 方便一页内展示大量数据。需要指定 column 的 width 属性，否则列头和内容可能不对齐。(还可以设置scroll来支持横向或纵向滚动)
 *
 */
 

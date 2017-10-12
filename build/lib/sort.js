@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -8,11 +8,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 exports["default"] = sort;
 
-var _react = require('react');
+var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _beeIcon = require('bee-icon');
+var _beeIcon = require("bee-icon");
 
 var _beeIcon2 = _interopRequireDefault(_beeIcon);
 
@@ -92,7 +92,7 @@ function sort(Table) {
 
       var sortOrder = this.state.sortOrder;
 
-      var prefixCls = this.props.prefixCls || 'bee-table';
+      var prefixCls = this.props.prefixCls || "bee-table";
       return columns.map(function (originColumn) {
         var column = _extends({}, originColumn);
         var sortButton = void 0;
@@ -100,34 +100,34 @@ function sort(Table) {
           var isAscend = sortOrder === "ascend";
           var isDescend = sortOrder === "descend";
           sortButton = _react2["default"].createElement(
-            'div',
-            { className: prefixCls + '-column-sorter' },
+            "div",
+            { className: prefixCls + "-column-sorter" },
             _react2["default"].createElement(
-              'span',
+              "span",
               {
-                className: prefixCls + '-column-sorter-up ' + (isAscend ? "on" : "off"),
-                title: '\u2191',
+                className: prefixCls + "-column-sorter-up " + (isAscend ? "on" : "off"),
+                title: "\u2191",
                 onClick: function onClick() {
                   return _this2.toggleSortOrder("ascend", column);
                 }
               },
-              _react2["default"].createElement(_beeIcon2["default"], { type: 'uf-triangle-up' })
+              _react2["default"].createElement(_beeIcon2["default"], { type: "uf-triangle-up" })
             ),
             _react2["default"].createElement(
-              'span',
+              "span",
               {
-                className: prefixCls + '-column-sorter-down ' + (isDescend ? "on" : "off"),
-                title: '\u2193',
+                className: prefixCls + "-column-sorter-down " + (isDescend ? "on" : "off"),
+                title: "\u2193",
                 onClick: function onClick() {
                   return _this2.toggleSortOrder("descend", column);
                 }
               },
-              _react2["default"].createElement(_beeIcon2["default"], { type: 'uf-triangle-down' })
+              _react2["default"].createElement(_beeIcon2["default"], { type: "uf-triangle-down" })
             )
           );
         }
         column.title = _react2["default"].createElement(
-          'span',
+          "span",
           null,
           column.title,
           sortButton
@@ -137,11 +137,11 @@ function sort(Table) {
     };
 
     Demo11.prototype.render = function render() {
-      var columns = this.renderColumnsDropdown(this.props.columns).concat();
+      var columns = this.renderColumnsDropdown(this.props.columns.concat());
       return _react2["default"].createElement(Table, _extends({}, this.props, { columns: columns, data: this.state.data }));
     };
 
     return Demo11;
   }(_react.Component);
 }
-module.exports = exports['default'];
+module.exports = exports["default"];

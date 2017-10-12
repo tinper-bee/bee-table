@@ -1,7 +1,7 @@
 /**
 *
 * @title 列排序
-* @description 列排序
+* @description 点击列的上下按钮即可排序
 *
 */
 

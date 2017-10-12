@@ -26,7 +26,6 @@ let sum = Table => {
           break;
         }
       }
-      debugger;
       let obj = {};
       obj[sumCol_index] = 0;
       if (Array.isArray(data_2)) {

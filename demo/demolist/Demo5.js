@@ -60,7 +60,7 @@ const data5 = [
 
 class Demo5 extends Component {
   render() {
-    return <Table columns={columns5} data={data5} scroll={{ x: 1500 }} />;
+    return <Table columns={columns5} data={data5}/>;
   }
 }
 

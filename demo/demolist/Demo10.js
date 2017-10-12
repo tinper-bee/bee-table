@@ -1,7 +1,7 @@
 /**
 *
 * @title 无数据时显示
-* @description 无数据时显示效果展示
+* @description 无数据时显示效果展示（可自定义）
  *
 * import {Table} from 'tinper-bee';
 */

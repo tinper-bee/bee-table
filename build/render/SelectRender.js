@@ -45,13 +45,12 @@ var SelectRender = function (_Component) {
       editable: false
     }, _this.handleChange = function (e) {
       var value = e;
-      var self = _this;
-      if (self.props.onChange) {
-        self.props.onChange(value);
+      if (_this.props.onChange) {
+        _this.props.onChange(value);
       }
       _this.setState({ value: value });
       setTimeout(function () {
-        self.setState({ editable: false });
+        _this.setState({ editable: false });
       }, 0);
     }, _this.check = function () {
       _this.setState({ editable: false });

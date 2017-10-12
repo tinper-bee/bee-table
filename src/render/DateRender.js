@@ -11,13 +11,10 @@ export default class DateRender extends Component {
   handleChange = e => {
     let { format } = this.props || "YYYY-MM-DD";
     const value = e.format(format);
-    this.setState({ value });
+    this.setState({ value, editable: false });
     if (this.props.onChange) {
       this.props.onChange(value);
     }
-    setTimeout(() => {
-      this.setState({ editable: false });
-    }, 0);
   };
   check = () => {
     this.setState({ editable: false });
@@ -29,7 +26,6 @@ export default class DateRender extends Component {
     this.setState({ editable: true });
   };
   handleKeydown = event => {
-    console.log(event.keyCode);
     if (event.keyCode == 13) {
       this.check();
     }

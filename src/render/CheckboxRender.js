@@ -21,7 +21,6 @@ export default class CheckboxRender extends Component {
     this.setState({ editable: true });
   };
   handleKeydown = event => {
-    console.log(event.keyCode);
     if (event.keyCode == 13) {
       this.check();
     }

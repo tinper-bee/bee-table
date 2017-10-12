@@ -52,7 +52,6 @@ var CheckboxRender = function (_Component) {
     }, _this.edit = function () {
       _this.setState({ editable: true });
     }, _this.handleKeydown = function (event) {
-      console.log(event.keyCode);
       if (event.keyCode == 13) {
         _this.check();
       }

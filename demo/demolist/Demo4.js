@@ -1,7 +1,7 @@
 /**
 *
 * @title 树形数据展示
-* @description 手写表格的头组件来达到更灵活的配置表格
+* @description 通过在data中配置children数据，来自动生成树形数据
 *
 */
 
