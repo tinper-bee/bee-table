@@ -10,4 +10,5 @@
 | value          | render的值       | string   | 无     |
 | isclickTrigger | 是否使用点击触发编辑状态   | boolean  | false |
 | onChange       | 当值发生改变的时候触发的方法 | Function | 无     |
+| format         | Currency:货币数字; | string | 无 |
 
