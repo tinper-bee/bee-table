@@ -33,7 +33,7 @@
 |title|表格标题|function|-|
 |footer|表格尾部|function|-|
 |emptyText|无数据时显示的内容|function|() => 'No Data'|
-|scroll|横向或纵向支持滚动，也可用于指定滚动区域的宽高度：{{ x: true, y: 300 }}|object|{}|
+|scroll|横向或纵向支持滚动，也可用于指定滚动区域的宽高度：{ x: true, y: 300 }|object|{}|
 |rowRef|获取行的ref|Function(record, index, indent):string|() => null|
 |getBodyWrapper|添加对table body的包装|Function(body)|body => body|
 
