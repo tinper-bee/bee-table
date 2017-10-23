@@ -55,14 +55,32 @@ var InputRender = function (_Component) {
       if (event.keyCode == 13) {
         _this.check();
       }
+    }, _this.formatCurrency = function (money) {
+      if (money && money != null && !!Number(money)) {
+        money = String(money);
+        var left = money.split(".")[0],
+            right = money.split(".")[1];
+        right = right ? right.length >= 2 ? "." + right.substr(0, 2) : "." + right + "0" : ".00";
+        var temp = left.split("").reverse().join("").match(/(\d{1,3})/g);
+        return (Number(money) < 0 ? "-" : "") + temp.join(",").split("").reverse().join("") + right;
+      } else if (money === 0) {
+        //注意===在这里的使用，如果传入的money为0,if中会将其判定为boolean类型，故而要另外做===判断
+        return "0.00";
+      } else {
+        return "";
+      }
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
+  //货币的格式化方法
+
 
   InputRender.prototype.render = function render() {
     var _state = this.state,
         value = _state.value,
         editable = _state.editable;
-    var isclickTrigger = this.props.isclickTrigger;
+    var _props = this.props,
+        isclickTrigger = _props.isclickTrigger,
+        format = _props.format;
 
     var cellContent = "";
     if (editable) {
@@ -91,6 +109,9 @@ var InputRender = function (_Component) {
         })
       );
     } else {
+      if (format && format === "Currency") {
+        value = this.formatCurrency(value);
+      }
       cellContent = isclickTrigger ? _react2["default"].createElement(
         "div",
         { className: "editable-cell-text-wrapper", onClick: this.edit },
