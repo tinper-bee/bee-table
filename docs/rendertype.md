@@ -1,6 +1,9 @@
 ## rendertype
 在表格中提供了多种rendertype可以供选择，比如下拉框，单选框，复选框，日期等
 
+## 如何引用
+import InputRender from "bee-table/render/DateRender.js"
+
 ### InputRender
 输入框类型render
 

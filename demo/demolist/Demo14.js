@@ -37,6 +37,7 @@ class Demo14 extends React.Component {
         {
           key: "0",
           name: "沉鱼",
+          number: "10",
           age: "y",
           address: "111",
           datepicker: "2017-06-12",
@@ -46,6 +47,7 @@ class Demo14 extends React.Component {
         {
           key: "1",
           name: "落雁",
+          number: "100",
           age: "y",
           address: "lucy",
           datepicker: "2017-06-12",
@@ -55,6 +57,7 @@ class Demo14 extends React.Component {
         {
           key: "2",
           name: "闭月",
+          number: "1000",
           age: "n",
           address: "lucy",
           datepicker: "2017-06-12",
@@ -64,6 +67,7 @@ class Demo14 extends React.Component {
         {
           key: "3",
           name: "羞花",
+          number: "9999",
           age: "y",
           address: "lucy",
           datepicker: "2017-06-12",
@@ -78,12 +82,26 @@ class Demo14 extends React.Component {
         title: "普通输入",
         dataIndex: "name",
         key: "name",
-        width: "100px",
+        width: "150px",
         render: (text, record, index) => (
           <InputRender
             value={text}
             isclickTrigger={true}
             onChange={this.onInputChange(index, "name")}
+          />
+        )
+      },
+      {
+        title: "货币输入",
+        dataIndex: "number",
+        key: "number",
+        width: "150px",
+        render: (text, record, index) => (
+          <InputRender
+            value={text}
+            format='Currency'
+            isclickTrigger={true}
+            onChange={this.onInputChange(index, "number")}
           />
         )
       },
