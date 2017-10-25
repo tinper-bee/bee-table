@@ -31,19 +31,16 @@ const columns12 = [
     sorter: (a, b) => a.c - b.c
   },
   {
-    title: "操作",
-    dataIndex: "",
-    key: "d",
-    render() {
-      return <a href="#">一些操作</a>;
-    }
+    title: "武功级别",
+    dataIndex: "d",
+    key: "d"
   }
 ];
 
 const data12 = [
-  { a: "杨过", b: "男", c: 30, key: "2" },
-  { a: "令狐冲", b: "男", c: 41, key: "1" },
-  { a: "郭靖", b: "男", c: 25, key: "3" }
+  { a: "杨过", b: "男", c: 30,d:'内行', key: "2" },
+  { a: "令狐冲", b: "男", c: 41,d:'大侠', key: "1" },
+  { a: "郭靖", b: "男", c: 25,d:'大侠', key: "3" }
 ];
 
 const defaultProps12 = {

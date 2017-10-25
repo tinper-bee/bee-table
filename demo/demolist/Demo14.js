@@ -42,7 +42,6 @@ class Demo14 extends React.Component {
           address: "111",
           datepicker: "2017-06-12",
           MonthPicker: "2017-02",
-          TimePicker: "2017-09-14 14:24:48"
         },
         {
           key: "1",
@@ -52,7 +51,6 @@ class Demo14 extends React.Component {
           address: "lucy",
           datepicker: "2017-06-12",
           MonthPicker: "2017-02",
-          TimePicker: "2017-09-14 14:24:48"
         },
         {
           key: "2",
@@ -62,7 +60,6 @@ class Demo14 extends React.Component {
           address: "lucy",
           datepicker: "2017-06-12",
           MonthPicker: "2017-02",
-          TimePicker: "2017-09-14 14:24:48"
         },
         {
           key: "3",
@@ -72,7 +69,6 @@ class Demo14 extends React.Component {
           address: "lucy",
           datepicker: "2017-06-12",
           MonthPicker: "2017-02",
-          TimePicker: "2017-09-14 14:24:48"
         }
       ],
       count: 4
@@ -174,23 +170,6 @@ class Demo14 extends React.Component {
             />
           );
         }
-      },
-      {
-        title: "日期",
-        dataIndex: "TimePicker",
-        key: "TimePicker",
-        render: (text, record, index) => {
-          return (
-            <DateRender
-              value={text}
-              format={format3}
-              isclickTrigger={true}
-              onSelect={this.onDateSelect}
-              onChange={this.onDateChange}
-              placeholder={dateInputPlaceholder}
-            />
-          );
-        }
       }
     ];
   }
@@ -233,8 +212,7 @@ class Demo14 extends React.Component {
       age: 32,
       address: "jack",
       datepicker: "2017-06-12",
-      MonthPicker: "2017-02",
-      TimePicker: "2017-09-14 14:24:48"
+      MonthPicker: "2017-02"
     };
     this.setState({
       dataSource: [...dataSource, newData],
