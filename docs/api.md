@@ -25,8 +25,8 @@
 | onExpand               | 展开行时的钩子函数                                | Function(expanded, record)             | () => ''        |
 | onExpandedRowsChange   | 函数在扩展行更改时调用                              | Function(expandedRows)                 | () => ''        |
 | indentSize             | indentSize为每个级别的data.i.children，更好地使用column.width指定 | number                                 | 15              |
-| onRowClick             | 行的点击事件钩子函数                               | Function(record, index)                | () => ''        |
-| onRowDoubleClick       | 行的双击事件钩子函数                               | Function(record, index)                | () => ''        |
+| onRowClick             | 行的点击事件钩子函数                               | Function(record, index, event)         | () => ''        |
+| onRowDoubleClick       | 行的双击事件钩子函数                               | Function(record, index, event)         | () => ''        |
 | expandIconAsCell       | 是否将expandIcon作为单元格                       | bool                                   | false           |
 | expandIconColumnIndex  | expandIcon的索引，当expandIconAsCell为false时，将插入哪个列 | number                                 | 0               |
 | showHeader             | 是否显示表头                                   | bool                                   | true            |
