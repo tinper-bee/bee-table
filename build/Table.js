@@ -449,7 +449,7 @@ var Table = function (_Component) {
       }, onHoverProps, {
         key: key,
         hoverKey: key,
-        ref: rowRef(record, i, indent),
+        ref: rowRef,
         store: this.store
       })));
 

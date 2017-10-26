@@ -381,7 +381,7 @@ class Table extends Component{
           {...onHoverProps}
           key={key}
           hoverKey={key}
-          ref={rowRef(record, i, indent)}
+          ref={rowRef}
           store={this.store}
         />
       );

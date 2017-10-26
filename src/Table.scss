@@ -144,6 +144,9 @@ $table-move-in-color: $bg-color-base;
     &:hover {
       background: #f7f7f7;
     }
+    .u-table{
+      padding: 0 40px 0 20px;
+    }
   }
   &-column-hidden {
     display: none;

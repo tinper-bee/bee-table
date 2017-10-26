@@ -9,33 +9,35 @@
 
 ### Table
 
-|参数|说明|类型|默认值|
-|:--|:---|:--|:---|
-|data|传入的表格数据|array|[]|
-|columns|列的配置表，具体配置见下表|array|-|
-|defaultExpandAllRows|默认是否展开所有行|bool|false|
-|expandedRowKeys|展开的行，控制属性|array|-|
-|defaultExpandedRowKeys|初始扩展行键|array|[]|
-|useFixedHeader|是否使用固定表头|bool|false|
-|bodyStyle|添加到tablebody上的style|object|{}|
-|style|添加到table上的style|object|{}|
-|rowKey|如果rowKey是字符串，`record [rowKey]`将被用作键。如果rowKey是function，`rowKey（record）'的返回值将被用作键。|	string or Function(record):string|'key'|
-|rowClassName|获取行的classname|Function(record, index, indent):string|() => ''|
-|expandedRowClassName|获取展开行的className|Function(recode, index, indent):string|() => ''|
-|onExpand|展开行时的钩子函数|Function(expanded, record)|() => ''|
-|onExpandedRowsChange|函数在扩展行更改时调用|Function(expandedRows)|() => ''|
-|indentSize|indentSize为每个级别的data.i.children，更好地使用column.width指定|number|15|
-|onRowClick|行的点击事件钩子函数|Function(record, index)|() => ''|
-|onRowDoubleClick|行的双击事件钩子函数|Function(record, index)|() => ''|
-|expandIconAsCell|是否将expandIcon作为单元格|bool|false|
-|expandIconColumnIndex|expandIcon的索引，当expandIconAsCell为false时，将插入哪个列|number|0|
-|showHeader|是否显示表头|bool|true|
-|title|表格标题|function|-|
-|footer|表格尾部|function|-|
-|emptyText|无数据时显示的内容|function|() => 'No Data'|
-|scroll|横向或纵向支持滚动，也可用于指定滚动区域的宽高度：{ x: true, y: 300 }|object|{}|
-|rowRef|获取行的ref|Function(record, index, indent):string|() => null|
-|getBodyWrapper|添加对table body的包装|Function(body)|body => body|
+| 参数                     | 说明                                       | 类型                                     | 默认值             |
+| :--------------------- | :--------------------------------------- | :------------------------------------- | :-------------- |
+| data                   | 传入的表格数据                                  | array                                  | []              |
+| columns                | 列的配置表，具体配置见下表                            | array                                  | -               |
+| defaultExpandAllRows   | 默认是否展开所有行                                | bool                                   | false           |
+| expandedRowKeys        | 展开的行，控制属性                                | array                                  | -               |
+| defaultExpandedRowKeys | 初始扩展行键                                   | array                                  | []              |
+| useFixedHeader         | 是否使用固定表头                                 | bool                                   | false           |
+| bodyStyle              | 添加到tablebody上的style                      | object                                 | {}              |
+| style                  | 添加到table上的style                          | object                                 | {}              |
+| rowKey                 | 如果rowKey是字符串，`record [rowKey]`将被用作键。如果rowKey是function，`rowKey（record）'的返回值将被用作键。 | string or Function(record):string      | 'key'           |
+| rowClassName           | 获取行的classname                            | Function(record, index, indent):string | () => ''        |
+| expandedRowClassName   | 获取展开行的className                          | Function(recode, index, indent):string | () => ''        |
+| onExpand               | 展开行时的钩子函数                                | Function(expanded, record)             | () => ''        |
+| onExpandedRowsChange   | 函数在扩展行更改时调用                              | Function(expandedRows)                 | () => ''        |
+| indentSize             | indentSize为每个级别的data.i.children，更好地使用column.width指定 | number                                 | 15              |
+| onRowClick             | 行的点击事件钩子函数                               | Function(record, index)                | () => ''        |
+| onRowDoubleClick       | 行的双击事件钩子函数                               | Function(record, index)                | () => ''        |
+| expandIconAsCell       | 是否将expandIcon作为单元格                       | bool                                   | false           |
+| expandIconColumnIndex  | expandIcon的索引，当expandIconAsCell为false时，将插入哪个列 | number                                 | 0               |
+| showHeader             | 是否显示表头                                   | bool                                   | true            |
+| title                  | 表格标题                                     | Function                               | -               |
+| footer                 | 表格尾部                                     | Function                               | -               |
+| emptyText              | 无数据时显示的内容                                | Function                               | () => 'No Data' |
+| scroll                 | 横向或纵向支持滚动，也可用于指定滚动区域的宽高度：{ x: true, y: 300 } | object                                 | {}              |
+| rowRef                 | 获取行的ref                                  | Function(record, index, indent):string | () => null      |
+| getBodyWrapper         | 添加对table body的包装                         | Function(body)                         | body => body    |
+| expandedRowRender      | 额外的展开行                                   | Function                               | -               |
+
 
 ### Column
 

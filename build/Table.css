@@ -83,6 +83,8 @@
     background: #f7f7f7; }
     .u-table tr.u-table-expanded-row:hover {
       background: #f7f7f7; }
+    .u-table tr.u-table-expanded-row .u-table {
+      padding: 0 40px 0 20px; }
   .u-table-column-hidden {
     display: none; }
   .u-table-prev-columns-page, .u-table-next-columns-page {
