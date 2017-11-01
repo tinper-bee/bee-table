@@ -1,64 +1,33 @@
 /**
-*
-* @title 嵌套子表格
-* @description 通过expandedRowRender参数来实现子表格
-*
-*/
-
+ *
+ * @title 编辑态表格（包含校验）
+ * @description 块级布局
+ *
+ */
 import React, { Component } from "react";
-import Table from "../../src";
-
-const columns15 = [
-  { title: "用户名", dataIndex: "a", key: "a", width: 100 },
-  { id: "123", title: "性别", dataIndex: "b", key: "b", width: 100 },
-  { title: "年龄", dataIndex: "c", key: "c", width: 200 },
-  {
-    title: "操作",
-    dataIndex: "d",
-    key: "d",
-    render(text, record, index) {
-      return (
-        <a
-          href="#"
-          onClick={() => {
-            alert("这是第" + index + "列，内容为:" + text);
-          }}
-        >
-          一些操作
-        </a>
-      );
-    }
-  }
-];
-
-const data15 = [
-  { a: "令狐冲", b: "男", c: 41, d: "操作", key: "1" },
-  { a: "杨过", b: "男", c: 67, d: "操作", key: "2" },
-  { a: "郭靖", b: "男", c: 25, d: "操作", key: "3" }
-];
-
+import ReactDOM from "react-dom";
+import Form from "bee-form";
+import FormControl from "bee-form-control";
+import Label from "bee-label";
+import FormGroup from "bee-form-group";
 class Demo15 extends Component {
-  expandedRowRender = () => {
-    return (
-      <Table
-        columns={columns15}
-        data={data15}
-        title={currentData => <div>标题: 这是一个标题</div>}
-        footer={currentData => <div>表尾: 我是小尾巴</div>}
-      />
-    );
+  check = (flag, obj) => {
+    console.log(flag);
+    console.log(obj);
   };
   render() {
     return (
-      <Table
-        columns={columns15}
-        data={data15}
-        expandedRowRender={this.expandedRowRender}
-        title={currentData => <div>标题: 这是一个标题</div>}
-        footer={currentData => <div>表尾: 我是小尾巴</div>}
-      />
+      <Form.FormItem
+       mesClassName="mesclassname"
+        labelName="姓名"
+        isRequire={true}
+        method="blur"
+        reg={/^[0-9]+$/}
+        check={this.check}
+      >
+        <FormControl name="age" placeholder="请输入数字" />
+      </Form.FormItem>
     );
   }
 }
-
 export default Demo15;

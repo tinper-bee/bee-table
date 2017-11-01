@@ -9,11 +9,11 @@ import Button from "bee-button";
 import React, { Component } from "react";
 import Table from "../../src";
 import Animate from "bee-animate";
+import Tooltip from "bee-tooltip";
 import Icon from "bee-icon";
 import Input from "bee-form-control";
 import Checkbox from "bee-checkbox";
 import Select from "bee-select";
-import Popconfirm from "bee-popconfirm";
 import InputRender from "../../src/render/InputRender.js";
 import DateRender from "../../src/render/DateRender.js";
 import SelectRender from "../../src/render/SelectRender.js";
@@ -81,9 +81,22 @@ class Demo14 extends React.Component {
         width: "150px",
         render: (text, record, index) => (
           <InputRender
+            name="name"
+            placeholder="请输入姓名"
             value={text}
             isclickTrigger={true}
+            check={this.check}
             onChange={this.onInputChange(index, "name")}
+            formItemClassName="formItem-style"
+            mesClassName="errMessage-style"
+            isRequire={true}
+            method="blur"
+            errorMessage={
+              <Tooltip overlay={"错误提示"}>
+                <Icon type="uf-exc-c" className="" />
+              </Tooltip>
+            }
+            reg={/^[0-9]+$/}
           />
         )
       },
@@ -94,10 +107,22 @@ class Demo14 extends React.Component {
         width: "150px",
         render: (text, record, index) => (
           <InputRender
-            value={text}
             format='Currency'
+            name="name"
+            placeholder="请输入姓名"
+            value={text}
             isclickTrigger={true}
-            onChange={this.onInputChange(index, "number")}
+            check={this.check}
+            onChange={this.onInputChange(index, "name")}
+            formItemClassName="formItem-style"
+            mesClassName="errMessage-style"
+            isRequire={true}
+            method="blur"
+            errorMessage={
+              <Tooltip overlay={"错误提示"}>
+                <Icon type="uf-exc-c" className="" />
+              </Tooltip>
+            }
           />
         )
       },
@@ -172,6 +197,10 @@ class Demo14 extends React.Component {
         }
       }
     ];
+  }
+  check=(flag, obj)=>{
+    console.log(flag);
+    console.log(obj);
   }
 
   onInputChange = (index, key) => {

@@ -296,3 +296,25 @@ $table-move-in-color: $bg-color-base;
     opacity: 0;
   }
 }
+
+
+
+.formItem-style{
+  height: unset;
+  padding: 0;
+}
+.errMessage-style{
+  display: none;
+  border: none;
+  /* margin-top: 5px; */
+  /* margin-bottom: 5px; */
+  background: transparent;
+  color: #F22C1D;
+  /* padding-left: 12px; */
+  /* padding-right: 12px; */
+  margin: 0;
+  position: absolute;
+  padding: 0;
+  top: 3px;
+  right: 0;
+}

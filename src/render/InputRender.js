@@ -1,6 +1,17 @@
 import React, { Component } from "react";
 import Icon from "bee-icon";
 import Input from "bee-form-control";
+import Form from "bee-form";
+import Tooltip from "bee-tooltip";
+import PropTypes from "prop-types";
+
+const propTypes = {
+  check: PropTypes.func
+};
+
+const defaultProps = {
+  check: () => ""
+};
 
 export default class InputRender extends Component {
   state = {
@@ -12,10 +23,18 @@ export default class InputRender extends Component {
     this.setState({ value });
   };
   check = () => {
-    this.setState({ editable: false });
-    if (this.props.onChange) {
-      this.props.onChange(this.state.value);
+    if (typeof this.flag === "undefined" || this.flag) {
+      this.props.check(this.flag, this.obj);
+      this.setState({ editable: false });
+      if (this.props.onChange) {
+        this.props.onChange(this.state.value);
+      }
+      this.flag = undefined;
     }
+  };
+  checkValidate = (flag, obj) => {
+    this.flag = flag;
+    this.obj = obj;
   };
   edit = () => {
     this.setState({ editable: true });
@@ -57,26 +76,83 @@ export default class InputRender extends Component {
   };
   render() {
     let { value, editable } = this.state;
-    let { isclickTrigger,format } = this.props;
+    let {
+      name,
+      placeholder,
+      isclickTrigger,
+      format,
+      formItemClassName,
+      mesClassName,
+      isRequire,
+      check,
+      method,
+      errorMessage,
+      reg,
+      htmlType
+    } = this.props;
     let cellContent = "";
     if (editable) {
       cellContent = isclickTrigger ? (
         <div className="editable-cell-input-wrapper">
-          <Input
+          {/* <Input
             onChange={this.handleChange}
             onKeyDown={this.handleKeydown}
             onBlur={this.check}
             autoFocus
             value={value}
           />
+           */}
+          <Form.FormItem
+            className={formItemClassName}
+            mesClassName={mesClassName}
+            isRequire={isRequire}
+            change={this.handleChange}
+            blur={this.check}
+            htmlType={htmlType}
+            method={method}
+            errorMessage={errorMessage}
+            reg={reg}
+            check={this.checkValidate}
+          >
+            <Input
+              name={name}
+              placeholder={placeholder}
+              onKeyDown={this.handleKeydown}
+              autoFocus
+              value={value}
+            />
+          </Form.FormItem>
         </div>
       ) : (
         <div className="editable-cell-input-wrapper">
-          <Input
+          {/* <Input
             value={value}
             onChange={this.handleChange}
             onKeyDown={this.handleKeydown}
-          />
+          /> */}
+          <Form.FormItem
+            className="formItem-style"
+            mesClassName="errMessage-style"
+            isRequire={true}
+            change={this.handleChange}
+            blur={this.check}
+            method="blur"
+            errorMessage={
+              <Tooltip overlay={"错误提示"}>
+                <Icon type="uf-exc-c" className="" />
+              </Tooltip>
+            }
+            reg={/^[0-9]+$/}
+            check={this.checkValidate}
+          >
+            <Input
+              name="age"
+              placeholder="请输入数字"
+              onKeyDown={this.handleKeydown}
+              autoFocus
+              value={value}
+            />
+          </Form.FormItem>
           <Icon
             type="uf-correct"
             className="editable-cell-icon-check"
@@ -85,7 +161,7 @@ export default class InputRender extends Component {
         </div>
       );
     } else {
-      if(format && format === "Currency"){
+      if (format && format === "Currency") {
         value = this.formatCurrency(value);
       }
       cellContent = isclickTrigger ? (
@@ -106,3 +182,5 @@ export default class InputRender extends Component {
     return <div className="editable-cell">{cellContent}</div>;
   }
 }
+InputRender.PropTypes = propTypes;
+InputRender.defaultProps = defaultProps;
