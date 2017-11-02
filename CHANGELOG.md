@@ -24,6 +24,7 @@
 * 新增嵌套子表格功能和demo，文档。修复rowRef参数bug ([87a81b2](https://github.com/tinper-bee/bee-table/commit/87a81b2))
 * 新增排序和全选高阶组件，并增加使用示例 ([f8a00fe](https://github.com/tinper-bee/bee-table/commit/f8a00fe))
 * 新增组件示例 ([69e0751](https://github.com/tinper-bee/bee-table/commit/69e0751))
+* **package.json:** 增加changelog和完善提交机制 ([6069320](https://github.com/tinper-bee/bee-table/commit/6069320))
 
 
 
