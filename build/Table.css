@@ -83,8 +83,6 @@
     background: #f7f7f7; }
     .u-table tr.u-table-expanded-row:hover {
       background: #f7f7f7; }
-    .u-table tr.u-table-expanded-row .u-table {
-      padding: 0 40px 0 20px; }
   .u-table-column-hidden {
     display: none; }
   .u-table-prev-columns-page, .u-table-next-columns-page {
@@ -185,3 +183,23 @@
     transform-origin: 0 0;
     transform: translateX(-30px);
     opacity: 0; } }
+
+.formItem-style {
+  height: unset;
+  min-height: unset;
+  padding: 0; }
+
+.errMessage-style {
+  display: none;
+  border: none;
+  /* margin-top: 5px; */
+  /* margin-bottom: 5px; */
+  background: transparent;
+  color: #F22C1D;
+  /* padding-left: 12px; */
+  /* padding-right: 12px; */
+  margin: 0;
+  position: absolute;
+  padding: 0;
+  top: 3px;
+  right: 0; }

@@ -87,8 +87,6 @@ class Demo14 extends React.Component {
             isclickTrigger={true}
             check={this.check}
             onChange={this.onInputChange(index, "name")}
-            formItemClassName="formItem-style"
-            mesClassName="errMessage-style"
             isRequire={true}
             method="blur"
             errorMessage={
@@ -114,8 +112,6 @@ class Demo14 extends React.Component {
             isclickTrigger={true}
             check={this.check}
             onChange={this.onInputChange(index, "name")}
-            formItemClassName="formItem-style"
-            mesClassName="errMessage-style"
             isRequire={true}
             method="blur"
             errorMessage={

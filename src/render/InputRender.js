@@ -103,8 +103,8 @@ export default class InputRender extends Component {
           />
            */}
           <Form.FormItem
-            className={formItemClassName}
-            mesClassName={mesClassName}
+            className={"formItem-style " + formItemClassName}
+            mesClassName={"errMessage-style " + mesClassName}
             isRequire={isRequire}
             change={this.handleChange}
             blur={this.check}
@@ -131,23 +131,20 @@ export default class InputRender extends Component {
             onKeyDown={this.handleKeydown}
           /> */}
           <Form.FormItem
-            className="formItem-style"
-            mesClassName="errMessage-style"
-            isRequire={true}
+            className={"formItem-style " + formItemClassName}
+            mesClassName={"errMessage-style " + mesClassName}
+            isRequire={isRequire}
             change={this.handleChange}
             blur={this.check}
-            method="blur"
-            errorMessage={
-              <Tooltip overlay={"错误提示"}>
-                <Icon type="uf-exc-c" className="" />
-              </Tooltip>
-            }
-            reg={/^[0-9]+$/}
+            htmlType={htmlType}
+            method={method}
+            errorMessage={errorMessage}
+            reg={reg}
             check={this.checkValidate}
           >
             <Input
-              name="age"
-              placeholder="请输入数字"
+              name={name}
+              placeholder={placeholder}
               onKeyDown={this.handleKeydown}
               autoFocus
               value={value}

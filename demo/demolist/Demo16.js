@@ -53,7 +53,6 @@ class Demo16 extends Component {
       <Table
         columns={columns16}
         data={data16}
-        expandIconAsCell="true"
         expandedRowRender={this.expandedRowRender}
         title={currentData => <div>标题: 这是一个标题</div>}
         footer={currentData => <div>表尾: 我是小尾巴</div>}

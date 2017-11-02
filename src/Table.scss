@@ -145,7 +145,7 @@ $table-move-in-color: $bg-color-base;
       background: #f7f7f7;
     }
     .u-table{
-      padding: 0 40px 0 20px;
+      // padding: 0 40px 0 20px;
     }
   }
   &-column-hidden {
@@ -301,6 +301,7 @@ $table-move-in-color: $bg-color-base;
 
 .formItem-style{
   height: unset;
+  min-height: unset;
   padding: 0;
 }
 .errMessage-style{

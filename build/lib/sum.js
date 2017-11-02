@@ -10,10 +10,6 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _lodash = require("lodash.clonedeep");
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
@@ -23,6 +19,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+
+// import clonedeep from "lodash.clonedeep";
 
 //创建新列存放  “合计”  字段
 var columns2 = {
@@ -43,7 +41,7 @@ var sum = function sum(Table) {
 
       _this.currentFooter = function () {
         var data_2 = _this.props.data;
-        var columns_sum = (0, _lodash2["default"])(_this.props.columns);
+        var columns_sum = _this.props.columns.concat();
         var sumCol_index = void 0;
         //用一个对象存储合计数据，这里合计对象的属性对应每列字段
         for (var i = 0; i < columns_sum.length; i++) {

@@ -16,6 +16,18 @@ var _beeFormControl = require("bee-form-control");
 
 var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 
+var _beeForm = require("bee-form");
+
+var _beeForm2 = _interopRequireDefault(_beeForm);
+
+var _beeTooltip = require("bee-tooltip");
+
+var _beeTooltip2 = _interopRequireDefault(_beeTooltip);
+
+var _propTypes = require("prop-types");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
@@ -25,6 +37,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+
+var propTypes = {
+  check: _propTypes2["default"].func
+};
+
+var defaultProps = {
+  check: function check() {
+    return "";
+  }
+};
 
 var InputRender = function (_Component) {
   _inherits(InputRender, _Component);
@@ -45,10 +67,17 @@ var InputRender = function (_Component) {
       var value = e;
       _this.setState({ value: value });
     }, _this.check = function () {
-      _this.setState({ editable: false });
-      if (_this.props.onChange) {
-        _this.props.onChange(_this.state.value);
+      if (typeof _this.flag === "undefined" || _this.flag) {
+        _this.props.check(_this.flag, _this.obj);
+        _this.setState({ editable: false });
+        if (_this.props.onChange) {
+          _this.props.onChange(_this.state.value);
+        }
+        _this.flag = undefined;
       }
+    }, _this.checkValidate = function (flag, obj) {
+      _this.flag = flag;
+      _this.obj = obj;
     }, _this.edit = function () {
       _this.setState({ editable: true });
     }, _this.handleKeydown = function (event) {
@@ -79,29 +108,71 @@ var InputRender = function (_Component) {
         value = _state.value,
         editable = _state.editable;
     var _props = this.props,
+        name = _props.name,
+        placeholder = _props.placeholder,
         isclickTrigger = _props.isclickTrigger,
-        format = _props.format;
+        format = _props.format,
+        formItemClassName = _props.formItemClassName,
+        mesClassName = _props.mesClassName,
+        isRequire = _props.isRequire,
+        check = _props.check,
+        method = _props.method,
+        errorMessage = _props.errorMessage,
+        reg = _props.reg,
+        htmlType = _props.htmlType;
 
     var cellContent = "";
     if (editable) {
       cellContent = isclickTrigger ? _react2["default"].createElement(
         "div",
         { className: "editable-cell-input-wrapper" },
-        _react2["default"].createElement(_beeFormControl2["default"], {
-          onChange: this.handleChange,
-          onKeyDown: this.handleKeydown,
-          onBlur: this.check,
-          autoFocus: true,
-          value: value
-        })
+        _react2["default"].createElement(
+          _beeForm2["default"].FormItem,
+          {
+            className: "formItem-style " + formItemClassName,
+            mesClassName: "errMessage-style " + mesClassName,
+            isRequire: isRequire,
+            change: this.handleChange,
+            blur: this.check,
+            htmlType: htmlType,
+            method: method,
+            errorMessage: errorMessage,
+            reg: reg,
+            check: this.checkValidate
+          },
+          _react2["default"].createElement(_beeFormControl2["default"], {
+            name: name,
+            placeholder: placeholder,
+            onKeyDown: this.handleKeydown,
+            autoFocus: true,
+            value: value
+          })
+        )
       ) : _react2["default"].createElement(
         "div",
         { className: "editable-cell-input-wrapper" },
-        _react2["default"].createElement(_beeFormControl2["default"], {
-          value: value,
-          onChange: this.handleChange,
-          onKeyDown: this.handleKeydown
-        }),
+        _react2["default"].createElement(
+          _beeForm2["default"].FormItem,
+          {
+            className: "formItem-style " + formItemClassName,
+            mesClassName: "errMessage-style " + mesClassName,
+            isRequire: isRequire,
+            change: this.handleChange,
+            blur: this.check,
+            htmlType: htmlType,
+            method: method,
+            errorMessage: errorMessage,
+            reg: reg,
+            check: this.checkValidate
+          },
+          _react2["default"].createElement(_beeFormControl2["default"], {
+            name: name,
+            placeholder: placeholder,
+            onKeyDown: this.handleKeydown,
+            autoFocus: true,
+            value: value
+          })
+        ),
         _react2["default"].createElement(_beeIcon2["default"], {
           type: "uf-correct",
           className: "editable-cell-icon-check",
@@ -138,4 +209,7 @@ var InputRender = function (_Component) {
 }(_react.Component);
 
 exports["default"] = InputRender;
+
+InputRender.PropTypes = propTypes;
+InputRender.defaultProps = defaultProps;
 module.exports = exports["default"];
