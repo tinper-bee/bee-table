@@ -38,21 +38,49 @@ const data16 = [
 ];
 
 class Demo16 extends Component {
+  constructor(props){
+    super(props);
+    this.state={
+      data:data16
+    }
+  }
   expandedRowRender = () => {
     return (
       <Table
         columns={columns16}
-        data={data16}
+        data={this.state.data}
         title={currentData => <div>标题: 这是一个标题</div>}
         footer={currentData => <div>表尾: 我是小尾巴</div>}
       />
     );
   };
+  getData=(expanded, record)=>{
+    //当点击展开的时候才去请求数据
+    if(expanded){
+      if(record.key==='1'){
+        this.setState({
+          data:[
+            { a: "令狐冲", b: "男", c: 41, d: "操作", key: "1" },
+            { a: "杨过", b: "男", c: 67, d: "操作", key: "2" }
+          ]
+        })
+      }else{
+        this.setState({
+          data:[
+            { a: "令狐冲", b: "男", c: 41, d: "操作", key: "1" },
+          ]
+        })
+      }
+    }
+    
+    
+  }
   render() {
     return (
       <Table
         columns={columns16}
         data={data16}
+        onExpand={this.getData}
         expandedRowRender={this.expandedRowRender}
         title={currentData => <div>标题: 这是一个标题</div>}
         footer={currentData => <div>表尾: 我是小尾巴</div>}

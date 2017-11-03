@@ -83,12 +83,8 @@ export default class InputRender extends Component {
       format,
       formItemClassName,
       mesClassName,
-      isRequire,
       check,
-      method,
-      errorMessage,
-      reg,
-      htmlType
+      ...other
     } = this.props;
     let cellContent = "";
     if (editable) {
@@ -105,14 +101,10 @@ export default class InputRender extends Component {
           <Form.FormItem
             className={"formItem-style " + formItemClassName}
             mesClassName={"errMessage-style " + mesClassName}
-            isRequire={isRequire}
             change={this.handleChange}
             blur={this.check}
-            htmlType={htmlType}
-            method={method}
-            errorMessage={errorMessage}
-            reg={reg}
             check={this.checkValidate}
+            {...other}
           >
             <Input
               name={name}
@@ -133,14 +125,10 @@ export default class InputRender extends Component {
           <Form.FormItem
             className={"formItem-style " + formItemClassName}
             mesClassName={"errMessage-style " + mesClassName}
-            isRequire={isRequire}
             change={this.handleChange}
             blur={this.check}
-            htmlType={htmlType}
-            method={method}
-            errorMessage={errorMessage}
-            reg={reg}
             check={this.checkValidate}
+            {...other}
           >
             <Input
               name={name}
