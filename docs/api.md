@@ -5,6 +5,12 @@
 
 ## 代码演示
 
+## 引入机制
+
+import Table from "bee-table";
+import 'bee-table/build/Table.css';
+
+
 ## API
 
 ### Table

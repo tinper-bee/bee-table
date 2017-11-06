@@ -44,6 +44,9 @@ import InputRender from "bee-table/render/InputRender.js"
 #### 依赖的组件
 该render依赖于`bee-icon`,`bee-datepicker`,`moment`
 
+1. 下载依赖。例如：`npm install bee-icon -S`或者`npm install bee-icon --save`
+2. 引入css文件。**注：如果引入了CSS的cdn资源，即可忽略此步骤。**例如：`import 'bee-icon/build/Icon.css;'`
+
 #### 配置
 | 参数                | 说明                                       | 类型         | 默认值    |
 | ----------------- | ---------------------------------------- | ---------- | ------ |
@@ -57,6 +60,9 @@ import InputRender from "bee-table/render/InputRender.js"
 
 #### 依赖的组件
 该render依赖于`bee-icon`,`bee-select`
+
+1. 下载依赖。例如：`npm install bee-icon -S`或者`npm install bee-icon --save`
+2. 引入css文件。**注：如果引入了CSS的cdn资源，即可忽略此步骤。**例如：`import 'bee-icon/build/Icon.css;'`
 
 #### 配置
 | 参数                | 说明                                       | 类型         | 默认值    |
