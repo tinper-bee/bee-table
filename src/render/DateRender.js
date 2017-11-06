@@ -10,7 +10,7 @@ export default class DateRender extends Component {
   };
   handleChange = e => {
     let { format } = this.props || "YYYY-MM-DD";
-    const value = e.format(format);
+    const value = e ? e.format(format) : "";
     this.setState({ value, editable: false });
     if (this.props.onChange) {
       this.props.onChange(value);
@@ -34,7 +34,7 @@ export default class DateRender extends Component {
     const { value, editable } = this.state;
     let { isclickTrigger } = this.props;
     let cellContent = "";
-    let date_value = moment(value);
+    let date_value = value ? moment(value) : value;
     if (editable) {
       cellContent = isclickTrigger ? (
         <div className="editable-cell-input-wrapper">
