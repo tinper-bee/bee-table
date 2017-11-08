@@ -1,7 +1,11 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import Icon from "bee-icon";
 import Select from "bee-select";
 
+const propTypes = {
+  dataSource: PropTypes.array
+};
 export default class SelectRender extends Component {
   state = {
     value: this.props.value,
@@ -13,7 +17,7 @@ export default class SelectRender extends Component {
       this.props.onChange(value);
     }
     this.setState({ value: value });
-    setTimeout(()=> {
+    setTimeout(() => {
       this.setState({ editable: false });
     }, 0);
   };
@@ -27,8 +31,8 @@ export default class SelectRender extends Component {
     this.setState({ editable: true });
   };
   render() {
-    const { value, editable } = this.state;
-    let { isclickTrigger } = this.props;
+    let { value, editable } = this.state;
+    let { isclickTrigger, dataSource } = this.props;
     let cellContent = "";
     if (editable) {
       cellContent = isclickTrigger ? (
@@ -63,6 +67,15 @@ export default class SelectRender extends Component {
         </div>
       );
     } else {
+      if (dataSource && dataSource.length > 0) {
+        for (var index = 0; index < dataSource.length; index++) {
+          var element = dataSource[index];
+          if (element.value === value) {
+            value = element.key;
+            break;
+          }
+        }
+      }
       cellContent = isclickTrigger ? (
         <div className="editable-cell-text-wrapper" onClick={this.edit}>
           {value || " "}
@@ -81,3 +94,4 @@ export default class SelectRender extends Component {
     return <div className="editable-cell">{cellContent}</div>;
   }
 }
+SelectRender.propTypes = propTypes;

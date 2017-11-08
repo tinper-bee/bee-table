@@ -65,8 +65,11 @@ import InputRender from "bee-table/render/InputRender.js"
 2. 引入css文件。**注：如果引入了CSS的cdn资源，即可忽略此步骤。**例如：`import 'bee-icon/build/Icon.css;'`
 
 #### 配置
-| 参数                | 说明                                       | 类型         | 默认值    |
-| ----------------- | ---------------------------------------- | ---------- | ------ |
-| isclickTrigger    | 是否使用点击触发编辑状态                             | boolean    | false  |
+| 参数             | 说明                                       | 类型      | 默认值   |
+| -------------- | ---------------------------------------- | ------- | ----- |
+| isclickTrigger | 是否使用点击触发编辑状态                             | boolean | false |
+| dataSource     | 数据的键值对，在渲染的时候能显示真实的key值。比如[{key:"张三",value:"01"}] | array   | -     |
+
+
 
 注:其他参数参见bee-select组件参数配置

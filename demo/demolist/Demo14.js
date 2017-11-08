@@ -28,7 +28,20 @@ const format3 = "YYYY-MM-DD HH:mm:ss";
 
 const dateInputPlaceholder = "选择日期";
 const dateInputPlaceholder2 = "选择年月";
-
+const dataSource = [
+  {
+    key: "boyuzhou",
+    value: "jack"
+  },
+  {
+    key: "renhualiu",
+    value: "lucy"
+  },
+  {
+    key: "yuzhao",
+    value: "yiminghe"
+  }
+];
 class Demo14 extends React.Component {
   constructor(props) {
     super(props);
@@ -39,9 +52,9 @@ class Demo14 extends React.Component {
           name: "沉鱼",
           number: "10",
           age: "y",
-          address: "111",
+          address: "jack",
           datepicker: "2017-06-12",
-          MonthPicker: "2017-02",
+          MonthPicker: "2017-02"
         },
         {
           key: "1",
@@ -50,7 +63,7 @@ class Demo14 extends React.Component {
           age: "y",
           address: "lucy",
           datepicker: "2017-06-12",
-          MonthPicker: "2017-02",
+          MonthPicker: "2017-02"
         },
         {
           key: "2",
@@ -59,7 +72,7 @@ class Demo14 extends React.Component {
           age: "n",
           address: "lucy",
           datepicker: "2017-06-12",
-          MonthPicker: "2017-02",
+          MonthPicker: "2017-02"
         },
         {
           key: "3",
@@ -68,7 +81,7 @@ class Demo14 extends React.Component {
           age: "y",
           address: "lucy",
           datepicker: "2017-06-12",
-          MonthPicker: "2017-02",
+          MonthPicker: "2017-02"
         }
       ],
       count: 4
@@ -105,7 +118,7 @@ class Demo14 extends React.Component {
         width: "150px",
         render: (text, record, index) => (
           <InputRender
-            format='Currency'
+            format="Currency"
             name="name"
             placeholder="请输入姓名"
             value={text}
@@ -142,9 +155,10 @@ class Demo14 extends React.Component {
         render: (text, record, index) => {
           return (
             <SelectRender
+              dataSource={dataSource}
               isclickTrigger={true}
               value={text}
-              onChange={this.onSelectChange}
+              onChange={this.onSelectChange(index, "address")}
             >
               <Option value="jack">boyuzhou</Option>
               <Option value="lucy">renhualiu</Option>
@@ -194,10 +208,10 @@ class Demo14 extends React.Component {
       }
     ];
   }
-  check=(flag, obj)=>{
+  check = (flag, obj) => {
     console.log(flag);
     console.log(obj);
-  }
+  };
 
   onInputChange = (index, key) => {
     return value => {
@@ -213,8 +227,13 @@ class Demo14 extends React.Component {
       this.setState({ dataSource });
     };
   };
-  onSelectChange = value => {
-    console.log(`selected ${value}`);
+  onSelectChange = (index, key) => {
+    return value => {
+      console.log(`selected ${value}`);
+      const dataSource = [...this.state.dataSource];
+      dataSource[index][key] = value;
+      this.setState({ dataSource });
+    };
   };
   onDateChange = d => {
     console.log(d);
@@ -256,6 +275,9 @@ class Demo14 extends React.Component {
       </Animate>
     );
   };
+  getData = () => {
+    console.log(this.state.dataSource);
+  };
   render() {
     const { dataSource } = this.state;
     const columns = this.columns;
@@ -267,6 +289,13 @@ class Demo14 extends React.Component {
           onClick={this.handleAdd}
         >
           添加
+        </Button>
+        <Button
+          className="editable-add-btn"
+          type="ghost"
+          onClick={this.getData}
+        >
+          取数
         </Button>
         <Table
           bordered
