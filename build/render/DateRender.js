@@ -51,7 +51,7 @@ var DateRender = function (_Component) {
       var _ref = _this.props || "YYYY-MM-DD",
           format = _ref.format;
 
-      var value = e.format(format);
+      var value = e ? e.format(format) : "";
       _this.setState({ value: value, editable: false });
       if (_this.props.onChange) {
         _this.props.onChange(value);
@@ -77,7 +77,7 @@ var DateRender = function (_Component) {
     var isclickTrigger = this.props.isclickTrigger;
 
     var cellContent = "";
-    var date_value = (0, _moment2["default"])(value);
+    var date_value = value ? (0, _moment2["default"])(value) : value;
     if (editable) {
       cellContent = isclickTrigger ? _react2["default"].createElement(
         "div",

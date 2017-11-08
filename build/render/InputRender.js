@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
@@ -31,6 +33,8 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -107,6 +111,7 @@ var InputRender = function (_Component) {
     var _state = this.state,
         value = _state.value,
         editable = _state.editable;
+
     var _props = this.props,
         name = _props.name,
         placeholder = _props.placeholder,
@@ -114,12 +119,8 @@ var InputRender = function (_Component) {
         format = _props.format,
         formItemClassName = _props.formItemClassName,
         mesClassName = _props.mesClassName,
-        isRequire = _props.isRequire,
         check = _props.check,
-        method = _props.method,
-        errorMessage = _props.errorMessage,
-        reg = _props.reg,
-        htmlType = _props.htmlType;
+        other = _objectWithoutProperties(_props, ["name", "placeholder", "isclickTrigger", "format", "formItemClassName", "mesClassName", "check"]);
 
     var cellContent = "";
     if (editable) {
@@ -128,18 +129,13 @@ var InputRender = function (_Component) {
         { className: "editable-cell-input-wrapper" },
         _react2["default"].createElement(
           _beeForm2["default"].FormItem,
-          {
+          _extends({
             className: "formItem-style " + formItemClassName,
             mesClassName: "errMessage-style " + mesClassName,
-            isRequire: isRequire,
             change: this.handleChange,
             blur: this.check,
-            htmlType: htmlType,
-            method: method,
-            errorMessage: errorMessage,
-            reg: reg,
             check: this.checkValidate
-          },
+          }, other),
           _react2["default"].createElement(_beeFormControl2["default"], {
             name: name,
             placeholder: placeholder,
@@ -153,18 +149,13 @@ var InputRender = function (_Component) {
         { className: "editable-cell-input-wrapper" },
         _react2["default"].createElement(
           _beeForm2["default"].FormItem,
-          {
+          _extends({
             className: "formItem-style " + formItemClassName,
             mesClassName: "errMessage-style " + mesClassName,
-            isRequire: isRequire,
             change: this.handleChange,
             blur: this.check,
-            htmlType: htmlType,
-            method: method,
-            errorMessage: errorMessage,
-            reg: reg,
             check: this.checkValidate
-          },
+          }, other),
           _react2["default"].createElement(_beeFormControl2["default"], {
             name: name,
             placeholder: placeholder,
