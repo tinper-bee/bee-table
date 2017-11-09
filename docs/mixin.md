@@ -1,6 +1,7 @@
 ## mixin
 
-Table拓展功能方法
+Table拓展功能方法。注：拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然在操作state会导致功能出现异常
+
 
 
 ### multiSelect

@@ -45,6 +45,9 @@ const data13 = [
   { a: "令狐冲", b: "男", c: 41,d:'大侠', key: "1" },
   { a: "郭靖", b: "男", c: 25,d:'大侠', key: "3" }
 ];
+//拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常
+let ComplexTable = multiSelect(sum(sort(Table)));
+
 class Demo13 extends Component {
   getSelectedDataFunc = (data) =>{
     console.log(data)
@@ -53,7 +56,6 @@ class Demo13 extends Component {
     let multiObj = {
       type: "checkbox",
     };
-    let ComplexTable = multiSelect(sum(sort(Table)));
     return (
       <div>
         <ComplexTable
