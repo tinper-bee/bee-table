@@ -1,52 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fc6f46f1-46b7-479d-a1be-6709765e93ca" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/lib/multiSelect.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/lib/sort.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/lib/sum.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/lib/util.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/render/CheckboxRender.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/render/DateRender.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/render/InputRender.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/render/RadioRender.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/render/SelectRender.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/demo/demolist/Demo11.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/demo/demolist/Demo12.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/demo/demolist/Demo13.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/demo/demolist/Demo15.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/mixin.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/mixin_en.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/rendertype.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/rendertype_en.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/lib/multiSelect.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/lib/sort.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/lib/sum.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/lib/util.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/render/CheckboxRender.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/render/DateRender.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/render/InputRender.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/render/RadioRender.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/render/SelectRender.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/TableDemo.scss" afterPath="$PROJECT_DIR$/demo/TableDemo.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/demolist/Demo1.js" afterPath="$PROJECT_DIR$/demo/demolist/Demo1.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/demolist/Demo10.js" afterPath="$PROJECT_DIR$/demo/demolist/Demo10.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/demolist/Demo2.js" afterPath="$PROJECT_DIR$/demo/demolist/Demo2.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/demolist/Demo3.js" afterPath="$PROJECT_DIR$/demo/demolist/Demo3.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/demolist/Demo4.js" afterPath="$PROJECT_DIR$/demo/demolist/Demo4.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/demolist/Demo5.js" afterPath="$PROJECT_DIR$/demo/demolist/Demo5.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/demolist/Demo6.js" afterPath="$PROJECT_DIR$/demo/demolist/Demo6.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/demolist/Demo7.js" afterPath="$PROJECT_DIR$/demo/demolist/Demo7.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/demolist/Demo8.js" afterPath="$PROJECT_DIR$/demo/demolist/Demo8.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/demolist/Demo9.js" afterPath="$PROJECT_DIR$/demo/demolist/Demo9.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/index-demo-base.js" afterPath="$PROJECT_DIR$/demo/index-demo-base.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/index.js" afterPath="$PROJECT_DIR$/demo/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/api.md" afterPath="$PROJECT_DIR$/docs/api.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Table.scss" afterPath="$PROJECT_DIR$/src/Table.scss" />
-    </list>
+    <list default="true" id="fc6f46f1-46b7-479d-a1be-6709765e93ca" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -239,7 +194,7 @@
     <property name="JavaScriptPreferStrict" value="false" />
     <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="I:/mirco/seneca-demo" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
   </component>
@@ -271,15 +226,15 @@
       <option name="presentableId" value="Default" />
       <updated>1504076174885</updated>
       <workItem from="1504076176405" duration="2701000" />
-      <workItem from="1506672272278" duration="1284000" />
+      <workItem from="1506672272278" duration="1303000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3985000" />
+    <option name="totallyTimeSpent" value="4004000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="0" width="1920" height="1084" extended-state="1" />
+    <frame x="-8" y="0" width="1920" height="1084" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24973433" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
