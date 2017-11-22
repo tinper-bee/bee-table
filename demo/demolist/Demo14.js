@@ -288,14 +288,15 @@ class Demo14 extends React.Component {
           type="ghost"
           onClick={this.handleAdd}
         >
-          添加
+          添加一行
         </Button>
         <Button
+          style={{marginLeft:"5px"}}
           className="editable-add-btn"
           type="ghost"
           onClick={this.getData}
         >
-          取数
+          获取数据
         </Button>
         <Table
           bordered

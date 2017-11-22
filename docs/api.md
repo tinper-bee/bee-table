@@ -52,12 +52,12 @@ import 'bee-table/build/Table.css';
 |:--|:---|:--|:---|
 |key|列的键|string|-|
 |className|传入列的classname|String	|-|
-|colSpan|该列的colSpan|Number|-|
+|colSpan|该列的colSpan，设置列合并|Number|-|
 |title|列的标题|node|-|
 |dataIndex|	显示数据记录的字段|String|-|
 |width|宽度的特定比例根据列的宽度计算|String/Number|-|
 |fixed|	当表水平滚动时，此列将被固定：true或'left'或'right'| true/'left'/'right'|-|
-|render|cell的render函数有三个参数：这个单元格的文本，这行的记录，这行的索引，它返回一个对象：{children：value，props：{colSpan：1，rowSpan：1}} ==>'children'是这个单元格的文本，props是这个单元格的一些设置|-|
+|render|cell的render函数有三个参数：这个单元格的文本，这行的记录，这行的索引，它返回一个对象：{children：value，props：{colSpan：1，rowSpan：1}} ==>'children'是这个单元格的文本，props是这个单元格的一些设置，可以设置单元格行/列合并|-|
 |onCellClick|单击列的单元格时调用|Function(row, event)|-|
 
 
