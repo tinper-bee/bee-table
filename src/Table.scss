@@ -53,6 +53,7 @@ $table-move-in-color: $bg-color-base;
 
   th, td {
     padding: $vertical-padding $horizontal-padding;
+    word-break: break-all;
   }
 
 

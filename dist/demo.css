@@ -7603,7 +7603,8 @@ ul {
   .u-table tr.tr-row-hover {
     background: rgb(227,242,253); }
   .u-table th, .u-table td {
-    padding: 16px 8px; }
+    padding: 16px 8px;
+    word-break: break-all; }
   .u-table-scroll {
     overflow: auto; }
   .u-table-header {
