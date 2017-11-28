@@ -3,7 +3,7 @@ import Icon from "bee-icon";
 
 /**
  * 参数：prefixCls，默认bee-table,用于设置图标的样式
- * @param {*} Table 
+ * @param {*} Table
  */
 export default function sort(Table) {
   return class Demo11 extends Component {
@@ -62,18 +62,18 @@ export default function sort(Table) {
           sortButton = (
             <div className={`${prefixCls}-column-sorter`}>
               <span
-                className={`${prefixCls}-column-sorter-up ${isAscend
-                  ? "on"
-                  : "off"}`}
+                className={`${prefixCls}-column-sorter-up ${
+                  isAscend ? "on" : "off"
+                }`}
                 title="↑"
                 onClick={() => this.toggleSortOrder("ascend", column)}
               >
                 <Icon type="uf-triangle-up" />
               </span>
               <span
-                className={`${prefixCls}-column-sorter-down ${isDescend
-                  ? "on"
-                  : "off"}`}
+                className={`${prefixCls}-column-sorter-down ${
+                  isDescend ? "on" : "off"
+                }`}
                 title="↓"
                 onClick={() => this.toggleSortOrder("descend", column)}
               >
