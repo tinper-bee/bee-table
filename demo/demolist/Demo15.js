@@ -21,6 +21,7 @@ const renderContent = (value, row, index) => {
 
 const columns = [{
   title: 'Name',
+  key: "name",
   dataIndex: 'name',
   render: (text, row, index) => {
     if (index < 4) {
@@ -35,11 +36,13 @@ const columns = [{
   },
 }, {
   title: 'Age',
+  key: "Age",
   dataIndex: 'age',
   render: renderContent,
 }, {
   title: 'Home phone',
   colSpan: 2,
+  key: "tel",
   dataIndex: 'tel',
   render: (value, row, index) => {
     const obj = {
@@ -60,10 +63,12 @@ const columns = [{
 }, {
   title: 'Phone',
   colSpan: 0,
+  key: "phone",
   dataIndex: 'phone',
   render: renderContent,
 }, {
   title: 'Address',
+  key: "address",
   dataIndex: 'address',
   render: renderContent,
 }];
