@@ -1,5 +1,5 @@
-<a name="1.0.3"></a>
-## 1.0.3 (2017-11-02)
+<a name="1.0.6"></a>
+## 1.0.6 (2017-11-29)
 
 
 ### Bug Fixes
@@ -12,6 +12,8 @@
 * 删除多余demo，修改样式和优化合计功能代码 ([b01d24d](https://github.com/tinper-bee/bee-table/commit/b01d24d))
 * 更新日期组件版本和提取dateRender组件 ([06e0091](https://github.com/tinper-bee/bee-table/commit/06e0091))
 * 解决合计行与排序组合使用时的问题 ([6f6abe5](https://github.com/tinper-bee/bee-table/commit/6f6abe5))
+* **DateRender.js:** 修复日期render中设置空字符串出错bug ([b7c1961](https://github.com/tinper-bee/bee-table/commit/b7c1961))
+* **table.scss:** 修改demo中涉及到组件的样式转移到组件中 ([1f5a43f](https://github.com/tinper-bee/bee-table/commit/1f5a43f))
 
 
 ### Features
@@ -25,6 +27,8 @@
 * 新增排序和全选高阶组件，并增加使用示例 ([f8a00fe](https://github.com/tinper-bee/bee-table/commit/f8a00fe))
 * 新增组件示例 ([69e0751](https://github.com/tinper-bee/bee-table/commit/69e0751))
 * **package.json:** 增加changelog和完善提交机制 ([6069320](https://github.com/tinper-bee/bee-table/commit/6069320))
+* **SelectRender.js:** 增加键值对参数能在浏览态的时候显示key值 ([4f5cb9b](https://github.com/tinper-bee/bee-table/commit/4f5cb9b))
+* **table.js && table.scss:** 修改固定表头的滚动条默认样式为auto ([e8bc09f](https://github.com/tinper-bee/bee-table/commit/e8bc09f))
 
 
 
