@@ -24,7 +24,8 @@
   .u-table tr.tr-row-hover {
     background: rgb(227,242,253); }
   .u-table th, .u-table td {
-    padding: 16px 8px; }
+    padding: 16px 8px;
+    word-break: break-all; }
   .u-table-scroll {
     overflow: auto; }
   .u-table-header {
@@ -40,7 +41,7 @@
     overflow-x: scroll;
     padding-bottom: 20px;
     margin-bottom: -20px;
-    overflow-y: scroll;
+    overflow-y: auto;
     box-sizing: border-box; }
   .u-table-title {
     padding: 16px 8px;

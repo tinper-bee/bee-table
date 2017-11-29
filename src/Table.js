@@ -465,7 +465,7 @@ class Table extends Component{
       } else {
         bodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
       }
-      bodyStyle.overflowY = bodyStyle.overflowY || 'scroll';
+      bodyStyle.overflowY = bodyStyle.overflowY || 'auto';
       useFixedHeader = true;
 
       // Add negative margin bottom for scroll bar overflow bug

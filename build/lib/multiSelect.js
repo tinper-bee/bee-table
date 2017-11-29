@@ -1,6 +1,12 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports["default"] = multiSelect;
 
 var _react = require("react");
 
@@ -28,7 +34,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * getSelectedDataFunc--function，能获取到选中的数据
  * 使用全选时得注意，data中的key值一定要是唯一值
  */
-module.exports = function multiSelect(Table) {
+function multiSelect(Table) {
   Array.prototype.indexOf = function (val) {
     for (var i = 0; i < this.length; i++) {
       if (this[i] == val) return i;
@@ -106,7 +112,7 @@ module.exports = function multiSelect(Table) {
           checkedObj: checkedObj,
           selIds: selIds
         });
-        if (typeof getSelectedDataFunc === 'function') {
+        if (typeof getSelectedDataFunc === "function") {
           getSelectedDataFunc(selIds);
         }
       };
@@ -172,4 +178,5 @@ module.exports = function multiSelect(Table) {
 
     return BookLoader;
   }(_react.Component);
-};
+}
+module.exports = exports["default"];

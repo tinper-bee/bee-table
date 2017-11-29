@@ -28,7 +28,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /**
  * 参数：prefixCls，默认bee-table,用于设置图标的样式
- * @param {*} Table 
+ * @param {*} Table
  */
 function sort(Table) {
   return function (_Component) {

@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+exports["default"] = sum;
+
 var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
@@ -29,7 +31,7 @@ var columns2 = {
   dataIndex: "showSum"
 };
 
-var sum = function sum(Table) {
+function sum(Table) {
   return function (_React$Component) {
     _inherits(SumTable, _React$Component);
 
@@ -96,6 +98,4 @@ var sum = function sum(Table) {
     return SumTable;
   }(_react2["default"].Component);
 };
-
-exports["default"] = sum;
 module.exports = exports["default"];
