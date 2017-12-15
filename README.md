@@ -87,6 +87,7 @@ class Demo extends Component {
 | expandedRowRender      | 额外的展开行                                   | Function                               | -               |
 | expandIconAsCell      | 展开按钮是否单独作为一个单元格                                   | bool                               | false               |
 | expandRowByClick       | 设置展开行是否通过点击行触发，此参数需要与上面参数搭配使用（默认是通过点击行前面的加号展开行 | bool                                   | false           |
+*注意: 一旦使用了expandedRowRender参数，data参数中的key属性必须设置。否则会导致无法展开！*
 
 ### Column
 
@@ -106,7 +107,12 @@ class Demo extends Component {
 
 Table拓展功能方法。注：拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然在操作state会导致功能出现异常
 
+## 如何引用
+需要单独的去引用相应的js文件，目录在lib文件夹，示例如下：
 
+```js
+import multiSelect from "bee-table/build/lib/multiSelect.js"
+```
 
 ### multiSelect
 
