@@ -14,9 +14,9 @@ import Icon from "bee-icon";
 import Input from "bee-form-control";
 import Checkbox from "bee-checkbox";
 import Select from "bee-select";
-import InputRender from "../../src/render/InputRender.js";
-import DateRender from "../../src/render/DateRender.js";
-import SelectRender from "../../src/render/SelectRender.js";
+import InputRender from "../../build/render/InputRender.js";
+import DateRender from "../../build/render/DateRender.js";
+import SelectRender from "../../build/render/SelectRender.js";
 
 //日期控件引入
 import DatePicker from "bee-datepicker";
