@@ -56,6 +56,9 @@ $table-move-in-color: $bg-color-base;
     word-break: break-all;
   }
 
+  &-row-hover {
+    background: rgb(227,242,253);
+  }
 
   &-scroll {
     overflow: auto;
