@@ -1,5 +1,4 @@
 import React from "react";
-// import clonedeep from "lodash.clonedeep";
 
 //创建新列存放  “合计”  字段
 let columns2 = {
@@ -8,7 +7,7 @@ let columns2 = {
   dataIndex: "showSum"
 };
 
-export default function sum(Table){
+export default function sum(Table) {
   return class SumTable extends React.Component {
     //无状态
     constructor(props) {
@@ -30,8 +29,11 @@ export default function sum(Table){
       obj[sumCol_index] = 0;
       if (Array.isArray(data_2)) {
         for (let i = 0; i < data_2.length; i++) {
-          if (typeof data_2[i][sumCol_index] == "number") {
-            obj[sumCol_index] += data_2[i][sumCol_index];
+          if (
+            typeof data_2[i][sumCol_index] == "number" ||
+            !isNaN(data_2[i][sumCol_index])
+          ) {
+            obj[sumCol_index] -= -data_2[i][sumCol_index];
           } else {
             obj[sumCol_index] = "";
           }
@@ -41,14 +43,10 @@ export default function sum(Table){
       obj.showSum = "合计";
       obj = [obj];
       //将设置的和用户传入的合并属性
-      //   if (columns_sum[0].dataIndex === "checkbox") {
-      // columns_sum[1] = Object.assign({}, columns_sum[1], columns2);
-      //   } else {
       columns_sum[0] = Object.assign({}, columns_sum[0], columns2);
-      //   }
       //除去列为特殊渲染的，避免像a标签这种html代码写入到合计中
       columns_sum.map((item, index) => {
-        if (typeof item.render == "function") {
+        if (typeof item.render == "function" && !item.sumCol) {
           item.render = "";
         }
         return item;
@@ -58,6 +56,7 @@ export default function sum(Table){
     render() {
       return (
         <Table
+          {...this.props}
           columns={this.props.columns}
           data={this.props.data}
           footer={this.currentFooter}
@@ -65,4 +64,4 @@ export default function sum(Table){
       );
     }
   };
-};
+}
