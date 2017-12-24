@@ -1,5 +1,15 @@
+<a name="1.0.7"></a>
+## [1.0.7](https://github.com/tinper-bee/bee-table/compare/1.0.6...1.0.7) (2017-12-24)
+
+
+### Bug Fixes
+
+* **sum.js:** 修复合计功能会忽略其他参数，并导致render不生效的bug ([e2d6be5](https://github.com/tinper-bee/bee-table/commit/e2d6be5))
+
+
+
 <a name="1.0.6"></a>
-## 1.0.6 (2017-11-29)
+## [1.0.6](https://github.com/tinper-bee/bee-table/compare/69e0751...1.0.6) (2017-11-29)
 
 
 ### Bug Fixes
