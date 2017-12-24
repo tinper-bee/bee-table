@@ -190,7 +190,6 @@ class Demo2 extends React.Component {
           添加
         </Button>
         <Table
-          bordered
           data={dataSource}
           columns={columns}
           getBodyWrapper={this.getBodyWrapper}

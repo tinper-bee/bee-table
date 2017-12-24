@@ -60,6 +60,7 @@ class Demo extends Component {
 | 参数                     | 说明                                       | 类型                                     | 默认值             |
 | :--------------------- | :--------------------------------------- | :------------------------------------- | :-------------- |
 | data                   | 传入的表格数据                                  | array                                  | []              |
+| bordered                | 是否展示外边框和列边框                            | boolean                                  | false               |
 | columns                | 列的配置表，具体配置见下表                            | array                                  | -               |
 | defaultExpandAllRows   | 默认是否展开所有行                                | bool                                   | false           |
 | expandedRowKeys        | 展开的行，控制属性                                | array                                  | -               |

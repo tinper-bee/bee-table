@@ -7594,20 +7594,32 @@ ul {
   .u-table th {
     background: #f7f7f7;
     font-weight: bold;
-    transition: background .3s ease; }
+    transition: background 0.3s ease; }
+    .u-table th[colspan] {
+      text-align: center; }
   .u-table td {
     border-bottom: 1px solid #e9e9e9; }
   .u-table tr {
-    transition: all .3s ease; }
+    transition: all 0.3s ease; }
     .u-table tr:hover {
       background: rgb(227,242,253); }
   .u-table tr.tr-row-hover {
     background: rgb(227,242,253); }
-  .u-table th, .u-table td {
+  .u-table th,
+  .u-table td {
     padding: 16px 8px;
     word-break: break-all; }
+  .u-table-row-hover {
+    background: #e3f2fd; }
   .u-table-scroll {
     overflow: auto; }
+  .u-table-bordered table {
+    border: 1px solid #e9e9e9; }
+  .u-table-bordered th {
+    border-bottom: 1px solid #e9e9e9; }
+  .u-table-bordered th,
+  .u-table-bordered td {
+    border-right: 1px solid #e9e9e9; }
   .u-table-header {
     overflow: hidden;
     background: #f7f7f7; }
@@ -7616,12 +7628,12 @@ ul {
     position: relative; }
   .u-table-fixed-header .u-table-body-inner {
     height: 100%;
-    overflow: scroll; }
+    overflow-y: hidden; }
   .u-table-fixed-header .u-table-scroll .u-table-header {
     overflow-x: scroll;
     padding-bottom: 20px;
     margin-bottom: -20px;
-    overflow-y: scroll;
+    overflow-y: auto;
     box-sizing: border-box; }
   .u-table-title {
     padding: 16px 8px;
@@ -7658,11 +7670,11 @@ ul {
   .u-table-row-spaced, .u-table-expanded-row-spaced {
     visibility: hidden; }
   .u-table-row-spaced:after, .u-table-expanded-row-spaced:after {
-    content: '.'; }
+    content: "."; }
   .u-table-row-expanded:after, .u-table-expanded-row-expanded:after {
-    content: '-'; }
+    content: "-"; }
   .u-table-row-collapsed:after, .u-table-expanded-row-collapsed:after {
-    content: '+'; }
+    content: "+"; }
   .u-table tr.u-table-expanded-row {
     background: #f7f7f7; }
     .u-table tr.u-table-expanded-row:hover {
@@ -7683,11 +7695,11 @@ ul {
   .u-table-prev-columns-page {
     margin-right: 8px; }
     .u-table-prev-columns-page:before {
-      content: '<'; }
+      content: "<"; }
   .u-table-next-columns-page {
     float: right; }
     .u-table-next-columns-page:before {
-      content: '>'; }
+      content: ">"; }
   .u-table-fixed-left, .u-table-fixed-right {
     position: absolute;
     top: 0;
@@ -7718,10 +7730,12 @@ ul {
 .u-table.bordered table {
   border-collapse: collapse; }
 
-.u-table.bordered th, .u-table.bordered td {
+.u-table.bordered th,
+.u-table.bordered td {
   border: 1px solid #e9e9e9; }
 
-.move-enter, .move-appear {
+.move-enter,
+.move-appear {
   opacity: 0;
   animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   animation-duration: 2.5s;
@@ -7730,11 +7744,12 @@ ul {
 
 .move-leave {
   animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
-  animation-duration: .5s;
+  animation-duration: 0.5s;
   animation-fill-mode: both;
   animation-play-state: paused; }
 
-.move-enter.move-enter-active, .move-appear.move-enter-active {
+.move-enter.move-enter-active,
+.move-appear.move-enter-active {
   animation-name: moveLeftIn;
   animation-play-state: running; }
 
@@ -7779,7 +7794,7 @@ ul {
   /* margin-top: 5px; */
   /* margin-bottom: 5px; */
   background: transparent;
-  color: #F22C1D;
+  color: #f22c1d;
   /* padding-left: 12px; */
   /* padding-right: 12px; */
   margin: 0;
@@ -7866,11 +7881,13 @@ ul {
 .bee-table-column-sorter-up.on .uf-triangle-up {
   color: #108ee9; }
 
-.bee-table-column-sorter .uf-triangle-down, .bee-table-column-sorter .uf-triangle-up {
+.bee-table-column-sorter .uf-triangle-down,
+.bee-table-column-sorter .uf-triangle-up {
   filter: none;
   font-size: 12px; }
 
-.bee-table-column-sorter .uf-triangle-down, .bee-table-column-sorter .uf-triangle-up {
+.bee-table-column-sorter .uf-triangle-down,
+.bee-table-column-sorter .uf-triangle-up {
   display: inline-block;
   padding: 0;
   font-size: 12px;
@@ -7881,7 +7898,7 @@ ul {
   line-height: 4px;
   height: 4px;
   color: #999;
-  transition: all .3s; }
+  transition: all 0.3s; }
 
 /* FormGroup */
 /*  Navlayout  */

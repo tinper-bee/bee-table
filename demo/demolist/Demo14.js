@@ -299,7 +299,6 @@ class Demo14 extends React.Component {
           获取数据
         </Button>
         <Table
-          bordered
           data={dataSource}
           columns={columns}
           getBodyWrapper={this.getBodyWrapper}

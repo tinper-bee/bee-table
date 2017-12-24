@@ -701,6 +701,9 @@ class Table extends Component{
     if (props.useFixedHeader || (props.scroll && props.scroll.y)) {
       className += ` ${clsPrefix}-fixed-header`;
     }
+    if(props.bordered){
+      className += ` ${clsPrefix}-bordered`;
+    }
     className += ` ${clsPrefix}-scroll-position-${this.state.scrollPosition}`;
 
     const isTableScroll = this.columnManager.isAnyColumnsFixed() ||
