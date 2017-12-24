@@ -26,6 +26,8 @@
   .u-table th, .u-table td {
     padding: 16px 8px;
     word-break: break-all; }
+  .u-table-row-hover {
+    background: #e3f2fd; }
   .u-table-scroll {
     overflow: auto; }
   .u-table-header {

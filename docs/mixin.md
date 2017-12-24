@@ -41,7 +41,7 @@ import multiSelect from "bee-table/build/lib/multiSelect.js"
 合计功能
 
 #### Column新增参数
-
+ 
 | 参数     | 说明         | 类型       | 默认值  |
 | ------ | ---------- | -------- | ---- |
 | sumCol | 该列设置为合计列，合计行中会显示合计数据 | boolean | false |

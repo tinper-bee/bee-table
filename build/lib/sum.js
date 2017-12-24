@@ -22,8 +22,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 
-// import clonedeep from "lodash.clonedeep";
-
 //创建新列存放  “合计”  字段
 var columns2 = {
   title: "合计",
@@ -56,8 +54,8 @@ function sum(Table) {
         obj[sumCol_index] = 0;
         if (Array.isArray(data_2)) {
           for (var _i = 0; _i < data_2.length; _i++) {
-            if (typeof data_2[_i][sumCol_index] == "number") {
-              obj[sumCol_index] += data_2[_i][sumCol_index];
+            if (typeof data_2[_i][sumCol_index] == "number" || !isNaN(data_2[_i][sumCol_index])) {
+              obj[sumCol_index] -= -data_2[_i][sumCol_index];
             } else {
               obj[sumCol_index] = "";
             }
@@ -67,14 +65,10 @@ function sum(Table) {
         obj.showSum = "合计";
         obj = [obj];
         //将设置的和用户传入的合并属性
-        //   if (columns_sum[0].dataIndex === "checkbox") {
-        // columns_sum[1] = Object.assign({}, columns_sum[1], columns2);
-        //   } else {
         columns_sum[0] = _extends({}, columns_sum[0], columns2);
-        //   }
         //除去列为特殊渲染的，避免像a标签这种html代码写入到合计中
         columns_sum.map(function (item, index) {
-          if (typeof item.render == "function") {
+          if (typeof item.render == "function" && !item.sumCol) {
             item.render = "";
           }
           return item;
@@ -88,14 +82,14 @@ function sum(Table) {
 
 
     SumTable.prototype.render = function render() {
-      return _react2["default"].createElement(Table, {
+      return _react2["default"].createElement(Table, _extends({}, this.props, {
         columns: this.props.columns,
         data: this.props.data,
         footer: this.currentFooter
-      });
+      }));
     };
 
     return SumTable;
   }(_react2["default"].Component);
-};
+}
 module.exports = exports["default"];
