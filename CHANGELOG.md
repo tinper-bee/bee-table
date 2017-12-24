@@ -1,3 +1,13 @@
+<a name="1.0.8"></a>
+## [1.0.8](https://github.com/tinper-bee/bee-table/compare/1.0.7...1.0.8) (2017-12-24)
+
+
+### Features
+
+* **Table.js:** 新增# bee-table ([8117b1c](https://github.com/tinper-bee/bee-table/commit/8117b1c))
+
+
+
 <a name="1.0.7"></a>
 ## [1.0.7](https://github.com/tinper-bee/bee-table/compare/1.0.6...1.0.7) (2017-12-24)
 
