@@ -51,12 +51,13 @@ export default function sum(Table) {
         }
         return item;
       });
-      return <Table{...this.props} showHeader={false} columns={columns_sum} data={obj} />;
+      return <Table{...this.props} footerScroll showHeader={false} columns={columns_sum} data={obj} />;
     };
     render() {
       return (
         <Table
           {...this.props}
+          footerScroll
           columns={this.props.columns}
           data={this.props.data}
           footer={this.currentFooter}
