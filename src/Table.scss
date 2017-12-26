@@ -20,7 +20,9 @@ $table-move-in-color: $bg-color-base;
   position: relative;
   line-height: $line-height;
   overflow: hidden;
-
+  &-body{
+    // overflow: hidden!important;
+  }
   table {
     width: 100%;
     border-collapse: collapse;
@@ -84,10 +86,13 @@ $table-move-in-color: $bg-color-base;
     background: #fff;
     position: relative;
   }
+  &-fixed-left &-body-inner {
+    margin-right: -20px;
+  }
 
   &-fixed-header &-body-inner {
     height: 100%;
-    overflow-y: hidden;
+    overflow: scroll;
   }
 
   &-fixed-header &-scroll &-header {
@@ -110,6 +115,9 @@ $table-move-in-color: $bg-color-base;
   &-footer {
     padding: $vertical-padding $horizontal-padding;
     border-bottom: 1px solid $table-border-color;
+    .u-table-scroll{
+      overflow-x: hidden;
+    }
   }
   &-footer & {
     margin: (-$vertical-padding) (-$horizontal-padding);
@@ -211,7 +219,7 @@ $table-move-in-color: $bg-color-base;
   &-fixed-left {
     left: 0;
     box-shadow: 4px 0 4px rgba(100, 100, 100, 0.1);
-    & &-body-inner {
+    &-body-inner {
       margin-right: -20px;
       padding-right: 20px;
     }
@@ -232,11 +240,11 @@ $table-move-in-color: $bg-color-base;
     }
   }
 
-  & &-scroll-position-left &-fixed-left {
+  &-scroll-position-left &-fixed-left {
     box-shadow: none;
   }
 
-  & &-scroll-position-right &-fixed-right {
+  &-scroll-position-right &-fixed-right {
     box-shadow: none;
   }
 }

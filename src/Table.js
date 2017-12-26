@@ -446,7 +446,7 @@ class Table extends Component{
 
   getTable(options = {}) {
     const { columns, fixed } = options;
-    const { clsPrefix, scroll = {}, getBodyWrapper } = this.props;
+    const { clsPrefix, scroll = {}, getBodyWrapper, footerScroll } = this.props;
     let { useFixedHeader } = this.props;
     const bodyStyle = { ...this.props.bodyStyle };
     const headStyle = {};
@@ -454,7 +454,9 @@ class Table extends Component{
     let tableClassName = '';
     if (scroll.x || fixed) {
       tableClassName = `${clsPrefix}-fixed`;
-      bodyStyle.overflowX = bodyStyle.overflowX || 'auto';
+      if(!footerScroll){
+        bodyStyle.overflowX = bodyStyle.overflowX || 'auto';
+      }
     }
 
     if (scroll.y) {
@@ -470,7 +472,7 @@ class Table extends Component{
 
       // Add negative margin bottom for scroll bar overflow bug
       const scrollbarWidth = measureScrollbar();
-      if (scrollbarWidth > 0) {
+      if (scrollbarWidth >= 0) {
         (fixed ? bodyStyle : headStyle).marginBottom = `-${scrollbarWidth}px`;
         (fixed ? bodyStyle : headStyle).paddingBottom = '0px';
       }

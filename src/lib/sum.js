@@ -51,7 +51,7 @@ export default function sum(Table) {
         }
         return item;
       });
-      return <Table showHeader={false} columns={columns_sum} data={obj} />;
+      return <Table{...this.props} showHeader={false} columns={columns_sum} data={obj} />;
     };
     render() {
       return (

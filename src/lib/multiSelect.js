@@ -124,7 +124,6 @@ export default function multiSelect(Table) {
             ),
             key: "checkbox",
             dataIndex: "checkbox",
-            width: "5%",
             render: (text, record, index) => {
               return (
                 <Checkbox
