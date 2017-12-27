@@ -89,6 +89,7 @@ class Demo extends Component {
 | expandIconAsCell      | 展开按钮是否单独作为一个单元格                                   | bool                               | false               |
 | expandRowByClick       | 设置展开行是否通过点击行触发，此参数需要与上面参数搭配使用（默认是通过点击行前面的加号展开行 | bool                                   | false           |
 | footerScroll       | 表尾和body是否公用同一个横向滚动条。（ 如果footer中也是一个table组件，并且也具有滚动条，那么也需要加入footerScroll参数。 ） | bool                                   | false           |
+
 *注意: 一旦使用了expandedRowRender参数，data参数中的key属性必须设置。否则会导致无法展开！*
 
 ### Column
@@ -128,6 +129,7 @@ import multiSelect from "bee-table/build/lib/multiSelect.js"
 | multiSelect.type    | 全选功能的类型，多选或单选（暂时只支持多选）     | string   | checkbox |
 | multiSelect.param   | 通过设置该参数来设计获取的数据数组，默认返还所有数据 | string   | ''       |
 | getSelectedDataFunc | 返回当前选中的数据数组                | Function | 无        |
+| selectDisabled | 设置某一行数据无法被选中，使用类似于rowClassName       | Function(record, index):bool | 无        |
 
 
 

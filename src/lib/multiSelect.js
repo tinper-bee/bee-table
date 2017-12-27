@@ -96,6 +96,7 @@ export default function multiSelect(Table) {
     };
     renderColumnsMultiSelect(columns) {
       const { data } = this.state;
+      let {selectDisabled} = this.props;
       let checkedObj = Object.assign({}, this.state.checkedObj);
       let checkedArray = Object.keys(checkedObj);
       let { multiSelect } = this.props;
@@ -124,11 +125,14 @@ export default function multiSelect(Table) {
             ),
             key: "checkbox",
             dataIndex: "checkbox",
+            width: "100px",
             render: (text, record, index) => {
+              let bool = selectDisabled(record, index);
               return (
                 <Checkbox
                   className="table-checkbox"
                   checked={checkedObj[record.key]}
+                  disabled={bool}
                   onChange={this.onCheckboxChange.bind(
                     this,
                     text,

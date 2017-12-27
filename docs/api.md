@@ -47,6 +47,7 @@ import 'bee-table/build/Table.css';
 | expandIconAsCell      | 展开按钮是否单独作为一个单元格                                   | bool                               | false               |
 | expandRowByClick       | 设置展开行是否通过点击行触发，此参数需要与上面参数搭配使用（默认是通过点击行前面的加号展开行 | bool                                   | false           |
 | footerScroll       | 表尾和body是否公用同一个横向滚动条。（ 如果footer中也是一个table组件，并且也具有滚动条，那么也需要加入footerScroll参数。 ） | bool                                   | false           |
+
 *注意: 一旦使用了expandedRowRender参数，data参数中的key属性必须设置。否则会导致无法展开！*
 
 ### Column
