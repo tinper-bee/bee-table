@@ -59,7 +59,7 @@ class Demo extends Component {
 
 | 参数                     | 说明                                       | 类型                                     | 默认值             |
 | :--------------------- | :--------------------------------------- | :------------------------------------- | :-------------- |
-| data                   | 传入的表格数据                                  | array                                  | []              |
+| data                   | 传入的表格数据（key值必需，否则会导致部分功能出现问题。建议使用唯一的值，如id）    | array                                  | []              |
 | bordered                | 是否展示外边框和列边框                            | boolean                                  | false               |
 | columns                | 列的配置表，具体配置见下表                            | array                                  | -               |
 | defaultExpandAllRows   | 默认是否展开所有行                                | bool                                   | false           |
@@ -90,7 +90,8 @@ class Demo extends Component {
 | expandRowByClick       | 设置展开行是否通过点击行触发，此参数需要与上面参数搭配使用（默认是通过点击行前面的加号展开行 | bool                                   | false           |
 | footerScroll       | 表尾和body是否公用同一个横向滚动条。（ 如果footer中也是一个table组件，并且也具有滚动条，那么也需要加入footerScroll参数。 ） | bool                                   | false           |
 
-*注意: 一旦使用了expandedRowRender参数，data参数中的key属性必须设置。否则会导致无法展开！*
+*注意: data参数中的key值必需，否则会导致部分功能出现问题！建议使用唯一的值，如id*
+
 
 ### Column
 

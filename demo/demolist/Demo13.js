@@ -33,15 +33,6 @@ const columns13 = [
     sumCol: true,
     sorter: (a, b) => a.c - b.c
   },
-
-  {
-    title: "年龄",
-    dataIndex: "c",
-    key: "c",
-    width: 200,
-    sumCol: true,
-    sorter: (a, b) => a.c - b.c
-  },
   {
     title: "武功级别",
     dataIndex: "d",
@@ -63,6 +54,7 @@ class Demo13 extends Component {
     console.log(data);
   };
   selectDisabled = (record, index) => {
+    console.log(record);
     if (index === 1) {
       return true;
     }

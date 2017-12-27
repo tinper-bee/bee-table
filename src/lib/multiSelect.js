@@ -24,9 +24,17 @@ export default function multiSelect(Table) {
   return class BookLoader extends Component {
     constructor(props) {
       super(props);
+      let { selectDisabled, data } = props,
+        checkedObj = {};
+      for (var i = 0; i < data.length; i++) {
+        let bool = selectDisabled(data[i], i);
+        if (!bool) {
+          checkedObj[data[i]["key"]] = false;
+        }
+      }
       this.state = {
         checkedAll: false,
-        checkedObj: {},
+        checkedObj: checkedObj,
         selIds: [],
         data: this.props.data
       };
@@ -35,12 +43,9 @@ export default function multiSelect(Table) {
       let self = this;
       let listData = self.state.data.concat();
       let checkedObj = Object.assign({}, self.state.checkedObj);
-      let data = self.props.data;
+      let { data } = self.props;
       let selIds = [];
       let id = self.props.multiSelect.param;
-      for (var i = 0; i < data.length; i++) {
-        checkedObj[data[i]["key"]] = !self.state.checkedAll;
-      }
       if (self.state.checkedAll) {
         selIds = [];
       } else {
@@ -50,6 +55,14 @@ export default function multiSelect(Table) {
           } else {
             selIds[i] = listData[i];
           }
+        }
+      }
+      for (var i = 0; i < data.length; i++) {
+        let bool = checkedObj.hasOwnProperty(data[i]["key"]);
+        if (!bool) {
+          selIds.splice(i, 1);
+        } else {
+          checkedObj[data[i]["key"]] = !self.state.checkedAll;
         }
       }
       self.setState({
@@ -96,7 +109,6 @@ export default function multiSelect(Table) {
     };
     renderColumnsMultiSelect(columns) {
       const { data } = this.state;
-      let {selectDisabled} = this.props;
       let checkedObj = Object.assign({}, this.state.checkedObj);
       let checkedArray = Object.keys(checkedObj);
       let { multiSelect } = this.props;
@@ -127,12 +139,12 @@ export default function multiSelect(Table) {
             dataIndex: "checkbox",
             width: "100px",
             render: (text, record, index) => {
-              let bool = selectDisabled(record, index);
+              let bool = checkedObj.hasOwnProperty(record["key"]);
               return (
                 <Checkbox
                   className="table-checkbox"
                   checked={checkedObj[record.key]}
-                  disabled={bool}
+                  disabled={!bool}
                   onChange={this.onCheckboxChange.bind(
                     this,
                     text,
