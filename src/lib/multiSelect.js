@@ -21,7 +21,7 @@ export default function multiSelect(Table) {
       this.splice(index, 1);
     }
   };
-  return class BookLoader extends Component {
+  return class multiSelect extends Component {
     constructor(props) {
       super(props);
       let { selectDisabled, data } = props,
@@ -38,6 +38,25 @@ export default function multiSelect(Table) {
         selIds: [],
         data: this.props.data
       };
+    }
+    componentWillReceiveProps(nextProps) {
+      let props = this.props,
+        { selectDisabled, data } = props,
+        checkedObj = {};
+      if (nextProps.data !== data) {
+        for (var i = 0; i < nextProps.data.length; i++) {
+          let bool = selectDisabled(nextProps.data[i], i);
+          if (!bool) {
+            checkedObj[nextProps.data[i]["key"]] = false;
+          }
+        }
+        this.setState({
+          checkedAll: false,
+          checkedObj: checkedObj,
+          selIds: [],
+          data: nextProps.data
+        });
+      }
     }
     onAllCheckChange = () => {
       let self = this;
