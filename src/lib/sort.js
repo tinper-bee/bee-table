@@ -14,6 +14,15 @@ export default function sort(Table) {
         data: this.props.data
       };
     }
+    componentWillReceiveProps(nextProps){
+      if(nextProps.data !== this.props.data){
+        this.setState({
+          sortOrder: "",
+          data: nextProps.data,
+          oldData: nextProps.data.concat(),
+        });
+      }
+    }
     toggleSortOrder = (order, column) => {
       let { sortOrder, data, oldData } = this.state;
       let ascend_sort = function(key) {
