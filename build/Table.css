@@ -46,9 +46,11 @@
   .u-table-fixed-header .u-table-body {
     background: #fff;
     position: relative; }
+  .u-table-fixed-left .u-table-body-inner {
+    margin-right: -20px; }
   .u-table-fixed-header .u-table-body-inner {
     height: 100%;
-    overflow-y: hidden; }
+    overflow: scroll; }
   .u-table-fixed-header .u-table-scroll .u-table-header {
     overflow-x: scroll;
     padding-bottom: 20px;
@@ -63,6 +65,8 @@
   .u-table-footer {
     padding: 16px 8px;
     border-bottom: 1px solid #e9e9e9; }
+    .u-table-footer .u-table-scroll {
+      overflow-x: hidden; }
   .u-table-footer .u-table {
     margin: -16px -8px; }
   .u-table-placeholder {
@@ -128,7 +132,7 @@
   .u-table-fixed-left {
     left: 0;
     box-shadow: 4px 0 4px rgba(100, 100, 100, 0.1); }
-    .u-table-fixed-left .u-table-fixed-left-body-inner {
+    .u-table-fixed-left-body-inner {
       margin-right: -20px;
       padding-right: 20px; }
     .u-table-fixed-left-fixed-header .u-table-fixed-left .u-table-fixed-left-body-inner {
@@ -139,9 +143,9 @@
     .u-table-fixed-right-expanded-row {
       color: transparent;
       pointer-events: none; }
-  .u-table .u-table-scroll-position-left .u-table-fixed-left {
+  .u-table-scroll-position-left .u-table-fixed-left {
     box-shadow: none; }
-  .u-table .u-table-scroll-position-right .u-table-fixed-right {
+  .u-table-scroll-position-right .u-table-fixed-right {
     box-shadow: none; }
 
 .u-table.bordered table {

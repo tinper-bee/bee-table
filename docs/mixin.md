@@ -22,6 +22,7 @@ import multiSelect from "bee-table/build/lib/multiSelect.js"
 | multiSelect.param   | 通过设置该参数来设计获取的数据数组，默认返还所有数据 | string   | ''       |
 | getSelectedDataFunc | 返回当前选中的数据数组                | Function | 无        |
 | selectDisabled | 设置某一行数据无法被选中，使用类似于rowClassName       | Function(record, index):bool | 无        |
+| selectedRow | 设置某一行数据是否被选中，使用类似于rowClassName       | Function(record, index):bool | 无        |
 
 
 

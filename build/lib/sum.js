@@ -73,7 +73,7 @@ function sum(Table) {
           }
           return item;
         });
-        return _react2["default"].createElement(Table, { showHeader: false, columns: columns_sum, data: obj });
+        return _react2["default"].createElement(Table, _extends({}, _this.props, { footerScroll: true, showHeader: false, columns: columns_sum, data: obj }));
       };
 
       return _this;
@@ -83,6 +83,7 @@ function sum(Table) {
 
     SumTable.prototype.render = function render() {
       return _react2["default"].createElement(Table, _extends({}, this.props, {
+        footerScroll: true,
         columns: this.props.columns,
         data: this.props.data,
         footer: this.currentFooter

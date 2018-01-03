@@ -87,6 +87,16 @@ function sort(Table) {
       return _this;
     }
 
+    Demo11.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+      if (nextProps.data !== this.props.data) {
+        this.setState({
+          sortOrder: "",
+          data: nextProps.data,
+          oldData: nextProps.data.concat()
+        });
+      }
+    };
+
     Demo11.prototype.renderColumnsDropdown = function renderColumnsDropdown(columns) {
       var _this2 = this;
 

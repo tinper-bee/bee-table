@@ -35,6 +35,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * 使用全选时得注意，data中的key值一定要是唯一值
  */
 function multiSelect(Table) {
+  var _class, _temp, _initialiseProps;
+
   Array.prototype.indexOf = function (val) {
     for (var i = 0; i < this.length; i++) {
       if (this[i] == val) return i;
@@ -47,86 +49,47 @@ function multiSelect(Table) {
       this.splice(index, 1);
     }
   };
-  return function (_Component) {
-    _inherits(BookLoader, _Component);
+  return _temp = _class = function (_Component) {
+    _inherits(multiSelect, _Component);
 
-    function BookLoader(props) {
-      _classCallCheck(this, BookLoader);
+    function multiSelect(props) {
+      _classCallCheck(this, multiSelect);
 
       var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
-      _this.onAllCheckChange = function () {
-        var self = _this;
-        var listData = self.state.data.concat();
-        var checkedObj = _extends({}, self.state.checkedObj);
-        var data = self.props.data;
-        var selIds = [];
-        var id = self.props.multiSelect.param;
-        for (var i = 0; i < data.length; i++) {
-          checkedObj[data[i]["key"]] = !self.state.checkedAll;
-        }
-        if (self.state.checkedAll) {
-          selIds = [];
-        } else {
-          for (var i = 0; i < listData.length; i++) {
-            if (id) {
-              selIds[i] = listData[i][id];
-            } else {
-              selIds[i] = listData[i];
-            }
-          }
-        }
-        self.setState({
-          checkedAll: !self.state.checkedAll,
-          checkedObj: checkedObj,
-          selIds: selIds
-        });
-        self.props.getSelectedDataFunc(selIds);
-      };
+      _initialiseProps.call(_this);
 
-      _this.onCheckboxChange = function (text, record, index) {
-        var self = _this;
-        var allFlag = false;
-        var selIds = self.state.selIds;
-        var id = self.props.multiSelect ? self.props.multiSelect.param ? record[self.props.multiSelect.param] : record : record;
-        var checkedObj = _extends({}, self.state.checkedObj);
-        var checkedArray = Object.keys(checkedObj);
-        var getSelectedDataFunc = self.props.getSelectedDataFunc;
-
-        if (checkedObj[record["key"]]) {
-          selIds.remove(id);
-        } else {
-          selIds.push(id);
-        }
-        checkedObj[record["key"]] = !checkedObj[record["key"]];
-        for (var i = 0; i < checkedArray.length; i++) {
-          if (!checkedObj[checkedArray[i]]) {
-            allFlag = false;
-            break;
-          } else {
-            allFlag = true;
-          }
-        }
-        self.setState({
-          checkedAll: allFlag,
-          checkedObj: checkedObj,
-          selIds: selIds
-        });
-        if (typeof getSelectedDataFunc === "function") {
-          getSelectedDataFunc(selIds);
-        }
-      };
+      var data = props.data,
+          checkedObj = _this.initCheckedObj(props);
 
       _this.state = {
         checkedAll: false,
-        checkedObj: {},
+        checkedObj: checkedObj,
         selIds: [],
         data: _this.props.data
       };
       return _this;
     }
 
-    BookLoader.prototype.renderColumnsMultiSelect = function renderColumnsMultiSelect(columns) {
+    multiSelect.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+      var props = this.props,
+          selectDisabled = props.selectDisabled,
+          selectedRow = props.selectedRow,
+          data = props.data,
+          checkedObj = {};
+
+      if (nextProps.data !== data || nextProps.selectDisabled !== selectDisabled || nextProps.selectedRow !== selectedRow) {
+        checkedObj = this.initCheckedObj(nextProps);
+        this.setState({
+          checkedAll: false,
+          checkedObj: checkedObj,
+          selIds: [],
+          data: nextProps.data
+        });
+      }
+    };
+
+    multiSelect.prototype.renderColumnsMultiSelect = function renderColumnsMultiSelect(columns) {
       var _this2 = this;
 
       var data = this.state.data;
@@ -157,11 +120,13 @@ function multiSelect(Table) {
           }),
           key: "checkbox",
           dataIndex: "checkbox",
-          width: "5%",
+          width: "100px",
           render: function render(text, record, index) {
+            var bool = checkedObj.hasOwnProperty(record["key"]);
             return _react2["default"].createElement(_beeCheckbox2["default"], {
               className: "table-checkbox",
               checked: checkedObj[record.key],
+              disabled: !bool,
               onChange: _this2.onCheckboxChange.bind(_this2, text, record, index)
             });
           }
@@ -171,12 +136,101 @@ function multiSelect(Table) {
       return columns;
     };
 
-    BookLoader.prototype.render = function render() {
+    multiSelect.prototype.render = function render() {
       var columns = this.renderColumnsMultiSelect(this.props.columns).concat();
       return _react2["default"].createElement(Table, _extends({}, this.props, { columns: columns }));
     };
 
-    return BookLoader;
-  }(_react.Component);
+    return multiSelect;
+  }(_react.Component), _initialiseProps = function _initialiseProps() {
+    var _this3 = this;
+
+    this.initCheckedObj = function (props) {
+      var checkedObj = {},
+          selectDisabled = props.selectDisabled,
+          selectedRow = props.selectedRow,
+          data = props.data;
+
+      for (var i = 0; i < data.length; i++) {
+        var bool = selectDisabled(data[i], i);
+        if (!bool) {
+          if (selectedRow && selectedRow(data[i], i)) {
+            checkedObj[data[i]["key"]] = true;
+          } else {
+            checkedObj[data[i]["key"]] = false;
+          }
+        }
+      }
+      return checkedObj;
+    };
+
+    this.onAllCheckChange = function () {
+      var self = _this3;
+      var listData = self.state.data.concat();
+      var checkedObj = _extends({}, self.state.checkedObj);
+      var data = self.props.data;
+
+      var selIds = [];
+      var id = self.props.multiSelect.param;
+      if (self.state.checkedAll) {
+        selIds = [];
+      } else {
+        for (var i = 0; i < listData.length; i++) {
+          if (id) {
+            selIds[i] = listData[i][id];
+          } else {
+            selIds[i] = listData[i];
+          }
+        }
+      }
+      for (var i = 0; i < data.length; i++) {
+        var bool = checkedObj.hasOwnProperty(data[i]["key"]);
+        if (!bool) {
+          selIds.splice(i, 1);
+        } else {
+          checkedObj[data[i]["key"]] = !self.state.checkedAll;
+        }
+      }
+      self.setState({
+        checkedAll: !self.state.checkedAll,
+        checkedObj: checkedObj,
+        selIds: selIds
+      });
+      self.props.getSelectedDataFunc(selIds);
+    };
+
+    this.onCheckboxChange = function (text, record, index) {
+      var self = _this3;
+      var allFlag = false;
+      var selIds = self.state.selIds;
+      var id = self.props.multiSelect ? self.props.multiSelect.param ? record[self.props.multiSelect.param] : record : record;
+      var checkedObj = _extends({}, self.state.checkedObj);
+      var checkedArray = Object.keys(checkedObj);
+      var getSelectedDataFunc = self.props.getSelectedDataFunc;
+
+      if (checkedObj[record["key"]]) {
+        selIds.remove(id);
+      } else {
+        selIds.push(id);
+      }
+      checkedObj[record["key"]] = !checkedObj[record["key"]];
+      for (var i = 0; i < checkedArray.length; i++) {
+        if (!checkedObj[checkedArray[i]]) {
+          allFlag = false;
+          break;
+        } else {
+          allFlag = true;
+        }
+      }
+      self.setState({
+        checkedAll: allFlag,
+        checkedObj: checkedObj,
+        selIds: selIds
+      });
+      if (typeof getSelectedDataFunc === "function") {
+        getSelectedDataFunc(selIds);
+      }
+    };
+  }, _temp;
 }
 module.exports = exports["default"];

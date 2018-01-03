@@ -519,7 +519,8 @@ var Table = function (_Component) {
         clsPrefix = _props3.clsPrefix,
         _props3$scroll = _props3.scroll,
         scroll = _props3$scroll === undefined ? {} : _props3$scroll,
-        getBodyWrapper = _props3.getBodyWrapper;
+        getBodyWrapper = _props3.getBodyWrapper,
+        footerScroll = _props3.footerScroll;
     var useFixedHeader = this.props.useFixedHeader;
 
     var bodyStyle = _extends({}, this.props.bodyStyle);
@@ -528,7 +529,9 @@ var Table = function (_Component) {
     var tableClassName = '';
     if (scroll.x || fixed) {
       tableClassName = clsPrefix + '-fixed';
-      bodyStyle.overflowX = bodyStyle.overflowX || 'auto';
+      if (!footerScroll) {
+        bodyStyle.overflowX = bodyStyle.overflowX || 'auto';
+      }
     }
 
     if (scroll.y) {
@@ -544,7 +547,7 @@ var Table = function (_Component) {
 
       // Add negative margin bottom for scroll bar overflow bug
       var scrollbarWidth = (0, _utils.measureScrollbar)();
-      if (scrollbarWidth > 0) {
+      if (scrollbarWidth >= 0) {
         (fixed ? bodyStyle : headStyle).marginBottom = '-' + scrollbarWidth + 'px';
         (fixed ? bodyStyle : headStyle).paddingBottom = '0px';
       }

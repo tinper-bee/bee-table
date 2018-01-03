@@ -24,14 +24,8 @@ export default function multiSelect(Table) {
   return class multiSelect extends Component {
     constructor(props) {
       super(props);
-      let { selectDisabled, data } = props,
-        checkedObj = {};
-      for (var i = 0; i < data.length; i++) {
-        let bool = selectDisabled(data[i], i);
-        if (!bool) {
-          checkedObj[data[i]["key"]] = false;
-        }
-      }
+      let { data } = props,
+        checkedObj = this.initCheckedObj(props);
       this.state = {
         checkedAll: false,
         checkedObj: checkedObj,
@@ -41,15 +35,10 @@ export default function multiSelect(Table) {
     }
     componentWillReceiveProps(nextProps) {
       let props = this.props,
-        { selectDisabled, data } = props,
+        { selectDisabled, selectedRow, data } = props,
         checkedObj = {};
-      if (nextProps.data !== data) {
-        for (var i = 0; i < nextProps.data.length; i++) {
-          let bool = selectDisabled(nextProps.data[i], i);
-          if (!bool) {
-            checkedObj[nextProps.data[i]["key"]] = false;
-          }
-        }
+      if (nextProps.data !== data || nextProps.selectDisabled !== selectDisabled || nextProps.selectedRow !== selectedRow) {
+        checkedObj = this.initCheckedObj(nextProps);
         this.setState({
           checkedAll: false,
           checkedObj: checkedObj,
@@ -58,6 +47,21 @@ export default function multiSelect(Table) {
         });
       }
     }
+    initCheckedObj = props => {
+      let checkedObj = {},
+        { selectDisabled, selectedRow, data } = props;
+      for (var i = 0; i < data.length; i++) {
+        let bool = selectDisabled(data[i], i);
+        if (!bool) {
+          if(selectedRow&&selectedRow(data[i], i)){
+            checkedObj[data[i]["key"]] = true;
+          }else{
+            checkedObj[data[i]["key"]] = false;
+          }
+        }
+      }
+      return checkedObj;
+    };
     onAllCheckChange = () => {
       let self = this;
       let listData = self.state.data.concat();
