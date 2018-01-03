@@ -1,3 +1,21 @@
+<a name="1.0.9"></a>
+## [1.0.9](https://github.com/tinper-bee/bee-table/compare/1.0.8...1.0.9) (2018-01-03)
+
+
+### Bug Fixes
+
+* **multiSelect.js:** 修复全选功能在更新数据时bug ([b9de7de](https://github.com/tinper-bee/bee-table/commit/b9de7de))
+* **sort.js:** 修复使用排序功能时，更新数据不生效bug ([b63541c](https://github.com/tinper-bee/bee-table/commit/b63541c))
+
+
+### Features
+
+* **multiSelect.js:** 新增selectDisabled可以设置某一行数据无法被全选 ([d2d6d09](https://github.com/tinper-bee/bee-table/commit/d2d6d09))
+* **multiSelect.js:** 新增selectedRow参数来控制某一行数据是否选中 ([3f0c3be](https://github.com/tinper-bee/bee-table/commit/3f0c3be))
+* **Table.js:** 新增footerScroll参数来让表尾和表体公用同一个横向滚动条 ([e79234f](https://github.com/tinper-bee/bee-table/commit/e79234f))
+
+
+
 <a name="1.0.8"></a>
 ## [1.0.8](https://github.com/tinper-bee/bee-table/compare/1.0.7...1.0.8) (2017-12-24)
 
