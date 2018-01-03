@@ -11983,13 +11983,9 @@
 	          data = props.data;
 	
 	      for (var i = 0; i < data.length; i++) {
-	        var bool = selectDisabled(data[i], i);
+	        var bool = selectDisabled && selectDisabled(data[i], i) || false;
 	        if (!bool) {
-	          if (selectedRow && selectedRow(data[i], i)) {
-	            checkedObj[data[i]["key"]] = true;
-	          } else {
-	            checkedObj[data[i]["key"]] = false;
-	          }
+	          checkedObj[data[i]["key"]] = selectedRow && selectedRow(data[i], i) || false;
 	        }
 	      }
 	      return checkedObj;

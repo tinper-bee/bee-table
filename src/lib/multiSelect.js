@@ -37,7 +37,11 @@ export default function multiSelect(Table) {
       let props = this.props,
         { selectDisabled, selectedRow, data } = props,
         checkedObj = {};
-      if (nextProps.data !== data || nextProps.selectDisabled !== selectDisabled || nextProps.selectedRow !== selectedRow) {
+      if (
+        nextProps.data !== data ||
+        nextProps.selectDisabled !== selectDisabled ||
+        nextProps.selectedRow !== selectedRow
+      ) {
         checkedObj = this.initCheckedObj(nextProps);
         this.setState({
           checkedAll: false,
@@ -51,13 +55,10 @@ export default function multiSelect(Table) {
       let checkedObj = {},
         { selectDisabled, selectedRow, data } = props;
       for (var i = 0; i < data.length; i++) {
-        let bool = selectDisabled(data[i], i);
+        let bool = (selectDisabled && selectDisabled(data[i], i)) || false;
         if (!bool) {
-          if(selectedRow&&selectedRow(data[i], i)){
-            checkedObj[data[i]["key"]] = true;
-          }else{
-            checkedObj[data[i]["key"]] = false;
-          }
+          checkedObj[data[i]["key"]] =
+            (selectedRow && selectedRow(data[i], i)) || false;
         }
       }
       return checkedObj;
