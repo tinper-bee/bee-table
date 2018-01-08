@@ -210,7 +210,9 @@ import InputRender from "bee-table/render/InputRender.js"
 #### 配置
 | 参数                | 说明                                       | 类型         | 默认值    |
 | ----------------- | ---------------------------------------- | ---------- | ------ |
-| isclickTrigger    | 是否使用点击触发编辑状态                             | boolean    | false  |
+| isclickTrigger    | 是否使用点击触发编辑状态                             | boolean    | false |
+| type  | 控制日期的显示格式，DatePicker、MonthPicker或者WeekPicker，暂时不支持RangePicker | string | "DatePicker" |
+
 
 注:其他参数参见bee-datepicker组件参数配置
 

@@ -18,10 +18,6 @@ import InputRender from "../../build/render/InputRender.js";
 import DateRender from "../../build/render/DateRender.js";
 import SelectRender from "../../build/render/SelectRender.js";
 
-//日期控件引入
-import DatePicker from "bee-datepicker";
-import MonthPicker, { WeekPicker, RangePicker } from "bee-datepicker";
-
 const format = "YYYY-MM-DD";
 const format2 = "YYYY-MM";
 const format3 = "YYYY-MM-DD HH:mm:ss";
@@ -197,6 +193,7 @@ class Demo14 extends React.Component {
           return (
             <DateRender
               value={text}
+              type="MonthPicker"
               isclickTrigger={true}
               format={format2}
               onSelect={this.onSelect}

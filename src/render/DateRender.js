@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Icon from "bee-icon";
 import DatePicker from "bee-datepicker";
 import moment from "moment";
+const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 
 export default class DateRender extends Component {
   state = {
@@ -32,13 +33,29 @@ export default class DateRender extends Component {
   };
   render() {
     const { value, editable } = this.state;
-    let { isclickTrigger } = this.props;
+    let { isclickTrigger, type } = this.props;
     let cellContent = "";
+    let TComponent;
+    switch (type.toLowerCase()) {
+      case "monthpicker":
+        TComponent = MonthPicker;
+        break;
+      // case "rangepicker":
+      //   TComponent = RangePicker;
+      //   break;
+      case "weekpicker":
+        TComponent = WeekPicker;
+        break;
+      default:
+      TComponent = DatePicker;
+        break;
+    }
+    TComponent;
     let date_value = value ? moment(value) : value;
     if (editable) {
       cellContent = isclickTrigger ? (
         <div className="editable-cell-input-wrapper">
-          <DatePicker
+          <TComponent
             {...this.props}
             value={date_value}
             onChange={this.handleChange}
@@ -51,7 +68,7 @@ export default class DateRender extends Component {
         </div>
       ) : (
         <div className="editable-cell-input-wrapper">
-          <DatePicker
+          <TComponent
             {...this.props}
             value={date_value}
             onChange={this.handleChange}
@@ -82,3 +99,6 @@ export default class DateRender extends Component {
     return <div className="editable-cell">{cellContent}</div>;
   }
 }
+DateRender.defaultProps = {
+  type: "DatePicker"
+};
