@@ -1,4 +1,15 @@
-<a name="1.0.10"></a> 
+<a name="1.0.11"></a>
+## [1.0.11](https://github.com/tinper-bee/bee-table/compare/v1.0.10...v1.0.11) (2018-01-16)
+
+
+### Features
+
+* **DateRender.js:** 新增type参数支持控制日期的不同展现方式，并完善示例和文档 ([0b814f8](https://github.com/tinper-bee/bee-table/commit/0b814f8))
+* **demo.js:** 修改demo显示效果 ([e6b3eb9](https://github.com/tinper-bee/bee-table/commit/e6b3eb9))
+
+
+
+<a name="1.0.10"></a>
 ## [1.0.10](https://github.com/tinper-bee/bee-table/compare/v1.0.9...v1.0.10) (2018-01-03)
 
 
