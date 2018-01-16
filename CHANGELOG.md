@@ -1,4 +1,4 @@
-<a name="1.0.10"></a>
+<a name="1.0.10"></a> 
 ## [1.0.10](https://github.com/tinper-bee/bee-table/compare/v1.0.9...v1.0.10) (2018-01-03)
 
 

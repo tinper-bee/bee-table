@@ -32,6 +32,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 
+var MonthPicker = _beeDatepicker2["default"].MonthPicker,
+    RangePicker = _beeDatepicker2["default"].RangePicker,
+    WeekPicker = _beeDatepicker2["default"].WeekPicker;
+
 var DateRender = function (_Component) {
   _inherits(DateRender, _Component);
 
@@ -74,15 +78,33 @@ var DateRender = function (_Component) {
     var _state = this.state,
         value = _state.value,
         editable = _state.editable;
-    var isclickTrigger = this.props.isclickTrigger;
+    var _props = this.props,
+        isclickTrigger = _props.isclickTrigger,
+        type = _props.type;
 
     var cellContent = "";
+    var TComponent = void 0;
+    switch (type.toLowerCase()) {
+      case "monthpicker":
+        TComponent = MonthPicker;
+        break;
+      // case "rangepicker":
+      //   TComponent = RangePicker;
+      //   break;
+      case "weekpicker":
+        TComponent = WeekPicker;
+        break;
+      default:
+        TComponent = _beeDatepicker2["default"];
+        break;
+    }
+    TComponent;
     var date_value = value ? (0, _moment2["default"])(value) : value;
     if (editable) {
       cellContent = isclickTrigger ? _react2["default"].createElement(
         "div",
         { className: "editable-cell-input-wrapper" },
-        _react2["default"].createElement(_beeDatepicker2["default"], _extends({}, this.props, {
+        _react2["default"].createElement(TComponent, _extends({}, this.props, {
           value: date_value,
           onChange: this.handleChange
         })),
@@ -94,7 +116,7 @@ var DateRender = function (_Component) {
       ) : _react2["default"].createElement(
         "div",
         { className: "editable-cell-input-wrapper" },
-        _react2["default"].createElement(_beeDatepicker2["default"], _extends({}, this.props, {
+        _react2["default"].createElement(TComponent, _extends({}, this.props, {
           value: date_value,
           onChange: this.handleChange
         })),
@@ -131,4 +153,8 @@ var DateRender = function (_Component) {
 }(_react.Component);
 
 exports["default"] = DateRender;
+
+DateRender.defaultProps = {
+  type: "DatePicker"
+};
 module.exports = exports["default"];
