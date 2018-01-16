@@ -33,7 +33,7 @@ class Demo extends Component {
         const header = (
             <div>
                 {example}
-                <Button style={{"margin-top": "10px"}} shape="block" onClick={ this.handleClick }>
+                <Button style={{"marginTop": "10px"}} shape="block" onClick={ this.handleClick }>
                     { caret }
                     { text }
                 </Button>
