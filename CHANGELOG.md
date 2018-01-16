@@ -1,3 +1,13 @@
+<a name="1.0.12"></a>
+## [1.0.12](https://github.com/tinper-bee/bee-table/compare/v1.0.11...v1.0.12) (2018-01-16)
+
+
+### Bug Fixes
+
+* **multiSelect.js:** 修复全选功能中使用rowKey参数bug ([5f30910](https://github.com/tinper-bee/bee-table/commit/5f30910))
+
+
+
 <a name="1.0.11"></a>
 ## [1.0.11](https://github.com/tinper-bee/bee-table/compare/v1.0.10...v1.0.11) (2018-01-16)
 
