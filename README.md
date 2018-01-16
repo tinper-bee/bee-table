@@ -68,7 +68,7 @@ class Demo extends Component {
 | useFixedHeader         | 是否使用固定表头                                 | bool                                   | false           |
 | bodyStyle              | 添加到tablebody上的style                      | object                                 | {}              |
 | style                  | 添加到table上的style                          | object                                 | {}              |
-| rowKey                 | 如果rowKey是字符串，`record [rowKey]`将被用作键。如果rowKey是function，`rowKey（record）'的返回值将被用作键。 | string or Function(record):string      | 'key'           |
+| rowKey                 | 如果rowKey是字符串，`record [rowKey]`将被用作键。如果rowKey是function，`rowKey（record, index）`的返回值将被用作键。 | string or Function(record, index):string      | 'key'           |
 | rowClassName           | 获取行的classname                            | Function(record, index, indent):string | () => ''        |
 | expandedRowClassName   | 获取展开行的className                          | Function(recode, index, indent):string | () => ''        |
 | onExpand               | 展开行时的钩子函数                                | Function(expanded, record)             | () => ''        |

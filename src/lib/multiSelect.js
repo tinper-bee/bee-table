@@ -51,13 +51,20 @@ export default function multiSelect(Table) {
         });
       }
     }
+    getRowKey=(record, index) => {
+      const rowKey = this.props.rowKey || 'key';
+      const key = (typeof rowKey === 'function') ?
+        rowKey(record, index) : record[rowKey];
+      return key;
+    }
     initCheckedObj = props => {
       let checkedObj = {},
         { selectDisabled, selectedRow, data } = props;
       for (var i = 0; i < data.length; i++) {
         let bool = (selectDisabled && selectDisabled(data[i], i)) || false;
+        let rowKey = data[i]["key"] ? data[i]["key"] : this.getRowKey(data[i],i);
         if (!bool) {
-          checkedObj[data[i]["key"]] =
+          checkedObj[rowKey] =
             (selectedRow && selectedRow(data[i], i)) || false;
         }
       }
@@ -82,11 +89,12 @@ export default function multiSelect(Table) {
         }
       }
       for (var i = 0; i < data.length; i++) {
-        let bool = checkedObj.hasOwnProperty(data[i]["key"]);
+        let rowKey = data[i]["key"] ? data[i]["key"] : this.getRowKey(data[i],i);
+        let bool = checkedObj.hasOwnProperty(rowKey);
         if (!bool) {
           selIds.splice(i, 1);
         } else {
-          checkedObj[data[i]["key"]] = !self.state.checkedAll;
+          checkedObj[rowKey] = !self.state.checkedAll;
         }
       }
       self.setState({
@@ -108,12 +116,13 @@ export default function multiSelect(Table) {
       let checkedObj = Object.assign({}, self.state.checkedObj);
       let checkedArray = Object.keys(checkedObj);
       let { getSelectedDataFunc } = self.props;
-      if (checkedObj[record["key"]]) {
+      let rowKey = record["key"] ? record["key"] : this.getRowKey(record,i);
+      if (checkedObj[rowKey]) {
         selIds.remove(id);
       } else {
         selIds.push(id);
       }
-      checkedObj[record["key"]] = !checkedObj[record["key"]];
+      checkedObj[rowKey] = !checkedObj[rowKey];
       for (var i = 0; i < checkedArray.length; i++) {
         if (!checkedObj[checkedArray[i]]) {
           allFlag = false;
@@ -163,11 +172,12 @@ export default function multiSelect(Table) {
             dataIndex: "checkbox",
             width: "100px",
             render: (text, record, index) => {
-              let bool = checkedObj.hasOwnProperty(record["key"]);
+              let rowKey = record["key"] ? record["key"] : this.getRowKey(record,i);
+              let bool = checkedObj.hasOwnProperty(rowKey);
               return (
                 <Checkbox
                   className="table-checkbox"
-                  checked={checkedObj[record.key]}
+                  checked={checkedObj[rowKey]}
                   disabled={!bool}
                   onChange={this.onCheckboxChange.bind(
                     this,
@@ -186,7 +196,7 @@ export default function multiSelect(Table) {
     }
     render() {
       let columns = this.renderColumnsMultiSelect(this.props.columns).concat();
-      return <Table {...this.props} columns={columns} />;
+      return <Table ref={(table_ref) => { this.table_ref = table_ref; }} {...this.props} columns={columns} />;
     }
   };
 }
