@@ -7,6 +7,7 @@ import shallowequal from 'shallowequal';
 import addEventListener from 'tinper-bee-core/lib/addEventListener';
 import ColumnManager from './ColumnManager';
 import createStore from './createStore';
+import Loading from 'bee-loading';
 
 const propTypes = {
     data: PropTypes.array,
@@ -711,6 +712,12 @@ class Table extends Component{
     const isTableScroll = this.columnManager.isAnyColumnsFixed() ||
                           props.scroll.x ||
                           props.scroll.y;
+    let loading = props.loading;
+    if (typeof loading === 'boolean') {
+      loading = {
+        show: loading,
+      };
+    }
     return (
       <div className={className} style={props.style}>
         {this.getTitle()}
@@ -729,6 +736,9 @@ class Table extends Component{
             {this.getRightFixedTable()}
           </div>}
         </div>
+        <Loading
+          container={this}
+          {...loading} />
       </div>
     );
   }

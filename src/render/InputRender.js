@@ -23,6 +23,7 @@ export default class InputRender extends Component {
     this.setState({ value });
   };
   check = () => {
+    console.log('1')
     if (typeof this.flag === "undefined" || this.flag) {
       this.props.check(this.flag, this.obj);
       this.setState({ editable: false });
@@ -31,6 +32,7 @@ export default class InputRender extends Component {
       }
       this.flag = undefined;
     }
+    
   };
   checkValidate = (flag, obj) => {
     this.flag = flag;
