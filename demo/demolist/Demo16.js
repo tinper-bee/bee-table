@@ -72,12 +72,18 @@ class Demo16 extends Component {
         })
       }
     }
-    
-    
+  }
+  haveExpandIcon=(record, index)=>{
+    //控制是否显示行展开icon，该参数只有在和expandedRowRender同时使用才生效
+    if(index == 0){
+      return true;
+    }
+    return false;
   }
   render() {
     return (
       <Table
+        haveExpandIcon={this.haveExpandIcon}
         columns={columns16}
         data={data16}
         onExpand={this.getData}

@@ -318,6 +318,7 @@ class Table extends Component{
     const expandRowByClick = props.expandRowByClick;
     const { fixedColumnsBodyRowsHeight } = this.state;
     let rst = [];
+    let isHiddenExpandIcon;
     const rowClassName = props.rowClassName;
     const rowRef = props.rowRef;
     const expandedRowClassName = props.expandedRowClassName;
@@ -336,6 +337,10 @@ class Table extends Component{
       let expandedRowContent;
       if (expandedRowRender && isRowExpanded) {
         expandedRowContent = expandedRowRender(record, i, indent);
+      }
+      //只有当使用expandedRowRender参数的时候才去识别isHiddenExpandIcon（隐藏行展开的icon）
+      if(expandedRowRender && typeof props.haveExpandIcon == 'function'){
+          isHiddenExpandIcon = props.haveExpandIcon(record, i);
       }
       const className = rowClassName(record, i, indent);
 
@@ -356,7 +361,8 @@ class Table extends Component{
       } else {
         leafColumns = this.columnManager.leafColumns();
       }
-
+      
+      
       rst.push(
         <TableRow
           indent={indent}
@@ -379,6 +385,7 @@ class Table extends Component{
           onRowClick={onRowClick}
           onRowDoubleClick={onRowDoubleClick}
           height={height}
+          isHiddenExpandIcon={isHiddenExpandIcon}
           {...onHoverProps}
           key={key}
           hoverKey={key}

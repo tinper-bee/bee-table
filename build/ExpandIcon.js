@@ -55,9 +55,10 @@ var ExpandIcon = function (_Component) {
         onExpand = _props.onExpand,
         needIndentSpaced = _props.needIndentSpaced,
         expanded = _props.expanded,
-        record = _props.record;
+        record = _props.record,
+        isHiddenExpandIcon = _props.isHiddenExpandIcon;
 
-    if (expandable) {
+    if (expandable && !isHiddenExpandIcon) {
       var expandClassName = expanded ? 'expanded' : 'collapsed';
       return _react2["default"].createElement('span', {
         className: clsPrefix + '-expand-icon ' + clsPrefix + '-' + expandClassName,
@@ -65,7 +66,7 @@ var ExpandIcon = function (_Component) {
           return onExpand(!expanded, record, e);
         }
       });
-    } else if (needIndentSpaced) {
+    } else if (needIndentSpaced || isHiddenExpandIcon) {
       return _react2["default"].createElement('span', { className: clsPrefix + '-expand-icon ' + clsPrefix + '-spaced' });
     }
     return null;

@@ -44,6 +44,8 @@ export default class InputRender extends Component {
   handleKeydown = event => {
     if (event.keyCode == 13) {
       this.check();
+    }else if(event.keyCode == 9){
+      debugger;
     }
   };
   //货币的格式化方法

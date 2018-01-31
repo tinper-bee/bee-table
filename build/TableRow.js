@@ -169,7 +169,8 @@ var TableRow = function (_Component) {
         onExpand = _props7.onExpand,
         needIndentSpaced = _props7.needIndentSpaced,
         indent = _props7.indent,
-        indentSize = _props7.indentSize;
+        indentSize = _props7.indentSize,
+        isHiddenExpandIcon = _props7.isHiddenExpandIcon;
     var className = this.props.className;
 
 
@@ -185,7 +186,8 @@ var TableRow = function (_Component) {
       onExpand: onExpand,
       needIndentSpaced: needIndentSpaced,
       expanded: expanded,
-      record: record
+      record: record,
+      isHiddenExpandIcon: isHiddenExpandIcon
     });
 
     for (var i = 0; i < columns.length; i++) {

@@ -40,6 +40,10 @@ var _createStore = require('./createStore');
 
 var _createStore2 = _interopRequireDefault(_createStore);
 
+var _beeLoading = require('bee-loading');
+
+var _beeLoading2 = _interopRequireDefault(_beeLoading);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
@@ -386,6 +390,7 @@ var Table = function (_Component) {
     var fixedColumnsBodyRowsHeight = this.state.fixedColumnsBodyRowsHeight;
 
     var rst = [];
+    var isHiddenExpandIcon = void 0;
     var rowClassName = props.rowClassName;
     var rowRef = props.rowRef;
     var expandedRowClassName = props.expandedRowClassName;
@@ -406,6 +411,10 @@ var Table = function (_Component) {
       var expandedRowContent = void 0;
       if (expandedRowRender && isRowExpanded) {
         expandedRowContent = expandedRowRender(record, i, indent);
+      }
+      //只有当使用expandedRowRender参数的时候才去识别isHiddenExpandIcon（隐藏行展开的icon）
+      if (expandedRowRender && typeof props.haveExpandIcon == 'function') {
+        isHiddenExpandIcon = props.haveExpandIcon(record, i);
       }
       var className = rowClassName(record, i, indent);
 
@@ -445,7 +454,8 @@ var Table = function (_Component) {
         expandIconColumnIndex: expandIconColumnIndex,
         onRowClick: onRowClick,
         onRowDoubleClick: onRowDoubleClick,
-        height: height
+        height: height,
+        isHiddenExpandIcon: isHiddenExpandIcon
       }, onHoverProps, {
         key: key,
         hoverKey: key,
@@ -811,6 +821,12 @@ var Table = function (_Component) {
     className += ' ' + clsPrefix + '-scroll-position-' + this.state.scrollPosition;
 
     var isTableScroll = this.columnManager.isAnyColumnsFixed() || props.scroll.x || props.scroll.y;
+    var loading = props.loading;
+    if (typeof loading === 'boolean') {
+      loading = {
+        show: loading
+      };
+    }
     return _react2["default"].createElement(
       'div',
       { className: className, style: props.style },
@@ -835,7 +851,10 @@ var Table = function (_Component) {
           { className: clsPrefix + '-fixed-right' },
           this.getRightFixedTable()
         )
-      )
+      ),
+      _react2["default"].createElement(_beeLoading2["default"], _extends({
+        container: this
+      }, loading))
     );
   };
 
