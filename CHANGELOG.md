@@ -1,3 +1,14 @@
+<a name="1.0.13"></a>
+## [1.0.13](https://github.com/tinper-bee/bee-table/compare/v1.0.12...v1.0.13) (2018-01-31)
+
+
+### Features
+
+* **Table.js:** add loading param ([92c6468](https://github.com/tinper-bee/bee-table/commit/92c6468)), closes [#10](https://github.com/tinper-bee/bee-table/issues/10)
+* feat haveExpandIcon to control hidden expandIcon ([98a403d](https://github.com/tinper-bee/bee-table/commit/98a403d))
+
+
+
 <a name="1.0.12"></a>
 ## [1.0.12](https://github.com/tinper-bee/bee-table/compare/v1.0.11...v1.0.12) (2018-01-16)
 
