@@ -7,6 +7,7 @@
 
 import React, { Component } from "react";
 import Table from "../../src";
+import multiSelect from "../../src/lib/multiSelect.js";
 
 const columns16 = [
   { title: "用户名", dataIndex: "a", key: "a", width: 100 },
@@ -37,18 +38,20 @@ const data16 = [
   { a: "郭靖", b: "男", c: 25, d: "操作", key: "3" }
 ];
 
+// let Table1 = multiSelect(Table)
+
 class Demo16 extends Component {
   constructor(props){
     super(props);
     this.state={
-      data:data16
+      data_obj:{}
     }
   }
-  expandedRowRender = () => {
+  expandedRowRender = (record, index, indent) => {
     return (
       <Table
         columns={columns16}
-        data={this.state.data}
+        data={this.state.data_obj[record.key]}
         title={currentData => <div>标题: 这是一个标题</div>}
         footer={currentData => <div>表尾: 我是小尾巴</div>}
       />
@@ -56,19 +59,22 @@ class Demo16 extends Component {
   };
   getData=(expanded, record)=>{
     //当点击展开的时候才去请求数据
+    let new_obj = Object.assign({},this.state.data_obj);
     if(expanded){
       if(record.key==='1'){
+        new_obj[record.key] = [
+          { a: "令狐冲", b: "男", c: 41, d: "操作", key: "1" },
+          { a: "杨过", b: "男", c: 67, d: "操作", key: "2" }
+        ]
         this.setState({
-          data:[
-            { a: "令狐冲", b: "男", c: 41, d: "操作", key: "1" },
-            { a: "杨过", b: "男", c: 67, d: "操作", key: "2" }
-          ]
+          data_obj:new_obj
         })
       }else{
+        new_obj[record.key] = [
+          { a: "令狐冲", b: "男", c: 41, d: "操作", key: "1" }
+        ]
         this.setState({
-          data:[
-            { a: "令狐冲", b: "男", c: 41, d: "操作", key: "1" },
-          ]
+          data_obj:new_obj
         })
       }
     }
@@ -83,7 +89,6 @@ class Demo16 extends Component {
   render() {
     return (
       <Table
-        haveExpandIcon={this.haveExpandIcon}
         columns={columns16}
         data={data16}
         onExpand={this.getData}
