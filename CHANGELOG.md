@@ -1,3 +1,14 @@
+<a name="1.0.14"></a>
+## [1.0.14](https://github.com/tinper-bee/bee-table/compare/v1.0.13...v1.0.14) (2018-03-28)
+
+
+### Bug Fixes
+
+* **Demo16.js:** change the demo about api of the expandedRowRender ([b33c036](https://github.com/tinper-bee/bee-table/commit/b33c036))
+* **multiSelect.js:** fix initCheckedObj will change selIds ([cf10950](https://github.com/tinper-bee/bee-table/commit/cf10950))
+
+
+
 <a name="1.0.13"></a>
 ## [1.0.13](https://github.com/tinper-bee/bee-table/compare/v1.0.12...v1.0.13) (2018-01-31)
 
