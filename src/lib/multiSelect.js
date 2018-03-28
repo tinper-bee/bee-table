@@ -24,14 +24,15 @@ export default function multiSelect(Table) {
   return class multiSelect extends Component {
     constructor(props) {
       super(props);
-      let { data } = props,
-        checkedObj = this.initCheckedObj(props);
       this.state = {
         checkedAll: false,
-        checkedObj: checkedObj,
+        checkedObj: {},
         selIds: [],
-        data: this.props.data
+        data: props.data
       };
+    }
+    componentDidMount(){
+      this.setState(this.initCheckedObj());
     }
     componentWillReceiveProps(nextProps) {
       let props = this.props,
@@ -42,7 +43,7 @@ export default function multiSelect(Table) {
         nextProps.selectDisabled !== selectDisabled ||
         nextProps.selectedRow !== selectedRow
       ) {
-        checkedObj = this.initCheckedObj(nextProps);
+        checkedObj = this.initCheckedObj(nextProps).checkedObj;
         this.setState({
           checkedAll: false,
           checkedObj: checkedObj,
@@ -57,18 +58,26 @@ export default function multiSelect(Table) {
         rowKey(record, index) : record[rowKey];
       return key;
     }
-    initCheckedObj = props => {
+    initCheckedObj = () => {
       let checkedObj = {},
-        { selectDisabled, selectedRow, data } = props;
+        { selectDisabled, selectedRow, data } = this.props,
+        selIds_ = this.state.selIds;
       for (var i = 0; i < data.length; i++) {
         let bool = (selectDisabled && selectDisabled(data[i], i)) || false;
         let rowKey = data[i]["key"] ? data[i]["key"] : this.getRowKey(data[i],i);
         if (!bool) {
-          checkedObj[rowKey] =
-            (selectedRow && selectedRow(data[i], i)) || false;
+          if(selectedRow && selectedRow(data[i], i)){
+            selIds_.push(data[i]);
+            checkedObj[rowKey] = true;
+          }else{
+            checkedObj[rowKey] = false;
+          }
         }
       }
-      return checkedObj;
+      return {
+        checkedObj:checkedObj,
+        selIds:selIds_
+      };
     };
     onAllCheckChange = () => {
       let self = this;
