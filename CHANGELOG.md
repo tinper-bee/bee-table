@@ -1,3 +1,13 @@
+<a name="1.0.15"></a>
+## [1.0.15](https://github.com/tinper-bee/bee-table/compare/v1.0.14...v1.0.15) (2018-04-02)
+
+
+### Bug Fixes
+
+* fix change this.props to props ([c3bc24d](https://github.com/tinper-bee/bee-table/commit/c3bc24d))
+
+
+
 <a name="1.0.14"></a>
 ## [1.0.14](https://github.com/tinper-bee/bee-table/compare/v1.0.13...v1.0.14) (2018-03-28)
 
