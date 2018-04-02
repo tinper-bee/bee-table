@@ -77,14 +77,18 @@ function multiSelect(Table) {
           selectDisabled = props.selectDisabled,
           selectedRow = props.selectedRow,
           data = props.data,
+          selIds = void 0,
+          obj = void 0,
           checkedObj = {};
 
       if (nextProps.data !== data || nextProps.selectDisabled !== selectDisabled || nextProps.selectedRow !== selectedRow) {
-        checkedObj = this.initCheckedObj(nextProps).checkedObj;
+        obj = this.initCheckedObj(nextProps);
+        checkedObj = obj.checkedObj;
+        selIds = obj.selIds;
         this.setState({
           checkedAll: false,
           checkedObj: checkedObj,
-          selIds: [],
+          selIds: selIds,
           data: nextProps.data
         });
       }

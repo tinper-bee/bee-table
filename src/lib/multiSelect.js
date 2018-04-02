@@ -37,17 +37,20 @@ export default function multiSelect(Table) {
     componentWillReceiveProps(nextProps) {
       let props = this.props,
         { selectDisabled, selectedRow, data } = props,
+        selIds,obj,
         checkedObj = {};
       if (
         nextProps.data !== data ||
         nextProps.selectDisabled !== selectDisabled ||
         nextProps.selectedRow !== selectedRow
       ) {
-        checkedObj = this.initCheckedObj(nextProps).checkedObj;
+        obj = this.initCheckedObj(nextProps);
+        checkedObj = obj.checkedObj;
+        selIds = obj.selIds;
         this.setState({
           checkedAll: false,
           checkedObj: checkedObj,
-          selIds: [],
+          selIds: selIds,
           data: nextProps.data
         });
       }
