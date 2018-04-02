@@ -64,13 +64,23 @@ export default function multiSelect(Table) {
     initCheckedObj = (props) => {
       let checkedObj = {},
         { selectDisabled, selectedRow, data } = props,
-        selIds_ = this.state.selIds;
+        selIds_ = [...this.state.selIds],
+        selIds_length = selIds_.length;
       for (var i = 0; i < data.length; i++) {
         let bool = (selectDisabled && selectDisabled(data[i], i)) || false;
         let rowKey = data[i]["key"] ? data[i]["key"] : this.getRowKey(data[i],i);
         if (!bool) {
           if(selectedRow && selectedRow(data[i], i)){
-            selIds_.push(data[i]);
+            if(selIds_length>0){
+              for (let index = 0; index < selIds_length; index++) {
+                const selid = selIds_[index];
+                if(selid[rowKey] !== data[i][rowKey]){
+                  selIds_.push(data[i]);
+                }
+              }
+            }else{
+              selIds_.push(data[i]);
+            }
             checkedObj[rowKey] = true;
           }else{
             checkedObj[rowKey] = false;
