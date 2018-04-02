@@ -35,6 +35,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * 使用全选时得注意，data中的key值一定要是唯一值
  */
 function multiSelect(Table) {
+  var _class, _temp, _initialiseProps;
+
   Array.prototype.indexOf = function (val) {
     for (var i = 0; i < this.length; i++) {
       if (this[i] == val) return i;
@@ -47,7 +49,7 @@ function multiSelect(Table) {
       this.splice(index, 1);
     }
   };
-  return function (_Component) {
+  return _temp = _class = function (_Component) {
     _inherits(multiSelect, _Component);
 
     function multiSelect(props) {
@@ -55,107 +57,7 @@ function multiSelect(Table) {
 
       var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
-      _this.getRowKey = function (record, index) {
-        var rowKey = _this.props.rowKey || 'key';
-        var key = typeof rowKey === 'function' ? rowKey(record, index) : record[rowKey];
-        return key;
-      };
-
-      _this.initCheckedObj = function () {
-        var checkedObj = {},
-            _this$props = _this.props,
-            selectDisabled = _this$props.selectDisabled,
-            selectedRow = _this$props.selectedRow,
-            data = _this$props.data,
-            selIds_ = _this.state.selIds;
-
-        for (var i = 0; i < data.length; i++) {
-          var bool = selectDisabled && selectDisabled(data[i], i) || false;
-          var rowKey = data[i]["key"] ? data[i]["key"] : _this.getRowKey(data[i], i);
-          if (!bool) {
-            if (selectedRow && selectedRow(data[i], i)) {
-              selIds_.push(data[i]);
-              checkedObj[rowKey] = true;
-            } else {
-              checkedObj[rowKey] = false;
-            }
-          }
-        }
-        return {
-          checkedObj: checkedObj,
-          selIds: selIds_
-        };
-      };
-
-      _this.onAllCheckChange = function () {
-        var self = _this;
-        var listData = self.state.data.concat();
-        var checkedObj = _extends({}, self.state.checkedObj);
-        var data = self.props.data;
-
-        var selIds = [];
-        var id = self.props.multiSelect.param;
-        if (self.state.checkedAll) {
-          selIds = [];
-        } else {
-          for (var i = 0; i < listData.length; i++) {
-            if (id) {
-              selIds[i] = listData[i][id];
-            } else {
-              selIds[i] = listData[i];
-            }
-          }
-        }
-        for (var i = 0; i < data.length; i++) {
-          var rowKey = data[i]["key"] ? data[i]["key"] : _this.getRowKey(data[i], i);
-          var bool = checkedObj.hasOwnProperty(rowKey);
-          if (!bool) {
-            selIds.splice(i, 1);
-          } else {
-            checkedObj[rowKey] = !self.state.checkedAll;
-          }
-        }
-        self.setState({
-          checkedAll: !self.state.checkedAll,
-          checkedObj: checkedObj,
-          selIds: selIds
-        });
-        self.props.getSelectedDataFunc(selIds);
-      };
-
-      _this.onCheckboxChange = function (text, record, index) {
-        var self = _this;
-        var allFlag = false;
-        var selIds = self.state.selIds;
-        var id = self.props.multiSelect ? self.props.multiSelect.param ? record[self.props.multiSelect.param] : record : record;
-        var checkedObj = _extends({}, self.state.checkedObj);
-        var checkedArray = Object.keys(checkedObj);
-        var getSelectedDataFunc = self.props.getSelectedDataFunc;
-
-        var rowKey = record["key"] ? record["key"] : _this.getRowKey(record, i);
-        if (checkedObj[rowKey]) {
-          selIds.remove(id);
-        } else {
-          selIds.push(id);
-        }
-        checkedObj[rowKey] = !checkedObj[rowKey];
-        for (var i = 0; i < checkedArray.length; i++) {
-          if (!checkedObj[checkedArray[i]]) {
-            allFlag = false;
-            break;
-          } else {
-            allFlag = true;
-          }
-        }
-        self.setState({
-          checkedAll: allFlag,
-          checkedObj: checkedObj,
-          selIds: selIds
-        });
-        if (typeof getSelectedDataFunc === "function") {
-          getSelectedDataFunc(selIds);
-        }
-      };
+      _initialiseProps.call(_this);
 
       _this.state = {
         checkedAll: false,
@@ -167,7 +69,7 @@ function multiSelect(Table) {
     }
 
     multiSelect.prototype.componentDidMount = function componentDidMount() {
-      this.setState(this.initCheckedObj());
+      this.setState(this.initCheckedObj(this.props));
     };
 
     multiSelect.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
@@ -246,6 +148,109 @@ function multiSelect(Table) {
     };
 
     return multiSelect;
-  }(_react.Component);
+  }(_react.Component), _initialiseProps = function _initialiseProps() {
+    var _this4 = this;
+
+    this.getRowKey = function (record, index) {
+      var rowKey = _this4.props.rowKey || 'key';
+      var key = typeof rowKey === 'function' ? rowKey(record, index) : record[rowKey];
+      return key;
+    };
+
+    this.initCheckedObj = function (props) {
+      var checkedObj = {},
+          selectDisabled = props.selectDisabled,
+          selectedRow = props.selectedRow,
+          data = props.data,
+          selIds_ = _this4.state.selIds;
+
+      for (var i = 0; i < data.length; i++) {
+        var bool = selectDisabled && selectDisabled(data[i], i) || false;
+        var rowKey = data[i]["key"] ? data[i]["key"] : _this4.getRowKey(data[i], i);
+        if (!bool) {
+          if (selectedRow && selectedRow(data[i], i)) {
+            selIds_.push(data[i]);
+            checkedObj[rowKey] = true;
+          } else {
+            checkedObj[rowKey] = false;
+          }
+        }
+      }
+      return {
+        checkedObj: checkedObj,
+        selIds: selIds_
+      };
+    };
+
+    this.onAllCheckChange = function () {
+      var self = _this4;
+      var listData = self.state.data.concat();
+      var checkedObj = _extends({}, self.state.checkedObj);
+      var data = self.props.data;
+
+      var selIds = [];
+      var id = self.props.multiSelect.param;
+      if (self.state.checkedAll) {
+        selIds = [];
+      } else {
+        for (var i = 0; i < listData.length; i++) {
+          if (id) {
+            selIds[i] = listData[i][id];
+          } else {
+            selIds[i] = listData[i];
+          }
+        }
+      }
+      for (var i = 0; i < data.length; i++) {
+        var rowKey = data[i]["key"] ? data[i]["key"] : _this4.getRowKey(data[i], i);
+        var bool = checkedObj.hasOwnProperty(rowKey);
+        if (!bool) {
+          selIds.splice(i, 1);
+        } else {
+          checkedObj[rowKey] = !self.state.checkedAll;
+        }
+      }
+      self.setState({
+        checkedAll: !self.state.checkedAll,
+        checkedObj: checkedObj,
+        selIds: selIds
+      });
+      self.props.getSelectedDataFunc(selIds);
+    };
+
+    this.onCheckboxChange = function (text, record, index) {
+      var self = _this4;
+      var allFlag = false;
+      var selIds = self.state.selIds;
+      var id = self.props.multiSelect ? self.props.multiSelect.param ? record[self.props.multiSelect.param] : record : record;
+      var checkedObj = _extends({}, self.state.checkedObj);
+      var checkedArray = Object.keys(checkedObj);
+      var getSelectedDataFunc = self.props.getSelectedDataFunc;
+
+      var rowKey = record["key"] ? record["key"] : _this4.getRowKey(record, i);
+      if (checkedObj[rowKey]) {
+        selIds.remove(id);
+      } else {
+        selIds.push(id);
+      }
+      checkedObj[rowKey] = !checkedObj[rowKey];
+      for (var i = 0; i < checkedArray.length; i++) {
+        if (!checkedObj[checkedArray[i]]) {
+          allFlag = false;
+          break;
+        } else {
+          allFlag = true;
+        }
+      }
+      self.setState({
+        checkedAll: allFlag,
+        checkedObj: checkedObj,
+        selIds: selIds
+      });
+      if (typeof getSelectedDataFunc === "function") {
+        getSelectedDataFunc(selIds);
+      }
+    };
+  }, _temp;
 }
 module.exports = exports["default"];

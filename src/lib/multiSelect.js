@@ -32,7 +32,7 @@ export default function multiSelect(Table) {
       };
     }
     componentDidMount(){
-      this.setState(this.initCheckedObj());
+      this.setState(this.initCheckedObj(this.props));
     }
     componentWillReceiveProps(nextProps) {
       let props = this.props,
@@ -58,9 +58,9 @@ export default function multiSelect(Table) {
         rowKey(record, index) : record[rowKey];
       return key;
     }
-    initCheckedObj = () => {
+    initCheckedObj = (props) => {
       let checkedObj = {},
-        { selectDisabled, selectedRow, data } = this.props,
+        { selectDisabled, selectedRow, data } = props,
         selIds_ = this.state.selIds;
       for (var i = 0; i < data.length; i++) {
         let bool = (selectDisabled && selectDisabled(data[i], i)) || false;
