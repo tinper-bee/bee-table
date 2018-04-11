@@ -135,6 +135,7 @@ function multiSelect(Table) {
               className: "table-checkbox",
               checked: checkedObj[rowKey],
               disabled: !bool,
+              onClick: _this2.handleClick,
               onChange: _this2.onCheckboxChange.bind(_this2, text, record, index)
             });
           }
@@ -266,6 +267,10 @@ function multiSelect(Table) {
       if (typeof getSelectedDataFunc === "function") {
         getSelectedDataFunc(selIds);
       }
+    };
+
+    this.handleClick = function (e) {
+      e.stopPropagation();
     };
   }, _temp;
 }

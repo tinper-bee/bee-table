@@ -9650,7 +9650,8 @@
 	    disabled: false,
 	    colors: 'primary',
 	    clsPrefix: 'u-checkbox',
-	    defaultChecked: false
+	    defaultChecked: false,
+	    onClick: function onClick() {}
 	};
 	var clsPrefix = 'u-checkbox';
 	
@@ -9743,7 +9744,9 @@
 	        var props = _this2.props;
 	
 	        clearTimeout(_this2.doubleClickFlag);
-	        props.onClick(e);
+	        if (props.onClick instanceof Function) {
+	            props.onClick(e);
+	        }
 	        //执行延时
 	        _this2.doubleClickFlag = setTimeout(function () {
 	            //do function在此处写单击事件要执行的代码
@@ -10093,6 +10096,7 @@
 	              className: "table-checkbox",
 	              checked: checkedObj[rowKey],
 	              disabled: !bool,
+	              onClick: _this2.handleClick,
 	              onChange: _this2.onCheckboxChange.bind(_this2, text, record, index)
 	            });
 	          }
@@ -10224,6 +10228,10 @@
 	      if (typeof getSelectedDataFunc === "function") {
 	        getSelectedDataFunc(selIds);
 	      }
+	    };
+	
+	    this.handleClick = function (e) {
+	      e.stopPropagation();
 	    };
 	  }, _temp;
 	}

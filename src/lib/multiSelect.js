@@ -162,6 +162,9 @@ export default function multiSelect(Table) {
         getSelectedDataFunc(selIds);
       }
     };
+    handleClick = (e) => {
+      e.stopPropagation();
+    }
     renderColumnsMultiSelect(columns) {
       const { data } = this.state;
       let checkedObj = Object.assign({}, this.state.checkedObj);
@@ -201,6 +204,7 @@ export default function multiSelect(Table) {
                   className="table-checkbox"
                   checked={checkedObj[rowKey]}
                   disabled={!bool}
+                  onClick={this.handleClick}
                   onChange={this.onCheckboxChange.bind(
                     this,
                     text,
