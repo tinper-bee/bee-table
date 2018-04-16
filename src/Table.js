@@ -282,13 +282,24 @@ class Table extends Component{
     } else {
       colCount = this.columnManager.leafColumns().length;
     }
+
+    function contentContainer () {
+      if(content && content.props && content.props.style){
+          return (
+              <div style={{height: content.props.style.height}}></div>
+          )
+      }else{
+        return ' '
+      }
+    }
+
     const columns = [{
       key: 'extra-row',
       render: () => ({
         props: {
           colSpan: colCount,
         },
-        children: fixed !== 'right' ? content : '&nbsp;',
+        children: fixed !== 'right' ? content : contentContainer(),
       }),
     }];
     if (expandIconAsCell && fixed !== 'right') {

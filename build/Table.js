@@ -351,6 +351,15 @@ var Table = function (_Component) {
     } else {
       colCount = this.columnManager.leafColumns().length;
     }
+
+    function contentContainer() {
+      if (content && content.props && content.props.style) {
+        return _react2["default"].createElement('div', { style: { height: content.props.style.height } });
+      } else {
+        return ' ';
+      }
+    }
+
     var columns = [{
       key: 'extra-row',
       render: function render() {
@@ -358,7 +367,7 @@ var Table = function (_Component) {
           props: {
             colSpan: colCount
           },
-          children: fixed !== 'right' ? content : '&nbsp;'
+          children: fixed !== 'right' ? content : contentContainer()
         };
       }
     }];
