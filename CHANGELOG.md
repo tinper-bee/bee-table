@@ -1,3 +1,13 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/tinper-bee/bee-table/compare/v1.0.18...v1.1.0) (2018-04-16)
+
+
+### Features
+
+* **bee-table:** 展开行和固定列同时使用支持固定列展开同样高度 ([141eb5c](https://github.com/tinper-bee/bee-table/commit/141eb5c))
+
+
+
 <a name="1.0.18"></a>
 ## [1.0.18](https://github.com/tinper-bee/bee-table/compare/v1.0.17...v1.0.18) (2018-04-11)
 
