@@ -169,6 +169,15 @@ function sum(Table) {
       _this.tableType = "array";
       return _this;
     }
+
+    SumTable.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+      var columns = this.props.columns;
+
+      if (columns != nextProps.columns) {
+        this.setFooterRender();
+      }
+    };
+
     //合计数字列,并将计算所得数据存储到一个obj对象中
 
 

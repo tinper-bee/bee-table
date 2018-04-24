@@ -6,6 +6,7 @@
  */
 
 import React, { Component } from "react";
+import Button from "bee-button";
 import Table from "../../src"; 
 import sum from "../../src/lib/sum.js";
  
@@ -84,29 +85,51 @@ const columns = [
   }
 ];
 
-const data = [];
-for (let i = 0; i < 5; i++) {
-  data.push({
-    key: i,
-    name: "John Brown",
-    age: i + 1,
-    street: "Lake Park",
-    building: "C",
-    number: 2035,
-    companyAddress: "Lake Street 42",
-    companyName: "SoftLake Co",
-    gender: "M"
-  });
+function getData(){
+  const data = [];
+  for (let i = 0; i < 5; i++) {
+    data.push({
+      key: i,
+      name: "John Brown"+i,
+      age: i + Math.floor(Math.random()*10),
+      street: "Lake Park",
+      building: "C",
+      number: 20 *  Math.floor(Math.random()*10),
+      companyAddress: "Lake Street 42",
+      companyName: "SoftLake Co",
+      gender: "M"
+    });
+  }
+  return data;
 }
 
 class Demo18 extends Component {
-   
-  render() {
-    let multiObj = {
-      type: "checkbox"
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: getData()
     };
+  }
+
+  changeData = ()=>{
+    this.setState({
+      data: getData()
+    });
+  }
+
+  render() {
+    const {data} = this.state;
     return (
       <div>
+        <Button 
+          className="editable-add-btn"
+          type="ghost"
+          onClick={this.changeData}
+        >
+          动态设置数据源
+        </Button>
+
          <ComplexTable 
           columns={columns}
           data={data}

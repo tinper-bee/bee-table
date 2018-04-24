@@ -15,6 +15,14 @@ export default function sum(Table) {
       //array , tree
       this.tableType = "array";
     }
+
+    componentWillReceiveProps(nextProps){
+      const {columns} = this.props;
+      if(columns != nextProps.columns){
+        this.setFooterRender();
+      }
+    }
+
     //合计数字列,并将计算所得数据存储到一个obj对象中
     currentFooter = () => {
       let data_2 = this.props.data;
