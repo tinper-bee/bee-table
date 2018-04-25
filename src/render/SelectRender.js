@@ -34,12 +34,22 @@ export default class SelectRender extends Component {
     let { value, editable } = this.state;
     let { isclickTrigger, dataSource } = this.props;
     let cellContent = "";
-    if (editable) {
+    if (editable) { 
       cellContent = isclickTrigger ? (
         <div className="editable-cell-input-wrapper">
           <Select
             {...this.props}
             value={this.state.value}
+            onBlur={(value)=>{
+              console.log(value);
+              // this.props.onBlur();
+            }}
+
+            onFocus={(value)=>{
+              console.log(value);
+              // this.props.onBlur();
+            }}
+
             onChange={this.handleChange}
           >
             {this.props.children}
@@ -55,6 +65,12 @@ export default class SelectRender extends Component {
           <Select
             {...this.props}
             value={this.state.value}
+            onBlur={()=>{ 
+              this.setState({
+              editable:true
+            });
+            this.props.onBlur();
+          }}
             onChange={this.handleChange}
           >
             {this.props.children}

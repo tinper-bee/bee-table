@@ -76,7 +76,7 @@
 	
 	var CARETUP = _react2['default'].createElement('i', { className: 'uf uf-arrow-up' });
 	
-	var Demo1 = __webpack_require__(64);var Demo10 = __webpack_require__(84);var Demo11 = __webpack_require__(85);var Demo12 = __webpack_require__(88);var Demo13 = __webpack_require__(91);var Demo14 = __webpack_require__(95);var Demo15 = __webpack_require__(437);var Demo16 = __webpack_require__(438);var Demo17 = __webpack_require__(439);var Demo18 = __webpack_require__(440);var Demo2 = __webpack_require__(441);var Demo3 = __webpack_require__(447);var Demo4 = __webpack_require__(448);var Demo5 = __webpack_require__(449);var Demo6 = __webpack_require__(450);var Demo7 = __webpack_require__(451);var Demo8 = __webpack_require__(452);var Demo9 = __webpack_require__(456);var DemoArray = [{ "example": _react2['default'].createElement(Demo1, null), "title": " 简单表格", "code": "/**\n*\n* @title 简单表格\n* @description\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\n\nconst columns = [\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert('这是第'+index+'列，内容为:'+text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  }\n];\n\nconst data = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\nclass Demo1 extends Component {\n  render() {\n    return (\n      <Table\n        columns={columns}\n        data={data}\n        title={currentData => <div>标题: 这是一个标题</div>}\n        footer={currentData => <div>表尾: 我是小尾巴</div>}\n      />\n    );\n  }\n}\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo10, null), "title": " 无数据时显示", "code": "/**\n*\n* @title 无数据时显示\n* @description 无数据时显示效果展示（可自定义）\n *\n* import {Table} from 'tinper-bee';\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\nconst columns10 = [\n    {\n      title: \"Name\",\n      dataIndex: \"name\",\n      key: \"name\",\n      width: \"40%\"\n    },\n    {\n      title: \"Age\",\n      dataIndex: \"age\",\n      key: \"age\",\n      width: \"30%\"\n    },\n    {\n      title: \"Address\",\n      dataIndex: \"address\",\n      key: \"address\"\n    }\n  ];\n  \n  const data10 = [\n    \n  ];\n\n  const emptyFunc = () => <span>这里没有数据！</span>\n  \n  class Demo10 extends Component {\n    render() {\n      return <Table columns={columns10} data={data10} emptyText={emptyFunc} />;\n    }\n  }\n\n", "desc": " 无数据时显示效果展示（可自定义）" }, { "example": _react2['default'].createElement(Demo11, null), "title": " 列排序", "code": "/**\n*\n* @title 列排序\n* @description 点击列的上下按钮即可排序\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee';\n\nconst columns11 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst data11 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\n];\n\nconst defaultProps11 = {\n  prefixCls: \"bee-table\"\n};\nclass Demo11 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      sortOrder: \"\",\n      data: data11\n    };\n  }\n  toggleSortOrder=(order, column)=> {\n    let { sortOrder, data, oldData } = this.state;\n    let ascend_sort = function(key) {\n      return function(a, b) {\n        return a.key - b.key;\n      };\n    };\n    let descend_sort = function(key) {\n      return function(a, b) {\n        return b.key - a.key;\n      };\n    };\n    if (sortOrder === order) {\n      // 切换为未排序状态\n      order = \"\";\n    }\n    if (!oldData) {\n      oldData = data.concat();\n    }\n    if (order === \"ascend\") {\n      data = data.sort(function(a, b) {\n        return column.sorter(a, b);\n      });\n    } else if (order === \"descend\") {\n      data = data.sort(function(a, b) {\n        return column.sorter(b, a);\n      });\n    } else {\n      data = oldData.concat();\n    }\n    this.setState({\n      sortOrder: order,\n      data: data,\n      oldData: oldData\n    });\n  }\n  renderColumnsDropdown(columns) {\n    const { sortOrder } = this.state;\n    const { prefixCls } = this.props;\n\n    return columns.map(originColumn => {\n      let column = Object.assign({}, originColumn);\n      let sortButton;\n      if (column.sorter) {\n        const isAscend = sortOrder === \"ascend\";\n        const isDescend = sortOrder === \"descend\";\n        sortButton = (\n          <div className={`${prefixCls}-column-sorter`}>\n            <span\n              className={`${prefixCls}-column-sorter-up ${isAscend\n                ? \"on\"\n                : \"off\"}`}\n              title=\"↑\"\n              onClick={() => this.toggleSortOrder(\"ascend\", column)}\n            >\n              <Icon type=\"uf-triangle-up\" />\n            </span>\n            <span\n              className={`${prefixCls}-column-sorter-down ${isDescend\n                ? \"on\"\n                : \"off\"}`}\n              title=\"↓\"\n              onClick={() => this.toggleSortOrder(\"descend\", column)}\n            >\n              <Icon type=\"uf-triangle-down\" />\n            </span>\n          </div>\n        );\n      }\n      column.title = (\n        <span>\n          {column.title}\n          {sortButton}\n        </span>\n      );\n      return column;\n    });\n  }\n  render() {\n    let columns = this.renderColumnsDropdown(columns11);\n    return <Table columns={columns} data={this.state.data} />;\n  }\n}\nDemo11.defaultProps = defaultProps11;\n\n\n", "desc": " 点击列的上下按钮即可排序" }, { "example": _react2['default'].createElement(Demo12, null), "title": " 全选功能", "code": "/**\n*\n* @title 全选功能\n* @description 点击表格左列按钮即可选中，并且在选中的回调函数中能获取到选中的数据（未使用封装好的全选功能）\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Checkbox } from 'tinper-bee';\n\nconst columns12 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst data12 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\n];\n\nconst defaultProps12 = {\n  prefixCls: \"bee-table\",\n  multiSelect: {\n    type: \"checkbox\",\n    param: \"key\"\n  }\n};\nclass Demo12 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      checkedAll:false,\n      checkedArray: [\n        false,\n        false,\n        false,\n      ],\n      data: data12\n    };\n  }\n  onAllCheckChange = () => {\n    let self = this;\n    let checkedArray = [];\n    let listData = self.state.data.concat();\n    let selIds = [];\n    // let id = self.props.multiSelect.param;\n    for (var i = 0; i < self.state.checkedArray.length; i++) {\n      checkedArray[i] = !self.state.checkedAll;\n    }\n    // if (self.state.checkedAll) {\n    //   selIds = [];\n    // } else {\n    //   for (var i = 0; i < listData.length; i++) {\n    //     selIds[i] = listData[i][id];\n    //   }\n    // }\n    self.setState({\n      checkedAll: !self.state.checkedAll,\n      checkedArray: checkedArray,\n      // selIds: selIds\n    });\n    // self.props.onSelIds(selIds);\n  };\n  onCheckboxChange = (text, record, index) => {\n    let self = this;\n    let allFlag = false;\n    // let selIds = self.state.selIds;\n    // let id = self.props.postId;\n    let checkedArray = self.state.checkedArray.concat();\n    // if (self.state.checkedArray[index]) {\n      // selIds.remove(record[id]);\n    // } else {\n      // selIds.push(record[id]);\n    // }\n    checkedArray[index] = !self.state.checkedArray[index];\n    for (var i = 0; i < self.state.checkedArray.length; i++) {\n      if (!checkedArray[i]) {\n        allFlag = false;\n        break;\n      } else {\n        allFlag = true;\n      }\n    }\n    self.setState({\n      checkedAll: allFlag,\n      checkedArray: checkedArray,\n      // selIds: selIds\n    });\n    // self.props.onSelIds(selIds);\n  };\n  renderColumnsMultiSelect(columns) {\n    const { data,checkedArray } = this.state;\n    const { multiSelect } = this.props;\n    let select_column = {};\n    let indeterminate_bool = false;\n    // let indeterminate_bool1 = true;\n    if (multiSelect && multiSelect.type === \"checkbox\") {\n      let i = checkedArray.length;\n      while(i--){\n          if(checkedArray[i]){\n            indeterminate_bool = true;\n            break;\n          }\n      }\n      let defaultColumns = [\n        {\n          title: (\n            <Checkbox\n              className=\"table-checkbox\"\n              checked={this.state.checkedAll}\n              indeterminate={indeterminate_bool&&!this.state.checkedAll}\n              onChange={this.onAllCheckChange}\n            />\n          ),\n          key: \"checkbox\",\n          dataIndex: \"checkbox\",\n          width: \"5%\",\n          render: (text, record, index) => {\n            return (\n              <Checkbox\n                className=\"table-checkbox\"\n                checked={this.state.checkedArray[index]}\n                onChange={this.onCheckboxChange.bind(this, text, record, index)}\n              />\n            );\n          }\n        }\n      ];\n      columns = defaultColumns.concat(columns);\n    }\n    return columns;\n  }\n  render() {\n    let columns = this.renderColumnsMultiSelect(columns12);\n    return <Table columns={columns} data={data12} />;\n  }\n}\nDemo12.defaultProps = defaultProps12;\n\n", "desc": " 点击表格左列按钮即可选中，并且在选中的回调函数中能获取到选中的数据（未使用封装好的全选功能）" }, { "example": _react2['default'].createElement(Demo13, null), "title": " 列排序、全选功能、合计", "code": "/**\n *\n * @title 列排序、全选功能、合计\n * @description 列排序、全选功能、合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table, Button, Checkbox } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/multiSelect.js\";;\nimport sort from \"tinper-bee/lib/sort.js\";;\nimport sum from \"tinper-bee/lib/sum.js\";;\n\nconst columns13 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 200\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 200\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width: 200\n  }\n];\n\nconst data13 = [\n  { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"大侠\", key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"大侠\", key: \"3\" }\n];\nconst data13_1 = [\n  { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"2\" },\n  { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"22\" },\n  { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"222\" },\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"大侠\", key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"大侠\", key: \"3\" }\n];\n//拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常\nlet ComplexTable = multiSelect(sum(sort(Table)));\n\nclass Demo13 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data13: data13,\n      selectedRow: this.selectedRow,\n      selectDisabled: this.selectDisabled\n    };\n  }\n  getSelectedDataFunc = data => {\n    console.log(data);\n  };\n  selectDisabled = (record, index) => {\n    console.log(record);\n    if (index === 1) {\n      return true;\n    }\n    return false;\n  };\n  selectedRow = (record, index) => {\n    console.log(record);\n    if (index === 0) {\n      return true;\n    }\n    return false;\n  };\n  onClick = () => {\n    this.setState({\n      selectedRow: function() {}\n    });\n  };\n  onClick1 = () => {\n    this.setState({\n      selectDisabled: (record, index) => {\n        console.log(record);\n        if (index === 2) {\n          return true;\n        }\n        return false;\n      }\n    });\n  };\n  render() {\n    let multiObj = {\n      type: \"checkbox\"\n    };\n    return (\n      <div>\n        <Button className=\"editable-add-btn\" onClick={this.onClick}>\n          change selectedRow\n        </Button>\n        <Button\n          className=\"editable-add-btn\"\n          style={{ marginLeft: \"5px\" }}\n          onClick={this.onClick1}\n        >\n          change selectDisabled\n        </Button>\n        <ComplexTable\n          selectDisabled={this.state.selectDisabled}\n          selectedRow={this.state.selectedRow}\n          columns={columns13}\n          data={this.state.data13}\n          multiSelect={multiObj}\n          getSelectedDataFunc={this.getSelectedDataFunc}\n        />\n      </div>\n    );\n  }\n}\n\n", "desc": " 列排序、全选功能、合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）" }, { "example": _react2['default'].createElement(Demo14, null), "title": " 编辑态表格", "code": "/**\n*\n* @title 编辑态表格\n* @description 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Select, Checkbox, Input, Icon, Tooltip, Animate, Button } from 'tinper-bee';\nimport InputRender from \"tinper-bee/lib/InputRender.js\";;\nimport DateRender from \"tinper-bee/lib/DateRender.js\";;\nimport SelectRender from \"tinper-bee/lib/SelectRender.js\";;\n\nconst format = \"YYYY-MM-DD\";\nconst format2 = \"YYYY-MM\";\nconst format3 = \"YYYY-MM-DD HH:mm:ss\";\n\nconst dateInputPlaceholder = \"选择日期\";\nconst dateInputPlaceholder2 = \"选择年月\";\nconst dataSource = [\n  {\n    key: \"boyuzhou\",\n    value: \"jack\"\n  },\n  {\n    key: \"renhualiu\",\n    value: \"lucy\"\n  },\n  {\n    key: \"yuzhao\",\n    value: \"yiminghe\"\n  }\n];\nclass Demo14 extends React.Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      dataSource: [\n        {\n          key: \"0\",\n          name: \"沉鱼\",\n          number: \"10\",\n          age: \"y\",\n          address: \"jack\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"1\",\n          name: \"落雁\",\n          number: \"100\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"2\",\n          name: \"闭月\",\n          number: \"1000\",\n          age: \"n\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"3\",\n          name: \"羞花\",\n          number: \"9999\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        }\n      ],\n      count: 4\n    };\n    this.columns = [\n      {\n        title: \"普通输入\",\n        dataIndex: \"name\",\n        key: \"name\",\n        width: \"150px\",\n        render: (text, record, index) => (\n          <InputRender\n            name=\"name\"\n            placeholder=\"请输入姓名\"\n            value={text}\n            isclickTrigger={true}\n            check={this.check}\n            onChange={this.onInputChange(index, \"name\")}\n            isRequire={true}\n            method=\"blur\"\n            errorMessage={\n              <Tooltip overlay={\"错误提示\"}>\n                <Icon type=\"uf-exc-c\" className=\"\" />\n              </Tooltip>\n            }\n            reg={/^[0-9]+$/}\n          />\n        )\n      },\n      {\n        title: \"货币输入\",\n        dataIndex: \"number\",\n        key: \"number\",\n        width: \"150px\",\n        render: (text, record, index) => (\n          <InputRender\n            format=\"Currency\"\n            name=\"name\"\n            placeholder=\"请输入姓名\"\n            value={text}\n            isclickTrigger={true}\n            check={this.check}\n            onChange={this.onInputChange(index, \"name\")}\n            isRequire={true}\n            method=\"blur\"\n            errorMessage={\n              <Tooltip overlay={\"错误提示\"}>\n                <Icon type=\"uf-exc-c\" className=\"\" />\n              </Tooltip>\n            }\n          />\n        )\n      },\n      {\n        title: \"复选\",\n        dataIndex: \"age\",\n        key: \"age\",\n        width: \"100px\",\n        render: (text, record, index) => (\n          <Checkbox\n            checked={record.age}\n            onChange={this.onCheckChange(index, \"age\")}\n          />\n        )\n      },\n      {\n        title: \"下拉框\",\n        dataIndex: \"address\",\n        key: \"address\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <SelectRender\n              dataSource={dataSource}\n              isclickTrigger={true}\n              value={text}\n              onChange={this.onSelectChange(index, \"address\")}\n            >\n              <Option value=\"jack\">boyuzhou</Option>\n              <Option value=\"lucy\">renhualiu</Option>\n              <Option value=\"disabled\" disabled>\n                Disabled\n              </Option>\n              <Option value=\"yiminghe\">yuzhao</Option>\n            </SelectRender>\n          );\n        }\n      },\n      {\n        title: \"年月日\",\n        dataIndex: \"datepicker\",\n        key: \"datepicker\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <DateRender\n              value={text}\n              isclickTrigger={true}\n              format={format}\n              onSelect={this.onDateSelect}\n              onChange={this.onDateChange}\n              placeholder={dateInputPlaceholder}\n            />\n          );\n        }\n      },\n      {\n        title: \"年月\",\n        dataIndex: \"MonthPicker\",\n        key: \"MonthPicker\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <DateRender\n              value={text}\n              type=\"MonthPicker\"\n              isclickTrigger={true}\n              format={format2}\n              onSelect={this.onSelect}\n              onChange={this.onChange}\n              placeholder={dateInputPlaceholder2}\n            />\n          );\n        }\n      }\n    ];\n  }\n  check = (flag, obj) => {\n    console.log(flag);\n    console.log(obj);\n  };\n\n  onInputChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onCheckChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onSelectChange = (index, key) => {\n    return value => {\n      console.log(`selected ${value}`);\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onDateChange = d => {\n    console.log(d);\n  };\n  onDateSelect = d => {\n    console.log(d);\n  };\n  onDelete = index => {\n    return () => {\n      const dataSource = [...this.state.dataSource];\n      dataSource.splice(index, 1);\n      this.setState({ dataSource });\n    };\n  };\n  handleAdd = () => {\n    const { count, dataSource } = this.state;\n    const newData = {\n      key: count,\n      name: `凤姐 ${count}`,\n      age: 32,\n      address: \"jack\",\n      datepicker: \"2017-06-12\",\n      MonthPicker: \"2017-02\"\n    };\n    this.setState({\n      dataSource: [...dataSource, newData],\n      count: count + 1\n    });\n  };\n\n  getBodyWrapper = body => {\n    return (\n      <Animate\n        transitionName=\"move\"\n        component=\"tbody\"\n        className={body.props.className}\n      >\n        {body.props.children}\n      </Animate>\n    );\n  };\n  getData = () => {\n    console.log(this.state.dataSource);\n  };\n  render() {\n    const { dataSource } = this.state;\n    const columns = this.columns;\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.handleAdd}\n        >\n          添加一行\n        </Button>\n        <Button\n          style={{marginLeft:\"5px\"}}\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.getData}\n        >\n          获取数据\n        </Button>\n        <Table\n          data={dataSource}\n          columns={columns}\n          getBodyWrapper={this.getBodyWrapper}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）" }, { "example": _react2['default'].createElement(Demo15, null), "title": " 表格行/列合并", "code": "/**\n*\n* @title 表格行/列合并\n* @description 表头只支持列合并，使用 column 里的 colSpan 进行设置。表格支持行/列合并，使用 render 里的单元格属性 colSpan 或者 rowSpan 设值为 0 时，设置的表格不会渲染。\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\n\nconst renderContent = (value, row, index) => {\n  const obj = {\n    children: value,\n    props: {},\n  };\n  if (index === 4) {\n    obj.props.colSpan = 0;\n  }\n  return obj;\n};\n\nconst columns = [{\n  title: 'Name',\n  key: \"name\",\n  dataIndex: 'name',\n  render: (text, row, index) => {\n    if (index < 4) {\n      return <a href=\"#\">{text}</a>;\n    }\n    return {\n      children: <a href=\"#\">{text}</a>,\n      props: {\n        colSpan: 5,\n      },\n    };\n  },\n}, {\n  title: 'Age',\n  key: \"Age\",\n  dataIndex: 'age',\n  render: renderContent,\n}, {\n  title: 'Home phone',\n  colSpan: 2,\n  key: \"tel\",\n  dataIndex: 'tel',\n  render: (value, row, index) => {\n    const obj = {\n      children: value,\n      props: {},\n    };\n    if (index === 2) {\n      obj.props.rowSpan = 2;\n    }\n    if (index === 3) {\n      obj.props.rowSpan = 0;\n    }\n    if (index === 4) {\n      obj.props.colSpan = 0;\n    }\n    return obj;\n  },\n}, {\n  title: 'Phone',\n  colSpan: 0,\n  key: \"phone\",\n  dataIndex: 'phone',\n  render: renderContent,\n}, {\n  title: 'Address',\n  key: \"address\",\n  dataIndex: 'address',\n  render: renderContent,\n}];\n\nconst data = [{\n  key: '1',\n  name: 'John Brown',\n  age: 32,\n  tel: '0571-22098909',\n  phone: 18889898989,\n  address: 'New York No. 1 Lake Park',\n}, {\n  key: '2',\n  name: 'Jim Green',\n  tel: '0571-22098333',\n  phone: 18889898888,\n  age: 42,\n  address: 'London No. 1 Lake Park',\n}, {\n  key: '3',\n  name: 'Joe Black',\n  age: 32,\n  tel: '0575-22098909',\n  phone: 18900010002,\n  address: 'Sidney No. 1 Lake Park',\n}, {\n  key: '4',\n  name: 'Jim Red',\n  age: 18,\n  tel: '0575-22098909',\n  phone: 18900010002,\n  address: 'London No. 2 Lake Park',\n}, {\n  key: '5',\n  name: 'Jake White',\n  age: 18,\n  tel: '0575-22098909',\n  phone: 18900010002,\n  address: 'Dublin No. 2 Lake Park',\n}];\n\nclass Demo15 extends Component {\n  render() {\n    return (\n       <Table columns={columns} data={data}/>\n    );\n  }\n}\n\n\n\n", "desc": " 表头只支持列合并，使用 column 里的 colSpan 进行设置。表格支持行/列合并，使用 render 里的单元格属性 colSpan 或者 rowSpan 设值为 0 时，设置的表格不会渲染。" }, { "example": _react2['default'].createElement(Demo16, null), "title": " 嵌套子表格", "code": "/**\n*\n* @title 嵌套子表格\n* @description 通过expandedRowRender参数来实现子表格\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/multiSelect.js\";;\n\nconst columns16 = [\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert(\"这是第\" + index + \"列，内容为:\" + text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  }\n];\n\nconst data16 = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\n// let Table1 = multiSelect(Table)\n\nclass Demo16 extends Component {\n  constructor(props){\n    super(props);\n    this.state={\n      data_obj:{}\n    }\n  }\n  expandedRowRender = (record, index, indent) => {\n    return (\n      <Table\n        columns={columns16}\n        data={this.state.data_obj[record.key]}\n        title={currentData => <div>标题: 这是一个标题</div>}\n        footer={currentData => <div>表尾: 我是小尾巴</div>}\n      />\n    );\n  };\n  getData=(expanded, record)=>{\n    //当点击展开的时候才去请求数据\n    let new_obj = Object.assign({},this.state.data_obj);\n    if(expanded){\n      if(record.key==='1'){\n        new_obj[record.key] = [\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n          { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" }\n        ]\n        this.setState({\n          data_obj:new_obj\n        })\n      }else{\n        new_obj[record.key] = [\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" }\n        ]\n        this.setState({\n          data_obj:new_obj\n        })\n      }\n    }\n  }\n  haveExpandIcon=(record, index)=>{\n    //控制是否显示行展开icon，该参数只有在和expandedRowRender同时使用才生效\n    if(index == 0){\n      return true;\n    }\n    return false;\n  }\n  render() {\n    return (\n      <Table\n        columns={columns16}\n        data={data16}\n        onExpand={this.getData}\n        expandedRowRender={this.expandedRowRender}\n        title={currentData => <div>标题: 这是一个标题</div>}\n        footer={currentData => <div>表尾: 我是小尾巴</div>}\n      />\n    );\n  }\n}\n\n\n", "desc": " 通过expandedRowRender参数来实现子表格" }, { "example": _react2['default'].createElement(Demo17, null), "title": " loading属性指定表格是否加载中", "code": "/**\n*\n* @title loading属性指定表格是否加载中\n* @description  loading可以传boolean或者obj对象，obj为bee-loading组件的参数类型\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Button } from 'tinper-bee';\n\nconst columns17 = [\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert('这是第'+index+'列，内容为:'+text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  }\n];\n\nconst data17 = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\nclass Demo17 extends Component {\n  constructor(props){\n    super(props);\n    this.state = {\n      loading : true\n    }\n  }\n  changeLoading = () => {\n    this.setState({\n      loading : !this.state.loading\n    })\n  }\n  render() {\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.changeLoading}\n        >\n          切换loading\n        </Button>\n        <Table\n          columns={columns17}\n          data={data17}\n          title={currentData => <div>标题: 这是一个标题</div>}\n          footer={currentData => <div>表尾: 我是小尾巴</div>}\n          // loading={this.state.loading}或者是boolean\n          loading={{show:this.state.loading,loadingType:\"line\"}}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": "  loading可以传boolean或者obj对象，obj为bee-loading组件的参数类型" }, { "example": _react2['default'].createElement(Demo18, null), "title": " 合并标题后的合计,且支持多字段统计", "code": "/**\n *\n * @title 合并标题后的合计,且支持多字段统计\n * @description 合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table, Button } from 'tinper-bee'; \nimport sum from \"tinper-bee/lib/sum.js\";;\n \nlet ComplexTable = sum(Table);\n\nconst columns = [\n  {\n    title: \"Name\",\n    dataIndex: \"name\",\n    key: \"name\",\n    width: 100,\n    fixed: \"left\"\n  },\n  {\n    title: \"Other\",\n    children: [\n      {\n        title: \"Age\",\n        dataIndex: \"age\",\n        key: \"age\",\n        width: 200,\n        sumCol: true,\n      },\n      {\n        title: \"Address\",\n        children: [\n          {\n            title: \"Street\",\n            dataIndex: \"street\",\n            key: \"street\",\n            width: 200\n          },\n          {\n            title: \"Block\",\n            children: [\n              {\n                title: \"Building\",\n                dataIndex: \"building\",\n                key: \"building\",\n                width: 100\n              },\n              {\n                title: \"Door No.\",\n                dataIndex: \"number\",\n                key: \"number\",\n                width: 100,\n                sumCol: true,\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  {\n    title: \"Company\",\n    children: [\n      {\n        title: \"Company Address\",\n        dataIndex: \"companyAddress\",\n        key: \"companyAddress\"\n      },\n      {\n        title: \"Company Name\",\n        dataIndex: \"companyName\",\n        key: \"companyName\"\n      }\n    ]\n  },\n  {\n    title: \"Gender\",\n    dataIndex: \"gender\",\n    key: \"gender\",\n    width: 60,\n    fixed: \"right\"\n  }\n];\n\nfunction getData(){\n  const data = [];\n  for (let i = 0; i < 5; i++) {\n    data.push({\n      key: i,\n      name: \"John Brown\"+i,\n      age: i + Math.floor(Math.random()*10),\n      street: \"Lake Park\",\n      building: \"C\",\n      number: 20 *  Math.floor(Math.random()*10),\n      companyAddress: \"Lake Street 42\",\n      companyName: \"SoftLake Co\",\n      gender: \"M\"\n    });\n  }\n  return data;\n}\n\nclass Demo18 extends Component {\n  \n  constructor(props) {\n    super(props);\n    this.state = {\n      data: getData()\n    };\n  }\n\n  changeData = ()=>{\n    this.setState({\n      data: getData()\n    });\n  }\n\n  render() {\n    const {data} = this.state;\n    return (\n      <div>\n        <Button \n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.changeData}\n        >\n          动态设置数据源\n        </Button>\n\n         <ComplexTable \n          columns={columns}\n          data={data}\n          bordered\n        />\n      </div>\n    );\n  }\n}\n\n", "desc": " 合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）" }, { "example": _react2['default'].createElement(Demo2, null), "title": " 增删改表格", "code": "/**\n*\n* @title 增删改表格\n* @description 这是带有增删改功能的表格（此编辑功能未使用render组件）\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Popconfirm, Input, Icon, Animate, Button } from 'tinper-bee';\n\nclass EditableCell extends React.Component {\n  state = {\n    value: this.props.value,\n    editable: false\n  };\n  handleChange = e => {\n    const value = e.target.value;\n    this.setState({ value });\n  };\n  check = () => {\n    this.setState({ editable: false });\n    if (this.props.onChange) {\n      this.props.onChange(this.state.value);\n    }\n  };\n  edit = () => {\n    this.setState({ editable: true });\n  };\n  handleKeydown = event => {\n    if (event.keyCode == 13) {\n      this.check();\n    }\n  };\n  render() {\n    const { value, editable } = this.state;\n    return (\n      <div className=\"editable-cell\">\n        {editable ? (\n          <div className=\"editable-cell-input-wrapper\">\n            <Input\n              value={value}\n              onChange={this.handleChange}\n              onKeyDown={this.handleKeydown}\n            />\n            <Icon\n              type=\"uf-correct\"\n              className=\"editable-cell-icon-check\"\n              onClick={this.check}\n            />\n          </div>\n        ) : (\n          <div className=\"editable-cell-text-wrapper\">\n            {value || \" \"}\n            <Icon\n              type=\"uf-pencil\"\n              className=\"editable-cell-icon\"\n              onClick={this.edit}\n            />\n          </div>\n        )}\n      </div>\n    );\n  }\n}\n\nclass Demo2 extends React.Component {\n  constructor(props) {\n    super(props);\n    this.columns = [\n      {\n        title: \"姓名\",\n        dataIndex: \"name\",\n        key: \"name\",\n        width: \"30%\",\n        render: (text, record, index) => (\n          <EditableCell\n            value={text}\n            onChange={this.onCellChange(index, \"name\")}\n          />\n        )\n      },\n      {\n        title: \"年龄\",\n        dataIndex: \"age\",\n        key: \"age\"\n      },\n      {\n        title: \"你懂的\",\n        dataIndex: \"address\",\n        key: \"address\"\n      },\n      {\n        title: \"操作\",\n        dataIndex: \"operation\",\n        key: \"operation\",\n        render: (text, record, index) => {\n          return this.state.dataSource.length > 1 ? (\n            <Popconfirm content=\"确认删除?\" id=\"aa\" onClose={this.onDelete(index)}>\n              <Icon type=\"uf-del\" />\n            </Popconfirm>\n          ) : null;\n        }\n      }\n    ];\n\n    this.state = {\n      dataSource: [\n        {\n          key: \"0\",\n          name: \"沉鱼\",\n          age: \"18\",\n          address: \"96, 77, 89\"\n        },\n        {\n          key: \"1\",\n          name: \"落雁\",\n          age: \"16\",\n          address: \"90, 70, 80\"\n        },\n        {\n          key: \"2\",\n          name: \"闭月\",\n          age: \"17\",\n          address: \"80, 60, 80\"\n        },\n        {\n          key: \"3\",\n          name: \"羞花\",\n          age: \"20\",\n          address: \"120, 60, 90\"\n        }\n      ],\n      count: 4\n    };\n  }\n  onCellChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onDelete = index => {\n    return () => {\n      const dataSource = [...this.state.dataSource];\n      dataSource.splice(index, 1);\n      this.setState({ dataSource });\n    };\n  };\n  handleAdd = () => {\n    const { count, dataSource } = this.state;\n    const newData = {\n      key: count,\n      name: `凤姐 ${count}`,\n      age: 32,\n      address: `100 100 100`\n    };\n    this.setState({\n      dataSource: [...dataSource, newData],\n      count: count + 1\n    });\n  };\n\n  getBodyWrapper = body => {\n    return (\n      <Animate\n        transitionName=\"move\"\n        component=\"tbody\"\n        className={body.props.className}\n      >\n        {body.props.children}\n      </Animate>\n    );\n  };\n  render() {\n    const { dataSource } = this.state;\n    const columns = this.columns;\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.handleAdd}\n        >\n          添加\n        </Button>\n        <Table\n          data={dataSource}\n          columns={columns}\n          getBodyWrapper={this.getBodyWrapper}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 这是带有增删改功能的表格（此编辑功能未使用render组件）" }, { "example": _react2['default'].createElement(Demo3, null), "title": " 表头分组", "code": "/**\n *\n * @title 表头分组\n * @description columns[n] 可以内嵌 children，以渲染分组表头。\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table, Button } from 'tinper-bee';\n\nconst { ColumnGroup, Column } = Table;\n\nconst columns = [\n  {\n    title: \"Name\",\n    dataIndex: \"name\",\n    key: \"name\",\n    width: 100,\n    fixed: \"left\"\n  },\n  {\n    title: \"Other\",\n    children: [\n      {\n        title: \"Age\",\n        dataIndex: \"age\",\n        key: \"age\",\n        width: 200\n      },\n      {\n        title: \"Address\",\n        children: [\n          {\n            title: \"Street\",\n            dataIndex: \"street\",\n            key: \"street\",\n            width: 200\n          },\n          {\n            title: \"Block\",\n            children: [\n              {\n                title: \"Building\",\n                dataIndex: \"building\",\n                key: \"building\",\n                width: 100\n              },\n              {\n                title: \"Door No.\",\n                dataIndex: \"number\",\n                key: \"number\",\n                width: 100\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  {\n    title: \"Company\",\n    children: [\n      {\n        title: \"Company Address\",\n        dataIndex: \"companyAddress\",\n        key: \"companyAddress\"\n      },\n      {\n        title: \"Company Name\",\n        dataIndex: \"companyName\",\n        key: \"companyName\"\n      }\n    ]\n  },\n  {\n    title: \"Gender\",\n    dataIndex: \"gender\",\n    key: \"gender\",\n    width: 60,\n    fixed: \"right\"\n  }\n];\n\nconst data = [];\nfor (let i = 0; i < 20; i++) {\n  data.push({\n    key: i,\n    name: \"John Brown\",\n    age: i + 1,\n    street: \"Lake Park\",\n    building: \"C\",\n    number: 2035,\n    companyAddress: \"Lake Street 42\",\n    companyName: \"SoftLake Co\",\n    gender: \"M\"\n  });\n}\n\nclass Demo3 extends Component {\n  render() {\n    return (\n      <Table\n        columns={columns}\n        data={data}\n        bordered\n        scroll={{ x: \"130%\", y: 240 }}\n      />\n    );\n  }\n}\n\n\n", "desc": " columns[n] 可以内嵌 children，以渲染分组表头。" }, { "example": _react2['default'].createElement(Demo4, null), "title": " 树形数据展示", "code": "/**\n*\n* @title 树形数据展示\n* @description 通过在data中配置children数据，来自动生成树形数据\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\nconst columns4 = [\n  {\n    title: \"Name\",\n    dataIndex: \"name\",\n    key: \"name\",\n    width: \"40%\"\n  },\n  {\n    title: \"Age\",\n    dataIndex: \"age\",\n    key: \"age\",\n    width: \"30%\"\n  },\n  {\n    title: \"Address\",\n    dataIndex: \"address\",\n    key: \"address\"\n  }\n];\n\nconst data4 = [\n  {\n    key: 1,\n    name: \"John Brown sr.\",\n    age: 60,\n    address: \"New York No. 1 Lake Park\",\n    children: [\n      {\n        key: 11,\n        name: \"John Brown\",\n        age: 42,\n        address: \"New York No. 2 Lake Park\"\n      },\n      {\n        key: 12,\n        name: \"John Brown jr.\",\n        age: 30,\n        address: \"New York No. 3 Lake Park\",\n        children: [\n          {\n            key: 121,\n            name: \"Jimmy Brown\",\n            age: 16,\n            address: \"New York No. 3 Lake Park\"\n          }\n        ]\n      },\n      {\n        key: 13,\n        name: \"Jim Green sr.\",\n        age: 72,\n        address: \"London No. 1 Lake Park\",\n        children: [\n          {\n            key: 131,\n            name: \"Jim Green\",\n            age: 42,\n            address: \"London No. 2 Lake Park\",\n            children: [\n              {\n                key: 1311,\n                name: \"Jim Green jr.\",\n                age: 25,\n                address: \"London No. 3 Lake Park\"\n              },\n              {\n                key: 1312,\n                name: \"Jimmy Green sr.\",\n                age: 18,\n                address: \"London No. 4 Lake Park\"\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  {\n    key: 2,\n    name: \"Joe Black\",\n    age: 32,\n    address: \"Sidney No. 1 Lake Park\"\n  }\n];\nclass Demo4 extends Component {\n  render() {\n    return <Table columns={columns4} data={data4} />;\n  }\n}\n\n\n", "desc": " 通过在data中配置children数据，来自动生成树形数据" }, { "example": _react2['default'].createElement(Demo5, null), "title": " 固定列", "code": "/**\n*\n* @title 固定列\n* @description 固定列到表格的某侧\n*\n*/\n\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\n\nconst columns5 = [\n  {\n    title: \"Full Name\",\n    width: 100,\n    dataIndex: \"name\",\n    key: \"name\",\n    fixed: \"left\"\n  },\n  { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\", fixed: \"left\" },\n  { title: \"Column 1\", dataIndex: \"address\", key: \"1\" },\n  { title: \"Column 2\", dataIndex: \"address\", key: \"2\" },\n  { title: \"Column 3\", dataIndex: \"address\", key: \"3\" },\n  { title: \"Column 4\", dataIndex: \"address\", key: \"4\" },\n  { title: \"Column 5\", dataIndex: \"address\", key: \"5\" },\n  { title: \"Column 6\", dataIndex: \"address\", key: \"6\" },\n  { title: \"Column 7\", dataIndex: \"address\", key: \"7\" },\n  { title: \"Column 8\", dataIndex: \"address\", key: \"8\" }\n];\n\nconst data5 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    address: \"New York Park\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  }\n];\n\nclass Demo5 extends Component {\n  render() {\n    return <Table columns={columns5} data={data5}scroll={{ x: \"130%\", y: 140 }}/>;\n  }\n}\n\n", "desc": " 固定列到表格的某侧" }, { "example": _react2['default'].createElement(Demo6, null), "title": " 固定表头", "code": "/**\n*\n* @title 固定表头\n* @description 方便一页内展示大量数据。需要指定 column 的 width 属性，否则列头和内容可能不对齐。(还可以设置scroll来支持横向或纵向滚动)\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\nconst columns6 = [\n  {\n    title: \"Full Name\",\n    width: 100,\n    dataIndex: \"name\",\n    key: \"name\"\n  },\n  { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\"},\n  { title: \"Address\", dataIndex: \"address\", key: \"1\" }\n];\n\nconst data6 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    address: \"New York Park\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },{\n    key: \"11\",\n    name: \"John Brown\",\n    age: 32,\n    address: \"New York Park\"\n  },\n  {\n    key: \"12\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"13\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"14\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  }\n];\n\nclass Demo6 extends Component {\n  render() {\n    return <Table columns={columns6} data={data6} scroll={{ y: 150 }} />;\n  }\n}\n\n", "desc": " 方便一页内展示大量数据。需要指定 column 的 width 属性，否则列头和内容可能不对齐。(还可以设置scroll来支持横向或纵向滚动)" }, { "example": _react2['default'].createElement(Demo7, null), "title": " 主子表", "code": "/**\n *\n * @title 主子表\n * @description 主表点击子表联动\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\n\nconst columns7 = [\n  { title: \"班级\", dataIndex: \"a\", key: \"a\" },\n  { title: \"人数\", dataIndex: \"b\", key: \"b\" },\n  { title: \"班主任\", dataIndex: \"c\", key: \"c\" },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst data7 = [\n  { a: \"02级一班\", b: \"2\", c: \"欧阳锋\", d: \"大侠\", key: \"1\" },\n  { a: \"03级二班\", b: \"3\", c: \"归海一刀\", d: \"大侠\", key: \"2\" },\n  { a: \"05级三班\", b: \"1\", c: \"一拳超人\", d: \"愣头青\", key: \"3\" }\n];\n\nconst columns7_1 = [\n  { title: \"姓名\", dataIndex: \"a\", key: \"a\" },\n  { title: \"班级\", dataIndex: \"b\", key: \"b\" },\n  { title: \"系别\", dataIndex: \"c\", key: \"c\" }\n];\n\nclass Demo7 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      children_data: []\n    };\n  }\n\n  rowclick = (record, index) => {\n    if (record.a === \"02级一班\") {\n      this.setState({\n        children_data: [\n          { a: \"郭靖\", b: \"02级一班\", c: \"文学系\", key: \"1\" },\n          { a: \"黄蓉\", b: \"02级一班\", c: \"文学系\", key: \"2\" }\n        ]\n      });\n    } else if (record.a === \"03级二班\") {\n      this.setState({\n        children_data: [\n          { a: \"杨过\", b: \"03级二班\", c: \"外语系\", key: \"1\" },\n          { a: \"小龙女\", b: \"03级二班\", c: \"外语系\", key: \"2\" },\n          { a: \"傻姑\", b: \"03级二班\", c: \"外语系\", key: \"3\" }\n        ]\n      });\n    } else if (record.a === \"05级三班\") {\n      this.setState({\n        children_data: [{ a: \"金圣叹\", b: \"05级三班\", c: \"美术系\", key: \"1\" }]\n      });\n    }\n  };\n\n  render() {\n    return (\n      <div>\n        <Table\n          columns={columns7}\n          data={data7}\n          onRowClick={this.rowclick}\n          title={currentData => <div>标题: 我是主表</div>}\n        />\n        <Table\n          style={{ marginTop: 40 }}\n          columns={columns7_1}\n          data={this.state.children_data}\n          title={currentData => <div>标题: 我是子表</div>}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 主表点击子表联动" }, { "example": _react2['default'].createElement(Demo8, null), "title": " 表格+分页", "code": "/**\n *\n * @title 表格+分页\n * @description 点击分页联动表格\n *\n *import {Table} from 'tinper-bee';\n */\n\nimport React, { Component } from \"react\";\n\nimport { Table, Pagination } from 'tinper-bee';\n\nconst columns8 = [\n  { title: \"姓名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst pageData = {\n  1: [\n    { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"2\" },\n    { a: \"令狐冲\", b: \"男\", c: 41, d: \"大侠\", key: \"1\" },\n    { a: \"郭靖\", b: \"男\", c: 25, d: \"大侠\", key: \"3\" }\n  ],\n  2: [\n    { a: \"芙蓉姐姐\", b: \"女\", c: 23, d: \"大侠\", key: \"1\" },\n    { a: \"芙蓉妹妹\", b: \"女\", c: 23, d: \"内行\", key: \"2\" }\n  ]\n};\n\nclass Demo8 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: pageData[1],\n      activePage: 1\n    };\n  }\n\n  handleSelect(eventKey) {\n    this.setState({\n      data: pageData[eventKey],\n      activePage: eventKey\n    });\n  }\n\n  render() {\n    return (\n      <div>\n        <Table columns={columns8} data={this.state.data} />\n        <Pagination\n          first\n          last\n          prev\n          next\n          boundaryLinks\n          items={2}\n          maxButtons={5}\n          activePage={this.state.activePage}\n          onSelect={this.handleSelect.bind(this)}\n        />\n      </div>\n    );\n  }\n}\n\n", "desc": " 点击分页联动表格" }, { "example": _react2['default'].createElement(Demo9, null), "title": " 表格+搜索", "code": "/**\n *\n * @title 表格+搜索\n * @description 搜索刷新表格数据\n *\n *\n * import {Table} from 'tinper-bee';\n */\n\nimport React, { Component } from \"react\";\n\nimport { Table, FormControl, InputGroup, Icon } from 'tinper-bee';\n\nclass Search extends Component {\n  state = {\n    searchValue: \"\",\n    empty: false\n  };\n\n  /**\n     * 搜索\n     */\n  handleSearch = () => {\n    let { onSearch } = this.props;\n    this.setState({\n      empty: true\n    });\n    onSearch && onSearch(this.state.searchValue);\n  };\n\n  /**\n     * 捕获回车\n     * @param e\n     */\n  handleKeyDown = e => {\n    if (e.keyCode === 13) {\n      this.handleSearch();\n    }\n  };\n\n  /**\n     * 输入框改变\n     * @param e\n     */\n  handleChange = e => {\n    this.setState({\n      searchValue: e.target.value\n    });\n  };\n\n  /**\n     * 清空输入框\n     */\n  emptySearch = () => {\n    let { onEmpty } = this.props;\n    this.setState({\n      searchValue: \"\",\n      empty: false\n    });\n    onEmpty && onEmpty();\n  };\n\n  render() {\n    return (\n      <InputGroup simple className=\"search-component\">\n        <FormControl\n          onChange={this.handleChange}\n          value={this.state.searchValue}\n          onKeyDown={this.handleKeyDown}\n          placeholder=\"请输入用户名\"\n          type=\"text\"\n        />\n        {this.state.empty ? (\n          <Icon\n            type=\"uf-close-c\"\n            onClick={this.emptySearch}\n            className=\"empty-search\"\n          />\n        ) : null}\n\n        <InputGroup.Button onClick={this.handleSearch} shape=\"border\">\n          <Icon type=\"uf-search\" />\n        </InputGroup.Button>\n      </InputGroup>\n    );\n  }\n}\n\nconst columns9 = [\n  {\n    title: \"姓名\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst userData = [\n  { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"大侠\", key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"大侠\", key: \"3\" }\n];\n\nclass Demo9 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: userData\n    };\n  }\n\n  handleSearch = value => {\n    if (value === \"\") {\n      return this.setState({\n        data: userData\n      });\n    }\n    let regExp = new RegExp(value, \"ig\");\n    let data = userData.filter(item => regExp.test(item.a));\n    this.setState({\n      data\n    });\n  };\n\n  handleEmpty = () => {\n    this.setState({\n      data: userData\n    });\n  };\n\n  render() {\n    return (\n      <div>\n        <div className=\"clearfix\">\n          <Search onSearch={this.handleSearch} onEmpty={this.handleEmpty} />\n        </div>\n        <Table columns={columns9} data={this.state.data} />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 搜索刷新表格数据" }];
+	var Demo1 = __webpack_require__(64);var Demo10 = __webpack_require__(84);var Demo11 = __webpack_require__(85);var Demo12 = __webpack_require__(88);var Demo13 = __webpack_require__(91);var Demo14 = __webpack_require__(95);var Demo15 = __webpack_require__(437);var Demo16 = __webpack_require__(438);var Demo17 = __webpack_require__(439);var Demo18 = __webpack_require__(440);var Demo19 = __webpack_require__(441);var Demo2 = __webpack_require__(442);var Demo3 = __webpack_require__(448);var Demo4 = __webpack_require__(449);var Demo5 = __webpack_require__(450);var Demo6 = __webpack_require__(451);var Demo7 = __webpack_require__(452);var Demo8 = __webpack_require__(453);var Demo9 = __webpack_require__(457);var DemoArray = [{ "example": _react2['default'].createElement(Demo1, null), "title": " 简单表格", "code": "/**\n*\n* @title 简单表格\n* @description\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\n\nconst columns = [\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert('这是第'+index+'列，内容为:'+text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  }\n];\n\nconst data = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\nclass Demo1 extends Component {\n  render() {\n    return (\n      <Table\n        columns={columns}\n        data={data}\n        title={currentData => <div>标题: 这是一个标题</div>}\n        footer={currentData => <div>表尾: 我是小尾巴</div>}\n      />\n    );\n  }\n}\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo10, null), "title": " 无数据时显示", "code": "/**\n*\n* @title 无数据时显示\n* @description 无数据时显示效果展示（可自定义）\n *\n* import {Table} from 'tinper-bee';\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\nconst columns10 = [\n    {\n      title: \"Name\",\n      dataIndex: \"name\",\n      key: \"name\",\n      width: \"40%\"\n    },\n    {\n      title: \"Age\",\n      dataIndex: \"age\",\n      key: \"age\",\n      width: \"30%\"\n    },\n    {\n      title: \"Address\",\n      dataIndex: \"address\",\n      key: \"address\"\n    }\n  ];\n  \n  const data10 = [\n    \n  ];\n\n  const emptyFunc = () => <span>这里没有数据！</span>\n  \n  class Demo10 extends Component {\n    render() {\n      return <Table columns={columns10} data={data10} emptyText={emptyFunc} />;\n    }\n  }\n\n", "desc": " 无数据时显示效果展示（可自定义）" }, { "example": _react2['default'].createElement(Demo11, null), "title": " 列排序", "code": "/**\n*\n* @title 列排序\n* @description 点击列的上下按钮即可排序\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee';\n\nconst columns11 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst data11 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\n];\n\nconst defaultProps11 = {\n  prefixCls: \"bee-table\"\n};\nclass Demo11 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      sortOrder: \"\",\n      data: data11\n    };\n  }\n  toggleSortOrder=(order, column)=> {\n    let { sortOrder, data, oldData } = this.state;\n    let ascend_sort = function(key) {\n      return function(a, b) {\n        return a.key - b.key;\n      };\n    };\n    let descend_sort = function(key) {\n      return function(a, b) {\n        return b.key - a.key;\n      };\n    };\n    if (sortOrder === order) {\n      // 切换为未排序状态\n      order = \"\";\n    }\n    if (!oldData) {\n      oldData = data.concat();\n    }\n    if (order === \"ascend\") {\n      data = data.sort(function(a, b) {\n        return column.sorter(a, b);\n      });\n    } else if (order === \"descend\") {\n      data = data.sort(function(a, b) {\n        return column.sorter(b, a);\n      });\n    } else {\n      data = oldData.concat();\n    }\n    this.setState({\n      sortOrder: order,\n      data: data,\n      oldData: oldData\n    });\n  }\n  renderColumnsDropdown(columns) {\n    const { sortOrder } = this.state;\n    const { prefixCls } = this.props;\n\n    return columns.map(originColumn => {\n      let column = Object.assign({}, originColumn);\n      let sortButton;\n      if (column.sorter) {\n        const isAscend = sortOrder === \"ascend\";\n        const isDescend = sortOrder === \"descend\";\n        sortButton = (\n          <div className={`${prefixCls}-column-sorter`}>\n            <span\n              className={`${prefixCls}-column-sorter-up ${isAscend\n                ? \"on\"\n                : \"off\"}`}\n              title=\"↑\"\n              onClick={() => this.toggleSortOrder(\"ascend\", column)}\n            >\n              <Icon type=\"uf-triangle-up\" />\n            </span>\n            <span\n              className={`${prefixCls}-column-sorter-down ${isDescend\n                ? \"on\"\n                : \"off\"}`}\n              title=\"↓\"\n              onClick={() => this.toggleSortOrder(\"descend\", column)}\n            >\n              <Icon type=\"uf-triangle-down\" />\n            </span>\n          </div>\n        );\n      }\n      column.title = (\n        <span>\n          {column.title}\n          {sortButton}\n        </span>\n      );\n      return column;\n    });\n  }\n  render() {\n    let columns = this.renderColumnsDropdown(columns11);\n    return <Table columns={columns} data={this.state.data} />;\n  }\n}\nDemo11.defaultProps = defaultProps11;\n\n\n", "desc": " 点击列的上下按钮即可排序" }, { "example": _react2['default'].createElement(Demo12, null), "title": " 全选功能", "code": "/**\n*\n* @title 全选功能\n* @description 点击表格左列按钮即可选中，并且在选中的回调函数中能获取到选中的数据（未使用封装好的全选功能）\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Checkbox } from 'tinper-bee';\n\nconst columns12 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst data12 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\n];\n\nconst defaultProps12 = {\n  prefixCls: \"bee-table\",\n  multiSelect: {\n    type: \"checkbox\",\n    param: \"key\"\n  }\n};\nclass Demo12 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      checkedAll:false,\n      checkedArray: [\n        false,\n        false,\n        false,\n      ],\n      data: data12\n    };\n  }\n  onAllCheckChange = () => {\n    let self = this;\n    let checkedArray = [];\n    let listData = self.state.data.concat();\n    let selIds = [];\n    // let id = self.props.multiSelect.param;\n    for (var i = 0; i < self.state.checkedArray.length; i++) {\n      checkedArray[i] = !self.state.checkedAll;\n    }\n    // if (self.state.checkedAll) {\n    //   selIds = [];\n    // } else {\n    //   for (var i = 0; i < listData.length; i++) {\n    //     selIds[i] = listData[i][id];\n    //   }\n    // }\n    self.setState({\n      checkedAll: !self.state.checkedAll,\n      checkedArray: checkedArray,\n      // selIds: selIds\n    });\n    // self.props.onSelIds(selIds);\n  };\n  onCheckboxChange = (text, record, index) => {\n    let self = this;\n    let allFlag = false;\n    // let selIds = self.state.selIds;\n    // let id = self.props.postId;\n    let checkedArray = self.state.checkedArray.concat();\n    // if (self.state.checkedArray[index]) {\n      // selIds.remove(record[id]);\n    // } else {\n      // selIds.push(record[id]);\n    // }\n    checkedArray[index] = !self.state.checkedArray[index];\n    for (var i = 0; i < self.state.checkedArray.length; i++) {\n      if (!checkedArray[i]) {\n        allFlag = false;\n        break;\n      } else {\n        allFlag = true;\n      }\n    }\n    self.setState({\n      checkedAll: allFlag,\n      checkedArray: checkedArray,\n      // selIds: selIds\n    });\n    // self.props.onSelIds(selIds);\n  };\n  renderColumnsMultiSelect(columns) {\n    const { data,checkedArray } = this.state;\n    const { multiSelect } = this.props;\n    let select_column = {};\n    let indeterminate_bool = false;\n    // let indeterminate_bool1 = true;\n    if (multiSelect && multiSelect.type === \"checkbox\") {\n      let i = checkedArray.length;\n      while(i--){\n          if(checkedArray[i]){\n            indeterminate_bool = true;\n            break;\n          }\n      }\n      let defaultColumns = [\n        {\n          title: (\n            <Checkbox\n              className=\"table-checkbox\"\n              checked={this.state.checkedAll}\n              indeterminate={indeterminate_bool&&!this.state.checkedAll}\n              onChange={this.onAllCheckChange}\n            />\n          ),\n          key: \"checkbox\",\n          dataIndex: \"checkbox\",\n          width: \"5%\",\n          render: (text, record, index) => {\n            return (\n              <Checkbox\n                className=\"table-checkbox\"\n                checked={this.state.checkedArray[index]}\n                onChange={this.onCheckboxChange.bind(this, text, record, index)}\n              />\n            );\n          }\n        }\n      ];\n      columns = defaultColumns.concat(columns);\n    }\n    return columns;\n  }\n  render() {\n    let columns = this.renderColumnsMultiSelect(columns12);\n    return <Table columns={columns} data={data12} />;\n  }\n}\nDemo12.defaultProps = defaultProps12;\n\n", "desc": " 点击表格左列按钮即可选中，并且在选中的回调函数中能获取到选中的数据（未使用封装好的全选功能）" }, { "example": _react2['default'].createElement(Demo13, null), "title": " 列排序、全选功能、合计", "code": "/**\n *\n * @title 列排序、全选功能、合计\n * @description 列排序、全选功能、合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table, Button, Checkbox } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/multiSelect.js\";;\nimport sort from \"tinper-bee/lib/sort.js\";;\nimport sum from \"tinper-bee/lib/sum.js\";;\n\nconst columns13 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 200\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 200\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width: 200\n  }\n];\n\nconst data13 = [\n  { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"大侠\", key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"大侠\", key: \"3\" }\n];\nconst data13_1 = [\n  { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"2\" },\n  { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"22\" },\n  { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"222\" },\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"大侠\", key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"大侠\", key: \"3\" }\n];\n//拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常\nlet ComplexTable = multiSelect(sum(sort(Table)));\n\nclass Demo13 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data13: data13,\n      selectedRow: this.selectedRow,\n      selectDisabled: this.selectDisabled\n    };\n  }\n  getSelectedDataFunc = data => {\n    console.log(data);\n  };\n  selectDisabled = (record, index) => {\n    console.log(record);\n    if (index === 1) {\n      return true;\n    }\n    return false;\n  };\n  selectedRow = (record, index) => {\n    console.log(record);\n    if (index === 0) {\n      return true;\n    }\n    return false;\n  };\n  onClick = () => {\n    this.setState({\n      selectedRow: function() {}\n    });\n  };\n  onClick1 = () => {\n    this.setState({\n      selectDisabled: (record, index) => {\n        console.log(record);\n        if (index === 2) {\n          return true;\n        }\n        return false;\n      }\n    });\n  };\n  render() {\n    let multiObj = {\n      type: \"checkbox\"\n    };\n    return (\n      <div>\n        <Button className=\"editable-add-btn\" onClick={this.onClick}>\n          change selectedRow\n        </Button>\n        <Button\n          className=\"editable-add-btn\"\n          style={{ marginLeft: \"5px\" }}\n          onClick={this.onClick1}\n        >\n          change selectDisabled\n        </Button>\n        <ComplexTable\n          selectDisabled={this.state.selectDisabled}\n          selectedRow={this.state.selectedRow}\n          columns={columns13}\n          data={this.state.data13}\n          multiSelect={multiObj}\n          getSelectedDataFunc={this.getSelectedDataFunc}\n        />\n      </div>\n    );\n  }\n}\n\n", "desc": " 列排序、全选功能、合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）" }, { "example": _react2['default'].createElement(Demo14, null), "title": " 编辑态表格", "code": "/**\n*\n* @title 编辑态表格\n* @description 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Select, Checkbox, Input, Icon, Tooltip, Animate, Button } from 'tinper-bee';\nimport InputRender from \"tinper-bee/lib/InputRender.js\";;\nimport DateRender from \"tinper-bee/lib/DateRender.js\";;\nimport SelectRender from \"tinper-bee/lib/SelectRender.js\";;\n\nconst format = \"YYYY-MM-DD\";\nconst format2 = \"YYYY-MM\";\nconst format3 = \"YYYY-MM-DD HH:mm:ss\";\n\nconst dateInputPlaceholder = \"选择日期\";\nconst dateInputPlaceholder2 = \"选择年月\";\nconst dataSource = [\n  {\n    key: \"boyuzhou\",\n    value: \"jack\"\n  },\n  {\n    key: \"renhualiu\",\n    value: \"lucy\"\n  },\n  {\n    key: \"yuzhao\",\n    value: \"yiminghe\"\n  }\n];\nclass Demo14 extends React.Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      dataSource: [\n        {\n          key: \"0\",\n          name: \"沉鱼\",\n          number: \"10\",\n          age: \"y\",\n          address: \"jack\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"1\",\n          name: \"落雁\",\n          number: \"100\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"2\",\n          name: \"闭月\",\n          number: \"1000\",\n          age: \"n\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"3\",\n          name: \"羞花\",\n          number: \"9999\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        }\n      ],\n      count: 4\n    };\n    this.columns = [\n      {\n        title: \"普通输入\",\n        dataIndex: \"name\",\n        key: \"name\",\n        width: \"150px\",\n        render: (text, record, index) => (\n          <InputRender\n            name=\"name\"\n            placeholder=\"请输入姓名\"\n            value={text}\n            isclickTrigger={true}\n            check={this.check}\n            onChange={this.onInputChange(index, \"name\")}\n            isRequire={true}\n            method=\"blur\"\n            errorMessage={\n              <Tooltip overlay={\"错误提示\"}>\n                <Icon type=\"uf-exc-c\" className=\"\" />\n              </Tooltip>\n            }\n            reg={/^[0-9]+$/}\n          />\n        )\n      },\n      {\n        title: \"货币输入\",\n        dataIndex: \"number\",\n        key: \"number\",\n        width: \"150px\",\n        render: (text, record, index) => (\n          <InputRender\n            format=\"Currency\"\n            name=\"name\"\n            placeholder=\"请输入姓名\"\n            value={text}\n            isclickTrigger={true}\n            check={this.check}\n            onChange={this.onInputChange(index, \"name\")}\n            isRequire={true}\n            method=\"blur\"\n            errorMessage={\n              <Tooltip overlay={\"错误提示\"}>\n                <Icon type=\"uf-exc-c\" className=\"\" />\n              </Tooltip>\n            }\n          />\n        )\n      },\n      {\n        title: \"复选\",\n        dataIndex: \"age\",\n        key: \"age\",\n        width: \"100px\",\n        render: (text, record, index) => (\n          <Checkbox\n            checked={record.age}\n            onChange={this.onCheckChange(index, \"age\")}\n          />\n        )\n      },\n      {\n        title: \"下拉框\",\n        dataIndex: \"address\",\n        key: \"address\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <SelectRender\n              dataSource={dataSource}\n              isclickTrigger={true}\n              value={text}\n              onChange={this.onSelectChange(index, \"address\")}\n            >\n              <Option value=\"jack\">boyuzhou</Option>\n              <Option value=\"lucy\">renhualiu</Option>\n              <Option value=\"disabled\" disabled>\n                Disabled\n              </Option>\n              <Option value=\"yiminghe\">yuzhao</Option>\n            </SelectRender>\n          );\n        }\n      },\n      {\n        title: \"年月日\",\n        dataIndex: \"datepicker\",\n        key: \"datepicker\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <DateRender\n              value={text}\n              isclickTrigger={true}\n              format={format}\n              onSelect={this.onDateSelect}\n              onChange={this.onDateChange}\n              placeholder={dateInputPlaceholder}\n            />\n          );\n        }\n      },\n      {\n        title: \"年月\",\n        dataIndex: \"MonthPicker\",\n        key: \"MonthPicker\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <DateRender\n              value={text}\n              type=\"MonthPicker\"\n              isclickTrigger={true}\n              format={format2}\n              onSelect={this.onSelect}\n              onChange={this.onChange}\n              placeholder={dateInputPlaceholder2}\n            />\n          );\n        }\n      }\n    ];\n  }\n  check = (flag, obj) => {\n    console.log(flag);\n    console.log(obj);\n  };\n\n  onInputChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onCheckChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onSelectChange = (index, key) => {\n    return value => {\n      console.log(`selected ${value}`);\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onDateChange = d => {\n    console.log(d);\n  };\n  onDateSelect = d => {\n    console.log(d);\n  };\n  onDelete = index => {\n    return () => {\n      const dataSource = [...this.state.dataSource];\n      dataSource.splice(index, 1);\n      this.setState({ dataSource });\n    };\n  };\n  handleAdd = () => {\n    const { count, dataSource } = this.state;\n    const newData = {\n      key: count,\n      name: `凤姐 ${count}`,\n      age: 32,\n      address: \"jack\",\n      datepicker: \"2017-06-12\",\n      MonthPicker: \"2017-02\"\n    };\n    this.setState({\n      dataSource: [...dataSource, newData],\n      count: count + 1\n    });\n  };\n\n  getBodyWrapper = body => {\n    return (\n      <Animate\n        transitionName=\"move\"\n        component=\"tbody\"\n        className={body.props.className}\n      >\n        {body.props.children}\n      </Animate>\n    );\n  };\n  getData = () => {\n    console.log(this.state.dataSource);\n  };\n  render() {\n    const { dataSource } = this.state;\n    const columns = this.columns;\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.handleAdd}\n        >\n          添加一行\n        </Button>\n        <Button\n          style={{marginLeft:\"5px\"}}\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.getData}\n        >\n          获取数据\n        </Button>\n        <Table\n          data={dataSource}\n          columns={columns}\n          getBodyWrapper={this.getBodyWrapper}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）" }, { "example": _react2['default'].createElement(Demo15, null), "title": " 表格行/列合并", "code": "/**\n*\n* @title 表格行/列合并\n* @description 表头只支持列合并，使用 column 里的 colSpan 进行设置。表格支持行/列合并，使用 render 里的单元格属性 colSpan 或者 rowSpan 设值为 0 时，设置的表格不会渲染。\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\n\nconst renderContent = (value, row, index) => {\n  const obj = {\n    children: value,\n    props: {},\n  };\n  if (index === 4) {\n    obj.props.colSpan = 0;\n  }\n  return obj;\n};\n\nconst columns = [{\n  title: 'Name',\n  key: \"name\",\n  dataIndex: 'name',\n  render: (text, row, index) => {\n    if (index < 4) {\n      return <a href=\"#\">{text}</a>;\n    }\n    return {\n      children: <a href=\"#\">{text}</a>,\n      props: {\n        colSpan: 5,\n      },\n    };\n  },\n}, {\n  title: 'Age',\n  key: \"Age\",\n  dataIndex: 'age',\n  render: renderContent,\n}, {\n  title: 'Home phone',\n  colSpan: 2,\n  key: \"tel\",\n  dataIndex: 'tel',\n  render: (value, row, index) => {\n    const obj = {\n      children: value,\n      props: {},\n    };\n    if (index === 2) {\n      obj.props.rowSpan = 2;\n    }\n    if (index === 3) {\n      obj.props.rowSpan = 0;\n    }\n    if (index === 4) {\n      obj.props.colSpan = 0;\n    }\n    return obj;\n  },\n}, {\n  title: 'Phone',\n  colSpan: 0,\n  key: \"phone\",\n  dataIndex: 'phone',\n  render: renderContent,\n}, {\n  title: 'Address',\n  key: \"address\",\n  dataIndex: 'address',\n  render: renderContent,\n}];\n\nconst data = [{\n  key: '1',\n  name: 'John Brown',\n  age: 32,\n  tel: '0571-22098909',\n  phone: 18889898989,\n  address: 'New York No. 1 Lake Park',\n}, {\n  key: '2',\n  name: 'Jim Green',\n  tel: '0571-22098333',\n  phone: 18889898888,\n  age: 42,\n  address: 'London No. 1 Lake Park',\n}, {\n  key: '3',\n  name: 'Joe Black',\n  age: 32,\n  tel: '0575-22098909',\n  phone: 18900010002,\n  address: 'Sidney No. 1 Lake Park',\n}, {\n  key: '4',\n  name: 'Jim Red',\n  age: 18,\n  tel: '0575-22098909',\n  phone: 18900010002,\n  address: 'London No. 2 Lake Park',\n}, {\n  key: '5',\n  name: 'Jake White',\n  age: 18,\n  tel: '0575-22098909',\n  phone: 18900010002,\n  address: 'Dublin No. 2 Lake Park',\n}];\n\nclass Demo15 extends Component {\n  render() {\n    return (\n       <Table columns={columns} data={data}/>\n    );\n  }\n}\n\n\n\n", "desc": " 表头只支持列合并，使用 column 里的 colSpan 进行设置。表格支持行/列合并，使用 render 里的单元格属性 colSpan 或者 rowSpan 设值为 0 时，设置的表格不会渲染。" }, { "example": _react2['default'].createElement(Demo16, null), "title": " 嵌套子表格", "code": "/**\n*\n* @title 嵌套子表格\n* @description 通过expandedRowRender参数来实现子表格\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/multiSelect.js\";;\n\nconst columns16 = [\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert(\"这是第\" + index + \"列，内容为:\" + text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  }\n];\n\nconst data16 = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\n// let Table1 = multiSelect(Table)\n\nclass Demo16 extends Component {\n  constructor(props){\n    super(props);\n    this.state={\n      data_obj:{}\n    }\n  }\n  expandedRowRender = (record, index, indent) => {\n    return (\n      <Table\n        columns={columns16}\n        data={this.state.data_obj[record.key]}\n        title={currentData => <div>标题: 这是一个标题</div>}\n        footer={currentData => <div>表尾: 我是小尾巴</div>}\n      />\n    );\n  };\n  getData=(expanded, record)=>{\n    //当点击展开的时候才去请求数据\n    let new_obj = Object.assign({},this.state.data_obj);\n    if(expanded){\n      if(record.key==='1'){\n        new_obj[record.key] = [\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n          { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" }\n        ]\n        this.setState({\n          data_obj:new_obj\n        })\n      }else{\n        new_obj[record.key] = [\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" }\n        ]\n        this.setState({\n          data_obj:new_obj\n        })\n      }\n    }\n  }\n  haveExpandIcon=(record, index)=>{\n    //控制是否显示行展开icon，该参数只有在和expandedRowRender同时使用才生效\n    if(index == 0){\n      return true;\n    }\n    return false;\n  }\n  render() {\n    return (\n      <Table\n        columns={columns16}\n        data={data16}\n        onExpand={this.getData}\n        expandedRowRender={this.expandedRowRender}\n        title={currentData => <div>标题: 这是一个标题</div>}\n        footer={currentData => <div>表尾: 我是小尾巴</div>}\n      />\n    );\n  }\n}\n\n\n", "desc": " 通过expandedRowRender参数来实现子表格" }, { "example": _react2['default'].createElement(Demo17, null), "title": " loading属性指定表格是否加载中", "code": "/**\n*\n* @title loading属性指定表格是否加载中\n* @description  loading可以传boolean或者obj对象，obj为bee-loading组件的参数类型\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Button } from 'tinper-bee';\n\nconst columns17 = [\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert('这是第'+index+'列，内容为:'+text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  }\n];\n\nconst data17 = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\nclass Demo17 extends Component {\n  constructor(props){\n    super(props);\n    this.state = {\n      loading : true\n    }\n  }\n  changeLoading = () => {\n    this.setState({\n      loading : !this.state.loading\n    })\n  }\n  render() {\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.changeLoading}\n        >\n          切换loading\n        </Button>\n        <Table\n          columns={columns17}\n          data={data17}\n          title={currentData => <div>标题: 这是一个标题</div>}\n          footer={currentData => <div>表尾: 我是小尾巴</div>}\n          // loading={this.state.loading}或者是boolean\n          loading={{show:this.state.loading,loadingType:\"line\"}}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": "  loading可以传boolean或者obj对象，obj为bee-loading组件的参数类型" }, { "example": _react2['default'].createElement(Demo18, null), "title": " 合并标题后的合计,且支持多字段统计", "code": "/**\n *\n * @title 合并标题后的合计,且支持多字段统计\n * @description 合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table, Button } from 'tinper-bee'; \nimport sum from \"tinper-bee/lib/sum.js\";;\n \nlet ComplexTable = sum(Table);\n\nconst columns = [\n  {\n    title: \"Name\",\n    dataIndex: \"name\",\n    key: \"name\",\n    width: 100,\n    fixed: \"left\"\n  },\n  {\n    title: \"Other\",\n    children: [\n      {\n        title: \"Age\",\n        dataIndex: \"age\",\n        key: \"age\",\n        width: 200,\n        sumCol: true,\n      },\n      {\n        title: \"Address\",\n        children: [\n          {\n            title: \"Street\",\n            dataIndex: \"street\",\n            key: \"street\",\n            width: 200\n          },\n          {\n            title: \"Block\",\n            children: [\n              {\n                title: \"Building\",\n                dataIndex: \"building\",\n                key: \"building\",\n                width: 100\n              },\n              {\n                title: \"Door No.\",\n                dataIndex: \"number\",\n                key: \"number\",\n                width: 100,\n                sumCol: true,\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  {\n    title: \"Company\",\n    children: [\n      {\n        title: \"Company Address\",\n        dataIndex: \"companyAddress\",\n        key: \"companyAddress\"\n      },\n      {\n        title: \"Company Name\",\n        dataIndex: \"companyName\",\n        key: \"companyName\"\n      }\n    ]\n  },\n  {\n    title: \"Gender\",\n    dataIndex: \"gender\",\n    key: \"gender\",\n    width: 60,\n    fixed: \"right\"\n  }\n];\n\nfunction getData(){\n  const data = [];\n  for (let i = 0; i < 5; i++) {\n    data.push({\n      key: i,\n      name: \"John Brown\"+i,\n      age: i + Math.floor(Math.random()*10),\n      street: \"Lake Park\",\n      building: \"C\",\n      number: 20 *  Math.floor(Math.random()*10),\n      companyAddress: \"Lake Street 42\",\n      companyName: \"SoftLake Co\",\n      gender: \"M\"\n    });\n  }\n  return data;\n}\n\nclass Demo18 extends Component {\n  \n  constructor(props) {\n    super(props);\n    this.state = {\n      data: getData()\n    };\n  }\n\n  changeData = ()=>{\n    this.setState({\n      data: getData()\n    });\n  }\n\n  render() {\n    const {data} = this.state;\n    return (\n      <div>\n        <Button \n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.changeData}\n        >\n          动态设置数据源\n        </Button>\n\n         <ComplexTable \n          columns={columns}\n          data={data}\n          bordered\n        />\n      </div>\n    );\n  }\n}\n\n", "desc": " 合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）" }, { "example": _react2['default'].createElement(Demo19, null), "title": " 编辑态表格", "code": "/**\n*\n* @title 编辑态表格\n* @description 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Select, Checkbox, Input, Icon, Tooltip, Animate, Button } from 'tinper-bee';\nimport InputRender from \"tinper-bee/lib/InputRender.js\";;\nimport DateRender from \"tinper-bee/lib/DateRender.js\";;\nimport SelectRender from \"tinper-bee/lib/SelectRender.js\";;\n\nconst format = \"YYYY-MM-DD\";\nconst format2 = \"YYYY-MM\";\nconst format3 = \"YYYY-MM-DD HH:mm:ss\";\n\nconst dateInputPlaceholder = \"选择日期\";\nconst dateInputPlaceholder2 = \"选择年月\";\nconst dataSource = [\n  {\n    key: \"boyuzhou\",\n    value: \"jack\"\n  },\n  {\n    key: \"renhualiu\",\n    value: \"lucy\"\n  },\n  {\n    key: \"yuzhao\",\n    value: \"yiminghe\"\n  }\n];\nclass Demo19 extends React.Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      dataSource: [\n        {\n          key: \"0\",\n          name: \"沉鱼\",\n          number: \"10\",\n          age: \"y\",\n          address: \"jack\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"1\",\n          name: \"落雁\",\n          number: \"100\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"2\",\n          name: \"闭月\",\n          number: \"1000\",\n          age: \"n\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"3\",\n          name: \"羞花\",\n          number: \"9999\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        }\n      ],\n      count: 4\n    };\n    this.columns = [ \n      {\n        title: \"货币输入\",\n        dataIndex: \"number\",\n        key: \"number\",\n        width: \"150px\",\n        render: (text, record, index) => (\n          <InputRender\n            format=\"Currency\"\n            name=\"name\"\n            placeholder=\"请输入姓名\"\n            value={text}\n            isclickTrigger={true}\n            check={this.check}\n            onChange={this.onInputChange(index, \"name\")}\n            isRequire={true}\n            method=\"blur\"\n            errorMessage={\n              <Tooltip overlay={\"错误提示\"}>\n                <Icon type=\"uf-exc-c\" className=\"\" />\n              </Tooltip>\n            }\n          />\n        )\n      },\n       \n      {\n        title:(<div>下拉框的div</div>),\n        dataIndex: \"address\",\n        key: \"address\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <SelectRender\n              dataSource={dataSource}\n              isclickTrigger={true}\n              value={text}\n              onChange={this.onSelectChange(index, \"address\")}\n              onFocus={this.handFocus}\n              onBlur={this.onBlur}\n              autofocus\n            >\n              <Option value=\"jack\">boyuzhou</Option>\n              <Option value=\"lucy\">renhualiu</Option>\n              <Option value=\"disabled\" disabled>\n                Disabled\n              </Option>\n              <Option value=\"yiminghe\">yuzhao</Option>\n            </SelectRender>\n          );\n        }\n      }\n    ];\n  }\n  check = (flag, obj) => {\n    console.log(flag);\n    console.log(obj);\n  };\n\n  handFocus = (value,e) => {\n    console.log(value+` 获取焦点事件`);\n  };\n  onBlur = (value,e) => {\n    console.log(value+` onBlur`);\n  };\n\n  onInputChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onCheckChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onSelectChange = (index, key) => {\n    return value => {\n      console.log(`selected ${value}`);\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onDateChange = d => {\n    console.log(d);\n  };\n  onDateSelect = d => {\n    console.log(d);\n  };\n  onDelete = index => {\n    return () => {\n      const dataSource = [...this.state.dataSource];\n      dataSource.splice(index, 1);\n      this.setState({ dataSource });\n    };\n  };\n  handleAdd = () => {\n    const { count, dataSource } = this.state;\n    const newData = {\n      key: count,\n      name: `凤姐 ${count}`,\n      age: 32,\n      address: \"jack\",\n      datepicker: \"2017-06-12\",\n      MonthPicker: \"2017-02\"\n    };\n    this.setState({\n      dataSource: [...dataSource, newData],\n      count: count + 1\n    });\n  };\n\n  getBodyWrapper = body => {\n    return (\n      <Animate\n        transitionName=\"move\"\n        component=\"tbody\"\n        className={body.props.className}\n      >\n        {body.props.children}\n      </Animate>\n    );\n  };\n  getData = () => {\n    console.log(this.state.dataSource);\n  };\n  render() {\n    const { dataSource } = this.state;\n    const columns = this.columns;\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.handleAdd}\n        >\n          添加一行\n        </Button>\n        <Button\n          style={{marginLeft:\"5px\"}}\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.getData}\n        >\n          获取数据\n        </Button>\n        <Table\n          data={dataSource}\n          columns={columns}\n          getBodyWrapper={this.getBodyWrapper}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）" }, { "example": _react2['default'].createElement(Demo2, null), "title": " 增删改表格", "code": "/**\n*\n* @title 增删改表格\n* @description 这是带有增删改功能的表格（此编辑功能未使用render组件）\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Popconfirm, Input, Icon, Animate, Button } from 'tinper-bee';\n\nclass EditableCell extends React.Component {\n  state = {\n    value: this.props.value,\n    editable: false\n  };\n  handleChange = e => {\n    const value = e.target.value;\n    this.setState({ value });\n  };\n  check = () => {\n    this.setState({ editable: false });\n    if (this.props.onChange) {\n      this.props.onChange(this.state.value);\n    }\n  };\n  edit = () => {\n    this.setState({ editable: true });\n  };\n  handleKeydown = event => {\n    if (event.keyCode == 13) {\n      this.check();\n    }\n  };\n  render() {\n    const { value, editable } = this.state;\n    return (\n      <div className=\"editable-cell\">\n        {editable ? (\n          <div className=\"editable-cell-input-wrapper\">\n            <Input\n              value={value}\n              onChange={this.handleChange}\n              onKeyDown={this.handleKeydown}\n            />\n            <Icon\n              type=\"uf-correct\"\n              className=\"editable-cell-icon-check\"\n              onClick={this.check}\n            />\n          </div>\n        ) : (\n          <div className=\"editable-cell-text-wrapper\">\n            {value || \" \"}\n            <Icon\n              type=\"uf-pencil\"\n              className=\"editable-cell-icon\"\n              onClick={this.edit}\n            />\n          </div>\n        )}\n      </div>\n    );\n  }\n}\n\nclass Demo2 extends React.Component {\n  constructor(props) {\n    super(props);\n    this.columns = [\n      {\n        title: \"姓名\",\n        dataIndex: \"name\",\n        key: \"name\",\n        width: \"30%\",\n        render: (text, record, index) => (\n          <EditableCell\n            value={text}\n            onChange={this.onCellChange(index, \"name\")}\n          />\n        )\n      },\n      {\n        title: \"年龄\",\n        dataIndex: \"age\",\n        key: \"age\"\n      },\n      {\n        title: \"你懂的\",\n        dataIndex: \"address\",\n        key: \"address\"\n      },\n      {\n        title: \"操作\",\n        dataIndex: \"operation\",\n        key: \"operation\",\n        render: (text, record, index) => {\n          return this.state.dataSource.length > 1 ? (\n            <Popconfirm content=\"确认删除?\" id=\"aa\" onClose={this.onDelete(index)}>\n              <Icon type=\"uf-del\" />\n            </Popconfirm>\n          ) : null;\n        }\n      }\n    ];\n\n    this.state = {\n      dataSource: [\n        {\n          key: \"0\",\n          name: \"沉鱼\",\n          age: \"18\",\n          address: \"96, 77, 89\"\n        },\n        {\n          key: \"1\",\n          name: \"落雁\",\n          age: \"16\",\n          address: \"90, 70, 80\"\n        },\n        {\n          key: \"2\",\n          name: \"闭月\",\n          age: \"17\",\n          address: \"80, 60, 80\"\n        },\n        {\n          key: \"3\",\n          name: \"羞花\",\n          age: \"20\",\n          address: \"120, 60, 90\"\n        }\n      ],\n      count: 4\n    };\n  }\n  onCellChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onDelete = index => {\n    return () => {\n      const dataSource = [...this.state.dataSource];\n      dataSource.splice(index, 1);\n      this.setState({ dataSource });\n    };\n  };\n  handleAdd = () => {\n    const { count, dataSource } = this.state;\n    const newData = {\n      key: count,\n      name: `凤姐 ${count}`,\n      age: 32,\n      address: `100 100 100`\n    };\n    this.setState({\n      dataSource: [...dataSource, newData],\n      count: count + 1\n    });\n  };\n\n  getBodyWrapper = body => {\n    return (\n      <Animate\n        transitionName=\"move\"\n        component=\"tbody\"\n        className={body.props.className}\n      >\n        {body.props.children}\n      </Animate>\n    );\n  };\n  render() {\n    const { dataSource } = this.state;\n    const columns = this.columns;\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.handleAdd}\n        >\n          添加\n        </Button>\n        <Table\n          data={dataSource}\n          columns={columns}\n          getBodyWrapper={this.getBodyWrapper}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 这是带有增删改功能的表格（此编辑功能未使用render组件）" }, { "example": _react2['default'].createElement(Demo3, null), "title": " 表头分组", "code": "/**\n *\n * @title 表头分组\n * @description columns[n] 可以内嵌 children，以渲染分组表头。\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table, Button } from 'tinper-bee';\n\nconst { ColumnGroup, Column } = Table;\n\nconst columns = [\n  {\n    title: \"Name\",\n    dataIndex: \"name\",\n    key: \"name\",\n    width: 100,\n    fixed: \"left\"\n  },\n  {\n    title: \"Other\",\n    children: [\n      {\n        title: \"Age\",\n        dataIndex: \"age\",\n        key: \"age\",\n        width: 200\n      },\n      {\n        title: \"Address\",\n        children: [\n          {\n            title: \"Street\",\n            dataIndex: \"street\",\n            key: \"street\",\n            width: 200\n          },\n          {\n            title: \"Block\",\n            children: [\n              {\n                title: \"Building\",\n                dataIndex: \"building\",\n                key: \"building\",\n                width: 100\n              },\n              {\n                title: \"Door No.\",\n                dataIndex: \"number\",\n                key: \"number\",\n                width: 100\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  {\n    title: \"Company\",\n    children: [\n      {\n        title: \"Company Address\",\n        dataIndex: \"companyAddress\",\n        key: \"companyAddress\"\n      },\n      {\n        title: \"Company Name\",\n        dataIndex: \"companyName\",\n        key: \"companyName\"\n      }\n    ]\n  },\n  {\n    title: \"Gender\",\n    dataIndex: \"gender\",\n    key: \"gender\",\n    width: 60,\n    fixed: \"right\"\n  }\n];\n\nconst data = [];\nfor (let i = 0; i < 20; i++) {\n  data.push({\n    key: i,\n    name: \"John Brown\",\n    age: i + 1,\n    street: \"Lake Park\",\n    building: \"C\",\n    number: 2035,\n    companyAddress: \"Lake Street 42\",\n    companyName: \"SoftLake Co\",\n    gender: \"M\"\n  });\n}\n\nclass Demo3 extends Component {\n  render() {\n    return (\n      <Table\n        columns={columns}\n        data={data}\n        bordered\n        scroll={{ x: \"130%\", y: 240 }}\n      />\n    );\n  }\n}\n\n\n", "desc": " columns[n] 可以内嵌 children，以渲染分组表头。" }, { "example": _react2['default'].createElement(Demo4, null), "title": " 树形数据展示", "code": "/**\n*\n* @title 树形数据展示\n* @description 通过在data中配置children数据，来自动生成树形数据\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\nconst columns4 = [\n  {\n    title: \"Name\",\n    dataIndex: \"name\",\n    key: \"name\",\n    width: \"40%\"\n  },\n  {\n    title: \"Age\",\n    dataIndex: \"age\",\n    key: \"age\",\n    width: \"30%\"\n  },\n  {\n    title: \"Address\",\n    dataIndex: \"address\",\n    key: \"address\"\n  }\n];\n\nconst data4 = [\n  {\n    key: 1,\n    name: \"John Brown sr.\",\n    age: 60,\n    address: \"New York No. 1 Lake Park\",\n    children: [\n      {\n        key: 11,\n        name: \"John Brown\",\n        age: 42,\n        address: \"New York No. 2 Lake Park\"\n      },\n      {\n        key: 12,\n        name: \"John Brown jr.\",\n        age: 30,\n        address: \"New York No. 3 Lake Park\",\n        children: [\n          {\n            key: 121,\n            name: \"Jimmy Brown\",\n            age: 16,\n            address: \"New York No. 3 Lake Park\"\n          }\n        ]\n      },\n      {\n        key: 13,\n        name: \"Jim Green sr.\",\n        age: 72,\n        address: \"London No. 1 Lake Park\",\n        children: [\n          {\n            key: 131,\n            name: \"Jim Green\",\n            age: 42,\n            address: \"London No. 2 Lake Park\",\n            children: [\n              {\n                key: 1311,\n                name: \"Jim Green jr.\",\n                age: 25,\n                address: \"London No. 3 Lake Park\"\n              },\n              {\n                key: 1312,\n                name: \"Jimmy Green sr.\",\n                age: 18,\n                address: \"London No. 4 Lake Park\"\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  {\n    key: 2,\n    name: \"Joe Black\",\n    age: 32,\n    address: \"Sidney No. 1 Lake Park\"\n  }\n];\nclass Demo4 extends Component {\n  render() {\n    return <Table columns={columns4} data={data4} />;\n  }\n}\n\n\n", "desc": " 通过在data中配置children数据，来自动生成树形数据" }, { "example": _react2['default'].createElement(Demo5, null), "title": " 固定列", "code": "/**\n*\n* @title 固定列\n* @description 固定列到表格的某侧\n*\n*/\n\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\n\nconst columns5 = [\n  {\n    title: \"Full Name\",\n    width: 100,\n    dataIndex: \"name\",\n    key: \"name\",\n    fixed: \"left\"\n  },\n  { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\", fixed: \"left\" },\n  { title: \"Column 1\", dataIndex: \"address\", key: \"1\" },\n  { title: \"Column 2\", dataIndex: \"address\", key: \"2\" },\n  { title: \"Column 3\", dataIndex: \"address\", key: \"3\" },\n  { title: \"Column 4\", dataIndex: \"address\", key: \"4\" },\n  { title: \"Column 5\", dataIndex: \"address\", key: \"5\" },\n  { title: \"Column 6\", dataIndex: \"address\", key: \"6\" },\n  { title: \"Column 7\", dataIndex: \"address\", key: \"7\" },\n  { title: \"Column 8\", dataIndex: \"address\", key: \"8\" }\n];\n\nconst data5 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    address: \"New York Park\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  }\n];\n\nclass Demo5 extends Component {\n  render() {\n    return <Table columns={columns5} data={data5}scroll={{ x: \"130%\", y: 140 }}/>;\n  }\n}\n\n", "desc": " 固定列到表格的某侧" }, { "example": _react2['default'].createElement(Demo6, null), "title": " 固定表头", "code": "/**\n*\n* @title 固定表头\n* @description 方便一页内展示大量数据。需要指定 column 的 width 属性，否则列头和内容可能不对齐。(还可以设置scroll来支持横向或纵向滚动)\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\nconst columns6 = [\n  {\n    title: \"Full Name\",\n    width: 100,\n    dataIndex: \"name\",\n    key: \"name\"\n  },\n  { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\"},\n  { title: \"Address\", dataIndex: \"address\", key: \"1\" }\n];\n\nconst data6 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    address: \"New York Park\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },{\n    key: \"11\",\n    name: \"John Brown\",\n    age: 32,\n    address: \"New York Park\"\n  },\n  {\n    key: \"12\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"13\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"14\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  }\n];\n\nclass Demo6 extends Component {\n  render() {\n    return <Table columns={columns6} data={data6} scroll={{ y: 150 }} />;\n  }\n}\n\n", "desc": " 方便一页内展示大量数据。需要指定 column 的 width 属性，否则列头和内容可能不对齐。(还可以设置scroll来支持横向或纵向滚动)" }, { "example": _react2['default'].createElement(Demo7, null), "title": " 主子表", "code": "/**\n *\n * @title 主子表\n * @description 主表点击子表联动\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\n\nconst columns7 = [\n  { title: \"班级\", dataIndex: \"a\", key: \"a\" },\n  { title: \"人数\", dataIndex: \"b\", key: \"b\" },\n  { title: \"班主任\", dataIndex: \"c\", key: \"c\" },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst data7 = [\n  { a: \"02级一班\", b: \"2\", c: \"欧阳锋\", d: \"大侠\", key: \"1\" },\n  { a: \"03级二班\", b: \"3\", c: \"归海一刀\", d: \"大侠\", key: \"2\" },\n  { a: \"05级三班\", b: \"1\", c: \"一拳超人\", d: \"愣头青\", key: \"3\" }\n];\n\nconst columns7_1 = [\n  { title: \"姓名\", dataIndex: \"a\", key: \"a\" },\n  { title: \"班级\", dataIndex: \"b\", key: \"b\" },\n  { title: \"系别\", dataIndex: \"c\", key: \"c\" }\n];\n\nclass Demo7 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      children_data: []\n    };\n  }\n\n  rowclick = (record, index) => {\n    if (record.a === \"02级一班\") {\n      this.setState({\n        children_data: [\n          { a: \"郭靖\", b: \"02级一班\", c: \"文学系\", key: \"1\" },\n          { a: \"黄蓉\", b: \"02级一班\", c: \"文学系\", key: \"2\" }\n        ]\n      });\n    } else if (record.a === \"03级二班\") {\n      this.setState({\n        children_data: [\n          { a: \"杨过\", b: \"03级二班\", c: \"外语系\", key: \"1\" },\n          { a: \"小龙女\", b: \"03级二班\", c: \"外语系\", key: \"2\" },\n          { a: \"傻姑\", b: \"03级二班\", c: \"外语系\", key: \"3\" }\n        ]\n      });\n    } else if (record.a === \"05级三班\") {\n      this.setState({\n        children_data: [{ a: \"金圣叹\", b: \"05级三班\", c: \"美术系\", key: \"1\" }]\n      });\n    }\n  };\n\n  render() {\n    return (\n      <div>\n        <Table\n          columns={columns7}\n          data={data7}\n          onRowClick={this.rowclick}\n          title={currentData => <div>标题: 我是主表</div>}\n        />\n        <Table\n          style={{ marginTop: 40 }}\n          columns={columns7_1}\n          data={this.state.children_data}\n          title={currentData => <div>标题: 我是子表</div>}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 主表点击子表联动" }, { "example": _react2['default'].createElement(Demo8, null), "title": " 表格+分页", "code": "/**\n *\n * @title 表格+分页\n * @description 点击分页联动表格\n *\n *import {Table} from 'tinper-bee';\n */\n\nimport React, { Component } from \"react\";\n\nimport { Table, Pagination } from 'tinper-bee';\n\nconst columns8 = [\n  { title: \"姓名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst pageData = {\n  1: [\n    { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"2\" },\n    { a: \"令狐冲\", b: \"男\", c: 41, d: \"大侠\", key: \"1\" },\n    { a: \"郭靖\", b: \"男\", c: 25, d: \"大侠\", key: \"3\" }\n  ],\n  2: [\n    { a: \"芙蓉姐姐\", b: \"女\", c: 23, d: \"大侠\", key: \"1\" },\n    { a: \"芙蓉妹妹\", b: \"女\", c: 23, d: \"内行\", key: \"2\" }\n  ]\n};\n\nclass Demo8 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: pageData[1],\n      activePage: 1\n    };\n  }\n\n  handleSelect(eventKey) {\n    this.setState({\n      data: pageData[eventKey],\n      activePage: eventKey\n    });\n  }\n\n  render() {\n    return (\n      <div>\n        <Table columns={columns8} data={this.state.data} />\n        <Pagination\n          first\n          last\n          prev\n          next\n          boundaryLinks\n          items={2}\n          maxButtons={5}\n          activePage={this.state.activePage}\n          onSelect={this.handleSelect.bind(this)}\n        />\n      </div>\n    );\n  }\n}\n\n", "desc": " 点击分页联动表格" }, { "example": _react2['default'].createElement(Demo9, null), "title": " 表格+搜索", "code": "/**\n *\n * @title 表格+搜索\n * @description 搜索刷新表格数据\n *\n *\n * import {Table} from 'tinper-bee';\n */\n\nimport React, { Component } from \"react\";\n\nimport { Table, FormControl, InputGroup, Icon } from 'tinper-bee';\n\nclass Search extends Component {\n  state = {\n    searchValue: \"\",\n    empty: false\n  };\n\n  /**\n     * 搜索\n     */\n  handleSearch = () => {\n    let { onSearch } = this.props;\n    this.setState({\n      empty: true\n    });\n    onSearch && onSearch(this.state.searchValue);\n  };\n\n  /**\n     * 捕获回车\n     * @param e\n     */\n  handleKeyDown = e => {\n    if (e.keyCode === 13) {\n      this.handleSearch();\n    }\n  };\n\n  /**\n     * 输入框改变\n     * @param e\n     */\n  handleChange = e => {\n    this.setState({\n      searchValue: e.target.value\n    });\n  };\n\n  /**\n     * 清空输入框\n     */\n  emptySearch = () => {\n    let { onEmpty } = this.props;\n    this.setState({\n      searchValue: \"\",\n      empty: false\n    });\n    onEmpty && onEmpty();\n  };\n\n  render() {\n    return (\n      <InputGroup simple className=\"search-component\">\n        <FormControl\n          onChange={this.handleChange}\n          value={this.state.searchValue}\n          onKeyDown={this.handleKeyDown}\n          placeholder=\"请输入用户名\"\n          type=\"text\"\n        />\n        {this.state.empty ? (\n          <Icon\n            type=\"uf-close-c\"\n            onClick={this.emptySearch}\n            className=\"empty-search\"\n          />\n        ) : null}\n\n        <InputGroup.Button onClick={this.handleSearch} shape=\"border\">\n          <Icon type=\"uf-search\" />\n        </InputGroup.Button>\n      </InputGroup>\n    );\n  }\n}\n\nconst columns9 = [\n  {\n    title: \"姓名\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst userData = [\n  { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"大侠\", key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"大侠\", key: \"3\" }\n];\n\nclass Demo9 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: userData\n    };\n  }\n\n  handleSearch = value => {\n    if (value === \"\") {\n      return this.setState({\n        data: userData\n      });\n    }\n    let regExp = new RegExp(value, \"ig\");\n    let data = userData.filter(item => regExp.test(item.a));\n    this.setState({\n      data\n    });\n  };\n\n  handleEmpty = () => {\n    this.setState({\n      data: userData\n    });\n  };\n\n  render() {\n    return (\n      <div>\n        <div className=\"clearfix\">\n          <Search onSearch={this.handleSearch} onEmpty={this.handleEmpty} />\n        </div>\n        <Table columns={columns9} data={this.state.data} />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 搜索刷新表格数据" }];
 	
 	var Demo = function (_Component) {
 	    _inherits(Demo, _Component);
@@ -14476,6 +14476,10 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
+	var _contains = __webpack_require__(104);
+	
+	var _contains2 = _interopRequireDefault(_contains);
+	
 	var _util = __webpack_require__(142);
 	
 	var _SelectTrigger = __webpack_require__(143);
@@ -14580,7 +14584,27 @@
 	  function RcSelect(props) {
 	    _classCallCheck(this, RcSelect);
 	
-	    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
+	    var _this2 = _possibleConstructorReturn(this, _Component.call(this, props));
+	
+	    _this2.getInit = function (event) {
+	      var _this = _reactDom2["default"].findDOMNode(_this2);
+	      if (event.target && (0, _contains2["default"])(_this, event.target)) {
+	        if (_this2._focused) return;
+	        _this2._focused = true;
+	        _this2.updateFocusClassName();
+	      } else {
+	        if (!_this2._focused) return;
+	        _this2._focused = false;
+	        _this2.updateFocusClassName();
+	      }
+	    };
+	
+	    _this2.onOutClick = function (event) {
+	      // this.clearBlurTime();
+	      _this2._focused = true;
+	      _this2.updateFocusClassName();
+	      _this2.props.onFocus(_this2.state.value);
+	    };
 	
 	    var value = [];
 	    if ('value' in props) {
@@ -14588,86 +14612,97 @@
 	    } else {
 	      value = (0, _util.toArray)(props.defaultValue);
 	    }
-	    value = _this.addLabelToValue(props, value);
-	    value = _this.addTitleToValue(props, value);
+	    value = _this2.addLabelToValue(props, value);
+	    value = _this2.addTitleToValue(props, value);
 	    var inputValue = '';
 	    if (props.combobox) {
 	      inputValue = value.length ? String(value[0].key) : '';
 	    }
-	    _this.saveInputRef = saveRef.bind(_this, 'inputInstance');
-	    _this.saveInputMirrorRef = saveRef.bind(_this, 'inputMirrorInstance');
+	    _this2.saveInputRef = saveRef.bind(_this2, 'inputInstance');
+	    _this2.saveInputMirrorRef = saveRef.bind(_this2, 'inputMirrorInstance');
 	    var open = props.open;
 	    if (open === undefined) {
 	      open = props.defaultOpen;
 	    }
-	    _this.state = {
+	    _this2.state = {
 	      value: value,
 	      inputValue: inputValue,
 	      open: open
 	    };
 	
-	    _this.filterOption = _this.filterOption.bind(_this);
-	    _this.renderFilterOptions = _this.renderFilterOptions.bind(_this);
-	    _this.renderFilterOptionsFromChildren = _this.renderFilterOptionsFromChildren.bind(_this);
-	    _this.onInputChange = _this.onInputChange.bind(_this);
-	    _this.onDropdownVisibleChange = _this.onDropdownVisibleChange.bind(_this);
+	    _this2.filterOption = _this2.filterOption.bind(_this2);
+	    _this2.renderFilterOptions = _this2.renderFilterOptions.bind(_this2);
+	    _this2.renderFilterOptionsFromChildren = _this2.renderFilterOptionsFromChildren.bind(_this2);
+	    _this2.onInputChange = _this2.onInputChange.bind(_this2);
+	    _this2.onDropdownVisibleChange = _this2.onDropdownVisibleChange.bind(_this2);
 	
-	    _this.onKeyDown = _this.onKeyDown.bind(_this);
-	    _this.onInputKeyDown = _this.onInputKeyDown.bind(_this);
-	    _this.onMenuSelect = _this.onMenuSelect.bind(_this);
-	    _this.onMenuDeselect = _this.onMenuDeselect.bind(_this);
-	    _this.onArrowClick = _this.onArrowClick.bind(_this);
+	    _this2.onKeyDown = _this2.onKeyDown.bind(_this2);
+	    _this2.onInputKeyDown = _this2.onInputKeyDown.bind(_this2);
+	    _this2.onMenuSelect = _this2.onMenuSelect.bind(_this2);
+	    _this2.onMenuDeselect = _this2.onMenuDeselect.bind(_this2);
+	    _this2.onArrowClick = _this2.onArrowClick.bind(_this2);
 	
-	    _this.onPlaceholderClick = _this.onPlaceholderClick.bind(_this);
-	    _this.onOuterFocus = _this.onOuterFocus.bind(_this);
-	    _this.onPopupFocus = _this.onPopupFocus.bind(_this);
-	    _this.onOuterBlur = _this.onOuterBlur.bind(_this);
-	    _this.onClearSelection = _this.onClearSelection.bind(_this);
+	    _this2.onPlaceholderClick = _this2.onPlaceholderClick.bind(_this2);
+	    _this2.onOuterFocus = _this2.onOuterFocus.bind(_this2);
+	    _this2.onPopupFocus = _this2.onPopupFocus.bind(_this2);
+	    _this2.onOuterBlur = _this2.onOuterBlur.bind(_this2);
+	    _this2.onClearSelection = _this2.onClearSelection.bind(_this2);
 	
-	    _this.onChoiceAnimationLeave = _this.onChoiceAnimationLeave.bind(_this);
-	    _this.getLabelBySingleValue = _this.getLabelBySingleValue.bind(_this);
-	    _this.getValueByLabel = _this.getValueByLabel.bind(_this);
-	    _this.getLabelFromOption = _this.getLabelFromOption.bind(_this);
-	    _this.getLabelFromProps = _this.getLabelFromProps.bind(_this);
+	    _this2.onChoiceAnimationLeave = _this2.onChoiceAnimationLeave.bind(_this2);
+	    _this2.getLabelBySingleValue = _this2.getLabelBySingleValue.bind(_this2);
+	    _this2.getValueByLabel = _this2.getValueByLabel.bind(_this2);
+	    _this2.getLabelFromOption = _this2.getLabelFromOption.bind(_this2);
+	    _this2.getLabelFromProps = _this2.getLabelFromProps.bind(_this2);
 	
-	    _this.getVLForOnChange = _this.getVLForOnChange.bind(_this);
-	    _this.getLabelByValue = _this.getLabelByValue.bind(_this);
-	    _this.getDropdownContainer = _this.getDropdownContainer.bind(_this);
-	    _this.getPlaceholderElement = _this.getPlaceholderElement.bind(_this);
-	    _this.getInputElement = _this.getInputElement.bind(_this);
+	    _this2.getVLForOnChange = _this2.getVLForOnChange.bind(_this2);
+	    _this2.getLabelByValue = _this2.getLabelByValue.bind(_this2);
+	    _this2.getDropdownContainer = _this2.getDropdownContainer.bind(_this2);
+	    _this2.getPlaceholderElement = _this2.getPlaceholderElement.bind(_this2);
+	    _this2.getInputElement = _this2.getInputElement.bind(_this2);
 	
-	    _this.getInputDOMNode = _this.getInputDOMNode.bind(_this);
-	    _this.getInputMirrorDOMNode = _this.getInputMirrorDOMNode.bind(_this);
-	    _this.getPopupDOMNode = _this.getPopupDOMNode.bind(_this);
-	    _this.getPopupMenuComponent = _this.getPopupMenuComponent.bind(_this);
-	    _this.setOpenState = _this.setOpenState.bind(_this);
+	    _this2.getInputDOMNode = _this2.getInputDOMNode.bind(_this2);
+	    _this2.getInputMirrorDOMNode = _this2.getInputMirrorDOMNode.bind(_this2);
+	    _this2.getPopupDOMNode = _this2.getPopupDOMNode.bind(_this2);
+	    _this2.getPopupMenuComponent = _this2.getPopupMenuComponent.bind(_this2);
+	    _this2.setOpenState = _this2.setOpenState.bind(_this2);
 	
-	    _this.setInputValue = _this.setInputValue.bind(_this);
-	    _this.clearBlurTime = _this.clearBlurTime.bind(_this);
-	    _this.clearAdjustTimer = _this.clearAdjustTimer.bind(_this);
-	    _this.clearAdjustTimer = _this.clearAdjustTimer.bind(_this);
-	    _this.updateFocusClassName = _this.updateFocusClassName.bind(_this);
+	    _this2.setInputValue = _this2.setInputValue.bind(_this2);
+	    _this2.clearBlurTime = _this2.clearBlurTime.bind(_this2);
+	    _this2.clearAdjustTimer = _this2.clearAdjustTimer.bind(_this2);
+	    _this2.clearAdjustTimer = _this2.clearAdjustTimer.bind(_this2);
+	    _this2.updateFocusClassName = _this2.updateFocusClassName.bind(_this2);
 	
-	    _this.maybeFocus = _this.maybeFocus.bind(_this);
-	    _this.addLabelToValue = _this.addLabelToValue.bind(_this);
-	    _this.addTitleToValue = _this.addTitleToValue.bind(_this);
-	    _this.removeSelected = _this.removeSelected.bind(_this);
-	    _this.openIfHasChildren = _this.openIfHasChildren.bind(_this);
+	    _this2.maybeFocus = _this2.maybeFocus.bind(_this2);
+	    _this2.addLabelToValue = _this2.addLabelToValue.bind(_this2);
+	    _this2.addTitleToValue = _this2.addTitleToValue.bind(_this2);
+	    _this2.removeSelected = _this2.removeSelected.bind(_this2);
+	    _this2.openIfHasChildren = _this2.openIfHasChildren.bind(_this2);
 	
-	    _this.fireChange = _this.fireChange.bind(_this);
-	    _this.isChildDisabled = _this.isChildDisabled.bind(_this);
-	    _this.tokenize = _this.tokenize.bind(_this);
-	    _this.adjustOpenState = _this.adjustOpenState.bind(_this);
-	    _this.renderTopControlNode = _this.renderTopControlNode.bind(_this);
-	
-	    return _this;
+	    _this2.fireChange = _this2.fireChange.bind(_this2);
+	    _this2.isChildDisabled = _this2.isChildDisabled.bind(_this2);
+	    _this2.tokenize = _this2.tokenize.bind(_this2);
+	    _this2.adjustOpenState = _this2.adjustOpenState.bind(_this2);
+	    _this2.renderTopControlNode = _this2.renderTopControlNode.bind(_this2);
+	    return _this2;
 	  }
 	
 	  RcSelect.prototype.componentWillMount = function componentWillMount() {
 	    this.adjustOpenState();
 	  };
 	
+	  RcSelect.prototype.componentDidMount = function componentDidMount() {
+	    if (this.props.autofocus) {
+	      this.onOuterFocus();
+	    }
+	    if (!this.props.autofocus) return;
+	    _reactDom2["default"].findDOMNode(this.refs.root).click();
+	    this.setState({
+	      open: false
+	    });
+	  };
+	
 	  RcSelect.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+	
 	    if ('value' in nextProps) {
 	      var value = (0, _util.toArray)(nextProps.value);
 	      value = this.addLabelToValue(nextProps, value);
@@ -14680,6 +14715,10 @@
 	          inputValue: value.length ? this.getLabelFromProps(nextProps, value[0].key) : ''
 	        });
 	      }
+	    }
+	
+	    if (this.props.autofocus) {
+	      this.onOuterFocus();
 	    }
 	  };
 	
@@ -14734,7 +14773,7 @@
 	  };
 	
 	  RcSelect.prototype.renderFilterOptionsFromChildren = function renderFilterOptionsFromChildren(children, showNotFound, iv) {
-	    var _this2 = this;
+	    var _this3 = this;
 	
 	    var sel = [];
 	    var props = this.props;
@@ -14743,7 +14782,7 @@
 	    var tags = props.tags;
 	    _react2["default"].Children.forEach(children, function (child) {
 	      if (child.type === _OptGroup2["default"]) {
-	        var innerItems = _this2.renderFilterOptionsFromChildren(child.props.children, false);
+	        var innerItems = _this3.renderFilterOptionsFromChildren(child.props.children, false);
 	        if (innerItems.length) {
 	          var label = child.props.label;
 	          var key = child.key;
@@ -14768,7 +14807,7 @@
 	      // );
 	
 	      var childValue = (0, _util.getValuePropValue)(child);
-	      if (_this2.filterOption(inputValue, child)) {
+	      if (_this3.filterOption(inputValue, child)) {
 	        sel.push(_react2["default"].createElement(_beeMenus.Item, _extends({
 	          style: _util.UNSELECTABLE_STYLE,
 	          attribute: _util.UNSELECTABLE_ATTRIBUTE,
@@ -14919,7 +14958,7 @@
 	  };
 	
 	  RcSelect.prototype.onMenuSelect = function onMenuSelect(_ref) {
-	    var _this3 = this;
+	    var _this4 = this;
 	
 	    var item = _ref.item;
 	
@@ -14950,7 +14989,7 @@
 	        this.skipAdjustOpen = true;
 	        this.clearAdjustTimer();
 	        this.skipAdjustOpenTimer = setTimeout(function () {
-	          _this3.skipAdjustOpen = false;
+	          _this4.skipAdjustOpen = false;
 	        }, 0);
 	      }
 	      if (value.length && value[0].key === selectedValue) {
@@ -14997,11 +15036,11 @@
 	    }
 	  };
 	
-	  RcSelect.prototype.onOuterFocus = function onOuterFocus() {
+	  RcSelect.prototype.onOuterFocus = function onOuterFocus(event) {
 	    this.clearBlurTime();
 	    this._focused = true;
 	    this.updateFocusClassName();
-	    this.props.onFocus();
+	    this.props.onFocus(this.state.value);
 	  };
 	
 	  RcSelect.prototype.onPopupFocus = function onPopupFocus() {
@@ -15010,32 +15049,34 @@
 	  };
 	
 	  RcSelect.prototype.onOuterBlur = function onOuterBlur() {
-	    var _this4 = this;
+	    var _this5 = this;
 	
 	    this.blurTimer = setTimeout(function () {
-	      _this4._focused = false;
-	      _this4.updateFocusClassName();
-	      var props = _this4.props;
-	      var value = _this4.state.value;
-	      var inputValue = _this4.state.inputValue;
+	      _this5._focused = false;
+	      _this5.updateFocusClassName();
+	      var props = _this5.props;
+	      var value = _this5.state.value;
+	      var inputValue = _this5.state.inputValue;
 	
 	      if ((0, _util.isSingleMode)(props) && props.showSearch && inputValue && props.defaultActiveFirstOption) {
-	        var options = _this4._options || [];
+	        var options = _this5._options || [];
 	        if (options.length) {
 	          var firstOption = (0, _util.findFirstMenuItem)(options);
 	          if (firstOption) {
 	            value = [{
 	              key: firstOption.key,
-	              label: _this4.getLabelFromOption(firstOption)
+	              label: _this5.getLabelFromOption(firstOption)
 	            }];
-	            _this4.fireChange(value);
+	            _this5.fireChange(value);
 	          }
 	        }
 	      } else if ((0, _util.isMultipleOrTags)(props) && inputValue) {
 	        // why not use setState?
-	        _this4.state.inputValue = _this4.getInputDOMNode().value = '';
+	        _this5.state.inputValue = _this5.getInputDOMNode().value = '';
 	      }
-	      props.onBlur(_this4.getVLForOnChange(value));
+	      //todu 返回数组对象
+	      // props.onBlur(this.getVLForOnChange(value));
+	      props.onBlur(_this5.state.value);
 	    }, 10);
 	  };
 	
@@ -15065,7 +15106,7 @@
 	  };
 	
 	  RcSelect.prototype.getLabelBySingleValue = function getLabelBySingleValue(children, value) {
-	    var _this5 = this;
+	    var _this6 = this;
 	
 	    if (value === undefined) {
 	      return null;
@@ -15073,19 +15114,19 @@
 	    var label = null;
 	    _react2["default"].Children.forEach(children, function (child) {
 	      if (child.type === _OptGroup2["default"]) {
-	        var maybe = _this5.getLabelBySingleValue(child.props.children, value);
+	        var maybe = _this6.getLabelBySingleValue(child.props.children, value);
 	        if (maybe !== null) {
 	          label = maybe;
 	        }
 	      } else if ((0, _util.getValuePropValue)(child) === value) {
-	        label = _this5.getLabelFromOption(child);
+	        label = _this6.getLabelFromOption(child);
 	      }
 	    });
 	    return label;
 	  };
 	
 	  RcSelect.prototype.getValueByLabel = function getValueByLabel(children, label) {
-	    var _this6 = this;
+	    var _this7 = this;
 	
 	    if (label === undefined) {
 	      return null;
@@ -15093,11 +15134,11 @@
 	    var value = null;
 	    _react2["default"].Children.forEach(children, function (child) {
 	      if (child.type === _OptGroup2["default"]) {
-	        var maybe = _this6.getValueByLabel(child.props.children, label);
+	        var maybe = _this7.getValueByLabel(child.props.children, label);
 	        if (maybe !== null) {
 	          value = maybe;
 	        }
-	      } else if ((0, _util.toArray)(_this6.getLabelFromOption(child)).join('') === label) {
+	      } else if ((0, _util.toArray)(_this7.getLabelFromOption(child)).join('') === label) {
 	        value = (0, _util.getValuePropValue)(child);
 	      }
 	    });
@@ -15219,7 +15260,7 @@
 	  };
 	
 	  RcSelect.prototype.setOpenState = function setOpenState(open, needFocus) {
-	    var _this7 = this;
+	    var _this8 = this;
 	
 	    var props = this.props,
 	        state = this.state;
@@ -15240,7 +15281,7 @@
 	    }
 	    this.setState(nextState, function () {
 	      if (open) {
-	        _this7.maybeFocus(open, needFocus);
+	        _this8.maybeFocus(open, needFocus);
 	      }
 	    });
 	  };
@@ -15302,18 +15343,18 @@
 	  };
 	
 	  RcSelect.prototype.addLabelToValue = function addLabelToValue(props, value_) {
-	    var _this8 = this;
+	    var _this9 = this;
 	
 	    var value = value_;
 	    if (props.labelInValue) {
 	      value.forEach(function (v) {
-	        v.label = v.label || _this8.getLabelFromProps(props, v.key);
+	        v.label = v.label || _this9.getLabelFromProps(props, v.key);
 	      });
 	    } else {
 	      value = value.map(function (v) {
 	        return {
 	          key: v,
-	          label: _this8.getLabelFromProps(props, v)
+	          label: _this9.getLabelFromProps(props, v)
 	        };
 	      });
 	    }
@@ -15321,7 +15362,7 @@
 	  };
 	
 	  RcSelect.prototype.addTitleToValue = function addTitleToValue(props, values) {
-	    var _this9 = this;
+	    var _this10 = this;
 	
 	    var nextValues = values;
 	    var keys = values.map(function (v) {
@@ -15329,7 +15370,7 @@
 	    });
 	    _react2["default"].Children.forEach(props.children, function (child) {
 	      if (child.type === _OptGroup2["default"]) {
-	        nextValues = _this9.addTitleToValue(child.props, nextValues);
+	        nextValues = _this10.addTitleToValue(child.props, nextValues);
 	      } else {
 	        var value = (0, _util.getValuePropValue)(child);
 	        var valueIndex = keys.indexOf(value);
@@ -15393,7 +15434,7 @@
 	  };
 	
 	  RcSelect.prototype.tokenize = function tokenize(string) {
-	    var _this10 = this;
+	    var _this11 = this;
 	
 	    var _props = this.props,
 	        multiple = _props.multiple,
@@ -15405,7 +15446,7 @@
 	      var selectedValue = { key: label, label: label };
 	      if ((0, _util.findIndexInValueByLabel)(nextValue, label) === -1) {
 	        if (multiple) {
-	          var value = _this10.getValueByLabel(children, label);
+	          var value = _this11.getValueByLabel(children, label);
 	          if (value) {
 	            selectedValue.key = value;
 	            nextValue = nextValue.concat(selectedValue);
@@ -15439,7 +15480,7 @@
 	  };
 	
 	  RcSelect.prototype.renderTopControlNode = function renderTopControlNode() {
-	    var _this11 = this;
+	    var _this12 = this;
 	
 	    var _state = this.state,
 	        value = _state.value,
@@ -15511,7 +15552,7 @@
 	          if (maxTagTextLength && typeof content === 'string' && content.length > maxTagTextLength) {
 	            content = content.slice(0, maxTagTextLength) + '...';
 	          }
-	          var disabled = _this11.isChildDisabled(singleValue.key);
+	          var disabled = _this12.isChildDisabled(singleValue.key);
 	          var choiceClassName = disabled ? clsPrefix + '-selection-choice ' + clsPrefix + '-selection-choice-disabled' : clsPrefix + '-selection-choice';
 	          return _react2["default"].createElement(
 	            'li',
@@ -15530,7 +15571,7 @@
 	            ),
 	            disabled ? null : _react2["default"].createElement('span', {
 	              className: clsPrefix + '-selection-choice-remove',
-	              onClick: _this11.removeSelected.bind(_this11, singleValue.key)
+	              onClick: _this12.removeSelected.bind(_this12, singleValue.key)
 	            })
 	          );
 	        });
@@ -15552,7 +15593,7 @@
 	    }
 	    return _react2["default"].createElement(
 	      'div',
-	      { className: className },
+	      { className: className, name: 'input', ref: 'input' },
 	      this.getPlaceholderElement(),
 	      innerNode
 	    );
@@ -15630,6 +15671,7 @@
 	          ref: 'root',
 	          onBlur: this.onOuterBlur,
 	          onFocus: this.onOuterFocus,
+	          onClick: this.onOutClick,
 	          className: (0, _classnames2["default"])(rootCls)
 	        },
 	        _react2["default"].createElement(
@@ -15637,7 +15679,7 @@
 	          _extends({
 	            ref: 'selection',
 	            key: 'selection',
-	            className: clsPrefix + '-selection\n            ' + clsPrefix + '-selection--' + (multiple ? 'multiple' : 'single'),
+	            className: clsPrefix + '-selection \n            ' + clsPrefix + '-selection--' + (multiple ? 'multiple' : 'single'),
 	            role: 'combobox',
 	            'aria-autocomplete': 'list',
 	            'aria-haspopup': 'true',
@@ -24116,6 +24158,7 @@
 	
 	    var pickerChangeHandler = {};
 	    var calendarHandler = {};
+	    var autofocus = this.props.autofocus ? { autofocus: 'autofocus' } : null;
 	
 	    if (props.showTime) {
 	      calendarHandler = {
@@ -24151,13 +24194,13 @@
 	          return _react2["default"].createElement(
 	            _beeInputGroup2["default"],
 	            { simple: true, className: "datepicker-input-group" },
-	            _react2["default"].createElement(_beeFormControl2["default"], {
+	            _react2["default"].createElement(_beeFormControl2["default"], _extends({
 	              disabled: props.disabled,
 	              readOnly: true,
 	              placeholder: _this2.props.placeholder,
 	              className: _this2.props.className,
 	              value: value && value.format(props.format) || ""
-	            }),
+	            }, autofocus)),
 	            _react2["default"].createElement(
 	              _beeInputGroup2["default"].Button,
 	              { shape: "border" },
@@ -52030,6 +52073,8 @@
 	  }
 	
 	  SelectRender.prototype.render = function render() {
+	    var _this2 = this;
+	
 	    var _state = this.state,
 	        value = _state.value,
 	        editable = _state.editable;
@@ -52041,11 +52086,21 @@
 	    if (editable) {
 	      cellContent = isclickTrigger ? _react2["default"].createElement(
 	        "div",
-	        { className: "editable-cell-input-wrapper" },
+	        { className: "editable-cell-input-wrapper", name: "input" },
 	        _react2["default"].createElement(
 	          _beeSelect2["default"],
 	          _extends({}, this.props, {
 	            value: this.state.value,
+	            onBlur: function onBlur(value, e) {
+	              console.log(value);
+	              // this.props.onBlur();
+	            },
+	
+	            onFocus: function onFocus(value, e) {
+	              console.log(value);
+	              // this.props.onBlur();
+	            },
+	
 	            onChange: this.handleChange
 	          }),
 	          this.props.children
@@ -52057,11 +52112,17 @@
 	        })
 	      ) : _react2["default"].createElement(
 	        "div",
-	        { className: "editable-cell-input-wrapper" },
+	        { className: "editable-cell-input-wrapper", name: "input" },
 	        _react2["default"].createElement(
 	          _beeSelect2["default"],
 	          _extends({}, this.props, {
 	            value: this.state.value,
+	            onBlur: function onBlur() {
+	              _this2.setState({
+	                editable: true
+	              });
+	              _this2.props.onBlur();
+	            },
 	            onChange: this.handleChange
 	          }),
 	          this.props.children
@@ -52736,6 +52797,10 @@
 	
 	var _beeAnimate2 = _interopRequireDefault(_beeAnimate);
 	
+	var _beeTooltip = __webpack_require__(101);
+	
+	var _beeTooltip2 = _interopRequireDefault(_beeTooltip);
+	
 	var _beeIcon = __webpack_require__(86);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
@@ -52744,7 +52809,338 @@
 	
 	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 	
-	var _beePopconfirm = __webpack_require__(442);
+	var _beeCheckbox = __webpack_require__(89);
+	
+	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
+	
+	var _beeSelect = __webpack_require__(123);
+	
+	var _beeSelect2 = _interopRequireDefault(_beeSelect);
+	
+	var _InputRender = __webpack_require__(155);
+	
+	var _InputRender2 = _interopRequireDefault(_InputRender);
+	
+	var _DateRender = __webpack_require__(168);
+	
+	var _DateRender2 = _interopRequireDefault(_DateRender);
+	
+	var _SelectRender = __webpack_require__(436);
+	
+	var _SelectRender2 = _interopRequireDefault(_SelectRender);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               *
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @title 编辑态表格
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @description 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               *
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               */
+	
+	var format = "YYYY-MM-DD";
+	var format2 = "YYYY-MM";
+	var format3 = "YYYY-MM-DD HH:mm:ss";
+	
+	var dateInputPlaceholder = "选择日期";
+	var dateInputPlaceholder2 = "选择年月";
+	var dataSource = [{
+	  key: "boyuzhou",
+	  value: "jack"
+	}, {
+	  key: "renhualiu",
+	  value: "lucy"
+	}, {
+	  key: "yuzhao",
+	  value: "yiminghe"
+	}];
+	
+	var Demo19 = function (_React$Component) {
+	  _inherits(Demo19, _React$Component);
+	
+	  function Demo19(props) {
+	    _classCallCheck(this, Demo19);
+	
+	    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+	
+	    _this.check = function (flag, obj) {
+	      console.log(flag);
+	      console.log(obj);
+	    };
+	
+	    _this.handFocus = function (value, e) {
+	      console.log(value + " \u83B7\u53D6\u7126\u70B9\u4E8B\u4EF6");
+	    };
+	
+	    _this.onBlur = function (value, e) {
+	      console.log(value + " onBlur");
+	    };
+	
+	    _this.onInputChange = function (index, key) {
+	      return function (value) {
+	        var dataSource = [].concat(_toConsumableArray(_this.state.dataSource));
+	        dataSource[index][key] = value;
+	        _this.setState({ dataSource: dataSource });
+	      };
+	    };
+	
+	    _this.onCheckChange = function (index, key) {
+	      return function (value) {
+	        var dataSource = [].concat(_toConsumableArray(_this.state.dataSource));
+	        dataSource[index][key] = value;
+	        _this.setState({ dataSource: dataSource });
+	      };
+	    };
+	
+	    _this.onSelectChange = function (index, key) {
+	      return function (value) {
+	        console.log("selected " + value);
+	        var dataSource = [].concat(_toConsumableArray(_this.state.dataSource));
+	        dataSource[index][key] = value;
+	        _this.setState({ dataSource: dataSource });
+	      };
+	    };
+	
+	    _this.onDateChange = function (d) {
+	      console.log(d);
+	    };
+	
+	    _this.onDateSelect = function (d) {
+	      console.log(d);
+	    };
+	
+	    _this.onDelete = function (index) {
+	      return function () {
+	        var dataSource = [].concat(_toConsumableArray(_this.state.dataSource));
+	        dataSource.splice(index, 1);
+	        _this.setState({ dataSource: dataSource });
+	      };
+	    };
+	
+	    _this.handleAdd = function () {
+	      var _this$state = _this.state,
+	          count = _this$state.count,
+	          dataSource = _this$state.dataSource;
+	
+	      var newData = {
+	        key: count,
+	        name: "\u51E4\u59D0 " + count,
+	        age: 32,
+	        address: "jack",
+	        datepicker: "2017-06-12",
+	        MonthPicker: "2017-02"
+	      };
+	      _this.setState({
+	        dataSource: [].concat(_toConsumableArray(dataSource), [newData]),
+	        count: count + 1
+	      });
+	    };
+	
+	    _this.getBodyWrapper = function (body) {
+	      return _react2["default"].createElement(
+	        _beeAnimate2["default"],
+	        {
+	          transitionName: "move",
+	          component: "tbody",
+	          className: body.props.className
+	        },
+	        body.props.children
+	      );
+	    };
+	
+	    _this.getData = function () {
+	      console.log(_this.state.dataSource);
+	    };
+	
+	    _this.state = {
+	      dataSource: [{
+	        key: "0",
+	        name: "沉鱼",
+	        number: "10",
+	        age: "y",
+	        address: "jack",
+	        datepicker: "2017-06-12",
+	        MonthPicker: "2017-02"
+	      }, {
+	        key: "1",
+	        name: "落雁",
+	        number: "100",
+	        age: "y",
+	        address: "lucy",
+	        datepicker: "2017-06-12",
+	        MonthPicker: "2017-02"
+	      }, {
+	        key: "2",
+	        name: "闭月",
+	        number: "1000",
+	        age: "n",
+	        address: "lucy",
+	        datepicker: "2017-06-12",
+	        MonthPicker: "2017-02"
+	      }, {
+	        key: "3",
+	        name: "羞花",
+	        number: "9999",
+	        age: "y",
+	        address: "lucy",
+	        datepicker: "2017-06-12",
+	        MonthPicker: "2017-02"
+	      }],
+	      count: 4
+	    };
+	    _this.columns = [{
+	      title: "货币输入",
+	      dataIndex: "number",
+	      key: "number",
+	      width: "150px",
+	      render: function render(text, record, index) {
+	        return _react2["default"].createElement(_InputRender2["default"], {
+	          format: "Currency",
+	          name: "name",
+	          placeholder: "\u8BF7\u8F93\u5165\u59D3\u540D",
+	          value: text,
+	          isclickTrigger: true,
+	          check: _this.check,
+	          onChange: _this.onInputChange(index, "name"),
+	          isRequire: true,
+	          method: "blur",
+	          errorMessage: _react2["default"].createElement(
+	            _beeTooltip2["default"],
+	            { overlay: "错误提示" },
+	            _react2["default"].createElement(_beeIcon2["default"], { type: "uf-exc-c", className: "" })
+	          )
+	        });
+	      }
+	    }, {
+	      title: _react2["default"].createElement(
+	        "div",
+	        null,
+	        "\u4E0B\u62C9\u6846\u7684div"
+	      ),
+	      dataIndex: "address",
+	      key: "address",
+	      width: "200px",
+	      render: function render(text, record, index) {
+	        return _react2["default"].createElement(
+	          _SelectRender2["default"],
+	          {
+	            dataSource: dataSource,
+	            isclickTrigger: true,
+	            value: text,
+	            onChange: _this.onSelectChange(index, "address"),
+	            onFocus: _this.handFocus,
+	            onBlur: _this.onBlur,
+	            autofocus: true
+	          },
+	          _react2["default"].createElement(
+	            Option,
+	            { value: "jack" },
+	            "boyuzhou"
+	          ),
+	          _react2["default"].createElement(
+	            Option,
+	            { value: "lucy" },
+	            "renhualiu"
+	          ),
+	          _react2["default"].createElement(
+	            Option,
+	            { value: "disabled", disabled: true },
+	            "Disabled"
+	          ),
+	          _react2["default"].createElement(
+	            Option,
+	            { value: "yiminghe" },
+	            "yuzhao"
+	          )
+	        );
+	      }
+	    }];
+	    return _this;
+	  }
+	
+	  Demo19.prototype.render = function render() {
+	    var dataSource = this.state.dataSource;
+	
+	    var columns = this.columns;
+	    return _react2["default"].createElement(
+	      "div",
+	      null,
+	      _react2["default"].createElement(
+	        _beeButton2["default"],
+	        {
+	          className: "editable-add-btn",
+	          type: "ghost",
+	          onClick: this.handleAdd
+	        },
+	        "\u6DFB\u52A0\u4E00\u884C"
+	      ),
+	      _react2["default"].createElement(
+	        _beeButton2["default"],
+	        {
+	          style: { marginLeft: "5px" },
+	          className: "editable-add-btn",
+	          type: "ghost",
+	          onClick: this.getData
+	        },
+	        "\u83B7\u53D6\u6570\u636E"
+	      ),
+	      _react2["default"].createElement(_src2["default"], {
+	        data: dataSource,
+	        columns: columns,
+	        getBodyWrapper: this.getBodyWrapper
+	      })
+	    );
+	  };
+	
+	  return Demo19;
+	}(_react2["default"].Component);
+	
+	exports["default"] = Demo19;
+	module.exports = exports["default"];
+
+/***/ }),
+/* 442 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _beeButton = __webpack_require__(62);
+	
+	var _beeButton2 = _interopRequireDefault(_beeButton);
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _src = __webpack_require__(65);
+	
+	var _src2 = _interopRequireDefault(_src);
+	
+	var _beeAnimate = __webpack_require__(96);
+	
+	var _beeAnimate2 = _interopRequireDefault(_beeAnimate);
+	
+	var _beeIcon = __webpack_require__(86);
+	
+	var _beeIcon2 = _interopRequireDefault(_beeIcon);
+	
+	var _beeFormControl = __webpack_require__(121);
+	
+	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
+	
+	var _beePopconfirm = __webpack_require__(443);
 	
 	var _beePopconfirm2 = _interopRequireDefault(_beePopconfirm);
 	
@@ -52977,7 +53373,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 442 */
+/* 443 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52986,7 +53382,7 @@
 	  value: true
 	});
 	
-	var _Popconfirm = __webpack_require__(443);
+	var _Popconfirm = __webpack_require__(444);
 	
 	var _Popconfirm2 = _interopRequireDefault(_Popconfirm);
 	
@@ -52996,7 +53392,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 443 */
+/* 444 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53037,7 +53433,7 @@
 	
 	var _Portal2 = _interopRequireDefault(_Portal);
 	
-	var _Confirm = __webpack_require__(444);
+	var _Confirm = __webpack_require__(445);
 	
 	var _Confirm2 = _interopRequireDefault(_Confirm);
 	
@@ -53243,7 +53639,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 444 */
+/* 445 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53262,7 +53658,7 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _i18n = __webpack_require__(445);
+	var _i18n = __webpack_require__(446);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
@@ -53274,7 +53670,7 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _tool = __webpack_require__(446);
+	var _tool = __webpack_require__(447);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -53423,7 +53819,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 445 */
+/* 446 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -53440,7 +53836,7 @@
 	};
 
 /***/ }),
-/* 446 */
+/* 447 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -53478,7 +53874,7 @@
 	}
 
 /***/ }),
-/* 447 */
+/* 448 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -53612,7 +54008,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 448 */
+/* 449 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53731,7 +54127,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 449 */
+/* 450 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53813,7 +54209,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 450 */
+/* 451 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53914,7 +54310,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 451 */
+/* 452 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -54024,7 +54420,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 452 */
+/* 453 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -54041,7 +54437,7 @@
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _beePagination = __webpack_require__(453);
+	var _beePagination = __webpack_require__(454);
 	
 	var _beePagination2 = _interopRequireDefault(_beePagination);
 	
@@ -54120,7 +54516,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 453 */
+/* 454 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54129,7 +54525,7 @@
 	  value: true
 	});
 	
-	var _Pagination = __webpack_require__(454);
+	var _Pagination = __webpack_require__(455);
 	
 	var _Pagination2 = _interopRequireDefault(_Pagination);
 	
@@ -54139,7 +54535,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 454 */
+/* 455 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -54158,7 +54554,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _PaginationButton = __webpack_require__(455);
+	var _PaginationButton = __webpack_require__(456);
 	
 	var _PaginationButton2 = _interopRequireDefault(_PaginationButton);
 	
@@ -54458,7 +54854,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 455 */
+/* 456 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54572,7 +54968,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 456 */
+/* 457 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
