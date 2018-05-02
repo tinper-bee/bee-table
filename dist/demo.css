@@ -8175,6 +8175,16 @@ ul {
   color: #999;
   transition: all 0.3s; }
 
+.bee-table-column-filter-cont {
+  position: relative; }
+
+.bee-table-column-filter {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 30px;
+  height: 30px; }
+
 /* FormGroup */
 /*  Navlayout  */
 /* FormGroup */

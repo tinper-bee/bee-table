@@ -458,3 +458,15 @@ $table-move-in-color: $bg-color-base;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
+
+
+.bee-table-column-filter-cont{
+  position: relative;
+}
+.bee-table-column-filter{
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 30px;
+  height: 30px;
+}
