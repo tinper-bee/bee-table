@@ -43,6 +43,7 @@ const defaultProps = {
 class TableRow extends Component{
  constructor(props){
      super(props);
+     this._timeout = null;
      this.state = {
          hovered: false,
      };
@@ -86,11 +87,14 @@ class TableRow extends Component{
     if (expandable && expandRowByClick) {
       onExpand(!expanded, record, index,event);
     }
-    onRowClick(record, index, event);
+    this.set((e)=> {  
+      onRowClick(record, index, event);
+    });
   }
 
   onRowDoubleClick(event) {
     const { record, index, onRowDoubleClick } = this.props;
+    this.clear();
     onRowDoubleClick(record, index, event);
   }
 
@@ -104,6 +108,17 @@ class TableRow extends Component{
     onHover(false, hoverKey);
   }
 
+  set =(fn)=> {
+      this.clear();
+      this._timeout = window.setTimeout(fn, 300);  
+  }
+
+  clear =(event)=> {
+    if (this._timeout) {  
+        window.clearTimeout(this._timeout);  
+    }
+  }
+ 
   render() {
     const {
       clsPrefix, columns, record, height, visible, index,
