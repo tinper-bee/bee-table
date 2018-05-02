@@ -16,3 +16,7 @@
 
 //引入日期控件样式文件
 @import "../node_modules/bee-datepicker/src/datepicker.scss";
+
+.selected{
+  background: rgb(227,242,253);
+}

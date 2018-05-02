@@ -95,8 +95,35 @@ const data4 = [
   }
 ];
 class Demo4 extends Component {
+
+  constructor(props){
+      super(props);
+      this.state = {
+        data: data4,
+        factoryValue: 0,
+        selectedRow: new Array(data4.length)//状态同步
+      }
+  }
+
   render() {
-    return <Table columns={columns4} data={data4} />;
+    return <Table 
+    rowClassName={(record,index,indent)=>{
+      if (this.state.selectedRow[index]) {
+          return 'selected';
+      } else {
+          return '';
+      }
+    }}
+    onRowClick={(record,index,indent)=>{
+      let selectedRow = new Array(this.state.data.length);
+      selectedRow[index] = true;
+      this.setState({
+          factoryValue: record,
+          selectedRow: selectedRow
+      });
+    }}
+    
+    columns={columns4} data={data4} />;
   }
 }
 

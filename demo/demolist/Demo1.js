@@ -1,8 +1,7 @@
 /**
 *
-* @title 简单表格，以及两种tip
-* 一种是bee-popover实现
-* 一种是标签本身的tooltip
+* @title 简单表格、两种tip、选中行背景色、文字过长
+* 【一种是bee-popover实现、一种是标签本身的tooltip】
 * @description
 */
 
@@ -21,7 +20,7 @@ function getTitleTip(text){
 const columns = [
   { id: "123", title: "性别", dataIndex: "b", key: "b", width: 100 },
   { title: "年龄", dataIndex: "c", key: "c", width: 200 },
-  { title: "用户名", dataIndex: "a", key: "a", width:80 ,
+  { title: "用户名", dataIndex: "a", key: "a", width:80 , className:"rowClassName",
   render(text, record, index) {
     return(<div style={{position: 'relative'}}>
         <Popover
@@ -77,11 +76,36 @@ const data = [
 ];
 
 class Demo1 extends Component {
+
+  constructor(props){
+      super(props);
+      this.state = {
+        data: data,
+        factoryValue: 0,
+        selectedRow: new Array(data.length)//状态同步
+      }
+  }
+
   render() {
     return (
       <Table
         columns={columns}
         data={data}
+        rowClassName={(record,index,indent)=>{
+          if (this.state.selectedRow[index]) {
+              return 'selected';
+          } else {
+              return '';
+          }
+        }}
+        onRowClick={(record,index,indent)=>{
+          let selectedRow = new Array(this.state.data.length);
+          selectedRow[index] = true;
+          this.setState({
+              factoryValue: record,
+              selectedRow: selectedRow
+          });
+        }}
         title={currentData => <div>标题: 这是一个标题</div>}
         footer={currentData => <div>表尾: 我是小尾巴</div>}
       /> 
