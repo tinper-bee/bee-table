@@ -73,6 +73,18 @@ var TableRow = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
+    _this.set = function (fn) {
+      _this.clear();
+      _this._timeout = window.setTimeout(fn, 300);
+    };
+
+    _this.clear = function (event) {
+      if (_this._timeout) {
+        window.clearTimeout(_this._timeout);
+      }
+    };
+
+    _this._timeout = null;
     _this.state = {
       hovered: false
     };
@@ -125,7 +137,9 @@ var TableRow = function (_Component) {
     if (expandable && expandRowByClick) {
       onExpand(!expanded, record, index, event);
     }
-    onRowClick(record, index, event);
+    this.set(function (e) {
+      onRowClick(record, index, event);
+    });
   };
 
   TableRow.prototype.onRowDoubleClick = function onRowDoubleClick(event) {
@@ -134,6 +148,7 @@ var TableRow = function (_Component) {
         index = _props4.index,
         onRowDoubleClick = _props4.onRowDoubleClick;
 
+    this.clear();
     onRowDoubleClick(record, index, event);
   };
 

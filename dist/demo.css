@@ -9586,4 +9586,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 .datepicker-input-group.u-input-group {
   display: block; }
 
+.selected {
+  background: #e3f2fd; }
+
 /*# sourceMappingURL=demo.css.map */
