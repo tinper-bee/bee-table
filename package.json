@@ -47,9 +47,8 @@
   },
   "dependencies": {
     "bee-loading": "^1.0.3",
-    "bee-popconfirm": "^1.0.2",
     "bee-popover": "^1.0.2",
-    "bee-select": "file:///Users/jony/workspaces/yonyou/component/bee-select",
+    "bee-select": "^1.0.8",
     "classnames": "^2.2.5",
     "object-path": "^0.11.3",
     "shallowequal": "^1.0.2",

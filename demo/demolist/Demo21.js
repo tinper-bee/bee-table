@@ -9,6 +9,7 @@
 import React, { Component } from 'react';
 import Table from '../../src';
 import filterColumn from '../../src/lib/filterColumn';
+import sum from '../../src/lib/sum';
 import Icon from "bee-icon";
 
 const columns21 = [
@@ -29,6 +30,7 @@ const columns21 = [
     dataIndex: "c",
     key: "c",
     width: 200,
+    sumCol: true,
     sorter: (a, b) => a.c - b.c
   },
   {
@@ -44,7 +46,7 @@ const data21 = [
   { a: "郭靖", b: "男", c: 25,d:'大侠', key: "3" }
 ];
 
-const FilterColumnTable = filterColumn(Table);
+const FilterColumnTable = filterColumn(sum(Table));
 
 const defaultProps21 = {
   prefixCls: "bee-table"

@@ -470,3 +470,28 @@ $table-move-in-color: $bg-color-base;
   width: 30px;
   height: 30px;
 }
+
+.pop .u-modal-dialog{
+  border: 1px solid #ccc;
+  background: #fff;
+}
+.clear-setting{ 
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+}
+.pop-cont{
+  margin: 10px;
+  margin-top: 0px;
+}
+.item{
+  margin-top: 10px;
+  line-height: 30px;
+  cursor: pointer;
+}
+.item>span{
+  margin-left: 5px;
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
