@@ -1,7 +1,7 @@
 /**
 *
-* @title 列排序
-* @description 点击列的上下按钮即可排序
+* @title 根据列进行过滤
+* @description 点击表格右侧按钮，进行表格列的数据过滤。
 *
 */
 
