@@ -1,18 +1,15 @@
 /**
 *
-* @title 根据列进行过滤
-* @description 点击表格右侧按钮，进行表格列的数据过滤。
-*
+* @title 列的拖拽
+* @description 点击列的表头，进行左右拖拽
 */
-
-
 import React, { Component } from 'react';
 import Table from '../../src';
-import filterColumn from '../../src/lib/filterColumn';
+import dragColumn from '../../src/lib/dragColumn';
 import sum from '../../src/lib/sum';
 import Icon from "bee-icon";
 
-const columns21 = [
+const columns22 = [
   {
     title: "名字",
     dataIndex: "a",
@@ -40,29 +37,29 @@ const columns21 = [
   }
 ];
 
-const data21 = [
+const data22 = [
   { a: "杨过", b: "男", c: 30,d:'内行', key: "2" },
   { a: "令狐冲", b: "男", c: 41,d:'大侠', key: "1" },
   { a: "郭靖", b: "男", c: 25,d:'大侠', key: "3" }
 ];
 
-const FilterColumnTable = filterColumn(sum(Table));
+const DragColumnTable = dragColumn(sum(Table));
 
-const defaultProps21 = {
+const defaultProps22 = {
   prefixCls: "bee-table"
 };
 
-class Demo21 extends Component {
+class Demo22 extends Component {
   constructor(props) {
     super(props);
   }
  
   render() {
     
-    return <FilterColumnTable columns={columns21} data={data21} />;
+    return <DragColumnTable columns={columns22} data={data22} />;
   }
 }
-Demo21.defaultProps = defaultProps21;
+Demo22.defaultProps = defaultProps22;
 
 
-export default Demo21;
+export default Demo22;
