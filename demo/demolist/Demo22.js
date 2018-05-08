@@ -4,9 +4,8 @@
 * @description 点击列的表头，进行左右拖拽
 */
 import React, { Component } from 'react';
-import Table from '../../src';
+import Table from '../../src'; 
 import dragColumn from '../../src/lib/dragColumn';
-import sum from '../../src/lib/sum';
 import Icon from "bee-icon";
 
 const columns22 = [
@@ -43,7 +42,7 @@ const data22 = [
   { a: "郭靖", b: "男", c: 25,d:'大侠', key: "3" }
 ];
 
-const DragColumnTable = dragColumn(sum(Table));
+const DragColumnTable = dragColumn(Table);
 
 const defaultProps22 = {
   prefixCls: "bee-table"
@@ -55,7 +54,6 @@ class Demo22 extends Component {
   }
  
   render() {
-    
     return <DragColumnTable columns={columns22} data={data22} />;
   }
 }

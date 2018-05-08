@@ -40,6 +40,8 @@ const propTypes = {
     rowRef: PropTypes.func,
     getBodyWrapper: PropTypes.func,
     children: PropTypes.node,
+
+    draggable: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -218,7 +220,7 @@ class Table extends Component{
   }
 
   getHeader(columns, fixed) {
-    const { showHeader, expandIconAsCell, clsPrefix } = this.props;
+    const { showHeader, expandIconAsCell, clsPrefix ,onDragStart,onDragOver,onDrop,draggable} = this.props;
     const rows = this.getHeaderRows(columns);
 
     if (expandIconAsCell && fixed !== 'right') {
@@ -231,9 +233,10 @@ class Table extends Component{
     }
 
     const trStyle = fixed ? this.getHeaderRowStyle(columns, rows) : null;
-
+    let drop = draggable?{onDragStart,onDragOver,onDrop,draggable}:{};
     return showHeader ? (
       <TableHeader
+        {...drop}
         clsPrefix={clsPrefix}
         rows={rows}
         rowStyle={trStyle}

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import shallowequal from 'shallowequal';
-import { DragSource } from 'react-dnd';
 
 const propTypes = {
     clsPrefix: PropTypes.string,
@@ -10,39 +9,27 @@ const propTypes = {
 }
 
 class TableHeader extends Component{
+
   constructor(props){
     super(props);
-
-    this.drag = {};
-    drag.ondragstart = this.ondragstart;
-    drag.ondragenter = this.ondragenter;
-    drag.ondragover = this.ondragover;
   }
+
   shouldComponentUpdate(nextProps) {
     return !shallowequal(nextProps, this.props);
   }
-
-  ondragstart=()=>{
-    console.log();
-  }
-
-  ondragenter=()=>{
-
-  }
-
-  ondragover=()=>{
-
-  }
-
-  
+ 
   render() {
-    const { clsPrefix, rowStyle, rows } = this.props;
+    const { clsPrefix, rowStyle ,onDragStart,onDragOver,onDrop,draggable,rows} = this.props;
     return (
       <thead className={`${clsPrefix}-thead`}>
         {
           rows.map((row, index) => (
             <tr key={index} style={rowStyle}>
-              {row.map((cellProps, i) => (<th {...this.drag} draggable="true" {...cellProps} key={i} />))}
+              {row.map((da, i) => {
+                return draggable?(<th 
+                  onDragStart={(event)=>{this.props.onDragStart(event,da)}} onDragOver={this.props.onDragOver} onDrop={(event)=>{this.props.onDrop(event,da)}} draggable={draggable}
+                {...da} key={i} />):(<th {...da} key={i} />);
+            })}
             </tr>
           ))
         }
