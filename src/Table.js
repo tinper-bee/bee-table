@@ -148,6 +148,7 @@ class Table extends Component{
         expandedRowKeys: nextProps.expandedRowKeys,
       });
     }
+    debugger;
     if (nextProps.columns && nextProps.columns !== this.props.columns) {
       this.columnManager.reset(nextProps.columns);
     } else if (nextProps.children !== this.props.children) {
@@ -220,9 +221,8 @@ class Table extends Component{
   }
 
   getHeader(columns, fixed) {
-    const { showHeader, expandIconAsCell, clsPrefix ,onDragStart,onDragOver,onDrop,draggable} = this.props;
+    const { showHeader, expandIconAsCell, clsPrefix ,onDragStart,onDragEnter,onDragOver,onDrop,draggable} = this.props;
     const rows = this.getHeaderRows(columns);
-
     if (expandIconAsCell && fixed !== 'right') {
       rows[0].unshift({
         key: 'u-table-expandIconAsCell',
@@ -233,7 +233,7 @@ class Table extends Component{
     }
 
     const trStyle = fixed ? this.getHeaderRowStyle(columns, rows) : null;
-    let drop = draggable?{onDragStart,onDragOver,onDrop,draggable}:{};
+    let drop = draggable?{onDragStart,onDragOver,onDrop,onDragEnter,draggable}:{};
     return showHeader ? (
       <TableHeader
         {...drop}
@@ -258,6 +258,7 @@ class Table extends Component{
         key: column.key,
         className: column.className || '',
         children: column.title,
+        drgHover: column.drgHover
       };
       if (column.children) {
         this.getHeaderRows(column.children, currentRow + 1, rows);

@@ -16,7 +16,8 @@ export default function dragColumn(Table) {
 
     constructor(props) {
       super(props);
-      const {columns} = props;
+      const {columns} = props; 
+      const { clsPrefix} = props;
       this.setColumOrderByIndex(columns);
     }
 
@@ -31,6 +32,7 @@ export default function dragColumn(Table) {
       Object.assign(_column,columns); 
       _column.forEach((da,i) => {
           da.dragIndex = i;
+          da.drgHover = false;
       });
       this.state = {
         columns:_column
@@ -38,12 +40,23 @@ export default function dragColumn(Table) {
     }
 
 
-    onDragStart=(event,data)=>{
-      event.dataTransfer.setData("Text",data.key);
+    onDragStart=(event,data)=>{ 
     }
 
-    onDragOver=(event)=>{
-      event.preventDefault();
+    onDragOver=(event,data)=>{
+     
+    }
+
+    onDragEnter=(event,data)=>{
+      const {columns:_columns} = this.state;
+      let columns = [];
+      Object.assign(columns,_columns);
+      columns.forEach((da)=>da.drgHover = false)
+      let current = columns.find((da)=>da.key == data.key);
+      current.drgHover = true;
+      this.setState({
+        columns
+      })
     }
 
     onDrop=(event,data)=>{
@@ -53,26 +66,27 @@ export default function dragColumn(Table) {
       let targetIndex = columns.findIndex((_da,i)=>_da.key == data.key);
 
       columns.forEach((da,i)=>{
+        da.drgHover = false;
         if(da.key == id){//obj
           da.dragIndex = targetIndex
         }
         if(da.key == data.key){//targetObj
-          da.dragIndex = objIndex
+          da.dragIndex = objIndex;
         }
       });
      let _columns = sortBy(columns,(da)=>da.dragIndex);
-      console.log("_columns--",_columns);
       this.setState({
-        columns:_columns
-      })
+        columns:_columns,
+      });
     }
 
     render() {
       const {data} = this.props;
       const {columns} = this.state;
-
       return (<Table {...this.props} columns={columns} data={data} 
-          onDragStart={this.onDragStart} onDragOver={this.onDragOver} onDrop={this.onDrop} draggable={true} 
+          onDragStart={this.onDragStart} onDragOver={this.onDragOver} onDrop={this.onDrop} 
+          onDragEnter={this.onDragEnter}
+          draggable={true} 
       />)
     }
   };
