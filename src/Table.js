@@ -148,7 +148,6 @@ class Table extends Component{
         expandedRowKeys: nextProps.expandedRowKeys,
       });
     }
-    debugger;
     if (nextProps.columns && nextProps.columns !== this.props.columns) {
       this.columnManager.reset(nextProps.columns);
     } else if (nextProps.children !== this.props.children) {
@@ -221,7 +220,8 @@ class Table extends Component{
   }
 
   getHeader(columns, fixed) {
-    const { showHeader, expandIconAsCell, clsPrefix ,onDragStart,onDragEnter,onDragOver,onDrop,draggable} = this.props;
+    const { showHeader, expandIconAsCell, clsPrefix ,onDragStart,onDragEnter,onDragOver,onDrop,draggable,
+      onMouseDown,onMouseMove,onMouseUp,dragborder} = this.props;
     const rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
       rows[0].unshift({
@@ -234,9 +234,11 @@ class Table extends Component{
 
     const trStyle = fixed ? this.getHeaderRowStyle(columns, rows) : null;
     let drop = draggable?{onDragStart,onDragOver,onDrop,onDragEnter,draggable}:{};
+    let dragBorder = dragborder?{onMouseDown,onMouseMove,onMouseUp,dragborder}:{};
     return showHeader ? (
       <TableHeader
         {...drop}
+        {...dragBorder}
         clsPrefix={clsPrefix}
         rows={rows}
         rowStyle={trStyle}
@@ -258,7 +260,8 @@ class Table extends Component{
         key: column.key,
         className: column.className || '',
         children: column.title,
-        drgHover: column.drgHover
+        drgHover: column.drgHover,
+        width:column.width,
       };
       if (column.children) {
         this.getHeaderRows(column.children, currentRow + 1, rows);
@@ -453,6 +456,20 @@ class Table extends Component{
     return <colgroup>{cols}</colgroup>;
   }
 
+  renderDragHideTable=()=>{
+    const {columns,} = this.props;
+    debugger;
+    let sum = 0;
+    return(<div className={`${this.props.clsPrefix}-hiden-drag`} >
+      {
+        columns.map((da,i)=>{
+          sum += da.width?da.width:0;
+          return(<div className={`${this.props.clsPrefix}-hiden-drag-li`}  key={da+"_hiden_"+i} style={{left:sum+"px"}}></div>);
+        })
+      }
+    </div>);
+  }
+
   getLeftFixedTable() {
     return this.getTable({
       columns: this.columnManager.leftColumns(),
@@ -517,7 +534,7 @@ class Table extends Component{
         </tbody>
       ) : null;
       return (
-        <table className={tableClassName} style={tableStyle}>
+        <table className={` ${tableClassName} table table-bordered `} style={tableStyle}>
           {this.getColGroup(columns, fixed)}
           {hasHead ? this.getHeader(columns, fixed) : null}
           {tableBody}
@@ -551,6 +568,7 @@ class Table extends Component{
         onTouchStart={this.detectScrollTarget}
         onScroll={this.handleBodyScroll}
       >
+        {this.renderDragHideTable()}
         {renderTable(!useFixedHeader)}
       </div>
     );

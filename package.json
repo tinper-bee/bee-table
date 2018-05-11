@@ -52,6 +52,7 @@
     "bee-select": "^1.0.8",
     "classnames": "^2.2.5",
     "object-path": "^0.11.3",
+    "re-resizable": "^4.4.8",
     "react-dnd": "^2.6.0",
     "shallowequal": "^1.0.2",
     "tinper-bee-core": "latest",

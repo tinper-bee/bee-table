@@ -4,7 +4,7 @@ import Checkbox from "bee-checkbox";
 import ReactDOM from 'react-dom';
 import Popover from 'bee-popover';
 import {sortBy} from './util';
-// import createColResizable from '../resiztable'
+import createColResizable from '../resiztable'
 // import Table from './Table';
 /**
  * 参数: 列拖拽
@@ -29,16 +29,16 @@ export default function dragColumn(Table) {
       }
     }
 
-    // componentDidMount() {
-    //   const domElemTableList = document.querySelectorAll('table');
-    //    createColResizable(domElemTableList[0], {
-    //     liveDrag: true
-    //   });
-    //   createColResizable(domElemTableList[1], {
-    //     liveDrag: false,
-    //     headerOnly: false
-    //   });
-    // }
+    componentDidMount() {
+      const domElemTableList = document.querySelectorAll('table');
+       createColResizable(domElemTableList[0], {
+        liveDrag: true
+      });
+      createColResizable(domElemTableList[1], {
+        liveDrag: false,
+        headerOnly: false
+      });
+    }
 
     setColumOrderByIndex = (columns)=>{
       let _column = [];

@@ -86,7 +86,9 @@ var propTypes = {
   scroll: _propTypes2["default"].object,
   rowRef: _propTypes2["default"].func,
   getBodyWrapper: _propTypes2["default"].func,
-  children: _propTypes2["default"].node
+  children: _propTypes2["default"].node,
+
+  draggable: _propTypes2["default"].bool
 };
 
 var defaultProps = {
@@ -278,10 +280,18 @@ var Table = function (_Component) {
     var _props = this.props,
         showHeader = _props.showHeader,
         expandIconAsCell = _props.expandIconAsCell,
-        clsPrefix = _props.clsPrefix;
+        clsPrefix = _props.clsPrefix,
+        onDragStart = _props.onDragStart,
+        onDragEnter = _props.onDragEnter,
+        onDragOver = _props.onDragOver,
+        onDrop = _props.onDrop,
+        draggable = _props.draggable,
+        onMouseDown = _props.onMouseDown,
+        onMouseMove = _props.onMouseMove,
+        onMouseUp = _props.onMouseUp,
+        dragborder = _props.dragborder;
 
     var rows = this.getHeaderRows(columns);
-
     if (expandIconAsCell && fixed !== 'right') {
       rows[0].unshift({
         key: 'u-table-expandIconAsCell',
@@ -292,12 +302,13 @@ var Table = function (_Component) {
     }
 
     var trStyle = fixed ? this.getHeaderRowStyle(columns, rows) : null;
-
-    return showHeader ? _react2["default"].createElement(_TableHeader2["default"], {
+    var drop = draggable ? { onDragStart: onDragStart, onDragOver: onDragOver, onDrop: onDrop, onDragEnter: onDragEnter, draggable: draggable } : {};
+    var dragBorder = dragborder ? { onMouseDown: onMouseDown, onMouseMove: onMouseMove, onMouseUp: onMouseUp, dragborder: dragborder } : {};
+    return showHeader ? _react2["default"].createElement(_TableHeader2["default"], _extends({}, drop, dragBorder, {
       clsPrefix: clsPrefix,
       rows: rows,
       rowStyle: trStyle
-    }) : null;
+    })) : null;
   };
 
   Table.prototype.getHeaderRows = function getHeaderRows(columns) {
@@ -318,7 +329,9 @@ var Table = function (_Component) {
       var cell = {
         key: column.key,
         className: column.className || '',
-        children: column.title
+        children: column.title,
+        drgHover: column.drgHover,
+        width: column.width
       };
       if (column.children) {
         _this2.getHeaderRows(column.children, currentRow + 1, rows);
@@ -592,7 +605,7 @@ var Table = function (_Component) {
       )) : null;
       return _react2["default"].createElement(
         'table',
-        { className: tableClassName, style: tableStyle },
+        { className: ' ' + tableClassName + ' table table-bordered ', style: tableStyle },
         _this3.getColGroup(columns, fixed),
         hasHead ? _this3.getHeader(columns, fixed) : null,
         tableBody

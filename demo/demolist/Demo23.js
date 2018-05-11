@@ -6,9 +6,10 @@
 import React, { Component } from 'react';
 import Table from '../../src'; 
 import dragColumn from '../../src/lib/dragColumn';
+
 import Icon from "bee-icon";
 
-const columns22 = [
+const columns23 = [
   {
     title: "名字",
     dataIndex: "a",
@@ -19,7 +20,7 @@ const columns22 = [
     title: "性别",
     dataIndex: "b",
     key: "b",
-    width: 100
+    width: 200
   },
   {
     title: "年龄",
@@ -32,11 +33,12 @@ const columns22 = [
   {
     title: "武功级别",
     dataIndex: "d",
-    key: "d"
+    key: "d",
+    width: 200,
   }
 ];
 
-const data22 = [
+const data23 = [
   { a: "杨过", b: "男", c: 30,d:'内行', key: "2" },
   { a: "令狐冲", b: "男", c: 41,d:'大侠', key: "1" },
   { a: "郭靖", b: "男", c: 25,d:'大侠', key: "3" }
@@ -44,20 +46,23 @@ const data22 = [
 
 const DragColumnTable = dragColumn(Table);
 
-const defaultProps22 = {
+const defaultProps23 = {
   prefixCls: "bee-table"
 };
 
-class Demo22 extends Component {
+class Demo23 extends Component {
   constructor(props) {
-    super(props);
+    super(props); 
   }
  
   render() {
-    return <DragColumnTable columns={columns22} data={data22} />;
+    return <DragColumnTable columns={columns23} data={data23} bordered
+    draggable={false}
+    dragborder={true}
+    />;
   }
 }
-Demo22.defaultProps = defaultProps22;
+Demo23.defaultProps = defaultProps23;
 
 
-export default Demo22;
+export default Demo23;

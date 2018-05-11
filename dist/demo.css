@@ -7858,12 +7858,21 @@ ul {
   position: relative;
   line-height: 1.5;
   overflow: hidden; }
+  .u-table-body {
+    position: relative; }
+  .u-table-hiden-drag {
+    position: relative; }
+    .u-table-hiden-drag-li {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      height: 10px;
+      border: 1px solid; }
   .u-table table {
     width: 100%;
     border-collapse: collapse;
     text-align: left; }
   .u-table th {
-    background: #f7f7f7;
     font-weight: bold;
     transition: background 0.3s ease; }
     .u-table th[colspan] {
@@ -7885,12 +7894,16 @@ ul {
   .u-table-scroll {
     overflow: auto; }
   .u-table-bordered table {
-    border: 1px solid #e9e9e9; }
+    border: 1px solid #e9e9e9;
+    box-sizing: border-box;
+    table-layout: fixed; }
   .u-table-bordered th {
-    border-bottom: 1px solid #e9e9e9; }
+    border-bottom: 1px solid #e9e9e9;
+    box-sizing: border-box; }
   .u-table-bordered th,
   .u-table-bordered td {
-    border-right: 1px solid #e9e9e9; }
+    border-right: 1px solid #e9e9e9;
+    box-sizing: border-box; }
   .u-table-header {
     overflow: hidden;
     background: #f7f7f7; }
@@ -8001,6 +8014,29 @@ ul {
     box-shadow: none; }
   .u-table-scroll-position-right .u-table-fixed-right {
     box-shadow: none; }
+  .u-table-thead th {
+    background: #f7f7f7; }
+  .u-table-thead .th-drag {
+    cursor: move; }
+  .u-table-thead .th-drag-hover {
+    background: #ccc; }
+  .u-table-thead-th {
+    position: relative; }
+    .u-table-thead-th-drag-gap {
+      height: 100%;
+      position: absolute;
+      right: 0px;
+      top: 0;
+      background: transparent;
+      width: 2px;
+      cursor: col-resize;
+      box-sizing: border-box; }
+    .u-table-thead-th .th-drag-gap {
+      background: transparent; }
+    .u-table-thead-th .th-drag-gap-hover {
+      background: red; }
+  .u-table-thead-th:last-child-drag-gap {
+    border: none; }
 
 .u-table.bordered table {
   border-collapse: collapse; }
@@ -8208,6 +8244,44 @@ ul {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; }
+
+.col-resize-container {
+  height: 0px;
+  position: relative; }
+  .col-resize-container + .table-col-resizer:first-of-type {
+    table-layout: fixed; }
+  .col-resize-container .active-drag .icon {
+    visibility: visible; }
+  .col-resize-container .last-handle {
+    display: none; }
+  .col-resize-container .drag-handle {
+    margin-left: -5px;
+    position: absolute;
+    z-index: 5;
+    width: 10px;
+    cursor: col-resize; }
+    .col-resize-container .drag-handle .icon {
+      color: #40b0dc;
+      top: -1px;
+      position: absolute;
+      visibility: hidden; }
+      .col-resize-container .drag-handle .icon:first-child {
+        left: -2px; }
+      .col-resize-container .drag-handle .icon:last-child {
+        left: 6px; }
+    .col-resize-container .drag-handle:hover .icon {
+      visibility: visible; }
+    .col-resize-container .drag-handle:hover .col-resizer {
+      border: 1px solid; }
+    .col-resize-container .drag-handle.disabled-drag {
+      cursor: default;
+      display: none; }
+    .col-resize-container .drag-handle .col-resizer {
+      position: absolute;
+      width: 1px;
+      height: 100%;
+      top: 0px;
+      left: 3px; }
 
 /* FormGroup */
 /*  Navlayout  */

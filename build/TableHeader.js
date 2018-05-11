@@ -40,7 +40,34 @@ var TableHeader = function (_Component) {
   function TableHeader(props) {
     _classCallCheck(this, TableHeader);
 
-    return _possibleConstructorReturn(this, _Component.call(this, props));
+    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
+
+    _this.onDragStart = function (event, data) {
+      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.setData("Text", data.key);
+      _this.currentObj = data;
+      event.dataTransfer.setDragImage(event.target, 0, 0);
+      _this.props.onDragStart(event, data);
+    };
+
+    _this.onDragOver = function (event, data) {
+      if (_this.currentObj.key == data.key) return;
+      event.preventDefault();
+      _this.props.onDragOver(event, data);
+    };
+
+    _this.onDragEnter = function (event, data) {
+      if (_this.currentObj.key == data.key) return;
+      _this.props.onDragEnter(event, data);
+    };
+
+    _this.onDrop = function (event, data) {
+      if (_this.currentObj.key == data.key) return;
+      _this.props.onDrop(event, data);
+    };
+
+    _this.currentObj = null;
+    return _this;
   }
 
   TableHeader.prototype.shouldComponentUpdate = function shouldComponentUpdate(nextProps) {
@@ -48,10 +75,20 @@ var TableHeader = function (_Component) {
   };
 
   TableHeader.prototype.render = function render() {
+    var _this2 = this;
+
     var _props = this.props,
         clsPrefix = _props.clsPrefix,
         rowStyle = _props.rowStyle,
-        rows = _props.rows;
+        onDragStart = _props.onDragStart,
+        onDragOver = _props.onDragOver,
+        onDrop = _props.onDrop,
+        draggable = _props.draggable,
+        rows = _props.rows,
+        onMouseDown = _props.onMouseDown,
+        onMouseMove = _props.onMouseMove,
+        onMouseUp = _props.onMouseUp,
+        dragborder = _props.dragborder;
 
     return _react2["default"].createElement(
       'thead',
@@ -60,8 +97,33 @@ var TableHeader = function (_Component) {
         return _react2["default"].createElement(
           'tr',
           { key: index, style: rowStyle },
-          row.map(function (cellProps, i) {
-            return _react2["default"].createElement('th', _extends({}, cellProps, { key: i }));
+          row.map(function (da, i) {
+            var thHover = da.drgHover ? ' ' + clsPrefix + '-thead th-drag-hover' : "";
+            if (draggable) {
+              return _react2["default"].createElement('th', {
+                onDragStart: function onDragStart(event) {
+                  _this2.onDragStart(event, da);
+                },
+                onDragOver: function onDragOver(event) {
+                  _this2.onDragOver(event, da);
+                },
+                onDrop: function onDrop(event) {
+                  _this2.onDrop(event, da);
+                },
+                onDragEnter: function onDragEnter(event) {
+                  _this2.onDragEnter(event, da);
+                },
+                draggable: draggable,
+                className: da.className + ' ' + clsPrefix + '-thead th-drag ' + thHover,
+                key: i });
+            } else if (dragborder) {
+              console.log(da);
+              return _react2["default"].createElement('th', _extends({}, da, {
+                className: da.className + ' ' + clsPrefix + '-thead th-drag-gap ' + thHover + ' ',
+                key: i }));
+            } else {
+              return _react2["default"].createElement('th', _extends({}, da, { key: i }));
+            }
           })
         );
       })
