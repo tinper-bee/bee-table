@@ -68,7 +68,7 @@ import InputRender from "bee-table/build/render/InputRender.js"
 | 参数             | 说明                                       | 类型      | 默认值   |
 | -------------- | ---------------------------------------- | ------- | ----- |
 | isclickTrigger | 是否使用点击触发编辑状态                             | boolean | false |
-| dataSource     | 数据的键值对，在表格浏览态的时候能显示真实的key值。比如[{key:"张三",value:"01"}] | array   | -     |
+| dataSource     | 数据的键值对，在表格浏览态的时候能显示真实的key值。比如`[{key:"张三",value:"01"}]` | array   | -     |
 
 
 
