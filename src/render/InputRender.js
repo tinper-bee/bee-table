@@ -22,8 +22,7 @@ export default class InputRender extends Component {
     const value = e;
     this.setState({ value });
   };
-  check = () => {
-    console.log('1')
+  check = () => { 
     if (typeof this.flag === "undefined" || this.flag) {
       this.props.check(this.flag, this.obj);
       this.setState({ editable: false });
@@ -45,7 +44,6 @@ export default class InputRender extends Component {
     if (event.keyCode == 13) {
       this.check();
     }else if(event.keyCode == 9){
-      debugger;
     }
   };
   //货币的格式化方法

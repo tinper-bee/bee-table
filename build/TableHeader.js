@@ -18,6 +18,8 @@ var _shallowequal = require('shallowequal');
 
 var _shallowequal2 = _interopRequireDefault(_shallowequal);
 
+var _utils = require('./utils');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
@@ -27,6 +29,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+
+// import ResizableTh from './ResizableTh';
 
 var propTypes = {
   clsPrefix: _propTypes2["default"].string,
@@ -66,7 +70,56 @@ var TableHeader = function (_Component) {
       _this.props.onDrop(event, data);
     };
 
+    _this.onMouseMove = function (event, data) {
+      if (_this.border) return;
+      var clsPrefix = _this.props.clsPrefix;
+
+      console.log("00-----");
+      if (_this.border) {
+        var x = event.pageX - _this.drag.initPageLeftX + _this.drag.initLeft;
+        console.log("00-----", x);
+      } else {
+        event.target.className = clsPrefix + '-thead-th-drag-gap th-drag-gap-hover';
+      }
+    };
+
+    _this.onMouseOut = function (event, data) {
+      if (_this.border) return;
+      var clsPrefix = _this.props.clsPrefix;
+
+      event.target.className = clsPrefix + '-thead-th-drag-gap th-drag-gap';
+    };
+
+    _this.onMouseDown = function (event, data) {
+      _this.border = true;
+      var clsPrefix = _this.props.clsPrefix;
+
+      event.target.className = clsPrefix + '-thead-th-drag-gap th-drag-gap-hover';
+
+      _this.drag.initPageLeftX = event.pageX;
+      _this.drag.initLeft = (0, _utils.tryParseInt)(event.target.style.left);
+      _this.drag.x = _this.drag.initLeft;
+    };
+
+    _this.onMouseUp = function (event, data) {
+      _this.border = false;
+      var clsPrefix = _this.props.clsPrefix;
+
+      event.target.className = clsPrefix + '-thead-th-drag-gap th-drag-gap';
+      var endx = event.pageX - _this.dragBorderObj.initPageLeftX;
+      // event.target.offsetWidth
+    };
+
     _this.currentObj = null;
+    _this.border = false;
+    _this.drag = {
+      initPageLeftX: 0,
+      initLeft: 0,
+      x: 0
+    };
+    _this.state = {
+      border: false
+    };
     return _this;
   }
 
@@ -88,7 +141,8 @@ var TableHeader = function (_Component) {
         onMouseDown = _props.onMouseDown,
         onMouseMove = _props.onMouseMove,
         onMouseUp = _props.onMouseUp,
-        dragborder = _props.dragborder;
+        dragborder = _props.dragborder,
+        onMouseOut = _props.onMouseOut;
 
     return _react2["default"].createElement(
       'thead',
@@ -118,9 +172,29 @@ var TableHeader = function (_Component) {
                 key: i });
             } else if (dragborder) {
               console.log(da);
-              return _react2["default"].createElement('th', _extends({}, da, {
-                className: da.className + ' ' + clsPrefix + '-thead th-drag-gap ' + thHover + ' ',
-                key: i }));
+              return _react2["default"].createElement(
+                'th',
+                _extends({}, da, {
+                  className: da.className + ' ' + clsPrefix + '-thead-th ',
+                  key: i }),
+                da.children,
+                _react2["default"].createElement('div', { ref: function ref(el) {
+                    return _this2.gap = el;
+                  },
+                  onMouseMove: function onMouseMove(event) {
+                    _this2.onMouseMove(event, da);
+                  },
+                  onMouseOut: function onMouseOut(event) {
+                    _this2.onMouseOut(event, da);
+                  },
+                  onMouseDown: function onMouseDown(event) {
+                    _this2.onMouseDown(event, da);
+                  },
+                  onMouseUp: function onMouseUp(event) {
+                    _this2.onMouseUp(event, da);
+                  },
+                  className: clsPrefix + '-thead-th-drag-gap ' })
+              );
             } else {
               return _react2["default"].createElement('th', _extends({}, da, { key: i }));
             }

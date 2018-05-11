@@ -261,8 +261,11 @@ class Table extends Component{
         className: column.className || '',
         children: column.title,
         drgHover: column.drgHover,
-        width:column.width,
+        width:column.width
       };
+      if(column.onHeadCellClick){
+        cell.onClick = column.onHeadCellClick;
+      }
       if (column.children) {
         this.getHeaderRows(column.children, currentRow + 1, rows);
       }
@@ -458,7 +461,6 @@ class Table extends Component{
 
   renderDragHideTable=()=>{
     const {columns,} = this.props;
-    debugger;
     let sum = 0;
     return(<div className={`${this.props.clsPrefix}-hiden-drag`} >
       {

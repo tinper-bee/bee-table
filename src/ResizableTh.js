@@ -25,8 +25,7 @@ class ResizableTh extends Component {
   
 
   onMouseDown=(event,data)=>{
-    this.mouse = true;
-    console.log(event.screenX);
+    this.mouse = true; 
     this.dragBorderObj.startScreenX = event.screenX;
   }
   onMouseMove=(event,data)=>{
@@ -40,8 +39,7 @@ class ResizableTh extends Component {
 
     let currObj =  columns.find((_da,i)=>_da.key == data.key);
     if(!currObj)return;
-    currObj.width = currObj.width?(currObj.width+endx):endx;
-    console.log("currObj.width--",currObj.width);
+    currObj.width = currObj.width?(currObj.width+endx):endx; 
     this.setState({
       columns
     });
@@ -52,8 +50,7 @@ class ResizableTh extends Component {
   }
 
   onMouseUp=(event,data)=>{
-    let endx = (event.screenX-this.dragBorderObj.startScreenX);
-    console.log("onmouseup-",endx);
+    let endx = (event.screenX-this.dragBorderObj.startScreenX); 
     this.mouse = false;
     
   }

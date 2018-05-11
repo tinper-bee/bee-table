@@ -120,6 +120,7 @@ Table拓展功能方法。注：拼接成复杂功能的table组件不能在rend
 import multiSelect from "bee-table/build/lib/multiSelect.js"
 ```
 
+
 ### multiSelect
 
 全选功能
@@ -158,6 +159,32 @@ import multiSelect from "bee-table/build/lib/multiSelect.js"
 | 参数     | 说明         | 类型       | 默认值  |
 | ------ | ---------- | -------- | ---- |
 | sumCol | 该列设置为合计列，合计行中会显示合计数据 | boolean | false |
+
+
+### filterColumn
+
+过滤表头列
+
+
+### dragColumn
+
+拖拽表头交换顺序
+
+#### dragColumn新增参数
+
+| 参数     | 说明         | 类型       | 默认值  |
+| ------ | ---------- | -------- | ---- |
+| draggable | 当前表格可拖拽 | boolean | false |
+
+
+### 拖拽变更宽度
+
+建设中...
+
+| 参数     | 说明         | 类型       | 默认值  |
+| ------ | ---------- | -------- | ---- |
+| dragborder | 当前表格可拖拽改变宽度 | boolean | false |
+
 
 
 ## rendertype
@@ -247,3 +274,5 @@ $ cd bee-table
 $ npm install
 $ npm run dev
 ```
+
+

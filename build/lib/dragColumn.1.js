@@ -30,6 +30,10 @@ var _beePopover2 = _interopRequireDefault(_beePopover);
 
 var _util = require("./util");
 
+var _resiztable = require("../resiztable");
+
+var _resiztable2 = _interopRequireDefault(_resiztable);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
@@ -40,7 +44,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 
-// import createColResizable from '../resiztable'
 // import Table from './Table';
 /**
  * 参数: 列拖拽
@@ -74,16 +77,16 @@ function dragColumn(Table) {
       }
     };
 
-    // componentDidMount() {
-    //   const domElemTableList = document.querySelectorAll('table');
-    //    createColResizable(domElemTableList[0], {
-    //     liveDrag: true
-    //   });
-    //   createColResizable(domElemTableList[1], {
-    //     liveDrag: false,
-    //     headerOnly: false
-    //   });
-    // }
+    dragColumn.prototype.componentDidMount = function componentDidMount() {
+      var domElemTableList = document.querySelectorAll('table');
+      (0, _resiztable2["default"])(domElemTableList[0], {
+        liveDrag: true
+      });
+      (0, _resiztable2["default"])(domElemTableList[1], {
+        liveDrag: false,
+        headerOnly: false
+      });
+    };
 
     dragColumn.prototype.render = function render() {
       var _props = this.props,

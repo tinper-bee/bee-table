@@ -107,12 +107,3 @@ export function removeClass(elm, className) {
     }
   });
 }
-
-export const tryParseInt = (value, defaultValue = 0) => {
-  const resultValue = parseInt(value);
-
-  if (isNaN(resultValue)) {
-    return defaultValue;
-  }
-  return resultValue;
-};

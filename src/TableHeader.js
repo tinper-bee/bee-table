@@ -58,10 +58,8 @@ class TableHeader extends Component{
   onMouseMove=(event,data)=>{
     if(this.border)return; 
     const {clsPrefix} = this.props;
-    console.log("00-----");
     if(this.border){
       let x = (event.pageX - this.drag.initPageLeftX) + this.drag.initLeft;
-      console.log("00-----",x);
     }else{
       event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap-hover`;
     }
@@ -102,17 +100,17 @@ class TableHeader extends Component{
             <tr key={index} style={rowStyle}>
               {row.map((da, i) => {
                 let thHover =  da.drgHover?` ${clsPrefix}-thead th-drag-hover`:""; 
+                delete da.drgHover;
                 if(draggable){
-                  return ( <th
+                  return ( <th {...da}
                     onDragStart={(event)=>{this.onDragStart(event,da)}} 
                     onDragOver={(event)=>{this.onDragOver(event,da)}}
                     onDrop={(event)=>{this.onDrop(event,da)}} 
                     onDragEnter={(event)=>{this.onDragEnter(event,da)}}
                     draggable={draggable}
                     className={`${da.className} ${clsPrefix}-thead th-drag ${thHover}`}
-                    key={i} />)
+                    key={da.key} />)
                 }else if(dragborder){
-                  console.log(da);
                     return(<th
                       // onDragStart={(event)=>{this.onDragGapStart(event,da)}} 
                       // onDragOver={(event)=>{this.onDragGapOver(event,da)}}
@@ -122,7 +120,7 @@ class TableHeader extends Component{
                     // onMouseDown={(event)=>{onMouseDown(event,da)}}
                    
                     // onMouseUp={(event)=>{onMouseUp(event,da)}}
-                    {...da}
+                    // {...da}
                     className={`${da.className} ${clsPrefix}-thead-th `}
                     key={i} >
                       {da.children}
@@ -134,7 +132,8 @@ class TableHeader extends Component{
                       className={`${clsPrefix}-thead-th-drag-gap `}></div>
                     </th>)
                 }else{
-                  return (<th {...da} key={i} />);
+                  let th = da.onClick?(<th {...da} key={i} onClick={(event)=>{da.onClick(da,event)}}/>):(<th {...da} key={i} />);
+                  return (th);
                 }
             })}
             </tr>

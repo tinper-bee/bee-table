@@ -136,6 +136,21 @@ var Table = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
+    _this.renderDragHideTable = function () {
+      var columns = _this.props.columns;
+
+      debugger;
+      var sum = 0;
+      return _react2["default"].createElement(
+        'div',
+        { className: _this.props.clsPrefix + '-hiden-drag' },
+        columns.map(function (da, i) {
+          sum += da.width ? da.width : 0;
+          return _react2["default"].createElement('div', { className: _this.props.clsPrefix + '-hiden-drag-li', key: da + "_hiden_" + i, style: { left: sum + "px" } });
+        })
+      );
+    };
+
     var expandedRowKeys = [];
     var rows = [].concat(_toConsumableArray(props.data));
     _this.columnManager = new _ColumnManager2["default"](props.columns, props.children);
@@ -639,6 +654,7 @@ var Table = function (_Component) {
         onTouchStart: this.detectScrollTarget,
         onScroll: this.handleBodyScroll
       },
+      this.renderDragHideTable(),
       renderTable(!useFixedHeader)
     );
 
