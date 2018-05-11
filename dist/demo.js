@@ -25457,7 +25457,6 @@
 	
 	    var pickerChangeHandler = {};
 	    var calendarHandler = {};
-	    var autofocus = this.props.autofocus ? { autofocus: 'autofocus' } : null;
 	
 	    if (props.showTime) {
 	      calendarHandler = {
@@ -25493,13 +25492,13 @@
 	          return _react2["default"].createElement(
 	            _beeInputGroup2["default"],
 	            { simple: true, className: "datepicker-input-group" },
-	            _react2["default"].createElement(_beeFormControl2["default"], _extends({
+	            _react2["default"].createElement(_beeFormControl2["default"], {
 	              disabled: props.disabled,
 	              readOnly: true,
 	              placeholder: _this2.props.placeholder,
 	              className: _this2.props.className,
 	              value: value && value.format(props.format) || ""
-	            }, autofocus)),
+	            }),
 	            _react2["default"].createElement(
 	              _beeInputGroup2["default"].Button,
 	              { shape: "border" },

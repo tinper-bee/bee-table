@@ -19,8 +19,7 @@
    "jsx"
   ],
   "transform": {
-   "^.+\\.js$": "babel-jest"
-  }
+   "^.+\\.js$": "babel-jest"}
  },
  "homepage": "https://github.com/tinper-bee/bee-table.git",
  "author": "Yonyou FED",
