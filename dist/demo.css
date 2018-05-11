@@ -7866,7 +7866,8 @@ ul {
       position: absolute;
       top: 0px;
       left: 0px;
-      height: 10px; }
+      height: 10px;
+      border: 1px solid; }
   .u-table table {
     width: 100%;
     border-collapse: collapse;
@@ -8033,7 +8034,7 @@ ul {
     .u-table-thead-th .th-drag-gap {
       background: transparent; }
     .u-table-thead-th .th-drag-gap-hover {
-      background: red; }
+      background: #000; }
   .u-table-thead-th:last-child-drag-gap {
     border: none; }
 

@@ -56,37 +56,58 @@ class TableHeader extends Component{
 
 
   onMouseMove=(event,data)=>{
+    console.log("onMouseMove----" ,this.border);
     if(this.border)return; 
     const {clsPrefix} = this.props;
-    if(this.border){
-      let x = (event.pageX - this.drag.initPageLeftX) + this.drag.initLeft;
-    }else{
+    // if(this.border){
+    //   console.log("xxxx-------000");
+    //   let x = (event.pageX - this.drag.initPageLeftX) + this.drag.initLeft;
+    //   console.log("xxxx-------" ,x);
+    // }else{
       event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap-hover`;
-    }
+    // }
   }
-
   onMouseOut=(event,data)=>{
     if(this.border)return;
     const {clsPrefix} = this.props;
     event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap`;
   }
- 
   onMouseDown=(event,data)=>{
     this.border = true;
     const {clsPrefix} = this.props;
-    event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap-hover`;
+    // event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap-hover`;
     
     this.drag.initPageLeftX = event.pageX;
     this.drag.initLeft = tryParseInt(event.target.style.left);
     this.drag.x = this.drag.initLeft;
+    this.drag.currIndex = this.props.rows[0].findIndex(da=>da.key==data.key);
+    console.log("--onThMouseMove---"+this.border);
   }
-
   onMouseUp=(event,data)=>{
     this.border = false;
     const {clsPrefix} = this.props;
     event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap`;
-    let endx = (event.pageX-this.dragBorderObj.initPageLeftX);
-    // event.target.offsetWidth
+  }
+  onThMouseUp=(event,data)=>{
+    this.border = false;
+    const {clsPrefix} = this.props;
+    // event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap`;
+  }
+   
+  onThMouseMove=(event,data)=>{ 
+    if(!this.border)return;
+    let x = (event.pageX - this.drag.initPageLeftX) + this.drag.initLeft-0;
+    //设置hiden的left
+    let currentHideDom = document.getElementById("u-table-drag-hide-table").getElementsByTagName("div")[this.drag.currIndex];
+    currentHideDom.style.left =  (this.drag.initPageLeftX+x-15)+"px";
+    //设置当前的宽度
+    // event.target.style.width = (data.width+x)+"px";
+    let  currentDom = document.getElementById("u-table-drag-thead").getElementsByTagName("th")[this.drag.currIndex];
+    currentDom.style.width = (data.width+x)+"px";
+    //设置他的后一个的宽度
+    let  currentLastDom = document.getElementById("u-table-drag-thead").getElementsByTagName("div")[this.drag.currIndex+1];
+    let _x = x<0?(-1*x):x;
+    currentLastDom.style.left =  (this.drag.initPageLeftX+x)+"px";
   }
  
   render() {
@@ -94,7 +115,7 @@ class TableHeader extends Component{
       onMouseDown,onMouseMove,onMouseUp,dragborder,onMouseOut
       } = this.props;
     return (
-      <thead className={`${clsPrefix}-thead`}>
+      <thead className={`${clsPrefix}-thead`} id="u-table-drag-thead">
         {
           rows.map((row, index) => (
             <tr key={index} style={rowStyle}>
@@ -118,7 +139,9 @@ class TableHeader extends Component{
                       // onDragEnter={(event)=>{this.onDragGapEnter(event,da)}}
 
                     // onMouseDown={(event)=>{onMouseDown(event,da)}}
-                   
+                    style={{width:da.width}}
+                    onMouseMove={(event)=>{this.onThMouseMove(event,da)}}
+                    onMouseUp={(event)=>{this.onThMouseUp(event,da)}} 
                     // onMouseUp={(event)=>{onMouseUp(event,da)}}
                     // {...da}
                     className={`${da.className} ${clsPrefix}-thead-th `}

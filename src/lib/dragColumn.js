@@ -124,11 +124,23 @@ export default function dragColumn(Table) {
       
     }
 
+    onThMouseMove=(event,data,left)=>{
+      const {columns:_columns} = this.state;
+      let columns = [];
+      Object.assign(columns,_columns);
+      let currObj =  columns.find((_da,i)=>_da.key == data.key);
+      if(currObj.width){
+        currObj.width = (currObj.width + left);
+      }
+      console.log("currObj.width---",currObj.width + " _ " + left);
+      this.setState({
+        columns
+      })
+    }
+
     render() {
       const {data,dragborder,draggable,className} = this.props;
       const {columns} = this.state;
-
-      
       return (<Table {...this.props} columns={columns} data={data} className={`${className} u-table-drag-border`}
           onDragStart={this.onDragStart} onDragOver={this.onDragOver} onDrop={this.onDrop} 
           onDragEnter={this.onDragEnter}
@@ -138,6 +150,8 @@ export default function dragColumn(Table) {
           onMouseDown={this.onMouseDown}
           onMouseMove={this.onMouseMove}
           onMouseUp={this.onMouseUp}
+
+          onThMouseMove={this.onThMouseMove}
       />)
     }
   };
