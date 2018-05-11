@@ -74,10 +74,8 @@ var TableHeader = function (_Component) {
       if (_this.border) return;
       var clsPrefix = _this.props.clsPrefix;
 
-      console.log("00-----");
       if (_this.border) {
         var x = event.pageX - _this.drag.initPageLeftX + _this.drag.initLeft;
-        console.log("00-----", x);
       } else {
         event.target.className = clsPrefix + '-thead-th-drag-gap th-drag-gap-hover';
       }
@@ -153,8 +151,9 @@ var TableHeader = function (_Component) {
           { key: index, style: rowStyle },
           row.map(function (da, i) {
             var thHover = da.drgHover ? ' ' + clsPrefix + '-thead th-drag-hover' : "";
+            delete da.drgHover;
             if (draggable) {
-              return _react2["default"].createElement('th', {
+              return _react2["default"].createElement('th', _extends({}, da, {
                 onDragStart: function onDragStart(event) {
                   _this2.onDragStart(event, da);
                 },
@@ -169,14 +168,22 @@ var TableHeader = function (_Component) {
                 },
                 draggable: draggable,
                 className: da.className + ' ' + clsPrefix + '-thead th-drag ' + thHover,
-                key: i });
+                key: da.key }));
             } else if (dragborder) {
-              console.log(da);
               return _react2["default"].createElement(
                 'th',
-                _extends({}, da, {
+                {
+                  // onDragStart={(event)=>{this.onDragGapStart(event,da)}} 
+                  // onDragOver={(event)=>{this.onDragGapOver(event,da)}}
+                  // onDrop={(event)=>{this.onDropGap(event,da)}} 
+                  // onDragEnter={(event)=>{this.onDragGapEnter(event,da)}}
+
+                  // onMouseDown={(event)=>{onMouseDown(event,da)}}
+
+                  // onMouseUp={(event)=>{onMouseUp(event,da)}}
+                  // {...da}
                   className: da.className + ' ' + clsPrefix + '-thead-th ',
-                  key: i }),
+                  key: i },
                 da.children,
                 _react2["default"].createElement('div', { ref: function ref(el) {
                     return _this2.gap = el;
@@ -196,7 +203,10 @@ var TableHeader = function (_Component) {
                   className: clsPrefix + '-thead-th-drag-gap ' })
               );
             } else {
-              return _react2["default"].createElement('th', _extends({}, da, { key: i }));
+              var th = da.onClick ? _react2["default"].createElement('th', _extends({}, da, { key: i, onClick: function onClick(event) {
+                  da.onClick(da, event);
+                } })) : _react2["default"].createElement('th', _extends({}, da, { key: i }));
+              return th;
             }
           })
         );

@@ -139,7 +139,6 @@ var Table = function (_Component) {
     _this.renderDragHideTable = function () {
       var columns = _this.props.columns;
 
-      debugger;
       var sum = 0;
       return _react2["default"].createElement(
         'div',
@@ -348,6 +347,9 @@ var Table = function (_Component) {
         drgHover: column.drgHover,
         width: column.width
       };
+      if (column.onHeadCellClick) {
+        cell.onClick = column.onHeadCellClick;
+      }
       if (column.children) {
         _this2.getHeaderRows(column.children, currentRow + 1, rows);
       }

@@ -175,7 +175,6 @@ function dragColumn(Table) {
 
     this.onMouseDown = function (event, data) {
       _this2.mouse = true;
-      console.log(event.screenX);
       _this2.dragBorderObj.startScreenX = event.screenX;
     };
 
@@ -194,7 +193,6 @@ function dragColumn(Table) {
       });
       if (!currObj) return;
       currObj.width = currObj.width ? currObj.width + endx : endx;
-      console.log("currObj.width--", currObj.width);
       _this2.setState({
         columns: columns
       });
@@ -206,7 +204,6 @@ function dragColumn(Table) {
 
     this.onMouseUp = function (event, data) {
       var endx = event.screenX - _this2.dragBorderObj.startScreenX;
-      console.log("onmouseup-", endx);
       _this2.mouse = false;
     };
   }, _temp;

@@ -44,7 +44,6 @@ var ResizableTh = function (_Component) {
 
     _this.onMouseDown = function (event, data) {
       _this.mouse = true;
-      console.log(event.screenX);
       _this.dragBorderObj.startScreenX = event.screenX;
     };
 
@@ -63,7 +62,6 @@ var ResizableTh = function (_Component) {
       });
       if (!currObj) return;
       currObj.width = currObj.width ? currObj.width + endx : endx;
-      console.log("currObj.width--", currObj.width);
       _this.setState({
         columns: columns
       });
@@ -75,7 +73,6 @@ var ResizableTh = function (_Component) {
 
     _this.onMouseUp = function (event, data) {
       var endx = event.screenX - _this.dragBorderObj.startScreenX;
-      console.log("onmouseup-", endx);
       _this.mouse = false;
     };
 
