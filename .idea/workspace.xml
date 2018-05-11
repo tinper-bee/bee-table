@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="fc6f46f1-46b7-479d-a1be-6709765e93ca" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/api.md" afterPath="$PROJECT_DIR$/docs/api.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/rendertype.md" afterPath="$PROJECT_DIR$/docs/rendertype.md" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -114,11 +113,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="api.md" pinned="false" current-in-tab="false">
+      <file leaf-file-name="api.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/docs/api.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="349">
+              <first_editor relative-caret-position="359">
                 <caret line="82" column="51" lean-forward="false" selection-start-line="82" selection-start-column="51" selection-end-line="82" selection-end-column="51" />
                 <folding />
               </first_editor>
@@ -153,11 +152,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="rendertype.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="rendertype.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/docs/rendertype.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="262">
+              <first_editor relative-caret-position="253">
                 <caret line="70" column="73" lean-forward="false" selection-start-line="70" selection-start-column="73" selection-end-line="70" selection-end-column="73" />
                 <folding />
               </first_editor>
@@ -246,8 +245,8 @@
         <option value="$PROJECT_DIR$/src/Table.js" />
         <option value="$PROJECT_DIR$/demo/demolist/Demo16.js" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/docs/api.md" />
         <option value="$PROJECT_DIR$/docs/rendertype.md" />
+        <option value="$PROJECT_DIR$/docs/api.md" />
       </list>
     </option>
   </component>
@@ -370,7 +369,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10907000" />
+    <option name="totallyTimeSpent" value="11366000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="946" extended-state="0" />
@@ -846,17 +845,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs/api.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="349">
-            <caret line="82" column="51" lean-forward="false" selection-start-line="82" selection-start-column="51" selection-end-line="82" selection-end-column="51" />
-            <folding />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docs/mixin.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -882,8 +870,19 @@
     <entry file="file://$PROJECT_DIR$/docs/rendertype.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="262">
+          <first_editor relative-caret-position="253">
             <caret line="70" column="73" lean-forward="false" selection-start-line="70" selection-start-column="73" selection-end-line="70" selection-end-column="73" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/api.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="359">
+            <caret line="82" column="51" lean-forward="false" selection-start-line="82" selection-start-column="51" selection-end-line="82" selection-end-column="51" />
             <folding />
           </first_editor>
           <second_editor />
