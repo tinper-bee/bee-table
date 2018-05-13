@@ -9742,8 +9742,6 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 	
-	// import createColResizable from '../resiztable'
-	// import Table from './Table';
 	/**
 	 * 参数: 列拖拽
 	 * @param {*} Table
@@ -9764,8 +9762,6 @@
 	
 	      var columns = props.columns;
 	
-	      _this.dragBorderObj = { startScreenX: 0, endScreenX: 0 };
-	      _this.mouse = false;
 	      _this.setColumOrderByIndex(columns);
 	      return _this;
 	    }
@@ -9775,17 +9771,6 @@
 	        this.setColumOrderByIndex();
 	      }
 	    };
-	
-	    // componentDidMount() {
-	    //   const domElemTableList = document.querySelectorAll('table');
-	    //    createColResizable(domElemTableList[0], {
-	    //     liveDrag: true
-	    //   });
-	    //   createColResizable(domElemTableList[1], {
-	    //     liveDrag: false,
-	    //     headerOnly: false
-	    //   });
-	    // }
 	
 	    dragColumn.prototype.render = function render() {
 	      var _props = this.props,
@@ -9800,12 +9785,7 @@
 	        onDragEnter: this.onDragEnter,
 	        draggable: draggable,
 	
-	        dragborder: true,
-	        onMouseDown: this.onMouseDown,
-	        onMouseMove: this.onMouseMove,
-	        onMouseUp: this.onMouseUp,
-	
-	        onThMouseMove: this.onThMouseMove
+	        dragborder: true
 	      }));
 	    };
 	
@@ -9876,55 +9856,8 @@
 	      });
 	    };
 	
-	    this.onMouseDown = function (event, data) {
-	      _this2.mouse = true;
-	      _this2.dragBorderObj.startScreenX = event.screenX;
-	    };
-	
-	    this.onMouseMove = function (event, data) {
-	      if (!_this2.mouse) return;
-	      var endx = event.screenX - _this2.dragBorderObj.startScreenX;
-	      var _columns = _this2.state.columns;
-	
-	      var columns = [];
-	      _extends(columns, _columns);
-	      // let currentIndex = columns.findIndex((_da,i)=>_da.key == data.key);
-	      // currentIndex = currentIndex==0?currentIndex:(currentIndex-1);
-	
-	      var currObj = columns.find(function (_da, i) {
-	        return _da.key == data.key;
-	      });
-	      if (!currObj) return;
-	      currObj.width = currObj.width ? currObj.width + endx : endx;
-	      _this2.setState({
-	        columns: columns
-	      });
-	    };
-	
 	    this.getTarget = function (evt) {
 	      return evt.target || evt.srcElement;
-	    };
-	
-	    this.onMouseUp = function (event, data) {
-	      var endx = event.screenX - _this2.dragBorderObj.startScreenX;
-	      _this2.mouse = false;
-	    };
-	
-	    this.onThMouseMove = function (event, data, left) {
-	      var _columns = _this2.state.columns;
-	
-	      var columns = [];
-	      _extends(columns, _columns);
-	      var currObj = columns.find(function (_da, i) {
-	        return _da.key == data.key;
-	      });
-	      if (currObj.width) {
-	        currObj.width = currObj.width + left;
-	      }
-	      console.log("currObj.width---", currObj.width + " _ " + left);
-	      _this2.setState({
-	        columns: columns
-	      });
 	    };
 	  }, _temp;
 	}

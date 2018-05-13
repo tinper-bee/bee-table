@@ -4,8 +4,6 @@ import Checkbox from "bee-checkbox";
 import ReactDOM from 'react-dom';
 import Popover from 'bee-popover';
 import {sortBy} from './util';
-// import createColResizable from '../resiztable'
-// import Table from './Table';
 /**
  * 参数: 列拖拽
  * @param {*} Table
@@ -17,9 +15,7 @@ export default function dragColumn(Table) {
 
     constructor(props) {
       super(props);
-      const {columns} = props; 
-      this.dragBorderObj = {startScreenX:0,endScreenX:0};
-      this.mouse = false;
+      const {columns} = props;
       this.setColumOrderByIndex(columns);
     }
 
@@ -28,18 +24,7 @@ export default function dragColumn(Table) {
         this.setColumOrderByIndex();
       }
     }
-
-    // componentDidMount() {
-    //   const domElemTableList = document.querySelectorAll('table');
-    //    createColResizable(domElemTableList[0], {
-    //     liveDrag: true
-    //   });
-    //   createColResizable(domElemTableList[1], {
-    //     liveDrag: false,
-    //     headerOnly: false
-    //   });
-    // }
-
+ 
     setColumOrderByIndex = (columns)=>{
       let _column = [];
       Object.assign(_column,columns); 
@@ -92,50 +77,9 @@ export default function dragColumn(Table) {
         columns:_columns,
       });
     }
-
-    onMouseDown=(event,data)=>{
-      this.mouse = true; 
-      this.dragBorderObj.startScreenX = event.screenX;
-    }
-    onMouseMove=(event,data)=>{
-      if(!this.mouse)return;
-      let endx = (event.screenX-this.dragBorderObj.startScreenX);
-      let {columns:_columns} = this.state;
-      let columns = [];
-      Object.assign(columns,_columns); 
-      // let currentIndex = columns.findIndex((_da,i)=>_da.key == data.key);
-      // currentIndex = currentIndex==0?currentIndex:(currentIndex-1);
-
-      let currObj =  columns.find((_da,i)=>_da.key == data.key);
-      if(!currObj)return;
-      currObj.width = currObj.width?(currObj.width+endx):endx; 
-      this.setState({
-        columns
-      });
-    }
-
+ 
     getTarget=(evt)=>{
         return evt.target || evt.srcElement;
-    }
-
-    onMouseUp=(event,data)=>{
-      let endx = (event.screenX-this.dragBorderObj.startScreenX); 
-      this.mouse = false;
-      
-    }
-
-    onThMouseMove=(event,data,left)=>{
-      const {columns:_columns} = this.state;
-      let columns = [];
-      Object.assign(columns,_columns);
-      let currObj =  columns.find((_da,i)=>_da.key == data.key);
-      if(currObj.width){
-        currObj.width = (currObj.width + left);
-      }
-      console.log("currObj.width---",currObj.width + " _ " + left);
-      this.setState({
-        columns
-      })
     }
 
     render() {
@@ -147,12 +91,7 @@ export default function dragColumn(Table) {
           draggable={draggable}
 
           dragborder={true}
-          onMouseDown={this.onMouseDown}
-          onMouseMove={this.onMouseMove}
-          onMouseUp={this.onMouseUp}
-
-          onThMouseMove={this.onThMouseMove}
-      />)
+          />)
     }
   };
 }
