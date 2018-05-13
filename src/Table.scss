@@ -27,7 +27,7 @@ $table-move-in-color: $bg-color-base;
   }
   &-hiden-drag{
     position: relative;
-    // z-index: 9999;
+    z-index: 9999;
 
     &-li{
       position: absolute;

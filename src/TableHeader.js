@@ -19,8 +19,12 @@ class TableHeader extends Component{
     this.drag = {
       initPageLeftX:0,
       initLeft:0,
-      x:0
+      x:0,
+      width:0
     }
+    let _da = {};
+    Object.assign(_da,this.props.rows[0]);
+    this.drag.data = JSON.parse(JSON.stringify(this.props.rows[0]));
     this.state = {
       border:false
     }
@@ -76,12 +80,12 @@ class TableHeader extends Component{
     this.border = true;
     const {clsPrefix} = this.props;
     // event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap-hover`;
-    
+    console.log("--onThMouseMove---"+this.drag);
     this.drag.initPageLeftX = event.pageX;
     this.drag.initLeft = tryParseInt(event.target.style.left);
     this.drag.x = this.drag.initLeft;
     this.drag.currIndex = this.props.rows[0].findIndex(da=>da.key==data.key);
-    console.log("--onThMouseMove---"+this.border);
+    this.drag.width = this.drag.data[this.drag.currIndex].width;
   }
   onMouseUp=(event,data)=>{
     this.border = false;
@@ -90,8 +94,6 @@ class TableHeader extends Component{
   }
   onThMouseUp=(event,data)=>{
     this.border = false;
-    const {clsPrefix} = this.props;
-    // event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap`;
   }
    
   onThMouseMove=(event,data)=>{ 
@@ -99,15 +101,43 @@ class TableHeader extends Component{
     let x = (event.pageX - this.drag.initPageLeftX) + this.drag.initLeft-0;
     //设置hiden的left
     let currentHideDom = document.getElementById("u-table-drag-hide-table").getElementsByTagName("div")[this.drag.currIndex];
-    currentHideDom.style.left =  (this.drag.initPageLeftX+x-15)+"px";
+    currentHideDom.style.left =  (this.drag.initPageLeftX+x-16)+"px";
+    // currentHideDom.style.width = ((this.props.rows[0])[this.drag.currIndex]).width+"px";
+    // console.log("--------------",x);
+    
+
+    // console.log("----",(currentHideDom[this.drag.currIndex]).offsetLeft);
+    // // console.log(" ==== ",this.props.rows[0][this.drag.currIndex])
+
+    // for(let i = this.drag.currIndex ; i < currentHideDom.length; i ++){
+    //   // console.log("----",currentHideDom[i].offsetLeft);
+    //   let _daWidth = (this.props.rows[0][this.drag.currIndex]).width;
+    //   currentHideDom[i].style.left = (_daWidth +x-15)+"px";
+    //   // if(i == this.drag.currIndex){
+        
+    //   // }
+    //   // currentHideDom[i].style.left =  (this.drag.initPageLeftX+x-15)+"px";
+      
+    // }
+
+
     //设置当前的宽度
     // event.target.style.width = (data.width+x)+"px";
+    let  currentData = this.drag.data[this.drag.currIndex];
+    // currentData.width = ((this.props.rows[0])[this.drag.currIndex].width+x);
+    currentData.width = this.drag.width + x;
+    console.log("-----currentData.width---------"+x,currentData.width);
     let  currentDom = document.getElementById("u-table-drag-thead").getElementsByTagName("th")[this.drag.currIndex];
-    currentDom.style.width = (data.width+x)+"px";
+    currentDom.style.width = (currentData.width)+"px";
     //设置他的后一个的宽度
-    let  currentLastDom = document.getElementById("u-table-drag-thead").getElementsByTagName("div")[this.drag.currIndex+1];
-    let _x = x<0?(-1*x):x;
-    currentLastDom.style.left =  (this.drag.initPageLeftX+x)+"px";
+    // let  currentLastDom = document.getElementById("u-table-drag-thead").getElementsByTagName("div")[this.drag.currIndex+1];
+    // let _x = x<0?(-1*x):x;
+    // currentLastDom.style.left =  (this.drag.initPageLeftX+x)+"px";
+
+   
+    this.drag.x = x;
+    // console.log("--------------",this.drag);
+    // console.log("----------pppp----",this.props.rows[0]);
   }
  
   render() {

@@ -7861,7 +7861,8 @@ ul {
   .u-table-body {
     position: relative; }
   .u-table-hiden-drag {
-    position: relative; }
+    position: relative;
+    z-index: 9999; }
     .u-table-hiden-drag-li {
       position: absolute;
       top: 0px;

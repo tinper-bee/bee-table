@@ -8165,13 +8165,14 @@
 	      var clsPrefix = _this.props.clsPrefix;
 	      // event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap-hover`;
 	
+	      console.log("--onThMouseMove---" + _this.drag);
 	      _this.drag.initPageLeftX = event.pageX;
 	      _this.drag.initLeft = (0, _utils.tryParseInt)(event.target.style.left);
 	      _this.drag.x = _this.drag.initLeft;
 	      _this.drag.currIndex = _this.props.rows[0].findIndex(function (da) {
 	        return da.key == data.key;
 	      });
-	      console.log("--onThMouseMove---" + _this.border);
+	      _this.drag.width = _this.drag.data[_this.drag.currIndex].width;
 	    };
 	
 	    _this.onMouseUp = function (event, data) {
@@ -8183,8 +8184,6 @@
 	
 	    _this.onThMouseUp = function (event, data) {
 	      _this.border = false;
-	      var clsPrefix = _this.props.clsPrefix;
-	      // event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap`;
 	    };
 	
 	    _this.onThMouseMove = function (event, data) {
@@ -8192,15 +8191,43 @@
 	      var x = event.pageX - _this.drag.initPageLeftX + _this.drag.initLeft - 0;
 	      //设置hiden的left
 	      var currentHideDom = document.getElementById("u-table-drag-hide-table").getElementsByTagName("div")[_this.drag.currIndex];
-	      currentHideDom.style.left = _this.drag.initPageLeftX + x - 15 + "px";
+	      currentHideDom.style.left = _this.drag.initPageLeftX + x - 16 + "px";
+	      // currentHideDom.style.width = ((this.props.rows[0])[this.drag.currIndex]).width+"px";
+	      // console.log("--------------",x);
+	
+	
+	      // console.log("----",(currentHideDom[this.drag.currIndex]).offsetLeft);
+	      // // console.log(" ==== ",this.props.rows[0][this.drag.currIndex])
+	
+	      // for(let i = this.drag.currIndex ; i < currentHideDom.length; i ++){
+	      //   // console.log("----",currentHideDom[i].offsetLeft);
+	      //   let _daWidth = (this.props.rows[0][this.drag.currIndex]).width;
+	      //   currentHideDom[i].style.left = (_daWidth +x-15)+"px";
+	      //   // if(i == this.drag.currIndex){
+	
+	      //   // }
+	      //   // currentHideDom[i].style.left =  (this.drag.initPageLeftX+x-15)+"px";
+	
+	      // }
+	
+	
 	      //设置当前的宽度
 	      // event.target.style.width = (data.width+x)+"px";
+	      var currentData = _this.drag.data[_this.drag.currIndex];
+	      // currentData.width = ((this.props.rows[0])[this.drag.currIndex].width+x);
+	      currentData.width = _this.drag.width + x;
+	      console.log("-----currentData.width---------" + x, currentData.width);
 	      var currentDom = document.getElementById("u-table-drag-thead").getElementsByTagName("th")[_this.drag.currIndex];
-	      currentDom.style.width = data.width + x + "px";
+	      currentDom.style.width = currentData.width + "px";
 	      //设置他的后一个的宽度
-	      var currentLastDom = document.getElementById("u-table-drag-thead").getElementsByTagName("div")[_this.drag.currIndex + 1];
-	      var _x = x < 0 ? -1 * x : x;
-	      currentLastDom.style.left = _this.drag.initPageLeftX + x + "px";
+	      // let  currentLastDom = document.getElementById("u-table-drag-thead").getElementsByTagName("div")[this.drag.currIndex+1];
+	      // let _x = x<0?(-1*x):x;
+	      // currentLastDom.style.left =  (this.drag.initPageLeftX+x)+"px";
+	
+	
+	      _this.drag.x = x;
+	      // console.log("--------------",this.drag);
+	      // console.log("----------pppp----",this.props.rows[0]);
 	    };
 	
 	    _this.currentObj = null;
@@ -8208,8 +8235,12 @@
 	    _this.drag = {
 	      initPageLeftX: 0,
 	      initLeft: 0,
-	      x: 0
+	      x: 0,
+	      width: 0
 	    };
+	    var _da = {};
+	    _extends(_da, _this.props.rows[0]);
+	    _this.drag.data = JSON.parse(JSON.stringify(_this.props.rows[0]));
 	    _this.state = {
 	      border: false
 	    };
