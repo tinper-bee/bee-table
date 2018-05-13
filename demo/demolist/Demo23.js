@@ -1,7 +1,7 @@
 /**
 *
-* @title 动态调整列的宽度
-* @description 点击列的表头，进行左右拖拽
+* @title 拖拽调整列的宽度
+* @description 目前支持此功能只支持普通表格【注：不支持tree结构的表头、不支持和表头拖拽交互列一起使用】
 */
 import React, { Component } from 'react';
 import Table from '../../src'; 

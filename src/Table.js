@@ -221,7 +221,7 @@ class Table extends Component{
 
   getHeader(columns, fixed) {
     const { showHeader, expandIconAsCell, clsPrefix ,onDragStart,onDragEnter,onDragOver,onDrop,draggable,
-      onMouseDown,onMouseMove,onMouseUp,dragborder,onThMouseMove} = this.props;
+      onMouseDown,onMouseMove,onMouseUp,dragborder,onThMouseMove,dragborderKey} = this.props;
     const rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
       rows[0].unshift({
@@ -234,7 +234,8 @@ class Table extends Component{
 
     const trStyle = fixed ? this.getHeaderRowStyle(columns, rows) : null;
     let drop = draggable?{onDragStart,onDragOver,onDrop,onDragEnter,draggable}:{};
-    let dragBorder = dragborder?{onMouseDown,onMouseMove,onMouseUp,dragborder,onThMouseMove}:{};
+    let dragBorder = dragborder?{onMouseDown,onMouseMove,onMouseUp,dragborder,onThMouseMove,dragborderKey}:{};
+
     return showHeader ? (
       <TableHeader
         {...drop}
@@ -328,6 +329,7 @@ class Table extends Component{
         indent={1}
         expandable={false}
         store={this.store}
+        dragborderKey={this.props.dragborderKey}
       />
     );
   }
@@ -460,9 +462,10 @@ class Table extends Component{
   }
 
   renderDragHideTable=()=>{
-    const {columns,} = this.props;
+    const {columns,dragborder,dragborderKey} = this.props;
+    if(!dragborder)return null;
     let sum = 0;
-    return(<div id="u-table-drag-hide-table" className={`${this.props.clsPrefix}-hiden-drag`} >
+    return(<div id={`u-table-drag-hide-table-${dragborderKey}`} className={`${this.props.clsPrefix}-hiden-drag`} >
       {
         columns.map((da,i)=>{
           sum += da.width?da.width:0;
@@ -537,9 +540,7 @@ class Table extends Component{
       ) : null;
       return (
         <table className={` ${tableClassName} table table-bordered `} style={tableStyle}>
-          {/* {
-            this.props.dragborder?"":this.getColGroup(columns, fixed)
-          } */}
+          {this.props.dragborder?null:this.getColGroup(columns, fixed)}
           {hasHead ? this.getHeader(columns, fixed) : null}
           {tableBody}
         </table>
@@ -562,7 +563,6 @@ class Table extends Component{
         </div>
       );
     }
-
     let BodyTable = (
       <div
         className={`${clsPrefix}-body`}

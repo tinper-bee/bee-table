@@ -17,10 +17,10 @@ class TableHeader extends Component{
     this.state = {
       border:false
     }
-
     //拖拽宽度处理
     if(!props.dragborder)return;
     this.border = false;
+    this.theadKey = new Date().getTime();
     this.drag = {
       initPageLeftX:0,
       initLeft:0,
@@ -91,14 +91,17 @@ class TableHeader extends Component{
    
   onThMouseMove=(event,data)=>{ 
     if(!this.border)return;
+    const {dragborderKey} = this.props;
+    console.log(data);
     let x = (event.pageX - this.drag.initPageLeftX) + this.drag.initLeft-0;
     //设置hiden的left
-    let currentHideDom = document.getElementById("u-table-drag-hide-table").getElementsByTagName("div")[this.drag.currIndex];
+    //"u-table-drag-hide-table"
+    let currentHideDom = document.getElementById("u-table-drag-hide-table-"+dragborderKey).getElementsByTagName("div")[this.drag.currIndex];
     currentHideDom.style.left =  (this.drag.initPageLeftX+x-16)+"px"; 
     //设置当前的宽度 
     let  currentData = this.drag.data[this.drag.currIndex]; 
     currentData.width = this.drag.width + x; 
-    let  currentDom = document.getElementById("u-table-drag-thead").getElementsByTagName("th")[this.drag.currIndex];
+    let  currentDom = document.getElementById("u-table-drag-thead-"+this.theadKey).getElementsByTagName("th")[this.drag.currIndex];
     currentDom.style.width = (currentData.width)+"px"; 
     this.drag.x = x; 
   }
@@ -108,7 +111,7 @@ class TableHeader extends Component{
       onMouseDown,onMouseMove,onMouseUp,dragborder,onMouseOut
       } = this.props;
     return (
-      <thead className={`${clsPrefix}-thead`} id="u-table-drag-thead">
+      <thead className={`${clsPrefix}-thead`} id={`u-table-drag-thead-${this.theadKey}`}>
         {
           rows.map((row, index) => (
             <tr key={index} style={rowStyle}>

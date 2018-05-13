@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import Icon from "bee-icon"; 
-import Checkbox from "bee-checkbox";
 import ReactDOM from 'react-dom';
-import Popover from 'bee-popover';
 import {sortBy} from './util';
 /**
  * 参数: 列拖拽
@@ -84,13 +82,15 @@ export default function dragColumn(Table) {
 
     render() {
       const {data,dragborder,draggable,className} = this.props;
+      let key = new Date().getTime();
       const {columns} = this.state;
       return (<Table {...this.props} columns={columns} data={data} className={`${className} u-table-drag-border`}
           onDragStart={this.onDragStart} onDragOver={this.onDragOver} onDrop={this.onDrop} 
           onDragEnter={this.onDragEnter}
           draggable={draggable}
-
+      
           dragborder={true}
+          dragborderKey={key}
           />)
     }
   };
