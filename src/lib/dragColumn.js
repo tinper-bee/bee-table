@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import Icon from "bee-icon"; 
-import Checkbox from "bee-checkbox";
 import ReactDOM from 'react-dom';
-import Popover from 'bee-popover';
 import {sortBy} from './util';
 /**
  * 参数: 列拖拽

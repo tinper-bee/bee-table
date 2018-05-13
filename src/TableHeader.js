@@ -14,6 +14,11 @@ class TableHeader extends Component{
   constructor(props){
     super(props);
     this.currentObj = null;
+    this.state = {
+      border:false
+    }
+    //拖拽宽度处理
+    if(!props.dragborder)return;
     this.border = false;
     this.drag = {
       initPageLeftX:0,
@@ -24,9 +29,6 @@ class TableHeader extends Component{
     let _da = {};
     Object.assign(_da,this.props.rows[0]);
     this.drag.data = JSON.parse(JSON.stringify(this.props.rows[0]));
-    this.state = {
-      border:false
-    }
   }
 
   shouldComponentUpdate(nextProps) {
