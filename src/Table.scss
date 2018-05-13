@@ -27,14 +27,11 @@ $table-move-in-color: $bg-color-base;
   }
   &-hiden-drag{
     position: relative;
-    z-index: 9999;
-
     &-li{
       position: absolute;
       top: 0px;
       left: 0px;
       height: 10px;
-      border: 1px solid;
     }
   }
   table {
@@ -84,6 +81,7 @@ $table-move-in-color: $bg-color-base;
       border: 1px solid #e9e9e9;
       box-sizing: border-box;
       table-layout: fixed;
+      width:auto;
     }
     th {
       border-bottom: 1px solid #e9e9e9;
@@ -294,7 +292,7 @@ $table-move-in-color: $bg-color-base;
         background:transparent;
       }
       .th-drag-gap-hover{
-        background: #000;
+        background: #ccc;
       }
     }
     &-th:last-child {

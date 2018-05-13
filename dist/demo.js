@@ -8099,8 +8099,6 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 	
-	// import ResizableTh from './ResizableTh';
-	
 	var propTypes = {
 	  clsPrefix: _propTypes2['default'].string,
 	  rowStyle: _propTypes2['default'].object,
@@ -8140,17 +8138,10 @@
 	    };
 	
 	    _this.onMouseMove = function (event, data) {
-	      console.log("onMouseMove----", _this.border);
 	      if (_this.border) return;
 	      var clsPrefix = _this.props.clsPrefix;
-	      // if(this.border){
-	      //   console.log("xxxx-------000");
-	      //   let x = (event.pageX - this.drag.initPageLeftX) + this.drag.initLeft;
-	      //   console.log("xxxx-------" ,x);
-	      // }else{
 	
 	      event.target.className = clsPrefix + '-thead-th-drag-gap th-drag-gap-hover';
-	      // }
 	    };
 	
 	    _this.onMouseOut = function (event, data) {
@@ -8163,9 +8154,7 @@
 	    _this.onMouseDown = function (event, data) {
 	      _this.border = true;
 	      var clsPrefix = _this.props.clsPrefix;
-	      // event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap-hover`;
 	
-	      console.log("--onThMouseMove---" + _this.drag);
 	      _this.drag.initPageLeftX = event.pageX;
 	      _this.drag.initLeft = (0, _utils.tryParseInt)(event.target.style.left);
 	      _this.drag.x = _this.drag.initLeft;
@@ -8192,42 +8181,12 @@
 	      //设置hiden的left
 	      var currentHideDom = document.getElementById("u-table-drag-hide-table").getElementsByTagName("div")[_this.drag.currIndex];
 	      currentHideDom.style.left = _this.drag.initPageLeftX + x - 16 + "px";
-	      // currentHideDom.style.width = ((this.props.rows[0])[this.drag.currIndex]).width+"px";
-	      // console.log("--------------",x);
-	
-	
-	      // console.log("----",(currentHideDom[this.drag.currIndex]).offsetLeft);
-	      // // console.log(" ==== ",this.props.rows[0][this.drag.currIndex])
-	
-	      // for(let i = this.drag.currIndex ; i < currentHideDom.length; i ++){
-	      //   // console.log("----",currentHideDom[i].offsetLeft);
-	      //   let _daWidth = (this.props.rows[0][this.drag.currIndex]).width;
-	      //   currentHideDom[i].style.left = (_daWidth +x-15)+"px";
-	      //   // if(i == this.drag.currIndex){
-	
-	      //   // }
-	      //   // currentHideDom[i].style.left =  (this.drag.initPageLeftX+x-15)+"px";
-	
-	      // }
-	
-	
-	      //设置当前的宽度
-	      // event.target.style.width = (data.width+x)+"px";
+	      //设置当前的宽度 
 	      var currentData = _this.drag.data[_this.drag.currIndex];
-	      // currentData.width = ((this.props.rows[0])[this.drag.currIndex].width+x);
 	      currentData.width = _this.drag.width + x;
-	      console.log("-----currentData.width---------" + x, currentData.width);
 	      var currentDom = document.getElementById("u-table-drag-thead").getElementsByTagName("th")[_this.drag.currIndex];
 	      currentDom.style.width = currentData.width + "px";
-	      //设置他的后一个的宽度
-	      // let  currentLastDom = document.getElementById("u-table-drag-thead").getElementsByTagName("div")[this.drag.currIndex+1];
-	      // let _x = x<0?(-1*x):x;
-	      // currentLastDom.style.left =  (this.drag.initPageLeftX+x)+"px";
-	
-	
 	      _this.drag.x = x;
-	      // console.log("--------------",this.drag);
-	      // console.log("----------pppp----",this.props.rows[0]);
 	    };
 	
 	    _this.currentObj = null;
@@ -8299,22 +8258,14 @@
 	              return _react2['default'].createElement(
 	                'th',
 	                {
-	                  // onDragStart={(event)=>{this.onDragGapStart(event,da)}} 
-	                  // onDragOver={(event)=>{this.onDragGapOver(event,da)}}
-	                  // onDrop={(event)=>{this.onDropGap(event,da)}} 
-	                  // onDragEnter={(event)=>{this.onDragGapEnter(event,da)}}
-	
-	                  // onMouseDown={(event)=>{onMouseDown(event,da)}}
 	                  style: { width: da.width },
 	                  onMouseMove: function onMouseMove(event) {
 	                    _this2.onThMouseMove(event, da);
 	                  },
 	                  onMouseUp: function onMouseUp(event) {
 	                    _this2.onThMouseUp(event, da);
-	                  }
-	                  // onMouseUp={(event)=>{onMouseUp(event,da)}}
-	                  // {...da}
-	                  , className: da.className + ' ' + clsPrefix + '-thead-th ',
+	                  },
+	                  className: da.className + ' ' + clsPrefix + '-thead-th ',
 	                  key: i },
 	                da.children,
 	                _react2['default'].createElement('div', { ref: function ref(el) {
