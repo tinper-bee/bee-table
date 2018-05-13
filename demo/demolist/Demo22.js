@@ -1,7 +1,7 @@
 /**
 *
-* @title 拖拽调整列的宽度
-* @description 目前支持此功能只支持普通表格【注：不支持tree结构的表头、不支持和表头拖拽交互列一起使用】
+* @title 列的拖拽，交换表头的顺序
+* @description 点击列的表头，进行左右拖拽
 */
 import React, { Component } from 'react';
 import Table from '../../src'; 
@@ -9,7 +9,7 @@ import dragColumn from '../../src/lib/dragColumn';
 
 import Icon from "bee-icon";
 
-const columns23 = [
+const columns22 = [
   {
     title: "名字",
     dataIndex: "a",
@@ -38,7 +38,7 @@ const columns23 = [
   }
 ];
 
-const data23 = [
+const data22 = [
   { a: "杨过", b: "男", c: 30,d:'内行', key: "2" },
   { a: "令狐冲", b: "男", c: 41,d:'大侠', key: "1" },
   { a: "郭靖", b: "男", c: 25,d:'大侠', key: "3" }
@@ -46,22 +46,22 @@ const data23 = [
 
 const DragColumnTable = dragColumn(Table);
 
-const defaultProps23 = {
+const defaultProps22 = {
   prefixCls: "bee-table"
 };
 
-class Demo23 extends Component {
+class Demo22 extends Component {
   constructor(props) {
     super(props); 
   }
-
+ 
   render() {
-    return <DragColumnTable columns={columns23} data={data23} bordered
-    dragborder={true}
+    return <DragColumnTable columns={columns22} data={data22} bordered
+    draggable={true} 
     />;
   }
 }
-Demo23.defaultProps = defaultProps23;
+Demo22.defaultProps = defaultProps22;
 
 
-export default Demo23;
+export default Demo22;

@@ -82,13 +82,15 @@ export default function dragColumn(Table) {
 
     render() {
       const {data,dragborder,draggable,className} = this.props;
+      let key = new Date().getTime();
       const {columns} = this.state;
       return (<Table {...this.props} columns={columns} data={data} className={`${className} u-table-drag-border`}
           onDragStart={this.onDragStart} onDragOver={this.onDragOver} onDrop={this.onDrop} 
           onDragEnter={this.onDragEnter}
           draggable={draggable}
-
+      
           dragborder={true}
+          dragborderKey={key}
           />)
     }
   };
