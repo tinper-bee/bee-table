@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import shallowequal from 'shallowequal';
 import {tryParseInt} from './utils';
-// import ResizableTh from './ResizableTh';
 
 const propTypes = {
     clsPrefix: PropTypes.string,
@@ -15,15 +14,22 @@ class TableHeader extends Component{
   constructor(props){
     super(props);
     this.currentObj = null;
+    this.state = {
+      border:false
+    }
+
+    //拖拽宽度处理
+    if(!props.dragborder)return;
     this.border = false;
     this.drag = {
       initPageLeftX:0,
       initLeft:0,
-      x:0
+      x:0,
+      width:0
     }
-    this.state = {
-      border:false
-    }
+    let _da = {};
+    Object.assign(_da,this.props.rows[0]);
+    this.drag.data = JSON.parse(JSON.stringify(this.props.rows[0]));
   }
 
   shouldComponentUpdate(nextProps) {
@@ -57,36 +63,44 @@ class TableHeader extends Component{
 
   onMouseMove=(event,data)=>{
     if(this.border)return; 
-    const {clsPrefix} = this.props;
-    if(this.border){
-      let x = (event.pageX - this.drag.initPageLeftX) + this.drag.initLeft;
-    }else{
-      event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap-hover`;
-    }
+    const {clsPrefix} = this.props; 
+    event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap-hover`;
   }
-
   onMouseOut=(event,data)=>{
     if(this.border)return;
     const {clsPrefix} = this.props;
     event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap`;
   }
- 
   onMouseDown=(event,data)=>{
     this.border = true;
-    const {clsPrefix} = this.props;
-    event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap-hover`;
-    
+    const {clsPrefix} = this.props; 
     this.drag.initPageLeftX = event.pageX;
     this.drag.initLeft = tryParseInt(event.target.style.left);
     this.drag.x = this.drag.initLeft;
+    this.drag.currIndex = this.props.rows[0].findIndex(da=>da.key==data.key);
+    this.drag.width = this.drag.data[this.drag.currIndex].width;
   }
-
   onMouseUp=(event,data)=>{
     this.border = false;
     const {clsPrefix} = this.props;
     event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap`;
-    let endx = (event.pageX-this.dragBorderObj.initPageLeftX);
-    // event.target.offsetWidth
+  }
+  onThMouseUp=(event,data)=>{
+    this.border = false;
+  }
+   
+  onThMouseMove=(event,data)=>{ 
+    if(!this.border)return;
+    let x = (event.pageX - this.drag.initPageLeftX) + this.drag.initLeft-0;
+    //设置hiden的left
+    let currentHideDom = document.getElementById("u-table-drag-hide-table").getElementsByTagName("div")[this.drag.currIndex];
+    currentHideDom.style.left =  (this.drag.initPageLeftX+x-16)+"px"; 
+    //设置当前的宽度 
+    let  currentData = this.drag.data[this.drag.currIndex]; 
+    currentData.width = this.drag.width + x; 
+    let  currentDom = document.getElementById("u-table-drag-thead").getElementsByTagName("th")[this.drag.currIndex];
+    currentDom.style.width = (currentData.width)+"px"; 
+    this.drag.x = x; 
   }
  
   render() {
@@ -94,7 +108,7 @@ class TableHeader extends Component{
       onMouseDown,onMouseMove,onMouseUp,dragborder,onMouseOut
       } = this.props;
     return (
-      <thead className={`${clsPrefix}-thead`}>
+      <thead className={`${clsPrefix}-thead`} id="u-table-drag-thead">
         {
           rows.map((row, index) => (
             <tr key={index} style={rowStyle}>
@@ -112,15 +126,9 @@ class TableHeader extends Component{
                     key={da.key} />)
                 }else if(dragborder){
                     return(<th
-                      // onDragStart={(event)=>{this.onDragGapStart(event,da)}} 
-                      // onDragOver={(event)=>{this.onDragGapOver(event,da)}}
-                      // onDrop={(event)=>{this.onDropGap(event,da)}} 
-                      // onDragEnter={(event)=>{this.onDragGapEnter(event,da)}}
-
-                    // onMouseDown={(event)=>{onMouseDown(event,da)}}
-                   
-                    // onMouseUp={(event)=>{onMouseUp(event,da)}}
-                    // {...da}
+                    style={{width:da.width}}
+                    onMouseMove={(event)=>{this.onThMouseMove(event,da)}}
+                    onMouseUp={(event)=>{this.onThMouseUp(event,da)}}
                     className={`${da.className} ${clsPrefix}-thead-th `}
                     key={i} >
                       {da.children}

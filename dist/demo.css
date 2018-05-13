@@ -7895,7 +7895,8 @@ ul {
   .u-table-bordered table {
     border: 1px solid #e9e9e9;
     box-sizing: border-box;
-    table-layout: fixed; }
+    table-layout: fixed;
+    width: auto; }
   .u-table-bordered th {
     border-bottom: 1px solid #e9e9e9;
     box-sizing: border-box; }
@@ -8033,7 +8034,7 @@ ul {
     .u-table-thead-th .th-drag-gap {
       background: transparent; }
     .u-table-thead-th .th-drag-gap-hover {
-      background: red; }
+      background: #ccc; }
   .u-table-thead-th:last-child-drag-gap {
     border: none; }
 

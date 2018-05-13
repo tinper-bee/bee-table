@@ -221,7 +221,7 @@ class Table extends Component{
 
   getHeader(columns, fixed) {
     const { showHeader, expandIconAsCell, clsPrefix ,onDragStart,onDragEnter,onDragOver,onDrop,draggable,
-      onMouseDown,onMouseMove,onMouseUp,dragborder} = this.props;
+      onMouseDown,onMouseMove,onMouseUp,dragborder,onThMouseMove} = this.props;
     const rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
       rows[0].unshift({
@@ -234,7 +234,7 @@ class Table extends Component{
 
     const trStyle = fixed ? this.getHeaderRowStyle(columns, rows) : null;
     let drop = draggable?{onDragStart,onDragOver,onDrop,onDragEnter,draggable}:{};
-    let dragBorder = dragborder?{onMouseDown,onMouseMove,onMouseUp,dragborder}:{};
+    let dragBorder = dragborder?{onMouseDown,onMouseMove,onMouseUp,dragborder,onThMouseMove}:{};
     return showHeader ? (
       <TableHeader
         {...drop}
@@ -462,7 +462,7 @@ class Table extends Component{
   renderDragHideTable=()=>{
     const {columns,} = this.props;
     let sum = 0;
-    return(<div className={`${this.props.clsPrefix}-hiden-drag`} >
+    return(<div id="u-table-drag-hide-table" className={`${this.props.clsPrefix}-hiden-drag`} >
       {
         columns.map((da,i)=>{
           sum += da.width?da.width:0;
@@ -537,7 +537,9 @@ class Table extends Component{
       ) : null;
       return (
         <table className={` ${tableClassName} table table-bordered `} style={tableStyle}>
-          {this.getColGroup(columns, fixed)}
+          {/* {
+            this.props.dragborder?"":this.getColGroup(columns, fixed)
+          } */}
           {hasHead ? this.getHeader(columns, fixed) : null}
           {tableBody}
         </table>
