@@ -52,7 +52,7 @@ const columns = [
                 title: "Door No.",
                 dataIndex: "number",
                 key: "number",
-                width: 100,
+                // width: 100,
                 sumCol: true,
               }
             ]
@@ -61,26 +61,28 @@ const columns = [
       }
     ]
   },
-  {
-    title: "Company",
-    children: [
-      {
-        title: "Company Address",
-        dataIndex: "companyAddress",
-        key: "companyAddress"
-      },
-      {
-        title: "Company Name",
-        dataIndex: "companyName",
-        key: "companyName"
-      }
-    ]
-  },
+  // {
+  //   title: "Company",
+  //   children: [
+  //     {
+  //       title: "Company Address",
+  //       dataIndex: "companyAddress",
+  //       key: "companyAddress",
+  //       width: 100,
+  //     },
+  //     {
+  //       title: "Company Name",
+  //       dataIndex: "companyName",
+  //       key: "companyName",
+  //       width: 100,
+  //     }
+  //   ]
+  // },
   {
     title: "Gender",
     dataIndex: "gender",
     key: "gender",
-    width: 60,
+    width: 80,
     fixed: "right"
   }
 ];
@@ -134,6 +136,7 @@ class Demo18 extends Component {
           columns={columns}
           data={data}
           bordered
+          // scroll={{ x: "130%", y: 140 }}
         />
       </div>
     );

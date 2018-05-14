@@ -7,7 +7,7 @@ $font-size-base: 12px;
 $line-height: 1.5;
 $table-border-color: $border-color-base;
 $table-head-background-color: #f7f7f7;
-$vertical-padding: 16px;
+$vertical-padding: 12px;
 $horizontal-padding: 8px;
 $table-border-color: #e9e9e9;
 
@@ -140,7 +140,7 @@ $table-move-in-color: $bg-color-base;
   }
 
   &-placeholder {
-    padding: 16px 8px;
+    padding: $vertical-padding 8px;
     background: #fff;
     border-bottom: 1px solid $table-border-color;
     text-align: center;
