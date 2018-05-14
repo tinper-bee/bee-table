@@ -1,3 +1,44 @@
+<a name="1.1.7"></a>
+## [1.1.7](https://github.com/tinper-bee/bee-table/compare/v1.1.6...v1.1.7) (2018-05-14)
+
+
+### Features
+
+* **发布拖拽表头列的宽度:** 发布拖拽表头列的宽度 ([67688d5](https://github.com/tinper-bee/bee-table/commit/67688d5))
+
+
+### BREAKING CHANGES
+
+* **发布拖拽表头列的宽度:** 发布拖拽表头列的宽度
+
+
+
+<a name="1.1.6"></a>
+## [1.1.6](https://github.com/tinper-bee/bee-table/compare/v1.1.5...v1.1.6) (2018-05-14)
+
+
+### Bug Fixes
+
+* demo在官网解析报错 ([67483a5](https://github.com/tinper-bee/bee-table/commit/67483a5))
+* 文档 ([b266837](https://github.com/tinper-bee/bee-table/commit/b266837))
+
+
+
+<a name="1.1.5"></a>
+## [1.1.5](https://github.com/tinper-bee/bee-table/compare/v1.1.4...v1.1.5) (2018-05-11)
+
+
+### Features
+
+* **表格拖拽交换列、表头过滤、issues的示例:** 表格拖拽交换列、表头过滤、issues的示例 ([903d1a8](https://github.com/tinper-bee/bee-table/commit/903d1a8))
+
+
+### BREAKING CHANGES
+
+* **表格拖拽交换列、表头过滤、issues的示例:** 表格拖拽交换列、表头过滤、issues的示例
+
+
+
 <a name="1.1.4"></a>
 ## [1.1.4](https://github.com/tinper-bee/bee-table/compare/v1.1.3...v1.1.4) (2018-05-02)
 
