@@ -137,12 +137,16 @@ var Table = function (_Component) {
     var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
     _this.renderDragHideTable = function () {
-      var columns = _this.props.columns;
+      var _this$props = _this.props,
+          columns = _this$props.columns,
+          dragborder = _this$props.dragborder,
+          dragborderKey = _this$props.dragborderKey;
 
+      if (!dragborder) return null;
       var sum = 0;
       return _react2["default"].createElement(
         'div',
-        { className: _this.props.clsPrefix + '-hiden-drag' },
+        { id: 'u-table-drag-hide-table-' + dragborderKey, className: _this.props.clsPrefix + '-hiden-drag' },
         columns.map(function (da, i) {
           sum += da.width ? da.width : 0;
           return _react2["default"].createElement('div', { className: _this.props.clsPrefix + '-hiden-drag-li', key: da + "_hiden_" + i, style: { left: sum + "px" } });
@@ -303,7 +307,9 @@ var Table = function (_Component) {
         onMouseDown = _props.onMouseDown,
         onMouseMove = _props.onMouseMove,
         onMouseUp = _props.onMouseUp,
-        dragborder = _props.dragborder;
+        dragborder = _props.dragborder,
+        onThMouseMove = _props.onThMouseMove,
+        dragborderKey = _props.dragborderKey;
 
     var rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
@@ -317,7 +323,8 @@ var Table = function (_Component) {
 
     var trStyle = fixed ? this.getHeaderRowStyle(columns, rows) : null;
     var drop = draggable ? { onDragStart: onDragStart, onDragOver: onDragOver, onDrop: onDrop, onDragEnter: onDragEnter, draggable: draggable } : {};
-    var dragBorder = dragborder ? { onMouseDown: onMouseDown, onMouseMove: onMouseMove, onMouseUp: onMouseUp, dragborder: dragborder } : {};
+    var dragBorder = dragborder ? { onMouseDown: onMouseDown, onMouseMove: onMouseMove, onMouseUp: onMouseUp, dragborder: dragborder, onThMouseMove: onThMouseMove, dragborderKey: dragborderKey } : {};
+
     return showHeader ? _react2["default"].createElement(_TableHeader2["default"], _extends({}, drop, dragBorder, {
       clsPrefix: clsPrefix,
       rows: rows,
@@ -417,7 +424,8 @@ var Table = function (_Component) {
       clsPrefix: clsPrefix + '-expanded-row',
       indent: 1,
       expandable: false,
-      store: this.store
+      store: this.store,
+      dragborderKey: this.props.dragborderKey
     });
   };
 
@@ -620,10 +628,11 @@ var Table = function (_Component) {
         { className: clsPrefix + '-tbody' },
         _this3.getRows(columns, fixed)
       )) : null;
+      var _drag_class = _this3.props.dragborder ? "table-drag-bordered" : "";
       return _react2["default"].createElement(
         'table',
-        { className: ' ' + tableClassName + ' table table-bordered ', style: tableStyle },
-        _this3.getColGroup(columns, fixed),
+        { className: ' ' + tableClassName + ' table table-bordered ' + _drag_class + ' ', style: tableStyle },
+        _this3.props.dragborder ? null : _this3.getColGroup(columns, fixed),
         hasHead ? _this3.getHeader(columns, fixed) : null,
         tableBody
       );
@@ -645,7 +654,6 @@ var Table = function (_Component) {
         renderTable(true, false)
       );
     }
-
     var BodyTable = _react2["default"].createElement(
       'div',
       {

@@ -332,7 +332,7 @@
     .u-table-thead-th .th-drag-gap {
       background: transparent; }
     .u-table-thead-th .th-drag-gap-hover {
-      background: red; }
+      background: #ccc; }
   .u-table-thead-th:last-child-drag-gap {
     border: none; }
 

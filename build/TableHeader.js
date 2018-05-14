@@ -30,8 +30,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 
-// import ResizableTh from './ResizableTh';
-
 var propTypes = {
   clsPrefix: _propTypes2["default"].string,
   rowStyle: _propTypes2["default"].object,
@@ -74,11 +72,7 @@ var TableHeader = function (_Component) {
       if (_this.border) return;
       var clsPrefix = _this.props.clsPrefix;
 
-      if (_this.border) {
-        var x = event.pageX - _this.drag.initPageLeftX + _this.drag.initLeft;
-      } else {
-        event.target.className = clsPrefix + '-thead-th-drag-gap th-drag-gap-hover';
-      }
+      event.target.className = clsPrefix + '-thead-th-drag-gap th-drag-gap-hover';
     };
 
     _this.onMouseOut = function (event, data) {
@@ -92,11 +86,13 @@ var TableHeader = function (_Component) {
       _this.border = true;
       var clsPrefix = _this.props.clsPrefix;
 
-      event.target.className = clsPrefix + '-thead-th-drag-gap th-drag-gap-hover';
-
       _this.drag.initPageLeftX = event.pageX;
       _this.drag.initLeft = (0, _utils.tryParseInt)(event.target.style.left);
       _this.drag.x = _this.drag.initLeft;
+      _this.drag.currIndex = _this.props.rows[0].findIndex(function (da) {
+        return da.key == data.key;
+      });
+      _this.drag.width = _this.drag.data[_this.drag.currIndex].width;
     };
 
     _this.onMouseUp = function (event, data) {
@@ -104,20 +100,46 @@ var TableHeader = function (_Component) {
       var clsPrefix = _this.props.clsPrefix;
 
       event.target.className = clsPrefix + '-thead-th-drag-gap th-drag-gap';
-      var endx = event.pageX - _this.dragBorderObj.initPageLeftX;
-      // event.target.offsetWidth
+    };
+
+    _this.onThMouseUp = function (event, data) {
+      _this.border = false;
+    };
+
+    _this.onThMouseMove = function (event, data) {
+      if (!_this.border) return;
+      var dragborderKey = _this.props.dragborderKey;
+
+      console.log(data);
+      var x = event.pageX - _this.drag.initPageLeftX + _this.drag.initLeft - 0;
+      //设置hiden的left
+      //"u-table-drag-hide-table"
+      var currentHideDom = document.getElementById("u-table-drag-hide-table-" + dragborderKey).getElementsByTagName("div")[_this.drag.currIndex];
+      currentHideDom.style.left = _this.drag.initPageLeftX + x - 16 + "px";
+      //设置当前的宽度 
+      var currentData = _this.drag.data[_this.drag.currIndex];
+      currentData.width = _this.drag.width + x;
+      var currentDom = document.getElementById("u-table-drag-thead-" + _this.theadKey).getElementsByTagName("th")[_this.drag.currIndex];
+      currentDom.style.width = currentData.width + "px";
+      _this.drag.x = x;
     };
 
     _this.currentObj = null;
+    _this.state = {
+      border: false
+      //拖拽宽度处理
+    };if (!props.dragborder) return _possibleConstructorReturn(_this);
     _this.border = false;
+    _this.theadKey = new Date().getTime();
     _this.drag = {
       initPageLeftX: 0,
       initLeft: 0,
-      x: 0
+      x: 0,
+      width: 0
     };
-    _this.state = {
-      border: false
-    };
+    var _da = {};
+    _extends(_da, _this.props.rows[0]);
+    _this.drag.data = JSON.parse(JSON.stringify(_this.props.rows[0]));
     return _this;
   }
 
@@ -142,9 +164,10 @@ var TableHeader = function (_Component) {
         dragborder = _props.dragborder,
         onMouseOut = _props.onMouseOut;
 
+    var attr = dragborder ? { id: 'u-table-drag-thead-' + this.theadKey } : {};
     return _react2["default"].createElement(
       'thead',
-      { className: clsPrefix + '-thead' },
+      _extends({ className: clsPrefix + '-thead' }, attr),
       rows.map(function (row, index) {
         return _react2["default"].createElement(
           'tr',
@@ -173,15 +196,13 @@ var TableHeader = function (_Component) {
               return _react2["default"].createElement(
                 'th',
                 {
-                  // onDragStart={(event)=>{this.onDragGapStart(event,da)}} 
-                  // onDragOver={(event)=>{this.onDragGapOver(event,da)}}
-                  // onDrop={(event)=>{this.onDropGap(event,da)}} 
-                  // onDragEnter={(event)=>{this.onDragGapEnter(event,da)}}
-
-                  // onMouseDown={(event)=>{onMouseDown(event,da)}}
-
-                  // onMouseUp={(event)=>{onMouseUp(event,da)}}
-                  // {...da}
+                  style: { width: da.width },
+                  onMouseMove: function onMouseMove(event) {
+                    _this2.onThMouseMove(event, da);
+                  },
+                  onMouseUp: function onMouseUp(event) {
+                    _this2.onThMouseUp(event, da);
+                  },
                   className: da.className + ' ' + clsPrefix + '-thead-th ',
                   key: i },
                 da.children,

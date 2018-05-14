@@ -1,6 +1,6 @@
 {
  "name": "bee-table",
- "version": "1.1.5",
+ "version": "1.1.6",
  "description": "Table ui component for react",
  "keywords": [
   "react",
@@ -19,7 +19,8 @@
    "jsx"
   ],
   "transform": {
-   "^.+\\.js$": "babel-jest"}
+   "^.+\\.js$": "babel-jest"
+  }
  },
  "homepage": "https://github.com/tinper-bee/bee-table.git",
  "author": "Yonyou FED",
