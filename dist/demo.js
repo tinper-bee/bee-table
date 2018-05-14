@@ -9590,9 +9590,10 @@
 	        { className: clsPrefix + '-tbody' },
 	        _this3.getRows(columns, fixed)
 	      )) : null;
+	      var _drag_class = _this3.props.dragborder ? "table-drag-bordered" : "";
 	      return _react2['default'].createElement(
 	        'table',
-	        { className: ' ' + tableClassName + ' table table-bordered ', style: tableStyle },
+	        { className: ' ' + tableClassName + ' table table-bordered ' + _drag_class + ' ', style: tableStyle },
 	        _this3.props.dragborder ? null : _this3.getColGroup(columns, fixed),
 	        hasHead ? _this3.getHeader(columns, fixed) : null,
 	        tableBody
@@ -10889,9 +10890,10 @@
 	        dragborder = _props.dragborder,
 	        onMouseOut = _props.onMouseOut;
 	
+	    var attr = dragborder ? { id: 'u-table-drag-thead-' + this.theadKey } : {};
 	    return _react2['default'].createElement(
 	      'thead',
-	      { className: clsPrefix + '-thead', id: 'u-table-drag-thead-' + this.theadKey },
+	      _extends({ className: clsPrefix + '-thead' }, attr),
 	      rows.map(function (row, index) {
 	        return _react2['default'].createElement(
 	          'tr',
@@ -55674,7 +55676,7 @@
 	        onDragEnter: this.onDragEnter,
 	        draggable: draggable,
 	
-	        dragborder: true,
+	        dragborder: dragborder,
 	        dragborderKey: key
 	      }));
 	    };

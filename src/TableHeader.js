@@ -110,8 +110,9 @@ class TableHeader extends Component{
     const { clsPrefix, rowStyle ,onDragStart,onDragOver,onDrop,draggable,rows,
       onMouseDown,onMouseMove,onMouseUp,dragborder,onMouseOut
       } = this.props;
+    let attr = dragborder?{id:`u-table-drag-thead-${this.theadKey}`}:{}
     return (
-      <thead className={`${clsPrefix}-thead`} id={`u-table-drag-thead-${this.theadKey}`}>
+      <thead className={`${clsPrefix}-thead`} {...attr}>
         {
           rows.map((row, index) => (
             <tr key={index} style={rowStyle}>

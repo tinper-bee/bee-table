@@ -538,8 +538,9 @@ class Table extends Component{
           {this.getRows(columns, fixed)}
         </tbody>
       ) : null;
+      let _drag_class = this.props.dragborder?"table-drag-bordered":""
       return (
-        <table className={` ${tableClassName} table table-bordered `} style={tableStyle}>
+        <table className={` ${tableClassName} table table-bordered ${_drag_class} `} style={tableStyle}>
           {this.props.dragborder?null:this.getColGroup(columns, fixed)}
           {hasHead ? this.getHeader(columns, fixed) : null}
           {tableBody}

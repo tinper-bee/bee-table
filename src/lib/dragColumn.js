@@ -89,7 +89,7 @@ export default function dragColumn(Table) {
           onDragEnter={this.onDragEnter}
           draggable={draggable}
       
-          dragborder={true}
+          dragborder={dragborder}
           dragborderKey={key}
           />)
     }

@@ -80,4 +80,4 @@ import 'bee-table/build/Table.css';
 - 如果使用了固定列，请给固定的列设定固定宽度既width属性。
 
 - 在使用expandedRowRender属性扩展表格时，如果同时使用了固定列。
-需要给expandedRowRender中返回的对象添加style={{height: xxx}},来使扩展后的固定列扩展成一样高度。
+需要给expandedRowRender中返回的对象添加`style=\{{height: xxx}\}`,来使扩展后的固定列扩展成一样高度。
