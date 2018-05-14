@@ -119,9 +119,18 @@ Table拓展功能方法。注：拼接成复杂功能的table组件不能在rend
 ## 如何引用
 需要单独的去引用相应的js文件，目录在lib文件夹，示例如下：
 
+* 在tinper-bee中引用
+
+```js
+import multiSelect from "tinper-bee/lib/multiSelect.js"
+```
+
+* 单独安装bee-table 方式
+
 ```js
 import multiSelect from "bee-table/build/lib/multiSelect.js"
 ```
+
 
 
 ### multiSelect
