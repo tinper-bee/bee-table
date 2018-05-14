@@ -55382,7 +55382,9 @@
 	    }
 	
 	    filterColumn.prototype.render = function render() {
-	      var data = this.props.data;
+	      var _props = this.props,
+	          data = _props.data,
+	          prefixCls = _props.prefixCls;
 	      var _state = this.state,
 	          columns = _state.columns,
 	          showModal = _state.showModal,
@@ -55399,10 +55401,10 @@
 	
 	      var content = _react2["default"].createElement(
 	        "div",
-	        { className: "pop-cont" },
+	        { className: prefixCls + "-pop-cont" },
 	        _react2["default"].createElement(
 	          "span",
-	          { className: "clear-setting", onClick: this.clear },
+	          { className: prefixCls + "-clear-setting", onClick: this.clear },
 	          "\u6E05\u9664\u8BBE\u7F6E"
 	        ),
 	        _react2["default"].createElement(
@@ -55414,7 +55416,7 @@
 	
 	      return _react2["default"].createElement(
 	        "div",
-	        { className: "bee-table-column-filter-cont" },
+	        { className: prefixCls + "-cont" },
 	        _react2["default"].createElement(Table, _extends({}, this.props, { columns: _columns, data: data })),
 	        _react2["default"].createElement(
 	          _beePopover2["default"],
@@ -55424,7 +55426,7 @@
 	            show: showModal },
 	          _react2["default"].createElement(
 	            "div",
-	            { className: "bee-table-column-filter" },
+	            { className: prefixCls + "-pop-column-filter" },
 	            _react2["default"].createElement(_beeIcon2["default"], { type: "uf-navmenu", onClick: this.openCloumList })
 	          )
 	        )
@@ -55432,7 +55434,9 @@
 	    };
 	
 	    return filterColumn;
-	  }(_react.Component), _initialiseProps = function _initialiseProps() {
+	  }(_react.Component), _class.defaultProps = {
+	    prefixCls: "u-table-filter-column"
+	  }, _initialiseProps = function _initialiseProps() {
 	    var _this2 = this;
 	
 	    this.getShowModal = function (event) {
@@ -55463,12 +55467,13 @@
 	    };
 	
 	    this.getCloumItem = function () {
+	      var prefixCls = _this2.props.prefixCls;
 	      var columns = _this2.state.columns;
 	
 	      return columns.map(function (da, i) {
 	        return _react2["default"].createElement(
 	          "div",
-	          { key: da.key + "_" + i, className: "item", onClick: function onClick() {
+	          { key: da.key + "_" + i, className: prefixCls + "-pop-cont-item", onClick: function onClick() {
 	              _this2.checkedColumItemClick(da);
 	            } },
 	          _react2["default"].createElement(_beeCheckbox2["default"], { id: da.key, checked: da.checked }),

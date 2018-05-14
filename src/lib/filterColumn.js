@@ -9,9 +9,16 @@ import Popover from 'bee-popover';
  */
  
 
+
 export default function filterColumn(Table) {
 
+ 
+
   return class filterColumn extends Component {
+
+    static defaultProps = {
+      prefixCls: "u-table-filter-column"
+    }
 
     constructor(props) {
       super(props);
@@ -59,8 +66,9 @@ export default function filterColumn(Table) {
     }
 
     getCloumItem=()=>{
+      const {prefixCls} = this.props;
       const {columns} = this.state;
-      return columns.map((da,i)=> (<div key={da.key+"_"+i} className="item" onClick={()=>{this.checkedColumItemClick(da)}}>
+      return columns.map((da,i)=> (<div key={da.key+"_"+i} className={`${prefixCls}-pop-cont-item`} onClick={()=>{this.checkedColumItemClick(da)}}>
           <Checkbox id={da.key} checked={da.checked}/> 
           <span>{da.title}</span>
         </div>))
@@ -79,7 +87,7 @@ export default function filterColumn(Table) {
     }
 
     render() {
-      const {data} = this.props;
+      const {data,prefixCls} = this.props;
       const {columns,showModal,width,screenX,screenY} = this.state;
       let _columns = [];
       columns.forEach((da)=>{
@@ -89,8 +97,8 @@ export default function filterColumn(Table) {
       });
 
       let content = (
-        <div className="pop-cont"> 
-        <span className="clear-setting" onClick={this.clear}>清除设置</span>
+        <div className={`${prefixCls}-pop-cont`}> 
+        <span className={`${prefixCls}-clear-setting`} onClick={this.clear}>清除设置</span>
         <div>
            {
             this.getCloumItem()
@@ -98,13 +106,13 @@ export default function filterColumn(Table) {
         </div>
       </div>);
 
-      return <div className="bee-table-column-filter-cont">
+      return <div className={`${prefixCls}-cont`}>
           <Table {...this.props} columns={_columns} data={data} />
           <Popover
             placement="leftTop"
             content={content} id="aa"
             show={showModal}   >
-              <div className="bee-table-column-filter"><Icon type="uf-navmenu" onClick={this.openCloumList}/></div>
+              <div className={`${prefixCls}-pop-column-filter`}><Icon type="uf-navmenu" onClick={this.openCloumList}/></div>
           </Popover> 
         </div>;
     }
