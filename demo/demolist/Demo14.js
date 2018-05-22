@@ -5,18 +5,24 @@
 *
 */
 
-import Button from "bee-button";
-import React, { Component } from "react";
+import React from "react";
 import Table from "../../src";
 import Animate from "bee-animate";
 import Tooltip from "bee-tooltip";
+import Button from "bee-button";
+import Form from "bee-form";
 import Icon from "bee-icon";
 import Input from "bee-form-control";
 import Checkbox from "bee-checkbox";
+import Datepicker from "bee-datepicker";
 import Select from "bee-select";
-import InputRender from "../../build/render/InputRender.js";
-import DateRender from "../../build/render/DateRender.js";
-import SelectRender from "../../build/render/SelectRender.js";
+import renderInput from "../../build/render/InputRender.js";
+import renderDate from "../../build/render/DateRender.js";
+import renderSelect from "../../build/render/SelectRender.js";
+
+const InputRender = renderInput(Form, Input, Icon);
+const DateRender = renderDate(Datepicker, Icon);
+const SelectRender = renderSelect(Select, Icon);
 
 const format = "YYYY-MM-DD";
 const format2 = "YYYY-MM";

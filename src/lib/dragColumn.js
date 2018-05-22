@@ -34,11 +34,12 @@ export default function dragColumn(Table) {
     }
 
 
-    onDragStart=(event,data)=>{ 
+    onDragStart=(event,data)=>{
+      this.props.onDragStart(event,data)
     }
 
     onDragOver=(event,data)=>{
-     
+     this.props.onDragOver(event,data)
     }
 
     onDragEnter=(event,data)=>{
@@ -50,7 +51,8 @@ export default function dragColumn(Table) {
       current.drgHover = true;
       this.setState({
         columns
-      })
+      });
+      this.props.onDragEnter(event,data);
     }
 
     onDrop=(event,data)=>{
@@ -72,6 +74,7 @@ export default function dragColumn(Table) {
       this.setState({
         columns:_columns,
       });
+      this.props.onDrop(event,data);
     }
  
     getTarget=(evt)=>{
@@ -79,16 +82,32 @@ export default function dragColumn(Table) {
     }
 
     render() {
-      const {data,dragborder,draggable,className} = this.props;
+      const {
+          data,
+          dragborder,
+          draggable,
+          className,
+          columns,
+          onDragStart,
+          onDragEnter,
+          onDragOver,
+          onDrop,
+          ...others
+      } = this.props;
       let key = new Date().getTime();
-      const {columns} = this.state;
-      return (<Table {...this.props} columns={columns} data={data} className={`${className} u-table-drag-border`}
-          onDragStart={this.onDragStart} onDragOver={this.onDragOver} onDrop={this.onDrop} 
-          onDragEnter={this.onDragEnter}
-          draggable={draggable}
-      
-          dragborder={dragborder}
-          dragborderKey={key}
+      return (
+          <Table
+              {...others}
+              columns={this.state.columns}
+              data={data}
+              className={`${className} u-table-drag-border`}
+              onDragStart={this.onDragStart}
+              onDragOver={this.onDragOver}
+              onDrop={this.onDrop}
+              onDragEnter={this.onDragEnter}
+              draggable={draggable}
+              dragborder={dragborder}
+              dragborderKey={key}
           />)
     }
   };

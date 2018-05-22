@@ -6,24 +6,22 @@
 */
 
 import Button from "bee-button";
-import React, { Component } from "react";
+import React from "react";
 import Table from "../../src";
 import Animate from "bee-animate";
 import Tooltip from "bee-tooltip";
 import Icon from "bee-icon";
 import Input from "bee-form-control";
-import Checkbox from "bee-checkbox";
+import Form from "bee-form";
 import Select from "bee-select";
-import InputRender from "../../build/render/InputRender.js";
-import DateRender from "../../build/render/DateRender.js";
-import SelectRender from "../../build/render/SelectRender.js";
+import renderInput from "../../build/render/InputRender.js";
+import renderSelect from "../../build/render/SelectRender.js";
 
-const format = "YYYY-MM-DD";
-const format2 = "YYYY-MM";
-const format3 = "YYYY-MM-DD HH:mm:ss";
+const InputRender = renderInput(Form, Input, Icon);
+const SelectRender = renderSelect(Select, Icon);
 
-const dateInputPlaceholder = "选择日期";
-const dateInputPlaceholder2 = "选择年月";
+const Option = Select.Option;
+
 const dataSource = [
   {
     key: "boyuzhou",
@@ -155,13 +153,7 @@ class Demo19 extends React.Component {
       this.setState({ dataSource });
     };
   };
-  onCheckChange = (index, key) => {
-    return value => {
-      const dataSource = [...this.state.dataSource];
-      dataSource[index][key] = value;
-      this.setState({ dataSource });
-    };
-  };
+
   onSelectChange = (index, key) => {
     return value => {
       console.log(`selected ${value}`);
@@ -170,19 +162,7 @@ class Demo19 extends React.Component {
       this.setState({ dataSource });
     };
   };
-  onDateChange = d => {
-    console.log(d);
-  };
-  onDateSelect = d => {
-    console.log(d);
-  };
-  onDelete = index => {
-    return () => {
-      const dataSource = [...this.state.dataSource];
-      dataSource.splice(index, 1);
-      this.setState({ dataSource });
-    };
-  };
+
   handleAdd = () => {
     const { count, dataSource } = this.state;
     const newData = {

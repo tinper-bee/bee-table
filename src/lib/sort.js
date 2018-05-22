@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Icon from "bee-icon";
 
 /**
  * 参数：prefixCls，默认bee-table,用于设置图标的样式

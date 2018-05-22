@@ -42,7 +42,6 @@ export default function filterColumn(Table, Checkbox, Popover, Icon) {
     }
 
     checkedColumItemClick = (da)=>{
-      let {columns} = this.state;
       da.checked = da.checked?false:true;
       da.disable  = da.checked?true:false;
       this.setState({

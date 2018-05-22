@@ -6,7 +6,7 @@ Table拓展功能方法。注：拼接成复杂功能的table组件不能在rend
 需要单独的去引用相应的js文件，目录在lib文件夹，示例如下：
 
 ```js
-import multiSelect from "bee-table/build/lib/multiSelect.js"
+import multiSelect from "tinper-bee/lib/multiSelect.js";
 ```
 
 ### multiSelect
@@ -25,7 +25,15 @@ import multiSelect from "bee-table/build/lib/multiSelect.js"
 | selectedRow | 设置某一行数据是否被选中，使用类似于rowClassName       | Function(record, index):bool | 无        |
 
 
+#### 使用
 
+```js
+import multiSelect from "tinper-bee/lib/multiSelect.js";
+import { Table, Checkbox } from 'tinper-bee';
+
+const MultiSelectTable = multiSelect(Table, Checkbox);
+
+```
 
 ### sort
 
@@ -37,7 +45,15 @@ import multiSelect from "bee-table/build/lib/multiSelect.js"
 | ------ | ---------- | -------- | ---- |
 | sorter | 排序函数，可以自定义 | Function | 无    |
 
+#### 使用
 
+```js
+import sort from "tinper-bee/lib/sort.js";
+import { Table, Icon } from 'tinper-bee';
+
+const SortTable = sort(Table, Icon);
+
+```
 
 ### sum
 
@@ -49,5 +65,55 @@ import multiSelect from "bee-table/build/lib/multiSelect.js"
 | ------ | ---------- | -------- | ---- |
 | sumCol | 该列设置为合计列，合计行中会显示合计数据 | boolean | false |
 
+#### 使用
 
+```js
+import sum from "tinper-bee/lib/sum.js";
+import { Table } from 'tinper-bee';
 
+const SumTable = sum(Table);
+
+```
+
+### dragColumn
+
+拖拽列功能
+
+#### dragColumn新增参数
+
+| 参数     | 说明         | 类型       | 默认值  |
+| ------ | ---------- | -------- | ---- |
+| dragborder | 显示拖拽边框 | boolean | false |
+| draggable | 是否可拖拽 | boolean | false |
+| onDragStart | 拖拽开始回调函数 | function | () => {} |
+| onDragEnter |拖拽进入回调函数 | function | () => {} |
+| onDragOver | 拖拽划过回调函数 | function | () => {} |
+| onDrop | 拖拽释放回调函数 | function | () => {} |
+
+#### 使用
+
+```js
+import dragColumn from "tinper-bee/lib/dragColumn.js";
+import { Table } from 'tinper-bee';
+
+const DragColumnTable = dragColumn(Table);
+
+```
+
+### filterColumn
+
+过滤功能
+
+#### filterColumn新增参数
+
+无
+
+#### 使用
+
+```js
+import filterColumn from "tinper-bee/lib/filterColumn.js";
+import { Table, Checkbox, Popover, Icon } from 'tinper-bee';
+
+const DragColumnTable = filterColumn(Table, Checkbox, Popover, Icon);
+
+```

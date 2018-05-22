@@ -12,14 +12,6 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _beeIcon = require("bee-icon");
-
-var _beeIcon2 = _interopRequireDefault(_beeIcon);
-
-var _reactDom = require("react-dom");
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
 var _util = require("./util");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -41,10 +33,10 @@ function dragColumn(Table) {
   var _class, _temp, _initialiseProps;
 
   return _temp = _class = function (_Component) {
-    _inherits(dragColumn, _Component);
+    _inherits(DragColumn, _Component);
 
-    function dragColumn(props) {
-      _classCallCheck(this, dragColumn);
+    function DragColumn(props) {
+      _classCallCheck(this, DragColumn);
 
       var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
@@ -56,13 +48,13 @@ function dragColumn(Table) {
       return _this;
     }
 
-    dragColumn.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+    DragColumn.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
       if (nextProps.columns != this.props.columns) {
         this.setColumOrderByIndex();
       }
     };
 
-    dragColumn.prototype.render = function render() {
+    DragColumn.prototype.render = function render() {
       var _props = this.props,
           data = _props.data,
           dragborder = _props.dragborder,
@@ -82,7 +74,7 @@ function dragColumn(Table) {
       }));
     };
 
-    return dragColumn;
+    return DragColumn;
   }(_react.Component), _initialiseProps = function _initialiseProps() {
     var _this2 = this;
 

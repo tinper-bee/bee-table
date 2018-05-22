@@ -6,7 +6,7 @@ import React, {Component} from "react";
  * @param Icon
  * @returns {CheckboxRender}
  */
-export default  function renderCheckbox(Checkbox, Icon) {
+export default function renderCheckbox(Checkbox, Icon) {
     return class CheckboxRender extends Component {
         state = {
             value: this.props.value,
@@ -33,7 +33,6 @@ export default  function renderCheckbox(Checkbox, Icon) {
 
         render() {
             const {value, editable} = this.state;
-            let {isclickTrigger} = this.props;
             let cellContent = "";
             if (editable) {
                 cellContent = (

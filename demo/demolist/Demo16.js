@@ -7,7 +7,6 @@
 
 import React, { Component } from "react";
 import Table from "../../src";
-import multiSelect from "../../src/lib/multiSelect.js";
 
 const columns16 = [
   { title: "用户名", dataIndex: "a", key: "a", width: 100 },
@@ -38,7 +37,6 @@ const data16 = [
   { a: "郭靖", b: "男", c: 25, d: "操作", key: "3" }
 ];
 
-// let Table1 = multiSelect(Table)
 
 class Demo16 extends Component {
   constructor(props){

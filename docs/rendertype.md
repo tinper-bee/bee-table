@@ -5,21 +5,15 @@
 需要单独的去引用相应的js文件，目录在render文件夹，示例如下：
 
 ```js
-import InputRender from "bee-table/build/render/InputRender.js"
+import renderInput from "tinper-bee/lib/InputRender.js";
+
 ```
-
-## 安装依赖包
-不同的render会依赖其他组件，因为此类render组件是作为bee-table的插件机制处理的，默认不会去自动下载所依赖的组件，所以在使用之前需要去安装相应的组件。
-
-## 如何下载对应依赖的组件
-1. 下载依赖。例如：`npm install bee-icon -S`或者`npm install bee-icon --save`
-2. 引入css文件。**注：如果引入了CSS的cdn资源，即可忽略此步骤。**例如：`import 'bee-icon/build/Icon.css;'`
 
 ### InputRender
 输入框类型render
 
 #### 依赖的组件
-该render依赖于`bee-icon`,`bee-form-control`,`bee-form`,`bee-tooltip`。
+该render依赖于`Icon`,`FormControl`,`Form`,`Tooltip`。
 
 
 #### 配置
@@ -40,11 +34,20 @@ import InputRender from "bee-table/build/render/InputRender.js"
 | htmlType          | 数值类型，目前支持 email/tel/IDCard/chinese/password'类型 | string     | -      |
 | reg               | 校验正则，注：设置 htmlType 后 reg 无效              | regExp     | -      |
 
+#### 使用
+
+```js
+import renderInput from "tinper-bee/lib/InputRender.js";
+import { Icon, Form , FormControl } from 'tinper-bee';
+const InputRender = renderInput(Form, FormControl, Icon);
+
+```
+
 ### DateRender
 日期类型render
 
 #### 依赖的组件
-该render依赖于`bee-icon`,`bee-datepicker`,`moment`
+该render依赖于`moment`, `Datepicker`, `Icon`
 
 
 #### 配置
@@ -54,14 +57,24 @@ import InputRender from "bee-table/build/render/InputRender.js"
 | type  | 控制日期的显示格式，DatePicker、MonthPicker或者WeekPicker，暂时不支持RangePicker | string | "DatePicker" |
 
 
-注:其他参数参见bee-datepicker组件参数配置
+注:其他参数参见Datepicker组件参数配置
+
+#### 使用
+
+```js
+import renderDate from "tinper-bee/lib/DateRender.js";
+import Datepicker from "tinper-bee/lib/Datepicker";
+import { Icon } from 'tinper-bee';
+const DateRender = renderDate(Datepicker, Icon);
+
+```
 
 
 ### SelectRender
-输入框类型render
+下拉框类型render
 
 #### 依赖的组件
-该render依赖于`bee-icon`,`bee-select`
+该render依赖于`Icon`,`Select`
 
 
 #### 配置
@@ -72,4 +85,39 @@ import InputRender from "bee-table/build/render/InputRender.js"
 
 
 
-注:其他参数参见bee-select组件参数配置
+注:其他参数参见Select组件参数配置
+
+#### 使用
+
+```js
+import renderSelect from "tinper-bee/lib/SelectRender.js";
+import { Icon, Select } from 'tinper-bee';
+const SelectRender = renderSelect(Select, Icon);
+
+```
+
+### CheckboxRender
+复选框类型render
+
+#### 依赖的组件
+该render依赖于`Icon`,`Checkbox`
+
+
+#### 配置
+| 参数             | 说明                                       | 类型      | 默认值   |
+| -------------- | ---------------------------------------- | ------- | ----- |
+| onChange | 修改后触发回调函数 | function | () => {} |
+| value    | 设置是否选中值 | boolean   | false   |
+
+
+
+注:其他参数参见Checkbox组件参数配置
+
+#### 使用
+
+```js
+import renderCheckbox from "tinper-bee/lib/CheckboxRender.js";
+import { Icon, Checkbox } from 'tinper-bee';
+const CheckboxRender = renderCheckbox(Checkbox, Icon);
+
+```
