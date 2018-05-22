@@ -1,5 +1,19 @@
 import React, { Component } from "react";
-import Checkbox from "bee-checkbox";
+
+function indexOf(array, val) {
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] === val) return i;
+    }
+    return -1;
+};
+
+function remove (array, val) {
+    let index = indexOf(array, val);
+    if (index > -1) {
+        array.splice(index, 1);
+    }
+};
+
 /**
  * multiSelect={
  *  type--默认值为checkbox
@@ -8,20 +22,10 @@ import Checkbox from "bee-checkbox";
  * getSelectedDataFunc--function，能获取到选中的数据
  * 使用全选时得注意，data中的key值一定要是唯一值
  */
-export default function multiSelect(Table) {
-  Array.prototype.indexOf = function(val) {
-    for (var i = 0; i < this.length; i++) {
-      if (this[i] == val) return i;
-    }
-    return -1;
-  };
-  Array.prototype.remove = function(val) {
-    var index = this.indexOf(val);
-    if (index > -1) {
-      this.splice(index, 1);
-    }
-  };
-  return class multiSelect extends Component {
+export default function multiSelect(Table, Checkbox) {
+
+
+  return class MultiSelect extends Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -140,7 +144,7 @@ export default function multiSelect(Table) {
       let { getSelectedDataFunc } = self.props;
       let rowKey = record["key"] ? record["key"] : this.getRowKey(record,i);
       if (checkedObj[rowKey]) {
-        selIds.remove(id);
+        remove(selIds, id);
       } else {
         selIds.push(id);
       }

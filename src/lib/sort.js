@@ -4,9 +4,10 @@ import Icon from "bee-icon";
 /**
  * 参数：prefixCls，默认bee-table,用于设置图标的样式
  * @param {*} Table
+ * @param {*} Icon
  */
-export default function sort(Table) {
-  return class Demo11 extends Component {
+export default function sort(Table, Icon) {
+  return class SortTable extends Component {
     constructor(props) {
       super(props);
       this.state = {

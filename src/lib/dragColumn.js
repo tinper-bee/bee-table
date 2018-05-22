@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import Icon from "bee-icon"; 
-import ReactDOM from 'react-dom';
 import {sortBy} from './util';
 /**
  * 参数: 列拖拽
@@ -9,7 +7,7 @@ import {sortBy} from './util';
  
 export default function dragColumn(Table) {
 
-  return class dragColumn extends Component {
+  return class DragColumn extends Component {
 
     constructor(props) {
       super(props);

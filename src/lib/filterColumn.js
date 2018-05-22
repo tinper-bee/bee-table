@@ -1,21 +1,15 @@
 import React, { Component } from "react";
-import Icon from "bee-icon"; 
-import Checkbox from "bee-checkbox";
-import ReactDOM from 'react-dom';
-import Popover from 'bee-popover';
 /**
  * 参数: 过滤表头
  * @param {*} Table
+ * @param {*} Checkbox
+ * @param {*} Popover
+ * @param {*} Icon
  */
- 
 
+export default function filterColumn(Table, Checkbox, Popover, Icon) {
 
-export default function filterColumn(Table) {
-
- 
-
-  return class filterColumn extends Component {
-
+  return class FilterColumn extends Component {
     static defaultProps = {
       prefixCls: "u-table-filter-column"
     }
