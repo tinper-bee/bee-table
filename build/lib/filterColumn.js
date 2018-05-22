@@ -130,8 +130,6 @@ function filterColumn(Table, Checkbox, Popover, Icon) {
     };
 
     this.checkedColumItemClick = function (da) {
-      var columns = _this2.state.columns;
-
       da.checked = da.checked ? false : true;
       da.disable = da.checked ? true : false;
       _this2.setState(_extends({}, _this2.state));

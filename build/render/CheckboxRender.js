@@ -62,7 +62,6 @@ function renderCheckbox(Checkbox, Icon) {
             var _state = this.state,
                 value = _state.value,
                 editable = _state.editable;
-            var isclickTrigger = this.props.isclickTrigger;
 
             var cellContent = "";
             if (editable) {
