@@ -694,13 +694,14 @@ class Table extends Component{
   }
 
   handleBodyScroll(e) {
-    // Prevent scrollTop setter trigger onScroll event
-    // http://stackoverflow.com/q/1386696
-    if (e.target !== this.scrollTarget) {
-      return;
-    }
+
     const { scroll = {} } = this.props;
     const { headTable, bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this.refs;
+      // Prevent scrollTop setter trigger onScroll event
+      // http://stackoverflow.com/q/1386696
+      if (e.target !== this.scrollTarget && this.scrollTarget !== headTable) {
+          return;
+      }
     if (scroll.x && e.target.scrollLeft !== this.lastScrollLeft) {
       if (e.target === bodyTable && headTable) {
         headTable.scrollLeft = e.target.scrollLeft;
