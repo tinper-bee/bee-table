@@ -804,11 +804,6 @@ var Table = function (_Component) {
   };
 
   Table.prototype.handleBodyScroll = function handleBodyScroll(e) {
-    // Prevent scrollTop setter trigger onScroll event
-    // http://stackoverflow.com/q/1386696
-    if (e.target !== this.scrollTarget) {
-      return;
-    }
     var _props$scroll = this.props.scroll,
         scroll = _props$scroll === undefined ? {} : _props$scroll;
     var _refs = this.refs,
@@ -816,7 +811,12 @@ var Table = function (_Component) {
         bodyTable = _refs.bodyTable,
         fixedColumnsBodyLeft = _refs.fixedColumnsBodyLeft,
         fixedColumnsBodyRight = _refs.fixedColumnsBodyRight;
+    // Prevent scrollTop setter trigger onScroll event
+    // http://stackoverflow.com/q/1386696
 
+    if (e.target !== this.scrollTarget && this.scrollTarget !== headTable) {
+      return;
+    }
     if (scroll.x && e.target.scrollLeft !== this.lastScrollLeft) {
       if (e.target === bodyTable && headTable) {
         headTable.scrollLeft = e.target.scrollLeft;
