@@ -39,7 +39,6 @@ class TableHeader extends Component{
       let newItem = item.key != "checkbox"?ObjectAssign(item):item;
       _row.push(newItem);
     });
-    debugger;
     this.drag.data = _row;//JSON.parse(JSON.stringify(this.props.rows[0]));
 
   }
@@ -110,7 +109,7 @@ class TableHeader extends Component{
     //"u-table-drag-hide-table"
     let currentHideDom = document.getElementById("u-table-drag-hide-table-"+dragborderKey).getElementsByTagName("div")[this.drag.currIndex];
     currentHideDom.style.left =  (this.drag.initPageLeftX+x-grap)+"px"; 
-    
+
     //获取最小宽度，不让拖动
     // let minWidth = 0;
     // for(let i=0;i<=this.drag.currIndex;i++){

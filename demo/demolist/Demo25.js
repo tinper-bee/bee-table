@@ -114,12 +114,12 @@ class Demo25 extends Component {
   }
  
   render() {
-    return <DragColumnTable columns={columns25} data={data25} 
+    return <div className="demo25"><DragColumnTable columns={columns25} data={data25} 
     bordered
     dragborder={true}
     scroll={{x:700}}
     multiSelect={{type: "checkbox"}}
-    />;
+    /></div>
   }
 }
 Demo25.defaultProps = defaultProps25;
