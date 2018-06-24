@@ -1,10 +1,20 @@
-<a name="1.2.1"></a>
-## [1.2.1](https://github.com/tinper-bee/bee-table/compare/v1.2.0...v1.2.1) (2018-06-06)
+<a name="1.2.2"></a>
+## [1.2.2](https://github.com/tinper-bee/bee-table/compare/v1.2.0...v1.2.2) (2018-06-24)
 
 
 ### Bug Fixes
 
 * **bee-table:** table解决滚动错行bug ([b2a0e0c](https://github.com/tinper-bee/bee-table/commit/b2a0e0c))
+
+
+### Features
+
+* **固定列、checkbox、过滤列 综合使用:** 固定列、checkbox、过滤列 综合使用 ([e0ea147](https://github.com/tinper-bee/bee-table/commit/e0ea147))
+
+
+### BREAKING CHANGES
+
+* **固定列、checkbox、过滤列 综合使用:** 固定列、checkbox、过滤列 综合使用
 
 
 
