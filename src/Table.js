@@ -476,6 +476,7 @@ class Table extends Component{
   }
 
   getLeftFixedTable() {
+    debugger;
     return this.getTable({
       columns: this.columnManager.leftColumns(),
       fixed: 'left',

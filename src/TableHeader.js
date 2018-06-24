@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import shallowequal from 'shallowequal';
-import {tryParseInt} from './utils';
+import {tryParseInt,ObjectAssign} from './utils';
 
 const propTypes = {
     clsPrefix: PropTypes.string,
     rowStyle: PropTypes.object,
     rows: PropTypes.array,
 }
+
+const grap = 16;//偏移数值
 
 class TableHeader extends Component{
 
@@ -25,11 +27,21 @@ class TableHeader extends Component{
       initPageLeftX:0,
       initLeft:0,
       x:0,
-      width:0
+      width:0,
     }
-    let _da = {};
-    Object.assign(_da,this.props.rows[0]);
-    this.drag.data = JSON.parse(JSON.stringify(this.props.rows[0]));
+    // let _da = {};
+    // Object.assign(_da,this.props.rows[0]);
+    // this.drag.data = JSON.parse(JSON.stringify(this.props.rows[0]));
+    // let a = this.props.rows[0];
+   
+    let _row = [];
+    this.props.rows[0].forEach(item => {
+      let newItem = item.key != "checkbox"?ObjectAssign(item):item;
+      _row.push(newItem);
+    });
+    debugger;
+    this.drag.data = _row;//JSON.parse(JSON.stringify(this.props.rows[0]));
+
   }
 
   shouldComponentUpdate(nextProps) {
@@ -97,7 +109,22 @@ class TableHeader extends Component{
     //设置hiden的left
     //"u-table-drag-hide-table"
     let currentHideDom = document.getElementById("u-table-drag-hide-table-"+dragborderKey).getElementsByTagName("div")[this.drag.currIndex];
-    currentHideDom.style.left =  (this.drag.initPageLeftX+x-16)+"px"; 
+    currentHideDom.style.left =  (this.drag.initPageLeftX+x-grap)+"px"; 
+    
+    //获取最小宽度，不让拖动
+    // let minWidth = 0;
+    // for(let i=0;i<=this.drag.currIndex;i++){
+    //   minWidth += this.drag.data[i].width;
+    // }
+    
+    // //判断最小值后在赋值 todo
+    // let currLeft = this.drag.initPageLeftX+x-grap;
+    // console.log("currLeft minWidth ",currLeft + " "+minWidth);
+    // if(currLeft <= minWidth){
+    //   return;
+    // }
+    // currentHideDom.style.left =  currLeft+"px"; 
+
     //设置当前的宽度 
     let  currentData = this.drag.data[this.drag.currIndex]; 
     currentData.width = this.drag.width + x; 
@@ -130,7 +157,7 @@ class TableHeader extends Component{
                     key={da.key} />)
                 }else if(dragborder){
                     return(<th
-                    style={{width:da.width}}
+                    style={{width:da.width,minWidth:da.width}}
                     onMouseMove={(event)=>{this.onThMouseMove(event,da)}}
                     onMouseUp={(event)=>{this.onThMouseUp(event,da)}}
                     className={`${da.className} ${clsPrefix}-thead-th `}

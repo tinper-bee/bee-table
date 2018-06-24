@@ -107,3 +107,22 @@ export function removeClass(elm, className) {
     }
   });
 }
+
+/**
+ * 简单数组数据对象拷贝
+ * @param {*} obj 要拷贝的对象 
+ */
+export function ObjectAssign(obj){
+  let b = obj instanceof Array;
+  let tagObj = b?[]:{};
+  if(b){//数组
+    obj.forEach(da => {
+      let _da = {};
+      Object.assign(_da,da);
+      tagObj.push(_da);
+    });
+  }else{
+    Object.assign(tagObj,obj);
+  }
+  return tagObj;
+}

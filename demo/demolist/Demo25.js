@@ -1,14 +1,13 @@
 /**
 *
-* @title 根据列进行过滤----edit
-* @description 点击表格右侧按钮，进行表格列的数据过滤。
+* @title 根据列进行过滤、拖拽综合使用案例
+* @description 根据列进行过滤、拖拽综合使用案例
 *
 */
 
-
 import React, { Component } from 'react';
 import Table from '../../src';
-import multiSelect from '../../src/lib/multiSelect';
+import multiSelect from '../../src/lib/newMultiSelect';
 import filterColumn from '../../src/lib/filterColumn';
 import dragColumn from "../../src/lib/dragColumn";
 
@@ -101,7 +100,9 @@ const data25 = [
 // const MultiSelectTable = multiSelect(Table, Checkbox);
 // let ComplexTable = multiSelect(Table, Checkbox);
 
-const DragColumnTable = dragColumn(filterColumn(Table, Popover));
+// const DragColumnTable = multiSelect(Table, Checkbox);
+const DragColumnTable = dragColumn(filterColumn(multiSelect(Table, Checkbox), Popover)); 
+// const DragColumnTable = dragColumn(filterColumn(Table, Popover));
 
 const defaultProps25 = {
   prefixCls: "bee-table"
@@ -117,8 +118,7 @@ class Demo25 extends Component {
     bordered
     dragborder={true}
     scroll={{x:700}}
-
-    // multiSelect={{type: "checkbox"}}
+    multiSelect={{type: "checkbox"}}
     />;
   }
 }
