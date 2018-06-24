@@ -12,6 +12,14 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _beeCheckbox = require("bee-checkbox");
+
+var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
+
+var _beeIcon = require("bee-icon");
+
+var _beeIcon2 = _interopRequireDefault(_beeIcon);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
@@ -30,7 +38,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * @param {*} Icon
  */
 
-function filterColumn(Table, Checkbox, Popover, Icon) {
+function filterColumn(Table, Popover) {
   var _class, _temp, _initialiseProps;
 
   return _temp = _class = function (_Component) {
@@ -54,12 +62,16 @@ function filterColumn(Table, Checkbox, Popover, Icon) {
       _this.state = {
         columns: _column,
         showModal: false,
-        width: props.width ? props.width : 150,
-        screenX: 0,
         screenY: 0
       };
       return _this;
     }
+
+    FilterColumn.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+      this.setState({
+        showPopover: false
+      });
+    };
 
     FilterColumn.prototype.render = function render() {
       var _props = this.props,
@@ -67,10 +79,7 @@ function filterColumn(Table, Checkbox, Popover, Icon) {
           prefixCls = _props.prefixCls;
       var _state = this.state,
           columns = _state.columns,
-          showModal = _state.showModal,
-          width = _state.width,
-          screenX = _state.screenX,
-          screenY = _state.screenY;
+          showModal = _state.showModal;
 
       var _columns = [];
       columns.forEach(function (da) {
@@ -99,15 +108,20 @@ function filterColumn(Table, Checkbox, Popover, Icon) {
         { className: prefixCls + "-cont" },
         _react2["default"].createElement(Table, _extends({}, this.props, { columns: _columns, data: data })),
         _react2["default"].createElement(
-          Popover,
-          {
-            placement: "leftTop",
-            content: content, id: "aa",
-            show: showModal },
+          "div",
+          { className: prefixCls + "-filter-icon" },
           _react2["default"].createElement(
-            "div",
-            { className: prefixCls + "-pop-column-filter" },
-            _react2["default"].createElement(Icon, { type: "uf-navmenu", onClick: this.openCloumList })
+            Popover,
+            {
+              id: "filter_column_popover",
+              placement: "leftTop",
+              content: content,
+              show: showModal },
+            _react2["default"].createElement(
+              "div",
+              { className: prefixCls + "-pop-column-filter" },
+              _react2["default"].createElement(_beeIcon2["default"], { type: "uf-navmenu", onClick: this.openCloumList })
+            )
           )
         )
       );
@@ -138,8 +152,6 @@ function filterColumn(Table, Checkbox, Popover, Icon) {
     this.openCloumList = function (ev) {
       var oEvent = ev || event;
       _this2.setState({
-        screenX: oEvent.clientX,
-        screenY: oEvent.clientY,
         showModal: true
       });
     };
@@ -154,7 +166,7 @@ function filterColumn(Table, Checkbox, Popover, Icon) {
           { key: da.key + "_" + i, className: prefixCls + "-pop-cont-item", onClick: function onClick() {
               _this2.checkedColumItemClick(da);
             } },
-          _react2["default"].createElement(Checkbox, { id: da.key, checked: da.checked }),
+          _react2["default"].createElement(_beeCheckbox2["default"], { id: da.key, checked: da.checked }),
           _react2["default"].createElement(
             "span",
             null,
@@ -166,7 +178,6 @@ function filterColumn(Table, Checkbox, Popover, Icon) {
 
     this.clear = function () {
       var columns = _this2.state.columns;
-      // let _chek = columns[0].checked?false:true;
 
       columns.forEach(function (da) {
         da.checked = true;

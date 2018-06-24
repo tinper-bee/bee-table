@@ -4,11 +4,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.tryParseInt = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 exports.measureScrollbar = measureScrollbar;
 exports.debounce = debounce;
 exports.warningOnce = warningOnce;
 exports.addClass = addClass;
 exports.removeClass = removeClass;
+exports.ObjectAssign = ObjectAssign;
 
 var _warning = require('warning');
 
@@ -120,4 +124,24 @@ function removeClass(elm, className) {
       el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
     }
   });
+}
+
+/**
+ * 简单数组数据对象拷贝
+ * @param {*} obj 要拷贝的对象 
+ */
+function ObjectAssign(obj) {
+  var b = obj instanceof Array;
+  var tagObj = b ? [] : {};
+  if (b) {
+    //数组
+    obj.forEach(function (da) {
+      var _da = {};
+      _extends(_da, da);
+      tagObj.push(_da);
+    });
+  } else {
+    _extends(tagObj, obj);
+  }
+  return tagObj;
 }

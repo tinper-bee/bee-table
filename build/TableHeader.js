@@ -36,6 +36,8 @@ var propTypes = {
   rows: _propTypes2["default"].array
 };
 
+var grap = 16; //偏移数值
+
 var TableHeader = function (_Component) {
   _inherits(TableHeader, _Component);
 
@@ -115,7 +117,22 @@ var TableHeader = function (_Component) {
       //设置hiden的left
       //"u-table-drag-hide-table"
       var currentHideDom = document.getElementById("u-table-drag-hide-table-" + dragborderKey).getElementsByTagName("div")[_this.drag.currIndex];
-      currentHideDom.style.left = _this.drag.initPageLeftX + x - 16 + "px";
+      currentHideDom.style.left = _this.drag.initPageLeftX + x - grap + "px";
+
+      //获取最小宽度，不让拖动
+      // let minWidth = 0;
+      // for(let i=0;i<=this.drag.currIndex;i++){
+      //   minWidth += this.drag.data[i].width;
+      // }
+
+      // //判断最小值后在赋值 todo
+      // let currLeft = this.drag.initPageLeftX+x-grap;
+      // console.log("currLeft minWidth ",currLeft + " "+minWidth);
+      // if(currLeft <= minWidth){
+      //   return;
+      // }
+      // currentHideDom.style.left =  currLeft+"px"; 
+
       //设置当前的宽度 
       var currentData = _this.drag.data[_this.drag.currIndex];
       currentData.width = _this.drag.width + x;
@@ -136,10 +153,18 @@ var TableHeader = function (_Component) {
       initLeft: 0,
       x: 0,
       width: 0
-    };
-    var _da = {};
-    _extends(_da, _this.props.rows[0]);
-    _this.drag.data = JSON.parse(JSON.stringify(_this.props.rows[0]));
+      // let _da = {};
+      // Object.assign(_da,this.props.rows[0]);
+      // this.drag.data = JSON.parse(JSON.stringify(this.props.rows[0]));
+      // let a = this.props.rows[0];
+
+    };var _row = [];
+    _this.props.rows[0].forEach(function (item) {
+      var newItem = item.key != "checkbox" ? (0, _utils.ObjectAssign)(item) : item;
+      _row.push(newItem);
+    });
+    _this.drag.data = _row; //JSON.parse(JSON.stringify(this.props.rows[0]));
+
     return _this;
   }
 
@@ -196,7 +221,7 @@ var TableHeader = function (_Component) {
               return _react2["default"].createElement(
                 'th',
                 {
-                  style: { width: da.width },
+                  style: { width: da.width, minWidth: da.width },
                   onMouseMove: function onMouseMove(event) {
                     _this2.onThMouseMove(event, da);
                   },
