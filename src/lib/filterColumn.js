@@ -32,6 +32,12 @@ export default function filterColumn(Table, Checkbox, Popover, Icon) {
       };
     }
 
+    componentWillReceiveProps(nextProps){
+      this.setState({
+        showPopover:false
+      })
+    }
+
     getShowModal=(event)=>{
       let {showModal} = this.state;
       if(showModal){
@@ -103,7 +109,7 @@ export default function filterColumn(Table, Checkbox, Popover, Icon) {
           <Table {...this.props} columns={_columns} data={data} />
           <Popover
             placement="leftTop"
-            content={content} id="aa"
+            content={content}
             show={showModal}   >
               <div className={`${prefixCls}-pop-column-filter`}><Icon type="uf-navmenu" onClick={this.openCloumList}/></div>
           </Popover> 
