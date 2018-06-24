@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import Checkbox from 'bee-checkbox';
+import Icon from "bee-icon";
 /**
  * 参数: 过滤表头
  * @param {*} Table
@@ -7,7 +9,7 @@ import React, { Component } from "react";
  * @param {*} Icon
  */
 
-export default function filterColumn(Table, Checkbox, Popover, Icon) {
+export default function filterColumn(Table,Popover) {
 
   return class FilterColumn extends Component {
     static defaultProps = {
@@ -26,8 +28,6 @@ export default function filterColumn(Table, Checkbox, Popover, Icon) {
       this.state = { 
         columns:_column,
         showModal:false,
-        width:props.width?props.width:150,
-        screenX:0,
         screenY:0
       };
     }
@@ -57,9 +57,7 @@ export default function filterColumn(Table, Checkbox, Popover, Icon) {
   
     openCloumList = (ev)=>{
       let oEvent=ev||event; 
-      this.setState({
-        screenX:oEvent.clientX,
-        screenY:oEvent.clientY,
+      this.setState({ 
         showModal:true
       });
     }
@@ -74,8 +72,7 @@ export default function filterColumn(Table, Checkbox, Popover, Icon) {
     }
 
     clear=()=>{
-      const {columns} = this.state;
-      // let _chek = columns[0].checked?false:true;
+      const {columns} = this.state; 
       columns.forEach(da => {
         da.checked = true;
         da.disable  = true;
@@ -87,7 +84,7 @@ export default function filterColumn(Table, Checkbox, Popover, Icon) {
 
     render() {
       const {data,prefixCls} = this.props;
-      const {columns,showModal,width,screenX,screenY} = this.state;
+      const {columns,showModal} = this.state;
       let _columns = [];
       columns.forEach((da)=>{
         if(da.disable){
@@ -107,12 +104,17 @@ export default function filterColumn(Table, Checkbox, Popover, Icon) {
 
       return <div className={`${prefixCls}-cont`}>
           <Table {...this.props} columns={_columns} data={data} />
-          <Popover
-            placement="leftTop"
-            content={content}
-            show={showModal}   >
-              <div className={`${prefixCls}-pop-column-filter`}><Icon type="uf-navmenu" onClick={this.openCloumList}/></div>
-          </Popover> 
+          <div className={`${prefixCls}-filter-icon`}>
+            <Popover
+              id="filter_column_popover"
+              placement="leftTop"
+              content={content}
+              show={showModal}   >
+                <div className={`${prefixCls}-pop-column-filter`}>
+                  <Icon type="uf-navmenu" onClick={this.openCloumList}/>
+                </div>
+            </Popover>
+          </div>
         </div>;
     }
   };
