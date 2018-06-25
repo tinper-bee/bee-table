@@ -318,10 +318,11 @@ $table-move-in-color: $bg-color-base;
     }
     &-filter-icon{
       position: absolute;
-      top: 10px;
+      top: 6px;
       right: 3px;
       width: 30px;
       height: 30px;
+      line-height: 30px;
       z-index: 2;
     }
     &-pop-cont-item{

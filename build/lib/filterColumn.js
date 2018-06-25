@@ -119,7 +119,7 @@ function filterColumn(Table, Popover) {
               show: showModal },
             _react2["default"].createElement(
               "div",
-              { className: prefixCls + "-pop-column-filter" },
+              { className: prefixCls + "-pop-column-filter-cont" },
               _react2["default"].createElement(_beeIcon2["default"], { type: "uf-navmenu", onClick: this.openCloumList })
             )
           )

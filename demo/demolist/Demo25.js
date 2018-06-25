@@ -96,6 +96,104 @@ const data25 = [
   { a: "郭靖", b: "男", c: 25, c1: 30, c2: 30,d:'大侠',e: "操作", key: "3" }
 ];
 
+function getCloumns(){
+  const column = [
+      {
+          title: "序号",
+          dataIndex: "index",
+          key: "index",
+          width: 100, 
+      },
+      {
+          title: "订单编号",
+          dataIndex: "orderCode",
+          key: "orderCode",
+          width: 250, 
+      },
+      {
+          title: "供应商名称",
+          dataIndex: "supplierName",
+          key: "supplierName",
+          width: 300
+      },
+      {
+          title: "类型",
+          dataIndex: "type_name",
+          key: "type_name",
+          width: 100
+      },
+      {
+          title: "采购组织",
+          dataIndex: "purchasing",
+          key: "purchasing",
+          width: 100
+      },
+      {
+          title: "采购组",
+          dataIndex: "purchasingGroup",
+          key: "purchasingGroup",
+          width: 100
+      },
+      {
+          title: "凭证日期",
+          dataIndex: "voucherDate",
+          key: "voucherDate",
+          width: 100,
+          
+      },
+      {
+          title: "审批状态",
+          dataIndex: "approvalState_name",
+          key: "approvalState_name",
+          width: 100
+      },
+      {
+          title: "确认状态",
+          dataIndex: "confirmState_name",
+          key: "confirmState_name",
+          width: 100
+      }, 
+      {
+          title: "关闭状态",
+          dataIndex: "closeState_name",
+          key: "closeState_name",
+          width: 100
+      },
+      {
+          title: "操作",
+          dataIndex: "d",
+          key: "d",
+          width:100,
+          fixed: "right",
+          render(text, record, index) {
+              return (
+                  <div className='operation-btn'>
+                      
+                  </div>
+              )
+          }
+      }
+  ];
+  return column;
+}
+
+const dataList = [ 
+  { 
+      index: 1, 
+      orderCode:"2343", 
+      supplierName: "xxx",
+      type_name: "123",
+      purchasing:'内行', 
+      purchasingGroup:"323",
+      voucherDate:"kkkk",
+      approvalState_name:"vvvv",
+      confirmState_name:"aaaa",
+      closeState_name:"vnnnnn",
+      d:"操作",
+      key: "2"
+  }, 
+]
+
 // const FilterColumnTable = filterColumn(Table, Popover);
 // const MultiSelectTable = multiSelect(Table, Checkbox);
 // let ComplexTable = multiSelect(Table, Checkbox);
@@ -112,9 +210,16 @@ class Demo25 extends Component {
   constructor(props) {
     super(props);
   }
+
+  getSelectedDataFunc=(data)=>{
+      console.log("data",data);
+  }
  
   render() {
-    return <div className="demo25"><DragColumnTable columns={columns25} data={data25} 
+    return <div className="demo25"><DragColumnTable 
+    columns={getCloumns()}
+    data={dataList} 
+    getSelectedDataFunc={this.getSelectedDataFunc}
     bordered
     dragborder={true}
     scroll={{x:700}}

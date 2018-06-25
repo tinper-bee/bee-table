@@ -59,6 +59,7 @@ function newMultiSelect(Table, Checkbox) {
         _this.setState({
           checkedAll: check
         });
+        _this.props.getSelectedDataFunc(data);
       };
 
       _this.handleClick = function () {};
@@ -79,6 +80,7 @@ function newMultiSelect(Table, Checkbox) {
           _this.setState(_extends({}, _this.state, {
             checkedAll: checkedAll
           }));
+          _this.props.getSelectedDataFunc(record);
         };
       };
 

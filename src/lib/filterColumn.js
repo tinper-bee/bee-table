@@ -110,7 +110,7 @@ export default function filterColumn(Table,Popover) {
               placement="leftTop"
               content={content}
               show={showModal}   >
-                <div className={`${prefixCls}-pop-column-filter`}>
+                <div className={`${prefixCls}-pop-column-filter-cont`}>
                   <Icon type="uf-navmenu" onClick={this.openCloumList}/>
                 </div>
             </Popover>

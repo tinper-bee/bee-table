@@ -46,7 +46,8 @@ export default function newMultiSelect(Table, Checkbox) {
       });
       this.setState({
         checkedAll:check
-      })
+      });
+      this.props.getSelectedDataFunc(data);
     }
 
     handleClick=()=>{
@@ -68,6 +69,7 @@ export default function newMultiSelect(Table, Checkbox) {
         ...this.state,
         checkedAll
       })
+      this.props.getSelectedDataFunc(record);
     };
 
     
