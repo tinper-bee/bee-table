@@ -65,8 +65,8 @@ const columns25 = [
     title: "操作",
     dataIndex: "e",
     key: "e",
-    fixed: "right",
     width: 100,
+    fixed: "right",
     render(text, record, index) {
       return (
         <div style={{position: 'relative'}} title={text} >
@@ -75,11 +75,6 @@ const columns25 = [
                 tooltip={text}
                 onClick={() => {
                   alert('这是第'+index+'列，内容为:'+text);
-                }}
-                style={{
-                    position: 'absolute',
-                    top: 5,
-                    left: 0
                 }}
               >
                 操作
@@ -215,14 +210,25 @@ class Demo25 extends Component {
       console.log("data",data);
   }
  
+  getCloumnsScroll=(columns)=>{
+    let sum = 0;
+    columns.forEach((da)=>{
+        sum += da.width;
+    })
+    console.log("sum",sum);
+    return (sum);
+  }
+
   render() {
+    let columns = getCloumns();
+
     return <div className="demo25"><DragColumnTable 
-    columns={columns25}
-    data={data25} 
+    columns={columns}
+    data={dataList} 
     getSelectedDataFunc={this.getSelectedDataFunc}
     bordered
     dragborder={true}
-    scroll={{x:700}}
+    scroll={{x:this.getCloumnsScroll(columns)}}
     multiSelect={{type: "checkbox"}}
     /></div>
   }
