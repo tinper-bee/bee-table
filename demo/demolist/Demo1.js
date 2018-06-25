@@ -81,8 +81,7 @@ class Demo1 extends Component {
       super(props);
       this.state = {
         data: data,
-        factoryValue: 0,
-        selectedRow: new Array(data.length)//状态同步
+        selectedRowIndex: 0
       }
   }
 
@@ -92,18 +91,15 @@ class Demo1 extends Component {
         columns={columns}
         data={data}
         rowClassName={(record,index,indent)=>{
-          if (this.state.selectedRow[index]) {
+          if (this.state.selectedRowIndex == index) {
               return 'selected';
           } else {
               return '';
           }
         }}
         onRowClick={(record,index,indent)=>{
-          let selectedRow = new Array(this.state.data.length);
-          selectedRow[index] = true;
-          this.setState({
-              factoryValue: record,
-              selectedRow: selectedRow
+          this.setState({ 
+              selectedRowIndex: index
           });
         }}
         title={currentData => <div>标题: 这是一个标题</div>}
