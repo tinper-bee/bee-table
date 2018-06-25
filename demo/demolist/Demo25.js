@@ -217,8 +217,8 @@ class Demo25 extends Component {
  
   render() {
     return <div className="demo25"><DragColumnTable 
-    columns={getCloumns()}
-    data={dataList} 
+    columns={columns25}
+    data={data25} 
     getSelectedDataFunc={this.getSelectedDataFunc}
     bordered
     dragborder={true}

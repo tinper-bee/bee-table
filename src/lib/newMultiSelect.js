@@ -40,14 +40,18 @@ export default function newMultiSelect(Table, Checkbox) {
 
     onAllCheckChange=()=>{
       let {data,checkedAll} = this.state;
+      let selectList = [];
       let check = checkedAll?false:true;
       data.forEach(item => {
         item.checked = check;
+        if(item.checked){
+          selectList.push(item);
+        }
       });
       this.setState({
         checkedAll:check
       });
-      this.props.getSelectedDataFunc(data);
+      this.props.getSelectedDataFunc(selectList);
     }
 
     handleClick=()=>{
@@ -56,6 +60,7 @@ export default function newMultiSelect(Table, Checkbox) {
  
     onCheckboxChange = (text, record, index) => () => {
       let {data} = this.state;
+      let selectList = [];
       record.checked = record.checked?false:true;
       let checkedAll = true;
       for(let i=0;i<data.length;i++){
@@ -69,7 +74,12 @@ export default function newMultiSelect(Table, Checkbox) {
         ...this.state,
         checkedAll
       })
-      this.props.getSelectedDataFunc(record);
+      data.forEach((da)=>{
+        if(da.checked){
+          selectList.push(da);
+        }
+      })
+      this.props.getSelectedDataFunc(selectList);
     };
 
     

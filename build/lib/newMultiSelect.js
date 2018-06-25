@@ -52,14 +52,18 @@ function newMultiSelect(Table, Checkbox) {
             data = _this$state.data,
             checkedAll = _this$state.checkedAll;
 
+        var selectList = [];
         var check = checkedAll ? false : true;
         data.forEach(function (item) {
           item.checked = check;
+          if (item.checked) {
+            selectList.push(item);
+          }
         });
         _this.setState({
           checkedAll: check
         });
-        _this.props.getSelectedDataFunc(data);
+        _this.props.getSelectedDataFunc(selectList);
       };
 
       _this.handleClick = function () {};
@@ -68,6 +72,7 @@ function newMultiSelect(Table, Checkbox) {
         return function () {
           var data = _this.state.data;
 
+          var selectList = [];
           record.checked = record.checked ? false : true;
           var checkedAll = true;
           for (var i = 0; i < data.length; i++) {
@@ -80,7 +85,12 @@ function newMultiSelect(Table, Checkbox) {
           _this.setState(_extends({}, _this.state, {
             checkedAll: checkedAll
           }));
-          _this.props.getSelectedDataFunc(record);
+          data.forEach(function (da) {
+            if (da.checked) {
+              selectList.push(da);
+            }
+          });
+          _this.props.getSelectedDataFunc(selectList);
         };
       };
 
