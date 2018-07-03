@@ -163,7 +163,14 @@ function getCloumns(){
           render(text, record, index) {
               return (
                   <div className='operation-btn'>
-                      
+                    <a href="#"
+                      tooltip={text}
+                      onClick={() => {
+                        alert('这是第'+index+'列，内容为:'+text);
+                      }}
+                    >
+                      一些操作
+                    </a>
                   </div>
               )
           }
