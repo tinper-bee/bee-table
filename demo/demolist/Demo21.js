@@ -32,23 +32,47 @@ const columns21 = [
     dataIndex: "c",
     key: "c",
     // width: 200,
-    sumCol: true,
+    // sumCol: true,
     sorter: (a, b) => a.c - b.c
   },
   {
     title: "武功级别",
     dataIndex: "d",
     key: "d"
+  },
+  {
+    title: "操作",
+    dataIndex: "e",
+    key: "e",
+    render(text, record, index){
+      return (
+        <div  title={text} >
+            <a href="#"
+                tooltip={text}
+                onClick={() => {
+                  alert('这是第'+index+'列，内容为:'+text);
+                }}
+                // style={{
+                //     position: 'absolute',
+                //     top: 5,
+                //     left: 0
+                // }}
+              >
+                一些操作
+              </a>
+        </div>
+      );
+    }
   }
 ];
 
 const data21 = [
-  { a: "杨过", b: "男", c: 30,d:'内行', key: "2" },
-  { a: "令狐冲", b: "男", c: 41,d:'大侠', key: "1" },
-  { a: "郭靖", b: "男", c: 25,d:'大侠', key: "3" }
+  { a: "杨过", b: "男", c: 30,d:'内行',e: "操作", key: "2" },
+  { a: "令狐冲", b: "男", c: 41,d:'大侠',e: "操作", key: "1" },
+  { a: "郭靖", b: "男", c: 25,d:'大侠',e: "操作", key: "3" }
 ];
 
-const FilterColumnTable = filterColumn(sum(Table), Checkbox, Popover, Icon);
+const FilterColumnTable = filterColumn(Table, Popover, Icon);
 
 const defaultProps21 = {
   prefixCls: "bee-table"
