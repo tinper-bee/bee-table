@@ -34,19 +34,10 @@ export default function filterColumn(Table,Popover) {
 
     componentWillReceiveProps(nextProps){
       this.setState({
-        showPopover:false
+        showModal:false
       })
     }
-
-    getShowModal=(event)=>{
-      let {showModal} = this.state;
-      if(showModal){
-        this.setState({
-          showModal:false
-        })
-      }
-    }
-
+    
     checkedColumItemClick = (da)=>{
       da.checked = da.checked?false:true;
       da.disable  = da.checked?true:false;
@@ -55,8 +46,7 @@ export default function filterColumn(Table,Popover) {
       })
     }
   
-    openCloumList = (ev)=>{
-      let oEvent=ev||event; 
+    openCloumList = ()=>{
       this.setState({ 
         showModal:true
       });
