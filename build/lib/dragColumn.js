@@ -78,8 +78,9 @@ function dragColumn(Table) {
         onDragOver: this.onDragOver,
         onDrop: this.onDrop,
         onDragEnter: this.onDragEnter,
-        draggable: draggable,
-        dragborder: dragborder,
+        draggable: draggable
+        // dragborder={dragborder}
+        , dragborder: false,
         dragborderKey: key
       }));
     };

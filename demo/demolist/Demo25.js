@@ -192,16 +192,30 @@ const dataList = [
       confirmState_name:"aaaa",
       closeState_name:"vnnnnn",
       d:"操作",
-      key: "2"
+      key: "1"
   }, 
+  { 
+    index: 2, 
+    orderCode:"222", 
+    supplierName: "22xxx",
+    type_name: "1223",
+    purchasing:'内行2', 
+    purchasingGroup:"3223",
+    voucherDate:"222kk",
+    approvalState_name:"22vvvv",
+    confirmState_name:"2aaaa",
+    closeState_name:"2vnnnnn",
+    d:"2操作",
+    key: "2"
+}, 
 ]
 
-// const FilterColumnTable = filterColumn(Table, Popover);
-// const MultiSelectTable = multiSelect(Table, Checkbox);
+// const DragColumnTable = filterColumn(Table, Popover);
+// const DragColumnTable = multiSelect(Table, Checkbox);
 // let ComplexTable = multiSelect(Table, Checkbox);
 
 // const DragColumnTable = multiSelect(Table, Checkbox);
-const DragColumnTable = dragColumn(filterColumn(multiSelect(Table, Checkbox), Popover)); 
+const DragColumnTable = filterColumn(multiSelect(Table, Checkbox), Popover); 
 // const DragColumnTable = dragColumn(filterColumn(Table, Popover));
 
 const defaultProps25 = {
@@ -234,9 +248,9 @@ class Demo25 extends Component {
     data={dataList} 
     getSelectedDataFunc={this.getSelectedDataFunc}
     bordered
-    dragborder={true}
-    scroll={{x:this.getCloumnsScroll(columns)}}
+    // dragborder={true} 
     multiSelect={{type: "checkbox"}}
+    scroll={{x:this.getCloumnsScroll(columns), y: 150}}
     /></div>
   }
 }

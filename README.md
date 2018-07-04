@@ -187,17 +187,7 @@ import multiSelect from "bee-table/build/lib/multiSelect.js"
 | 参数     | 说明         | 类型       | 默认值  |
 | ------ | ---------- | -------- | ---- |
 | draggable | 当前表格可拖拽 | boolean | false |
-
-
-### 拖拽变更宽度
-
-目前支持此功能只支持普通表格【注：不支持tree结构的表头、不支持和表头拖拽交互列一起使用】[示例](https://github.com/tinper-bee/bee-table/tree/master/demo/demolist/Demo23.js)
-
-| 参数     | 说明         | 类型       | 默认值  |
-| ------ | ---------- | -------- | ---- |
-| dragborder | 当前表格可拖拽改变宽度 | boolean | false |
-
-
+ 
 
 
 ## rendertype

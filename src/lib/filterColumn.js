@@ -4,7 +4,6 @@ import Icon from "bee-icon";
 /**
  * 参数: 过滤表头
  * @param {*} Table
- * @param {*} Checkbox
  * @param {*} Popover
  * @param {*} Icon
  */
@@ -37,7 +36,7 @@ export default function filterColumn(Table,Popover) {
         showModal:false
       })
     }
-    
+
     checkedColumItemClick = (da)=>{
       da.checked = da.checked?false:true;
       da.disable  = da.checked?true:false;

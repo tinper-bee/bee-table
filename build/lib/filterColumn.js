@@ -33,7 +33,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 /**
  * 参数: 过滤表头
  * @param {*} Table
- * @param {*} Checkbox
  * @param {*} Popover
  * @param {*} Icon
  */
@@ -69,7 +68,7 @@ function filterColumn(Table, Popover) {
 
     FilterColumn.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
       this.setState({
-        showPopover: false
+        showModal: false
       });
     };
 
@@ -133,24 +132,13 @@ function filterColumn(Table, Popover) {
   }, _initialiseProps = function _initialiseProps() {
     var _this2 = this;
 
-    this.getShowModal = function (event) {
-      var showModal = _this2.state.showModal;
-
-      if (showModal) {
-        _this2.setState({
-          showModal: false
-        });
-      }
-    };
-
     this.checkedColumItemClick = function (da) {
       da.checked = da.checked ? false : true;
       da.disable = da.checked ? true : false;
       _this2.setState(_extends({}, _this2.state));
     };
 
-    this.openCloumList = function (ev) {
-      var oEvent = ev || event;
+    this.openCloumList = function () {
       _this2.setState({
         showModal: true
       });
