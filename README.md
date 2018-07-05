@@ -187,6 +187,8 @@ import multiSelect from "bee-table/build/lib/multiSelect.js"
 | 参数     | 说明         | 类型       | 默认值  |
 | ------ | ---------- | -------- | ---- |
 | draggable | 当前表格可拖拽 | boolean | false |
+| checkMinSize | 当前表格显示最少列数 | boolean | false |
+
  
 
 

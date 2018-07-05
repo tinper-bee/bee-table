@@ -1,6 +1,6 @@
 /**
 * @title 根据列进行过滤、拖拽交换列综合使用案例
-* @description 新增属性【checkMinSize 】 1. 当所有列都设置了width属性后，需要给table增加checkMinSize属性，[表格最小列数] 2. 所有列不设置width。
+* @description 新增属性【checkMinSize 当前表格显示最少列数 】 1. 当所有列都设置了width属性后，需要给table增加checkMinSize属性 2. 所有列不设置width。
 */
 
 /**注：
