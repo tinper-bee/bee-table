@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -8,11 +8,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 exports["default"] = dragColumn;
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _util = require("./util");
+var _util = require('./util');
+
+var _utils = require('../utils');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -52,7 +54,7 @@ function dragColumn(Table) {
 
     DragColumn.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
       if (nextProps.columns != this.props.columns) {
-        this.setColumOrderByIndex();
+        this.setColumOrderByIndex(nextProps.columns);
       }
     };
 
@@ -67,13 +69,13 @@ function dragColumn(Table) {
           onDragEnter = _props.onDragEnter,
           onDragOver = _props.onDragOver,
           onDrop = _props.onDrop,
-          others = _objectWithoutProperties(_props, ["data", "dragborder", "draggable", "className", "columns", "onDragStart", "onDragEnter", "onDragOver", "onDrop"]);
+          others = _objectWithoutProperties(_props, ['data', 'dragborder', 'draggable', 'className', 'columns', 'onDragStart', 'onDragEnter', 'onDragOver', 'onDrop']);
 
       var key = new Date().getTime();
       return _react2["default"].createElement(Table, _extends({}, others, {
         columns: this.state.columns,
         data: data,
-        className: className + " u-table-drag-border",
+        className: className + ' u-table-drag-border',
         onDragStart: this.onDragStart,
         onDragOver: this.onDragOver,
         onDrop: this.onDrop,
@@ -89,9 +91,7 @@ function dragColumn(Table) {
   }(_react.Component), _initialiseProps = function _initialiseProps() {
     var _this2 = this;
 
-    this.setColumOrderByIndex = function (columns) {
-      var _column = [];
-      _extends(_column, columns);
+    this.setColumOrderByIndex = function (_column) {
       _column.forEach(function (da, i) {
         da.dragIndex = i;
         da.drgHover = false;
@@ -102,14 +102,19 @@ function dragColumn(Table) {
     };
 
     this.onDragStart = function (event, data) {
-      _this2.props.onDragStart(event, data);
+      if (_this2.props.onDragStart) {
+        _this2.props.onDragStart(event, data);
+      }
     };
 
     this.onDragOver = function (event, data) {
-      _this2.props.onDragOver(event, data);
+      if (_this2.props.onDragOver) {
+        _this2.props.onDragOver(event, data);
+      }
     };
 
     this.onDragEnter = function (event, data) {
+      if (data.key == "checkbox") return;
       var _columns = _this2.state.columns;
 
       var columns = [];
@@ -120,14 +125,18 @@ function dragColumn(Table) {
       var current = columns.find(function (da) {
         return da.key == data.key;
       });
+      if (current.fixed) return;
       current.drgHover = true;
       _this2.setState({
         columns: columns
       });
-      _this2.props.onDragEnter(event, data);
+      if (_this2.props.onDragEnter) {
+        _this2.props.onDragEnter(event, data);
+      }
     };
 
     this.onDrop = function (event, data) {
+      if (data.key == "checkbox") return;
       var columns = _this2.state.columns;
 
       var id = event.dataTransfer.getData("Text");
@@ -137,7 +146,8 @@ function dragColumn(Table) {
       var targetIndex = columns.findIndex(function (_da, i) {
         return _da.key == data.key;
       });
-
+      if (columns[objIndex].fixed) return; //固定列不让拖拽
+      if (columns[targetIndex].fixed) return; //固定列不让拖拽
       columns.forEach(function (da, i) {
         da.drgHover = false;
         if (da.key == id) {
@@ -149,13 +159,13 @@ function dragColumn(Table) {
           da.dragIndex = objIndex;
         }
       });
-      var _columns = (0, _util.sortBy)(columns, function (da) {
-        return da.dragIndex;
-      });
+      var _columns = columns.sort((0, _util.compare)('dragIndex'));
       _this2.setState({
-        columns: _columns
+        columns: JSON.parse(JSON.stringify(_columns))
       });
-      _this2.props.onDrop(event, data);
+      if (_this2.props.onDrop) {
+        _this2.props.onDrop(event, data);
+      }
     };
 
     this.getTarget = function (evt) {
@@ -163,4 +173,4 @@ function dragColumn(Table) {
     };
   }, _temp;
 }
-module.exports = exports["default"];
+module.exports = exports['default'];

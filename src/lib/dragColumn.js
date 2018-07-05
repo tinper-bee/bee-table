@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import {sortBy} from './util';
+import {compare} from './util';
+import {ObjectAssign} from '../utils';
 /**
  * 参数: 列拖拽
  * @param {*} Table
@@ -17,13 +18,11 @@ export default function dragColumn(Table) {
 
     componentWillReceiveProps(nextProps){
       if(nextProps.columns != this.props.columns){
-        this.setColumOrderByIndex();
+        this.setColumOrderByIndex(nextProps.columns);
       }
     }
  
-    setColumOrderByIndex = (columns)=>{
-      let _column = [];
-      Object.assign(_column,columns); 
+    setColumOrderByIndex = (_column)=>{
       _column.forEach((da,i) => {
           da.dragIndex = i;
           da.drgHover = false;
@@ -35,32 +34,42 @@ export default function dragColumn(Table) {
 
 
     onDragStart=(event,data)=>{
-      this.props.onDragStart(event,data)
+      if(this.props.onDragStart){
+        this.props.onDragStart(event,data)
+      }
     }
 
     onDragOver=(event,data)=>{
-     this.props.onDragOver(event,data)
+      if(this.props.onDragOver){
+       this.props.onDragOver(event,data)
+      }
     }
 
     onDragEnter=(event,data)=>{
+      if(data.key == "checkbox")return;
       const {columns:_columns} = this.state;
       let columns = [];
       Object.assign(columns,_columns);
       columns.forEach((da)=>da.drgHover = false)
       let current = columns.find((da)=>da.key == data.key);
+      if(current.fixed)return;
       current.drgHover = true;
       this.setState({
         columns
       });
-      this.props.onDragEnter(event,data);
+      if(this.props.onDragEnter){
+        this.props.onDragEnter(event,data);
+      }
     }
 
     onDrop=(event,data)=>{
+      if(data.key == "checkbox")return;
       let {columns} = this.state;
       const id = event.dataTransfer.getData("Text");
       let objIndex =  columns.findIndex((_da,i)=>_da.key == id);
       let targetIndex = columns.findIndex((_da,i)=>_da.key == data.key);
-
+      if(columns[objIndex].fixed)return;//固定列不让拖拽
+      if(columns[targetIndex].fixed)return;//固定列不让拖拽
       columns.forEach((da,i)=>{
         da.drgHover = false;
         if(da.key == id){//obj
@@ -70,11 +79,13 @@ export default function dragColumn(Table) {
           da.dragIndex = objIndex;
         }
       });
-     let _columns = sortBy(columns,(da)=>da.dragIndex);
+     let _columns =  columns.sort(compare('dragIndex'));
       this.setState({
-        columns:_columns,
+        columns: JSON.parse(JSON.stringify(_columns)),
       });
-      this.props.onDrop(event,data);
+      if(this.props.onDrop){
+        this.props.onDrop(event,data);
+      }
     }
  
     getTarget=(evt)=>{

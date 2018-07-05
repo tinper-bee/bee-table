@@ -20,6 +20,8 @@ var _beeIcon = require("bee-icon");
 
 var _beeIcon2 = _interopRequireDefault(_beeIcon);
 
+var _utils = require("../utils");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
@@ -52,8 +54,7 @@ function filterColumn(Table, Popover) {
 
       var columns = props.columns;
 
-      var _column = [];
-      _extends(_column, columns);
+      var _column = (0, _utils.ObjectAssign)(columns);
       _column.forEach(function (da) {
         da.checked = true;
         da.disable = true;
@@ -67,6 +68,11 @@ function filterColumn(Table, Popover) {
     }
 
     FilterColumn.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+      if (nextProps.columns != this.props.columns) {
+        this.setState({
+          columns: (0, _utils.ObjectAssign)(nextProps.columns)
+        });
+      }
       this.setState({
         showModal: false
       });
@@ -75,17 +81,27 @@ function filterColumn(Table, Popover) {
     FilterColumn.prototype.render = function render() {
       var _props = this.props,
           data = _props.data,
-          prefixCls = _props.prefixCls;
+          prefixCls = _props.prefixCls,
+          scrollPro = _props.scroll;
       var _state = this.state,
           columns = _state.columns,
           showModal = _state.showModal;
 
-      var _columns = [];
+
+      var _columns = [],
+          widthState = 0,
+          scroll = scrollPro;
       columns.forEach(function (da) {
         if (da.disable) {
           _columns.push(da);
         }
+        if (da.width) {
+          widthState++;
+        }
       });
+      if (_columns.length == widthState) {
+        scroll.x = this.getCloumnsScroll(columns);
+      }
 
       var content = _react2["default"].createElement(
         "div",
@@ -105,7 +121,10 @@ function filterColumn(Table, Popover) {
       return _react2["default"].createElement(
         "div",
         { className: prefixCls + "-cont" },
-        _react2["default"].createElement(Table, _extends({}, this.props, { columns: _columns, data: data })),
+        _react2["default"].createElement(Table, _extends({}, this.props, { columns: _columns, data: data,
+          scroll: scroll
+          //  scroll={{x:this.getCloumnsScroll(columns)}}
+        })),
         _react2["default"].createElement(
           "div",
           { className: prefixCls + "-filter-icon" },
@@ -133,7 +152,21 @@ function filterColumn(Table, Popover) {
     var _this2 = this;
 
     this.checkedColumItemClick = function (da) {
+      var checkMinSize = _this2.props.checkMinSize;
+
       da.checked = da.checked ? false : true;
+      // if(checkMinSize)
+      var sum = 0,
+          leng = 0;
+      _this2.state.columns.forEach(function (da) {
+        da.fixed ? "" : leng++;
+        !da.fixed && da.checked ? sum++ : "";
+      });
+      if (sum < checkMinSize) {
+        return;
+      } else {
+        if (sum <= 0) return;
+      }
       da.disable = da.checked ? true : false;
       _this2.setState(_extends({}, _this2.state));
     };
@@ -149,18 +182,20 @@ function filterColumn(Table, Popover) {
       var columns = _this2.state.columns;
 
       return columns.map(function (da, i) {
-        return _react2["default"].createElement(
-          "div",
-          { key: da.key + "_" + i, className: prefixCls + "-pop-cont-item", onClick: function onClick() {
-              _this2.checkedColumItemClick(da);
-            } },
-          _react2["default"].createElement(_beeCheckbox2["default"], { id: da.key, checked: da.checked }),
-          _react2["default"].createElement(
-            "span",
-            null,
-            da.title
-          )
-        );
+        if (!da.fixed) {
+          return _react2["default"].createElement(
+            "div",
+            { key: da.key + "_" + i, className: prefixCls + "-pop-cont-item", onClick: function onClick() {
+                _this2.checkedColumItemClick(da);
+              } },
+            _react2["default"].createElement(_beeCheckbox2["default"], { id: da.key, checked: da.checked }),
+            _react2["default"].createElement(
+              "span",
+              null,
+              da.title
+            )
+          );
+        }
       });
     };
 
@@ -172,6 +207,17 @@ function filterColumn(Table, Popover) {
         da.disable = true;
       });
       _this2.setState(_extends({}, _this2.state));
+    };
+
+    this.getCloumnsScroll = function (columns) {
+      var sum = 0;
+      columns.forEach(function (da) {
+        if (da.checked) {
+          sum += da.width;
+        }
+      });
+      console.log("sum", sum);
+      return sum;
     };
   }, _temp;
 }

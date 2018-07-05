@@ -55,18 +55,18 @@ var TableHeader = function (_Component) {
     };
 
     _this.onDragOver = function (event, data) {
-      if (_this.currentObj.key == data.key) return;
+      if (!_this.currentObj || _this.currentObj.key == data.key) return;
       event.preventDefault();
       _this.props.onDragOver(event, data);
     };
 
     _this.onDragEnter = function (event, data) {
-      if (_this.currentObj.key == data.key) return;
+      if (!_this.currentObj || _this.currentObj.key == data.key) return;
       _this.props.onDragEnter(event, data);
     };
 
     _this.onDrop = function (event, data) {
-      if (_this.currentObj.key == data.key) return;
+      if (!_this.currentObj || _this.currentObj.key == data.key) return;
       _this.props.onDrop(event, data);
     };
 

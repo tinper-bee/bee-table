@@ -56,18 +56,18 @@ class TableHeader extends Component{
   }
   
   onDragOver=(event,data)=>{
-    if(this.currentObj.key == data.key)return;
+    if(!this.currentObj || this.currentObj.key == data.key)return;
     event.preventDefault();
     this.props.onDragOver(event,data);
   }
 
   onDragEnter=(event,data)=>{
-    if(this.currentObj.key == data.key)return;
+    if(!this.currentObj || this.currentObj.key == data.key)return;
     this.props.onDragEnter(event,data);
   }
 
   onDrop=(event,data)=>{
-    if(this.currentObj.key == data.key)return;
+    if(!this.currentObj ||this.currentObj.key == data.key)return;
     this.props.onDrop(event,data);
   }
 

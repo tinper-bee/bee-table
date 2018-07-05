@@ -35,3 +35,16 @@ export function sortBy(arr, prop, desc) {
   if(desc) ret.reverse();
   return ret;
 };
+
+/**
+ * 数组对象排序
+ * console.log(arr.sort(compare('age')))
+ * @param {} property 
+ */
+export function compare(property){
+    return function(a,b){
+        var value1 = a[property];
+        var value2 = b[property];
+        return value1 - value2;
+    }
+}

@@ -1,10 +1,12 @@
 /**
-*
-* @title 根据列进行过滤、拖拽综合使用案例
-* @description 根据列进行过滤、拖拽综合使用案例
-*
+* @title 根据列进行过滤、拖拽交换列综合使用案例
+* @description 新增属性【checkMinSize 】 1. 当所有列都设置了width属性后，需要给table增加checkMinSize属性，[表格最小列数] 2. 所有列不设置width。
 */
 
+/**注：
+ *  在使用过滤列的时候，如果每一列都设置了width属性，勾选的时候回出现重复列问题。当表格的宽度小于合计宽度的时候，就会出现此问题。 
+ *  必须有个别列不设置width属性，即可避免此问题。
+ */
 import React, { Component } from 'react';
 import Table from '../../src';
 import multiSelect from '../../src/lib/newMultiSelect';
@@ -16,81 +18,7 @@ import Icon from "bee-icon";
 import Checkbox from 'bee-checkbox';
 import Popover from 'bee-popover';
 
-const columns25 = [
-  {
-    title: "名字",
-    dataIndex: "a",
-    key: "a",
-    width: 100,
-    fixed: "left"
-  },
-  {
-    title: "性别",
-    dataIndex: "b",
-    key: "b",
-    width: 100
-  },
-  {
-    title: "年龄",
-    dataIndex: "c",
-    key: "c",
-    width: 100,
-    sumCol: true,
-    sorter: (a, b) => a.c - b.c
-  },
-  {
-    title: "年龄1",
-    dataIndex: "c1",
-    key: "c1",
-    width: 100,
-    sumCol: true,
-    sorter: (a, b) => a.c - b.c
-  },
-  {
-    title: "年龄2",
-    dataIndex: "c2",
-    key: "c2",
-    width: 100,
-    sumCol: true,
-    sorter: (a, b) => a.c - b.c
-  },
-  {
-    title: "武功级别",
-    dataIndex: "d",
-    width: 100,
-    key: "d",
-   
-  },
-  {
-    title: "操作",
-    dataIndex: "e",
-    key: "e",
-    width: 100,
-    fixed: "right",
-    render(text, record, index) {
-      return (
-        <div style={{position: 'relative'}} title={text} >
-            <a
-                href="#"
-                tooltip={text}
-                onClick={() => {
-                  alert('这是第'+index+'列，内容为:'+text);
-                }}
-              >
-                操作
-              </a>
-        </div>
-      );
-    }
-  }
-];
-
-const data25 = [
-  { a: "杨过rrrrr", b: "男", c: 30, c1: 30, c2: 30,d:'内行',e: "操作", key: "2" },
-  { a: "令狐冲", b: "男", c: 41, c1: 30, c2: 30,d:'大侠',e: "操作", key: "1" },
-  { a: "郭靖", b: "男", c: 25, c1: 30, c2: 30,d:'大侠',e: "操作", key: "3" }
-];
-
+ //Cloumns1
 function getCloumns(){
   const column = [
       {
@@ -103,13 +31,13 @@ function getCloumns(){
           title: "订单编号",
           dataIndex: "orderCode",
           key: "orderCode",
-          width: 250, 
+          width: 100, 
       },
       {
           title: "供应商名称",
           dataIndex: "supplierName",
           key: "supplierName",
-          width: 300
+          width: 100
       },
       {
           title: "类型",
@@ -127,7 +55,7 @@ function getCloumns(){
           title: "采购组",
           dataIndex: "purchasingGroup",
           key: "purchasingGroup",
-          width: 100
+           width: 300
       },
       {
           title: "凭证日期",
@@ -146,13 +74,91 @@ function getCloumns(){
           title: "确认状态",
           dataIndex: "confirmState_name",
           key: "confirmState_name",
-          width: 100
+           width: 100
       }, 
       {
           title: "关闭状态",
           dataIndex: "closeState_name",
           key: "closeState_name",
           width: 100
+      },
+      {
+          title: "操作",
+          dataIndex: "d",
+          key: "d",
+          width:100,
+          fixed: "right",
+          render(text, record, index) {
+              return (
+                  <div className='operation-btn'>
+                    <a href="#"
+                      tooltip={text}
+                      onClick={() => {
+                        alert('这是第'+index+'列，内容为:'+text);
+                      }}
+                    >
+                      一些操作
+                    </a>
+                  </div>
+              )
+          }
+      }
+  ];
+  return column;
+}
+//Cloumns2
+function getCloumns25(){
+  const column = [
+      {
+          title: "序号",
+          dataIndex: "index",
+          key: "index",
+      },
+      {
+          title: "订单编号",
+          dataIndex: "orderCode",
+          key: "orderCode",
+      },
+      {
+          title: "供应商名称",
+          dataIndex: "supplierName",
+          key: "supplierName",
+      },
+      {
+          title: "类型",
+          dataIndex: "type_name",
+          key: "type_name",
+      },
+      {
+          title: "采购组织",
+          dataIndex: "purchasing",
+          key: "purchasing",
+      },
+      {
+          title: "采购组",
+          dataIndex: "purchasingGroup",
+          key: "purchasingGroup",
+      },
+      {
+          title: "凭证日期",
+          dataIndex: "voucherDate",
+          key: "voucherDate",
+          
+      },
+      {
+          title: "审批状态",
+          dataIndex: "approvalState_name",
+          key: "approvalState_name",
+      },
+      {
+          title: "确认状态",
+          dataIndex: "confirmState_name",
+          key: "confirmState_name",
+      }, 
+      {
+          title: "关闭状态",
+          dataIndex: "closeState_name",
+          key: "closeState_name",
       },
       {
           title: "操作",
@@ -210,13 +216,7 @@ const dataList = [
 }, 
 ]
 
-// const DragColumnTable = filterColumn(Table, Popover);
-// const DragColumnTable = multiSelect(Table, Checkbox);
-// let ComplexTable = multiSelect(Table, Checkbox);
-
-// const DragColumnTable = multiSelect(Table, Checkbox);
-const DragColumnTable = filterColumn(multiSelect(Table, Checkbox), Popover); 
-// const DragColumnTable = dragColumn(filterColumn(Table, Popover));
+const DragColumnTable = filterColumn(dragColumn(multiSelect(Table, Checkbox)),Popover);
 
 const defaultProps25 = {
   prefixCls: "bee-table"
@@ -248,9 +248,11 @@ class Demo25 extends Component {
     data={dataList} 
     getSelectedDataFunc={this.getSelectedDataFunc}
     bordered
-    // dragborder={true} 
+    checkMinSize={6}
+    draggable={true}
     multiSelect={{type: "checkbox"}}
-    scroll={{x:this.getCloumnsScroll(columns), y: 150}}
+    scroll={{x:"130%", y: 150}}
+    // scroll={{x:this.getCloumnsScroll(columns), y: 150}}
     /></div>
   }
 }
