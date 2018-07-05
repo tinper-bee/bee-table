@@ -1,3 +1,33 @@
+<a name="1.2.7"></a>
+## [1.2.7](https://github.com/tinper-bee/bee-table/compare/v1.2.6...v1.2.7) (2018-07-05)
+
+
+### Bug Fixes
+
+* **列筛选后滚动条问题，针对列过滤新增checkMinSize属性:** 列筛选后滚动条问题，针对列过滤新增checkMinSize属性 ([36b87b1](https://github.com/tinper-bee/bee-table/commit/36b87b1))
+
+
+
+<a name="1.2.6"></a>
+## [1.2.6](https://github.com/tinper-bee/bee-table/compare/v1.2.5...v1.2.6) (2018-07-04)
+
+
+
+<a name="1.2.5"></a>
+## [1.2.5](https://github.com/tinper-bee/bee-table/compare/v1.2.4...v1.2.5) (2018-06-25)
+
+
+
+<a name="1.2.4"></a>
+## [1.2.4](https://github.com/tinper-bee/bee-table/compare/v1.2.3...v1.2.4) (2018-06-25)
+
+
+
+<a name="1.2.3"></a>
+## [1.2.3](https://github.com/tinper-bee/bee-table/compare/v1.2.2...v1.2.3) (2018-06-24)
+
+
+
 <a name="1.2.2"></a>
 ## [1.2.2](https://github.com/tinper-bee/bee-table/compare/v1.2.0...v1.2.2) (2018-06-24)
 
