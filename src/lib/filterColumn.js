@@ -19,16 +19,19 @@ export default function filterColumn(Table,Popover) {
     constructor(props) {
       super(props);
       const {columns} = props;
-      let _column = ObjectAssign(columns);
+      this.state = { 
+        columns:this.setColumOrderByIndex(ObjectAssign(columns)),
+        showModal:false,
+        screenY:0
+      };
+    }
+
+    setColumOrderByIndex = (_column)=>{
       _column.forEach(da => {
         da.checked = true;
         da.disable = true;
       });
-      this.state = { 
-        columns:_column,
-        showModal:false,
-        screenY:0
-      };
+      return _column; 
     }
 
     componentWillReceiveProps(nextProps){
@@ -44,18 +47,18 @@ export default function filterColumn(Table,Popover) {
 
     checkedColumItemClick = (da)=>{
       let {checkMinSize} = this.props;
-      da.checked = da.checked?false:true;
       // if(checkMinSize)
       let sum = 0,leng=0;
       this.state.columns.forEach(da => {
         da.fixed?"":leng++;
         !da.fixed && da.checked?sum++:"";
       });
-      if(sum < checkMinSize){
+      if(sum < checkMinSize && da.checked){
         return;
       }else{
-        if(sum<=0)return;
+        if(sum<=1  && da.checked)return;
       }
+      da.checked = da.checked?false:true;
       da.disable  = da.checked?true:false;
       this.setState({
         ...this.state

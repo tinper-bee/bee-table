@@ -248,7 +248,7 @@ class Demo25 extends Component {
     data={dataList} 
     getSelectedDataFunc={this.getSelectedDataFunc}
     bordered
-    checkMinSize={6}
+    checkMinSize={7}
     draggable={true}
     multiSelect={{type: "checkbox"}}
     scroll={{x:"130%", y: 150}}

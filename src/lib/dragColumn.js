@@ -12,13 +12,16 @@ export default function dragColumn(Table) {
 
     constructor(props) {
       super(props);
-      const {columns} = props;
-      this.setColumOrderByIndex(columns);
+      this.state = {
+        columns:this.setColumOrderByIndex(props.columns)
+      };
     }
 
     componentWillReceiveProps(nextProps){
       if(nextProps.columns != this.props.columns){
-        this.setColumOrderByIndex(nextProps.columns);
+        this.setState({
+          columns:this.setColumOrderByIndex(nextProps.columns)
+        })
       }
     }
  
@@ -27,9 +30,7 @@ export default function dragColumn(Table) {
           da.dragIndex = i;
           da.drgHover = false;
       });
-      this.state = {
-        columns:_column
-      };
+      return _column; 
     }
 
 

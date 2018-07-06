@@ -34,9 +34,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  */
 
 function dragColumn(Table) {
-  var _class, _temp, _initialiseProps;
 
-  return _temp = _class = function (_Component) {
+  return function (_Component) {
     _inherits(DragColumn, _Component);
 
     function DragColumn(props) {
@@ -44,17 +43,96 @@ function dragColumn(Table) {
 
       var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
-      _initialiseProps.call(_this);
+      _this.setColumOrderByIndex = function (_column) {
+        _column.forEach(function (da, i) {
+          da.dragIndex = i;
+          da.drgHover = false;
+        });
+        return _column;
+      };
 
-      var columns = props.columns;
+      _this.onDragStart = function (event, data) {
+        if (_this.props.onDragStart) {
+          _this.props.onDragStart(event, data);
+        }
+      };
 
-      _this.setColumOrderByIndex(columns);
+      _this.onDragOver = function (event, data) {
+        if (_this.props.onDragOver) {
+          _this.props.onDragOver(event, data);
+        }
+      };
+
+      _this.onDragEnter = function (event, data) {
+        if (data.key == "checkbox") return;
+        var _columns = _this.state.columns;
+
+        var columns = [];
+        _extends(columns, _columns);
+        columns.forEach(function (da) {
+          return da.drgHover = false;
+        });
+        var current = columns.find(function (da) {
+          return da.key == data.key;
+        });
+        if (current.fixed) return;
+        current.drgHover = true;
+        _this.setState({
+          columns: columns
+        });
+        if (_this.props.onDragEnter) {
+          _this.props.onDragEnter(event, data);
+        }
+      };
+
+      _this.onDrop = function (event, data) {
+        if (data.key == "checkbox") return;
+        var columns = _this.state.columns;
+
+        var id = event.dataTransfer.getData("Text");
+        var objIndex = columns.findIndex(function (_da, i) {
+          return _da.key == id;
+        });
+        var targetIndex = columns.findIndex(function (_da, i) {
+          return _da.key == data.key;
+        });
+        if (columns[objIndex].fixed) return; //固定列不让拖拽
+        if (columns[targetIndex].fixed) return; //固定列不让拖拽
+        columns.forEach(function (da, i) {
+          da.drgHover = false;
+          if (da.key == id) {
+            //obj
+            da.dragIndex = targetIndex;
+          }
+          if (da.key == data.key) {
+            //targetObj
+            da.dragIndex = objIndex;
+          }
+        });
+        var _columns = columns.sort((0, _util.compare)('dragIndex'));
+        _this.setState({
+          columns: JSON.parse(JSON.stringify(_columns))
+        });
+        if (_this.props.onDrop) {
+          _this.props.onDrop(event, data);
+        }
+      };
+
+      _this.getTarget = function (evt) {
+        return evt.target || evt.srcElement;
+      };
+
+      _this.state = {
+        columns: _this.setColumOrderByIndex(props.columns)
+      };
       return _this;
     }
 
     DragColumn.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
       if (nextProps.columns != this.props.columns) {
-        this.setColumOrderByIndex(nextProps.columns);
+        this.setState({
+          columns: this.setColumOrderByIndex(nextProps.columns)
+        });
       }
     };
 
@@ -88,89 +166,6 @@ function dragColumn(Table) {
     };
 
     return DragColumn;
-  }(_react.Component), _initialiseProps = function _initialiseProps() {
-    var _this2 = this;
-
-    this.setColumOrderByIndex = function (_column) {
-      _column.forEach(function (da, i) {
-        da.dragIndex = i;
-        da.drgHover = false;
-      });
-      _this2.state = {
-        columns: _column
-      };
-    };
-
-    this.onDragStart = function (event, data) {
-      if (_this2.props.onDragStart) {
-        _this2.props.onDragStart(event, data);
-      }
-    };
-
-    this.onDragOver = function (event, data) {
-      if (_this2.props.onDragOver) {
-        _this2.props.onDragOver(event, data);
-      }
-    };
-
-    this.onDragEnter = function (event, data) {
-      if (data.key == "checkbox") return;
-      var _columns = _this2.state.columns;
-
-      var columns = [];
-      _extends(columns, _columns);
-      columns.forEach(function (da) {
-        return da.drgHover = false;
-      });
-      var current = columns.find(function (da) {
-        return da.key == data.key;
-      });
-      if (current.fixed) return;
-      current.drgHover = true;
-      _this2.setState({
-        columns: columns
-      });
-      if (_this2.props.onDragEnter) {
-        _this2.props.onDragEnter(event, data);
-      }
-    };
-
-    this.onDrop = function (event, data) {
-      if (data.key == "checkbox") return;
-      var columns = _this2.state.columns;
-
-      var id = event.dataTransfer.getData("Text");
-      var objIndex = columns.findIndex(function (_da, i) {
-        return _da.key == id;
-      });
-      var targetIndex = columns.findIndex(function (_da, i) {
-        return _da.key == data.key;
-      });
-      if (columns[objIndex].fixed) return; //固定列不让拖拽
-      if (columns[targetIndex].fixed) return; //固定列不让拖拽
-      columns.forEach(function (da, i) {
-        da.drgHover = false;
-        if (da.key == id) {
-          //obj
-          da.dragIndex = targetIndex;
-        }
-        if (da.key == data.key) {
-          //targetObj
-          da.dragIndex = objIndex;
-        }
-      });
-      var _columns = columns.sort((0, _util.compare)('dragIndex'));
-      _this2.setState({
-        columns: JSON.parse(JSON.stringify(_columns))
-      });
-      if (_this2.props.onDrop) {
-        _this2.props.onDrop(event, data);
-      }
-    };
-
-    this.getTarget = function (evt) {
-      return evt.target || evt.srcElement;
-    };
-  }, _temp;
+  }(_react.Component);
 }
 module.exports = exports['default'];

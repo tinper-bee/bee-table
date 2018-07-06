@@ -54,13 +54,8 @@ function filterColumn(Table, Popover) {
 
       var columns = props.columns;
 
-      var _column = (0, _utils.ObjectAssign)(columns);
-      _column.forEach(function (da) {
-        da.checked = true;
-        da.disable = true;
-      });
       _this.state = {
-        columns: _column,
+        columns: _this.setColumOrderByIndex((0, _utils.ObjectAssign)(columns)),
         showModal: false,
         screenY: 0
       };
@@ -151,22 +146,30 @@ function filterColumn(Table, Popover) {
   }, _initialiseProps = function _initialiseProps() {
     var _this2 = this;
 
+    this.setColumOrderByIndex = function (_column) {
+      _column.forEach(function (da) {
+        da.checked = true;
+        da.disable = true;
+      });
+      return _column;
+    };
+
     this.checkedColumItemClick = function (da) {
       var checkMinSize = _this2.props.checkMinSize;
-
-      da.checked = da.checked ? false : true;
       // if(checkMinSize)
+
       var sum = 0,
           leng = 0;
       _this2.state.columns.forEach(function (da) {
         da.fixed ? "" : leng++;
         !da.fixed && da.checked ? sum++ : "";
       });
-      if (sum < checkMinSize) {
+      if (sum < checkMinSize && da.checked) {
         return;
       } else {
-        if (sum <= 0) return;
+        if (sum <= 1 && da.checked) return;
       }
+      da.checked = da.checked ? false : true;
       da.disable = da.checked ? true : false;
       _this2.setState(_extends({}, _this2.state));
     };
