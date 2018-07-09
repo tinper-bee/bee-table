@@ -106,84 +106,6 @@ function getCloumns(){
   ];
   return column;
 }
-//Cloumns2
-function getCloumns25(){
-  const column = [
-      {
-          title: "序号",
-          dataIndex: "index",
-          key: "index",
-      },
-      {
-          title: "订单编号",
-          dataIndex: "orderCode",
-          key: "orderCode",
-      },
-      {
-          title: "供应商名称",
-          dataIndex: "supplierName",
-          key: "supplierName",
-      },
-      {
-          title: "类型",
-          dataIndex: "type_name",
-          key: "type_name",
-      },
-      {
-          title: "采购组织",
-          dataIndex: "purchasing",
-          key: "purchasing",
-      },
-      {
-          title: "采购组",
-          dataIndex: "purchasingGroup",
-          key: "purchasingGroup",
-      },
-      {
-          title: "凭证日期",
-          dataIndex: "voucherDate",
-          key: "voucherDate",
-          
-      },
-      {
-          title: "审批状态",
-          dataIndex: "approvalState_name",
-          key: "approvalState_name",
-      },
-      {
-          title: "确认状态",
-          dataIndex: "confirmState_name",
-          key: "confirmState_name",
-      }, 
-      {
-          title: "关闭状态",
-          dataIndex: "closeState_name",
-          key: "closeState_name",
-      },
-      {
-          title: "操作",
-          dataIndex: "d",
-          key: "d",
-          width:100,
-          fixed: "right",
-          render(text, record, index) {
-              return (
-                  <div className='operation-btn'>
-                    <a href="#"
-                      tooltip={text}
-                      onClick={() => {
-                        alert('这是第'+index+'列，内容为:'+text);
-                      }}
-                    >
-                      一些操作
-                    </a>
-                  </div>
-              )
-          }
-      }
-  ];
-  return column;
-}
 
 const dataList = [ 
   { 
@@ -213,7 +135,35 @@ const dataList = [
     closeState_name:"2vnnnnn",
     d:"2操作",
     key: "2"
-}, 
+  },
+  { 
+    index: 3, 
+    orderCode:"222", 
+    supplierName: "22xxx",
+    type_name: "1223",
+    purchasing:'内行2', 
+    purchasingGroup:"3223",
+    voucherDate:"222kk",
+    approvalState_name:"22vvvv",
+    confirmState_name:"2aaaa",
+    closeState_name:"2vnnnnn",
+    d:"3操作",
+    key: "3"
+  },
+  { 
+    index: 4, 
+    orderCode:"222", 
+    supplierName: "22xxx",
+    type_name: "1223",
+    purchasing:'内行2', 
+    purchasingGroup:"3223",
+    voucherDate:"222kk",
+    approvalState_name:"22vvvv",
+    confirmState_name:"2aaaa",
+    closeState_name:"2vnnnnn",
+    d:"4操作",
+    key: "4"
+  },
 ]
 
 const DragColumnTable = filterColumn(dragColumn(multiSelect(Table, Checkbox)),Popover);
@@ -242,7 +192,7 @@ class Demo25 extends Component {
 
   render() {
     let columns = getCloumns();
-
+    
     return <div className="demo25"><DragColumnTable 
     columns={columns}
     data={dataList} 
@@ -251,7 +201,7 @@ class Demo25 extends Component {
     checkMinSize={7}
     draggable={true}
     multiSelect={{type: "checkbox"}}
-    scroll={{x:"130%", y: 150}}
+    scroll={{x:"130%", y: 100}}
     // scroll={{x:this.getCloumnsScroll(columns), y: 150}}
     /></div>
   }
