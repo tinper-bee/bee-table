@@ -115,9 +115,9 @@ export default function filterColumn(Table,Popover) {
       columns.forEach((da)=>{
         if(da.disable){
           _columns.push(da);
-        }
-        if(da.width){
-          widthState++;
+          if(da.width){
+            widthState++;
+          }
         }
       });
       if(_columns.length == widthState){

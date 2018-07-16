@@ -8038,7 +8038,9 @@ ul {
     border: none; }
   .u-table-filter-column-pop-cont {
     margin: 10px;
-    margin-top: 0px; }
+    margin-top: 0px;
+    height: 300px;
+    overflow-y: scroll; }
   .u-table-filter-column-clear-setting {
     border-bottom: 1px solid #ccc;
     cursor: pointer; }

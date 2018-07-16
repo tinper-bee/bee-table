@@ -308,6 +308,8 @@ $table-move-in-color: $bg-color-base;
     &-pop-cont{
       margin: 10px;
       margin-top: 0px;
+      height: 300px;
+      overflow-y: scroll;
     }
     &-clear-setting{ 
       border-bottom: 1px solid #ccc;

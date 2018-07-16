@@ -75,7 +75,12 @@ export default function sort(Table, Icon) {
                   isAscend ? "on" : "off"
                 }`}
                 title="↑"
-                onClick={() => this.toggleSortOrder("ascend", column)}
+                onClick={() =>{
+                  this.toggleSortOrder("ascend", column);
+                  if(column.sorterClick){
+                    column.sorterClick(column);
+                  }
+                } }
               >
                 <Icon type="uf-triangle-up" />
               </span>
@@ -84,7 +89,12 @@ export default function sort(Table, Icon) {
                   isDescend ? "on" : "off"
                 }`}
                 title="↓"
-                onClick={() => this.toggleSortOrder("descend", column)}
+                onClick={() => {
+                  this.toggleSortOrder("descend", column);
+                  if(column.sorterClick){
+                    column.sorterClick(column);
+                  }
+                }}
               >
                 <Icon type="uf-triangle-down" />
               </span>

@@ -115,7 +115,10 @@ function sort(Table, Icon) {
                 className: prefixCls + "-column-sorter-up " + (isAscend ? "on" : "off"),
                 title: "\u2191",
                 onClick: function onClick() {
-                  return _this2.toggleSortOrder("ascend", column);
+                  _this2.toggleSortOrder("ascend", column);
+                  if (column.sorterClick) {
+                    column.sorterClick(column);
+                  }
                 }
               },
               _react2["default"].createElement(Icon, { type: "uf-triangle-up" })
@@ -126,7 +129,10 @@ function sort(Table, Icon) {
                 className: prefixCls + "-column-sorter-down " + (isDescend ? "on" : "off"),
                 title: "\u2193",
                 onClick: function onClick() {
-                  return _this2.toggleSortOrder("descend", column);
+                  _this2.toggleSortOrder("descend", column);
+                  if (column.sorterClick) {
+                    column.sorterClick(column);
+                  }
                 }
               },
               _react2["default"].createElement(Icon, { type: "uf-triangle-down" })
