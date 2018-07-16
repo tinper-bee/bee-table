@@ -1,7 +1,7 @@
 /**
  *
  * @title 列排序、全选功能、合计
- * @description 列排序、全选功能、合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）
+ * @description 列排序、全选功能、合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）新增回调函数(sorterClick)
  *
  */
 
@@ -33,7 +33,10 @@ const columns13 = [
     key: "c",
     width: 200,
     sumCol: true,
-    sorter: (a, b) => a.c - b.c
+    sorter: (a, b) => a.c - b.c,
+    sorterClick:data=>{//排序的回调函数
+      console.log("data",data);
+    }
   },
   {
     title: "武功级别",
