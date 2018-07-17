@@ -44,7 +44,7 @@ const MultiSelectTable = multiSelect(Table, Checkbox);
 | 参数     | 说明         | 类型       | 默认值  |
 | ------ | ---------- | -------- | ---- |
 | sorter | 排序函数，可以自定义 | Function | 无    |
-| sorterClick | 排序钩子函数| Function | 无    |
+| sorterClick | 排序钩子函数| Function | (coloum,type)    |
 
 #### 使用
 

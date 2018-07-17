@@ -34,7 +34,8 @@ const columns13 = [
     width: 200,
     sumCol: true,
     sorter: (a, b) => a.c - b.c,
-    sorterClick:data=>{//排序的回调函数
+    sorterClick:(data,type)=>{//排序的回调函数
+      //type value is up or down
       console.log("data",data);
     }
   },

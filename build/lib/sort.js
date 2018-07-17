@@ -117,7 +117,7 @@ function sort(Table, Icon) {
                 onClick: function onClick() {
                   _this2.toggleSortOrder("ascend", column);
                   if (column.sorterClick) {
-                    column.sorterClick(column);
+                    column.sorterClick(column, "up");
                   }
                 }
               },
@@ -131,7 +131,7 @@ function sort(Table, Icon) {
                 onClick: function onClick() {
                   _this2.toggleSortOrder("descend", column);
                   if (column.sorterClick) {
-                    column.sorterClick(column);
+                    column.sorterClick(column, "down");
                   }
                 }
               },

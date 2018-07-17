@@ -78,7 +78,7 @@ export default function sort(Table, Icon) {
                 onClick={() =>{
                   this.toggleSortOrder("ascend", column);
                   if(column.sorterClick){
-                    column.sorterClick(column);
+                    column.sorterClick(column,"up");
                   }
                 } }
               >
@@ -92,7 +92,7 @@ export default function sort(Table, Icon) {
                 onClick={() => {
                   this.toggleSortOrder("descend", column);
                   if(column.sorterClick){
-                    column.sorterClick(column);
+                    column.sorterClick(column,"down");
                   }
                 }}
               >
