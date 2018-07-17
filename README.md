@@ -112,6 +112,8 @@ class Demo extends Component {
 
 
 
+
+
 ## mixin
 
 Table拓展功能方法。注：拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然在操作state会导致功能出现异常
@@ -159,6 +161,8 @@ import multiSelect from "bee-table/build/lib/multiSelect.js"
 | 参数     | 说明         | 类型       | 默认值  |
 | ------ | ---------- | -------- | ---- |
 | sorter | 排序函数，可以自定义 | Function | 无    |
+| sorterClick | 排序钩子函数| Function | 无    |
+
 
 
 
