@@ -124,6 +124,7 @@ const dataList = [
   }, 
   { 
     index: 2, 
+    _checked:true,
     orderCode:"222", 
     supplierName: "22xxx",
     type_name: "1223",
@@ -140,6 +141,7 @@ const dataList = [
     index: 3, 
     orderCode:"222", 
     supplierName: "22xxx",
+    _disabled:true,
     type_name: "1223",
     purchasing:'内行2', 
     purchasingGroup:"3223",
@@ -190,6 +192,10 @@ class Demo25 extends Component {
     return (sum);
   }
 
+  selectedRow=(record, index)=>{
+
+  }
+
   render() {
     let columns = getCloumns();
     
@@ -202,6 +208,7 @@ class Demo25 extends Component {
     draggable={true}
     multiSelect={{type: "checkbox"}}
     scroll={{x:"130%", y: 100}}
+    selectedRow={this.selectedRow}
     // scroll={{x:this.getCloumnsScroll(columns), y: 150}}
     /></div>
   }

@@ -43,8 +43,8 @@ export default function newMultiSelect(Table, Checkbox) {
       let selectList = [];
       let check = checkedAll?false:true;
       data.forEach(item => {
-        item.checked = check;
-        if(item.checked){
+        item._checked = check;
+        if(item._checked){
           selectList.push(item);
         }
       });
@@ -61,11 +61,11 @@ export default function newMultiSelect(Table, Checkbox) {
     onCheckboxChange = (text, record, index) => () => {
       let {data} = this.state;
       let selectList = [];
-      record.checked = record.checked?false:true;
+      record._checked = record._checked?false:true;
       let checkedAll = true;
       for(let i=0;i<data.length;i++){
         let item = data[i];
-        if(!item.checked || item.checked == false){
+        if(!item._checked || item._checked == false){
           checkedAll = false;
           break;
         }
@@ -75,7 +75,7 @@ export default function newMultiSelect(Table, Checkbox) {
         checkedAll
       })
       data.forEach((da)=>{
-        if(da.checked){
+        if(da._checked){
           selectList.push(da);
         }
       })
@@ -101,10 +101,14 @@ export default function newMultiSelect(Table, Checkbox) {
           fixed:"left",
           width: 50,
           render: (text, record, index) => {
+            let attr = {};
+            console.log("record._disabled---",record._disabled)
+            record._disabled?attr.disabled = record._disabled:"";
             return <Checkbox
                 key={index}
                 className="table-checkbox"
-                checked={record.checked}
+                {...attr}
+                checked={record._checked}
                 onClick={this.handleClick}
                 onChange={this.onCheckboxChange(text, record, index)}
               ></Checkbox>

@@ -9698,5 +9698,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   height: 100%; }
   .demo25 .u-table-filter-column-filter-icon {
     right: 15px; }
+  .demo25 .u-table-scroll .u-table-header {
+    margin-right: 15px; }
 
 /*# sourceMappingURL=demo.css.map */
