@@ -72,7 +72,6 @@ class Demo13 extends Component {
     };
   }
   getSelectedDataFunc = data => {
-    debugger;
     console.log(data);
   };
   selectDisabled = (record, index) => {

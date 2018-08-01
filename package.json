@@ -75,6 +75,7 @@
   "bee-layout": "latest",
   "bee-pagination": "latest",
   "bee-panel": "latest",
+  "bee-popconfirm": "^1.0.2",
   "bee-tools": "latest",
   "bee-tooltip": "^1.0.2",
   "chai": "^3.5.0",

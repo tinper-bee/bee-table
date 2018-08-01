@@ -102,7 +102,6 @@ export default function newMultiSelect(Table, Checkbox) {
           width: 50,
           render: (text, record, index) => {
             let attr = {};
-            console.log("record._disabled---",record._disabled)
             record._disabled?attr.disabled = record._disabled:"";
             return <Checkbox
                 key={index}
