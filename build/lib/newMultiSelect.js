@@ -111,7 +111,6 @@ function newMultiSelect(Table, Checkbox) {
           width: 50,
           render: function render(text, record, index) {
             var attr = {};
-            console.log("record._disabled---", record._disabled);
             record._disabled ? attr.disabled = record._disabled : "";
             return _react2["default"].createElement(Checkbox, _extends({
               key: index,
