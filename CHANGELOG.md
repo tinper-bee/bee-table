@@ -1,3 +1,33 @@
+<a name="1.3.3"></a>
+## [1.3.3](https://github.com/tinper-bee/bee-table/compare/v1.3.2...v1.3.3) (2018-08-02)
+
+
+### Features
+
+* **bee-table:** 去掉console，排序修改 ([c752873](https://github.com/tinper-bee/bee-table/commit/c752873))
+
+
+
+<a name="1.3.2"></a>
+## [1.3.2](https://github.com/tinper-bee/bee-table/compare/v1.3.1...v1.3.2) (2018-07-25)
+
+
+
+<a name="1.3.1"></a>
+## [1.3.1](https://github.com/tinper-bee/bee-table/compare/v1.3.0...v1.3.1) (2018-07-17)
+
+
+
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/tinper-bee/bee-table/compare/v1.2.9...v1.3.0) (2018-07-16)
+
+
+
+<a name="1.2.9"></a>
+## [1.2.9](https://github.com/tinper-bee/bee-table/compare/v1.2.7...v1.2.9) (2018-07-16)
+
+
+
 <a name="1.2.7"></a>
 ## [1.2.7](https://github.com/tinper-bee/bee-table/compare/v1.2.6...v1.2.7) (2018-07-05)
 
