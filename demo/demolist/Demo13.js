@@ -22,16 +22,24 @@ const columns13 = [
     width: 200
   },
   {
-    title: "性别",
+    title: "功力指数",
     dataIndex: "b",
     key: "b",
-    width: 200
+    width: 200,
+    sumCol: true,
+    order:"ascend",
+    sorter: (a, b) => a.c - b.c,
+    sorterClick:(data,type)=>{//排序的回调函数
+      //type value is up or down
+      console.log("data",data);
+    }
   },
   {
     title: "年龄",
     dataIndex: "c",
     key: "c",
     width: 200,
+    order:"descend",
     sumCol: true,
     sorter: (a, b) => a.c - b.c,
     sorterClick:(data,type)=>{//排序的回调函数
@@ -48,9 +56,9 @@ const columns13 = [
 ];
 
 const data13 = [
-  { a: "杨过", b: "男", c: 30, d: "内行", key: "2" },
-  { a: "令狐冲", b: "男", c: 41, d: "大侠", key: "1" },
-  { a: "郭靖", b: "男", c: 25, d: "大侠", key: "3" }
+  { a: "杨过", b: 675, c: 30, d: "内行", key: "2" },
+  { a: "令狐冲", b: 43, c: 41, d: "大侠", key: "1" },
+  { a: "郭靖", b: 153, c: 25, d: "大侠", key: "3" }
 ];
 const data13_1 = [
   { a: "杨过", b: "男", c: 30, d: "内行", key: "2" },

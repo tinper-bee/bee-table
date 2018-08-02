@@ -10,21 +10,25 @@ export default function sort(Table, Icon) {
     constructor(props) {
       super(props);
       this.state = {
-        sortOrder: "",
-        data: this.props.data
+        data: this.props.data,
+        columns:props.columns, 
       };
     }
     componentWillReceiveProps(nextProps){
       if(nextProps.data !== this.props.data){
-        this.setState({
-          sortOrder: "",
+        this.setState({ 
           data: nextProps.data,
           oldData: nextProps.data.concat(),
         });
       }
+      if(nextProps.columns !== this.props.columns){
+        this.setState({
+          columns: nextProps.columns, 
+        });
+      }
     }
     toggleSortOrder = (order, column) => {
-      let { sortOrder, data, oldData } = this.state;
+      let { data, oldData ,columns} = this.state;
       let ascend_sort = function(key) {
         return function(a, b) {
           return a.key - b.key;
@@ -35,10 +39,10 @@ export default function sort(Table, Icon) {
           return b.key - a.key;
         };
       };
-      if (sortOrder === order) {
-        // 切换为未排序状态
-        order = "";
-      }
+      // if (sortOrder === order) {
+      //   // 切换为未排序状态
+      //   order = "";
+      // }
       if (!oldData) {
         oldData = data.concat();
       }
@@ -53,21 +57,22 @@ export default function sort(Table, Icon) {
       } else {
         data = oldData.concat();
       }
-      this.setState({
-        sortOrder: order,
-        data: data,
-        oldData: oldData
+      let seleObj = columns.find(da=>da.key == column.key);
+      seleObj.order = order;
+      this.setState({ 
+        data,
+        oldData,
+        columns
       });
     };
-    renderColumnsDropdown(columns) {
-      const { sortOrder } = this.state;
+    renderColumnsDropdown=(columns)=>{
       const prefixCls = this.props.prefixCls || "bee-table";
       return columns.map(originColumn => {
         let column = Object.assign({}, originColumn);
         let sortButton;
         if (column.sorter) {
-          const isAscend = sortOrder === "ascend";
-          const isDescend = sortOrder === "descend";
+          let isAscend = column.order && column.order === "ascend";
+          let isDescend = column.order && column.order === "descend";
           sortButton = (
             <div className={`${prefixCls}-column-sorter`}>
               <span
@@ -75,8 +80,9 @@ export default function sort(Table, Icon) {
                   isAscend ? "on" : "off"
                 }`}
                 title="↑"
-                onClick={() =>{
+                onClick={() =>{ 
                   this.toggleSortOrder("ascend", column);
+
                   if(column.sorterClick){
                     column.sorterClick(column,"up");
                   }
@@ -111,7 +117,7 @@ export default function sort(Table, Icon) {
       });
     }
     render() {
-      let columns = this.renderColumnsDropdown(this.props.columns.concat());
+      let columns = this.renderColumnsDropdown(this.state.columns.concat());
       return <Table {...this.props} columns={columns} data={this.state.data} />;
     }
   };

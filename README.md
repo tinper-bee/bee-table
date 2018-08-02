@@ -109,6 +109,7 @@ class Demo extends Component {
 |render|cell的render函数有三个参数：这个单元格的文本，这行的记录，这行的索引，它返回一个对象：{children：value，props：{colSpan：1，rowSpan：1}} ==>'children'是这个单元格的文本，props是这个单元格的一些设置|-|
 |onCellClick|单击列的单元格时调用|Function(row, event)|-|
 |onHeadCellClick|单击表头的单元格时调用|Function(row, event)|row 当前行的数据|
+| order | 设置排序 | string（"descend"、"ascend"） | -|
 
 
 
