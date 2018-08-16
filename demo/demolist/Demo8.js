@@ -2,8 +2,6 @@
  *
  * @title 表格+分页
  * @description 点击分页联动表格
- *
- *import {Table} from 'tinper-bee';
  */
 
 import React, { Component } from "react";
@@ -59,11 +57,14 @@ class Demo8 extends Component {
           last
           prev
           next
-          boundaryLinks
-          items={2}
           maxButtons={5}
+          boundaryLinks
           activePage={this.state.activePage}
           onSelect={this.handleSelect.bind(this)}
+          onDataNumSelect={this.dataNumSelect}
+          showJump={true}
+          total={100}
+          dataNum={2}
         />
       </div>
     );

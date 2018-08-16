@@ -1,47 +1,33 @@
 /**
 *
-* @title 简单表格、两种tip、选中行背景色、文字过长
-* 【一种是bee-popover实现、一种是标签本身的tooltip】
+* @title 简单表格、文字过长，两种tip
+* 【Tooltip】
 * @description
 */
 
 import React, { Component } from "react";
-import Popover from 'bee-popover';
 import Button from "bee-button";
+import Tooltip from "bee-tooltip";
 import Table from "../../src";
 
-function getTitleTip(text){
-  return(<div>
-      <h3>{text}</h3> 
-  </div>)
-}
-
-
 const columns = [
+  { title: "用户名", dataIndex: "a", key: "a", width:80 , className:"rowClassName",
+  render: (text, record, index)=> {
+    return ( 
+        <Tooltip inverse overlay={text}>
+        <span tootip={text} style={{
+                display: "inline-block",
+                width: "100px",
+                textOverflow:"ellipsis",
+                overflow:"hidden",
+                whiteSpace:"nowrap",
+                verticalAlign: "middle",
+            }}>{text}</span>
+        </Tooltip>
+    );
+  }},
   { id: "123", title: "性别", dataIndex: "b", key: "b", width: 100 },
   { title: "年龄", dataIndex: "c", key: "c", width: 200 },
-  { title: "用户名", dataIndex: "a", key: "a", width:80 , className:"rowClassName",
-  render(text, record, index) {
-    return(<div style={{position: 'relative'}}>
-        <Popover
-            placement="leftTop"
-            content={getTitleTip(text)}
-            trigger="hover"
-            id="leftTop"
-        >
-            <span
-                style={{
-                    position: 'absolute',
-                    top: 5,
-                    left: 0,
-                    width: "80px",
-                    textOverflow:"ellipsis",
-                    overflow:"hidden",
-                    whiteSpace:"nowrap"
-                }}>{text}</span>
-        </Popover>
-    </div>);
-  }},
   {
     title: "操作",
     dataIndex: "d",
@@ -90,20 +76,11 @@ class Demo1 extends Component {
       <Table
         columns={columns}
         data={data}
-        rowClassName={(record,index,indent)=>{
-          if (this.state.selectedRowIndex == index) {
-              return 'selected';
-          } else {
-              return '';
-          }
-        }}
         onRowClick={(record,index,indent)=>{
           this.setState({ 
               selectedRowIndex: index
           });
         }}
-        title={currentData => <div>标题: 这是一个标题</div>}
-        footer={currentData => <div>表尾: 我是小尾巴</div>}
       /> 
     );
   }
