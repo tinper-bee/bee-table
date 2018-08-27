@@ -125,7 +125,7 @@ class Table extends Component{
   }
 
   componentDidMount() {
-    this.resetScrollY();
+    setTimeout(this.resetScrollY,300);
     if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
       this.resizeEvent = addEventListener(
@@ -156,7 +156,9 @@ class Table extends Component{
   }
 
   componentDidUpdate() {
-    this.syncFixedTableRowHeight();
+    if (this.columnManager.isAnyColumnsFixed()) {
+      this.syncFixedTableRowHeight();
+    }
   }
 
   componentWillUnmount() {
