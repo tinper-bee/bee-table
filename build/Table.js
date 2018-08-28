@@ -207,7 +207,7 @@ var Table = function (_Component) {
   }
 
   Table.prototype.componentDidMount = function componentDidMount() {
-    this.resetScrollY();
+    setTimeout(this.resetScrollY, 300);
     if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
       this.resizeEvent = (0, _addEventListener2["default"])(window, 'resize', (0, _utils.debounce)(this.syncFixedTableRowHeight, 150));
@@ -236,7 +236,9 @@ var Table = function (_Component) {
   };
 
   Table.prototype.componentDidUpdate = function componentDidUpdate() {
-    this.syncFixedTableRowHeight();
+    if (this.columnManager.isAnyColumnsFixed()) {
+      this.syncFixedTableRowHeight();
+    }
   };
 
   Table.prototype.componentWillUnmount = function componentWillUnmount() {
