@@ -471,8 +471,12 @@ var Table = function (_Component) {
       if (this.columnManager.isAnyColumnsFixed()) {
         onHoverProps.onHover = this.handleRowHover;
       }
-
-      var height = fixed && fixedColumnsBodyRowsHeight[i] ? fixedColumnsBodyRowsHeight[i] : null;
+      var fixedIndex = i;
+      //判断是否是tree结构
+      if (this.treeType) {
+        fixedIndex = this.treeRowIndex;
+      }
+      var height = fixed && fixedColumnsBodyRowsHeight[fixedIndex] ? fixedColumnsBodyRowsHeight[fixedIndex] : null;
 
       var leafColumns = void 0;
       if (fixed === 'left') {
@@ -491,7 +495,7 @@ var Table = function (_Component) {
         record: record,
         expandIconAsCell: expandIconAsCell,
         onDestroy: this.onRowDestroy,
-        index: i,
+        index: fixedIndex,
         visible: visible,
         expandRowByClick: expandRowByClick,
         onExpand: this.onExpanded,
@@ -511,13 +515,14 @@ var Table = function (_Component) {
         ref: rowRef,
         store: this.store
       })));
-
+      this.treeRowIndex++;
       var subVisible = visible && isRowExpanded;
 
       if (expandedRowContent && isRowExpanded) {
         rst.push(this.getExpandedRow(key, expandedRowContent, subVisible, expandedRowClassName(record, i, indent), fixed));
       }
       if (childrenColumn) {
+        this.treeType = true; //证明是tree表形式
         rst = rst.concat(this.getRowsByData(childrenColumn, subVisible, indent + 1, columns, fixed));
       }
     }
@@ -525,6 +530,8 @@ var Table = function (_Component) {
   };
 
   Table.prototype.getRows = function getRows(columns, fixed) {
+    //统计index，只有含有鼠表结构才有用，因为数表结构时，固定列的索引取值有问题
+    this.treeRowIndex = 0;
     return this.getRowsByData(this.state.data, true, 0, columns, fixed);
   };
 

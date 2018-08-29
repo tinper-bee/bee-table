@@ -373,9 +373,13 @@ class Table extends Component{
       if (this.columnManager.isAnyColumnsFixed()) {
         onHoverProps.onHover = this.handleRowHover;
       }
-
-      const height = (fixed && fixedColumnsBodyRowsHeight[i]) ?
-        fixedColumnsBodyRowsHeight[i] : null;
+      let fixedIndex = i;
+      //判断是否是tree结构
+      if(this.treeType){
+        fixedIndex = this.treeRowIndex;
+      }
+      const height = (fixed && fixedColumnsBodyRowsHeight[fixedIndex]) ?
+        fixedColumnsBodyRowsHeight[fixedIndex] : null;
 
 
       let leafColumns;
@@ -397,7 +401,7 @@ class Table extends Component{
           record={record}
           expandIconAsCell={expandIconAsCell}
           onDestroy={this.onRowDestroy}
-          index={i}
+          index={fixedIndex}
           visible={visible}
           expandRowByClick={expandRowByClick}
           onExpand={this.onExpanded}
@@ -418,7 +422,7 @@ class Table extends Component{
           store={this.store}
         />
       );
-
+      this.treeRowIndex++;
       const subVisible = visible && isRowExpanded;
 
       if (expandedRowContent && isRowExpanded) {
@@ -427,6 +431,7 @@ class Table extends Component{
         ));
       }
       if (childrenColumn) {
+        this.treeType = true;//证明是tree表形式
         rst = rst.concat(this.getRowsByData(
           childrenColumn, subVisible, indent + 1, columns, fixed
         ));
@@ -436,6 +441,8 @@ class Table extends Component{
   }
 
   getRows(columns, fixed) {
+     //统计index，只有含有鼠表结构才有用，因为数表结构时，固定列的索引取值有问题
+     this.treeRowIndex = 0;
     return this.getRowsByData(this.state.data, true, 0, columns, fixed);
   }
 
