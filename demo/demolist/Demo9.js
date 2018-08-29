@@ -45,9 +45,9 @@ class Search extends Component {
      * 输入框改变
      * @param e
      */
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({
-      searchValue: e.target.value
+      searchValue: e
     });
   };
 
