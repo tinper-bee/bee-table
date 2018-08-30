@@ -28,7 +28,7 @@ const columns13 = [
     width: 200,
     sumCol: true,
     order:"ascend",
-    sorter: (a, b) => a.c - b.c,
+    sorter: (a, b) => a.b - b.b,
     sorterClick:(data,type)=>{//排序的回调函数
       //type value is up or down
       console.log("data",data);
@@ -97,11 +97,13 @@ class Demo13 extends Component {
     return false;
   };
   onClick = () => {
+    console.log("change selectedRow");
     this.setState({
-      selectedRow: function() {}
+      selectedRow: function() {} 
     });
   };
   onClick1 = () => {
+    console.log("change selectDisabled");
     this.setState({
       selectDisabled: (record, index) => {
         // console.log(record);

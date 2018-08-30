@@ -109,7 +109,6 @@ class Demo14 extends React.Component {
                 <Icon type="uf-exc-c" className="" />
               </Tooltip>
             }
-            reg={/^[0-9]+$/}
           />
         )
       },
@@ -121,12 +120,12 @@ class Demo14 extends React.Component {
         render: (text, record, index) => (
           <InputRender
             format="Currency"
-            name="name"
-            placeholder="请输入姓名"
+            name="number"
+            placeholder="请输入货币"
             value={text}
             isclickTrigger={true}
             check={this.check}
-            onChange={this.onInputChange(index, "name")}
+            onChange={this.onInputChange(index, "number")}
             isRequire={true}
             method="blur"
             errorMessage={
@@ -134,6 +133,7 @@ class Demo14 extends React.Component {
                 <Icon type="uf-exc-c" className="" />
               </Tooltip>
             }
+            reg={/^[0-9]+$/}
           />
         )
       },
