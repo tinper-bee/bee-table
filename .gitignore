@@ -2,7 +2,8 @@
 logs
 *.log
 npm-debug.log*
-
+.DS_Store
+.idea
 # Runtime data
 pids
 *.pid
@@ -37,3 +38,4 @@ jspm_packages
 
 coverage
 .*.swp
+package-lock.json
