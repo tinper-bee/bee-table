@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Checkbox from 'bee-checkbox';
 import Icon from "bee-icon";
 import {ObjectAssign} from '../utils';
+function noop() {}
 /**
  * 参数: 过滤表头
  * @param {*} Table
@@ -13,7 +14,9 @@ export default function filterColumn(Table,Popover) {
 
   return class FilterColumn extends Component {
     static defaultProps = {
-      prefixCls: "u-table-filter-column"
+      prefixCls: "u-table-filter-column",
+      afterFilter: noop,
+      scroll:{}
     }
 
     constructor(props) {
@@ -28,25 +31,30 @@ export default function filterColumn(Table,Popover) {
 
     setColumOrderByIndex = (_column)=>{
       _column.forEach(da => {
-        da.checked = true;
-        da.disable = true;
+        //默认所有的列都显示，如果传递ifshow属性，根据ifshow属性值来判断是否显示某列
+        if(da.hasOwnProperty('ifshow')){
+          da.checked = da.ifshow?true:false;
+          da.ifshow = da.checked;
+        }else{
+          da.checked = true;
+          da.ifshow = true;
+        }
       });
       return _column; 
     }
-
     componentWillReceiveProps(nextProps){
       if(nextProps.columns != this.props.columns){
         this.setState({
-          columns:ObjectAssign(nextProps.columns)
+          columns:this.setColumOrderByIndex(ObjectAssign(nextProps.columns))
         })
       }
       this.setState({
-        showModal:false
+        showModal:nextProps.showFilterPopover?true:false
       })
     }
 
     checkedColumItemClick = (da)=>{
-      let {checkMinSize} = this.props;
+      let {checkMinSize,afterFilter} = this.props;
       // if(checkMinSize)
       let sum = 0,leng=0;
       this.state.columns.forEach(da => {
@@ -59,10 +67,12 @@ export default function filterColumn(Table,Popover) {
         if(sum<=1  && da.checked)return;
       }
       da.checked = da.checked?false:true;
-      da.disable  = da.checked?true:false;
+      da.ifshow  = da.checked?true:false;
+      
       this.setState({
         ...this.state
       })
+      afterFilter(da,this.state.columns);
     }
   
     openCloumList = ()=>{
@@ -89,7 +99,7 @@ export default function filterColumn(Table,Popover) {
       const {columns} = this.state; 
       columns.forEach(da => {
         da.checked = true;
-        da.disable  = true;
+        da.ifshow  = true;
       });
       this.setState({
         ...this.state
@@ -103,7 +113,7 @@ export default function filterColumn(Table,Popover) {
           sum += da.width;
         }
       })
-      console.log("sum",sum);
+      // console.log("sum",sum);
       return (sum);
     }
 
@@ -113,7 +123,7 @@ export default function filterColumn(Table,Popover) {
 
       let _columns = [],widthState=0,scroll=scrollPro;
       columns.forEach((da)=>{
-        if(da.disable){
+        if(da.ifshow){
           _columns.push(da);
           if(da.width){
             widthState++;
@@ -153,4 +163,5 @@ export default function filterColumn(Table,Popover) {
         </div>;
     }
   };
+
 }

@@ -66,7 +66,7 @@ export default function sort(Table, Icon) {
       });
     };
     renderColumnsDropdown=(columns)=>{
-      const prefixCls = this.props.prefixCls || "bee-table";
+      const prefixCls = "bee-table";
       return columns.map(originColumn => {
         let column = Object.assign({}, originColumn);
         let sortButton;

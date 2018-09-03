@@ -11,8 +11,10 @@ import Checkbox from "bee-checkbox";
 import Button from "bee-button";
 import Icon from "bee-icon";
 import multiSelect from "../../src/lib/multiSelect.js";
+import filterColumn from '../../src/lib/filterColumn';
 import sort from "../../src/lib/sort.js";
 import sum from "../../src/lib/sum.js";
+import Popover from 'bee-popover';
 
 const columns13 = [
   {
@@ -68,7 +70,7 @@ const data13_1 = [
   { a: "郭靖", b: "男", c: 25, d: "大侠", key: "3" }
 ];
 //拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常
-let ComplexTable = multiSelect(sum(sort(Table, Icon)), Checkbox);
+let ComplexTable = filterColumn(multiSelect(sum(sort(Table, Icon)), Checkbox),Popover,Icon) ;
 
 class Demo13 extends Component {
   constructor(props) {
