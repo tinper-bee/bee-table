@@ -3,6 +3,7 @@
 /*  Navlayout  */
 /* FormGroup */
 /*  Navlayout  */
+@import url(../node_modules/bee-message/build/Message.css);
 .red {
   color: rgb(244,67,54) !important; }
 
@@ -6166,6 +6167,145 @@ input.u-button[type="submit"] {
 
 .collapse.in {
   display: block; }
+
+/* FormGroup */
+/*  Navlayout  */
+.u-popconfirm {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1540;
+  display: none;
+  max-width: 300px;
+  padding: 1px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: normal;
+  line-break: auto;
+  line-height: 1.42857143;
+  text-align: left;
+  text-decoration: none;
+  text-shadow: none;
+  text-transform: none;
+  white-space: normal;
+  word-break: normal;
+  word-spacing: normal;
+  word-wrap: normal;
+  font-size: 14px;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgb(224,224,224);
+  border-radius: 6px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); }
+  .u-popconfirm-dark {
+    background-color: rgb(66,66,66);
+    color: #fff; }
+
+.u-popconfirm.right {
+  margin-left: 10px; }
+
+.u-popconfirm.left {
+  margin-left: -10px; }
+
+.u-popconfirm.top {
+  margin-top: -10px; }
+
+.u-popconfirm.bottom {
+  margin-top: 10px; }
+
+.u-popconfirm.right > .arrow {
+  top: 50%;
+  left: -10px;
+  margin-top: -11px;
+  border-left-width: 0;
+  border-right-color: rgb(224,224,224); }
+
+.u-popconfirm.left > .arrow {
+  top: 50%;
+  right: -10px;
+  margin-top: -11px;
+  border-right-width: 0;
+  border-left-color: rgb(224,224,224); }
+
+.u-popconfirm.top > .arrow {
+  left: 50%;
+  margin-left: -11px;
+  border-bottom-width: 0;
+  border-top-color: rgb(224,224,224);
+  bottom: -10px; }
+
+.u-popconfirm.bottom > .arrow {
+  left: 50%;
+  margin-left: -11px;
+  border-top-width: 0;
+  border-bottom-color: rgb(224,224,224);
+  top: -11px; }
+
+.u-popconfirm > .arrow {
+  border-width: 10px; }
+
+.u-popconfirm > .arrow, .u-popconfirm > .arrow:after {
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid; }
+
+.u-popconfirm > .arrow:after {
+  border-width: 10px;
+  content: ""; }
+
+.u-popconfirm.right > .arrow:after {
+  content: " ";
+  left: 1px;
+  bottom: -10px;
+  border-left-width: 0;
+  border-right-color: #fff; }
+
+.u-popconfirm.left > .arrow:after {
+  content: " ";
+  right: 1px;
+  border-right-width: 0;
+  border-left-color: #fff;
+  bottom: -10px; }
+
+.u-popconfirm.top > .arrow:after {
+  content: " ";
+  bottom: 1px;
+  margin-left: -10px;
+  border-bottom-width: 0;
+  border-top-color: #fff; }
+
+.u-popconfirm.bottom > .arrow:after {
+  content: " ";
+  top: 1px;
+  margin-left: -10px;
+  border-top-width: 0;
+  border-bottom-color: #fff; }
+
+.u-popconfirm-dark.right > .arrow:after {
+  border-right-color: rgb(66,66,66); }
+
+.u-popconfirm-dark.left > .arrow:after {
+  border-left-color: rgb(66,66,66); }
+
+.u-popconfirm-dark.top > .arrow:after {
+  border-top-color: rgb(66,66,66); }
+
+.u-popconfirm-dark.bottom > .arrow:after {
+  border-bottom-color: rgb(66,66,66); }
+
+.u-popconfirm-content {
+  padding: 15px; }
+
+.u-popconfirm-confirm {
+  text-align: center; }
+  .u-popconfirm-confirm button {
+    margin-right: 10px; }
+
+.u-popconfirm .u-button {
+  margin: 10px; }
 
 /* FormGroup */
 /*  Navlayout  */

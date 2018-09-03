@@ -102,6 +102,7 @@ class Demo19 extends React.Component {
                 <Icon type="uf-exc-c" className="" />
               </Tooltip>
             }
+            reg={/^[0-9]+$/}
           />
         )
       },

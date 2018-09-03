@@ -19,7 +19,7 @@ class EditableCell extends React.Component {
     editable: false
   };
   handleChange = e => {
-    const value = e.target.value;
+    const value = e;
     this.setState({ value });
   };
   check = () => {
@@ -145,12 +145,12 @@ class Demo2 extends React.Component {
       this.setState({ dataSource });
     };
   };
-  onDelete = index => {
+  onDelete = (index) => {
     return () => {
       const dataSource = [...this.state.dataSource];
       dataSource.splice(index, 1);
       this.setState({ dataSource });
-    };
+    }
   };
   handleAdd = () => {
     const { count, dataSource } = this.state;
