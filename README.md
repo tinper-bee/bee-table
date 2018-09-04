@@ -129,13 +129,17 @@ class Demo extends Component {
 * 在tinper-bee中引用
 
 ```js
+
 import {Table} from 'tinper-bee'
+
 ```
 
 * 单独安装bee-table 方式
 
 ```js
+
 import Table from 'bee-table'
+
 ```
 
 
