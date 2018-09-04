@@ -10,9 +10,20 @@
 
 react bee-table component for tinper-bee
 
-some description...
+该table组件除了基本表格功能集成之外，还提供了一下功能。
+  * 动态设置过滤列
+  * 排序合计
+  * 多选
+  * 主子表
+  * 固定表头
+  * 交互列
+  * 列拖拽
+  * 嵌套子表格
+  * 行、列合并
+  
+具体示例代码参考[!这里](http://bee.tinper.org/bee-table/)
 
-## install
+## 安装
 
 [![bee-table](https://nodei.co/npm/bee-table.png)](https://npmjs.org/package/bee-table)
 
@@ -112,26 +123,19 @@ class Demo extends Component {
 | order | 设置排序 | string（"descend"、"ascend"） | -|
 
 
-
-
-
-## mixin
-
-Table拓展功能方法。注：拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然在操作state会导致功能出现异常
-
 ## 如何引用
 需要单独的去引用相应的js文件，目录在lib文件夹，示例如下：
 
 * 在tinper-bee中引用
 
 ```js
-import multiSelect from "tinper-bee/lib/multiSelect.js"
+import {Table} from "tinper-bee"
 ```
 
 * 单独安装bee-table 方式
 
 ```js
-import multiSelect from "bee-table/build/lib/multiSelect.js"
+import Table from "bee-table"
 ```
 
 

@@ -270,8 +270,12 @@ $table-move-in-color: $bg-color-base;
       background: $table-head-background-color;
     }
     .th-drag{
-      cursor: move;
+      cursor: pointer;
     }
+    //为了区分是拖拽宽度还是交换列，先注释上面了
+    // .th-drag:hover{
+    //   background:#ccc;
+    // }
     .th-drag-hover{ 
       background: #ccc;
     }
@@ -344,6 +348,7 @@ $table-move-in-color: $bg-color-base;
       background: #fff;
     }
   }
+  //拖拽宽度代码
 }
 
 .u-table.bordered {
