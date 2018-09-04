@@ -10,7 +10,7 @@
 
 react bee-table component for tinper-bee
 
-该table组件除了基本表格功能集成之外，还提供了一下功能。
+该table组件除了基本表格功能之外，还提供了一下功能。
   * 动态设置过滤列
   * 排序合计
   * 多选
@@ -129,13 +129,13 @@ class Demo extends Component {
 * 在tinper-bee中引用
 
 ```js
-import {Table} from "tinper-bee"
+import {Table} from 'tinper-bee'
 ```
 
 * 单独安装bee-table 方式
 
 ```js
-import Table from "bee-table"
+import Table from 'bee-table'
 ```
 
 
