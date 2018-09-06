@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Checkbox from 'bee-checkbox';
-import {ObjectAssign} from '../utils';
+import {ObjectAssign} from './util';
 /**
  * 参数: 过滤表头
  * @param {*} Table

@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import {compare} from './util';
-import {ObjectAssign} from '../utils';
+import {ObjectAssign} from '../util';
 /**
  * 参数: 列拖拽
  * @param {*} Table
  */
- 
-export default function dragColumn(Table) {
+// 0、定义一个拖拽dom
+// 1、当移动到表头可以显示当前操作列的move图标。
+//  2、添加start、move事件、drop事件
+export default function dragWidthColumn(Table) {
 
-  return class DragColumn extends Component {
+  return class DragWidthColumn extends Component {
 
     constructor(props) {
       super(props);
@@ -47,46 +49,11 @@ export default function dragColumn(Table) {
     }
 
     onDragEnter=(event,data)=>{
-      if(data.key == "checkbox")return;
-      const {columns:_columns} = this.state;
-      let columns = [];
-      Object.assign(columns,_columns);
-      columns.forEach((da)=>da.drgHover = false)
-      let current = columns.find((da)=>da.key == data.key);
-      if(current.fixed)return;
-      current.drgHover = true;
-      this.setState({
-        columns
-      });
-      if(this.props.onDragEnter){
-        this.props.onDragEnter(event,data);
-      }
+     
     }
 
     onDrop=(event,data)=>{
-      if(data.key == "checkbox")return;
-      let {columns} = this.state;
-      const id = event.dataTransfer.getData("Text");
-      let objIndex =  columns.findIndex((_da,i)=>_da.key == id);
-      let targetIndex = columns.findIndex((_da,i)=>_da.key == data.key);
-      if(columns[objIndex].fixed)return;//固定列不让拖拽
-      if(columns[targetIndex].fixed)return;//固定列不让拖拽
-      columns.forEach((da,i)=>{
-        da.drgHover = false;
-        if(da.key == id){//obj
-          da.dragIndex = targetIndex
-        }
-        if(da.key == data.key){//targetObj
-          da.dragIndex = objIndex;
-        }
-      });
-     let _columns =  columns.sort(compare('dragIndex'));
-      this.setState({
-        columns: JSON.parse(JSON.stringify(_columns)),
-      });
-      if(this.props.onDrop){
-        this.props.onDrop(event,data);
-      }
+    
     }
  
     getTarget=(evt)=>{
@@ -113,10 +80,10 @@ export default function dragColumn(Table) {
               columns={this.state.columns}
               data={data}
               className={`${className} u-table-drag-border`}
-              onDragStart={this.onDragStart}
-              onDragOver={this.onDragOver}
-              onDrop={this.onDrop}
-              onDragEnter={this.onDragEnter}
+              onDragStart={this.onDragWidthStart}
+              onDragOver={this.onDragWidthOver}
+              onDrop={this.onDropWidth}
+              onDragEnter={this.onDragWidthEnter}
               draggable={draggable}
               // dragborder={dragborder}
               dragborder={false}

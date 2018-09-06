@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Checkbox from 'bee-checkbox';
 import Icon from "bee-icon";
-import {ObjectAssign} from '../utils';
+import {ObjectAssign} from './util';
 function noop() {}
 /**
  * 参数: 过滤表头
