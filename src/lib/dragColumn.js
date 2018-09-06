@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import {compare} from './util';
-import {ObjectAssign} from '../util';
+import {compare,ObjectAssign} from './util';
 /**
  * 参数: 列拖拽
  * @param {*} Table
