@@ -20,7 +20,7 @@ var _beeIcon = require("bee-icon");
 
 var _beeIcon2 = _interopRequireDefault(_beeIcon);
 
-var _utils = require("../utils");
+var _util = require("./util");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -56,7 +56,7 @@ function filterColumn(Table, Popover) {
       var columns = props.columns;
 
       _this.state = {
-        columns: _this.setColumOrderByIndex((0, _utils.ObjectAssign)(columns)),
+        columns: _this.setColumOrderByIndex((0, _util.ObjectAssign)(columns)),
         showModal: false,
         screenY: 0
       };
@@ -66,7 +66,7 @@ function filterColumn(Table, Popover) {
     FilterColumn.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
       if (nextProps.columns != this.props.columns) {
         this.setState({
-          columns: this.setColumOrderByIndex((0, _utils.ObjectAssign)(nextProps.columns))
+          columns: this.setColumOrderByIndex((0, _util.ObjectAssign)(nextProps.columns))
         });
       }
       this.setState({

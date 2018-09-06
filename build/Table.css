@@ -315,7 +315,7 @@
   .u-table-thead th {
     background: #f7f7f7; }
   .u-table-thead .th-drag {
-    cursor: move; }
+    cursor: pointer; }
   .u-table-thead .th-drag-hover {
     background: #ccc; }
   .u-table-thead-th {
