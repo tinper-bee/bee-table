@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -8,13 +8,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 exports["default"] = dragColumn;
 
-var _react = require('react');
+var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _util = require('./util');
-
-var _util2 = require('../util');
+var _util = require("./util");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -147,13 +145,13 @@ function dragColumn(Table) {
           onDragEnter = _props.onDragEnter,
           onDragOver = _props.onDragOver,
           onDrop = _props.onDrop,
-          others = _objectWithoutProperties(_props, ['data', 'dragborder', 'draggable', 'className', 'columns', 'onDragStart', 'onDragEnter', 'onDragOver', 'onDrop']);
+          others = _objectWithoutProperties(_props, ["data", "dragborder", "draggable", "className", "columns", "onDragStart", "onDragEnter", "onDragOver", "onDrop"]);
 
       var key = new Date().getTime();
       return _react2["default"].createElement(Table, _extends({}, others, {
         columns: this.state.columns,
         data: data,
-        className: className + ' u-table-drag-border',
+        className: className + " u-table-drag-border",
         onDragStart: this.onDragStart,
         onDragOver: this.onDragOver,
         onDrop: this.onDrop,
@@ -168,4 +166,4 @@ function dragColumn(Table) {
     return DragColumn;
   }(_react.Component);
 }
-module.exports = exports['default'];
+module.exports = exports["default"];
