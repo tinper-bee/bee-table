@@ -5258,6 +5258,18 @@ a, .mdl-accordion, .mdl-button, .mdl-card, .mdl-checkbox, .mdl-dropdown-menu,
   .u-panel .u-panel-body {
     padding: 15px 15px;
     position: relative; }
+    .u-panel .u-panel-body .uf {
+      position: absolute;
+      right: 25px;
+      top: 30px;
+      color: #fff;
+      font-size: 20px;
+      padding: 2px 8px;
+      margin: 8px;
+      border-radius: 4px;
+      cursor: pointer; }
+      .u-panel .u-panel-body .uf:hover {
+        color: #a8a7a7; }
 
 .u-panel-default {
   border-color: #ddd; }

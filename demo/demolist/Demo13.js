@@ -101,17 +101,7 @@ class Demo13 extends Component {
       selectedRow: function() {}
     });
   };
-  onClick1 = () => {
-    this.setState({
-      selectDisabled: (record, index) => {
-        // console.log(record);
-        if (index === 2) {
-          return true;
-        }
-        return false;
-      }
-    });
-  };
+
   render() {
     let multiObj = {
       type: "checkbox"
@@ -120,13 +110,6 @@ class Demo13 extends Component {
       <div>
         <Button className="editable-add-btn" onClick={this.onClick}>
           change selectedRow
-        </Button>
-        <Button
-          className="editable-add-btn"
-          style={{ marginLeft: "5px" }}
-          onClick={this.onClick1}
-        >
-          change selectDisabled
         </Button>
         <ComplexTable
           selectDisabled={this.state.selectDisabled}
