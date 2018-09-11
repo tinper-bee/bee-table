@@ -11,21 +11,23 @@ import Tooltip from "bee-tooltip";
 import Table from "../../src";
 
 const columns = [
-  { title: "用户名", dataIndex: "a", key: "a", width:80 , className:"rowClassName",
-  render: (text, record, index)=> {
-    return ( 
+  {
+    title: "用户名", dataIndex: "a", key: "a", width: 80, className: "rowClassName",
+    render: (text, record, index) => {
+      return (
         <Tooltip inverse overlay={text}>
-        <span tootip={text} style={{
-                display: "inline-block",
-                width: "100px",
-                textOverflow:"ellipsis",
-                overflow:"hidden",
-                whiteSpace:"nowrap",
-                verticalAlign: "middle",
-            }}>{text}</span>
+          <span tootip={text} style={{
+            display: "inline-block",
+            width: "100px",
+            textOverflow: "ellipsis",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            verticalAlign: "middle",
+          }}>{text}</span>
         </Tooltip>
-    );
-  }},
+      );
+    }
+  },
   { id: "123", title: "性别", dataIndex: "b", key: "b", width: 100 },
   { title: "年龄", dataIndex: "c", key: "c", width: 200 },
   {
@@ -34,20 +36,15 @@ const columns = [
     key: "d",
     render(text, record, index) {
       return (
-        <div style={{position: 'relative'}} title={text} >
-            <a
-                href="#"
-                tooltip={text}
-                onClick={() => {
-                  alert('这是第'+index+'列，内容为:'+text);
-                }}
-                style={{
-                    position: 'absolute',
-                    top: 5,
-                    left: 0
-                }}
-              >
-                一些操作
+        <div style={{ position: 'relative' }} title={text} >
+          <a
+            href="javascript:;"
+            tooltip={text}
+            onClick={() => {
+              alert('这是第' + index + '列，内容为:' + text);
+            }}
+          >
+            一些操作
               </a>
         </div>
       );
@@ -63,12 +60,12 @@ const data = [
 
 class Demo1 extends Component {
 
-  constructor(props){
-      super(props);
-      this.state = {
-        data: data,
-        selectedRowIndex: 0
-      }
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: data,
+      selectedRowIndex: 0
+    }
   }
 
   render() {
@@ -76,12 +73,12 @@ class Demo1 extends Component {
       <Table
         columns={columns}
         data={data}
-        onRowClick={(record,index,indent)=>{
-          this.setState({ 
-              selectedRowIndex: index
+        onRowClick={(record, index, indent) => {
+          this.setState({
+            selectedRowIndex: index
           });
         }}
-      /> 
+      />
     );
   }
 }
