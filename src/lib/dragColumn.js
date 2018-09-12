@@ -117,8 +117,8 @@ export default function dragColumn(Table) {
               onDrop={this.onDrop}
               onDragEnter={this.onDragEnter}
               draggable={draggable}
-              // dragborder={dragborder}
-              dragborder={false}
+              dragborder={dragborder}
+              // dragborder={false}
               dragborderKey={key}
           />)
     }

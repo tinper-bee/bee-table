@@ -123,7 +123,7 @@ class TableRow extends Component{
     const {
       clsPrefix, columns, record, height, visible, index,
       expandIconColumnIndex, expandIconAsCell, expanded, expandRowByClick,
-      expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon
+      expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed
     } = this.props;
 
     let { className } = this.props;
@@ -168,6 +168,7 @@ class TableRow extends Component{
           index={index}
           column={columns[i]}
           key={columns[i].key}
+          fixed= {fixed}
           expandIcon={(isColumnHaveExpandIcon) ? expandIcon : null}
         />
       );

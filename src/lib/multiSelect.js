@@ -199,7 +199,7 @@ export default function multiSelect(Table, Checkbox) {
             ),
             key: "checkbox",
             dataIndex: "checkbox",
-            width: "100px",
+            width: "100",
             render: (text, record, index) => {
               let rowKey = record["key"] ? record["key"] : this.getRowKey(record,i);
               let bool = checkedObj.hasOwnProperty(rowKey);

@@ -9187,8 +9187,8 @@
 	  rowRef: _propTypes2['default'].func,
 	  getBodyWrapper: _propTypes2['default'].func,
 	  children: _propTypes2['default'].node,
-	
-	  draggable: _propTypes2['default'].bool
+	  draggable: _propTypes2['default'].bool,
+	  minColumnWidth: _propTypes2['default'].number
 	};
 	
 	var defaultProps = {
@@ -9225,7 +9225,8 @@
 	  },
 	  emptyText: function emptyText() {
 	    return 'No Data';
-	  }
+	  },
+	  minColumnWidth: 80
 	};
 	
 	var Table = function (_Component) {
@@ -9256,7 +9257,7 @@
 	
 	    var expandedRowKeys = [];
 	    var rows = [].concat(_toConsumableArray(props.data));
-	    _this.columnManager = new _ColumnManager2['default'](props.columns, props.children);
+	    _this.columnManager = new _ColumnManager2['default'](props.columns, props.children, props.originWidth);
 	    _this.store = (0, _createStore2['default'])({ currentHoverKey: null });
 	
 	    if (props.defaultExpandAllRows) {
@@ -9302,12 +9303,16 @@
 	    _this.detectScrollTarget = _this.detectScrollTarget.bind(_this);
 	    _this.handleBodyScroll = _this.handleBodyScroll.bind(_this);
 	    _this.handleRowHover = _this.handleRowHover.bind(_this);
-	
+	    _this.computeTableWidth = _this.computeTableWidth.bind(_this);
 	    return _this;
 	  }
 	
 	  Table.prototype.componentDidMount = function componentDidMount() {
 	    setTimeout(this.resetScrollY, 300);
+	    //后续也放在recevice里面
+	    if (!this.props.originWidth) {
+	      this.computeTableWidth();
+	    }
 	    if (this.columnManager.isAnyColumnsFixed()) {
 	      this.syncFixedTableRowHeight();
 	      this.resizeEvent = (0, _addEventListener2['default'])(window, 'resize', (0, _utils.debounce)(this.syncFixedTableRowHeight, 150));
@@ -9333,6 +9338,9 @@
 	    } else if (nextProps.children !== this.props.children) {
 	      this.columnManager.reset(null, nextProps.children);
 	    }
+	    if (!nextProps.originWidth) {
+	      this.computeTableWidth();
+	    }
 	  };
 	
 	  Table.prototype.componentDidUpdate = function componentDidUpdate() {
@@ -9344,6 +9352,27 @@
 	  Table.prototype.componentWillUnmount = function componentWillUnmount() {
 	    if (this.resizeEvent) {
 	      this.resizeEvent.remove();
+	    }
+	  };
+	
+	  Table.prototype.computeTableWidth = function computeTableWidth() {
+	    //计算总表格宽度、根据表格宽度和各列的宽度和比较，重置最后一列
+	    this.contentWidth = this.contentTable.clientWidth; //表格宽度
+	    //如果用户传了scroll.x按用户传的为主
+	    var setWidthParam = this.props.scroll.x;
+	    if (setWidthParam) {
+	      if (typeof setWidthParam == 'string' && setWidthParam.indexOf('%')) {
+	        this.contentWidth = this.contentWidth * parseInt(setWidthParam) / 100;
+	      } else {
+	        this.contentWidth = parseInt(setWidthParam);
+	      }
+	    }
+	    var computeObj = this.columnManager.getColumnWidth();
+	    var lastShowIndex = computeObj.lastShowIndex;
+	    this.computeWidth = computeObj.computeWidth;
+	    if (this.computeWidth < this.contentWidth) {
+	      var contentWidthDiff = this.contentWidth - this.computeWidth;
+	      this.setState({ contentWidthDiff: contentWidthDiff, lastShowIndex: lastShowIndex });
 	    }
 	  };
 	
@@ -9411,7 +9440,8 @@
 	        onMouseUp = _props.onMouseUp,
 	        dragborder = _props.dragborder,
 	        onThMouseMove = _props.onThMouseMove,
-	        dragborderKey = _props.dragborderKey;
+	        dragborderKey = _props.dragborderKey,
+	        minColumnWidth = _props.minColumnWidth;
 	
 	    var rows = this.getHeaderRows(columns);
 	    if (expandIconAsCell && fixed !== 'right') {
@@ -9426,11 +9456,20 @@
 	    var trStyle = fixed ? this.getHeaderRowStyle(columns, rows) : null;
 	    var drop = draggable ? { onDragStart: onDragStart, onDragOver: onDragOver, onDrop: onDrop, onDragEnter: onDragEnter, draggable: draggable } : {};
 	    var dragBorder = dragborder ? { onMouseDown: onMouseDown, onMouseMove: onMouseMove, onMouseUp: onMouseUp, dragborder: dragborder, onThMouseMove: onThMouseMove, dragborderKey: dragborderKey } : {};
-	
+	    var contentWidthDiff = 0;
+	    //非固定表格,宽度不够时自动扩充
+	    if (!fixed) {
+	      contentWidthDiff = this.state.contentWidthDiff;
+	    }
 	    return showHeader ? _react2['default'].createElement(_TableHeader2['default'], _extends({}, drop, dragBorder, {
+	      minColumnWidth: minColumnWidth,
+	      contentWidthDiff: contentWidthDiff,
+	      lastShowIndex: this.state.lastShowIndex,
 	      clsPrefix: clsPrefix,
 	      rows: rows,
-	      rowStyle: trStyle
+	      contentTable: this.contentTable,
+	      rowStyle: trStyle,
+	      fixed: fixed
 	    })) : null;
 	  };
 	
@@ -9454,6 +9493,7 @@
 	        className: column.className || '',
 	        children: column.title,
 	        drgHover: column.drgHover,
+	        fixed: column.fixed,
 	        width: column.width
 	      };
 	      if (column.onHeadCellClick) {
@@ -9613,7 +9653,8 @@
 	        key: key,
 	        hoverKey: key,
 	        ref: rowRef,
-	        store: this.store
+	        store: this.store,
+	        fixed: fixed
 	      })));
 	      this.treeRowIndex++;
 	      var subVisible = visible && isRowExpanded;
@@ -9637,6 +9678,12 @@
 	
 	  Table.prototype.getColGroup = function getColGroup(columns, fixed) {
 	    var cols = [];
+	    var _state = this.state,
+	        _state$contentWidthDi = _state.contentWidthDiff,
+	        contentWidthDiff = _state$contentWidthDi === undefined ? 0 : _state$contentWidthDi,
+	        _state$lastShowIndex = _state.lastShowIndex,
+	        lastShowIndex = _state$lastShowIndex === undefined ? 0 : _state$lastShowIndex;
+	
 	    if (this.props.expandIconAsCell && fixed !== 'right') {
 	      cols.push(_react2['default'].createElement('col', {
 	        className: this.props.clsPrefix + '-expand-icon-col',
@@ -9645,14 +9692,20 @@
 	    }
 	    var leafColumns = void 0;
 	    if (fixed === 'left') {
+	      contentWidthDiff = 0;
 	      leafColumns = this.columnManager.leftLeafColumns();
 	    } else if (fixed === 'right') {
+	      contentWidthDiff = 0;
 	      leafColumns = this.columnManager.rightLeafColumns();
 	    } else {
 	      leafColumns = this.columnManager.leafColumns();
 	    }
-	    cols = cols.concat(leafColumns.map(function (c) {
-	      return _react2['default'].createElement('col', { key: c.key, style: { width: c.width, minWidth: c.width } });
+	    cols = cols.concat(leafColumns.map(function (c, i, arr) {
+	      var width = c.width;
+	      if (lastShowIndex == i) {
+	        width = parseInt(width) + contentWidthDiff;
+	      }
+	      return _react2['default'].createElement('col', { key: c.key, style: { width: width, minWidth: c.width } });
 	    }));
 	    return _react2['default'].createElement(
 	      'colgroup',
@@ -9962,6 +10015,8 @@
 	  };
 	
 	  Table.prototype.render = function render() {
+	    var _this5 = this;
+	
 	    var props = this.props;
 	    var clsPrefix = props.clsPrefix;
 	
@@ -9986,7 +10041,9 @@
 	    }
 	    return _react2['default'].createElement(
 	      'div',
-	      { className: className, style: props.style },
+	      { className: className, style: props.style, ref: function ref(el) {
+	          return _this5.contentTable = el;
+	        } },
 	      this.getTitle(),
 	      _react2['default'].createElement(
 	        'div',
@@ -10217,7 +10274,8 @@
 	        needIndentSpaced = _props7.needIndentSpaced,
 	        indent = _props7.indent,
 	        indentSize = _props7.indentSize,
-	        isHiddenExpandIcon = _props7.isHiddenExpandIcon;
+	        isHiddenExpandIcon = _props7.isHiddenExpandIcon,
+	        fixed = _props7.fixed;
 	    var className = this.props.className;
 	
 	
@@ -10257,6 +10315,7 @@
 	        index: index,
 	        column: columns[i],
 	        key: columns[i].key,
+	        fixed: fixed,
 	        expandIcon: isColumnHaveExpandIcon ? expandIcon : null
 	      }));
 	    }
@@ -10367,10 +10426,11 @@
 	        indent = _props2.indent,
 	        index = _props2.index,
 	        expandIcon = _props2.expandIcon,
-	        column = _props2.column;
+	        column = _props2.column,
+	        fixed = _props2.fixed;
 	    var dataIndex = column.dataIndex,
-	        render = column.render,
-	        _column$className = column.className,
+	        render = column.render;
+	    var _column$className = column.className,
 	        className = _column$className === undefined ? '' : _column$className;
 	
 	
@@ -10400,6 +10460,10 @@
 	
 	    if (rowSpan === 0 || colSpan === 0) {
 	      return null;
+	    }
+	    //不是固定表格并且当前列是固定，则隐藏当前列
+	    if (column.fixed && !fixed) {
+	      className = className + (clsPrefix + '-fixed-columns-in-body');
 	    }
 	    return _react2['default'].createElement(
 	      'td',
@@ -10939,11 +11003,19 @@
 	      _this.props.onDrop(event, data);
 	    };
 	
-	    _this.onMouseMove = function (event, data) {
-	      if (_this.border) return;
+	    _this.onMouseOver = function (event, data) {
+	      //如果是固定列没有拖拽功能
+	      if (_this.border || data.fixed) return;
 	      var clsPrefix = _this.props.clsPrefix;
 	
 	      event.target.className = clsPrefix + '-thead-th-drag-gap th-drag-gap-hover';
+	    };
+	
+	    _this.onMouseMove = function (event, data) {
+	      //如果是固定列没有拖拽功能
+	      if (_this.border || data.fixed) return;
+	      // const {clsPrefix} = this.props; 
+	      // event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap-hover`;
 	    };
 	
 	    _this.onMouseOut = function (event, data) {
@@ -10955,7 +11027,9 @@
 	
 	    _this.onMouseDown = function (event, data) {
 	      _this.border = true;
-	      var clsPrefix = _this.props.clsPrefix;
+	      var _this$props = _this.props,
+	          clsPrefix = _this$props.clsPrefix,
+	          contentTable = _this$props.contentTable;
 	
 	      _this.drag.initPageLeftX = event.pageX;
 	      _this.drag.initLeft = (0, _utils.tryParseInt)(event.target.style.left);
@@ -10964,6 +11038,8 @@
 	        return da.key == data.key;
 	      });
 	      _this.drag.width = _this.drag.data[_this.drag.currIndex].width;
+	
+	      _this.contentTableWidth = contentTable.width;
 	    };
 	
 	    _this.onMouseUp = function (event, data) {
@@ -10979,10 +11055,23 @@
 	
 	    _this.onThMouseMove = function (event, data) {
 	      if (!_this.border) return;
-	      var dragborderKey = _this.props.dragborderKey;
+	      var _this$props2 = _this.props,
+	          dragborderKey = _this$props2.dragborderKey,
+	          contentTable = _this$props2.contentTable;
 	
-	      console.log(data);
 	      var x = event.pageX - _this.drag.initPageLeftX + _this.drag.initLeft - 0;
+	      if (!_this.contentTableWidth) {
+	        _this.contentTableWidth = contentTable.clientWidth;
+	      }
+	      var newTableWidth = _this.contentTableWidth + x;
+	      var newWidth = _this.drag.width + x;
+	      if (newWidth < _this.props.minColumnWidth) {
+	        //清楚样式
+	        var moveDom = event.target.querySelector('.th-drag-gap-hover');
+	        moveDom && moveDom.classList.remove('th-drag-gap-hover');
+	        // event.target.classList.remove('th-drag-gap-hover');
+	        return;
+	      }
 	      //设置hiden的left
 	      //"u-table-drag-hide-table"
 	      var currentHideDom = document.getElementById("u-table-drag-hide-table-" + dragborderKey).getElementsByTagName("div")[_this.drag.currIndex];
@@ -11004,9 +11093,11 @@
 	
 	      //设置当前的宽度 
 	      var currentData = _this.drag.data[_this.drag.currIndex];
-	      currentData.width = _this.drag.width + x;
+	      currentData.width = newWidth;
 	      var currentDom = document.getElementById("u-table-drag-thead-" + _this.theadKey).getElementsByTagName("th")[_this.drag.currIndex];
-	      currentDom.style.width = currentData.width + "px";
+	      currentDom.style.width = newWidth + "px";
+	      // this.contentTableWidth = newTableWidth;
+	      contentTable.style.width = newTableWidth + 'px';
 	      _this.drag.x = x;
 	    };
 	
@@ -11056,7 +11147,10 @@
 	        onMouseMove = _props.onMouseMove,
 	        onMouseUp = _props.onMouseUp,
 	        dragborder = _props.dragborder,
-	        onMouseOut = _props.onMouseOut;
+	        onMouseOut = _props.onMouseOut,
+	        contentWidthDiff = _props.contentWidthDiff,
+	        fixed = _props.fixed,
+	        lastShowIndex = _props.lastShowIndex;
 	
 	    var attr = dragborder ? { id: 'u-table-drag-thead-' + this.theadKey } : {};
 	    return _react2['default'].createElement(
@@ -11066,9 +11160,16 @@
 	        return _react2['default'].createElement(
 	          'tr',
 	          { key: index, style: rowStyle },
-	          row.map(function (da, i) {
+	          row.map(function (da, i, arr) {
 	            var thHover = da.drgHover ? ' ' + clsPrefix + '-thead th-drag-hover' : "";
 	            delete da.drgHover;
+	            var fixedStyle = '';
+	            if (!fixed && da.fixed) {
+	              fixedStyle = clsPrefix + '-row-fixed-columns-in-body';
+	            }
+	            if (lastShowIndex == i) {
+	              da.width = parseInt(da.width) + contentWidthDiff;
+	            }
 	            if (draggable) {
 	              return _react2['default'].createElement('th', _extends({}, da, {
 	                onDragStart: function onDragStart(event) {
@@ -11084,20 +11185,21 @@
 	                  _this2.onDragEnter(event, da);
 	                },
 	                draggable: draggable,
-	                className: da.className + ' ' + clsPrefix + '-thead th-drag ' + thHover,
+	                className: da.className + ' ' + clsPrefix + '-thead th-drag ' + thHover + ' ' + fixedStyle,
 	                key: da.key }));
 	            } else if (dragborder) {
+	
 	              return _react2['default'].createElement(
 	                'th',
 	                {
-	                  style: { width: da.width, minWidth: da.width },
+	                  style: { width: da.width },
 	                  onMouseMove: function onMouseMove(event) {
 	                    _this2.onThMouseMove(event, da);
 	                  },
 	                  onMouseUp: function onMouseUp(event) {
 	                    _this2.onThMouseUp(event, da);
 	                  },
-	                  className: da.className + ' ' + clsPrefix + '-thead-th ',
+	                  className: da.className + ' ' + clsPrefix + '-thead-th  ' + fixedStyle,
 	                  key: i },
 	                da.children,
 	                _react2['default'].createElement('div', { ref: function ref(el) {
@@ -11115,12 +11217,15 @@
 	                  onMouseUp: function onMouseUp(event) {
 	                    _this2.onMouseUp(event, da);
 	                  },
+	                  onMouseOver: function onMouseOver(event) {
+	                    _this2.onMouseOver(event, da);
+	                  },
 	                  className: clsPrefix + '-thead-th-drag-gap ' })
 	              );
 	            } else {
-	              var th = da.onClick ? _react2['default'].createElement('th', _extends({}, da, { key: i, onClick: function onClick(event) {
+	              var th = da.onClick ? _react2['default'].createElement('th', _extends({}, da, { className: ' ' + fixedStyle, key: i, onClick: function onClick(event) {
 	                  da.onClick(da, event);
-	                } })) : _react2['default'].createElement('th', _extends({}, da, { key: i }));
+	                } })) : _react2['default'].createElement('th', _extends({}, da, { key: i, className: ' ' + fixedStyle }));
 	              return th;
 	            }
 	          })
@@ -11132,6 +11237,9 @@
 	  return TableHeader;
 	}(_react.Component);
 	
+	TableHeader.defaultProps = {
+	  contentWidthDiff: 0
+	};
 	;
 	
 	TableHeader.propTypes = propTypes;
@@ -11158,6 +11266,7 @@
 	exports.addClass = addClass;
 	exports.removeClass = removeClass;
 	exports.ObjectAssign = ObjectAssign;
+	exports.closest = closest;
 	
 	var _warning = __webpack_require__(31);
 	
@@ -11289,6 +11398,23 @@
 	    _extends(tagObj, obj);
 	  }
 	  return tagObj;
+	}
+	/**
+	 * 获取某个父元素
+	 * */
+	
+	function closest(ele, selector) {
+	  var matches = ele.matches || ele.webkitMatchesSelector || ele.mozMatchesSelector || ele.msMatchesSelector;
+	  if (matches) {
+	    while (ele) {
+	      if (matches.call(ele, selector)) {
+	        return ele;
+	      } else {
+	        ele = ele.parentElement;
+	      }
+	    }
+	  }
+	  return null;
 	}
 
 /***/ }),
@@ -11731,12 +11857,13 @@
 	//行控制管理
 	
 	var ColumnManager = function () {
-	  function ColumnManager(columns, elements) {
+	  function ColumnManager(columns, elements, originWidth) {
 	    _classCallCheck(this, ColumnManager);
 	
 	    this._cached = {};
 	
 	    this.columns = columns || this.normalize(elements);
+	    this.originWidth = originWidth;
 	  }
 	
 	  ColumnManager.prototype.isAnyColumnsFixed = function isAnyColumnsFixed() {
@@ -11789,35 +11916,53 @@
 	    });
 	  };
 	
-	  ColumnManager.prototype.leafColumns = function leafColumns() {
+	  ColumnManager.prototype.centerColumns = function centerColumns() {
 	    var _this6 = this;
 	
+	    return this._cache('centerColumns', function () {
+	      return _this6.groupedColumns().filter(function (column) {
+	        return !column.fixed;
+	      });
+	    });
+	  };
+	
+	  ColumnManager.prototype.leafColumns = function leafColumns() {
+	    var _this7 = this;
+	
 	    return this._cache('leafColumns', function () {
-	      return _this6._leafColumns(_this6.columns);
+	      return _this7._leafColumns(_this7.columns);
 	    });
 	  };
 	
 	  ColumnManager.prototype.leftLeafColumns = function leftLeafColumns() {
-	    var _this7 = this;
+	    var _this8 = this;
 	
 	    return this._cache('leftLeafColumns', function () {
-	      return _this7._leafColumns(_this7.leftColumns());
+	      return _this8._leafColumns(_this8.leftColumns());
 	    });
 	  };
 	
 	  ColumnManager.prototype.rightLeafColumns = function rightLeafColumns() {
-	    var _this8 = this;
+	    var _this9 = this;
 	
 	    return this._cache('rightLeafColumns', function () {
-	      return _this8._leafColumns(_this8.rightColumns());
+	      return _this9._leafColumns(_this9.rightColumns());
+	    });
+	  };
+	
+	  ColumnManager.prototype.centerLeafColumns = function centerLeafColumns() {
+	    var _this10 = this;
+	
+	    return this._cache('centerLeafColumns', function () {
+	      return _this10._leafColumns(_this10.centerColumns());
 	    });
 	  };
 	
 	  // add appropriate rowspan and colspan to column
 	
 	
-	  ColumnManager.prototype.groupedColumns = function groupedColumns() {
-	    var _this9 = this;
+	  ColumnManager.prototype.groupedColumns = function groupedColumns(type) {
+	    var _this11 = this;
 	
 	    return this._cache('groupedColumns', function () {
 	      var _groupColumns = function _groupColumns(columns) {
@@ -11836,7 +11981,17 @@
 	          }
 	        };
 	        columns.forEach(function (column, index) {
-	          var newColumn = _extends({}, column);
+	          var defaultOpt = {
+	            ifshow: true
+	          };
+	          if (!_this11.originWidth) {
+	            defaultOpt.width = 200;
+	          }
+	          //获取非固定列
+	          if (type == 'nofixed' && column.fixed) {
+	            return false;
+	          }
+	          var newColumn = _extends({}, defaultOpt, column);
 	          rows[currentRow].push(newColumn);
 	          parentColumn.colSpan = parentColumn.colSpan || 0;
 	          if (newColumn.children && newColumn.children.length > 0) {
@@ -11857,22 +12012,22 @@
 	        });
 	        return grouped;
 	      };
-	      return _groupColumns(_this9.columns);
+	      return _groupColumns(_this11.columns);
 	    });
 	  };
 	
 	  ColumnManager.prototype.normalize = function normalize(elements) {
-	    var _this10 = this;
+	    var _this12 = this;
 	
 	    var columns = [];
 	    _react2['default'].Children.forEach(elements, function (element) {
-	      if (!_this10.isColumnElement(element)) return;
+	      if (!_this12.isColumnElement(element)) return;
 	      var column = _extends({}, element.props);
 	      if (element.key) {
 	        column.key = element.key;
 	      }
 	      if (element.type === _ColumnGroup2['default']) {
-	        column.children = _this10.normalize(column.children);
+	        column.children = _this12.normalize(column.children);
 	      }
 	      columns.push(column);
 	    });
@@ -11888,6 +12043,49 @@
 	    this._cached = {};
 	  };
 	
+	  ColumnManager.prototype.getColumnWidth = function getColumnWidth() {
+	    var columns = this.groupedColumns();
+	    var res = { computeWidth: 0, lastShowIndex: 0 };
+	    columns.forEach(function (col, index) {
+	      //如果列显示
+	      if (col.ifshow) {
+	        res.computeWidth += parseInt(col.width);
+	        if (!col.fixed) {
+	          res.lastShowIndex = index;
+	        }
+	      }
+	    });
+	    return res;
+	  };
+	
+	  ColumnManager.prototype.getLeftColumnsWidth = function getLeftColumnsWidth() {
+	    var _this13 = this;
+	
+	    return this._cache('leftColumnsWidth', function () {
+	      var leftColumnsWidth = 0;
+	      _this13.groupedColumns().forEach(function (column) {
+	        if (column.fixed === 'left' || column.fixed === true) {
+	          leftColumnsWidth += column.width;
+	        }
+	      });
+	      return leftColumnsWidth;
+	    });
+	  };
+	
+	  ColumnManager.prototype.getRightColumnsWidth = function getRightColumnsWidth() {
+	    var _this14 = this;
+	
+	    return this._cache('rightColumnsWidth', function () {
+	      var rightColumnsWidth = 0;
+	      _this14.groupedColumns().forEach(function (column) {
+	        if (column.fixed === 'right') {
+	          rightColumnsWidth += column.width;
+	        }
+	      });
+	      return rightColumnsWidth;
+	    });
+	  };
+	
 	  ColumnManager.prototype._cache = function _cache(name, fn) {
 	    if (name in this._cached) {
 	      return this._cached[name];
@@ -11896,15 +12094,27 @@
 	    return this._cached[name];
 	  };
 	
+	  //todo 含有children的宽度计算
+	
+	
 	  ColumnManager.prototype._leafColumns = function _leafColumns(columns) {
-	    var _this11 = this;
+	    var _this15 = this;
 	
 	    var leafColumns = [];
+	
 	    columns.forEach(function (column) {
 	      if (!column.children) {
-	        leafColumns.push(column);
+	
+	        var defaultOpt = {
+	          ifshow: true
+	        };
+	        if (!_this15.originWidth) {
+	          defaultOpt.width = 200;
+	        }
+	        var newColumn = _extends({}, defaultOpt, column);
+	        leafColumns.push(newColumn);
 	      } else {
-	        leafColumns.push.apply(leafColumns, _toConsumableArray(_this11._leafColumns(column.children)));
+	        leafColumns.push.apply(leafColumns, _toConsumableArray(_this15._leafColumns(column.children)));
 	      }
 	    });
 	    return leafColumns;
@@ -11950,7 +12160,8 @@
 	  width: _propTypes2['default'].oneOfType([_propTypes2['default'].number, _propTypes2['default'].string]),
 	  fixed: _propTypes2['default'].oneOf([true, 'left', 'right']),
 	  render: _propTypes2['default'].func,
-	  onCellClick: _propTypes2['default'].func
+	  onCellClick: _propTypes2['default'].func,
+	  ifshow: _propTypes2['default'].bool
 	};
 	
 	var Column = function (_Component) {
@@ -11964,6 +12175,11 @@
 	
 	  return Column;
 	}(_react.Component);
+	
+	Column.defaultProps = {
+	  ifshow: true
+	};
+	
 	
 	Column.propTypes = propTypes;
 	
@@ -13365,7 +13581,7 @@
 	          }),
 	          key: "checkbox",
 	          dataIndex: "checkbox",
-	          width: "100px",
+	          width: "100",
 	          render: function render(text, record, index) {
 	            var rowKey = record["key"] ? record["key"] : _this2.getRowKey(record, i);
 	            var bool = checkedObj.hasOwnProperty(rowKey);
@@ -13764,7 +13980,7 @@
 	          }
 	          return item;
 	        });
-	        return _react2["default"].createElement(Table, _extends({}, _this.props, { loading: false, footerScroll: true, showHeader: false, columns: columns_sum, data: obj }));
+	        return _react2["default"].createElement(Table, _extends({}, _this.props, { loading: false, footerScroll: true, showHeader: false, columns: columns_sum, data: obj, originWidth: true }));
 	      };
 	
 	      _this.currentTreeFooter = function () {
@@ -13816,7 +14032,7 @@
 	
 	        var _sumArray = [_extends({ key: "sumData", showSum: "合计" }, _countObj)];
 	        columns[0] = _extends({}, columns[0], columns2);
-	        return _react2["default"].createElement(Table, _extends({}, _this.props, { bordered: false, loading: false, footerScroll: true, showHeader: false, columns: columns, data: _sumArray }));
+	        return _react2["default"].createElement(Table, _extends({}, _this.props, { bordered: false, loading: false, footerScroll: true, showHeader: false, columns: columns, data: _sumArray, originWidth: true }));
 	      };
 	
 	      _this.getNodeItem = function (array, newArray) {
@@ -13882,7 +14098,8 @@
 	        footerScroll: true,
 	        columns: this.props.columns,
 	        data: this.props.data,
-	        footer: this.setFooterRender
+	        footer: this.setFooterRender,
+	        originWidth: true
 	      }));
 	    };
 	
@@ -57354,10 +57571,10 @@
 	        onDragOver: this.onDragOver,
 	        onDrop: this.onDrop,
 	        onDragEnter: this.onDragEnter,
-	        draggable: draggable
-	        // dragborder={dragborder}
-	        , dragborder: false,
-	        dragborderKey: key
+	        draggable: draggable,
+	        dragborder: dragborder
+	        // dragborder={false}
+	        , dragborderKey: key
 	      }));
 	    };
 	

@@ -85,35 +85,53 @@ var ColumnManager = function () {
     });
   };
 
-  ColumnManager.prototype.leafColumns = function leafColumns() {
+  ColumnManager.prototype.centerColumns = function centerColumns() {
     var _this6 = this;
 
+    return this._cache('centerColumns', function () {
+      return _this6.groupedColumns().filter(function (column) {
+        return !column.fixed;
+      });
+    });
+  };
+
+  ColumnManager.prototype.leafColumns = function leafColumns() {
+    var _this7 = this;
+
     return this._cache('leafColumns', function () {
-      return _this6._leafColumns(_this6.columns);
+      return _this7._leafColumns(_this7.columns);
     });
   };
 
   ColumnManager.prototype.leftLeafColumns = function leftLeafColumns() {
-    var _this7 = this;
+    var _this8 = this;
 
     return this._cache('leftLeafColumns', function () {
-      return _this7._leafColumns(_this7.leftColumns());
+      return _this8._leafColumns(_this8.leftColumns());
     });
   };
 
   ColumnManager.prototype.rightLeafColumns = function rightLeafColumns() {
-    var _this8 = this;
+    var _this9 = this;
 
     return this._cache('rightLeafColumns', function () {
-      return _this8._leafColumns(_this8.rightColumns());
+      return _this9._leafColumns(_this9.rightColumns());
+    });
+  };
+
+  ColumnManager.prototype.centerLeafColumns = function centerLeafColumns() {
+    var _this10 = this;
+
+    return this._cache('centerLeafColumns', function () {
+      return _this10._leafColumns(_this10.centerColumns());
     });
   };
 
   // add appropriate rowspan and colspan to column
 
 
-  ColumnManager.prototype.groupedColumns = function groupedColumns() {
-    var _this9 = this;
+  ColumnManager.prototype.groupedColumns = function groupedColumns(type) {
+    var _this11 = this;
 
     return this._cache('groupedColumns', function () {
       var _groupColumns = function _groupColumns(columns) {
@@ -132,7 +150,14 @@ var ColumnManager = function () {
           }
         };
         columns.forEach(function (column, index) {
-          var newColumn = _extends({}, column);
+          var defaultOpt = {
+            ifshow: true,
+            width: 200
+            //获取非固定列
+          };if (type == 'nofixed' && column.fixed) {
+            return false;
+          }
+          var newColumn = _extends({}, defaultOpt, column);
           rows[currentRow].push(newColumn);
           parentColumn.colSpan = parentColumn.colSpan || 0;
           if (newColumn.children && newColumn.children.length > 0) {
@@ -153,22 +178,22 @@ var ColumnManager = function () {
         });
         return grouped;
       };
-      return _groupColumns(_this9.columns);
+      return _groupColumns(_this11.columns);
     });
   };
 
   ColumnManager.prototype.normalize = function normalize(elements) {
-    var _this10 = this;
+    var _this12 = this;
 
     var columns = [];
     _react2["default"].Children.forEach(elements, function (element) {
-      if (!_this10.isColumnElement(element)) return;
+      if (!_this12.isColumnElement(element)) return;
       var column = _extends({}, element.props);
       if (element.key) {
         column.key = element.key;
       }
       if (element.type === _ColumnGroup2["default"]) {
-        column.children = _this10.normalize(column.children);
+        column.children = _this12.normalize(column.children);
       }
       columns.push(column);
     });
@@ -184,6 +209,46 @@ var ColumnManager = function () {
     this._cached = {};
   };
 
+  ColumnManager.prototype.getColumnWidth = function getColumnWidth() {
+    var computeWidth = 0;
+    var columns = this.groupedColumns();
+    columns.forEach(function (col) {
+      //如果列显示，固定列也要去掉
+      if (col.ifshow && !col.fixed) {
+        computeWidth += parseInt(col.width);
+      }
+    });
+    return computeWidth;
+  };
+
+  ColumnManager.prototype.getLeftColumnsWidth = function getLeftColumnsWidth() {
+    var _this13 = this;
+
+    return this._cache('leftColumnsWidth', function () {
+      var leftColumnsWidth = 0;
+      _this13.groupedColumns().forEach(function (column) {
+        if (column.fixed === 'left' || column.fixed === true) {
+          leftColumnsWidth += column.width;
+        }
+      });
+      return leftColumnsWidth;
+    });
+  };
+
+  ColumnManager.prototype.getRightColumnsWidth = function getRightColumnsWidth() {
+    var _this14 = this;
+
+    return this._cache('rightColumnsWidth', function () {
+      var rightColumnsWidth = 0;
+      _this14.groupedColumns().forEach(function (column) {
+        if (column.fixed === 'right') {
+          rightColumnsWidth += column.width;
+        }
+      });
+      return rightColumnsWidth;
+    });
+  };
+
   ColumnManager.prototype._cache = function _cache(name, fn) {
     if (name in this._cached) {
       return this._cached[name];
@@ -193,14 +258,22 @@ var ColumnManager = function () {
   };
 
   ColumnManager.prototype._leafColumns = function _leafColumns(columns) {
-    var _this11 = this;
+    var _this15 = this;
 
     var leafColumns = [];
+    var parWidth = 0;
     columns.forEach(function (column) {
       if (!column.children) {
-        leafColumns.push(column);
+
+        var defaultOpt = {
+          ifshow: true,
+          width: 200
+        };
+        var newColumn = _extends({}, defaultOpt, column);
+        parWidth += newColumn.width;
+        leafColumns.push(newColumn);
       } else {
-        leafColumns.push.apply(leafColumns, _toConsumableArray(_this11._leafColumns(column.children)));
+        leafColumns.push.apply(leafColumns, _toConsumableArray(_this15._leafColumns(column.children)));
       }
     });
     return leafColumns;

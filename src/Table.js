@@ -40,8 +40,8 @@ const propTypes = {
     rowRef: PropTypes.func,
     getBodyWrapper: PropTypes.func,
     children: PropTypes.node,
-
     draggable: PropTypes.bool,
+    minColumnWidth:PropTypes.number
 };
 
 const defaultProps = {
@@ -68,6 +68,7 @@ const defaultProps = {
     rowRef: () => null,
     getBodyWrapper: body => body,
     emptyText: () => 'No Data',
+    minColumnWidth:80
 };
 
 class Table extends Component{
@@ -75,7 +76,7 @@ class Table extends Component{
       super(props);
       let expandedRowKeys = [];
       let rows = [...props.data];
-      this.columnManager = new ColumnManager(props.columns, props.children);
+      this.columnManager = new ColumnManager(props.columns, props.children,props.originWidth);
       this.store = createStore({ currentHoverKey: null });
 
       if (props.defaultExpandAllRows) {
@@ -121,17 +122,22 @@ class Table extends Component{
     this.detectScrollTarget = this.detectScrollTarget.bind(this);
     this.handleBodyScroll = this.handleBodyScroll.bind(this);
     this.handleRowHover = this.handleRowHover.bind(this);
-
+    this.computeTableWidth = this.computeTableWidth.bind(this);
   }
 
   componentDidMount() {
     setTimeout(this.resetScrollY,300);
+    //后续也放在recevice里面
+    if(!this.props.originWidth){
+      this.computeTableWidth();
+    }
     if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
       this.resizeEvent = addEventListener(
         window, 'resize', debounce(this.syncFixedTableRowHeight, 150)
       );
     }
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -153,6 +159,10 @@ class Table extends Component{
     } else if (nextProps.children !== this.props.children) {
       this.columnManager.reset(null, nextProps.children);
     }
+    if(!nextProps.originWidth){
+      this.computeTableWidth();
+    }
+    
   }
 
   componentDidUpdate() {
@@ -167,6 +177,27 @@ class Table extends Component{
     }
   }
 
+  computeTableWidth(){
+      //计算总表格宽度、根据表格宽度和各列的宽度和比较，重置最后一列
+      this.contentWidth = this.contentTable.clientWidth//表格宽度
+      //如果用户传了scroll.x按用户传的为主
+      let setWidthParam = this.props.scroll.x
+      if(setWidthParam){
+        if(typeof(setWidthParam)=='string' && setWidthParam.indexOf('%')){
+          this.contentWidth = this.contentWidth * parseInt(setWidthParam) /100
+        }else{
+          this.contentWidth = parseInt(setWidthParam);
+        }
+      }
+      const computeObj = this.columnManager.getColumnWidth();
+      let lastShowIndex = computeObj.lastShowIndex;
+      this.computeWidth = computeObj.computeWidth;
+      if(this.computeWidth < this.contentWidth){
+        let contentWidthDiff = this.contentWidth - this.computeWidth;
+        this.setState({contentWidthDiff,lastShowIndex});
+      }
+
+  }
   onExpandedRowsChange(expandedRowKeys) {
     if (!this.props.expandedRowKeys) {
       this.setState({ expandedRowKeys });
@@ -223,7 +254,7 @@ class Table extends Component{
 
   getHeader(columns, fixed) {
     const { showHeader, expandIconAsCell, clsPrefix ,onDragStart,onDragEnter,onDragOver,onDrop,draggable,
-      onMouseDown,onMouseMove,onMouseUp,dragborder,onThMouseMove,dragborderKey} = this.props;
+      onMouseDown,onMouseMove,onMouseUp,dragborder,onThMouseMove,dragborderKey,minColumnWidth} = this.props;
     const rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
       rows[0].unshift({
@@ -237,14 +268,23 @@ class Table extends Component{
     const trStyle = fixed ? this.getHeaderRowStyle(columns, rows) : null;
     let drop = draggable?{onDragStart,onDragOver,onDrop,onDragEnter,draggable}:{};
     let dragBorder = dragborder?{onMouseDown,onMouseMove,onMouseUp,dragborder,onThMouseMove,dragborderKey}:{};
-
+    let contentWidthDiff = 0;
+    //非固定表格,宽度不够时自动扩充
+    if(!fixed){
+      contentWidthDiff =  this.state.contentWidthDiff
+    }
     return showHeader ? (
       <TableHeader
         {...drop}
         {...dragBorder}
+        minColumnWidth={minColumnWidth}
+        contentWidthDiff = {contentWidthDiff}
+        lastShowIndex = {this.state.lastShowIndex}
         clsPrefix={clsPrefix}
         rows={rows}
+        contentTable = {this.contentTable}
         rowStyle={trStyle}
+        fixed={fixed}
       />
     ) : null;
   }
@@ -264,6 +304,7 @@ class Table extends Component{
         className: column.className || '',
         children: column.title,
         drgHover: column.drgHover,
+        fixed:column.fixed,
         width:column.width
       };
       if(column.onHeadCellClick){
@@ -420,6 +461,7 @@ class Table extends Component{
           hoverKey={key}
           ref={rowRef}
           store={this.store}
+          fixed={fixed}
         />
       );
       this.treeRowIndex++;
@@ -448,6 +490,7 @@ class Table extends Component{
 
   getColGroup(columns, fixed) {
     let cols = [];
+    let {contentWidthDiff=0,lastShowIndex=0} = this.state;
     if (this.props.expandIconAsCell && fixed !== 'right') {
       cols.push(
         <col
@@ -458,14 +501,20 @@ class Table extends Component{
     }
     let leafColumns;
     if (fixed === 'left') {
+      contentWidthDiff = 0;
       leafColumns = this.columnManager.leftLeafColumns();
     } else if (fixed === 'right') {
+      contentWidthDiff = 0;
       leafColumns = this.columnManager.rightLeafColumns();
     } else {
       leafColumns = this.columnManager.leafColumns();
     }
-    cols = cols.concat(leafColumns.map(c => {
-      return <col key={c.key} style={{ width: c.width, minWidth: c.width }} />;
+    cols = cols.concat(leafColumns.map((c,i,arr) => {
+      let width = c.width;
+      if(lastShowIndex == i ){
+        width = parseInt(width) + contentWidthDiff;
+      }
+      return <col key={c.key} style={{ width: width, minWidth: c.width }} />;
     }));
     return <colgroup>{cols}</colgroup>;
   }
@@ -549,7 +598,7 @@ class Table extends Component{
       ) : null;
       let _drag_class = this.props.dragborder?"table-drag-bordered":""
       return (
-        <table className={` ${tableClassName} table table-bordered ${_drag_class} `} style={tableStyle}>
+        <table className={` ${tableClassName} table table-bordered ${_drag_class} `} style={tableStyle}  >
           {this.props.dragborder?null:this.getColGroup(columns, fixed)}
           {hasHead ? this.getHeader(columns, fixed) : null}
           {tableBody}
@@ -774,7 +823,7 @@ class Table extends Component{
       };
     }
     return (
-      <div className={className} style={props.style}>
+      <div className={className} style={props.style} ref={el => this.contentTable = el}>
         {this.getTitle()}
         <div className={`${clsPrefix}-content`}>
           {this.columnManager.isAnyColumnsLeftFixed() &&

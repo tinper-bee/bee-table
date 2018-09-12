@@ -40,7 +40,10 @@ class TableHeader extends Component{
       _row.push(newItem);
     });
     this.drag.data = _row;//JSON.parse(JSON.stringify(this.props.rows[0]));
-
+    
+  }
+  static defaultProps = {
+    contentWidthDiff:0
   }
 
   shouldComponentUpdate(nextProps) {
@@ -71,11 +74,18 @@ class TableHeader extends Component{
     this.props.onDrop(event,data);
   }
 
-
-  onMouseMove=(event,data)=>{
-    if(this.border)return; 
+  onMouseOver=(event,data)=>{
+    //如果是固定列没有拖拽功能
+    if(this.border || data.fixed)return; 
     const {clsPrefix} = this.props; 
     event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap-hover`;
+  }
+
+  onMouseMove=(event,data)=>{
+    //如果是固定列没有拖拽功能
+    if(this.border || data.fixed)return; 
+    // const {clsPrefix} = this.props; 
+    // event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap-hover`;
   }
   onMouseOut=(event,data)=>{
     if(this.border)return;
@@ -84,12 +94,14 @@ class TableHeader extends Component{
   }
   onMouseDown=(event,data)=>{
     this.border = true;
-    const {clsPrefix} = this.props; 
+    const {clsPrefix,contentTable} = this.props; 
     this.drag.initPageLeftX = event.pageX;
     this.drag.initLeft = tryParseInt(event.target.style.left);
     this.drag.x = this.drag.initLeft;
     this.drag.currIndex = this.props.rows[0].findIndex(da=>da.key==data.key);
     this.drag.width = this.drag.data[this.drag.currIndex].width;
+
+    this.contentTableWidth = contentTable.width;
   }
   onMouseUp=(event,data)=>{
     this.border = false;
@@ -102,9 +114,20 @@ class TableHeader extends Component{
    
   onThMouseMove=(event,data)=>{ 
     if(!this.border)return;
-    const {dragborderKey} = this.props;
-    console.log(data);
+    const {dragborderKey,contentTable} = this.props;
     let x = (event.pageX - this.drag.initPageLeftX) + this.drag.initLeft-0;
+    if(!this.contentTableWidth){
+      this.contentTableWidth = contentTable.clientWidth;
+    }
+    const newTableWidth = this.contentTableWidth + x;
+    const newWidth = this.drag.width + x;
+    if(newWidth<this.props.minColumnWidth){
+      //清楚样式
+      let moveDom = event.target.querySelector('.th-drag-gap-hover');
+      moveDom && moveDom.classList.remove('th-drag-gap-hover');
+      // event.target.classList.remove('th-drag-gap-hover');
+      return
+    }
     //设置hiden的left
     //"u-table-drag-hide-table"
     let currentHideDom = document.getElementById("u-table-drag-hide-table-"+dragborderKey).getElementsByTagName("div")[this.drag.currIndex];
@@ -126,15 +149,18 @@ class TableHeader extends Component{
 
     //设置当前的宽度 
     let  currentData = this.drag.data[this.drag.currIndex]; 
-    currentData.width = this.drag.width + x; 
+    currentData.width = newWidth; 
     let  currentDom = document.getElementById("u-table-drag-thead-"+this.theadKey).getElementsByTagName("th")[this.drag.currIndex];
-    currentDom.style.width = (currentData.width)+"px"; 
+    currentDom.style.width = newWidth+"px"; 
+    // this.contentTableWidth = newTableWidth;
+    contentTable.style.width = newTableWidth+'px';
     this.drag.x = x; 
+
   }
  
   render() {
     const { clsPrefix, rowStyle ,onDragStart,onDragOver,onDrop,draggable,rows,
-      onMouseDown,onMouseMove,onMouseUp,dragborder,onMouseOut
+      onMouseDown,onMouseMove,onMouseUp,dragborder,onMouseOut,contentWidthDiff,fixed,lastShowIndex
       } = this.props;
     let attr = dragborder?{id:`u-table-drag-thead-${this.theadKey}`}:{}
     return (
@@ -142,9 +168,16 @@ class TableHeader extends Component{
         {
           rows.map((row, index) => (
             <tr key={index} style={rowStyle}>
-              {row.map((da, i) => {
+              {row.map((da, i,arr) => {
                 let thHover =  da.drgHover?` ${clsPrefix}-thead th-drag-hover`:""; 
                 delete da.drgHover;
+                let fixedStyle='';
+                if(!fixed && da.fixed){
+                  fixedStyle=`${clsPrefix}-row-fixed-columns-in-body`;
+                }
+                if(lastShowIndex == i){
+                  da.width = parseInt(da.width) + contentWidthDiff;
+                }
                 if(draggable){
                   return ( <th {...da}
                     onDragStart={(event)=>{this.onDragStart(event,da)}} 
@@ -152,14 +185,15 @@ class TableHeader extends Component{
                     onDrop={(event)=>{this.onDrop(event,da)}} 
                     onDragEnter={(event)=>{this.onDragEnter(event,da)}}
                     draggable={draggable}
-                    className={`${da.className} ${clsPrefix}-thead th-drag ${thHover}`}
+                    className={`${da.className} ${clsPrefix}-thead th-drag ${thHover} ${fixedStyle}`}
                     key={da.key} />)
                 }else if(dragborder){
+                    
                     return(<th
-                    style={{width:da.width,minWidth:da.width}}
+                    style={{width:da.width}}
                     onMouseMove={(event)=>{this.onThMouseMove(event,da)}}
                     onMouseUp={(event)=>{this.onThMouseUp(event,da)}}
-                    className={`${da.className} ${clsPrefix}-thead-th `}
+                    className={`${da.className} ${clsPrefix}-thead-th  ${fixedStyle}`}
                     key={i} >
                       {da.children}
                     <div ref={el=>this.gap = el }
@@ -167,10 +201,11 @@ class TableHeader extends Component{
                       onMouseOut={(event)=>{this.onMouseOut(event,da)}}
                       onMouseDown={(event)=>{this.onMouseDown(event,da)}}
                       onMouseUp={(event)=>{this.onMouseUp(event,da)}} 
+                      onMouseOver={(event)=>{this.onMouseOver(event,da)}}
                       className={`${clsPrefix}-thead-th-drag-gap `}></div>
                     </th>)
                 }else{
-                  let th = da.onClick?(<th {...da} key={i} onClick={(event)=>{da.onClick(da,event)}}/>):(<th {...da} key={i} />);
+                  let th = da.onClick?(<th {...da} className={` ${fixedStyle}`} key={i} onClick={(event)=>{da.onClick(da,event)}}/>):(<th {...da} key={i} className={` ${fixedStyle}`} />);
                   return (th);
                 }
             })}

@@ -30,8 +30,9 @@ class TableCell extends Component{
   }
   render() {
     const { record, indentSize, clsPrefix, indent,
-            index, expandIcon, column } = this.props;
-    const { dataIndex, render, className = '' } = column;
+            index, expandIcon, column ,fixed} = this.props;
+    const { dataIndex, render } = column;
+    let {className = ''} = column;
 
     let text = objectPath.get(record, dataIndex);
     let tdProps;
@@ -62,6 +63,10 @@ class TableCell extends Component{
 
     if (rowSpan === 0 || colSpan === 0) {
       return null;
+    }
+    //不是固定表格并且当前列是固定，则隐藏当前列
+    if(column.fixed && !fixed){
+      className = className+`${clsPrefix}-fixed-columns-in-body`;
     }
     return (
       <td

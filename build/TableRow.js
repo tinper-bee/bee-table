@@ -185,7 +185,8 @@ var TableRow = function (_Component) {
         needIndentSpaced = _props7.needIndentSpaced,
         indent = _props7.indent,
         indentSize = _props7.indentSize,
-        isHiddenExpandIcon = _props7.isHiddenExpandIcon;
+        isHiddenExpandIcon = _props7.isHiddenExpandIcon,
+        fixed = _props7.fixed;
     var className = this.props.className;
 
 
@@ -225,6 +226,7 @@ var TableRow = function (_Component) {
         index: index,
         column: columns[i],
         key: columns[i].key,
+        fixed: fixed,
         expandIcon: isColumnHaveExpandIcon ? expandIcon : null
       }));
     }

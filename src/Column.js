@@ -16,11 +16,14 @@ const propTypes = {
       'right',
     ]),
     render: PropTypes.func,
-    onCellClick: PropTypes.func
+    onCellClick: PropTypes.func,
+    ifshow:PropTypes.bool
 }
 
 class Column extends Component {
-
+  static defaultProps = {
+    ifshow:true
+  }
 }
 
 Column.propTypes = propTypes;

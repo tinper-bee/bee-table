@@ -126,3 +126,20 @@ export function ObjectAssign(obj){
   }
   return tagObj;
 }
+/**
+ * 获取某个父元素
+ * */
+
+export function closest(ele, selector) {
+  const matches = ele.matches || ele.webkitMatchesSelector || ele.mozMatchesSelector || ele.msMatchesSelector;
+  if (matches) {
+    while (ele) {
+      if (matches.call(ele, selector)) {
+        return ele;
+      } else {
+        ele = ele.parentElement;
+      }
+    }
+  }
+  return null;
+}

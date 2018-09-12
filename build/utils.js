@@ -13,6 +13,7 @@ exports.warningOnce = warningOnce;
 exports.addClass = addClass;
 exports.removeClass = removeClass;
 exports.ObjectAssign = ObjectAssign;
+exports.closest = closest;
 
 var _warning = require('warning');
 
@@ -144,4 +145,21 @@ function ObjectAssign(obj) {
     _extends(tagObj, obj);
   }
   return tagObj;
+}
+/**
+ * 获取某个父元素
+ * */
+
+function closest(ele, selector) {
+  var matches = ele.matches || ele.webkitMatchesSelector || ele.mozMatchesSelector || ele.msMatchesSelector;
+  if (matches) {
+    while (ele) {
+      if (matches.call(ele, selector)) {
+        return ele;
+      } else {
+        ele = ele.parentElement;
+      }
+    }
+  }
+  return null;
 }

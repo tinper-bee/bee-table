@@ -7,8 +7,9 @@ import ColumnGroup from './ColumnGroup';
 export default class ColumnManager {
   _cached = {}
 
-  constructor(columns, elements) {
+  constructor(columns, elements,originWidth) {
     this.columns = columns || this.normalize(elements);
+    this.originWidth = originWidth;
   }
 
   isAnyColumnsFixed() {
@@ -48,6 +49,14 @@ export default class ColumnManager {
       );
     });
   }
+  
+  centerColumns() {
+    return this._cache('centerColumns', () => {
+      return this.groupedColumns().filter(
+        column => !column.fixed 
+      );
+    });
+  }
 
   leafColumns() {
     return this._cache('leafColumns', () =>
@@ -66,9 +75,14 @@ export default class ColumnManager {
       this._leafColumns(this.rightColumns())
     );
   }
+  centerLeafColumns() {
+    return this._cache('centerLeafColumns', () =>
+      this._leafColumns(this.centerColumns())
+    );
+  }
 
   // add appropriate rowspan and colspan to column
-  groupedColumns() {
+  groupedColumns(type) {
     return this._cache('groupedColumns', () => {
       const _groupColumns = (columns, currentRow = 0, parentColumn = {}, rows = []) => {
         // track how many rows we got
@@ -85,7 +99,17 @@ export default class ColumnManager {
           }
         };
         columns.forEach((column, index) => {
-          const newColumn = { ...column };
+          let defaultOpt= {
+            ifshow:true
+          }
+          if(!this.originWidth){
+            defaultOpt.width = 200
+          }
+          //获取非固定列
+          if(type=='nofixed' && column.fixed){
+            return false;
+          }
+          const newColumn = { ...defaultOpt,...column };
           rows[currentRow].push(newColumn);
           parentColumn.colSpan = parentColumn.colSpan || 0;
           if (newColumn.children && newColumn.children.length > 0) {
@@ -134,6 +158,44 @@ export default class ColumnManager {
     this.columns = columns || this.normalize(elements);
     this._cached = {};
   }
+  getColumnWidth(){
+    let columns = this.groupedColumns();
+    let res={computeWidth:0,lastShowIndex:0};
+    columns.forEach((col,index)=>{
+      //如果列显示
+      if(col.ifshow){
+        res.computeWidth += parseInt(col.width);
+        if(!col.fixed){
+          res.lastShowIndex = index;
+        }
+      }
+    })
+    return res;
+  }
+
+  getLeftColumnsWidth() {
+    return this._cache('leftColumnsWidth', () => {
+       let leftColumnsWidth =0;
+       this.groupedColumns().forEach(column =>{
+        if (column.fixed === 'left' || column.fixed === true){
+          leftColumnsWidth += column.width;
+        }
+       });
+       return leftColumnsWidth;
+    });
+  }
+
+  getRightColumnsWidth() {
+    return this._cache('rightColumnsWidth', () => {
+      let rightColumnsWidth =0;
+      this.groupedColumns().forEach(column =>{
+       if (column.fixed === 'right'){
+        rightColumnsWidth += column.width;
+       }
+      });
+      return rightColumnsWidth;
+    });
+  }
 
   _cache(name, fn) {
     if (name in this._cached) {
@@ -143,11 +205,21 @@ export default class ColumnManager {
     return this._cached[name];
   }
 
+  //todo 含有children的宽度计算
   _leafColumns(columns) {
     const leafColumns = [];
+ 
     columns.forEach(column => {
       if (!column.children) {
-        leafColumns.push(column);
+
+        let defaultOpt= {
+          ifshow:true
+        }
+        if(!this.originWidth){
+          defaultOpt.width = 200
+        }
+        const newColumn = { ...defaultOpt,...column };
+        leafColumns.push(newColumn);
       } else {
         leafColumns.push(...this._leafColumns(column.children));
       }

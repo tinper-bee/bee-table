@@ -70,11 +70,19 @@ var TableHeader = function (_Component) {
       _this.props.onDrop(event, data);
     };
 
-    _this.onMouseMove = function (event, data) {
-      if (_this.border) return;
+    _this.onMouseOver = function (event, data) {
+      //如果是固定列没有拖拽功能
+      if (_this.border || data.fixed) return;
       var clsPrefix = _this.props.clsPrefix;
 
       event.target.className = clsPrefix + '-thead-th-drag-gap th-drag-gap-hover';
+    };
+
+    _this.onMouseMove = function (event, data) {
+      //如果是固定列没有拖拽功能
+      if (_this.border || data.fixed) return;
+      // const {clsPrefix} = this.props; 
+      // event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap-hover`;
     };
 
     _this.onMouseOut = function (event, data) {
@@ -86,7 +94,9 @@ var TableHeader = function (_Component) {
 
     _this.onMouseDown = function (event, data) {
       _this.border = true;
-      var clsPrefix = _this.props.clsPrefix;
+      var _this$props = _this.props,
+          clsPrefix = _this$props.clsPrefix,
+          contentTable = _this$props.contentTable;
 
       _this.drag.initPageLeftX = event.pageX;
       _this.drag.initLeft = (0, _utils.tryParseInt)(event.target.style.left);
@@ -95,6 +105,8 @@ var TableHeader = function (_Component) {
         return da.key == data.key;
       });
       _this.drag.width = _this.drag.data[_this.drag.currIndex].width;
+
+      _this.contentTableWidth = contentTable.width;
     };
 
     _this.onMouseUp = function (event, data) {
@@ -110,10 +122,23 @@ var TableHeader = function (_Component) {
 
     _this.onThMouseMove = function (event, data) {
       if (!_this.border) return;
-      var dragborderKey = _this.props.dragborderKey;
+      var _this$props2 = _this.props,
+          dragborderKey = _this$props2.dragborderKey,
+          contentTable = _this$props2.contentTable;
 
-      console.log(data);
       var x = event.pageX - _this.drag.initPageLeftX + _this.drag.initLeft - 0;
+      if (!_this.contentTableWidth) {
+        _this.contentTableWidth = contentTable.clientWidth;
+      }
+      var newTableWidth = _this.contentTableWidth + x;
+      var newWidth = _this.drag.width + x;
+      if (newWidth < _this.props.minColumnWidth) {
+        //清楚样式
+        var moveDom = event.target.querySelector('.th-drag-gap-hover');
+        moveDom && moveDom.classList.remove('th-drag-gap-hover');
+        // event.target.classList.remove('th-drag-gap-hover');
+        return;
+      }
       //设置hiden的left
       //"u-table-drag-hide-table"
       var currentHideDom = document.getElementById("u-table-drag-hide-table-" + dragborderKey).getElementsByTagName("div")[_this.drag.currIndex];
@@ -135,9 +160,11 @@ var TableHeader = function (_Component) {
 
       //设置当前的宽度 
       var currentData = _this.drag.data[_this.drag.currIndex];
-      currentData.width = _this.drag.width + x;
+      currentData.width = newWidth;
       var currentDom = document.getElementById("u-table-drag-thead-" + _this.theadKey).getElementsByTagName("th")[_this.drag.currIndex];
-      currentDom.style.width = currentData.width + "px";
+      currentDom.style.width = newWidth + "px";
+      // this.contentTableWidth = newTableWidth;
+      contentTable.style.width = newTableWidth + 'px';
       _this.drag.x = x;
     };
 
@@ -187,7 +214,9 @@ var TableHeader = function (_Component) {
         onMouseMove = _props.onMouseMove,
         onMouseUp = _props.onMouseUp,
         dragborder = _props.dragborder,
-        onMouseOut = _props.onMouseOut;
+        onMouseOut = _props.onMouseOut,
+        contentWidthDiff = _props.contentWidthDiff,
+        fixed = _props.fixed;
 
     var attr = dragborder ? { id: 'u-table-drag-thead-' + this.theadKey } : {};
     return _react2["default"].createElement(
@@ -197,9 +226,16 @@ var TableHeader = function (_Component) {
         return _react2["default"].createElement(
           'tr',
           { key: index, style: rowStyle },
-          row.map(function (da, i) {
+          row.map(function (da, i, arr) {
             var thHover = da.drgHover ? ' ' + clsPrefix + '-thead th-drag-hover' : "";
             delete da.drgHover;
+            var fixedStyle = '';
+            if (!fixed && da.fixed) {
+              fixedStyle = clsPrefix + '-row-fixed-columns-in-body';
+            }
+            if (arr.length == i + 1) {
+              da.width = parseInt(da.width) + contentWidthDiff;
+            }
             if (draggable) {
               return _react2["default"].createElement('th', _extends({}, da, {
                 onDragStart: function onDragStart(event) {
@@ -215,20 +251,21 @@ var TableHeader = function (_Component) {
                   _this2.onDragEnter(event, da);
                 },
                 draggable: draggable,
-                className: da.className + ' ' + clsPrefix + '-thead th-drag ' + thHover,
+                className: da.className + ' ' + clsPrefix + '-thead th-drag ' + thHover + ' ' + fixedStyle,
                 key: da.key }));
             } else if (dragborder) {
+
               return _react2["default"].createElement(
                 'th',
                 {
-                  style: { width: da.width, minWidth: da.width },
+                  style: { width: da.width },
                   onMouseMove: function onMouseMove(event) {
                     _this2.onThMouseMove(event, da);
                   },
                   onMouseUp: function onMouseUp(event) {
                     _this2.onThMouseUp(event, da);
                   },
-                  className: da.className + ' ' + clsPrefix + '-thead-th ',
+                  className: da.className + ' ' + clsPrefix + '-thead-th  ' + fixedStyle,
                   key: i },
                 da.children,
                 _react2["default"].createElement('div', { ref: function ref(el) {
@@ -246,12 +283,15 @@ var TableHeader = function (_Component) {
                   onMouseUp: function onMouseUp(event) {
                     _this2.onMouseUp(event, da);
                   },
+                  onMouseOver: function onMouseOver(event) {
+                    _this2.onMouseOver(event, da);
+                  },
                   className: clsPrefix + '-thead-th-drag-gap ' })
               );
             } else {
-              var th = da.onClick ? _react2["default"].createElement('th', _extends({}, da, { key: i, onClick: function onClick(event) {
+              var th = da.onClick ? _react2["default"].createElement('th', _extends({}, da, { className: ' ' + fixedStyle, key: i, onClick: function onClick(event) {
                   da.onClick(da, event);
-                } })) : _react2["default"].createElement('th', _extends({}, da, { key: i }));
+                } })) : _react2["default"].createElement('th', _extends({}, da, { key: i, className: ' ' + fixedStyle }));
               return th;
             }
           })
@@ -263,6 +303,9 @@ var TableHeader = function (_Component) {
   return TableHeader;
 }(_react.Component);
 
+TableHeader.defaultProps = {
+  contentWidthDiff: 0
+};
 ;
 
 TableHeader.propTypes = propTypes;

@@ -28,7 +28,8 @@ var propTypes = {
   width: _propTypes2["default"].oneOfType([_propTypes2["default"].number, _propTypes2["default"].string]),
   fixed: _propTypes2["default"].oneOf([true, 'left', 'right']),
   render: _propTypes2["default"].func,
-  onCellClick: _propTypes2["default"].func
+  onCellClick: _propTypes2["default"].func,
+  ifshow: _propTypes2["default"].bool
 };
 
 var Column = function (_Component) {
@@ -42,6 +43,12 @@ var Column = function (_Component) {
 
   return Column;
 }(_react.Component);
+
+Column.defaultProps = {
+  width: '200',
+  ifshow: true
+};
+
 
 Column.propTypes = propTypes;
 

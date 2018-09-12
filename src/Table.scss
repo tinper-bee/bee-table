@@ -268,6 +268,9 @@ $table-move-in-color: $bg-color-base;
 
     th{
       background: $table-head-background-color;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
     .th-drag{
       cursor: pointer;
@@ -289,14 +292,16 @@ $table-move-in-color: $bg-color-base;
         top: 0;
         background:transparent;
         width: 2px;
-        cursor: col-resize;
+        
         box-sizing: border-box;
+        z-index: 100;
       }
       .th-drag-gap{
         background:transparent;
       }
       .th-drag-gap-hover{
         background: #ccc;
+        cursor: col-resize;
       }
     }
     &-th:last-child {
@@ -349,6 +354,10 @@ $table-move-in-color: $bg-color-base;
     }
   }
   //拖拽宽度代码
+  &-row-fixed-columns-in-body{
+    visibility: hidden;
+    pointer-events: none;
+  }
 }
 
 .u-table.bordered {

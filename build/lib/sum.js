@@ -192,7 +192,8 @@ function sum(Table) {
         footerScroll: true,
         columns: this.props.columns,
         data: this.props.data,
-        footer: this.setFooterRender
+        footer: this.setFooterRender,
+        originWidth: true
       }));
     };
 

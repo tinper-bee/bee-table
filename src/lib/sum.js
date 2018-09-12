@@ -61,7 +61,7 @@ export default function sum(Table) {
         }
         return item;
       });
-      return <Table{...this.props} loading={false} footerScroll showHeader={false} columns={columns_sum} data={obj} />;
+      return <Table{...this.props} loading={false} footerScroll showHeader={false} columns={columns_sum} data={obj} originWidth={true}/>;
     };
 
     currentTreeFooter =()=>{
@@ -84,7 +84,7 @@ export default function sum(Table) {
       }
       let _sumArray = [{key:"sumData",showSum:"合计",..._countObj}];
       columns[0] = Object.assign({}, columns[0], columns2);
-      return <Table{...this.props} bordered={false} loading={false} footerScroll showHeader={false} columns={columns} data={_sumArray} />;
+      return <Table{...this.props} bordered={false} loading={false} footerScroll showHeader={false} columns={columns} data={_sumArray} originWidth={true}/>;
     }
 
     getNodeItem =(array,newArray)=>{
@@ -132,6 +132,7 @@ export default function sum(Table) {
           columns={this.props.columns}
           data={this.props.data}
           footer={this.setFooterRender}
+          originWidth={true}
         />
       );
     }

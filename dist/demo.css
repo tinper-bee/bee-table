@@ -8528,7 +8528,10 @@ ul {
   .u-table-scroll-position-right .u-table-fixed-right {
     box-shadow: none; }
   .u-table-thead th {
-    background: #f7f7f7; }
+    background: #f7f7f7;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; }
   .u-table-thead .th-drag {
     cursor: pointer; }
   .u-table-thead .th-drag-hover {
@@ -8542,12 +8545,13 @@ ul {
       top: 0;
       background: transparent;
       width: 2px;
-      cursor: col-resize;
-      box-sizing: border-box; }
+      box-sizing: border-box;
+      z-index: 100; }
     .u-table-thead-th .th-drag-gap {
       background: transparent; }
     .u-table-thead-th .th-drag-gap-hover {
-      background: #ccc; }
+      background: #ccc;
+      cursor: col-resize; }
   .u-table-thead-th:last-child-drag-gap {
     border: none; }
   .u-table-filter-column-pop-cont {
@@ -8581,6 +8585,9 @@ ul {
   .u-table-filter-column-pop .u-modal-dialog {
     border: 1px solid #ccc;
     background: #fff; }
+  .u-table-row-fixed-columns-in-body {
+    visibility: hidden;
+    pointer-events: none; }
 
 .u-table.bordered table {
   border-collapse: collapse; }

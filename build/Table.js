@@ -87,8 +87,8 @@ var propTypes = {
   rowRef: _propTypes2["default"].func,
   getBodyWrapper: _propTypes2["default"].func,
   children: _propTypes2["default"].node,
-
-  draggable: _propTypes2["default"].bool
+  draggable: _propTypes2["default"].bool,
+  minColumnWidth: _propTypes2["default"].number
 };
 
 var defaultProps = {
@@ -125,7 +125,8 @@ var defaultProps = {
   },
   emptyText: function emptyText() {
     return 'No Data';
-  }
+  },
+  minColumnWidth: 80
 };
 
 var Table = function (_Component) {
@@ -202,12 +203,16 @@ var Table = function (_Component) {
     _this.detectScrollTarget = _this.detectScrollTarget.bind(_this);
     _this.handleBodyScroll = _this.handleBodyScroll.bind(_this);
     _this.handleRowHover = _this.handleRowHover.bind(_this);
-
+    _this.computeTableWidth = _this.computeTableWidth.bind(_this);
     return _this;
   }
 
   Table.prototype.componentDidMount = function componentDidMount() {
     setTimeout(this.resetScrollY, 300);
+    //后续也放在recevice里面
+    if (!this.props.originWidth) {
+      this.computeTableWidth();
+    }
     if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
       this.resizeEvent = (0, _addEventListener2["default"])(window, 'resize', (0, _utils.debounce)(this.syncFixedTableRowHeight, 150));
@@ -233,6 +238,9 @@ var Table = function (_Component) {
     } else if (nextProps.children !== this.props.children) {
       this.columnManager.reset(null, nextProps.children);
     }
+    if (!nextProps.originWidth) {
+      this.computeTableWidth();
+    }
   };
 
   Table.prototype.componentDidUpdate = function componentDidUpdate() {
@@ -244,6 +252,16 @@ var Table = function (_Component) {
   Table.prototype.componentWillUnmount = function componentWillUnmount() {
     if (this.resizeEvent) {
       this.resizeEvent.remove();
+    }
+  };
+
+  Table.prototype.computeTableWidth = function computeTableWidth() {
+    //计算总表格宽度、根据表格宽度和各列的宽度和比较，重置最后一列
+    this.contentWidth = this.contentTable.clientWidth; //表格宽度
+    this.computeWidth = this.columnManager.getColumnWidth();
+    if (this.computeWidth < this.contentWidth) {
+      var contentWidthDiff = this.contentWidth - this.computeWidth;
+      this.setState({ contentWidthDiff: contentWidthDiff });
     }
   };
 
@@ -311,7 +329,8 @@ var Table = function (_Component) {
         onMouseUp = _props.onMouseUp,
         dragborder = _props.dragborder,
         onThMouseMove = _props.onThMouseMove,
-        dragborderKey = _props.dragborderKey;
+        dragborderKey = _props.dragborderKey,
+        minColumnWidth = _props.minColumnWidth;
 
     var rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
@@ -326,11 +345,19 @@ var Table = function (_Component) {
     var trStyle = fixed ? this.getHeaderRowStyle(columns, rows) : null;
     var drop = draggable ? { onDragStart: onDragStart, onDragOver: onDragOver, onDrop: onDrop, onDragEnter: onDragEnter, draggable: draggable } : {};
     var dragBorder = dragborder ? { onMouseDown: onMouseDown, onMouseMove: onMouseMove, onMouseUp: onMouseUp, dragborder: dragborder, onThMouseMove: onThMouseMove, dragborderKey: dragborderKey } : {};
-
+    var contentWidthDiff = 0;
+    //非固定表格,宽度不够时自动扩充
+    if (!fixed) {
+      contentWidthDiff = this.state.contentWidthDiff;
+    }
     return showHeader ? _react2["default"].createElement(_TableHeader2["default"], _extends({}, drop, dragBorder, {
+      minColumnWidth: minColumnWidth,
+      contentWidthDiff: contentWidthDiff,
       clsPrefix: clsPrefix,
       rows: rows,
-      rowStyle: trStyle
+      contentTable: this.contentTable,
+      rowStyle: trStyle,
+      fixed: fixed
     })) : null;
   };
 
@@ -354,7 +381,8 @@ var Table = function (_Component) {
         className: column.className || '',
         children: column.title,
         drgHover: column.drgHover,
-        width: column.width
+        fixed: column.fixed,
+        width: column.width ? column.width : 200
       };
       if (column.onHeadCellClick) {
         cell.onClick = column.onHeadCellClick;
@@ -513,7 +541,8 @@ var Table = function (_Component) {
         key: key,
         hoverKey: key,
         ref: rowRef,
-        store: this.store
+        store: this.store,
+        fixed: fixed
       })));
       this.treeRowIndex++;
       var subVisible = visible && isRowExpanded;
@@ -537,6 +566,10 @@ var Table = function (_Component) {
 
   Table.prototype.getColGroup = function getColGroup(columns, fixed) {
     var cols = [];
+    var _state$contentWidthDi = this.state.contentWidthDiff,
+        contentWidthDiff = _state$contentWidthDi === undefined ? 0 : _state$contentWidthDi;
+
+
     if (this.props.expandIconAsCell && fixed !== 'right') {
       cols.push(_react2["default"].createElement('col', {
         className: this.props.clsPrefix + '-expand-icon-col',
@@ -545,14 +578,20 @@ var Table = function (_Component) {
     }
     var leafColumns = void 0;
     if (fixed === 'left') {
+      contentWidthDiff = 0;
       leafColumns = this.columnManager.leftLeafColumns();
     } else if (fixed === 'right') {
+      contentWidthDiff = 0;
       leafColumns = this.columnManager.rightLeafColumns();
     } else {
       leafColumns = this.columnManager.leafColumns();
     }
-    cols = cols.concat(leafColumns.map(function (c) {
-      return _react2["default"].createElement('col', { key: c.key, style: { width: c.width, minWidth: c.width } });
+    cols = cols.concat(leafColumns.map(function (c, i, arr) {
+      var width = c.width;
+      if (arr.length == i + 1) {
+        width = parseInt(width) + contentWidthDiff;
+      }
+      return _react2["default"].createElement('col', { key: c.key, style: { width: width, minWidth: c.width } });
     }));
     return _react2["default"].createElement(
       'colgroup',
@@ -862,6 +901,8 @@ var Table = function (_Component) {
   };
 
   Table.prototype.render = function render() {
+    var _this5 = this;
+
     var props = this.props;
     var clsPrefix = props.clsPrefix;
 
@@ -886,7 +927,9 @@ var Table = function (_Component) {
     }
     return _react2["default"].createElement(
       'div',
-      { className: className, style: props.style },
+      { className: className, style: props.style, ref: function ref(el) {
+          return _this5.contentTable = el;
+        } },
       this.getTitle(),
       _react2["default"].createElement(
         'div',

@@ -71,10 +71,11 @@ var TableCell = function (_Component) {
         indent = _props2.indent,
         index = _props2.index,
         expandIcon = _props2.expandIcon,
-        column = _props2.column;
+        column = _props2.column,
+        fixed = _props2.fixed;
     var dataIndex = column.dataIndex,
-        render = column.render,
-        _column$className = column.className,
+        render = column.render;
+    var _column$className = column.className,
         className = _column$className === undefined ? '' : _column$className;
 
 
@@ -104,6 +105,10 @@ var TableCell = function (_Component) {
 
     if (rowSpan === 0 || colSpan === 0) {
       return null;
+    }
+    //不是固定表格并且当前列是固定，则隐藏当前列
+    if (column.fixed && !fixed) {
+      className = className + (clsPrefix + '-fixed-columns-in-body');
     }
     return _react2["default"].createElement(
       'td',
