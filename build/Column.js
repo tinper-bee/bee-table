@@ -45,7 +45,6 @@ var Column = function (_Component) {
 }(_react.Component);
 
 Column.defaultProps = {
-  width: '200',
   ifshow: true
 };
 

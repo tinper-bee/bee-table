@@ -216,7 +216,8 @@ var TableHeader = function (_Component) {
         dragborder = _props.dragborder,
         onMouseOut = _props.onMouseOut,
         contentWidthDiff = _props.contentWidthDiff,
-        fixed = _props.fixed;
+        fixed = _props.fixed,
+        lastShowIndex = _props.lastShowIndex;
 
     var attr = dragborder ? { id: 'u-table-drag-thead-' + this.theadKey } : {};
     return _react2["default"].createElement(
@@ -233,7 +234,7 @@ var TableHeader = function (_Component) {
             if (!fixed && da.fixed) {
               fixedStyle = clsPrefix + '-row-fixed-columns-in-body';
             }
-            if (arr.length == i + 1) {
+            if (lastShowIndex == i) {
               da.width = parseInt(da.width) + contentWidthDiff;
             }
             if (draggable) {

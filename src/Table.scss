@@ -104,12 +104,18 @@ $table-move-in-color: $bg-color-base;
   }
   &-fixed-left &-body-inner {
     margin-right: -20px;
+    padding-right: 20px;
+  }
+
+   &-fixed-header &-fixed-left &-body-inner {
+    padding-right: 0px;
   }
 
   &-fixed-header &-body-inner {
     height: 100%;
     overflow: scroll;
   }
+
 
   &-fixed-header &-scroll &-header {
     overflow-x: scroll;

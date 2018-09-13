@@ -153,7 +153,8 @@ class TableHeader extends Component{
     let  currentDom = document.getElementById("u-table-drag-thead-"+this.theadKey).getElementsByTagName("th")[this.drag.currIndex];
     currentDom.style.width = newWidth+"px"; 
     // this.contentTableWidth = newTableWidth;
-    contentTable.style.width = newTableWidth+'px';
+    let contentTableDom = document.getElementById("u-table-drag-thead-"+this.theadKey).parentNode;
+    contentTableDom.style.width = newTableWidth+'px';
     this.drag.x = x; 
 
   }

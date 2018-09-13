@@ -27,12 +27,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 //行控制管理
 
 var ColumnManager = function () {
-  function ColumnManager(columns, elements) {
+  function ColumnManager(columns, elements, originWidth) {
     _classCallCheck(this, ColumnManager);
 
     this._cached = {};
 
     this.columns = columns || this.normalize(elements);
+    this.originWidth = originWidth;
   }
 
   ColumnManager.prototype.isAnyColumnsFixed = function isAnyColumnsFixed() {
@@ -151,10 +152,13 @@ var ColumnManager = function () {
         };
         columns.forEach(function (column, index) {
           var defaultOpt = {
-            ifshow: true,
-            width: 200
-            //获取非固定列
-          };if (type == 'nofixed' && column.fixed) {
+            ifshow: true
+          };
+          if (!_this11.originWidth) {
+            defaultOpt.width = 200;
+          }
+          //获取非固定列
+          if (type == 'nofixed' && column.fixed) {
             return false;
           }
           var newColumn = _extends({}, defaultOpt, column);
@@ -210,15 +214,18 @@ var ColumnManager = function () {
   };
 
   ColumnManager.prototype.getColumnWidth = function getColumnWidth() {
-    var computeWidth = 0;
     var columns = this.groupedColumns();
-    columns.forEach(function (col) {
-      //如果列显示，固定列也要去掉
-      if (col.ifshow && !col.fixed) {
-        computeWidth += parseInt(col.width);
+    var res = { computeWidth: 0, lastShowIndex: 0 };
+    columns.forEach(function (col, index) {
+      //如果列显示
+      if (col.ifshow) {
+        res.computeWidth += parseInt(col.width);
+        if (!col.fixed) {
+          res.lastShowIndex = index;
+        }
       }
     });
-    return computeWidth;
+    return res;
   };
 
   ColumnManager.prototype.getLeftColumnsWidth = function getLeftColumnsWidth() {
@@ -257,20 +264,24 @@ var ColumnManager = function () {
     return this._cached[name];
   };
 
+  //todo 含有children的宽度计算
+
+
   ColumnManager.prototype._leafColumns = function _leafColumns(columns) {
     var _this15 = this;
 
     var leafColumns = [];
-    var parWidth = 0;
+
     columns.forEach(function (column) {
       if (!column.children) {
 
         var defaultOpt = {
-          ifshow: true,
-          width: 200
+          ifshow: true
         };
+        if (!_this15.originWidth) {
+          defaultOpt.width = 200;
+        }
         var newColumn = _extends({}, defaultOpt, column);
-        parWidth += newColumn.width;
         leafColumns.push(newColumn);
       } else {
         leafColumns.push.apply(leafColumns, _toConsumableArray(_this15._leafColumns(column.children)));

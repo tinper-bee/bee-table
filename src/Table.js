@@ -186,7 +186,11 @@ class Table extends Component{
         if(typeof(setWidthParam)=='string' && setWidthParam.indexOf('%')){
           this.contentWidth = this.contentWidth * parseInt(setWidthParam) /100
         }else{
-          this.contentWidth = parseInt(setWidthParam);
+          let numSetWidthParam = parseInt(setWidthParam);
+          //若传入的宽度小于当前宽度以当前宽度为主。
+          if(numSetWidthParam > this.contentWidth){
+            this.contentWidth = numSetWidthParam;
+          }
         }
       }
       const computeObj = this.columnManager.getColumnWidth();

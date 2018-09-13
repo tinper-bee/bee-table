@@ -157,7 +157,7 @@ var Table = function (_Component) {
 
     var expandedRowKeys = [];
     var rows = [].concat(_toConsumableArray(props.data));
-    _this.columnManager = new _ColumnManager2["default"](props.columns, props.children);
+    _this.columnManager = new _ColumnManager2["default"](props.columns, props.children, props.originWidth);
     _this.store = (0, _createStore2["default"])({ currentHoverKey: null });
 
     if (props.defaultExpandAllRows) {
@@ -258,10 +258,21 @@ var Table = function (_Component) {
   Table.prototype.computeTableWidth = function computeTableWidth() {
     //计算总表格宽度、根据表格宽度和各列的宽度和比较，重置最后一列
     this.contentWidth = this.contentTable.clientWidth; //表格宽度
-    this.computeWidth = this.columnManager.getColumnWidth();
+    //如果用户传了scroll.x按用户传的为主
+    var setWidthParam = this.props.scroll.x;
+    if (setWidthParam) {
+      if (typeof setWidthParam == 'string' && setWidthParam.indexOf('%')) {
+        this.contentWidth = this.contentWidth * parseInt(setWidthParam) / 100;
+      } else {
+        this.contentWidth = parseInt(setWidthParam);
+      }
+    }
+    var computeObj = this.columnManager.getColumnWidth();
+    var lastShowIndex = computeObj.lastShowIndex;
+    this.computeWidth = computeObj.computeWidth;
     if (this.computeWidth < this.contentWidth) {
       var contentWidthDiff = this.contentWidth - this.computeWidth;
-      this.setState({ contentWidthDiff: contentWidthDiff });
+      this.setState({ contentWidthDiff: contentWidthDiff, lastShowIndex: lastShowIndex });
     }
   };
 
@@ -353,6 +364,7 @@ var Table = function (_Component) {
     return showHeader ? _react2["default"].createElement(_TableHeader2["default"], _extends({}, drop, dragBorder, {
       minColumnWidth: minColumnWidth,
       contentWidthDiff: contentWidthDiff,
+      lastShowIndex: this.state.lastShowIndex,
       clsPrefix: clsPrefix,
       rows: rows,
       contentTable: this.contentTable,
@@ -382,7 +394,7 @@ var Table = function (_Component) {
         children: column.title,
         drgHover: column.drgHover,
         fixed: column.fixed,
-        width: column.width ? column.width : 200
+        width: column.width
       };
       if (column.onHeadCellClick) {
         cell.onClick = column.onHeadCellClick;
@@ -566,9 +578,11 @@ var Table = function (_Component) {
 
   Table.prototype.getColGroup = function getColGroup(columns, fixed) {
     var cols = [];
-    var _state$contentWidthDi = this.state.contentWidthDiff,
-        contentWidthDiff = _state$contentWidthDi === undefined ? 0 : _state$contentWidthDi;
-
+    var _state = this.state,
+        _state$contentWidthDi = _state.contentWidthDiff,
+        contentWidthDiff = _state$contentWidthDi === undefined ? 0 : _state$contentWidthDi,
+        _state$lastShowIndex = _state.lastShowIndex,
+        lastShowIndex = _state$lastShowIndex === undefined ? 0 : _state$lastShowIndex;
 
     if (this.props.expandIconAsCell && fixed !== 'right') {
       cols.push(_react2["default"].createElement('col', {
@@ -588,7 +602,7 @@ var Table = function (_Component) {
     }
     cols = cols.concat(leafColumns.map(function (c, i, arr) {
       var width = c.width;
-      if (arr.length == i + 1) {
+      if (lastShowIndex == i) {
         width = parseInt(width) + contentWidthDiff;
       }
       return _react2["default"].createElement('col', { key: c.key, style: { width: width, minWidth: c.width } });
