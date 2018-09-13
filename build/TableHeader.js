@@ -164,7 +164,8 @@ var TableHeader = function (_Component) {
       var currentDom = document.getElementById("u-table-drag-thead-" + _this.theadKey).getElementsByTagName("th")[_this.drag.currIndex];
       currentDom.style.width = newWidth + "px";
       // this.contentTableWidth = newTableWidth;
-      contentTable.style.width = newTableWidth + 'px';
+      var contentTableDom = document.getElementById("u-table-drag-thead-" + _this.theadKey).parentNode;
+      contentTableDom.style.width = newTableWidth + 'px';
       _this.drag.x = x;
     };
 

@@ -212,7 +212,10 @@
     background: #fff;
     position: relative; }
   .u-table-fixed-left .u-table-body-inner {
-    margin-right: -20px; }
+    margin-right: -20px;
+    padding-right: 20px; }
+  .u-table-fixed-header .u-table-fixed-left .u-table-body-inner {
+    padding-right: 0px; }
   .u-table-fixed-header .u-table-body-inner {
     height: 100%;
     overflow: scroll; }
