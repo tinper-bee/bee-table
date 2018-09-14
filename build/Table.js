@@ -264,7 +264,8 @@ var Table = function (_Component) {
       this.contentWidth = numSetWidthParam;
     } else {
       //计算总表格宽度、根据表格宽度和各列的宽度和比较，重置最后一列
-      this.contentWidth = this.contentTable.getBoundingClientRect().width; //表格宽度
+      this.contentDomWidth = this.contentTable.getBoundingClientRect().width; //表格容器宽度
+      this.contentWidth = this.contentDomWidth; //默认与容器宽度一样
       if (typeof setWidthParam == 'string' && setWidthParam.indexOf('%')) {
         this.contentWidth = this.contentWidth * parseInt(setWidthParam) / 100;
       }
