@@ -244,6 +244,7 @@ var Table = function (_Component) {
   };
 
   Table.prototype.componentDidUpdate = function componentDidUpdate() {
+
     if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
     }
@@ -256,19 +257,16 @@ var Table = function (_Component) {
   };
 
   Table.prototype.computeTableWidth = function computeTableWidth() {
-    //计算总表格宽度、根据表格宽度和各列的宽度和比较，重置最后一列
-    this.contentWidth = this.contentTable.clientWidth; //表格宽度
     //如果用户传了scroll.x按用户传的为主
     var setWidthParam = this.props.scroll.x;
-    if (setWidthParam) {
+    if (typeof setWidthParam == 'number') {
+      var numSetWidthParam = parseInt(setWidthParam);
+      this.contentWidth = numSetWidthParam;
+    } else {
+      //计算总表格宽度、根据表格宽度和各列的宽度和比较，重置最后一列
+      this.contentWidth = this.contentTable.getBoundingClientRect().width; //表格宽度
       if (typeof setWidthParam == 'string' && setWidthParam.indexOf('%')) {
         this.contentWidth = this.contentWidth * parseInt(setWidthParam) / 100;
-      } else {
-        var numSetWidthParam = parseInt(setWidthParam);
-        //若传入的宽度小于当前宽度以当前宽度为主。
-        if (numSetWidthParam > this.contentWidth) {
-          this.contentWidth = numSetWidthParam;
-        }
       }
     }
     var computeObj = this.columnManager.getColumnWidth();
@@ -345,7 +343,8 @@ var Table = function (_Component) {
         dragborder = _props.dragborder,
         onThMouseMove = _props.onThMouseMove,
         dragborderKey = _props.dragborderKey,
-        minColumnWidth = _props.minColumnWidth;
+        minColumnWidth = _props.minColumnWidth,
+        headerHeight = _props.headerHeight;
 
     var rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
@@ -357,7 +356,7 @@ var Table = function (_Component) {
       });
     }
 
-    var trStyle = fixed ? this.getHeaderRowStyle(columns, rows) : null;
+    var trStyle = headerHeight ? { height: headerHeight } : fixed ? this.getHeaderRowStyle(columns, rows) : null;
     var drop = draggable ? { onDragStart: onDragStart, onDragOver: onDragOver, onDrop: onDrop, onDragEnter: onDragEnter, draggable: draggable } : {};
     var dragBorder = dragborder ? { onMouseDown: onMouseDown, onMouseMove: onMouseMove, onMouseUp: onMouseUp, dragborder: dragborder, onThMouseMove: onThMouseMove, dragborderKey: dragborderKey } : {};
     var contentWidthDiff = 0;
@@ -484,6 +483,7 @@ var Table = function (_Component) {
 
     var rst = [];
     var isHiddenExpandIcon = void 0;
+    var height = void 0;
     var rowClassName = props.rowClassName;
     var rowRef = props.rowRef;
     var expandedRowClassName = props.expandedRowClassName;
@@ -520,7 +520,12 @@ var Table = function (_Component) {
       if (this.treeType) {
         fixedIndex = this.treeRowIndex;
       }
-      var height = fixed && fixedColumnsBodyRowsHeight[fixedIndex] ? fixedColumnsBodyRowsHeight[fixedIndex] : null;
+
+      if (props.fixedHeight) {
+        height = props.fixedHeight;
+      } else {
+        height = fixed && fixedColumnsBodyRowsHeight[fixedIndex] ? fixedColumnsBodyRowsHeight[fixedIndex] : null;
+      }
 
       var leafColumns = void 0;
       if (fixed === 'left') {
@@ -812,6 +817,7 @@ var Table = function (_Component) {
     var fixedColumnsHeadRowsHeight = this.state.fixedColumnsHeadRowsHeight;
 
     var headerHeight = fixedColumnsHeadRowsHeight[0];
+
     if (headerHeight && columns) {
       if (headerHeight === 'auto') {
         return { height: 'auto' };
@@ -822,15 +828,19 @@ var Table = function (_Component) {
   };
 
   Table.prototype.syncFixedTableRowHeight = function syncFixedTableRowHeight() {
-    var clsPrefix = this.props.clsPrefix;
+    //this.props.height、headerHeight分别为用户传入的行高和表头高度，如果有值，所有行的高度都是固定的，主要为了避免在千行数据中有固定列时获取行高度有问题
+    var _props7 = this.props,
+        clsPrefix = _props7.clsPrefix,
+        height = _props7.height,
+        headerHeight = _props7.headerHeight;
 
     var headRows = this.refs.headTable ? this.refs.headTable.querySelectorAll('thead') : this.refs.bodyTable.querySelectorAll('thead');
     var bodyRows = this.refs.bodyTable.querySelectorAll('.' + clsPrefix + '-row') || [];
     var fixedColumnsHeadRowsHeight = [].map.call(headRows, function (row) {
-      return row.getBoundingClientRect().height || 'auto';
+      return headerHeight ? headerHeight : row.getBoundingClientRect().height || 'auto';
     });
     var fixedColumnsBodyRowsHeight = [].map.call(bodyRows, function (row) {
-      return row.getBoundingClientRect().height || 'auto';
+      return height ? height : row.getBoundingClientRect().height || 'auto';
     });
     if ((0, _shallowequal2["default"])(this.state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) && (0, _shallowequal2["default"])(this.state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
       return;

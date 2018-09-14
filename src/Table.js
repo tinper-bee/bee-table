@@ -166,6 +166,7 @@ class Table extends Component{
   }
 
   componentDidUpdate() {
+    
     if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
     }
@@ -178,20 +179,18 @@ class Table extends Component{
   }
 
   computeTableWidth(){
-      //计算总表格宽度、根据表格宽度和各列的宽度和比较，重置最后一列
-      this.contentWidth = this.contentTable.clientWidth//表格宽度
       //如果用户传了scroll.x按用户传的为主
       let setWidthParam = this.props.scroll.x
-      if(setWidthParam){
-        if(typeof(setWidthParam)=='string' && setWidthParam.indexOf('%')){
-          this.contentWidth = this.contentWidth * parseInt(setWidthParam) /100
-        }else{
-          let numSetWidthParam = parseInt(setWidthParam);
-          //若传入的宽度小于当前宽度以当前宽度为主。
-          if(numSetWidthParam > this.contentWidth){
-            this.contentWidth = numSetWidthParam;
+      if(typeof(setWidthParam) == 'number'){
+        let numSetWidthParam = parseInt(setWidthParam);
+        this.contentWidth = numSetWidthParam;
+      }else{
+          //计算总表格宽度、根据表格宽度和各列的宽度和比较，重置最后一列
+          this.contentDomWidth = this.contentTable.getBoundingClientRect().width//表格容器宽度
+          this.contentWidth = this.contentDomWidth;//默认与容器宽度一样
+          if(typeof(setWidthParam)=='string' && setWidthParam.indexOf('%')){
+            this.contentWidth = this.contentWidth * parseInt(setWidthParam) /100
           }
-        }
       }
       const computeObj = this.columnManager.getColumnWidth();
       let lastShowIndex = computeObj.lastShowIndex;
@@ -258,7 +257,7 @@ class Table extends Component{
 
   getHeader(columns, fixed) {
     const { showHeader, expandIconAsCell, clsPrefix ,onDragStart,onDragEnter,onDragOver,onDrop,draggable,
-      onMouseDown,onMouseMove,onMouseUp,dragborder,onThMouseMove,dragborderKey,minColumnWidth} = this.props;
+      onMouseDown,onMouseMove,onMouseUp,dragborder,onThMouseMove,dragborderKey,minColumnWidth,headerHeight} = this.props;
     const rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
       rows[0].unshift({
@@ -269,7 +268,7 @@ class Table extends Component{
       });
     }
 
-    const trStyle = fixed ? this.getHeaderRowStyle(columns, rows) : null;
+    const trStyle =headerHeight?{height:headerHeight}:(fixed ? this.getHeaderRowStyle(columns, rows) : null);
     let drop = draggable?{onDragStart,onDragOver,onDrop,onDragEnter,draggable}:{};
     let dragBorder = dragborder?{onMouseDown,onMouseMove,onMouseUp,dragborder,onThMouseMove,dragborderKey}:{};
     let contentWidthDiff = 0;
@@ -389,6 +388,7 @@ class Table extends Component{
     const { fixedColumnsBodyRowsHeight } = this.state;
     let rst = [];
     let isHiddenExpandIcon;
+    let height;
     const rowClassName = props.rowClassName;
     const rowRef = props.rowRef;
     const expandedRowClassName = props.expandedRowClassName;
@@ -423,8 +423,13 @@ class Table extends Component{
       if(this.treeType){
         fixedIndex = this.treeRowIndex;
       }
-      const height = (fixed && fixedColumnsBodyRowsHeight[fixedIndex]) ?
-        fixedColumnsBodyRowsHeight[fixedIndex] : null;
+       
+      if(props.fixedHeight){
+        height = props.fixedHeight
+      }else{
+        height =  (fixed && fixedColumnsBodyRowsHeight[fixedIndex]) ? fixedColumnsBodyRowsHeight[fixedIndex] : null;
+      }
+     
 
 
       let leafColumns;
@@ -700,6 +705,7 @@ class Table extends Component{
   getHeaderRowStyle(columns, rows) {
     const { fixedColumnsHeadRowsHeight } = this.state;
     const headerHeight = fixedColumnsHeadRowsHeight[0];
+
     if (headerHeight && columns) {
       if (headerHeight === 'auto') {
         return { height: 'auto' };
@@ -710,16 +716,17 @@ class Table extends Component{
   }
 
   syncFixedTableRowHeight() {
-    const { clsPrefix } = this.props;
+    //this.props.height、headerHeight分别为用户传入的行高和表头高度，如果有值，所有行的高度都是固定的，主要为了避免在千行数据中有固定列时获取行高度有问题
+    const { clsPrefix ,height,headerHeight} = this.props;
     const headRows = this.refs.headTable ?
             this.refs.headTable.querySelectorAll('thead') :
             this.refs.bodyTable.querySelectorAll('thead');
     const bodyRows = this.refs.bodyTable.querySelectorAll(`.${clsPrefix}-row`) || [];
     const fixedColumnsHeadRowsHeight = [].map.call(
-      headRows, row => row.getBoundingClientRect().height || 'auto'
+      headRows, row => headerHeight?headerHeight:(row.getBoundingClientRect().height || 'auto')
     );
     const fixedColumnsBodyRowsHeight = [].map.call(
-      bodyRows, row => row.getBoundingClientRect().height || 'auto'
+      bodyRows, row =>  height?height:(row.getBoundingClientRect().height || 'auto')
     );
     if (shallowequal(this.state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
         shallowequal(this.state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {

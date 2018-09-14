@@ -70,15 +70,21 @@ class Demo1 extends Component {
 
   render() {
     return (
-      <Table
-        columns={columns}
-        data={data}
-        onRowClick={(record, index, indent) => {
-          this.setState({
-            selectedRowIndex: index
-          });
-        }}
-      />
+   
+        <Table
+          columns={columns}
+          data={data}
+          parentNodeId='parent'
+          height={43}
+          headerHeight={42}
+          onRowClick={(record, index, indent) => {
+            this.setState({
+              selectedRowIndex: index
+            });
+          }}
+        />
+
+     
     );
   }
 }
