@@ -564,7 +564,8 @@ class Table extends Component{
     const headStyle = {};
 
     let tableClassName = '';
-    if (scroll.x || fixed) {
+    //表格元素的宽度大于容器的宽度也显示滚动条
+    if (scroll.x || fixed || this.contentDomWidth<this.contentWidth) {
       tableClassName = `${clsPrefix}-fixed`;
       if(!footerScroll){
         bodyStyle.overflowX = bodyStyle.overflowX || 'auto';
@@ -607,7 +608,7 @@ class Table extends Component{
       ) : null;
       let _drag_class = this.props.dragborder?"table-drag-bordered":""
       return (
-        <table className={` ${tableClassName} table table-bordered ${_drag_class} `} style={tableStyle}  >
+        <table className={` ${tableClassName}  table-bordered ${_drag_class} `} style={tableStyle}  >
           {this.props.dragborder?null:this.getColGroup(columns, fixed)}
           {hasHead ? this.getHeader(columns, fixed) : null}
           {tableBody}

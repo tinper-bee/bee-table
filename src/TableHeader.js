@@ -100,8 +100,9 @@ class TableHeader extends Component{
     this.drag.x = this.drag.initLeft;
     this.drag.currIndex = this.props.rows[0].findIndex(da=>da.key==data.key);
     this.drag.width = this.drag.data[this.drag.currIndex].width;
-
-    this.contentTableWidth = contentTable.width;
+    let contentTableDom = document.getElementById("u-table-drag-thead-"+this.theadKey).parentNode;
+    
+    this.contentTableWidth = contentTableDom.style.width?parseInt(contentTableDom.style.width):parseInt(contentTableDom.scrollWidth);
   }
   onMouseUp=(event,data)=>{
     this.border = false;
@@ -116,10 +117,14 @@ class TableHeader extends Component{
     if(!this.border)return;
     const {dragborderKey,contentTable} = this.props;
     let x = (event.pageX - this.drag.initPageLeftX) + this.drag.initLeft-0;
+    let contentTableDom = document.getElementById("u-table-drag-thead-"+this.theadKey).parentNode;
+    
     if(!this.contentTableWidth){
-      this.contentTableWidth = contentTable.clientWidth;
+      this.contentTableWidth = contentTableDom.style.width?parseInt(contentTableDom.style.width):parseInt(contentTableDom.scrollWidth);
     }
+    // console.log(this.contentTableWidth,x);
     const newTableWidth = this.contentTableWidth + x;
+    // console.log(newTableWidth);
     const newWidth = this.drag.width + x;
     if(newWidth<this.props.minColumnWidth){
       //清楚样式
@@ -153,8 +158,9 @@ class TableHeader extends Component{
     let  currentDom = document.getElementById("u-table-drag-thead-"+this.theadKey).getElementsByTagName("th")[this.drag.currIndex];
     currentDom.style.width = newWidth+"px"; 
     // this.contentTableWidth = newTableWidth;
-    let contentTableDom = document.getElementById("u-table-drag-thead-"+this.theadKey).parentNode;
+   
     contentTableDom.style.width = newTableWidth+'px';
+    
     this.drag.x = x; 
 
   }
