@@ -105,8 +105,9 @@ var TableHeader = function (_Component) {
         return da.key == data.key;
       });
       _this.drag.width = _this.drag.data[_this.drag.currIndex].width;
+      var contentTableDom = document.getElementById("u-table-drag-thead-" + _this.theadKey).parentNode;
 
-      _this.contentTableWidth = contentTable.width;
+      _this.contentTableWidth = contentTableDom.style.width ? parseInt(contentTableDom.style.width) : parseInt(contentTableDom.scrollWidth);
     };
 
     _this.onMouseUp = function (event, data) {
@@ -127,10 +128,14 @@ var TableHeader = function (_Component) {
           contentTable = _this$props2.contentTable;
 
       var x = event.pageX - _this.drag.initPageLeftX + _this.drag.initLeft - 0;
+      var contentTableDom = document.getElementById("u-table-drag-thead-" + _this.theadKey).parentNode;
+
       if (!_this.contentTableWidth) {
-        _this.contentTableWidth = contentTable.clientWidth;
+        _this.contentTableWidth = contentTableDom.style.width ? parseInt(contentTableDom.style.width) : parseInt(contentTableDom.scrollWidth);
       }
+      // console.log(this.contentTableWidth,x);
       var newTableWidth = _this.contentTableWidth + x;
+      // console.log(newTableWidth);
       var newWidth = _this.drag.width + x;
       if (newWidth < _this.props.minColumnWidth) {
         //清楚样式
@@ -164,8 +169,9 @@ var TableHeader = function (_Component) {
       var currentDom = document.getElementById("u-table-drag-thead-" + _this.theadKey).getElementsByTagName("th")[_this.drag.currIndex];
       currentDom.style.width = newWidth + "px";
       // this.contentTableWidth = newTableWidth;
-      var contentTableDom = document.getElementById("u-table-drag-thead-" + _this.theadKey).parentNode;
+
       contentTableDom.style.width = newTableWidth + 'px';
+
       _this.drag.x = x;
     };
 

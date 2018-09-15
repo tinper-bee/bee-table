@@ -656,7 +656,8 @@ var Table = function (_Component) {
     var headStyle = {};
 
     var tableClassName = '';
-    if (scroll.x || fixed) {
+    //表格元素的宽度大于容器的宽度也显示滚动条
+    if (scroll.x || fixed || this.contentDomWidth < this.contentWidth) {
       tableClassName = clsPrefix + '-fixed';
       if (!footerScroll) {
         bodyStyle.overflowX = bodyStyle.overflowX || 'auto';
@@ -703,7 +704,7 @@ var Table = function (_Component) {
       var _drag_class = _this3.props.dragborder ? "table-drag-bordered" : "";
       return _react2["default"].createElement(
         'table',
-        { className: ' ' + tableClassName + ' table table-bordered ' + _drag_class + ' ', style: tableStyle },
+        { className: ' ' + tableClassName + '  table-bordered ' + _drag_class + ' ', style: tableStyle },
         _this3.props.dragborder ? null : _this3.getColGroup(columns, fixed),
         hasHead ? _this3.getHeader(columns, fixed) : null,
         tableBody
