@@ -158,13 +158,17 @@ export default class ColumnManager {
     this.columns = columns || this.normalize(elements);
     this._cached = {};
   }
-  getColumnWidth(){
+  getColumnWidth(contentWidth){
     let columns = this.groupedColumns();
     let res={computeWidth:0,lastShowIndex:0};
     columns.forEach((col,index)=>{
       //如果列显示
       if(col.ifshow){
-        res.computeWidth += parseInt(col.width);
+        let width = col.width;
+        if(typeof(width) == 'string' && width.includes('%') ){
+          width = contentWidth *  parseInt(col.width) /100;
+        }
+        res.computeWidth += parseInt(width);
         if(!col.fixed){
           res.lastShowIndex = index;
         }

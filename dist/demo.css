@@ -4,6 +4,7 @@
 /* FormGroup */
 /*  Navlayout  */
 @import url(../node_modules/bee-message/build/Message.css);
+@import url(../node_modules/bee-dropdown/build/Dropdown.css);
 .red {
   color: rgb(244,67,54) !important; }
 
@@ -10238,5 +10239,13 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     right: 15px; }
   .demo25 .u-table-scroll .u-table-header {
     margin-right: 15px; }
+
+th .drop-menu .uf {
+  font-size: 12px;
+  visibility: hidden;
+  margin-left: 15px; }
+
+th:hover .uf {
+  visibility: visible; }
 
 /*# sourceMappingURL=demo.css.map */

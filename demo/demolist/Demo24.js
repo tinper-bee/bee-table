@@ -7,7 +7,12 @@
 */
 import React, { Component } from 'react';
 import Table from '../../src';
+import Icon from 'bee-icon';
+import Menu from 'bee-menus';
+import Dropdown from 'bee-dropdown';
 
+
+const { Item } = Menu;
 // const columns24 = [
 //   {
 //     title: "Full Name",
@@ -98,42 +103,78 @@ class Demo24 extends Component {
 
   constructor(props) {
     super(props);
-    let columns = [];
-    Object.assign(columns,columns24);
-    columns.forEach(da=>da.onHeadCellClick=this.onHeadCellClick);
+    // let columns = [];
+    // Object.assign(columns,columns24);
+    // columns.forEach(da=>da.onHeadCellClick=this.onHeadCellClick);
     this.state = {
-      columns
+      columns:columns24
     }
   }
 
-  onHeadCellClick=(data,event)=>{
-    let fixed = "left";
-    let fixedIndex = 0;
-    const {columns:_columns} = this.state;
-    _columns.find((da,i)=>{
-      da.fixed?fixed=da.fixed:"left";
-      da.fixed?fixedIndex = i:"";
-    });
-    let columns = [];
-    Object.assign(columns,_columns);
-    let fixedCols = [];
-    let nonColums = [];
-    let currObj = columns.find(da=>{
-      if(da.key == data.key){
-        da.fixed?delete da.fixed:da.fixed = fixed;
+  
+    onSelect = ({key,item})=>{ 
+      console.log(`${key} selected`); //获取key
+      let currentObject = item.props.data; //获取选中对象的数据
+      let {columns} = this.state;
+      let fixedCols = [];
+      let nonColums = [];
+      columns.find(da=>{
+        if(da.key == key){
+          da.fixed?delete da.fixed:da.fixed = 'left';
+        }
+        da.fixed?fixedCols.push(da):nonColums.push(da);
+      });
+    
+      columns = [...fixedCols,...nonColums]
+
+      this.setState({
+        columns
+      });
+    }
+  //表头增加下拉菜单
+  renderColumnsDropdown(columns) {
+    const icon ='uf-arrow-down';
+    
+    return columns.map((originColumn,index) => {
+      let column = Object.assign({}, originColumn);
+      let menuInfo = [], title='锁定';
+      if(originColumn.fixed){
+        title = '解锁'
       }
-      da.fixed?fixedCols.push(da):nonColums.push(da);
+      menuInfo.push({
+        info:title,
+        key:originColumn.key,
+        index:index
+      });
+      const menu = (
+        <Menu onSelect={this.onSelect} >{
+            menuInfo.map(da=>{ return <Item key={da.key} data={da} >{da.info}</Item> })
+            }
+        </Menu>)
+      column.title = (
+        <span className='title-con drop-menu'>
+          {column.title}
+          <Dropdown
+            trigger={['click']} 
+            overlay={menu}
+            animation="slide-up"
+          >
+           <Icon type={icon}/>
+          </Dropdown> 
+          
+        </span>
+      );
+      return column;
     });
-    columns = fixed=="left"?[...fixedCols,...nonColums]:[...nonColums,...fixedCols]
-    console.log(columns);
-    this.setState({
-      columns
-    });
+    
   }
 
   render() {
-    const {columns} = this.state;
-    return <Table columns={columns} data={data24} scroll={{ x: "110%", y: 240 }}/>;
+    let {columns} = this.state;
+     columns = this.renderColumnsDropdown(columns);
+    return <div className="demo24">
+            <Table columns={columns} data={data24} scroll={{ x: "110%", y: 240 }}/>
+          </div>;
   }
 }
 

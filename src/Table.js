@@ -192,7 +192,7 @@ class Table extends Component{
             this.contentWidth = this.contentWidth * parseInt(setWidthParam) /100
           }
       }
-      const computeObj = this.columnManager.getColumnWidth();
+      const computeObj = this.columnManager.getColumnWidth(this.contentWidth);
       let lastShowIndex = computeObj.lastShowIndex;
       this.computeWidth = computeObj.computeWidth;
       if(this.computeWidth < this.contentWidth){

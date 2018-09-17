@@ -18,7 +18,7 @@ const columns = [
         <Tooltip inverse overlay={text}>
           <span tootip={text} style={{
             display: "inline-block",
-            width: "100px",
+            width: "60px",
             textOverflow: "ellipsis",
             overflow: "hidden",
             whiteSpace: "nowrap",
@@ -28,7 +28,7 @@ const columns = [
       );
     }
   },
-  { id: "123", title: "性别", dataIndex: "b", key: "b", width: 100 },
+  { id: "123", title: "性别", dataIndex: "b", key: "b", width: '10%' },
   { title: "年龄", dataIndex: "c", key: "c", width: 200 },
   {
     title: "操作",

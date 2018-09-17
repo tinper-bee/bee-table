@@ -9,13 +9,12 @@ import React, { Component } from "react";
 import Table from "../../src";
 
 const columns16 = [
-  { title: "用户名", dataIndex: "a", key: "a", width: 100 },
-  { id: "123", title: "性别", dataIndex: "b", key: "b", width: 100 },
-  { title: "年龄", dataIndex: "c", key: "c", width: 200 },
   {
     title: "操作",
     dataIndex: "d",
     key: "d",
+    fixed:'left',
+    width:200,
     render(text, record, index) {
       return (
         <a
@@ -28,7 +27,11 @@ const columns16 = [
         </a>
       );
     }
-  }
+  },
+  { title: "用户名", dataIndex: "a", key: "a", width: 100 },
+  { id: "123", title: "性别", dataIndex: "b", key: "b", width: 100 },
+  { title: "年龄", dataIndex: "c", key: "c", width: 200 },
+  
 ];
 
 const data16 = [
@@ -46,12 +49,15 @@ class Demo16 extends Component {
     }
   }
   expandedRowRender = (record, index, indent) => {
+    console.log(this.state.data_obj[record.key].length);
+    let height = 42 * (this.state.data_obj[record.key].length+ 3);
+    
     return (
       <Table
         columns={columns16}
+        style={{height:height}}
         data={this.state.data_obj[record.key]}
-        title={currentData => <div>标题: 这是一个标题</div>}
-        footer={currentData => <div>表尾: 我是小尾巴</div>}
+
       />
     );
   };
