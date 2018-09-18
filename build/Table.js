@@ -270,7 +270,7 @@ var Table = function (_Component) {
         this.contentWidth = this.contentWidth * parseInt(setWidthParam) / 100;
       }
     }
-    var computeObj = this.columnManager.getColumnWidth();
+    var computeObj = this.columnManager.getColumnWidth(this.contentWidth);
     var lastShowIndex = computeObj.lastShowIndex;
     this.computeWidth = computeObj.computeWidth;
     if (this.computeWidth < this.contentWidth) {
@@ -450,7 +450,7 @@ var Table = function (_Component) {
           props: {
             colSpan: colCount
           },
-          children: fixed !== 'right' ? content : contentContainer()
+          children: !fixed ? content : contentContainer()
         };
       }
     }];

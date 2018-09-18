@@ -213,13 +213,17 @@ var ColumnManager = function () {
     this._cached = {};
   };
 
-  ColumnManager.prototype.getColumnWidth = function getColumnWidth() {
+  ColumnManager.prototype.getColumnWidth = function getColumnWidth(contentWidth) {
     var columns = this.groupedColumns();
     var res = { computeWidth: 0, lastShowIndex: 0 };
     columns.forEach(function (col, index) {
       //如果列显示
       if (col.ifshow) {
-        res.computeWidth += parseInt(col.width);
+        var width = col.width;
+        if (typeof width == 'string' && width.includes('%')) {
+          width = contentWidth * parseInt(col.width) / 100;
+        }
+        res.computeWidth += parseInt(width);
         if (!col.fixed) {
           res.lastShowIndex = index;
         }
