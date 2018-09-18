@@ -8496,6 +8496,8 @@ ul {
     background: #f7f7f7; }
     .u-table tr.u-table-expanded-row:hover {
       background: #f7f7f7; }
+    .u-table tr.u-table-expanded-row .u-table {
+      z-index: 1; }
   .u-table-column-hidden {
     display: none; }
   .u-table-prev-columns-page, .u-table-next-columns-page {

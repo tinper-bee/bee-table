@@ -33,6 +33,30 @@ const columns16 = [
   { title: "年龄", dataIndex: "c", key: "c", width: 200 },
   
 ];
+const columns17 = [
+  {
+    title: "操作",
+    dataIndex: "d",
+    key: "d",
+    width:200,
+    render(text, record, index) {
+      return (
+        <a
+          href="#"
+          onClick={() => {
+            alert("这是第" + index + "列，内容为:" + text);
+          }}
+        >
+          一些操作
+        </a>
+      );
+    }
+  },
+  { title: "用户名", dataIndex: "a", key: "a", width: 100 },
+  { id: "123", title: "性别", dataIndex: "b", key: "b", width: 100 },
+  { title: "年龄", dataIndex: "c", key: "c", width: 200 },
+  
+];
 
 const data16 = [
   { a: "令狐冲", b: "男", c: 41, d: "操作", key: "1" },
@@ -49,14 +73,13 @@ class Demo16 extends Component {
     }
   }
   expandedRowRender = (record, index, indent) => {
-    console.log(this.state.data_obj[record.key].length);
-    let height = 42 * (this.state.data_obj[record.key].length+ 3);
+    let height = 42 * (this.state.data_obj[record.key].length+ 2);
     
     return (
       <Table
-        columns={columns16}
+        columns={columns17}
         style={{height:height}}
-        data={this.state.data_obj[record.key]}
+        data={this.state.data_obj[record.key]} 
 
       />
     );

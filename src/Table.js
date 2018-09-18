@@ -356,7 +356,7 @@ class Table extends Component{
         props: {
           colSpan: colCount,
         },
-        children: fixed !== 'right' ? content : contentContainer(),
+        children: !fixed ? content : contentContainer(),
       }),
     }];
     if (expandIconAsCell && fixed !== 'right') {

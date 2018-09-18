@@ -192,6 +192,7 @@ $table-move-in-color: $bg-color-base;
     }
     .u-table {
       // padding: 0 40px 0 20px;
+      z-index: 1;
     }
   }
   &-column-hidden {
