@@ -18,24 +18,33 @@ export default function newMultiSelect(Table, Checkbox) {
 
     constructor(props) {
       super(props);
+      let checkedAll = this.setChecked(props.data);
       this.state = {
-        checkedAll:false,
-        // columns:this.getDefaultColumns(props.columns,"init"),
+        checkedAll,
         data:ObjectAssign(props.data),
       }
     }
 
     componentWillReceiveProps(nextProps){
-      // if(this.props.columns != nextProps.columns){
-      //   this.setState({
-      //     columns:this.getDefaultColumns(nextProps.columns)
-      //   })
-      // }
       if(this.props.data != nextProps.data){
         this.setState({
-          data:ObjectAssign(nextProps.data)
+          data:ObjectAssign(nextProps.data),
+          checkedAll:this.setChecked(nextProps.data),
         })
       }
+    }
+
+    setChecked(data){
+      let allCheck = true;
+      if(data){
+        for (const da of data) {
+          if(!da._checked){
+            allCheck = false;
+            break;
+          }
+        }
+      }
+      return allCheck;
     }
 
     onAllCheckChange=()=>{
