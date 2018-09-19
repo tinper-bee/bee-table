@@ -8,7 +8,8 @@
 
 import React, { Component } from 'react';
 import Table from '../../src';
-
+import dragColumn from "../../src/lib/dragColumn";;
+const DragColumnTable = dragColumn(Table);
 
 const columns6 = [
   {
@@ -73,8 +74,8 @@ const data6 = [
 
 class Demo6 extends Component {
   render() {
-    return <Table columns={columns6} data={data6} scroll={{ y: 150 }} />;
+    return <DragColumnTable columns={columns6} data={data6} scroll={{y: 150 }} dragborder={true}  />;
   }
 }
 
-export default Demo6;
+export default Demo6; 

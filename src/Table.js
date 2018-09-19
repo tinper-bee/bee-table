@@ -609,7 +609,8 @@ class Table extends Component{
       let _drag_class = this.props.dragborder?"table-drag-bordered":""
       return (
         <table className={` ${tableClassName}  table-bordered ${_drag_class} `} style={tableStyle}  >
-          {this.props.dragborder?null:this.getColGroup(columns, fixed)}
+          {/* {this.props.dragborder?null:this.getColGroup(columns, fixed)} */}
+          {this.getColGroup(columns, fixed)}
           {hasHead ? this.getHeader(columns, fixed) : null}
           {tableBody}
         </table>
@@ -772,7 +773,7 @@ class Table extends Component{
       if (e.target !== this.scrollTarget && this.scrollTarget !== headTable) {
           return;
       }
-    if (scroll.x && e.target.scrollLeft !== this.lastScrollLeft) {
+    if ( e.target.scrollLeft !== this.lastScrollLeft) {
       if (e.target === bodyTable && headTable) {
         headTable.scrollLeft = e.target.scrollLeft;
       } else if (e.target === headTable && bodyTable) {

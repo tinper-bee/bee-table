@@ -101,8 +101,12 @@ class TableHeader extends Component{
     this.drag.currIndex = this.props.rows[0].findIndex(da=>da.key==data.key);
     this.drag.width = this.drag.data[this.drag.currIndex].width;
     let contentTableDom = document.getElementById("u-table-drag-thead-"+this.theadKey).parentNode;
-    
-    this.contentTableWidth = contentTableDom.style.width?parseInt(contentTableDom.style.width):parseInt(contentTableDom.scrollWidth);
+    const styleWidth = contentTableDom.style.width;
+    if(styleWidth  && (typeof (styleWidth)=='number'|| styleWidth.includes('px') )){
+       this.contentTableWidth = parseInt(styleWidth);
+    }else{
+       this.contentTableWidth = parseInt(contentTableDom.scrollWidth)
+    }
   }
   onMouseUp=(event,data)=>{
     this.border = false;
@@ -111,20 +115,41 @@ class TableHeader extends Component{
   }
   onThMouseUp=(event,data)=>{
     this.border = false;
+    const {clsPrefix} = this.props; 
+    let eventDom = event.target;
+    let optDom ;
+    if(eventDom.classList.contains('.th-drag-gap-hover')){
+
+      optDom = eventDom;
+      
+    }else{
+      optDom = eventDom.querySelector(`.${clsPrefix}-thead-th-drag-gap`);
+    }
+    if(optDom){
+      optDom.classList.remove('th-drag-gap-hover');
+      optDom.classList.add('th-drag-gap');
+    }
+    
+    
   }
    
   onThMouseMove=(event,data)=>{ 
     if(!this.border)return;
+    //固定表头拖拽
+
     const {dragborderKey,contentTable} = this.props;
     let x = (event.pageX - this.drag.initPageLeftX) + this.drag.initLeft-0;
     let contentTableDom = document.getElementById("u-table-drag-thead-"+this.theadKey).parentNode;
     
     if(!this.contentTableWidth){
-      this.contentTableWidth = contentTableDom.style.width?parseInt(contentTableDom.style.width):parseInt(contentTableDom.scrollWidth);
+      const styleWidth = contentTableDom.style.width;
+      if(styleWidth  && (typeof (styleWidth)=='number'|| styleWidth.includes('px') )){
+        this.contentTableWidth = parseInt(styleWidth);
+      }else{
+        this.contentTableWidth = parseInt(contentTableDom.scrollWidth)
+      }
     }
-    // console.log(this.contentTableWidth,x);
     const newTableWidth = this.contentTableWidth + x;
-    // console.log(newTableWidth);
     const newWidth = this.drag.width + x;
     if(newWidth<this.props.minColumnWidth){
       //清楚样式
@@ -158,10 +183,21 @@ class TableHeader extends Component{
     let  currentDom = document.getElementById("u-table-drag-thead-"+this.theadKey).getElementsByTagName("th")[this.drag.currIndex];
     currentDom.style.width = newWidth+"px"; 
     // this.contentTableWidth = newTableWidth;
-   
     contentTableDom.style.width = newTableWidth+'px';
-    
     this.drag.x = x; 
+    //固定表头时，表头和表体分开，拖拽时表体的宽度也需要一起联动
+    const siblingDom = contentTableDom.parentNode.nextElementSibling;
+    if(siblingDom){
+      const bodyTableDom = siblingDom.querySelector('table')
+      //2、是的话将表头对应的表格的宽度给表体对应的表格的宽度
+      bodyTableDom.style.width = newTableWidth+'px';
+      //3、对应的col也要跟这变
+      let colDomArr = bodyTableDom.querySelectorAll('colgroup col')
+      colDomArr[this.drag.currIndex].style.width = newWidth+"px" ;
+      //4、设置overflow属性
+
+    }
+
 
   }
  
