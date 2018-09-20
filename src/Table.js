@@ -10,92 +10,92 @@ import createStore from './createStore';
 import Loading from 'bee-loading';
 
 const propTypes = {
-    data: PropTypes.array,
-    expandIconAsCell: PropTypes.bool,
-    defaultExpandAllRows: PropTypes.bool,
-    expandedRowKeys: PropTypes.array,
-    defaultExpandedRowKeys: PropTypes.array,
-    useFixedHeader: PropTypes.bool,
-    columns: PropTypes.array,
-    clsPrefix: PropTypes.string,
-    bodyStyle: PropTypes.object,
-    style: PropTypes.object,
-    //特殊的渲染规则的key值
-    rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    rowClassName: PropTypes.func,
-    expandedRowClassName: PropTypes.func,
-    childrenColumnName: PropTypes.string,
-    onExpand: PropTypes.func,
-    onExpandedRowsChange: PropTypes.func,
-    indentSize: PropTypes.number,
-    onRowClick: PropTypes.func,
-    onRowDoubleClick: PropTypes.func,
-    expandIconColumnIndex: PropTypes.number,
-    //是否显示表头
-    showHeader: PropTypes.bool,
-    title: PropTypes.func,
-    footer: PropTypes.func,
-    emptyText: PropTypes.func,
-    scroll: PropTypes.object,
-    rowRef: PropTypes.func,
-    getBodyWrapper: PropTypes.func,
-    children: PropTypes.node,
-    draggable: PropTypes.bool,
-    minColumnWidth:PropTypes.number
+  data: PropTypes.array,
+  expandIconAsCell: PropTypes.bool,
+  defaultExpandAllRows: PropTypes.bool,
+  expandedRowKeys: PropTypes.array,
+  defaultExpandedRowKeys: PropTypes.array,
+  useFixedHeader: PropTypes.bool,
+  columns: PropTypes.array,
+  clsPrefix: PropTypes.string,
+  bodyStyle: PropTypes.object,
+  style: PropTypes.object,
+  //特殊的渲染规则的key值
+  rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  rowClassName: PropTypes.func,
+  expandedRowClassName: PropTypes.func,
+  childrenColumnName: PropTypes.string,
+  onExpand: PropTypes.func,
+  onExpandedRowsChange: PropTypes.func,
+  indentSize: PropTypes.number,
+  onRowClick: PropTypes.func,
+  onRowDoubleClick: PropTypes.func,
+  expandIconColumnIndex: PropTypes.number,
+  //是否显示表头
+  showHeader: PropTypes.bool,
+  title: PropTypes.func,
+  footer: PropTypes.func,
+  emptyText: PropTypes.func,
+  scroll: PropTypes.object,
+  rowRef: PropTypes.func,
+  getBodyWrapper: PropTypes.func,
+  children: PropTypes.node,
+  draggable: PropTypes.bool,
+  minColumnWidth: PropTypes.number
 };
 
 const defaultProps = {
-    data: [],
-    useFixedHeader: false,
-    expandIconAsCell: false,
-    defaultExpandAllRows: false,
-    defaultExpandedRowKeys: [],
-    rowKey: 'key',
-    rowClassName: () => '',
-    expandedRowClassName: () => '',
-    onExpand() {},
-    onExpandedRowsChange() {},
-    onRowClick() {},
-    onRowDoubleClick() {},
-    clsPrefix: 'u-table',
-    bodyStyle: {},
-    style: {},
-    childrenColumnName: 'children',
-    indentSize: 15,
-    expandIconColumnIndex: 0,
-    showHeader: true,
-    scroll: {},
-    rowRef: () => null,
-    getBodyWrapper: body => body,
-    emptyText: () => 'No Data',
-    minColumnWidth:80
+  data: [],
+  useFixedHeader: false,
+  expandIconAsCell: false,
+  defaultExpandAllRows: false,
+  defaultExpandedRowKeys: [],
+  rowKey: 'key',
+  rowClassName: () => '',
+  expandedRowClassName: () => '',
+  onExpand() { },
+  onExpandedRowsChange() { },
+  onRowClick() { },
+  onRowDoubleClick() { },
+  clsPrefix: 'u-table',
+  bodyStyle: {},
+  style: {},
+  childrenColumnName: 'children',
+  indentSize: 15,
+  expandIconColumnIndex: 0,
+  showHeader: true,
+  scroll: {},
+  rowRef: () => null,
+  getBodyWrapper: body => body,
+  emptyText: () => 'No Data',
+  minColumnWidth: 80
 };
 
-class Table extends Component{
-  constructor(props){
-      super(props);
-      let expandedRowKeys = [];
-      let rows = [...props.data];
-      this.columnManager = new ColumnManager(props.columns, props.children,props.originWidth);
-      this.store = createStore({ currentHoverKey: null });
+class Table extends Component {
+  constructor(props) {
+    super(props);
+    let expandedRowKeys = [];
+    let rows = [...props.data];
+    this.columnManager = new ColumnManager(props.columns, props.children, props.originWidth);
+    this.store = createStore({ currentHoverKey: null });
 
-      if (props.defaultExpandAllRows) {
-        for (let i = 0; i < rows.length; i++) {
-          const row = rows[i];
-          expandedRowKeys.push(this.getRowKey(row, i));
-          rows = rows.concat(row[props.childrenColumnName] || []);
-        }
-      } else {
-        expandedRowKeys = props.expandedRowKeys || props.defaultExpandedRowKeys;
+    if (props.defaultExpandAllRows) {
+      for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        expandedRowKeys.push(this.getRowKey(row, i));
+        rows = rows.concat(row[props.childrenColumnName] || []);
       }
-      this.state = {
-          expandedRowKeys,
-          data: props.data,
-          currentHoverKey: null,
-          scrollPosition: 'left',
-          fixedColumnsHeadRowsHeight: [],
-          fixedColumnsBodyRowsHeight: [],
-      }
+    } else {
+      expandedRowKeys = props.expandedRowKeys || props.defaultExpandedRowKeys;
+    }
+    this.state = {
+      expandedRowKeys,
+      data: props.data,
+      currentHoverKey: null,
+      scrollPosition: 'left',
+      fixedColumnsHeadRowsHeight: [],
+      fixedColumnsBodyRowsHeight: [],
+    }
 
     this.onExpandedRowsChange = this.onExpandedRowsChange.bind(this);
     this.onExpanded = this.onExpanded.bind(this);
@@ -126,9 +126,9 @@ class Table extends Component{
   }
 
   componentDidMount() {
-    setTimeout(this.resetScrollY,300);
+    setTimeout(this.resetScrollY, 300);
     //后续也放在recevice里面
-    if(!this.props.originWidth){
+    if (!this.props.originWidth) {
       this.computeTableWidth();
     }
     if (this.columnManager.isAnyColumnsFixed()) {
@@ -159,14 +159,14 @@ class Table extends Component{
     } else if (nextProps.children !== this.props.children) {
       this.columnManager.reset(null, nextProps.children);
     }
-    if(!nextProps.originWidth){
+    if (!nextProps.originWidth) {
       this.computeTableWidth();
     }
-    
+
   }
 
   componentDidUpdate() {
-    
+
     if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
     }
@@ -178,27 +178,27 @@ class Table extends Component{
     }
   }
 
-  computeTableWidth(){
-      //如果用户传了scroll.x按用户传的为主
-      let setWidthParam = this.props.scroll.x
-      if(typeof(setWidthParam) == 'number'){
-        let numSetWidthParam = parseInt(setWidthParam);
-        this.contentWidth = numSetWidthParam;
-      }else{
-          //计算总表格宽度、根据表格宽度和各列的宽度和比较，重置最后一列
-          this.contentDomWidth = this.contentTable.getBoundingClientRect().width//表格容器宽度
-          this.contentWidth = this.contentDomWidth;//默认与容器宽度一样
-          if(typeof(setWidthParam)=='string' && setWidthParam.indexOf('%')){
-            this.contentWidth = this.contentWidth * parseInt(setWidthParam) /100
-          }
+  computeTableWidth() {
+    //如果用户传了scroll.x按用户传的为主
+    let setWidthParam = this.props.scroll.x
+    if (typeof (setWidthParam) == 'number') {
+      let numSetWidthParam = parseInt(setWidthParam);
+      this.contentWidth = numSetWidthParam;
+    } else {
+      //计算总表格宽度、根据表格宽度和各列的宽度和比较，重置最后一列
+      this.contentDomWidth = this.contentTable.getBoundingClientRect().width//表格容器宽度
+      this.contentWidth = this.contentDomWidth;//默认与容器宽度一样
+      if (typeof (setWidthParam) == 'string' && setWidthParam.indexOf('%')) {
+        this.contentWidth = this.contentWidth * parseInt(setWidthParam) / 100
       }
-      const computeObj = this.columnManager.getColumnWidth(this.contentWidth);
-      let lastShowIndex = computeObj.lastShowIndex;
-      this.computeWidth = computeObj.computeWidth;
-      if(this.computeWidth < this.contentWidth){
-        let contentWidthDiff = this.contentWidth - this.computeWidth;
-        this.setState({contentWidthDiff,lastShowIndex});
-      }
+    }
+    const computeObj = this.columnManager.getColumnWidth(this.contentWidth);
+    let lastShowIndex = computeObj.lastShowIndex;
+    this.computeWidth = computeObj.computeWidth;
+    if (this.computeWidth < this.contentWidth) {
+      let contentWidthDiff = this.contentWidth - this.computeWidth;
+      this.setState({ contentWidthDiff, lastShowIndex });
+    }
 
   }
   onExpandedRowsChange(expandedRowKeys) {
@@ -208,7 +208,7 @@ class Table extends Component{
     this.props.onExpandedRowsChange(expandedRowKeys);
   }
 
-  onExpanded(expanded, record, index,e ) {
+  onExpanded(expanded, record, index, e) {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
@@ -256,8 +256,8 @@ class Table extends Component{
   }
 
   getHeader(columns, fixed) {
-    const { showHeader, expandIconAsCell, clsPrefix ,onDragStart,onDragEnter,onDragOver,onDrop,draggable,
-      onMouseDown,onMouseMove,onMouseUp,dragborder,onThMouseMove,dragborderKey,minColumnWidth,headerHeight} = this.props;
+    const { onFilterRowsDropChange, onFilterRowsChange, filterable, showHeader, expandIconAsCell, clsPrefix, onDragStart, onDragEnter, onDragOver, onDrop, draggable,
+      onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey, minColumnWidth, headerHeight } = this.props;
     const rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
       rows[0].unshift({
@@ -268,31 +268,35 @@ class Table extends Component{
       });
     }
 
-    const trStyle =headerHeight?{height:headerHeight}:(fixed ? this.getHeaderRowStyle(columns, rows) : null);
-    let drop = draggable?{onDragStart,onDragOver,onDrop,onDragEnter,draggable}:{};
-    let dragBorder = dragborder?{onMouseDown,onMouseMove,onMouseUp,dragborder,onThMouseMove,dragborderKey}:{};
+    const trStyle = headerHeight ? { height: headerHeight } : (fixed ? this.getHeaderRowStyle(columns, rows) : null);
+    let drop = draggable ? { onDragStart, onDragOver, onDrop, onDragEnter, draggable } : {};
+    let dragBorder = dragborder ? { onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey } : {};
     let contentWidthDiff = 0;
     //非固定表格,宽度不够时自动扩充
-    if(!fixed){
-      contentWidthDiff =  this.state.contentWidthDiff
+    if (!fixed) {
+      contentWidthDiff = this.state.contentWidthDiff
     }
     return showHeader ? (
       <TableHeader
         {...drop}
         {...dragBorder}
         minColumnWidth={minColumnWidth}
-        contentWidthDiff = {contentWidthDiff}
-        lastShowIndex = {this.state.lastShowIndex}
+        contentWidthDiff={contentWidthDiff}
+        lastShowIndex={this.state.lastShowIndex}
         clsPrefix={clsPrefix}
         rows={rows}
-        contentTable = {this.contentTable}
+        contentTable={this.contentTable}
         rowStyle={trStyle}
         fixed={fixed}
+        filterable={filterable}
+        onFilterRowsChange={onFilterRowsChange}
+        onFilterRowsDropChange={onFilterRowsDropChange}
       />
     ) : null;
   }
 
   getHeaderRows(columns, currentRow = 0, rows) {
+    let filterCol = [];
     rows = rows || [];
     rows[currentRow] = rows[currentRow] || [];
 
@@ -307,10 +311,10 @@ class Table extends Component{
         className: column.className || '',
         children: column.title,
         drgHover: column.drgHover,
-        fixed:column.fixed,
-        width:column.width
+        fixed: column.fixed,
+        width: column.width
       };
-      if(column.onHeadCellClick){
+      if (column.onHeadCellClick) {
         cell.onClick = column.onHeadCellClick;
       }
       if (column.children) {
@@ -325,7 +329,22 @@ class Table extends Component{
       if (cell.colSpan !== 0) {
         rows[currentRow].push(cell);
       }
+      //判断是否启用过滤
+      if (this.props.filterable) {
+        //组装Filter需要的Col
+        filterCol.push({
+          key: column.key,
+          children: "过滤渲染",
+          width: column.width,
+          filtertype: column.filterType,
+          dataindex: column.dataIndex,
+          datasource: this.props.data
+        });
+      }
     });
+    if (this.props.filterable) {
+      rows.push(filterCol);
+    }
     return rows.filter(row => row.length > 0);
   }
 
@@ -340,12 +359,12 @@ class Table extends Component{
       colCount = this.columnManager.leafColumns().length;
     }
 
-    function contentContainer () {
-      if(content && content.props && content.props.style){
-          return (
-              <div style={{height: content.props.style.height}}></div>
-          )
-      }else{
+    function contentContainer() {
+      if (content && content.props && content.props.style) {
+        return (
+          <div style={{ height: content.props.style.height }}></div>
+        )
+      } else {
         return ' '
       }
     }
@@ -409,8 +428,8 @@ class Table extends Component{
         expandedRowContent = expandedRowRender(record, i, indent);
       }
       //只有当使用expandedRowRender参数的时候才去识别isHiddenExpandIcon（隐藏行展开的icon）
-      if(expandedRowRender && typeof props.haveExpandIcon == 'function'){
-          isHiddenExpandIcon = props.haveExpandIcon(record, i);
+      if (expandedRowRender && typeof props.haveExpandIcon == 'function') {
+        isHiddenExpandIcon = props.haveExpandIcon(record, i);
       }
       const className = rowClassName(record, i, indent);
 
@@ -420,16 +439,16 @@ class Table extends Component{
       }
       let fixedIndex = i;
       //判断是否是tree结构
-      if(this.treeType){
+      if (this.treeType) {
         fixedIndex = this.treeRowIndex;
       }
-       
-      if(props.fixedHeight){
+
+      if (props.fixedHeight) {
         height = props.fixedHeight
-      }else{
-        height =  (fixed && fixedColumnsBodyRowsHeight[fixedIndex]) ? fixedColumnsBodyRowsHeight[fixedIndex] : null;
+      } else {
+        height = (fixed && fixedColumnsBodyRowsHeight[fixedIndex]) ? fixedColumnsBodyRowsHeight[fixedIndex] : null;
       }
-     
+
 
 
       let leafColumns;
@@ -440,8 +459,8 @@ class Table extends Component{
       } else {
         leafColumns = this.columnManager.leafColumns();
       }
-      
-      
+
+
       rst.push(
         <TableRow
           indent={indent}
@@ -492,14 +511,14 @@ class Table extends Component{
   }
 
   getRows(columns, fixed) {
-     //统计index，只有含有鼠表结构才有用，因为数表结构时，固定列的索引取值有问题
-     this.treeRowIndex = 0;
+    //统计index，只有含有鼠表结构才有用，因为数表结构时，固定列的索引取值有问题
+    this.treeRowIndex = 0;
     return this.getRowsByData(this.state.data, true, 0, columns, fixed);
   }
 
   getColGroup(columns, fixed) {
     let cols = [];
-    let {contentWidthDiff=0,lastShowIndex=0} = this.state;
+    let { contentWidthDiff = 0, lastShowIndex = 0 } = this.state;
     if (this.props.expandIconAsCell && fixed !== 'right') {
       cols.push(
         <col
@@ -518,9 +537,9 @@ class Table extends Component{
     } else {
       leafColumns = this.columnManager.leafColumns();
     }
-    cols = cols.concat(leafColumns.map((c,i,arr) => {
+    cols = cols.concat(leafColumns.map((c, i, arr) => {
       let width = c.width;
-      if(lastShowIndex == i ){
+      if (lastShowIndex == i) {
         width = parseInt(width) + contentWidthDiff;
       }
       return <col key={c.key} style={{ width: width, minWidth: c.width }} />;
@@ -528,21 +547,21 @@ class Table extends Component{
     return <colgroup>{cols}</colgroup>;
   }
 
-  renderDragHideTable=()=>{
-    const {columns,dragborder,dragborderKey} = this.props;
-    if(!dragborder)return null;
+  renderDragHideTable = () => {
+    const { columns, dragborder, dragborderKey } = this.props;
+    if (!dragborder) return null;
     let sum = 0;
-    return(<div id={`u-table-drag-hide-table-${dragborderKey}`} className={`${this.props.clsPrefix}-hiden-drag`} >
+    return (<div id={`u-table-drag-hide-table-${dragborderKey}`} className={`${this.props.clsPrefix}-hiden-drag`} >
       {
-        columns.map((da,i)=>{
-          sum += da.width?da.width:0;
-          return(<div className={`${this.props.clsPrefix}-hiden-drag-li`}  key={da+"_hiden_"+i} style={{left:sum+"px"}}></div>);
+        columns.map((da, i) => {
+          sum += da.width ? da.width : 0;
+          return (<div className={`${this.props.clsPrefix}-hiden-drag-li`} key={da + "_hiden_" + i} style={{ left: sum + "px" }}></div>);
         })
       }
     </div>);
   }
 
-  getLeftFixedTable() { 
+  getLeftFixedTable() {
     return this.getTable({
       columns: this.columnManager.leftColumns(),
       fixed: 'left',
@@ -565,9 +584,9 @@ class Table extends Component{
 
     let tableClassName = '';
     //表格元素的宽度大于容器的宽度也显示滚动条
-    if (scroll.x || fixed || this.contentDomWidth<this.contentWidth) {
+    if (scroll.x || fixed || this.contentDomWidth < this.contentWidth) {
       tableClassName = `${clsPrefix}-fixed`;
-      if(!footerScroll){
+      if (!footerScroll) {
         bodyStyle.overflowX = bodyStyle.overflowX || 'auto';
       }
     }
@@ -606,7 +625,7 @@ class Table extends Component{
           {this.getRows(columns, fixed)}
         </tbody>
       ) : null;
-      let _drag_class = this.props.dragborder?"table-drag-bordered":""
+      let _drag_class = this.props.dragborder ? "table-drag-bordered" : ""
       return (
         <table className={` ${tableClassName}  table-bordered ${_drag_class} `} style={tableStyle}  >
           {/* {this.props.dragborder?null:this.getColGroup(columns, fixed)} */}
@@ -719,19 +738,19 @@ class Table extends Component{
 
   syncFixedTableRowHeight() {
     //this.props.height、headerHeight分别为用户传入的行高和表头高度，如果有值，所有行的高度都是固定的，主要为了避免在千行数据中有固定列时获取行高度有问题
-    const { clsPrefix ,height,headerHeight} = this.props;
+    const { clsPrefix, height, headerHeight } = this.props;
     const headRows = this.refs.headTable ?
-            this.refs.headTable.querySelectorAll('thead') :
-            this.refs.bodyTable.querySelectorAll('thead');
+      this.refs.headTable.querySelectorAll('thead') :
+      this.refs.bodyTable.querySelectorAll('thead');
     const bodyRows = this.refs.bodyTable.querySelectorAll(`.${clsPrefix}-row`) || [];
     const fixedColumnsHeadRowsHeight = [].map.call(
-      headRows, row => headerHeight?headerHeight:(row.getBoundingClientRect().height || 'auto')
+      headRows, row => headerHeight ? headerHeight : (row.getBoundingClientRect().height || 'auto')
     );
     const fixedColumnsBodyRowsHeight = [].map.call(
-      bodyRows, row =>  height?height:(row.getBoundingClientRect().height || 'auto')
+      bodyRows, row => height ? height : (row.getBoundingClientRect().height || 'auto')
     );
     if (shallowequal(this.state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
-        shallowequal(this.state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
+      shallowequal(this.state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
       return;
     }
     this.setState({
@@ -768,12 +787,12 @@ class Table extends Component{
 
     const { scroll = {} } = this.props;
     const { headTable, bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this.refs;
-      // Prevent scrollTop setter trigger onScroll event
-      // http://stackoverflow.com/q/1386696
-      if (e.target !== this.scrollTarget && this.scrollTarget !== headTable) {
-          return;
-      }
-    if ( e.target.scrollLeft !== this.lastScrollLeft) {
+    // Prevent scrollTop setter trigger onScroll event
+    // http://stackoverflow.com/q/1386696
+    if (e.target !== this.scrollTarget && this.scrollTarget !== headTable) {
+      return;
+    }
+    if (e.target.scrollLeft !== this.lastScrollLeft) {
       if (e.target === bodyTable && headTable) {
         headTable.scrollLeft = e.target.scrollLeft;
       } else if (e.target === headTable && bodyTable) {
@@ -821,14 +840,14 @@ class Table extends Component{
     if (props.useFixedHeader || (props.scroll && props.scroll.y)) {
       className += ` ${clsPrefix}-fixed-header`;
     }
-    if(props.bordered){
+    if (props.bordered) {
       className += ` ${clsPrefix}-bordered`;
     }
     className += ` ${clsPrefix}-scroll-position-${this.state.scrollPosition}`;
 
     const isTableScroll = this.columnManager.isAnyColumnsFixed() ||
-                          props.scroll.x ||
-                          props.scroll.y;
+      props.scroll.x ||
+      props.scroll.y;
     let loading = props.loading;
     if (typeof loading === 'boolean') {
       loading = {
@@ -840,18 +859,18 @@ class Table extends Component{
         {this.getTitle()}
         <div className={`${clsPrefix}-content`}>
           {this.columnManager.isAnyColumnsLeftFixed() &&
-          <div className={`${clsPrefix}-fixed-left`}>
-            {this.getLeftFixedTable()}
-          </div>}
+            <div className={`${clsPrefix}-fixed-left`}>
+              {this.getLeftFixedTable()}
+            </div>}
           <div className={isTableScroll ? `${clsPrefix}-scroll` : ''}>
             {this.getTable({ columns: this.columnManager.groupedColumns() })}
             {this.getEmptyText()}
             {this.getFooter()}
           </div>
           {this.columnManager.isAnyColumnsRightFixed() &&
-          <div className={`${clsPrefix}-fixed-right`}>
-            {this.getRightFixedTable()}
-          </div>}
+            <div className={`${clsPrefix}-fixed-right`}>
+              {this.getRightFixedTable()}
+            </div>}
         </div>
         <Loading
           container={this}

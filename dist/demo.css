@@ -8545,6 +8545,8 @@ ul {
     box-shadow: none; }
   .u-table-scroll-position-right .u-table-fixed-right {
     box-shadow: none; }
+  .u-table-thead .filter-text, .u-table-thead .filter-dropdown, .u-table-thead .filter-date {
+    font-weight: normal; }
   .u-table-thead th {
     background: #f7f7f7;
     overflow: hidden;

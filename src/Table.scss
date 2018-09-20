@@ -272,7 +272,9 @@ $table-move-in-color: $bg-color-base;
   }
 
   &-thead{
-
+    .filter-text,.filter-dropdown,.filter-date {
+      font-weight: normal;
+    }
     th{
       background: $table-head-background-color;
       overflow: hidden;
