@@ -11,10 +11,10 @@ import Table from '../../src';
 
 
 const columns26 = [
-  { title: "姓名", width: 150, dataIndex: "name", key: "name", filterType: "text" },
-  { title: "年龄", width: 100, dataIndex: "age", key: "age", filterType: "dropdown" },
+  { title: "姓名", width: 180, dataIndex: "name", key: "name", filterType: "text", filterDropdown: "show" },
+  { title: "年龄", width: 120, dataIndex: "age", key: "age", filterType: "dropdown" },
   { title: "日期", width: 200, dataIndex: "date", key: "date", filterType: "date" },
-  { title: "居住地址", width: 150, dataIndex: "address", key: "address", filterType: "text" },
+  { title: "居住地址", width: 120, dataIndex: "address", key: "address", filterType: "dropdown" },
   { title: "备注", dataIndex: "mark", key: "mark" }
 ];
 
@@ -84,7 +84,7 @@ const data26 = [
   }
 ];
 
-class Demo6 extends Component {
+class Demo26 extends Component {
   handlerFilterRowsChange = (key, val) => {
     console.log('准备构建AJAX请求，接收参数：key=', key, ' value=', val);
   }
@@ -92,8 +92,15 @@ class Demo6 extends Component {
     console.log('过滤条件类型:', key, val);
   }
   render() {
-    return <Table onFilterRowsDropChange={this.handlerFilterRowsDropChange} onFilterRowsChange={this.handlerFilterRowsChange} filterable={true} bordered columns={columns26} data={data26} />;
+    return <Table
+      onFilterRowsDropChange={this.handlerFilterRowsDropChange}//下拉条件的回调(key,val)=>()
+      onFilterRowsChange={this.handlerFilterRowsChange}//触发输入操作以及其他的回调(key,val)=>()
+      filterDelay={500}//输入文本多少ms触发回调函数，默认300ms
+      filterable={true}//是否开启过滤数据功能
+      bordered
+      columns={columns26}
+      data={data26} />;
   }
 }
 
-export default Demo6;
+export default Demo26;

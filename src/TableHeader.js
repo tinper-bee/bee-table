@@ -223,15 +223,17 @@ class TableHeader extends Component {
    * @description 过滤渲染的组件类型
    */
   filterRenderType = (type, dataIndex, index) => {
-    const { clsPrefix, rows } = this.props;
+    const { clsPrefix, rows, filterDelay } = this.props;
     switch (type) {
       //文本输入
       case 'text':
         return <FilterType
           rendertype={type}
+          clsPrefix={clsPrefix}
           className={`${clsPrefix} filter-text`}
-          onChange={debounce(500, this.handlerFilterTextChange.bind(this, dataIndex))}
+          onChange={debounce(filterDelay || 300, this.handlerFilterTextChange.bind(this, dataIndex))}
           onSelectDropdown={this.handlerFilterDropChange.bind(this, dataIndex)}
+          filterDropdown={rows[1][index]['filterdropdown']}
         />
       //下拉框选择
       case 'dropdown':
@@ -250,6 +252,7 @@ class TableHeader extends Component {
           className={`${clsPrefix} filter-dropdown`}
           data={selectDataSource}
           onChange={this.handlerFilterTextChange.bind(this, dataIndex)}
+          onSelectDropdown={this.handlerFilterDropChange.bind(this, dataIndex)}
         />
       //日期
       case 'date':
@@ -258,6 +261,7 @@ class TableHeader extends Component {
           className={`${clsPrefix} filter-date`}
           onClick={() => { }}
           onChange={this.handlerFilterTextChange.bind(this, dataIndex)}
+          onSelectDropdown={this.handlerFilterDropChange.bind(this, dataIndex)}
         />
       default:
         //不匹配类型默认文本输入

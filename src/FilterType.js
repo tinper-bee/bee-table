@@ -1,52 +1,43 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import FormControl from 'bee-form-control';
-import Button from 'bee-button';
-import Icon from 'bee-icon';
 import Select from 'bee-select';
 import DatePicker from 'bee-datepicker';
-import Menu from 'bee-menus';
-import Dropdown from 'bee-dropdown';
-const { Item } = Menu;
-const format = "YYYY-MM-DD dddd";
+import FilterDropDown from './FilterDropDown';
+
+const propTypes = {
+    filterDropdown: PropTypes.string
+};
 
 class FilterType extends Component {
     renderControl = (rendertype) => {
+        let { filterDropdown, className, onChange, onSelectDropdown, clsPrefix } = this.props;
         switch (rendertype) {
             case 'text':
-                const dropmenu = (
-                    <Menu
-                        onSelect={this.props.onSelectDropdown}
-                    >
-                        <Item key="1">等于</Item>
-                        <Item key="2">包含</Item>
-                        <Item key="3">以结尾</Item>
-                        <Item key="4">空</Item>
-                        <Item key="5">不等于</Item>
-                        <Item key="6">不包含</Item>
-                        <Item key="7">以开始</Item>
-                    </Menu>
-                );
-                return <div><FormControl
-                    className={this.props.className}
-                    onChange={this.props.onChange}
-                    style={{ width: "70%" }}
+                return <div className={`${clsPrefix} filter-wrap`}><FormControl
+                    className={className}
+                    onChange={onChange}
                 />
-                    <Dropdown
-                        trigger={['click']}
-                        overlay={dropmenu}
-                        animation="slide-up"
+                    {filterDropdown == 'show' && <FilterDropDown
+                        onSelectDropdown={onSelectDropdown}
                     >
-                        <Button shape="border" style={{ marginLeft: "5px", minWidth: "26px", width: "26px", padding: 0, marginBottom: "4px" }}><Icon style={{ padding: 0 }} type="uf-arrow-c-o-down" /></Button>
-                    </Dropdown>
+                    </FilterDropDown>}
                 </div>
             case 'dropdown':
-                return <Select
+                return <div className={`${clsPrefix} filter-wrap`}><Select
                     {...this.props}
-                />
+                />{filterDropdown == 'show' && <FilterDropDown
+                    onSelectDropdown={onSelectDropdown}
+                >
+                </FilterDropDown>}</div>
             case 'date':
-                return <DatePicker
+                return <div className={`${clsPrefix} filter-wrap`}><DatePicker
                     {...this.props}
-                />
+                />{filterDropdown == 'show' && <FilterDropDown
+                    onSelectDropdown={onSelectDropdown}
+                >
+                </FilterDropDown>}
+                </div>
             default:
                 break;
         }
@@ -59,5 +50,8 @@ class FilterType extends Component {
         );
     }
 }
-
+FilterType.propTypes = propTypes;
+FilterType.defaultProps = {
+    filterDropdown: 'show'
+}
 export default FilterType;

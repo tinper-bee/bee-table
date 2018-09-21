@@ -8547,6 +8547,9 @@ ul {
     box-shadow: none; }
   .u-table-thead .filter-text, .u-table-thead .filter-dropdown, .u-table-thead .filter-date {
     font-weight: normal; }
+  .u-table-thead .filter-wrap {
+    display: -ms-flexbox;
+    display: flex; }
   .u-table-thead th {
     background: #f7f7f7;
     overflow: hidden;
@@ -10243,13 +10246,5 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     right: 15px; }
   .demo25 .u-table-scroll .u-table-header {
     margin-right: 15px; }
-
-th .drop-menu .uf {
-  font-size: 12px;
-  visibility: hidden;
-  margin-left: 15px; }
-
-th:hover .uf {
-  visibility: visible; }
 
 /*# sourceMappingURL=demo.css.map */

@@ -256,7 +256,7 @@ class Table extends Component {
   }
 
   getHeader(columns, fixed) {
-    const { onFilterRowsDropChange, onFilterRowsChange, filterable, showHeader, expandIconAsCell, clsPrefix, onDragStart, onDragEnter, onDragOver, onDrop, draggable,
+    const { filterDelay, onFilterRowsDropChange, onFilterRowsChange, filterable, showHeader, expandIconAsCell, clsPrefix, onDragStart, onDragEnter, onDragOver, onDrop, draggable,
       onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey, minColumnWidth, headerHeight } = this.props;
     const rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
@@ -291,6 +291,7 @@ class Table extends Component {
         filterable={filterable}
         onFilterRowsChange={onFilterRowsChange}
         onFilterRowsDropChange={onFilterRowsDropChange}
+        filterDelay={filterDelay}
       />
     ) : null;
   }
@@ -338,7 +339,8 @@ class Table extends Component {
           width: column.width,
           filtertype: column.filterType,
           dataindex: column.dataIndex,
-          datasource: this.props.data
+          datasource: this.props.data,
+          filterdropdown: column.filterDropdown
         });
       }
     });
