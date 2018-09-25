@@ -253,6 +253,7 @@ class TableHeader extends Component {
           data={selectDataSource}
           onChange={this.handlerFilterTextChange.bind(this, dataIndex)}
           onSelectDropdown={this.handlerFilterDropChange.bind(this, dataIndex)}
+          filterDropdown={rows[1][index]['filterdropdown']}
         />
       //日期
       case 'date':
@@ -262,6 +263,7 @@ class TableHeader extends Component {
           onClick={() => { }}
           onChange={this.handlerFilterTextChange.bind(this, dataIndex)}
           onSelectDropdown={this.handlerFilterDropChange.bind(this, dataIndex)}
+          filterDropdown={rows[1][index]['filterdropdown']}
         />
       default:
         //不匹配类型默认文本输入
