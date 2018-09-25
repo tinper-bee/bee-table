@@ -198,6 +198,9 @@ class Table extends Component{
       if(this.computeWidth < this.contentWidth){
         let contentWidthDiff = this.contentWidth - this.computeWidth;
         this.setState({contentWidthDiff,lastShowIndex});
+      }else{
+        this.contentWidth = this.computeWidth;
+        this.setState({contentWidth:this.contentWidth});//重新渲染，为了显示滚动条
       }
 
   }
@@ -598,7 +601,7 @@ class Table extends Component{
         if (scroll.x === true) {
           tableStyle.tableLayout = 'fixed';
         } else {
-          tableStyle.width = scroll.x;
+          tableStyle.width = this.contentWidth;
         }
       }
       const tableBody = hasBody ? getBodyWrapper(

@@ -185,6 +185,8 @@ class TableHeader extends Component{
     // this.contentTableWidth = newTableWidth;
     contentTableDom.style.width = newTableWidth+'px';
     this.drag.x = x; 
+    let contentColDomArr = contentTableDom.querySelectorAll('colgroup col')
+    contentColDomArr[this.drag.currIndex].style.width = newWidth+"px" ;
     //固定表头时，表头和表体分开，拖拽时表体的宽度也需要一起联动
     const siblingDom = contentTableDom.parentNode.nextElementSibling;
     if(siblingDom){

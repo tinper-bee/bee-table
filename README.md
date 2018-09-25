@@ -76,7 +76,6 @@ class Demo extends Component {
 | defaultExpandAllRows   | 默认是否展开所有行                                | bool                                   | false           |
 | expandedRowKeys        | 展开的行，控制属性                                | array                                  | -               |
 | defaultExpandedRowKeys | 初始扩展行键                                   | array                                  | []              |
-| useFixedHeader         | 是否使用固定表头                                 | bool                                   | false           |
 | bodyStyle              | 添加到tablebody上的style                      | object                                 | {}              |
 | style                  | 添加到table上的style                          | object                                 | {}              |
 | rowKey                 | 如果rowKey是字符串，`record [rowKey]`将被用作键。如果rowKey是function，`rowKey（record, index）`的返回值将被用作键。 | string or Function(record, index):string      | 'key'           |

@@ -87,8 +87,8 @@ export default function filterColumn(Table,Popover) {
       return columns.map((da,i)=> 
       {
         if(!da.fixed){
-          return (<div key={da.key+"_"+i} className={`${prefixCls}-pop-cont-item`} onClick={()=>{this.checkedColumItemClick(da)}}>
-            <Checkbox id={da.key} checked={da.checked}/> 
+          return (<div key={da.key+"_"+i} className={`${prefixCls}-pop-cont-item`} >
+            <Checkbox id={da.key} checked={da.checked} onClick={()=>{this.checkedColumItemClick(da)}}/> 
             <span>{da.title}</span>
           </div>)
         }
@@ -156,7 +156,7 @@ export default function filterColumn(Table,Popover) {
               content={content}
               show={showModal}   >
                 <div className={`${prefixCls}-pop-column-filter-cont`}>
-                  <Icon type="uf-navmenu" onClick={this.openCloumList}/>
+                  <Icon type="uf-grid" onClick={this.openCloumList}/>
                 </div>
             </Popover>
           </div>

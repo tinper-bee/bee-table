@@ -27,7 +27,6 @@ const columns13 = [
     key: "b",
     width: 200,
     sumCol: true,
-    order:"ascend",
     sorter: (a, b) => a.c - b.c,
     sorterClick:(data,type)=>{//排序的回调函数
       //type value is up or down
@@ -39,7 +38,6 @@ const columns13 = [
     dataIndex: "c",
     key: "c",
     width: 200,
-    order:"descend",
     sumCol: true,
     sorter: (a, b) => a.c - b.c,
     sorterClick:(data,type)=>{//排序的回调函数
@@ -106,6 +104,9 @@ class Demo13 extends Component {
     let multiObj = {
       type: "checkbox"
     };
+    let sortObj ={
+      mode:'multiple'
+    }
     return (
       <div>
         <Button className="editable-add-btn" onClick={this.onClick}>
@@ -117,6 +118,7 @@ class Demo13 extends Component {
           columns={columns13}
           data={this.state.data13}
           multiSelect={multiObj}
+          sort = {sortObj}
           getSelectedDataFunc={this.getSelectedDataFunc}
         />
       </div>
