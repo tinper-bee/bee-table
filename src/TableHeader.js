@@ -323,9 +323,9 @@ class TableHeader extends Component {
                   let th;
                   if (filterable && index == rows.length - 1) {
                     da.children = this.filterRenderType(da['filtertype'], da.dataindex, i);
-                    th = <th {...da} key={i} className={` ${fixedStyle}`} />;
+                    th = <th {...da} key={i} className={`${da.className}  ${fixedStyle}`} />;
                   } else {
-                    th = da.onClick ? (<th {...da} className={` ${fixedStyle}`} key={i} onClick={(event) => { da.onClick(da, event) }} />) : (<th {...da} key={i} className={` ${fixedStyle}`} />);
+                    th = da.onClick ? (<th {...da} className={`${da.className} ${fixedStyle}`} key={i} onClick={(event) => { da.onClick(da, event) }} />) : (<th {...da} key={i} className={`${da.className}  ${fixedStyle}`} />);
                   }
                   return (th);
                 }

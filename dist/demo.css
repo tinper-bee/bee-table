@@ -8562,11 +8562,15 @@ ul {
       text-align: center;
       display: inline-block; }
       .u-table-thead th .bee-table-column-sorter > .bee-table-column-sorter-down,
-      .u-table-thead th .bee-table-column-sorter > .bee-table-column-sorter-up {
+      .u-table-thead th .bee-table-column-sorter > .bee-table-column-sorter-up, .u-table-thead th .bee-table-column-sorter > .bee-table-column-sorter-flat {
         line-height: 6px;
         display: block;
         width: 14px;
         cursor: pointer; }
+      .u-table-thead th .bee-table-column-sorter > .bee-table-column-sorter-flat {
+        display: none; }
+    .u-table-thead th:hover .bee-table-column-sorter > .bee-table-column-sorter-flat {
+      display: block; }
     .u-table-thead th .bee-table-column-sorter-down.on .uf-triangle-down,
     .u-table-thead th .bee-table-column-sorter-down.on .uf-triangle-up,
     .u-table-thead th .bee-table-column-sorter-up.on .uf-triangle-down,
@@ -8603,7 +8607,7 @@ ul {
       right: 0px;
       top: 0;
       background: transparent;
-      width: 2px;
+      width: 1px;
       box-sizing: border-box;
       z-index: 100; }
     .u-table-thead-th .th-drag-gap {
@@ -10242,13 +10246,5 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     right: 15px; }
   .demo25 .u-table-scroll .u-table-header {
     margin-right: 15px; }
-
-th .drop-menu .uf {
-  font-size: 12px;
-  visibility: hidden;
-  margin-left: 15px; }
-
-th:hover .uf {
-  visibility: visible; }
 
 /*# sourceMappingURL=demo.css.map */

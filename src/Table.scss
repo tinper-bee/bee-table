@@ -290,14 +290,27 @@ $table-move-in-color: $bg-color-base;
         height: 1em;
         vertical-align: middle;
         text-align: center;
-        // display: none;
         display: inline-block;
+       
         & > .bee-table-column-sorter-down,
-        & > .bee-table-column-sorter-up {
+        & > .bee-table-column-sorter-up, & > .bee-table-column-sorter-flat {
           line-height: 6px;
           display: block;
           width: 14px;
           cursor: pointer;
+        }
+        & > .bee-table-column-sorter-flat{
+          display: none;
+        
+        }
+       
+      }
+      &:hover{
+        .bee-table-column-sorter {
+          & > .bee-table-column-sorter-flat{
+            display: block;
+          
+          }
         }
       }
       .bee-table-column-sorter-down.on .uf-triangle-down,
@@ -354,7 +367,7 @@ $table-move-in-color: $bg-color-base;
         right: 0px;
         top: 0;
         background:transparent;
-        width: 2px;
+        width: 1px;
         
         box-sizing: border-box;
         z-index: 100;
