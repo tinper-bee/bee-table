@@ -51230,10 +51230,11 @@
 	          }
 	        });
 	        if (orderColslen > 0) {
-	          //第一层排序
 	          data = data.sort(function (a, b) {
 	            return self._sortBy(a, b, orderCols, orderColslen, 1);
 	          });
+	        } else {
+	          data = oldData.concat();;
 	        }
 	        return data;
 	      };
@@ -51282,13 +51283,13 @@
 	            return da.key == column.key;
 	          });
 	          seleObj.order = order;
+	          if (order === "flatscend") {
+	            _this.changeOrderNum(column);
+	          }
 	          if (!seleObj.orderNum && (order == 'ascend' || order == 'descend')) {
 	            seleObj.orderNum = _this.getOrderNum();
 	          }
 	          data = _this.multiSort(columns);
-	          if (order === "flatscend") {
-	            _this.changeOrderNum(column);
-	          }
 	        }
 	
 	        _this.setState({

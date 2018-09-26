@@ -111,12 +111,11 @@ export default function sort(Table, Icon) {
         }
       })
       if(orderColslen>0){
-        //第一层排序
         data = data.sort(function(a, b) {
           return self._sortBy(a,b,orderCols,orderColslen,1);
         });
-        
-        
+      }else{
+        data = oldData.concat();
       }
       return data;
 
@@ -160,13 +159,13 @@ export default function sort(Table, Icon) {
       }else{
         seleObj = columns.find(da=>da.key == column.key);
         seleObj.order = order;
-        if(!seleObj.orderNum && (order=='ascend'||order=='descend')){
-          seleObj.orderNum = this.getOrderNum();
-        }
-        data = this.multiSort(columns);
         if(order === "flatscend"){
           this.changeOrderNum(column);
         }
+        if(!seleObj.orderNum && (order=='ascend'||order=='descend')){
+          seleObj.orderNum = this.getOrderNum();
+        }
+        data = this.multiSort(columns); 
       }
 
       
