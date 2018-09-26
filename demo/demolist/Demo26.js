@@ -12,9 +12,9 @@ import Table from '../../src';
 
 const columns26 = [
   { title: "姓名", width: 180, dataIndex: "name", key: "name", filterType: "text", filterDropdown: "show" },
-  { title: "年龄", width: 120, dataIndex: "age", key: "age", filterType: "dropdown" },
-  { title: "日期", width: 200, dataIndex: "date", key: "date", filterType: "date" },
-  { title: "居住地址", width: 120, dataIndex: "address", key: "address", filterType: "dropdown" },
+  { title: "年龄", width: 150, dataIndex: "age", key: "age", filterType: "dropdown", filterDropdown: "show" },
+  { title: "日期", width: 200, dataIndex: "date", key: "date", filterType: "date", filterDropdown: "show", format: "YYYY-MM-DD" },
+  { title: "居住地址", width: 150, dataIndex: "address", key: "address", filterType: "dropdown", filterDropdown: "show" },
   { title: "备注", dataIndex: "mark", key: "mark" }
 ];
 
@@ -23,7 +23,7 @@ const data26 = [
     key: "1",
     name: "John Brown",
     age: 32,
-    date: "2018-09-18 09:46:44",
+    date: "2018-09-19",
     address: "朝阳区",
     mark: "无"
   },
@@ -31,7 +31,7 @@ const data26 = [
     key: "2",
     name: "Jim Green",
     age: 40,
-    date: "2018-09-18 09:46:44",
+    date: "2018-09-18",
     address: "朝阳区",
     mark: "无"
   },
@@ -39,7 +39,7 @@ const data26 = [
     key: "3",
     name: "Jim Green",
     age: 40,
-    date: "2018-09-18 09:46:44",
+    date: "2018-09-18",
     address: "东城区",
     mark: "无"
   },
@@ -47,14 +47,14 @@ const data26 = [
     key: "4",
     name: "Jim Green",
     age: 40,
-    date: "2018-09-18 09:46:44",
+    date: "2018-09-18",
     address: "东城区",
     mark: "无"
   }, {
     key: "5",
     name: "John Brown",
     age: 32,
-    date: "2018-09-18 09:46:44",
+    date: "2018-09-18",
     address: "海淀区",
     mark: "无"
   },
@@ -62,7 +62,7 @@ const data26 = [
     key: "6",
     name: "Jim Green",
     age: 48,
-    date: "2018-09-18 09:46:44",
+    date: "2018-09-18",
     address: "海淀区",
     mark: "无"
   },
@@ -70,7 +70,7 @@ const data26 = [
     key: "7",
     name: "Jim Green",
     age: 40,
-    date: "2018-09-18 09:46:44",
+    date: "2018-09-18",
     address: "海淀区",
     mark: "无"
   },
@@ -78,7 +78,7 @@ const data26 = [
     key: "8",
     name: "Jim Green",
     age: 38,
-    date: "2018-09-18 09:46:44",
+    date: "2018-09-18",
     address: "海淀区",
     mark: "无"
   }

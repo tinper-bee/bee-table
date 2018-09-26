@@ -185,10 +185,10 @@ class TableHeader extends Component {
     let currentDom = document.getElementById("u-table-drag-thead-" + this.theadKey).getElementsByTagName("th")[this.drag.currIndex];
     currentDom.style.width = newWidth + "px";
     // this.contentTableWidth = newTableWidth;
-    contentTableDom.style.width = newTableWidth+'px';
-    this.drag.x = x; 
+    contentTableDom.style.width = newTableWidth + 'px';
+    this.drag.x = x;
     let contentColDomArr = contentTableDom.querySelectorAll('colgroup col')
-    contentColDomArr[this.drag.currIndex].style.width = newWidth+"px" ;
+    contentColDomArr[this.drag.currIndex].style.width = newWidth + "px";
     //固定表头时，表头和表体分开，拖拽时表体的宽度也需要一起联动
     const siblingDom = contentTableDom.parentNode.nextElementSibling;
     if (siblingDom) {
@@ -261,8 +261,9 @@ class TableHeader extends Component {
       case 'date':
         return <FilterType
           rendertype={type}
-          className={`${clsPrefix} filter-date`}
+          className={`filter-date`}
           onClick={() => { }}
+          format={rows[1][index]['format'] || "YYYY-MM-DD"}
           onChange={this.handlerFilterTextChange.bind(this, dataIndex)}
           onSelectDropdown={this.handlerFilterDropChange.bind(this, dataIndex)}
           filterDropdown={rows[1][index]['filterdropdown']}
