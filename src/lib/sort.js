@@ -7,9 +7,9 @@ import React, { Component } from "react";
  */
 export default function sort(Table, Icon) {
   const IconType = [{
-    'type':'noSort',
+    'type':'flat',
     'icon':'uf-symlist',
-    'order':'',
+    'order':'flatscend',
   },{
       'type':'up',
       'icon':'uf-sortup',
@@ -30,7 +30,10 @@ export default function sort(Table, Icon) {
       };
     }
     static defaultProps = {
-      sort: {mode:'single'}
+      sort: {
+              mode:'single',
+              backSource:false //默认是前端排序，值为true为后端排序
+            }
    };
     componentWillReceiveProps(nextProps){
       if(nextProps.data !== this.props.data){
@@ -77,45 +80,97 @@ export default function sort(Table, Icon) {
     getColAndOrderType = ()=>{
 
     }
+   /**
+    * pre：前一条数据
+    * after:后一条数据
+    * orderType:升序、降序
+    */
+    _sortBy=(pre,after,orderCols,orderColslen,currentIndex)=>{
+      const preKey = pre[orderCols[currentIndex].key];
+      const afterKey = after[orderCols[currentIndex].key];
+      if(preKey == afterKey && currentIndex+1<=orderColslen){
+        return this._sortBy(pre,after,orderCols,orderColslen,currentIndex+1);
+      }
+      if(orderCols[currentIndex].order=='ascend'){
+        return preKey  - afterKey
+      }else{
+        return afterKey - preKey
+      }
+    }
+    /**
+     * 多列排序 先排order为1的，其他的基于已排序的数据排
+     */
+    multiSort = (columns)=>{
+      let {data, oldData} = this.state;
+      const self = this;
+      let orderCols = {},orderColslen=0;
+      columns.forEach(item=>{
+        if(item.orderNum){
+          orderColslen++;
+          orderCols[item.orderNum] = item;
+        }
+      })
+      if(orderColslen>0){
+        //第一层排序
+        data = data.sort(function(a, b) {
+          return self._sortBy(a,b,orderCols,orderColslen,1);
+        });
+        
+        
+      }
+      return data;
+
+    }
+
     toggleSortOrder = (order, column) => {
       let { data, oldData ,columns} = this.state;
       let {sort} = this.props;
-      // let ascend_sort = function(key) {
-      //   return function(a, b) {
-      //     return a.key - b.key;
-      //   };
-      // };
-      // let descend_sort = function(key) {
-      //   return function(a, b) {
-      //     return b.key - a.key;
-      //   };
-      // };
-     
+      let seleObj;
       if (!oldData) {
         oldData = data.concat();
       }
-      let seleObj = columns.find(da=>da.key == column.key);
-      seleObj.order = order;
-      if(!seleObj.orderNum && (order=='ascend'||order=='descend')){
-        seleObj.orderNum = this.getOrderNum();
-      }
-      //通过后端请求
-      if(sort.backSource){
-        //获取排序的字段和方式
+      //单列排序，清空其他列的排序
+      if(sort.mode == 'single'){
+        columns.forEach(da=>{
+          if(da.key == column.key){
+            seleObj = da;
+          }else{
+            if(da.order){
+              da.order = 'flatscend';
+            }
+          }
+        })
+        seleObj.order = order;
+        //通过后端请求
+        if(sort.backSource){
+          //获取排序的字段和方式
+        }else{
+          if (order === "ascend") {
+            data = data.sort(function(a, b) {
+              return column.sorter(a, b);
+            });
+          } else if (order === "descend") {
+            data = data.sort(function(a, b) {
+              return column.sorter(b, a);
+            });
+          } else {
+            data = oldData.concat();
+          }
+        }
       }else{
-        if (order === "ascend") {
-          data = data.sort(function(a, b) {
-            return column.sorter(a, b);
-          });
-        } else if (order === "descend") {
-          data = data.sort(function(a, b) {
-            return column.sorter(b, a);
-          });
-        } else {
-          data = oldData.concat();
+        seleObj = columns.find(da=>da.key == column.key);
+        seleObj.order = order;
+        if(!seleObj.orderNum && (order=='ascend'||order=='descend')){
+          seleObj.orderNum = this.getOrderNum();
+        }
+        data = this.multiSort(columns);
+        if(order === "flatscend"){
           this.changeOrderNum(column);
         }
       }
+
+      
+      
       this.setState({ 
         data,
         oldData,
@@ -131,26 +186,26 @@ export default function sort(Table, Icon) {
       return columns.map(originColumn => {
         let iconTypeIndex = 0;
         let column = Object.assign({}, originColumn);
-        
-        if(column.order ){
-          if(column.order === "ascend"){
-            iconTypeIndex = 1;
-          }
-          if(column.order === "descend"){
-            iconTypeIndex = 2;
-          }
+        let sorterClass = 'flat';
+     
+        if(column.order === "ascend"){
+          iconTypeIndex = 1;
+          sorterClass = 'up'
+        }else if(column.order === "descend"){
+          iconTypeIndex = 2;
+          sorterClass = 'down'
         }
+        
         let sortButton;
         if (column.sorter) {
-          // //大于0说明不是升序就是降序，判断orderNum有没有值，没有值赋值
-          // if(iconTypeIndex>0 && !column.orderNum && mode=='multiple'){
-          //   column.orderNum = this.getOrderNum();
-          //   console.log(column.orderNum);
-          // }
+          //大于0说明不是升序就是降序，判断orderNum有没有值，没有值赋值
+          if(iconTypeIndex>0 && !column.orderNum && mode=='multiple'){
+            column.orderNum = this.getOrderNum();
+          }
           sortButton = (
             <div className={`${prefixCls}-column-sorter`}>
               <span
-                className={`${prefixCls}-column-sorter-up `}
+                className={`${prefixCls}-column-sorter-${sorterClass}`}
                 onClick={() =>{ 
                   this.toggleSortOrder(IconType[iconTypeIndex==2?0:iconTypeIndex+1].order, column);
 
