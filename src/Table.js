@@ -343,6 +343,7 @@ class Table extends Component {
           filtertype: column.filterType,
           dataindex: column.dataIndex,
           datasource: this.props.data,
+          format: column.format,
           filterdropdown: column.filterDropdown
         });
       }

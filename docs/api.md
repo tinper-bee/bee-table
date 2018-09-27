@@ -48,6 +48,11 @@ import 'bee-table/build/Table.css';
 | footerScroll       | 表尾和body是否公用同一个横向滚动条。（ 如果footer中也是一个table组件，并且也具有滚动条，那么也需要加入footerScroll参数。 ） | bool                                   | false           |
 | loading       | 表格是否加载中 | bool|object(详情可以参考上面示例)                                   | false           |
 | haveExpandIcon       | 控制是否显示行展开icon.**注：该参数只有在和expandedRowRender同时使用才生效** | Function(record, index):bool   | () =>false |
+| filterable       | 是否开启根据条件来过滤数据 | bool | false
+| filterDelay       | 触发过滤输入的时候的ms延迟时间 | number | 300
+| onFilterRowsChange       | 触发过滤输入操作以及其他的回调 | (key,val) => () | ()=>()
+| onFilterRowsDropChange       | 过滤下拉条件的回调 | (key,val)=>() | () => ()
+
 
 
 *注意: data参数中的key值必需，否则会导致部分功能出现问题！建议使用唯一的值，如id*
@@ -67,6 +72,9 @@ import 'bee-table/build/Table.css';
 |render|cell的render函数有三个参数：这个单元格的文本，这行的记录，这行的索引，它返回一个对象：{children：value，props：{colSpan：1，rowSpan：1}} ==>'children'是这个单元格的文本，props是这个单元格的一些设置，可以设置单元格行/列合并|-|
 |onCellClick|单击列的单元格时调用|Function(row, event)|-|
 | order | 设置排序 | string（"descend"、"ascend"） | -|
+| filterType | 过滤下拉的类型.可选`text`,`dropdown`,`date` | string | text |
+| filterDropdown | 是否显示过滤下拉.可选`show`,`hide` | string | show |
+| format | 设置日期类的格式 | string | YYYY-MM-DD |
 
 {% include "mixin.md"%}
 

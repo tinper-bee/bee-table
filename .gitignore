@@ -39,3 +39,5 @@ jspm_packages
 coverage
 .*.swp
 package-lock.json
+demo/.DS_Store
+demo/demolist/.DS_Store
