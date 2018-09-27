@@ -113,7 +113,7 @@ $table-move-in-color: $bg-color-base;
 
   &-fixed-header &-body-inner {
     height: 100%;
-    overflow: scroll;
+    overflow: auto;
   }
 
 
