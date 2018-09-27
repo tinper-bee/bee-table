@@ -54,9 +54,9 @@ class FilterDropDown extends Component {
                 overlay={dropmenu}
                 animation="slide-up"
             >
-                <Button shape="border" style={{ marginLeft: "3px", minWidth: "0px", width: "24px", padding: 0 }}><Icon style={{ padding: 0 }} type="uf-treearrow-down" /></Button>
+                <Button shape="border" style={{ marginLeft: "3px", minWidth: "0px", width: "24px", padding: 0 }}><Icon style={{ padding: 0 }} type="uf-filter" /></Button>
             </Dropdown>}
-            <Button onClick={this.onClickClear} shape="border" style={{ marginLeft: "1px", minWidth: "0px", width: "24px", padding: 0, "visibility": this.props.isShowClear || this.state.selectValue.length > 0 ? "visible" : "hidden" }}><Icon style={{ padding: 0, "visibility": this.props.isShowClear || this.state.selectValue.length > 0 ? "visible" : "hidden" }} type="uf-close" /></Button>
+            <Button onClick={this.onClickClear} shape="border" style={{ marginLeft: "1px", minWidth: "0px", width: "24px", padding: 0, "visibility": this.props.isShowClear || this.state.selectValue.length > 0 ? "visible" : "hidden" }}><Icon style={{ padding: 0, "visibility": this.props.isShowClear || this.state.selectValue.length > 0 ? "visible" : "hidden" }} type="uf-filterno" /></Button>
         </div>
         );
     }

@@ -50421,13 +50421,13 @@
 	                _react2['default'].createElement(
 	                    _beeButton2['default'],
 	                    { shape: 'border', style: { marginLeft: "3px", minWidth: "0px", width: "24px", padding: 0 } },
-	                    _react2['default'].createElement(_beeIcon2['default'], { style: { padding: 0 }, type: 'uf-treearrow-down' })
+	                    _react2['default'].createElement(_beeIcon2['default'], { style: { padding: 0 }, type: 'uf-filter' })
 	                )
 	            ),
 	            _react2['default'].createElement(
 	                _beeButton2['default'],
 	                { onClick: this.onClickClear, shape: 'border', style: { marginLeft: "1px", minWidth: "0px", width: "24px", padding: 0, "visibility": this.props.isShowClear || this.state.selectValue.length > 0 ? "visible" : "hidden" } },
-	                _react2['default'].createElement(_beeIcon2['default'], { style: { padding: 0, "visibility": this.props.isShowClear || this.state.selectValue.length > 0 ? "visible" : "hidden" }, type: 'uf-close' })
+	                _react2['default'].createElement(_beeIcon2['default'], { style: { padding: 0, "visibility": this.props.isShowClear || this.state.selectValue.length > 0 ? "visible" : "hidden" }, type: 'uf-filterno' })
 	            )
 	        );
 	    };

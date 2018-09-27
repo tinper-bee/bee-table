@@ -2553,9 +2553,9 @@ a, .mdl-accordion, .mdl-button, .mdl-card, .mdl-checkbox, .mdl-dropdown-menu,
 
 @font-face {
   font-family: "uf";
-  src: url("../node_modules/tinper-bee-core/scss/iconfont.eot?t=1483429573920");
+  src: url("../style/utils/iconfont.eot");
   /* IE9*/
-  src: url("../node_modules/tinper-bee-core/scss/iconfont.eot?t=1483429573920#iefix") format("embedded-opentype"), url("../node_modules/tinper-bee-core/scss/iconfont.woff?t=1483429573920") format("woff"), url("../node_modules/tinper-bee-core/scss/iconfont.ttf?t=1483429573920") format("truetype"), url("../node_modules/tinper-bee-core/scss/iconfont.svg?t=1483429573920#uf") format("svg");
+  src: url("../style/utils/iconfont.eot") format("embedded-opentype"), url("../style/utils/iconfont.woff") format("woff"), url("../style/utils/iconfont.ttf") format("truetype"), url("../style/utils/iconfont.svg") format("svg");
   /* iOS 4.1- */ }
 
 .uf {
@@ -3479,6 +3479,33 @@ a, .mdl-accordion, .mdl-button, .mdl-card, .mdl-checkbox, .mdl-dropdown-menu,
 
 .uf-treeline-copy:before {
   content: "\e994"; }
+
+.uf-listwithdots:before {
+  content: "\e9cd"; }
+
+.uf-gridlogo:before {
+  content: "\e900"; }
+
+.uf-magnifyingglass:before {
+  content: "\e9ce"; }
+
+.uf-anglearrowdown:before {
+  content: "\e9cf"; }
+
+.uf-yongyouyunchnen:before {
+  content: "\e98d"; }
+
+.uf-yycloud:before {
+  content: "\e68f"; }
+
+.uf-funnel-o:before {
+  content: "\e63c"; }
+
+.uf-filter:before {
+  content: "\e9d0"; }
+
+.uf-filterno:before {
+  content: "\e9d1"; }
 
 /* FormGroup */
 /*  Navlayout  */
