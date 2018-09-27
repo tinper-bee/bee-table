@@ -276,6 +276,9 @@ var Table = function (_Component) {
     if (this.computeWidth < this.contentWidth) {
       var contentWidthDiff = this.contentWidth - this.computeWidth;
       this.setState({ contentWidthDiff: contentWidthDiff, lastShowIndex: lastShowIndex });
+    } else {
+      this.contentWidth = this.computeWidth;
+      this.setState({ contentWidth: this.contentWidth }); //重新渲染，为了显示滚动条
     }
   };
 
@@ -330,6 +333,10 @@ var Table = function (_Component) {
 
   Table.prototype.getHeader = function getHeader(columns, fixed) {
     var _props = this.props,
+        filterDelay = _props.filterDelay,
+        onFilterRowsDropChange = _props.onFilterRowsDropChange,
+        onFilterRowsChange = _props.onFilterRowsChange,
+        filterable = _props.filterable,
         showHeader = _props.showHeader,
         expandIconAsCell = _props.expandIconAsCell,
         clsPrefix = _props.clsPrefix,
@@ -373,7 +380,11 @@ var Table = function (_Component) {
       rows: rows,
       contentTable: this.contentTable,
       rowStyle: trStyle,
-      fixed: fixed
+      fixed: fixed,
+      filterable: filterable,
+      onFilterRowsChange: onFilterRowsChange,
+      onFilterRowsDropChange: onFilterRowsDropChange,
+      filterDelay: filterDelay
     })) : null;
   };
 
@@ -383,6 +394,7 @@ var Table = function (_Component) {
     var currentRow = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
     var rows = arguments[2];
 
+    var filterCol = [];
     rows = rows || [];
     rows[currentRow] = rows[currentRow] || [];
 
@@ -415,7 +427,24 @@ var Table = function (_Component) {
       if (cell.colSpan !== 0) {
         rows[currentRow].push(cell);
       }
+      //判断是否启用过滤
+      if (_this2.props.filterable) {
+        //组装Filter需要的Col
+        filterCol.push({
+          key: column.key,
+          children: "过滤渲染",
+          width: column.width,
+          filtertype: column.filterType,
+          dataindex: column.dataIndex,
+          datasource: _this2.props.data,
+          format: column.format,
+          filterdropdown: column.filterDropdown
+        });
+      }
     });
+    if (this.props.filterable) {
+      rows.push(filterCol);
+    }
     return rows.filter(function (row) {
       return row.length > 0;
     });
@@ -693,7 +722,7 @@ var Table = function (_Component) {
         if (scroll.x === true) {
           tableStyle.tableLayout = 'fixed';
         } else {
-          tableStyle.width = scroll.x;
+          tableStyle.width = _this3.contentWidth;
         }
       }
       var tableBody = hasBody ? getBodyWrapper(_react2["default"].createElement(
@@ -705,7 +734,7 @@ var Table = function (_Component) {
       return _react2["default"].createElement(
         'table',
         { className: ' ' + tableClassName + '  table-bordered ' + _drag_class + ' ', style: tableStyle },
-        _this3.props.dragborder ? null : _this3.getColGroup(columns, fixed),
+        _this3.getColGroup(columns, fixed),
         hasHead ? _this3.getHeader(columns, fixed) : null,
         tableBody
       );
@@ -895,7 +924,7 @@ var Table = function (_Component) {
     if (e.target !== this.scrollTarget && this.scrollTarget !== headTable) {
       return;
     }
-    if (scroll.x && e.target.scrollLeft !== this.lastScrollLeft) {
+    if (e.target.scrollLeft !== this.lastScrollLeft) {
       if (e.target === bodyTable && headTable) {
         headTable.scrollLeft = e.target.scrollLeft;
       } else if (e.target === headTable && bodyTable) {
