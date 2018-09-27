@@ -51200,8 +51200,6 @@
 	        _this.setState({ columns: columns });
 	      };
 	
-	      _this.getColAndOrderType = function () {};
-	
 	      _this._sortBy = function (pre, after, orderCols, orderColslen, currentIndex) {
 	        var preKey = pre[orderCols[currentIndex].key];
 	        var afterKey = after[orderCols[currentIndex].key];
@@ -51234,7 +51232,7 @@
 	            return self._sortBy(a, b, orderCols, orderColslen, 1);
 	          });
 	        } else {
-	          data = oldData.concat();;
+	          data = oldData.concat();
 	        }
 	        return data;
 	      };
@@ -51291,7 +51289,6 @@
 	          }
 	          data = _this.multiSort(columns);
 	        }
-	
 	        _this.setState({
 	          data: data,
 	          oldData: oldData,
@@ -51376,14 +51373,12 @@
 	        });
 	      }
 	    };
-	    //当有的列不排序时，将该列的orderNum置为‘’，并动态的修改其他列的orderNum。
-	    /**
-	     * column 当前的排序的列
-	     */
 	
 	    /**
-	     * 获取排序方式
+	     * column 当前的排序的列
+	     * 当有的列不排序时，将该列的orderNum置为‘’，并动态的修改其他列的orderNum。
 	     */
+	
 	
 	    /**
 	     * pre：前一条数据

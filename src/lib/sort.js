@@ -57,9 +57,10 @@ export default function sort(Table, Icon) {
       })
       return orderNum?orderNum:1;
     }
-    //当有的列不排序时，将该列的orderNum置为‘’，并动态的修改其他列的orderNum。
+    
     /**
      * column 当前的排序的列
+     * 当有的列不排序时，将该列的orderNum置为‘’，并动态的修改其他列的orderNum。
      */
     changeOrderNum = (column)=>{
       let {columns} = this.state;
@@ -74,12 +75,7 @@ export default function sort(Table, Icon) {
      this.setState({columns});
 
     }
-    /**
-     * 获取排序方式
-     */
-    getColAndOrderType = ()=>{
-
-    }
+   
    /**
     * pre：前一条数据
     * after:后一条数据
@@ -167,9 +163,6 @@ export default function sort(Table, Icon) {
         }
         data = this.multiSort(columns); 
       }
-
-      
-      
       this.setState({ 
         data,
         oldData,
