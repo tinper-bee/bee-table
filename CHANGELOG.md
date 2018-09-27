@@ -1,3 +1,18 @@
+<a name="1.4.5"></a>
+## [1.4.5](https://github.com/tinper-bee/bee-table/compare/v1.4.4...v1.4.5) (2018-09-27)
+
+
+### Bug Fixes
+
+* 表头列增加className，左固定列增加边界 ([e08c25d](https://github.com/tinper-bee/bee-table/commit/e08c25d))
+
+
+
+<a name="1.4.4"></a>
+## [1.4.4](https://github.com/tinper-bee/bee-table/compare/v1.4.3...v1.4.4) (2018-09-19)
+
+
+
 <a name="1.4.3"></a>
 ## [1.4.3](https://github.com/tinper-bee/bee-table/compare/v1.4.2...v1.4.3) (2018-09-18)
 
