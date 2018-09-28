@@ -52,6 +52,8 @@
   "bee-menus": "^1.0.7",
   "bee-popover": "^1.0.2",
   "bee-select": "^1.0.8",
+  "bee-form-control": "latest",
+  "bee-datepicker": "latest",
   "classnames": "^2.2.5",
   "lodash.clonedeep": "^4.5.0",
   "object-path": "^0.11.3",
@@ -70,9 +72,9 @@
   "bee-animate": "latest",
   "bee-button": "latest",
   "bee-checkbox": "^1.1.1",
-  "bee-datepicker": "latest",
+ 
   "bee-form": "^1.0.8",
-  "bee-form-control": "latest",
+ 
   "bee-icon": "latest",
   "bee-input-group": "latest",
   "bee-layout": "latest",
