@@ -110,13 +110,19 @@ var TableHeader = function (_Component) {
       _this.drag.currIndex = _this.props.rows[0].findIndex(function (da) {
         return da.key == data.key;
       });
-      _this.drag.width = _this.drag.data[_this.drag.currIndex].width;
+
       var contentTableDom = document.getElementById("u-table-drag-thead-" + _this.theadKey).parentNode;
       var styleWidth = contentTableDom.style.width;
       if (styleWidth && (typeof styleWidth == 'number' || styleWidth.includes('px'))) {
         _this.contentTableWidth = parseInt(styleWidth);
       } else {
         _this.contentTableWidth = parseInt(contentTableDom.scrollWidth);
+      }
+      var dragColWidth = _this.drag.data[_this.drag.currIndex].width;
+      if (typeof dragColWidth == 'string' && dragColWidth.indexOf('%')) {
+        _this.drag.width = _this.contentTableWidth * parseInt(dragColWidth) / 100;
+      } else {
+        _this.drag.width = parseInt(_this.drag.data[_this.drag.currIndex].width);
       }
     };
 
@@ -365,11 +371,13 @@ var TableHeader = function (_Component) {
             var thHover = da.drgHover ? ' ' + clsPrefix + '-thead th-drag-hover' : "";
             delete da.drgHover;
             var fixedStyle = '';
+            var canDotDrag = '';
             if (!fixed && da.fixed) {
               fixedStyle = clsPrefix + '-row-fixed-columns-in-body';
             }
             if (lastShowIndex == i) {
               da.width = parseInt(da.width) + contentWidthDiff;
+              canDotDrag = 'th-can-not-drag';
             }
             if (draggable) {
               return _react2["default"].createElement('th', _extends({}, da, {
@@ -400,7 +408,7 @@ var TableHeader = function (_Component) {
                   onMouseUp: function onMouseUp(event) {
                     _this2.onThMouseUp(event, da);
                   },
-                  className: da.className + ' ' + clsPrefix + '-thead-th  ' + fixedStyle,
+                  className: da.className + ' ' + clsPrefix + '-thead-th ' + canDotDrag + '  ' + fixedStyle,
                   key: i },
                 da.children,
                 _react2["default"].createElement('div', { ref: function ref(el) {

@@ -218,7 +218,7 @@
     padding-right: 0px; }
   .u-table-fixed-header .u-table-body-inner {
     height: 100%;
-    overflow: auto; }
+    overflow: scroll; }
   .u-table-fixed-header .u-table-scroll .u-table-header {
     overflow-x: scroll;
     padding-bottom: 20px;
@@ -390,6 +390,9 @@
     .u-table-thead-th .th-drag-gap-hover {
       background: #ccc;
       cursor: col-resize; }
+    .u-table-thead-th.th-can-not-drag .th-drag-gap-hover {
+      cursor: none;
+      width: 0px; }
   .u-table-thead-th:last-child-drag-gap {
     border: none; }
   .u-table-filter-column-pop-cont {
