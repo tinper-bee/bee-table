@@ -10823,7 +10823,7 @@
 	      this.setState({ contentWidthDiff: contentWidthDiff, lastShowIndex: lastShowIndex });
 	    } else {
 	      this.contentWidth = this.computeWidth;
-	      this.setState({ contentWidth: this.contentWidth }); //重新渲染，为了显示滚动条
+	      this.setState({ contentWidthDiff: 0, lastShowIndex: lastShowIndex }); //重新渲染，为了显示滚动条
 	    }
 	  };
 	

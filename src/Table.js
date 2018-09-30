@@ -200,7 +200,7 @@ class Table extends Component {
         this.setState({contentWidthDiff,lastShowIndex});
       }else{
         this.contentWidth = this.computeWidth;
-        this.setState({contentWidth:this.contentWidth});//重新渲染，为了显示滚动条
+        this.setState({contentWidthDiff:0,lastShowIndex});//重新渲染，为了显示滚动条
       }
   }
 
