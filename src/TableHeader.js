@@ -101,7 +101,7 @@ class TableHeader extends Component {
     this.drag.initLeft = tryParseInt(event.target.style.left);
     this.drag.x = this.drag.initLeft;
     this.drag.currIndex = this.props.rows[0].findIndex(da => da.key == data.key);
-    this.drag.width = this.drag.data[this.drag.currIndex].width;
+    
     let contentTableDom = document.getElementById("u-table-drag-thead-" + this.theadKey).parentNode;
     const styleWidth = contentTableDom.style.width;
     if (styleWidth && (typeof (styleWidth) == 'number' || styleWidth.includes('px'))) {
@@ -109,6 +109,13 @@ class TableHeader extends Component {
     } else {
       this.contentTableWidth = parseInt(contentTableDom.scrollWidth)
     }
+    const dragColWidth = this.drag.data[this.drag.currIndex].width;
+    if(typeof(dragColWidth)=='string' && dragColWidth.indexOf('%')){
+      this.drag.width = this.contentTableWidth * parseInt(dragColWidth) /100
+    }else{
+      this.drag.width = parseInt(this.drag.data[this.drag.currIndex].width);
+    }
+    
   }
   onMouseUp = (event, data) => {
     this.border = false;
@@ -288,11 +295,13 @@ class TableHeader extends Component {
                 let thHover = da.drgHover ? ` ${clsPrefix}-thead th-drag-hover` : "";
                 delete da.drgHover;
                 let fixedStyle = '';
+                let canDotDrag = '';
                 if (!fixed && da.fixed) {
                   fixedStyle = `${clsPrefix}-row-fixed-columns-in-body`;
                 }
                 if (lastShowIndex == i) {
                   da.width = parseInt(da.width) + contentWidthDiff;
+                  canDotDrag = 'th-can-not-drag'
                 }
                 if (draggable) {
                   return (<th {...da}
@@ -309,7 +318,7 @@ class TableHeader extends Component {
                     style={{ width: da.width }}
                     onMouseMove={(event) => { this.onThMouseMove(event, da) }}
                     onMouseUp={(event) => { this.onThMouseUp(event, da) }}
-                    className={`${da.className} ${clsPrefix}-thead-th  ${fixedStyle}`}
+                    className={`${da.className} ${clsPrefix}-thead-th ${canDotDrag}  ${fixedStyle}`}
                     key={i} >
                     {da.children}
                     <div ref={el => this.gap = el}

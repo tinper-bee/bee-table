@@ -113,7 +113,7 @@ $table-move-in-color: $bg-color-base;
 
   &-fixed-header &-body-inner {
     height: 100%;
-    overflow: auto;
+    overflow: scroll;
   }
 
 
@@ -378,6 +378,12 @@ $table-move-in-color: $bg-color-base;
       .th-drag-gap-hover{
         background: #ccc;
         cursor: col-resize;
+      }
+      &.th-can-not-drag{
+        .th-drag-gap-hover{
+          cursor: none;
+          width: 0px;
+        }
       }
     }
     &-th:last-child {

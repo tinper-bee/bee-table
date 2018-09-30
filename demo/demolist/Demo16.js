@@ -12,7 +12,7 @@ const columns16 = [
   {
     title: "操作",
     dataIndex: "d",
-    key: "d",
+    key: "d", 
     fixed:'left',
     width:200,
     render(text, record, index) {
@@ -28,7 +28,7 @@ const columns16 = [
       );
     }
   },
-  { title: "用户名", dataIndex: "a", key: "a", width: 100 },
+  { title: "用户名", dataIndex: "a", key: "a", width: 1500 },
   { id: "123", title: "性别", dataIndex: "b", key: "b", width: 100 },
   { title: "年龄", dataIndex: "c", key: "c", width: 200 },
   
@@ -120,6 +120,7 @@ class Demo16 extends Component {
         data={data16}
         onExpand={this.getData}
         expandedRowRender={this.expandedRowRender}
+        scroll={{x:true}}
         title={currentData => <div>标题: 这是一个标题</div>}
         footer={currentData => <div>表尾: 我是小尾巴</div>}
       />

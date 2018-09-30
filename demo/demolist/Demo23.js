@@ -14,19 +14,19 @@ const columns23 = [
     title: "名字",
     dataIndex: "a",
     key: "a",
-    width: 100
+    width: '10%'
   },
   {
     title: "性别",
     dataIndex: "b",
     key: "b",
-    width: 200
+    width: '200'
   },
   {
     title: "年龄",
     dataIndex: "c",
     key: "c",
-    width: 200,
+    width: '200',
     sumCol: true,
     sorter: (a, b) => a.c - b.c
   },
@@ -34,6 +34,7 @@ const columns23 = [
     title: "武功级别",
     dataIndex: "d",
     key: "d",
+    fixed:'right',
     width: 200,
   }
 ];
