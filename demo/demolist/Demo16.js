@@ -13,7 +13,6 @@ const columns16 = [
     title: "操作",
     dataIndex: "d",
     key: "d", 
-    fixed:'left',
     width:200,
     render(text, record, index) {
       return (

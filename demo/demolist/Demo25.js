@@ -118,10 +118,54 @@ const dataList = [
       voucherDate:"kkkk",
       approvalState_name:"vvvv",
       confirmState_name:"aaaa",
-      closeState_name:"vnnnnnvnnnnnvnnnnnvnnnnnvnnnnnvnnnnnvnnnnnvnnnnnvnnnnnvnnnnnvnnnnnvnnnnn",
+      closeState_name:"vnnnnn",
       d:"操作",
       key: "1"
-  }
+  }, 
+  { 
+    index: 2, 
+    _checked:true,
+    orderCode:"222", 
+    supplierName: "22xxx",
+    type_name: "1223",
+    purchasing:'内行2', 
+    purchasingGroup:"3223",
+    voucherDate:"222kk",
+    approvalState_name:"22vvvv",
+    confirmState_name:"2aaaa",
+    closeState_name:"2vnnnnn",
+    d:"2操作",
+    key: "2"
+  },
+  { 
+    index: 3, 
+    orderCode:"222", 
+    supplierName: "22xxx",
+    _disabled:true,
+    type_name: "1223",
+    purchasing:'内行2', 
+    purchasingGroup:"3223",
+    voucherDate:"222kk",
+    approvalState_name:"22vvvv",
+    confirmState_name:"2aaaa",
+    closeState_name:"2vnnnnn",
+    d:"3操作",
+    key: "3"
+  },
+  { 
+    index: 4, 
+    orderCode:"222", 
+    supplierName: "22xxx",
+    type_name: "1223",
+    purchasing:'内行2', 
+    purchasingGroup:"3223",
+    voucherDate:"222kk",
+    approvalState_name:"22vvvv",
+    confirmState_name:"2aaaa",
+    closeState_name:"2vnnnnn",
+    d:"4操作",
+    key: "4"
+  },
 ]
 
 const DragColumnTable = filterColumn(dragColumn(multiSelect(Table, Checkbox)),Popover);
@@ -147,12 +191,6 @@ class Demo25 extends Component {
     console.log("sum",sum);
     return (sum);
   }
-  onExpand = (expandedKeys) => {
-    this.setState({
-      expandedKeys,
-      autoExpandParent: false,
-    });
-  }
 
   selectedRow=(record, index)=>{
 
@@ -161,18 +199,20 @@ class Demo25 extends Component {
   render() {
     let columns = getCloumns();
     
-    return <div className="demo25"><DragColumnTable 
-    columns={columns}
-    data={dataList} 
-    getSelectedDataFunc={this.getSelectedDataFunc}
-    bordered
-    checkMinSize={7}
-    draggable={true}
-    multiSelect={{type: "checkbox"}}
-    scroll={{x:"130%", y: true}}
-    selectedRow={this.selectedRow}
-    // scroll={{x:this.getCloumnsScroll(columns), y: 150}}
-    /></div>
+    return <div className="demo25">
+            <DragColumnTable 
+                columns={columns}
+                data={dataList} 
+                getSelectedDataFunc={this.getSelectedDataFunc}
+                bordered
+                checkMinSize={7}
+                draggable={true}
+                multiSelect={{type: "checkbox"}}
+                scroll={{x:"130%", y: 100}}
+                selectedRow={this.selectedRow}
+                // scroll={{x:this.getCloumnsScroll(columns), y: 150}}
+                />
+            </div>
   }
 }
 Demo25.defaultProps = defaultProps25;
