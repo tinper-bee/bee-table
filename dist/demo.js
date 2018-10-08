@@ -11187,9 +11187,9 @@
 	    }
 	    cols = cols.concat(leafColumns.map(function (c, i, arr) {
 	      var width = c.width;
-	      if (typeof width == 'string' && width.indexOf('%') > -1) {
+	      if (typeof width == 'string' && width.indexOf('%') > -1 && self.contentWidth) {
 	        width = parseInt(self.contentWidth * parseInt(width) / 100);
-	      } else {
+	      } else if (width) {
 	        width = parseInt(width);
 	      }
 	      if (lastShowIndex == i) {
