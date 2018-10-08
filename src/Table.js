@@ -524,6 +524,7 @@ class Table extends Component {
 
   getColGroup(columns, fixed) {
     let cols = [];
+    let self= this;
     let { contentWidthDiff = 0, lastShowIndex = 0 } = this.state;
     if (this.props.expandIconAsCell && fixed !== 'right') {
       cols.push(
@@ -545,9 +546,15 @@ class Table extends Component {
     }
     cols = cols.concat(leafColumns.map((c, i, arr) => {
       let width = c.width;
-      if (lastShowIndex == i) {
-        width = parseInt(width) + contentWidthDiff;
+      if(typeof(width)=='string' && width.indexOf('%')>-1){
+        width = parseInt(self.contentWidth * parseInt(width) /100);
+      }else{
+        width = parseInt(width);
       }
+      if (lastShowIndex == i) {
+        width = width + contentWidthDiff;
+      }
+
       return <col key={c.key} style={{ width: width, minWidth: c.width }} />;
     }));
     return <colgroup>{cols}</colgroup>;

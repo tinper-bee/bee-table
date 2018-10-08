@@ -21,6 +21,7 @@ const columns = [
   },
   {
     title: "Other",
+    width:600,
     children: [
       {
         title: "Age",
@@ -60,16 +61,19 @@ const columns = [
   },
   {
     title: "Company",
+    width:400,
     children: [
       {
         title: "Company Address",
         dataIndex: "companyAddress",
-        key: "companyAddress"
+        key: "companyAddress",
+        width:200,
       },
       {
         title: "Company Name",
         dataIndex: "companyName",
-        key: "companyName"
+        key: "companyName",
+        width:200,
       }
     ]
   },
@@ -104,7 +108,7 @@ class Demo3 extends Component {
         columns={columns}
         data={data}
         bordered
-        scroll={{ x: "130%", y: 240 }}
+        scroll={{ y: 240 }}
       />
     );
   }

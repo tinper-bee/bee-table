@@ -110,7 +110,7 @@ class TableHeader extends Component {
       this.contentTableWidth = parseInt(contentTableDom.scrollWidth)
     }
     const dragColWidth = this.drag.data[this.drag.currIndex].width;
-    if(typeof(dragColWidth)=='string' && dragColWidth.indexOf('%')){
+    if(typeof(dragColWidth)=='string' && dragColWidth.indexOf('%')>-1){
       this.drag.width = this.contentTableWidth * parseInt(dragColWidth) /100
     }else{
       this.drag.width = parseInt(this.drag.data[this.drag.currIndex].width);
