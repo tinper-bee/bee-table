@@ -119,7 +119,7 @@ var TableHeader = function (_Component) {
         _this.contentTableWidth = parseInt(contentTableDom.scrollWidth);
       }
       var dragColWidth = _this.drag.data[_this.drag.currIndex].width;
-      if (typeof dragColWidth == 'string' && dragColWidth.indexOf('%')) {
+      if (typeof dragColWidth == 'string' && dragColWidth.indexOf('%') > -1) {
         _this.drag.width = _this.contentTableWidth * parseInt(dragColWidth) / 100;
       } else {
         _this.drag.width = parseInt(_this.drag.data[_this.drag.currIndex].width);

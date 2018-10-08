@@ -214,7 +214,7 @@ var ColumnManager = function () {
   };
 
   ColumnManager.prototype.getColumnWidth = function getColumnWidth(contentWidth) {
-    var columns = this.groupedColumns();
+    var columns = this.leafColumns();
     var res = { computeWidth: 0, lastShowIndex: 0 };
     columns.forEach(function (col, index) {
       //如果列显示

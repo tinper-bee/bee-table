@@ -617,6 +617,7 @@ var Table = function (_Component) {
 
   Table.prototype.getColGroup = function getColGroup(columns, fixed) {
     var cols = [];
+    var self = this;
     var _state = this.state,
         _state$contentWidthDi = _state.contentWidthDiff,
         contentWidthDiff = _state$contentWidthDi === undefined ? 0 : _state$contentWidthDi,
@@ -641,9 +642,15 @@ var Table = function (_Component) {
     }
     cols = cols.concat(leafColumns.map(function (c, i, arr) {
       var width = c.width;
-      if (lastShowIndex == i) {
-        width = parseInt(width) + contentWidthDiff;
+      if (typeof width == 'string' && width.indexOf('%') > -1) {
+        width = parseInt(self.contentWidth * parseInt(width) / 100);
+      } else {
+        width = parseInt(width);
       }
+      if (lastShowIndex == i) {
+        width = width + contentWidthDiff;
+      }
+
       return _react2["default"].createElement('col', { key: c.key, style: { width: width, minWidth: c.width } });
     }));
     return _react2["default"].createElement(
@@ -725,6 +732,10 @@ var Table = function (_Component) {
           tableStyle.width = _this3.contentWidth;
         }
       }
+      //自动出现滚动条
+      // if(this.contentDomWidth < this.contentWidth){
+      //   tableStyle.width = this.contentWidth;
+      // }
       var tableBody = hasBody ? getBodyWrapper(_react2["default"].createElement(
         'tbody',
         { className: clsPrefix + '-tbody' },
