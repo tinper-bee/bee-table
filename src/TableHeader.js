@@ -101,7 +101,7 @@ class TableHeader extends Component {
     this.drag.initLeft = tryParseInt(event.target.style.left);
     this.drag.x = this.drag.initLeft;
     this.drag.currIndex = this.props.rows[0].findIndex(da => da.key == data.key);
-    
+
     let contentTableDom = document.getElementById("u-table-drag-thead-" + this.theadKey).parentNode;
     const styleWidth = contentTableDom.style.width;
     if (styleWidth && (typeof (styleWidth) == 'number' || styleWidth.includes('px'))) {
@@ -110,12 +110,12 @@ class TableHeader extends Component {
       this.contentTableWidth = parseInt(contentTableDom.scrollWidth)
     }
     const dragColWidth = this.drag.data[this.drag.currIndex].width;
-    if(typeof(dragColWidth)=='string' && dragColWidth.indexOf('%')>-1){
-      this.drag.width = this.contentTableWidth * parseInt(dragColWidth) /100
-    }else{
+    if (typeof (dragColWidth) == 'string' && dragColWidth.indexOf('%') > -1) {
+      this.drag.width = this.contentTableWidth * parseInt(dragColWidth) / 100
+    } else {
       this.drag.width = parseInt(this.drag.data[this.drag.currIndex].width);
     }
-    
+
   }
   onMouseUp = (event, data) => {
     this.border = false;
@@ -303,6 +303,9 @@ class TableHeader extends Component {
                   da.width = parseInt(da.width) + contentWidthDiff;
                   canDotDrag = 'th-can-not-drag'
                 }
+                if (filterable && index == rows.length - 1) {
+                  da.children = this.filterRenderType(da['filtertype'], da.dataindex, i);
+                }
                 if (draggable) {
                   return (<th {...da}
                     onDragStart={(event) => { this.onDragStart(event, da) }}
@@ -331,12 +334,7 @@ class TableHeader extends Component {
                   </th>)
                 } else {
                   let th;
-                  if (filterable && index == rows.length - 1) {
-                    da.children = this.filterRenderType(da['filtertype'], da.dataindex, i);
-                    th = <th {...da} key={i} className={`${da.className}  ${fixedStyle}`} />;
-                  } else {
-                    th = da.onClick ? (<th {...da} className={`${da.className} ${fixedStyle}`} key={i} onClick={(event) => { da.onClick(da, event) }} />) : (<th {...da} key={i} className={`${da.className}  ${fixedStyle}`} />);
-                  }
+                  th = da.onClick ? (<th {...da} className={`${da.className} ${fixedStyle}`} key={i} onClick={(event) => { da.onClick(da, event) }} />) : (<th {...da} key={i} className={`${da.className}  ${fixedStyle}`} />);
                   return (th);
                 }
               })}
