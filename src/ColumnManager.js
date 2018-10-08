@@ -159,7 +159,7 @@ export default class ColumnManager {
     this._cached = {};
   }
   getColumnWidth(contentWidth){
-    let columns = this.groupedColumns();
+    let columns = this.leafColumns();
     let res={computeWidth:0,lastShowIndex:0};
     columns.forEach((col,index)=>{
       //如果列显示
