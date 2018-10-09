@@ -57,6 +57,11 @@ $table-move-in-color: $bg-color-base;
     transition: all 0.3s ease;
     &:hover {
       background: $table-hover-color;
+      td {
+        .uf-eye{
+          visibility: visible !important;
+        }
+      }
     }
   }
   tr.tr-row-hover {
@@ -349,7 +354,7 @@ $table-move-in-color: $bg-color-base;
       }
     }
     .th-drag{
-      cursor: pointer;
+      cursor: move;
     }
     //为了区分是拖拽宽度还是交换列，先注释上面了
     // .th-drag:hover{
