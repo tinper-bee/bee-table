@@ -1,21 +1,34 @@
 /**
 *
 * @title 组合过滤和其他功能使用
-* @description 在过滤的基础上增加列拖拽、列排序等一系列功能
+* @description 在过滤数据行的基础上增加列拖拽、动态菜单显示等
 *
 */
 
+/**
+ * @description 
+ */
 
 import React, { Component } from 'react';
 import Table from '../../src';
-import dragColumn from '../../src/lib/dragColumn';
+import multiSelect from '../../src/lib/MultiSelect';
+import sort from '../../src/lib/sort';
+import Checkbox from 'bee-checkbox';
+import Icon from 'bee-icon';
+import Menu from 'bee-menus';
+import Dropdown from 'bee-dropdown';
 
 
-const columns27 = [
-  { title: "姓名", width: 180, dataIndex: "name", key: "name", filterType: "text", filterDropdown: "show" },
-  { title: "年龄", width: 150, dataIndex: "age", key: "age", filterType: "dropdown", filterDropdown: "show" },
-  { title: "居住地址", width: 150, dataIndex: "address", key: "address", filterType: "dropdown", filterDropdown: "show" },
-];
+const { Item } = Menu;
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
+
+
+const dataList = [
+  { "key": "1", value: "库存明细", id: "a" },
+  { "key": "2", value: "订单明细", id: "v" },
+  { "key": "3", value: "发货明细", id: "c" }
+]
 
 const data27 = [
   {
@@ -83,23 +96,65 @@ const data27 = [
   }
 ];
 
-const DragColumnTable = dragColumn(Table);
 
+const MultiSelectTable = multiSelect(Table, Checkbox);
+const ComplexTable = sort(MultiSelectTable, Icon);
 class Demo27 extends Component {
   handlerFilterRowsChange = (key, val) => {
     console.log('准备构建AJAX请求，接收参数：key=', key, ' value=', val);
   }
+
   handlerFilterRowsDropChange = (key, val) => {
     console.log('过滤条件类型:', key, val);
   }
+  getSelectedDataFunc = data => {
+    console.log(data);
+  }
+  onClick = (item) => {
+    console.log(item);
+  }
+
   render() {
-    return <DragColumnTable
+    const menu1 = (
+      <Menu onClick={this.onClick} style={{ width: 240 }} mode="vertical" >
+        <SubMenu key="sub1" title={<span><span>组织 1</span></span>}>
+          <MenuItemGroup title="Item 1">
+            <Menu.Item key="1">选项 1</Menu.Item>
+            <Menu.Item key="2">选项 2</Menu.Item>
+          </MenuItemGroup>
+          <MenuItemGroup title="Iteom 2">
+            <Menu.Item key="3">选项 3</Menu.Item>
+            <Menu.Item key="4">选项 4</Menu.Item>
+          </MenuItemGroup>
+        </SubMenu>
+      </Menu>)
+    let multiObj = {
+      type: "checkbox"
+    };
+    let columns27 = [
+      {
+        title: "", width: 40, dataIndex: "key", key: "key", render: (text, record, index) => {
+          return <Dropdown
+            trigger={['click']}
+            overlay={menu1}
+            animation="slide-up"
+          >
+            <Icon style={{ "visibility": "hidden" }} type="uf-eye" />
+          </Dropdown>
+        }
+      },
+      { title: "姓名", width: 180, dataIndex: "name", key: "name", filterType: "text", filterDropdown: "show" },
+      { title: "年龄", width: 150, sorter: (a, b) => a.age - b.age, dataIndex: "age", key: "age", filterType: "dropdown", filterDropdown: "show" },
+      { title: "居住地址", width: 150, dataIndex: "address", key: "address", filterType: "dropdown", filterDropdown: "show" },
+    ];
+    return <ComplexTable
       onFilterRowsDropChange={this.handlerFilterRowsDropChange}//下拉条件的回调(key,val)=>()
       onFilterRowsChange={this.handlerFilterRowsChange}//触发输入操作以及其他的回调(key,val)=>()
       filterDelay={500}//输入文本多少ms触发回调函数，默认300ms
       filterable={true}//是否开启过滤数据功能
+      getSelectedDataFunc={this.getSelectedDataFunc}
       bordered
-      draggable={true}
+      multiSelect={multiObj}
       columns={columns27}
       data={data27} />;
   }
