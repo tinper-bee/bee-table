@@ -73,7 +73,7 @@
   "babel-jest": "^22.0.4",
   "bee-animate": "latest",
   "bee-checkbox": "^1.1.1",
-  "bee-form": "^1.0.8",
+  "bee-form": "1.1.10",
   "bee-input-group": "latest",
   "bee-layout": "latest",
   "bee-pagination": "latest",

@@ -75,6 +75,21 @@ export default function sort(Table, Icon) {
      this.setState({columns});
 
     }
+    /**
+     * 获取排序字段
+     */
+    getOrderCols = (columns)=>{
+      let orderCols = [];
+      columns.forEach(item=>{
+        if(item.order=='ascend'||item.order=='descend'){
+          orderCols.push({order:item.order,
+            field:item.dataIndex,
+            orderNum:item.orderNum
+          });
+        }
+      })
+      return orderCols;
+    }
    
    /**
     * pre：前一条数据
@@ -137,8 +152,12 @@ export default function sort(Table, Icon) {
         })
         seleObj.order = order;
         //通过后端请求
-        if(sort.backSource){
+        if(sort.backSource && typeof sort.sortFun === "function"){
           //获取排序的字段和方式
+          sort.sortFun([{
+            order:order,
+            field:seleObj.dataIndex
+          }]);
         }else{
           if (order === "ascend") {
             data = data.sort(function(a, b) {
@@ -161,7 +180,12 @@ export default function sort(Table, Icon) {
         if(!seleObj.orderNum && (order=='ascend'||order=='descend')){
           seleObj.orderNum = this.getOrderNum();
         }
-        data = this.multiSort(columns); 
+        if(sort.backSource && typeof sort.sortFun === "function"){
+          sort.sortFun(this.getOrderCols(columns));
+        }else{
+          data = this.multiSort(columns);
+        }
+         
       }
       this.setState({ 
         data,
