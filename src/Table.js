@@ -633,10 +633,10 @@ class Table extends Component {
           tableStyle.width = this.contentWidth;
         }
       }
-      //自动出现滚动条
-      // if(this.contentDomWidth < this.contentWidth){
-      //   tableStyle.width = this.contentWidth;
-      // }
+     // 自动出现滚动条
+      if(this.contentDomWidth > this.contentWidth){
+        tableStyle.width = this.contentDomWidth;
+      }
       const tableBody = hasBody ? getBodyWrapper(
         <tbody className={`${clsPrefix}-tbody`}>
           {this.getRows(columns, fixed)}
