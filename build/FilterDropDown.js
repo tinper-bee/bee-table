@@ -49,7 +49,7 @@ var FilterDropDown = function (_Component) {
 
             if (onSelectDropdown) {
                 _this.setState({
-                    selectValue: s.key
+                    selectValue: [s.key]
                 }, function () {
                     onSelectDropdown(s);
                 });
