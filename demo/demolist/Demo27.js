@@ -144,8 +144,21 @@ class Demo27 extends Component {
         }
       },
       { title: "姓名", width: 180, dataIndex: "name", key: "name", filterType: "text", filterDropdown: "show" },
-      { title: "年龄", width: 150, sorter: (a, b) => a.age - b.age, dataIndex: "age", key: "age", filterType: "dropdown", filterDropdown: "show" },
-      { title: "居住地址", width: 150, dataIndex: "address", key: "address", filterType: "dropdown", filterDropdown: "show" },
+      {
+        title: "年龄",
+        width: 150,
+        sorter: (a, b) => a.age - b.age,
+        dataIndex: "age",
+        key: "age",
+        filterType: "dropdown",
+        filterDropdown: "hide",
+        filterDropdownAuto: "manual",//切换手动传入模式
+        filterDropdownData: [{
+          key: '数据',
+          value: '数据'
+        }]
+      },
+      { title: "居住地址", width: 150, dataIndex: "address", key: "address", filterType: "dropdown", filterDropdown: "hide" },
     ];
     return <ComplexTable
       onFilterRowsDropChange={this.handlerFilterRowsDropChange}//下拉条件的回调(key,val)=>()
