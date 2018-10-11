@@ -170,6 +170,11 @@ class Table extends Component {
     if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
     }
+    //如果contentDomWidth为0则需要重新计算，适应模态框中表格;
+    if(this.contentDomWidth == 0){
+      this.computeTableWidth();
+    }
+
   }
 
   componentWillUnmount() {

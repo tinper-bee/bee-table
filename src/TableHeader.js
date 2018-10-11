@@ -37,7 +37,7 @@ class TableHeader extends Component {
     // let a = this.props.rows[0];
 
     let _row = [];
-    this.props.rows[0].forEach(item => {
+    this.props.rows[0] && this.props.rows[0].forEach(item => {
       let newItem = item.key != "checkbox" ? ObjectAssign(item) : item;
       _row.push(newItem);
     });
