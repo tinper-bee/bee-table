@@ -642,9 +642,9 @@ var Table = function (_Component) {
     }
     cols = cols.concat(leafColumns.map(function (c, i, arr) {
       var width = c.width;
-      if (typeof width == 'string' && width.indexOf('%') > -1) {
+      if (typeof width == 'string' && width.indexOf('%') > -1 && self.contentWidth) {
         width = parseInt(self.contentWidth * parseInt(width) / 100);
-      } else {
+      } else if (width) {
         width = parseInt(width);
       }
       if (lastShowIndex == i) {
@@ -732,10 +732,10 @@ var Table = function (_Component) {
           tableStyle.width = _this3.contentWidth;
         }
       }
-      //自动出现滚动条
-      // if(this.contentDomWidth < this.contentWidth){
-      //   tableStyle.width = this.contentWidth;
-      // }
+      // 自动出现滚动条
+      if (_this3.contentDomWidth > _this3.contentWidth) {
+        tableStyle.width = _this3.contentDomWidth;
+      }
       var tableBody = hasBody ? getBodyWrapper(_react2["default"].createElement(
         'tbody',
         { className: clsPrefix + '-tbody' },

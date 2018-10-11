@@ -379,6 +379,9 @@ var TableHeader = function (_Component) {
               da.width = parseInt(da.width) + contentWidthDiff;
               canDotDrag = 'th-can-not-drag';
             }
+            if (filterable && index == rows.length - 1) {
+              da.children = _this2.filterRenderType(da['filtertype'], da.dataindex, i);
+            }
             if (draggable) {
               return _react2["default"].createElement('th', _extends({}, da, {
                 onDragStart: function onDragStart(event) {
@@ -433,14 +436,9 @@ var TableHeader = function (_Component) {
               );
             } else {
               var th = void 0;
-              if (filterable && index == rows.length - 1) {
-                da.children = _this2.filterRenderType(da['filtertype'], da.dataindex, i);
-                th = _react2["default"].createElement('th', _extends({}, da, { key: i, className: da.className + '  ' + fixedStyle }));
-              } else {
-                th = da.onClick ? _react2["default"].createElement('th', _extends({}, da, { className: da.className + ' ' + fixedStyle, key: i, onClick: function onClick(event) {
-                    da.onClick(da, event);
-                  } })) : _react2["default"].createElement('th', _extends({}, da, { key: i, className: da.className + '  ' + fixedStyle }));
-              }
+              th = da.onClick ? _react2["default"].createElement('th', _extends({}, da, { className: da.className + ' ' + fixedStyle, key: i, onClick: function onClick(event) {
+                  da.onClick(da, event);
+                } })) : _react2["default"].createElement('th', _extends({}, da, { key: i, className: da.className + '  ' + fixedStyle }));
               return th;
             }
           })
