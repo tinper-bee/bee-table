@@ -95,9 +95,9 @@ function filterColumn(Table, Popover) {
           }
         }
       });
-      if (_columns.length == widthState) {
-        scroll.x = this.getCloumnsScroll(columns);
-      }
+      // if(_columns.length == widthState){
+      //   scroll.x = this.getCloumnsScroll(columns);
+      // }
 
       var content = _react2["default"].createElement(
         "div",
@@ -117,8 +117,8 @@ function filterColumn(Table, Popover) {
       return _react2["default"].createElement(
         "div",
         { className: prefixCls + "-cont" },
-        _react2["default"].createElement(Table, _extends({}, this.props, { columns: _columns, data: data,
-          scroll: scroll
+        _react2["default"].createElement(Table, _extends({}, this.props, { columns: _columns, data: data
+          // scroll={scroll}
           //  scroll={{x:this.getCloumnsScroll(columns)}}
         })),
         _react2["default"].createElement(
