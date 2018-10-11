@@ -248,6 +248,10 @@ var Table = function (_Component) {
     if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
     }
+    //如果contentDomWidth为0则需要重新计算，适应模态框中表格;
+    if (this.contentDomWidth == 0) {
+      this.computeTableWidth();
+    }
   };
 
   Table.prototype.componentWillUnmount = function componentWillUnmount() {
@@ -438,7 +442,9 @@ var Table = function (_Component) {
           dataindex: column.dataIndex,
           datasource: _this2.props.data,
           format: column.format,
-          filterdropdown: column.filterDropdown
+          filterdropdown: column.filterDropdown,
+          filterdropdownauto: column.filterDropdownAuto, //是否自定义数据
+          filterdropdowndata: column.filterDropdownData //自定义数据格式
         });
       }
     });

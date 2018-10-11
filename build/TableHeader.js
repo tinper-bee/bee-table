@@ -257,7 +257,7 @@ var TableHeader = function (_Component) {
         //下拉框选择
         case 'dropdown':
           var selectDataSource = [];
-          if (rows.length > 0) {
+          if (rows.length > 0 && (rows[1][index]['filterdropdownauto'] || 'auto') == 'auto') {
             var hash = {};
             //处理下拉重复对象组装dropdown
             selectDataSource = Array.from(rows[1][0].datasource, function (x) {
@@ -267,6 +267,8 @@ var TableHeader = function (_Component) {
               hash[next.key] ? '' : hash[next.key] = true && item.push(next);
               return item;
             }, []);
+          } else {
+            selectDataSource = rows[1][index]['filterdropdowndata'];
           }
           return _react2["default"].createElement(_FilterType2["default"], {
             rendertype: type,
@@ -311,7 +313,7 @@ var TableHeader = function (_Component) {
       // let a = this.props.rows[0];
 
     };var _row = [];
-    _this.props.rows[0].forEach(function (item) {
+    _this.props.rows[0] && _this.props.rows[0].forEach(function (item) {
       var newItem = item.key != "checkbox" ? (0, _utils.ObjectAssign)(item) : item;
       _row.push(newItem);
     });
