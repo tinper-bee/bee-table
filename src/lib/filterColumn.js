@@ -130,9 +130,9 @@ export default function filterColumn(Table,Popover) {
           }
         }
       });
-      if(_columns.length == widthState){
-        scroll.x = this.getCloumnsScroll(columns);
-      }
+      // if(_columns.length == widthState){
+      //   scroll.x = this.getCloumnsScroll(columns);
+      // }
       
       let content = (
         <div className={`${prefixCls}-pop-cont`}> 
@@ -146,7 +146,7 @@ export default function filterColumn(Table,Popover) {
 
       return <div className={`${prefixCls}-cont`}>
           <Table {...this.props} columns={_columns} data={data}  
-          scroll={scroll}
+          // scroll={scroll}
           //  scroll={{x:this.getCloumnsScroll(columns)}}
            />
           <div className={`${prefixCls}-filter-icon`}>
