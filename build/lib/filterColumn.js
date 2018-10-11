@@ -128,7 +128,7 @@ function filterColumn(Table, Popover) {
             Popover,
             {
               id: "filter_column_popover",
-              placement: "leftTop",
+              placement: "left",
               content: content,
               show: showModal },
             _react2["default"].createElement(

@@ -50833,7 +50833,7 @@
 	
 	            if (onSelectDropdown) {
 	                _this.setState({
-	                    selectValue: s.key
+	                    selectValue: [s.key]
 	                }, function () {
 	                    onSelectDropdown(s);
 	                });
@@ -59394,7 +59394,7 @@
 	            Popover,
 	            {
 	              id: "filter_column_popover",
-	              placement: "leftTop",
+	              placement: "left",
 	              content: content,
 	              show: showModal },
 	            _react2["default"].createElement(

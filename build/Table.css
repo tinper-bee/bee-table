@@ -184,6 +184,8 @@
     transition: all 0.3s ease; }
     .u-table tr:hover {
       background: rgb(227,242,253); }
+      .u-table tr:hover td .uf-eye {
+        visibility: visible !important; }
   .u-table tr.tr-row-hover {
     background: rgb(227,242,253); }
   .u-table th,
@@ -371,7 +373,7 @@
     .u-table-thead th:hover .bee-table-column-sorter {
       display: inline-block; }
   .u-table-thead .th-drag {
-    cursor: pointer; }
+    cursor: move; }
   .u-table-thead .th-drag-hover {
     background: #ccc; }
   .u-table-thead-th {

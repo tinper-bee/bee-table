@@ -16,7 +16,7 @@ class FilterDropDown extends Component {
         let { onSelectDropdown } = this.props;
         if (onSelectDropdown) {
             this.setState({
-                selectValue: s.key
+                selectValue: [s.key]
             }, () => {
                 onSelectDropdown(s);
             });
