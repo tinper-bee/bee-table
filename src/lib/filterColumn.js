@@ -152,7 +152,7 @@ export default function filterColumn(Table,Popover) {
           <div className={`${prefixCls}-filter-icon`}>
             <Popover
               id="filter_column_popover"
-              placement="leftTop"
+              placement="left"
               content={content}
               show={showModal}   >
                 <div className={`${prefixCls}-pop-column-filter-cont`}>
