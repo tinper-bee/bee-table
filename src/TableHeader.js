@@ -247,7 +247,7 @@ class TableHeader extends Component {
       //下拉框选择
       case 'dropdown':
         let selectDataSource = [];
-        if (rows.length > 0) {
+        if (rows.length > 0 && (rows[1][index]['filterdropdownauto'] || 'auto') == 'auto') {
           let hash = {};
           //处理下拉重复对象组装dropdown
           selectDataSource = Array.from(rows[1][0].datasource, x => ({ key: x[dataIndex], value: x[dataIndex] }));
@@ -255,6 +255,8 @@ class TableHeader extends Component {
             hash[next.key] ? '' : hash[next.key] = true && item.push(next);
             return item
           }, []);
+        } else {
+          selectDataSource = rows[1][index]['filterdropdowndata']
         }
         return <FilterType
           rendertype={type}

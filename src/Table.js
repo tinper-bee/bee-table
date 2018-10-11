@@ -178,30 +178,30 @@ class Table extends Component {
     }
   }
 
-  computeTableWidth(){
-      //如果用户传了scroll.x按用户传的为主
-      let setWidthParam = this.props.scroll.x
-      if(typeof(setWidthParam) == 'number'){
-        let numSetWidthParam = parseInt(setWidthParam);
-        this.contentWidth = numSetWidthParam;
-      }else{
-          //计算总表格宽度、根据表格宽度和各列的宽度和比较，重置最后一列
-          this.contentDomWidth = this.contentTable.getBoundingClientRect().width//表格容器宽度
-          this.contentWidth = this.contentDomWidth;//默认与容器宽度一样
-          if(typeof(setWidthParam)=='string' && setWidthParam.indexOf('%')){
-            this.contentWidth = this.contentWidth * parseInt(setWidthParam) /100
-          }
+  computeTableWidth() {
+    //如果用户传了scroll.x按用户传的为主
+    let setWidthParam = this.props.scroll.x
+    if (typeof (setWidthParam) == 'number') {
+      let numSetWidthParam = parseInt(setWidthParam);
+      this.contentWidth = numSetWidthParam;
+    } else {
+      //计算总表格宽度、根据表格宽度和各列的宽度和比较，重置最后一列
+      this.contentDomWidth = this.contentTable.getBoundingClientRect().width//表格容器宽度
+      this.contentWidth = this.contentDomWidth;//默认与容器宽度一样
+      if (typeof (setWidthParam) == 'string' && setWidthParam.indexOf('%')) {
+        this.contentWidth = this.contentWidth * parseInt(setWidthParam) / 100
       }
-      const computeObj = this.columnManager.getColumnWidth(this.contentWidth);
-      let lastShowIndex = computeObj.lastShowIndex;
-      this.computeWidth = computeObj.computeWidth;
-      if(this.computeWidth < this.contentWidth){
-        let contentWidthDiff = this.contentWidth - this.computeWidth;
-        this.setState({contentWidthDiff,lastShowIndex});
-      }else{
-        this.contentWidth = this.computeWidth;
-        this.setState({contentWidthDiff:0,lastShowIndex});//重新渲染，为了显示滚动条
-      }
+    }
+    const computeObj = this.columnManager.getColumnWidth(this.contentWidth);
+    let lastShowIndex = computeObj.lastShowIndex;
+    this.computeWidth = computeObj.computeWidth;
+    if (this.computeWidth < this.contentWidth) {
+      let contentWidthDiff = this.contentWidth - this.computeWidth;
+      this.setState({ contentWidthDiff, lastShowIndex });
+    } else {
+      this.contentWidth = this.computeWidth;
+      this.setState({ contentWidthDiff: 0, lastShowIndex });//重新渲染，为了显示滚动条
+    }
   }
 
   onExpandedRowsChange(expandedRowKeys) {
@@ -344,7 +344,9 @@ class Table extends Component {
           dataindex: column.dataIndex,
           datasource: this.props.data,
           format: column.format,
-          filterdropdown: column.filterDropdown
+          filterdropdown: column.filterDropdown,
+          filterdropdownauto: column.filterDropdownAuto,//是否自定义数据
+          filterdropdowndata: column.filterDropdownData//自定义数据格式
         });
       }
     });
@@ -524,7 +526,7 @@ class Table extends Component {
 
   getColGroup(columns, fixed) {
     let cols = [];
-    let self= this;
+    let self = this;
     let { contentWidthDiff = 0, lastShowIndex = 0 } = this.state;
     if (this.props.expandIconAsCell && fixed !== 'right') {
       cols.push(
@@ -546,9 +548,9 @@ class Table extends Component {
     }
     cols = cols.concat(leafColumns.map((c, i, arr) => {
       let width = c.width;
-      if(typeof(width)=='string' && width.indexOf('%')>-1 && self.contentWidth){
-        width = parseInt(self.contentWidth * parseInt(width) /100);
-      }else if(width){
+      if (typeof (width) == 'string' && width.indexOf('%') > -1 && self.contentWidth) {
+        width = parseInt(self.contentWidth * parseInt(width) / 100);
+      } else if (width) {
         width = parseInt(width);
       }
       if (lastShowIndex == i) {
@@ -633,8 +635,8 @@ class Table extends Component {
           tableStyle.width = this.contentWidth;
         }
       }
-     // 自动出现滚动条
-      if(this.contentDomWidth > this.contentWidth){
+      // 自动出现滚动条
+      if (this.contentDomWidth > this.contentWidth) {
         tableStyle.width = this.contentDomWidth;
       }
       const tableBody = hasBody ? getBodyWrapper(
