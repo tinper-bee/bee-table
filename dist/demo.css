@@ -8596,10 +8596,6 @@ ul {
         display: block;
         width: 14px;
         cursor: pointer; }
-      .u-table-thead th .bee-table-column-sorter > .bee-table-column-sorter-flat {
-        display: none; }
-    .u-table-thead th:hover .bee-table-column-sorter > .bee-table-column-sorter-flat {
-      display: block; }
     .u-table-thead th .bee-table-column-sorter-down.on .uf-triangle-down,
     .u-table-thead th .bee-table-column-sorter-down.on .uf-triangle-up,
     .u-table-thead th .bee-table-column-sorter-up.on .uf-triangle-down,

@@ -28,7 +28,6 @@ const columns13 = [
     key: "b",
     width: 200,
     sumCol: true,
-    order:'ascend',
     sorter: (a, b) => a.c - b.c,
     sorterClick:(data,type)=>{//排序的回调函数
       //type value is up or down
