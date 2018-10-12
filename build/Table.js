@@ -249,7 +249,7 @@ var Table = function (_Component) {
       this.syncFixedTableRowHeight();
     }
     //如果contentDomWidth为0则需要重新计算，适应模态框中表格;
-    if (this.contentDomWidth == 0) {
+    if (this.contentDomWidth == 0 && this.preContentDomWidth !== this.contentDomWidth) {
       this.computeTableWidth();
     }
   };
@@ -267,8 +267,10 @@ var Table = function (_Component) {
       var numSetWidthParam = parseInt(setWidthParam);
       this.contentWidth = numSetWidthParam;
     } else {
+      this.preContentDomWidth = this.contentDomWidth;
       //计算总表格宽度、根据表格宽度和各列的宽度和比较，重置最后一列
       this.contentDomWidth = this.contentTable.getBoundingClientRect().width; //表格容器宽度
+
       this.contentWidth = this.contentDomWidth; //默认与容器宽度一样
       if (typeof setWidthParam == 'string' && setWidthParam.indexOf('%')) {
         this.contentWidth = this.contentWidth * parseInt(setWidthParam) / 100;
