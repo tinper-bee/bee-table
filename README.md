@@ -127,7 +127,9 @@ class Demo extends Component {
 | order | 设置排序 | string（"descend"、"ascend"） | - |
 | filterType | 过滤下拉的类型.可选`text`,`dropdown`,`date` | string | text |
 | filterDropdown | 是否显示过滤下拉.可选`show`,`hide` | string | show |
-| format | 设置日期类的格式 | string | YYYY-MM-DD |
+| format | 针对过滤下拉设置日期类的格式 | string | YYYY-MM-DD |
+| filterDropdownAuto | 设置下拉条件是否自动设置选项，`auto`自动根据当前数据生成，`manual`手动传入，可以使用`filterDropdownData`来传入自定义数据 | string | auto |
+| filterDropdownData | 下拉条件自定义数据，filterDropdownAuto=manual生效，传入格式：[{ key : "自定义", value : "自定义" }] | array | [] |
 
 
 ## 如何引用
