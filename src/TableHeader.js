@@ -265,6 +265,7 @@ class TableHeader extends Component {
           onChange={this.handlerFilterTextChange.bind(this, dataIndex)}
           onSelectDropdown={this.handlerFilterDropChange.bind(this, dataIndex)}
           filterDropdown={rows[1][index]['filterdropdown']}
+          onFocus={rows[1][index]['filterdropdownfocus']}
         />
       //日期
       case 'date':
@@ -307,6 +308,7 @@ class TableHeader extends Component {
                 }
                 if (filterable && index == rows.length - 1) {
                   da.children = this.filterRenderType(da['filtertype'], da.dataindex, i);
+                  delete da.filterdropdownfocus;
                 }
                 if (draggable) {
                   return (<th {...da}

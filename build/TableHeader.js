@@ -276,7 +276,8 @@ var TableHeader = function (_Component) {
             data: selectDataSource,
             onChange: _this.handlerFilterTextChange.bind(_this, dataIndex),
             onSelectDropdown: _this.handlerFilterDropChange.bind(_this, dataIndex),
-            filterDropdown: rows[1][index]['filterdropdown']
+            filterDropdown: rows[1][index]['filterdropdown'],
+            onFocus: rows[1][index]['filterdropdownfocus']
           });
         //日期
         case 'date':
@@ -383,6 +384,7 @@ var TableHeader = function (_Component) {
             }
             if (filterable && index == rows.length - 1) {
               da.children = _this2.filterRenderType(da['filtertype'], da.dataindex, i);
+              delete da.filterdropdownfocus;
             }
             if (draggable) {
               return _react2["default"].createElement('th', _extends({}, da, {

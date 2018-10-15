@@ -353,7 +353,8 @@ class Table extends Component {
           format: column.format,
           filterdropdown: column.filterDropdown,
           filterdropdownauto: column.filterDropdownAuto,//是否自定义数据
-          filterdropdowndata: column.filterDropdownData//自定义数据格式
+          filterdropdowndata: column.filterDropdownData,//自定义数据格式
+          filterdropdownfocus: column.filterDropdownFocus//焦点触发函数回调
         });
       }
     });
