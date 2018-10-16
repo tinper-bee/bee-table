@@ -109,7 +109,7 @@ function dragColumn(Table) {
         });
         var _columns = columns.sort((0, _util.compare)('dragIndex'));
         _this.setState({
-          columns: JSON.parse(JSON.stringify(_columns))
+          columns: _columns.slice()
         });
         if (_this.props.onDrop) {
           _this.props.onDrop(event, data);
