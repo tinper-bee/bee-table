@@ -136,7 +136,7 @@ export default function filterColumn(Table,Popover) {
       
       let content = (
         <div className={`${prefixCls}-pop-cont`}> 
-        <span className={`${prefixCls}-clear-setting`} onClick={this.clear}>清除设置</span>
+        <span className={`${prefixCls}-clear-setting`} onClick={this.clear}>还原设置</span>
         <div>
            {
             this.getCloumItem()

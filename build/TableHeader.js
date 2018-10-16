@@ -377,6 +377,11 @@ var TableHeader = function (_Component) {
             if (!fixed && da.fixed) {
               fixedStyle = clsPrefix + '-row-fixed-columns-in-body';
             }
+            if (typeof da.width == 'string' && da.width.indexOf('%') > -1 && _this2.props.contentWidth) {
+              da.width = parseInt(_this2.props.contentWidth * parseInt(da.width) / 100);
+            } else if (da.width) {
+              da.width = parseInt(da.width);
+            }
             if (lastShowIndex == i) {
               da.width = parseInt(da.width) + contentWidthDiff;
               canDotDrag = 'th-can-not-drag';

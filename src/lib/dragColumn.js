@@ -81,7 +81,7 @@ export default function dragColumn(Table) {
       });
      let _columns =  columns.sort(compare('dragIndex'));
       this.setState({
-        columns: JSON.parse(JSON.stringify(_columns)),
+        columns:_columns.slice()
       });
       if(this.props.onDrop){
         this.props.onDrop(event,data);

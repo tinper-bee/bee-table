@@ -248,8 +248,8 @@ var Table = function (_Component) {
     if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
     }
-    //如果contentDomWidth为0则需要重新计算，适应模态框中表格;
-    if (this.contentDomWidth == 0 && this.preContentDomWidth !== this.contentDomWidth) {
+    //适应模态框中表格、以及父容器宽度变化的情况
+    if (typeof this.props.scroll.x !== 'number' && this.contentTable.getBoundingClientRect().width !== this.contentDomWidth) {
       this.computeTableWidth();
     }
   };
@@ -267,7 +267,7 @@ var Table = function (_Component) {
       var numSetWidthParam = parseInt(setWidthParam);
       this.contentWidth = numSetWidthParam;
     } else {
-      this.preContentDomWidth = this.contentDomWidth;
+      // this.preContentDomWidth = this.contentDomWidth;
       //计算总表格宽度、根据表格宽度和各列的宽度和比较，重置最后一列
       this.contentDomWidth = this.contentTable.getBoundingClientRect().width; //表格容器宽度
 
@@ -381,6 +381,7 @@ var Table = function (_Component) {
     return showHeader ? _react2["default"].createElement(_TableHeader2["default"], _extends({}, drop, dragBorder, {
       minColumnWidth: minColumnWidth,
       contentWidthDiff: contentWidthDiff,
+      contentWidth: this.contentWidth,
       lastShowIndex: this.state.lastShowIndex,
       clsPrefix: clsPrefix,
       rows: rows,
@@ -742,6 +743,7 @@ var Table = function (_Component) {
       }
       // 自动出现滚动条
       if (_this3.contentDomWidth > _this3.contentWidth) {
+        console.log(_this3.contentDomWidth);
         tableStyle.width = _this3.contentDomWidth;
       }
       var tableBody = hasBody ? getBodyWrapper(_react2["default"].createElement(

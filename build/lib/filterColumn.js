@@ -105,7 +105,7 @@ function filterColumn(Table, Popover) {
         _react2["default"].createElement(
           "span",
           { className: prefixCls + "-clear-setting", onClick: this.clear },
-          "\u6E05\u9664\u8BBE\u7F6E"
+          "\u8FD8\u539F\u8BBE\u7F6E"
         ),
         _react2["default"].createElement(
           "div",

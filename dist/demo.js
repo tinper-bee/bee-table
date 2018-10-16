@@ -3258,30 +3258,44 @@
 
 	'use strict';
 	
-	Object.defineProperty(exports, "__esModule", {
+	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-	exports["default"] = addEventListener;
+	exports['default'] = addEventListener;
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
 	var _EventObject = __webpack_require__(41);
 	
 	var _EventObject2 = _interopRequireDefault(_EventObject);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function addEventListener(target, eventType, callback) {
+	function addEventListener(target, eventType, callback, option) {
 	  function wrapCallback(e) {
-	    var ne = new _EventObject2["default"](e);
+	    var ne = new _EventObject2['default'](e);
 	    callback.call(target, ne);
 	  }
 	
 	  if (target.addEventListener) {
-	    target.addEventListener(eventType, wrapCallback, false);
-	    return {
-	      remove: function remove() {
-	        target.removeEventListener(eventType, wrapCallback, false);
+	    var _ret = (function () {
+	      var useCapture = false;
+	      if (typeof option === 'object') {
+	        useCapture = option.capture || false;
+	      } else if (typeof option === 'boolean') {
+	        useCapture = option;
 	      }
-	    };
+	
+	      target.addEventListener(eventType, wrapCallback, option || false);
+	
+	      return {
+	        v: {
+	          remove: function remove() {
+	            target.removeEventListener(eventType, wrapCallback, useCapture);
+	          }
+	        }
+	      };
+	    })();
+	
+	    if (typeof _ret === 'object') return _ret.v;
 	  } else if (target.attachEvent) {
 	    target.attachEvent('on' + eventType, wrapCallback);
 	    return {
@@ -3291,17 +3305,26 @@
 	    };
 	  }
 	}
+	
 	module.exports = exports['default'];
 
 /***/ }),
 /* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
+	/**
+	 * @ignore
+	 * event object for dom
+	 * @author yiminghe@gmail.com
+	 */
+	
 	'use strict';
 	
-	Object.defineProperty(exports, "__esModule", {
+	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
 	var _EventBaseObject = __webpack_require__(42);
 	
@@ -3310,14 +3333,6 @@
 	var _objectAssign = __webpack_require__(43);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	/**
-	 * @ignore
-	 * event object for dom
-	 * @author yiminghe@gmail.com
-	 */
 	
 	var TRUE = true;
 	var FALSE = false;
@@ -3353,9 +3368,9 @@
 	  reg: /^(mousewheel|DOMMouseScroll)$/,
 	  props: [],
 	  fix: function fix(event, nativeEvent) {
-	    var deltaX = void 0;
-	    var deltaY = void 0;
-	    var delta = void 0;
+	    var deltaX = undefined;
+	    var deltaY = undefined;
+	    var delta = undefined;
 	    var wheelDelta = nativeEvent.wheelDelta;
 	    var axis = nativeEvent.axis;
 	    var wheelDeltaY = nativeEvent.wheelDeltaY;
@@ -3428,9 +3443,9 @@
 	  reg: /^mouse|contextmenu|click|mspointer|(^DOMMouseScroll$)/i,
 	  props: ['buttons', 'clientX', 'clientY', 'button', 'offsetX', 'relatedTarget', 'which', 'fromElement', 'toElement', 'offsetY', 'pageX', 'pageY', 'screenX', 'screenY'],
 	  fix: function fix(event, nativeEvent) {
-	    var eventDoc = void 0;
-	    var doc = void 0;
-	    var body = void 0;
+	    var eventDoc = undefined;
+	    var doc = undefined;
+	    var body = undefined;
 	    var target = event.target;
 	    var button = nativeEvent.button;
 	
@@ -3479,7 +3494,7 @@
 	
 	  var isNative = typeof nativeEvent.stopPropagation === 'function' || typeof nativeEvent.cancelBubble === 'boolean';
 	
-	  _EventBaseObject2["default"].call(this);
+	  _EventBaseObject2['default'].call(this);
 	
 	  this.nativeEvent = nativeEvent;
 	
@@ -3497,9 +3512,9 @@
 	  this.isDefaultPrevented = isDefaultPrevented;
 	
 	  var fixFns = [];
-	  var fixFn = void 0;
-	  var l = void 0;
-	  var prop = void 0;
+	  var fixFn = undefined;
+	  var l = undefined;
+	  var prop = undefined;
 	  var props = commonProps.concat();
 	
 	  eventNormalizers.forEach(function (normalizer) {
@@ -3539,9 +3554,9 @@
 	  this.timeStamp = nativeEvent.timeStamp || Date.now();
 	}
 	
-	var EventBaseObjectProto = _EventBaseObject2["default"].prototype;
+	var EventBaseObjectProto = _EventBaseObject2['default'].prototype;
 	
-	(0, _objectAssign2["default"])(DomEventObject.prototype, EventBaseObjectProto, {
+	(0, _objectAssign2['default'])(DomEventObject.prototype, EventBaseObjectProto, {
 	  constructor: DomEventObject,
 	
 	  preventDefault: function preventDefault() {
@@ -3557,6 +3572,7 @@
 	
 	    EventBaseObjectProto.preventDefault.call(this);
 	  },
+	
 	  stopPropagation: function stopPropagation() {
 	    var e = this.nativeEvent;
 	
@@ -3572,24 +3588,24 @@
 	  }
 	});
 	
-	exports["default"] = DomEventObject;
+	exports['default'] = DomEventObject;
 	module.exports = exports['default'];
 
 /***/ }),
 /* 42 */
 /***/ (function(module, exports) {
 
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
 	/**
 	 * @ignore
 	 * base event object for custom and dom event.
 	 * @author yiminghe@gmail.com
 	 */
 	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	function returnFalse() {
 	  return false;
 	}
@@ -3618,15 +3634,18 @@
 	  preventDefault: function preventDefault() {
 	    this.isDefaultPrevented = returnTrue;
 	  },
+	
 	  stopPropagation: function stopPropagation() {
 	    this.isPropagationStopped = returnTrue;
 	  },
+	
 	  stopImmediatePropagation: function stopImmediatePropagation() {
 	    this.isImmediatePropagationStopped = returnTrue;
 	    // fixed 1.2
 	    // call stopPropagation implicitly
 	    this.stopPropagation();
 	  },
+	
 	  halt: function halt(immediate) {
 	    if (immediate) {
 	      this.stopImmediatePropagation();
@@ -3638,7 +3657,7 @@
 	};
 	
 	exports["default"] = EventBaseObject;
-	module.exports = exports['default'];
+	module.exports = exports["default"];
 
 /***/ }),
 /* 43 */
@@ -6449,6 +6468,10 @@
 	Notification.defaultProps = defaultProps;
 	
 	Notification.newInstance = function newNotificationInstance(properties, callback) {
+	  if (typeof callback !== 'function') {
+	    console.error('You must introduce callback as the second parameter of Notification.newInstance().');
+	    return;
+	  }
 	  var props = properties || {};
 	  var div = document.createElement('div');
 	  document.body.appendChild(div);
@@ -8261,9 +8284,9 @@
 	    OverlayTrigger.prototype.componentWillUnmount = function componentWillUnmount() {
 	        !isReact16 && _reactDom2["default"].unmountComponentAtNode(this._mountNode);
 	        this._mountNode = null;
-	
-	        clearTimeout(this._hoverShowDelay);
-	        clearTimeout(this._hoverHideDelay);
+	        // 加判断去掉 clearTimeout
+	        this._hoverShowDelay && clearTimeout(this._hoverShowDelay);
+	        this._hoverShowDelay && clearTimeout(this._hoverHideDelay);
 	    };
 	
 	    OverlayTrigger.prototype.handleToggle = function handleToggle() {
@@ -10793,8 +10816,8 @@
 	    if (this.columnManager.isAnyColumnsFixed()) {
 	      this.syncFixedTableRowHeight();
 	    }
-	    //如果contentDomWidth为0则需要重新计算，适应模态框中表格;
-	    if (this.contentDomWidth == 0 && this.preContentDomWidth !== this.contentDomWidth) {
+	    //适应模态框中表格、以及父容器宽度变化的情况
+	    if (typeof this.props.scroll.x !== 'number' && this.contentTable.getBoundingClientRect().width !== this.contentDomWidth) {
 	      this.computeTableWidth();
 	    }
 	  };
@@ -10812,7 +10835,7 @@
 	      var numSetWidthParam = parseInt(setWidthParam);
 	      this.contentWidth = numSetWidthParam;
 	    } else {
-	      this.preContentDomWidth = this.contentDomWidth;
+	      // this.preContentDomWidth = this.contentDomWidth;
 	      //计算总表格宽度、根据表格宽度和各列的宽度和比较，重置最后一列
 	      this.contentDomWidth = this.contentTable.getBoundingClientRect().width; //表格容器宽度
 	
@@ -10926,6 +10949,7 @@
 	    return showHeader ? _react2['default'].createElement(_TableHeader2['default'], _extends({}, drop, dragBorder, {
 	      minColumnWidth: minColumnWidth,
 	      contentWidthDiff: contentWidthDiff,
+	      contentWidth: this.contentWidth,
 	      lastShowIndex: this.state.lastShowIndex,
 	      clsPrefix: clsPrefix,
 	      rows: rows,
@@ -11287,6 +11311,7 @@
 	      }
 	      // 自动出现滚动条
 	      if (_this3.contentDomWidth > _this3.contentWidth) {
+	        console.log(_this3.contentDomWidth);
 	        tableStyle.width = _this3.contentDomWidth;
 	      }
 	      var tableBody = hasBody ? getBodyWrapper(_react2['default'].createElement(
@@ -12819,6 +12844,11 @@
 	            if (!fixed && da.fixed) {
 	              fixedStyle = clsPrefix + '-row-fixed-columns-in-body';
 	            }
+	            if (typeof da.width == 'string' && da.width.indexOf('%') > -1 && _this2.props.contentWidth) {
+	              da.width = parseInt(_this2.props.contentWidth * parseInt(da.width) / 100);
+	            } else if (da.width) {
+	              da.width = parseInt(da.width);
+	            }
 	            if (lastShowIndex == i) {
 	              da.width = parseInt(da.width) + contentWidthDiff;
 	              canDotDrag = 'th-can-not-drag';
@@ -14329,6 +14359,7 @@
 	  combobox: _propTypes2["default"].bool,
 	  notFoundContent: _propTypes2["default"].oneOfType([_propTypes2["default"].node, _propTypes2["default"].array, _propTypes2["default"].any]),
 	  showSearch: _propTypes2["default"].bool,
+	  open: _propTypes2["default"].bool,
 	  transitionName: _propTypes2["default"].string,
 	  choiceTransitionName: _propTypes2["default"].string,
 	  multiple: _propTypes2["default"].bool,
@@ -14372,7 +14403,8 @@
 	        size = _props.size,
 	        combobox = _props.combobox,
 	        showSearch = _props.showSearch,
-	        data = _props.data;
+	        data = _props.data,
+	        open = _props.open;
 	    var _props2 = this.props,
 	        _props2$notFoundConte = _props2.notFoundContent,
 	        notFoundContent = _props2$notFoundConte === undefined ? "Not Found" : _props2$notFoundConte,
@@ -14406,7 +14438,9 @@
 	      _extends({}, this.props, {
 	        className: cls,
 	        optionLabelProp: optionLabelProp || "children",
-	        notFoundContent: notFoundContent
+	        notFoundContent: notFoundContent,
+	        open: this.props.open,
+	        changeOpen: this.props.changeOpen
 	      }),
 	      data.map(function (item) {
 	        return _react2["default"].createElement(
@@ -14515,7 +14549,7 @@
 	var valueObjectShape = void 0;
 	
 	if (_propTypes2["default"]) {
-	  valueObjectShape = _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].shape({
+	  valueObjectShape = _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].number, _propTypes2["default"].shape({
 	    key: _propTypes2["default"].string,
 	    label: _propTypes2["default"].node
 	  })]);
@@ -14534,8 +14568,8 @@
 	  clsPrefix: _propTypes2["default"].string,
 	  className: _propTypes2["default"].string,
 	  transitionName: _propTypes2["default"].string,
-	  optionLabelProp: _propTypes2["default"].string,
-	  optionFilterProp: _propTypes2["default"].string,
+	  optionLabelProp: _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].number]),
+	  optionFilterProp: _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].number]),
 	  animation: _propTypes2["default"].string,
 	  choiceTransitionName: _propTypes2["default"].string,
 	  onChange: _propTypes2["default"].func,
@@ -14569,6 +14603,7 @@
 	  onSelect: noop,
 	  onSearch: noop,
 	  onDeselect: noop,
+	  changeOpen: noop,
 	  showArrow: true,
 	  dropdownMatchSelectWidth: true,
 	  dropdownStyle: {},
@@ -14608,6 +14643,13 @@
 	      _this2.props.onFocus(_this2.state.value);
 	    };
 	
+	    _this2.borderBlur = function () {
+	      _this2.setState({
+	        open: false
+	      });
+	      _this2._focused = false;
+	    };
+	
 	    var value = [];
 	    if ('value' in props) {
 	      value = (0, _util.toArray)(props.value);
@@ -14622,14 +14664,14 @@
 	    }
 	    _this2.saveInputRef = saveRef.bind(_this2, 'inputInstance');
 	    _this2.saveInputMirrorRef = saveRef.bind(_this2, 'inputMirrorInstance');
-	    var open = props.open;
-	    if (open === undefined) {
-	      open = props.defaultOpen;
-	    }
+	    // let open = props.open;
+	    // if (open === undefined) {
+	    //   open = props.defaultOpen;
+	    // }
 	    _this2.state = {
 	      value: value,
 	      inputValue: inputValue,
-	      open: open
+	      open: props.open ? props.open : props.defaultOpen
 	    };
 	
 	    _this2.filterOption = _this2.filterOption.bind(_this2);
@@ -14704,6 +14746,11 @@
 	  };
 	
 	  RcSelect.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+	    if (nextProps.open !== this.props.open) {
+	      this.setState({
+	        open: nextProps.open
+	      });
+	    }
 	
 	    if ('value' in nextProps) {
 	      var value = (0, _util.toArray)(nextProps.value);
@@ -15648,6 +15695,9 @@
 	    if (this.props.haveFocus) {
 	      attr.onBlur = this.onOuterBlur;
 	      attr.onFocus = this.onOuterFocus;
+	    } else {
+	      attr.onBlur = this.borderBlur;
+	      attr.onFocus = this.onOuterFocus;
 	    }
 	    return _react2["default"].createElement(
 	      _SelectTrigger2["default"],
@@ -15682,8 +15732,6 @@
 	        _extends({
 	          style: props.style,
 	          ref: 'root'
-	          // onBlur={this.onOuterBlur}
-	          // onFocus={this.onOuterFocus}
 	        }, attr, {
 	          onClick: this.onOutClick,
 	          className: (0, _classnames2["default"])(rootCls)
@@ -20670,7 +20718,7 @@
 	
 	var propTypes = {
 	  disabled: _propTypes2["default"].bool,
-	  value: _propTypes2["default"].string
+	  value: _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].number])
 	};
 	
 	var Option = function (_React$Component) {
@@ -20867,7 +20915,9 @@
 	              readOnly: true,
 	              placeholder: _this2.props.placeholder,
 	              value: value && value.format(props.format) || "",
-	              onClick: _this2.onClick
+	              onClick: function onClick(event) {
+	                _this2.onClick(event);
+	              }
 	            }, autofocus)),
 	            _react2["default"].createElement(
 	              _beeInputGroup2["default"].Button,
@@ -20918,10 +20968,10 @@
 	    props.onChange(value, value && value.format(props.format) || '');
 	  };
 	
-	  this.onClick = function () {
+	  this.onClick = function (e) {
 	    var props = _this3.props;
 	    var value = _this3.state.value;
-	    props.onClick(value || null, value && value.format(props.format) || '');
+	    props.onClick && props.onClick(e.nativeEvent, value || null, value && value.format(props.format) || '');
 	  };
 	};
 	
@@ -44876,12 +44926,12 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	function addEventListenerWrap(target, eventType, cb) {
+	function addEventListenerWrap(target, eventType, cb, option) {
 	  /* eslint camelcase: 2 */
 	  var callback = _reactDom2['default'].unstable_batchedUpdates ? function run(e) {
 	    _reactDom2['default'].unstable_batchedUpdates(cb, e);
 	  } : cb;
-	  return (0, _addDomEventListener2['default'])(target, eventType, callback);
+	  return (0, _addDomEventListener2['default'])(target, eventType, callback, option);
 	}
 	module.exports = exports['default'];
 
@@ -58679,18 +58729,18 @@
 	    }
 	  };
 	
-	  Popconfirm.prototype.handleClose = function handleClose() {
+	  Popconfirm.prototype.handleClose = function handleClose(e) {
 	    var onClose = this.props.onClose;
 	
 	    this.hide();
-	    onClose && onClose();
+	    onClose && onClose(e);
 	  };
 	
-	  Popconfirm.prototype.handleCancel = function handleCancel() {
+	  Popconfirm.prototype.handleCancel = function handleCancel(e) {
 	    var onCancel = this.props.onCancel;
 	
 	    this.hide();
-	    onCancel && onCancel();
+	    onCancel && onCancel(e);
 	  };
 	
 	  Popconfirm.prototype.handleHide = function handleHide() {
@@ -58726,7 +58776,8 @@
 	        content = _props.content,
 	        children = _props.children,
 	        onClick = _props.onClick,
-	        props = _objectWithoutProperties(_props, ['content', 'children', 'onClick']);
+	        stopbubble = _props.stopbubble,
+	        props = _objectWithoutProperties(_props, ['content', 'children', 'onClick', 'stopbubble']);
 	
 	    delete props.defaultOverlayShown;
 	
@@ -58743,6 +58794,7 @@
 	      _extends({}, confirmProps, {
 	        onClose: this.handleClose,
 	        onCancel: this.handleCancel,
+	        stopbubble: stopbubble,
 	        placement: props.placement }),
 	      content
 	    );
@@ -58858,6 +58910,11 @@
 	    arrowOffsetLeft: _propTypes2["default"].oneOfType([_propTypes2["default"].number, _propTypes2["default"].string]),
 	
 	    /**
+	     * 阻止冒泡
+	     */
+	    stopbubble: _propTypes2["default"].number,
+	
+	    /**
 	     * Title content
 	     */
 	    title: _propTypes2["default"].node,
@@ -58867,6 +58924,7 @@
 	};
 	
 	var defaultProps = {
+	    stopbubble: 0,
 	    placement: 'right',
 	    clsPrefix: 'u-popconfirm',
 	    locale: {}
@@ -58878,7 +58936,27 @@
 	    function Confirm(props) {
 	        _classCallCheck(this, Confirm);
 	
-	        return _possibleConstructorReturn(this, _React$Component.call(this, props));
+	        var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+	
+	        _this.cancel = function (e) {
+	            var _this$props = _this.props,
+	                stopbubble = _this$props.stopbubble,
+	                onCancel = _this$props.onCancel;
+	
+	            stopbubble && e.stopPropagation();
+	            onCancel(e);
+	        };
+	
+	        _this.close = function (e) {
+	            var _this$props2 = _this.props,
+	                stopbubble = _this$props2.stopbubble,
+	                onClose = _this$props2.onClose;
+	
+	            stopbubble && e.stopPropagation();
+	            onClose(e);
+	        };
+	
+	        return _this;
 	    }
 	
 	    Confirm.prototype.render = function render() {
@@ -58939,13 +59017,13 @@
 	                { className: (0, _classnames2["default"])(clsPrefix + '-confirm') },
 	                _react2["default"].createElement(
 	                    _beeButton2["default"],
-	                    { onClick: onCancel, size: 'sm', style: { minWidth: 50 },
+	                    { onClick: this.cancel, size: 'sm', style: { minWidth: 50 },
 	                        shape: 'border' },
 	                    local['cancel']
 	                ),
 	                _react2["default"].createElement(
 	                    _beeButton2["default"],
-	                    { onClick: onClose, size: 'sm', style: { minWidth: 50 }, colors: 'primary' },
+	                    { onClick: this.close, size: 'sm', style: { minWidth: 50 }, colors: 'primary' },
 	                    local['ok']
 	                )
 	            )
@@ -59380,7 +59458,7 @@
 	        _react2["default"].createElement(
 	          "span",
 	          { className: prefixCls + "-clear-setting", onClick: this.clear },
-	          "\u6E05\u9664\u8BBE\u7F6E"
+	          "\u8FD8\u539F\u8BBE\u7F6E"
 	        ),
 	        _react2["default"].createElement(
 	          "div",
@@ -60300,7 +60378,7 @@
 	        });
 	        var _columns = columns.sort((0, _util.compare)('dragIndex'));
 	        _this.setState({
-	          columns: JSON.parse(JSON.stringify(_columns))
+	          columns: _columns.slice()
 	        });
 	        if (_this.props.onDrop) {
 	          _this.props.onDrop(event, data);

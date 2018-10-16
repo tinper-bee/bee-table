@@ -304,20 +304,9 @@ $table-move-in-color: $bg-color-base;
           width: 14px;
           cursor: pointer;
         }
-        // & > .bee-table-column-sorter-flat{
-        //   display: none;
-        
-        // }
        
       }
-      // &:hover{
-      //   .bee-table-column-sorter {
-      //     & > .bee-table-column-sorter-flat{
-      //       display: block;
-          
-      //     }
-      //   }
-      // }
+
       .bee-table-column-sorter-down.on .uf-triangle-down,
       .bee-table-column-sorter-down.on .uf-triangle-up,
       .bee-table-column-sorter-up.on .uf-triangle-down,
