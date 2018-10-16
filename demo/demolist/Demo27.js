@@ -1,7 +1,7 @@
 /**
 *
 * @title 组合过滤和其他功能使用
-* @description 在过滤数据行的基础上增加列拖拽、动态菜单显示等
+* @description 在过滤数据行的基础上增加列拖拽、动态菜单显示、下拉条件动态传入自定义等
 *
 */
 
@@ -100,6 +100,12 @@ const data27 = [
 const MultiSelectTable = multiSelect(Table, Checkbox);
 const ComplexTable = sort(MultiSelectTable, Icon);
 class Demo27 extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dropdownvalue: []
+    }
+  }
   handlerFilterRowsChange = (key, val) => {
     console.log('准备构建AJAX请求，接收参数：key=', key, ' value=', val);
   }
@@ -153,10 +159,12 @@ class Demo27 extends Component {
         filterType: "dropdown",
         filterDropdown: "hide",
         filterDropdownAuto: "manual",//切换手动传入模式
-        filterDropdownData: [{
-          key: '数据',
-          value: '数据'
-        }]
+        filterDropdownData: this.state.dropdownvalue,
+        filterDropdownFocus: () => {
+          this.setState({
+            dropdownvalue: [{ key: "自定义数据1", value: "1" }, { key: "自定义数据2", value: "2" }]
+          });
+        }
       },
       { title: "居住地址", width: 150, dataIndex: "address", key: "address", filterType: "dropdown", filterDropdown: "hide" },
     ];
