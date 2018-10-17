@@ -241,6 +241,7 @@ class TableHeader extends Component {
           clsPrefix={clsPrefix}
           className={`${clsPrefix} filter-text`}
           onChange={debounce(filterDelay || 300, this.handlerFilterTextChange.bind(this, dataIndex))}
+          // onChange={this.handlerFilterTextChange.bind(this, dataIndex)}
           onSelectDropdown={this.handlerFilterDropChange.bind(this, dataIndex)}
           filterDropdown={rows[1][index]['filterdropdown']}
         />

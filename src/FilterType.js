@@ -23,19 +23,28 @@ class FilterType extends Component {
     clearText = () => {
         this.setState({
             text: ""
-        }, () => {
-            this.changeText("");
+        });
+        let { onChange } = this.props;
+        onChange && onChange("");
+    }
+
+    //设置文本
+    changeText = (eve) => {
+        this.setState({
+            text: eve
         });
     }
-    //设置文本
-    changeText = (val) => {
+    //回车执行函数
+    changeTextCall = (eve) => {
         let { onChange } = this.props;
-        if (onChange) {
-            onChange(val);
-            this.setState({
-                text: val
-            });
+        if (eve.keyCode == 13) {
+            onChange(eve.target.value);
         }
+    }
+    //失去焦点后执行函数
+    changeTextCallBlur = (val) => {
+        let { onChange } = this.props;
+        onChange && onChange(val);
     }
     //设置下拉值
     changeSelect = (val) => {
@@ -84,6 +93,8 @@ class FilterType extends Component {
                     value={this.state.text}
                     className={className}
                     onChange={this.changeText}
+                    onKeyDown={this.changeTextCall}
+                    onBlur={this.changeTextCallBlur}
                 />
                     <FilterDropDown
                         onSelectDropdown={onSelectDropdown}

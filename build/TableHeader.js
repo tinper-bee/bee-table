@@ -250,8 +250,9 @@ var TableHeader = function (_Component) {
             rendertype: type,
             clsPrefix: clsPrefix,
             className: clsPrefix + ' filter-text',
-            onChange: (0, _throttleDebounce.debounce)(filterDelay || 300, _this.handlerFilterTextChange.bind(_this, dataIndex)),
-            onSelectDropdown: _this.handlerFilterDropChange.bind(_this, dataIndex),
+            onChange: (0, _throttleDebounce.debounce)(filterDelay || 300, _this.handlerFilterTextChange.bind(_this, dataIndex))
+            // onChange={this.handlerFilterTextChange.bind(this, dataIndex)}
+            , onSelectDropdown: _this.handlerFilterDropChange.bind(_this, dataIndex),
             filterDropdown: rows[1][index]['filterdropdown']
           });
         //下拉框选择

@@ -12722,8 +12722,9 @@
 	            rendertype: type,
 	            clsPrefix: clsPrefix,
 	            className: clsPrefix + ' filter-text',
-	            onChange: (0, _throttleDebounce.debounce)(filterDelay || 300, _this.handlerFilterTextChange.bind(_this, dataIndex)),
-	            onSelectDropdown: _this.handlerFilterDropChange.bind(_this, dataIndex),
+	            onChange: (0, _throttleDebounce.debounce)(filterDelay || 300, _this.handlerFilterTextChange.bind(_this, dataIndex))
+	            // onChange={this.handlerFilterTextChange.bind(this, dataIndex)}
+	            , onSelectDropdown: _this.handlerFilterDropChange.bind(_this, dataIndex),
 	            filterDropdown: rows[1][index]['filterdropdown']
 	          });
 	        //下拉框选择
@@ -13715,20 +13716,30 @@
 	        _this.clearText = function () {
 	            _this.setState({
 	                text: ""
-	            }, function () {
-	                _this.changeText("");
+	            });
+	            var onChange = _this.props.onChange;
+	
+	            onChange && onChange("");
+	        };
+	
+	        _this.changeText = function (eve) {
+	            _this.setState({
+	                text: eve
 	            });
 	        };
 	
-	        _this.changeText = function (val) {
+	        _this.changeTextCall = function (eve) {
 	            var onChange = _this.props.onChange;
 	
-	            if (onChange) {
-	                onChange(val);
-	                _this.setState({
-	                    text: val
-	                });
+	            if (eve.keyCode == 13) {
+	                onChange(eve.target.value);
 	            }
+	        };
+	
+	        _this.changeTextCallBlur = function (val) {
+	            var onChange = _this.props.onChange;
+	
+	            onChange && onChange(val);
 	        };
 	
 	        _this.changeSelect = function (val) {
@@ -13789,7 +13800,9 @@
 	                            },
 	                            value: _this.state.text,
 	                            className: className,
-	                            onChange: _this.changeText
+	                            onChange: _this.changeText,
+	                            onKeyDown: _this.changeTextCall,
+	                            onBlur: _this.changeTextCallBlur
 	                        }),
 	                        _react2['default'].createElement(_FilterDropDown2['default'], {
 	                            onSelectDropdown: onSelectDropdown,
@@ -13856,7 +13869,12 @@
 	    }
 	    //清除文本
 	
+	
 	    //设置文本
+	
+	    //回车执行函数
+	
+	    //失去焦点后执行函数
 	
 	    //设置下拉值
 	
