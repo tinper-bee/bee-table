@@ -55,7 +55,7 @@
   "bee-loading": "^1.0.3",
   "bee-menus": "^1.0.7",
   "bee-popover": "^1.0.2",
-  "bee-select": "^1.0.8",
+  "bee-select": "^1.0.21",
   "classnames": "^2.2.5",
   "lodash.clonedeep": "^4.5.0",
   "object-path": "^0.11.3",

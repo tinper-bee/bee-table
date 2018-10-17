@@ -50,7 +50,7 @@ import 'bee-table/build/Table.css';
 | haveExpandIcon       | 控制是否显示行展开icon.**注：该参数只有在和expandedRowRender同时使用才生效** | Function(record, index):bool   | () =>false |
 | filterable       | 是否开启根据条件来过滤数据 | bool | false
 | filterDelay       | 触发过滤输入的时候的ms延迟时间 | number | 300
-| onFilterRowsChange       | 触发过滤输入操作以及其他的回调 | (key,val) => () | ()=>()
+| onFilterRowsChange       | 触发过滤输入操作以及其他的回调，回车执行函数或者失去焦点触发回调 | (key,val) => () | () => ()
 | onFilterRowsDropChange       | 过滤下拉条件的回调 | (key,val)=>() | () => ()
 
 

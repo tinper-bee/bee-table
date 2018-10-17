@@ -7579,7 +7579,8 @@ ul {
   position: absolute;
   outline: none;
   overflow: hidden;
-  font-size: 12px; }
+  font-size: 12px;
+  animation: uSlideUpIn 300ms ease; }
   .u-select-dropdown.slide-up-enter.slide-up-enter-active.u-select-dropdown-placement-bottomLeft, .u-select-dropdown.slide-up-appear.slide-up-appear-active.u-select-dropdown-placement-bottomLeft {
     animation-name: uSlideUpIn; }
   .u-select-dropdown.slide-up-enter.slide-up-enter-active.u-select-dropdown-placement-topLeft, .u-select-dropdown.slide-up-appear.slide-up-appear-active.u-select-dropdown-placement-topLeft {
@@ -9334,8 +9335,7 @@ ul {
   border-collapse: collapse;
   max-width: 100%;
   background-color: transparent;
-  width: 100%;
-  height: 100%; }
+  width: 100%; }
 
 .rc-calendar table,
 .rc-calendar td,
@@ -9538,7 +9538,7 @@ ul {
 .rc-calendar-time-panel-table {
   table-layout: fixed;
   width: 100%;
-  height: 100%;
+  height: 255px;
   border-collapse: separate; }
 
 .rc-calendar-time-panel-cell {
@@ -9632,16 +9632,13 @@ ul {
   user-select: none;
   right: 0; }
 
-.rc-calendar-month-panel-body, .rc-calendar-year-panel-body, .rc-calendar-decade-panel-body {
-  padding: 9px 10px 10px;
-  height: calc(100% - 30px); }
-
-.rc-calendar-month-panel > div, .rc-calendar-year-panel > div {
-  height: 100%; }
+.rc-calendar-month-panel-body {
+  padding: 9px 10px 10px; }
 
 .rc-calendar-month-panel-table {
   table-layout: fixed;
   width: 100%;
+  height: 255px;
   border-collapse: separate; }
 
 .rc-calendar-month-panel-cell {
