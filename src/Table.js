@@ -156,6 +156,10 @@ class Table extends Component {
     }
     if (nextProps.columns && nextProps.columns !== this.props.columns) {
       this.columnManager.reset(nextProps.columns);
+      if(this.refs && this.refs.bodyTable){
+          //如果列变了，对应的table的ScrollTop属性置为0
+          this.refs.bodyTable.scrollTop = 0;
+      }
     } else if (nextProps.children !== this.props.children) {
       this.columnManager.reset(null, nextProps.children);
     }
@@ -174,6 +178,7 @@ class Table extends Component {
     if(typeof (this.props.scroll.x) !== 'number' && this.contentTable.getBoundingClientRect().width !== this.contentDomWidth){
       this.computeTableWidth();
     }
+
 
   }
 

@@ -132,7 +132,7 @@ export default function sum(Table) {
           columns={this.props.columns}
           data={this.props.data}
           footer={this.setFooterRender}
-          originWidth={true}
+          // originWidth={true}
         />
       );
     }
