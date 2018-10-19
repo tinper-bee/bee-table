@@ -112,7 +112,7 @@ function dragColumn(Table) {
           columns: _columns.slice()
         });
         if (_this.props.onDrop) {
-          _this.props.onDrop(event, data);
+          _this.props.onDrop(event, data, columns);
         }
       };
 

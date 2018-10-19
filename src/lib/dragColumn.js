@@ -84,7 +84,7 @@ export default function dragColumn(Table) {
         columns:_columns.slice()
       });
       if(this.props.onDrop){
-        this.props.onDrop(event,data);
+        this.props.onDrop(event,data,columns);
       }
     }
  
