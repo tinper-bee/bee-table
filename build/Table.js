@@ -236,7 +236,7 @@ var Table = function (_Component) {
     }
     if (nextProps.columns && nextProps.columns !== this.props.columns) {
       this.columnManager.reset(nextProps.columns);
-      if (nextProps.columns.length !== this.props.length && this.refs && this.refs.bodyTable) {
+      if (nextProps.columns.length !== this.props.columns.length && this.refs && this.refs.bodyTable) {
         this.refs.fixedColumnsBodyLeft && (this.refs.fixedColumnsBodyLeft.scrollTop = this.refs.bodyTable.scrollTop);
         this.refs.fixedColumnsBodyRight && (this.refs.fixedColumnsBodyRight.scrollTop = this.refs.bodyTable.scrollTop);
       }
