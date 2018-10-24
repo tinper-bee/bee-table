@@ -228,7 +228,7 @@ class Table extends Component {
       e.preventDefault();
       e.stopPropagation();
     }
-    const info = this.findExpandedRow(record);
+    const info = this.findExpandedRow(record, index);
     if (typeof info !== 'undefined' && !expanded) {
       this.onRowDestroy(record, index);
     } else if (!info && expanded) {
@@ -806,7 +806,7 @@ class Table extends Component {
     //const rows = this.getExpandedRows().filter(i => i === this.getRowKey(record, index));
     //修复rowKey index问题 By Kvkens 2018-10-24 13:38:38
     const rows = this.getExpandedRows().filter((item, i) => {
-      i === this.getRowKey(record, index) || item === this.getRowKey(record, index)
+      return i === this.getRowKey(record, index) || item === this.getRowKey(record, index)
     });
     return rows[0];
   }

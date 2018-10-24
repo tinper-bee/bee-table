@@ -304,7 +304,7 @@ var Table = function (_Component) {
       e.preventDefault();
       e.stopPropagation();
     }
-    var info = this.findExpandedRow(record);
+    var info = this.findExpandedRow(record, index);
     if (typeof info !== 'undefined' && !expanded) {
       this.onRowDestroy(record, index);
     } else if (!info && expanded) {
@@ -923,7 +923,7 @@ var Table = function (_Component) {
     //const rows = this.getExpandedRows().filter(i => i === this.getRowKey(record, index));
     //修复rowKey index问题 By Kvkens 2018-10-24 13:38:38
     var rows = this.getExpandedRows().filter(function (item, i) {
-      i === _this4.getRowKey(record, index) || item === _this4.getRowKey(record, index);
+      return i === _this4.getRowKey(record, index) || item === _this4.getRowKey(record, index);
     });
     return rows[0];
   };
