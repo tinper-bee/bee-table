@@ -156,9 +156,9 @@ class Table extends Component {
     }
     if (nextProps.columns && nextProps.columns !== this.props.columns) {
       this.columnManager.reset(nextProps.columns);
-      if(this.refs && this.refs.bodyTable){
-          //如果列变了，对应的table的ScrollTop属性置为0
-          this.refs.bodyTable.scrollTop = 0;
+      if (this.refs && this.refs.bodyTable) {
+        //如果列变了，对应的table的ScrollTop属性置为0
+        this.refs.bodyTable.scrollTop = 0;
       }
     } else if (nextProps.children !== this.props.children) {
       this.columnManager.reset(null, nextProps.children);
@@ -175,7 +175,7 @@ class Table extends Component {
       this.syncFixedTableRowHeight();
     }
     //适应模态框中表格、以及父容器宽度变化的情况
-    if(typeof (this.props.scroll.x) !== 'number' && this.contentTable.getBoundingClientRect().width !== this.contentDomWidth){
+    if (typeof (this.props.scroll.x) !== 'number' && this.contentTable.getBoundingClientRect().width !== this.contentDomWidth) {
       this.computeTableWidth();
     }
 
@@ -198,7 +198,7 @@ class Table extends Component {
       // this.preContentDomWidth = this.contentDomWidth;
       //计算总表格宽度、根据表格宽度和各列的宽度和比较，重置最后一列
       this.contentDomWidth = this.contentTable.getBoundingClientRect().width//表格容器宽度
-      
+
       this.contentWidth = this.contentDomWidth;//默认与容器宽度一样
       if (typeof (setWidthParam) == 'string' && setWidthParam.indexOf('%')) {
         this.contentWidth = this.contentWidth * parseInt(setWidthParam) / 100
@@ -297,7 +297,7 @@ class Table extends Component {
         {...dragBorder}
         minColumnWidth={minColumnWidth}
         contentWidthDiff={contentWidthDiff}
-        contentWidth = {this.contentWidth}
+        contentWidth={this.contentWidth}
         lastShowIndex={this.state.lastShowIndex}
         clsPrefix={clsPrefix}
         rows={rows}
@@ -803,7 +803,11 @@ class Table extends Component {
   }
 
   findExpandedRow(record, index) {
-    const rows = this.getExpandedRows().filter(i => i === this.getRowKey(record, index));
+    //const rows = this.getExpandedRows().filter(i => i === this.getRowKey(record, index));
+    //修复rowKey index问题 By Kvkens 2018-10-24 13:38:38
+    const rows = this.getExpandedRows().filter((item, i) => {
+      i === this.getRowKey(record, index) || item === this.getRowKey(record, index)
+    });
     return rows[0];
   }
 
