@@ -8501,7 +8501,7 @@ ul {
   .u-table-row-expand-icon, .u-table-expanded-row-expand-icon {
     cursor: pointer;
     display: inline-block;
-    margin-right: 10px;
+    margin-right: 0px;
     width: 16px;
     height: 16px;
     text-align: center;
