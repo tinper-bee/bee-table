@@ -158,9 +158,8 @@ class Table extends Component {
     if (nextProps.columns && nextProps.columns !== this.props.columns) {
       this.columnManager.reset(nextProps.columns);
       if(nextProps.columns.length !== this.props.columns.length && this.refs && this.refs.bodyTable){
-         this.refs.fixedColumnsBodyLeft && ( this.refs.fixedColumnsBodyLeft.scrollTop = this.refs.bodyTable.scrollTop);
-         this.refs.fixedColumnsBodyRight && ( this.refs.fixedColumnsBodyRight.scrollTop = this.refs.bodyTable.scrollTop);
-      }
+         this.scrollTop = this.refs.bodyTable.scrollTop;
+     }
 
     } else if (nextProps.children !== this.props.children) {
       this.columnManager.reset(null, nextProps.children);
@@ -179,6 +178,11 @@ class Table extends Component {
     //适应模态框中表格、以及父容器宽度变化的情况
     if (typeof (this.props.scroll.x) !== 'number' && this.contentTable.getBoundingClientRect().width !== this.contentDomWidth) {
       this.computeTableWidth();
+    }
+    if(this.scrollTop){
+      this.refs.fixedColumnsBodyLeft && ( this.refs.fixedColumnsBodyLeft.scrollTop = this.scrollTop);
+      this.refs.fixedColumnsBodyRight && ( this.refs.fixedColumnsBodyRight.scrollTop = this.scrollTop);
+      this.scrollTop = 0;
     }
 
 
