@@ -278,7 +278,7 @@ class Table extends Component {
 
   getHeader(columns, fixed) {
     const { filterDelay, onFilterRowsDropChange, onFilterRowsChange, filterable, showHeader, expandIconAsCell, clsPrefix, onDragStart, onDragEnter, onDragOver, onDrop, draggable,
-      onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey, minColumnWidth, headerHeight } = this.props;
+      onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey, minColumnWidth, headerHeight,afterDragColWidth } = this.props;
     const rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
       rows[0].unshift({
@@ -314,6 +314,7 @@ class Table extends Component {
         onFilterRowsChange={onFilterRowsChange}
         onFilterRowsDropChange={onFilterRowsDropChange}
         filterDelay={filterDelay}
+        afterDragColWidth = {afterDragColWidth}
       />
     ) : null;
   }
@@ -335,7 +336,8 @@ class Table extends Component {
         children: column.title,
         drgHover: column.drgHover,
         fixed: column.fixed,
-        width: column.width
+        width: column.width,
+        dataIndex:column.dataIndex
       };
       if (column.onHeadCellClick) {
         cell.onClick = column.onHeadCellClick;

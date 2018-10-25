@@ -124,7 +124,7 @@ class TableHeader extends Component {
   }
   onThMouseUp = (event, data) => {
     this.border = false;
-    const { clsPrefix } = this.props;
+    const { clsPrefix,rows } = this.props;
     let eventDom = event.target;
     let optDom;
     if (eventDom.classList.contains('.th-drag-gap-hover')) {
@@ -138,7 +138,10 @@ class TableHeader extends Component {
       optDom.classList.remove('th-drag-gap-hover');
       optDom.classList.add('th-drag-gap');
     }
-
+    //宽度拖拽后，增加回调函数，外部可以记录宽度
+    if(typeof (this.props.afterDragColWidth) == 'function' && rows && rows[0] && this.drag.currIndex){
+      this.props.afterDragColWidth(rows[0][this.drag.currIndex]);
+    }
 
   }
 
@@ -193,6 +196,8 @@ class TableHeader extends Component {
     currentDom.style.width = newWidth + "px";
     // this.contentTableWidth = newTableWidth;
     contentTableDom.style.width = newTableWidth + 'px';
+    data.width = newWidth;
+  
     this.drag.x = x;
     let contentColDomArr = contentTableDom.querySelectorAll('colgroup col')
     contentColDomArr[this.drag.currIndex].style.width = newWidth + "px";

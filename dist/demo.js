@@ -10935,7 +10935,8 @@
 	        onThMouseMove = _props.onThMouseMove,
 	        dragborderKey = _props.dragborderKey,
 	        minColumnWidth = _props.minColumnWidth,
-	        headerHeight = _props.headerHeight;
+	        headerHeight = _props.headerHeight,
+	        afterDragColWidth = _props.afterDragColWidth;
 	
 	    var rows = this.getHeaderRows(columns);
 	    if (expandIconAsCell && fixed !== 'right') {
@@ -10968,7 +10969,8 @@
 	      filterable: filterable,
 	      onFilterRowsChange: onFilterRowsChange,
 	      onFilterRowsDropChange: onFilterRowsDropChange,
-	      filterDelay: filterDelay
+	      filterDelay: filterDelay,
+	      afterDragColWidth: afterDragColWidth
 	    })) : null;
 	  };
 	
@@ -10994,7 +10996,8 @@
 	        children: column.title,
 	        drgHover: column.drgHover,
 	        fixed: column.fixed,
-	        width: column.width
+	        width: column.width,
+	        dataIndex: column.dataIndex
 	      };
 	      if (column.onHeadCellClick) {
 	        cell.onClick = column.onHeadCellClick;
@@ -12612,7 +12615,9 @@
 	
 	    _this.onThMouseUp = function (event, data) {
 	      _this.border = false;
-	      var clsPrefix = _this.props.clsPrefix;
+	      var _this$props2 = _this.props,
+	          clsPrefix = _this$props2.clsPrefix,
+	          rows = _this$props2.rows;
 	
 	      var eventDom = event.target;
 	      var optDom = void 0;
@@ -12626,15 +12631,19 @@
 	        optDom.classList.remove('th-drag-gap-hover');
 	        optDom.classList.add('th-drag-gap');
 	      }
+	      //宽度拖拽后，增加回调函数，外部可以记录宽度
+	      if (typeof _this.props.afterDragColWidth == 'function' && rows && rows[0] && _this.drag.currIndex) {
+	        _this.props.afterDragColWidth(rows[0][_this.drag.currIndex]);
+	      }
 	    };
 	
 	    _this.onThMouseMove = function (event, data) {
 	      if (!_this.border) return;
 	      //固定表头拖拽
 	
-	      var _this$props2 = _this.props,
-	          dragborderKey = _this$props2.dragborderKey,
-	          contentTable = _this$props2.contentTable;
+	      var _this$props3 = _this.props,
+	          dragborderKey = _this$props3.dragborderKey,
+	          contentTable = _this$props3.contentTable;
 	
 	      var x = event.pageX - _this.drag.initPageLeftX + _this.drag.initLeft - 0;
 	      var contentTableDom = document.getElementById("u-table-drag-thead-" + _this.theadKey).parentNode;
@@ -12682,6 +12691,8 @@
 	      currentDom.style.width = newWidth + "px";
 	      // this.contentTableWidth = newTableWidth;
 	      contentTableDom.style.width = newTableWidth + 'px';
+	      data.width = newWidth;
+	
 	      _this.drag.x = x;
 	      var contentColDomArr = contentTableDom.querySelectorAll('colgroup col');
 	      contentColDomArr[_this.drag.currIndex].style.width = newWidth + "px";
@@ -12715,10 +12726,10 @@
 	    };
 	
 	    _this.filterRenderType = function (type, dataIndex, index) {
-	      var _this$props3 = _this.props,
-	          clsPrefix = _this$props3.clsPrefix,
-	          rows = _this$props3.rows,
-	          filterDelay = _this$props3.filterDelay;
+	      var _this$props4 = _this.props,
+	          clsPrefix = _this$props4.clsPrefix,
+	          rows = _this$props4.rows,
+	          filterDelay = _this$props4.filterDelay;
 	
 	      switch (type) {
 	        //文本输入

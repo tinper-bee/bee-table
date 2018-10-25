@@ -367,7 +367,8 @@ var Table = function (_Component) {
         onThMouseMove = _props.onThMouseMove,
         dragborderKey = _props.dragborderKey,
         minColumnWidth = _props.minColumnWidth,
-        headerHeight = _props.headerHeight;
+        headerHeight = _props.headerHeight,
+        afterDragColWidth = _props.afterDragColWidth;
 
     var rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
@@ -400,7 +401,8 @@ var Table = function (_Component) {
       filterable: filterable,
       onFilterRowsChange: onFilterRowsChange,
       onFilterRowsDropChange: onFilterRowsDropChange,
-      filterDelay: filterDelay
+      filterDelay: filterDelay,
+      afterDragColWidth: afterDragColWidth
     })) : null;
   };
 
@@ -426,7 +428,8 @@ var Table = function (_Component) {
         children: column.title,
         drgHover: column.drgHover,
         fixed: column.fixed,
-        width: column.width
+        width: column.width,
+        dataIndex: column.dataIndex
       };
       if (column.onHeadCellClick) {
         cell.onClick = column.onHeadCellClick;
