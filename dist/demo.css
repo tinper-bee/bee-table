@@ -6765,7 +6765,15 @@ input.u-button[type="submit"] {
     float: left; }
   .u-pagination .data_per_select {
     margin: 5px;
-    float: left; }
+    float: left;
+    min-width: 120px; }
+    .u-pagination .data_per_select .u-select {
+      width: 50px;
+      margin: 0 6px; }
+      .u-pagination .data_per_select .u-select .u-select-selection {
+        height: 36px; }
+        .u-pagination .data_per_select .u-select .u-select-selection .u-select-selection-rendered {
+          line-height: 36px; }
   .u-pagination .data_select {
     outline: none;
     -webkit-appearance: none;
@@ -8656,12 +8664,15 @@ ul {
     position: relative; }
   .u-table-filter-column-filter-icon {
     position: absolute;
-    top: 6px;
-    right: 3px;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    z-index: 2; }
+    top: 3px;
+    right: 2px;
+    width: 25px;
+    height: 38px;
+    line-height: 38px;
+    z-index: 2;
+    background: #f7f7f7; }
+    .u-table-filter-column-filter-iconi.uf {
+      padding: 0px; }
   .u-table-filter-column-pop-cont-item {
     margin-top: 10px;
     line-height: 30px;
@@ -9228,7 +9239,8 @@ ul {
   box-shadow: 0 1px 5px #ccc;
   background-clip: padding-box;
   border: 1px solid #ccc;
-  line-height: 1.5; }
+  line-height: 1.5;
+  z-index: 1800; }
 
 .rc-calendar-date-panel,
 .rc-calendar-panel {
@@ -9678,6 +9690,9 @@ ul {
   background: #3fc7fa;
   color: #fff; }
 
+.rc-calendar > .rc-calendar-year-panel {
+  position: relative; }
+
 .rc-calendar-year-panel {
   left: 0;
   top: 0;
@@ -9966,7 +9981,8 @@ ul {
   left: 36px; }
 
 .rc-calendar-range .rc-calendar-year-panel,
-.rc-calendar-range .rc-calendar-month-panel {
+.rc-calendar-range .rc-calendar-month-panel,
+.rc-calendar-range .rc-calendar-decade-panel {
   top: 35px; }
 
 .rc-calendar-range .rc-calendar-month-panel .rc-calendar-year-panel {

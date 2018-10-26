@@ -337,7 +337,7 @@ class Table extends Component {
         drgHover: column.drgHover,
         fixed: column.fixed,
         width: column.width,
-        dataIndex:column.dataIndex
+        dataindex:column.dataIndex
       };
       if (column.onHeadCellClick) {
         cell.onClick = column.onHeadCellClick;
@@ -618,6 +618,7 @@ class Table extends Component {
     let { useFixedHeader } = this.props;
     const bodyStyle = { ...this.props.bodyStyle };
     const headStyle = {};
+    const innerBodyStyle = {};
 
     let tableClassName = '';
     //表格元素的宽度大于容器的宽度也显示滚动条
@@ -632,7 +633,9 @@ class Table extends Component {
       // maxHeight will make fixed-Table scrolling not working
       // so we only set maxHeight to body-Table here
       if (fixed) {
-        bodyStyle.height = bodyStyle.height || scroll.y;
+        // bodyStyle.height = bodyStyle.height || scroll.y;
+        innerBodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
+        innerBodyStyle.overflowY = bodyStyle.overflowY || 'auto';
       } else {
         bodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
       }
@@ -659,7 +662,6 @@ class Table extends Component {
       }
       // 自动出现滚动条
       if (this.contentDomWidth > this.contentWidth) {
-        console.log(this.contentDomWidth);
         tableStyle.width = this.contentDomWidth;
       }
       const tableBody = hasBody ? getBodyWrapper(
@@ -723,6 +725,7 @@ class Table extends Component {
           style={{ ...bodyStyle }}
         >
           <div
+            style={{...innerBodyStyle}}
             className={`${clsPrefix}-body-inner`}
             ref={refName}
             onMouseOver={this.detectScrollTarget}
@@ -900,15 +903,17 @@ class Table extends Component {
       <div className={className} style={props.style} ref={el => this.contentTable = el}>
         {this.getTitle()}
         <div className={`${clsPrefix}-content`}>
-          {this.columnManager.isAnyColumnsLeftFixed() &&
-            <div className={`${clsPrefix}-fixed-left`}>
-              {this.getLeftFixedTable()}
-            </div>}
+         
           <div className={isTableScroll ? `${clsPrefix}-scroll` : ''}>
             {this.getTable({ columns: this.columnManager.groupedColumns() })}
             {this.getEmptyText()}
             {this.getFooter()}
           </div>
+
+          {this.columnManager.isAnyColumnsLeftFixed() &&
+            <div className={`${clsPrefix}-fixed-left`}>
+              {this.getLeftFixedTable()}
+            </div>}
           {this.columnManager.isAnyColumnsRightFixed() &&
             <div className={`${clsPrefix}-fixed-right`}>
               {this.getRightFixedTable()}

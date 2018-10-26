@@ -27,7 +27,7 @@ const columns16 = [
       );
     }
   },
-  { title: "用户名", dataIndex: "a", key: "a", width: 1500 },
+  { title: "用户名", dataIndex: "a", key: "a", width: 250 },
   { id: "123", title: "性别", dataIndex: "b", key: "b", width: 100 },
   { title: "年龄", dataIndex: "c", key: "c", width: 200 },
   
