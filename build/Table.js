@@ -429,7 +429,7 @@ var Table = function (_Component) {
         drgHover: column.drgHover,
         fixed: column.fixed,
         width: column.width,
-        dataIndex: column.dataIndex
+        dataindex: column.dataIndex
       };
       if (column.onHeadCellClick) {
         cell.onClick = column.onHeadCellClick;
@@ -712,6 +712,7 @@ var Table = function (_Component) {
 
     var bodyStyle = _extends({}, this.props.bodyStyle);
     var headStyle = {};
+    var innerBodyStyle = {};
 
     var tableClassName = '';
     //表格元素的宽度大于容器的宽度也显示滚动条
@@ -726,7 +727,9 @@ var Table = function (_Component) {
       // maxHeight will make fixed-Table scrolling not working
       // so we only set maxHeight to body-Table here
       if (fixed) {
-        bodyStyle.height = bodyStyle.height || scroll.y;
+        // bodyStyle.height = bodyStyle.height || scroll.y;
+        innerBodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
+        innerBodyStyle.overflowY = bodyStyle.overflowY || 'auto';
       } else {
         bodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
       }
@@ -756,7 +759,6 @@ var Table = function (_Component) {
       }
       // 自动出现滚动条
       if (_this3.contentDomWidth > _this3.contentWidth) {
-        console.log(_this3.contentDomWidth);
         tableStyle.width = _this3.contentDomWidth;
       }
       var tableBody = hasBody ? getBodyWrapper(_react2["default"].createElement(
@@ -822,6 +824,7 @@ var Table = function (_Component) {
         _react2["default"].createElement(
           'div',
           {
+            style: _extends({}, innerBodyStyle),
             className: clsPrefix + '-body-inner',
             ref: refName,
             onMouseOver: this.detectScrollTarget,
@@ -1027,17 +1030,17 @@ var Table = function (_Component) {
       _react2["default"].createElement(
         'div',
         { className: clsPrefix + '-content' },
-        this.columnManager.isAnyColumnsLeftFixed() && _react2["default"].createElement(
-          'div',
-          { className: clsPrefix + '-fixed-left' },
-          this.getLeftFixedTable()
-        ),
         _react2["default"].createElement(
           'div',
           { className: isTableScroll ? clsPrefix + '-scroll' : '' },
           this.getTable({ columns: this.columnManager.groupedColumns() }),
           this.getEmptyText(),
           this.getFooter()
+        ),
+        this.columnManager.isAnyColumnsLeftFixed() && _react2["default"].createElement(
+          'div',
+          { className: clsPrefix + '-fixed-left' },
+          this.getLeftFixedTable()
         ),
         this.columnManager.isAnyColumnsRightFixed() && _react2["default"].createElement(
           'div',
