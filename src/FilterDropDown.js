@@ -39,13 +39,12 @@ class FilterDropDown extends Component {
                 onSelect={this.onSelectDropdown}
                 selectedKeys={this.state.selectValue}
             >
-                <Item key="1">等于</Item>
                 <Item key="2">包含</Item>
-                <Item key="3">以结尾</Item>
-                <Item key="4">空</Item>
-                <Item key="5">不等于</Item>
                 <Item key="6">不包含</Item>
+                <Item key="1">等于</Item>
+                <Item key="5">不等于</Item>
                 <Item key="7">以开始</Item>
+                <Item key="3">以结尾</Item>
             </Menu>
         );
         return (<div>
