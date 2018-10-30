@@ -614,7 +614,7 @@ class Table extends Component {
 
   getTable(options = {}) {
     const { columns, fixed } = options;
-    const { clsPrefix, scroll = {}, getBodyWrapper, footerScroll } = this.props;
+    const { clsPrefix, scroll = {}, getBodyWrapper, footerScroll,headerScroll } = this.props;
     let { useFixedHeader } = this.props;
     const bodyStyle = { ...this.props.bodyStyle };
     const headStyle = {};
@@ -645,8 +645,18 @@ class Table extends Component {
       // Add negative margin bottom for scroll bar overflow bug
       const scrollbarWidth = measureScrollbar();
       if (scrollbarWidth >= 0) {
-        (fixed ? bodyStyle : headStyle).marginBottom = `-${scrollbarWidth}px`;
         (fixed ? bodyStyle : headStyle).paddingBottom = '0px';
+        //显示表头滚动条
+        if(headerScroll){
+          if(fixed){
+            bodyStyle.marginBottom = `-${scrollbarWidth}px`;
+            headStyle.marginBottom = `${scrollbarWidth}px`;
+          }else{
+            headStyle.marginBottom = `0px`;
+          }
+        }else{
+          (fixed ? bodyStyle : headStyle).marginBottom = `-${scrollbarWidth}px`;
+        }
       }
     }
 
