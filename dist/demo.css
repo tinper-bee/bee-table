@@ -6765,15 +6765,7 @@ input.u-button[type="submit"] {
     float: left; }
   .u-pagination .data_per_select {
     margin: 5px;
-    float: left;
-    min-width: 120px; }
-    .u-pagination .data_per_select .u-select {
-      width: 50px;
-      margin: 0 6px; }
-      .u-pagination .data_per_select .u-select .u-select-selection {
-        height: 36px; }
-        .u-pagination .data_per_select .u-select .u-select-selection .u-select-selection-rendered {
-          line-height: 36px; }
+    float: left; }
   .u-pagination .data_select {
     outline: none;
     -webkit-appearance: none;
@@ -9239,8 +9231,7 @@ ul {
   box-shadow: 0 1px 5px #ccc;
   background-clip: padding-box;
   border: 1px solid #ccc;
-  line-height: 1.5;
-  z-index: 1800; }
+  line-height: 1.5; }
 
 .rc-calendar-date-panel,
 .rc-calendar-panel {
@@ -9690,9 +9681,6 @@ ul {
   background: #3fc7fa;
   color: #fff; }
 
-.rc-calendar > .rc-calendar-year-panel {
-  position: relative; }
-
 .rc-calendar-year-panel {
   left: 0;
   top: 0;
@@ -9981,8 +9969,7 @@ ul {
   left: 36px; }
 
 .rc-calendar-range .rc-calendar-year-panel,
-.rc-calendar-range .rc-calendar-month-panel,
-.rc-calendar-range .rc-calendar-decade-panel {
+.rc-calendar-range .rc-calendar-month-panel {
   top: 35px; }
 
 .rc-calendar-range .rc-calendar-month-panel .rc-calendar-year-panel {

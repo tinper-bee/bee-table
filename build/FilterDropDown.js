@@ -85,28 +85,8 @@ var FilterDropDown = function (_Component) {
             },
             _react2["default"].createElement(
                 Item,
-                { key: '1' },
-                '\u7B49\u4E8E'
-            ),
-            _react2["default"].createElement(
-                Item,
                 { key: '2' },
                 '\u5305\u542B'
-            ),
-            _react2["default"].createElement(
-                Item,
-                { key: '3' },
-                '\u4EE5\u7ED3\u5C3E'
-            ),
-            _react2["default"].createElement(
-                Item,
-                { key: '4' },
-                '\u7A7A'
-            ),
-            _react2["default"].createElement(
-                Item,
-                { key: '5' },
-                '\u4E0D\u7B49\u4E8E'
             ),
             _react2["default"].createElement(
                 Item,
@@ -115,8 +95,23 @@ var FilterDropDown = function (_Component) {
             ),
             _react2["default"].createElement(
                 Item,
+                { key: '1' },
+                '\u7B49\u4E8E'
+            ),
+            _react2["default"].createElement(
+                Item,
+                { key: '5' },
+                '\u4E0D\u7B49\u4E8E'
+            ),
+            _react2["default"].createElement(
+                Item,
                 { key: '7' },
                 '\u4EE5\u5F00\u59CB'
+            ),
+            _react2["default"].createElement(
+                Item,
+                { key: '3' },
+                '\u4EE5\u7ED3\u5C3E'
             )
         );
         return _react2["default"].createElement(

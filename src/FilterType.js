@@ -94,7 +94,7 @@ class FilterType extends Component {
                     className={className}
                     onChange={this.changeText}
                     onKeyDown={this.changeTextCall}
-                    //onBlur={this.changeTextCallBlur}
+                    onBlur={this.changeTextCallBlur}
                 />
                     <FilterDropDown
                         onSelectDropdown={onSelectDropdown}

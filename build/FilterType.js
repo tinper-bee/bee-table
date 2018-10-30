@@ -140,8 +140,8 @@ var FilterType = function (_Component) {
                             value: _this.state.text,
                             className: className,
                             onChange: _this.changeText,
-                            onKeyDown: _this.changeTextCall
-                            //onBlur={this.changeTextCallBlur}
+                            onKeyDown: _this.changeTextCall,
+                            onBlur: _this.changeTextCallBlur
                         }),
                         _react2["default"].createElement(_FilterDropDown2["default"], {
                             onSelectDropdown: onSelectDropdown,
