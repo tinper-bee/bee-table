@@ -11275,7 +11275,8 @@
 	        _props3$scroll = _props3.scroll,
 	        scroll = _props3$scroll === undefined ? {} : _props3$scroll,
 	        getBodyWrapper = _props3.getBodyWrapper,
-	        footerScroll = _props3.footerScroll;
+	        footerScroll = _props3.footerScroll,
+	        headerScroll = _props3.headerScroll;
 	    var useFixedHeader = this.props.useFixedHeader;
 	
 	    var bodyStyle = _extends({}, this.props.bodyStyle);
@@ -11307,8 +11308,18 @@
 	      // Add negative margin bottom for scroll bar overflow bug
 	      var scrollbarWidth = (0, _utils.measureScrollbar)();
 	      if (scrollbarWidth >= 0) {
-	        (fixed ? bodyStyle : headStyle).marginBottom = '-' + scrollbarWidth + 'px';
 	        (fixed ? bodyStyle : headStyle).paddingBottom = '0px';
+	        //显示表头滚动条
+	        if (headerScroll) {
+	          if (fixed) {
+	            bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
+	            headStyle.marginBottom = scrollbarWidth + 'px';
+	          } else {
+	            headStyle.marginBottom = '0px';
+	          }
+	        } else {
+	          (fixed ? bodyStyle : headStyle).marginBottom = '-' + scrollbarWidth + 'px';
+	        }
 	      }
 	    }
 	
