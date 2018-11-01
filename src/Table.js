@@ -69,7 +69,8 @@ const defaultProps = {
   getBodyWrapper: body => body,
   emptyText: () => 'No Data',
   columns:[],
-  minColumnWidth: 80
+  minColumnWidth: 80,
+  locale:{}
 };
 
 class Table extends Component {
@@ -301,6 +302,7 @@ class Table extends Component {
       <TableHeader
         {...drop}
         {...dragBorder}
+        locale={this.props.locale}
         minColumnWidth={minColumnWidth}
         contentWidthDiff={contentWidthDiff}
         contentWidth={this.contentWidth}

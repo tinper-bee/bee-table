@@ -3,6 +3,8 @@ import Dropdown from 'bee-dropdown';
 import Menu from 'bee-menus';
 import Button from 'bee-button';
 import Icon from 'bee-icon';
+import i18n from './i18n';
+import { getComponentLocale } from 'bee-locale/build/tool';
 const { Item } = Menu;
 
 class FilterDropDown extends Component {
@@ -34,17 +36,20 @@ class FilterDropDown extends Component {
     }
     render() {
         let { isShowCondition } = this.props;
+
+        let locale = getComponentLocale(this.props, this.context, 'Table', () => i18n);
+
         let dropmenu = (
             <Menu
                 onSelect={this.onSelectDropdown}
                 selectedKeys={this.state.selectValue}
             >
-                <Item key="2">包含</Item>
-                <Item key="6">不包含</Item>
-                <Item key="1">等于</Item>
-                <Item key="5">不等于</Item>
-                <Item key="7">以开始</Item>
-                <Item key="3">以结尾</Item>
+                <Item key="2">{locale['include']}</Item>
+                <Item key="6">{locale['exclusive']}</Item>
+                <Item key="1">{locale['equal']}</Item>
+                <Item key="5">{locale['unequal']}</Item>
+                <Item key="7">{locale['begin']}</Item>
+                <Item key="3">{locale['end']}</Item>
             </Menu>
         );
         return (<div>

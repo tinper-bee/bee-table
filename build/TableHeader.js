@@ -249,12 +249,14 @@ var TableHeader = function (_Component) {
       var _this$props4 = _this.props,
           clsPrefix = _this$props4.clsPrefix,
           rows = _this$props4.rows,
-          filterDelay = _this$props4.filterDelay;
+          filterDelay = _this$props4.filterDelay,
+          locale = _this$props4.locale;
 
       switch (type) {
         //文本输入
         case 'text':
           return _react2["default"].createElement(_FilterType2["default"], {
+            locale: locale,
             rendertype: type,
             clsPrefix: clsPrefix,
             className: clsPrefix + ' filter-text',
@@ -280,6 +282,7 @@ var TableHeader = function (_Component) {
             selectDataSource = rows[1][index]['filterdropdowndata'];
           }
           return _react2["default"].createElement(_FilterType2["default"], {
+            locale: locale,
             rendertype: type,
             className: clsPrefix + ' filter-dropdown',
             data: selectDataSource,
@@ -291,6 +294,7 @@ var TableHeader = function (_Component) {
         //日期
         case 'date':
           return _react2["default"].createElement(_FilterType2["default"], {
+            locale: locale,
             rendertype: type,
             className: 'filter-date',
             onClick: function onClick() {},

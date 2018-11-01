@@ -2420,9 +2420,6 @@ i.uf {
 /*
  * 选择时删除文本阴影，及设置默认选中颜色
  */
-::-moz-selection {
-  background: rgb(187,222,251);
-  text-shadow: none; }
 ::selection {
   background: rgb(187,222,251);
   text-shadow: none; }

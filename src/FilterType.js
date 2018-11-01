@@ -85,7 +85,7 @@ class FilterType extends Component {
     }
     //组件渲染
     renderControl = (rendertype) => {
-        let { filterDropdown, className, onChange, onSelectDropdown, clsPrefix } = this.props;
+        let { filterDropdown, className, onChange, onSelectDropdown, clsPrefix, locale } = this.props;
         switch (rendertype) {
             case 'text':
                 return <div className={`${clsPrefix} filter-wrap`}><FormControl
@@ -97,6 +97,7 @@ class FilterType extends Component {
                     onBlur={this.changeTextCallBlur}
                 />
                     <FilterDropDown
+                        locale={locale}
                         onSelectDropdown={onSelectDropdown}
                         onClickClear={this.clearText}
                         isShowClear={this.state.text}
@@ -110,6 +111,7 @@ class FilterType extends Component {
                     value={this.state.selectValue}
                     onChange={this.changeSelect}
                 /><FilterDropDown
+                    locale={locale}
                     onSelectDropdown={onSelectDropdown}
                     onClickClear={this.clearSelectValue}
                     isShowCondition={filterDropdown}
@@ -123,6 +125,7 @@ class FilterType extends Component {
                     onChange={this.changeDate}
                     open={this.state.open}
                 />{filterDropdown == 'show' && <FilterDropDown
+                    locale={locale}
                     onSelectDropdown={onSelectDropdown}
                     onClickClear={this.clearDateValue}
                     isShowCondition={filterDropdown}
@@ -135,7 +138,7 @@ class FilterType extends Component {
                     className={className}
                     onChange={onChange}
                 />
-                    {filterDropdown == 'show' && <FilterDropDown
+                    {filterDropdown == 'show' && <FilterDropDown locale={locale}
                         onSelectDropdown={onSelectDropdown}
                     >
                     </FilterDropDown>}
