@@ -127,7 +127,8 @@ var defaultProps = {
     return 'No Data';
   },
   columns: [],
-  minColumnWidth: 80
+  minColumnWidth: 80,
+  locale: {}
 };
 
 var Table = function (_Component) {
@@ -389,6 +390,7 @@ var Table = function (_Component) {
       contentWidthDiff = this.state.contentWidthDiff;
     }
     return showHeader ? _react2["default"].createElement(_TableHeader2["default"], _extends({}, drop, dragBorder, {
+      locale: this.props.locale,
       minColumnWidth: minColumnWidth,
       contentWidthDiff: contentWidthDiff,
       contentWidth: this.contentWidth,

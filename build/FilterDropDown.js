@@ -24,6 +24,12 @@ var _beeIcon = require('bee-icon');
 
 var _beeIcon2 = _interopRequireDefault(_beeIcon);
 
+var _i18n = require('./i18n');
+
+var _i18n2 = _interopRequireDefault(_i18n);
+
+var _tool = require('bee-locale/build/tool');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
@@ -77,6 +83,11 @@ var FilterDropDown = function (_Component) {
     FilterDropDown.prototype.render = function render() {
         var isShowCondition = this.props.isShowCondition;
 
+
+        var locale = (0, _tool.getComponentLocale)(this.props, this.context, 'Table', function () {
+            return _i18n2["default"];
+        });
+
         var dropmenu = _react2["default"].createElement(
             _beeMenus2["default"],
             {
@@ -86,32 +97,32 @@ var FilterDropDown = function (_Component) {
             _react2["default"].createElement(
                 Item,
                 { key: '2' },
-                '\u5305\u542B'
+                locale['include']
             ),
             _react2["default"].createElement(
                 Item,
                 { key: '6' },
-                '\u4E0D\u5305\u542B'
+                locale['exclusive']
             ),
             _react2["default"].createElement(
                 Item,
                 { key: '1' },
-                '\u7B49\u4E8E'
+                locale['equal']
             ),
             _react2["default"].createElement(
                 Item,
                 { key: '5' },
-                '\u4E0D\u7B49\u4E8E'
+                locale['unequal']
             ),
             _react2["default"].createElement(
                 Item,
                 { key: '7' },
-                '\u4EE5\u5F00\u59CB'
+                locale['begin']
             ),
             _react2["default"].createElement(
                 Item,
                 { key: '3' },
-                '\u4EE5\u7ED3\u5C3E'
+                locale['end']
             )
         );
         return _react2["default"].createElement(

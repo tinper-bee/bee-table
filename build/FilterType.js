@@ -126,7 +126,8 @@ var FilterType = function (_Component) {
                 className = _this$props.className,
                 onChange = _this$props.onChange,
                 onSelectDropdown = _this$props.onSelectDropdown,
-                clsPrefix = _this$props.clsPrefix;
+                clsPrefix = _this$props.clsPrefix,
+                locale = _this$props.locale;
 
             switch (rendertype) {
                 case 'text':
@@ -144,6 +145,7 @@ var FilterType = function (_Component) {
                             onBlur: _this.changeTextCallBlur
                         }),
                         _react2["default"].createElement(_FilterDropDown2["default"], {
+                            locale: locale,
                             onSelectDropdown: onSelectDropdown,
                             onClickClear: _this.clearText,
                             isShowClear: _this.state.text,
@@ -159,6 +161,7 @@ var FilterType = function (_Component) {
                             onChange: _this.changeSelect
                         })),
                         _react2["default"].createElement(_FilterDropDown2["default"], {
+                            locale: locale,
                             onSelectDropdown: onSelectDropdown,
                             onClickClear: _this.clearSelectValue,
                             isShowCondition: filterDropdown,
@@ -175,6 +178,7 @@ var FilterType = function (_Component) {
                             open: _this.state.open
                         })),
                         filterDropdown == 'show' && _react2["default"].createElement(_FilterDropDown2["default"], {
+                            locale: locale,
                             onSelectDropdown: onSelectDropdown,
                             onClickClear: _this.clearDateValue,
                             isShowCondition: filterDropdown,
@@ -189,7 +193,7 @@ var FilterType = function (_Component) {
                             className: className,
                             onChange: onChange
                         }),
-                        filterDropdown == 'show' && _react2["default"].createElement(_FilterDropDown2["default"], {
+                        filterDropdown == 'show' && _react2["default"].createElement(_FilterDropDown2["default"], { locale: locale,
                             onSelectDropdown: onSelectDropdown
                         })
                     );

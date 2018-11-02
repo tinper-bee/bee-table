@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import Checkbox from 'bee-checkbox';
 import Icon from "bee-icon";
 import {ObjectAssign} from './util';
+import i18n from '../i18n'
+import { getComponentLocale } from 'bee-locale/build/tool';
+
 function noop() {}
 /**
  * 参数: 过滤表头
@@ -121,6 +124,8 @@ export default function filterColumn(Table,Popover) {
       const {data,prefixCls,scroll:scrollPro} = this.props;
       const {columns,showModal} = this.state;
 
+      let locale = getComponentLocale(this.props, this.context, 'Table', () => i18n);
+
       let _columns = [],widthState=0,scroll=scrollPro;
       columns.forEach((da)=>{
         if(da.ifshow){
@@ -136,7 +141,7 @@ export default function filterColumn(Table,Popover) {
       
       let content = (
         <div className={`${prefixCls}-pop-cont`}> 
-        <span className={`${prefixCls}-clear-setting`} onClick={this.clear}>还原设置</span>
+        <span className={`${prefixCls}-clear-setting`} onClick={this.clear}>{locale['resetSettings']}</span>
         <div>
            {
             this.getCloumItem()

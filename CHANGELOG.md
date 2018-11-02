@@ -1,3 +1,13 @@
+<a name="1.4.32"></a>
+## [1.4.32](https://github.com/tinper-bee/bee-table/compare/v1.4.31...v1.4.32) (2018-11-01)
+
+
+### Features
+
+* **bee-table:** 加多语 ([ffc232d](https://github.com/tinper-bee/bee-table/commit/ffc232d))
+
+
+
 <a name="1.4.31"></a>
 ## [1.4.31](https://github.com/tinper-bee/bee-table/compare/v1.4.30...v1.4.31) (2018-10-30)
 

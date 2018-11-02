@@ -237,11 +237,12 @@ class TableHeader extends Component {
    * @description 过滤渲染的组件类型
    */
   filterRenderType = (type, dataIndex, index) => {
-    const { clsPrefix, rows, filterDelay } = this.props;
+    const { clsPrefix, rows, filterDelay,locale } = this.props;
     switch (type) {
       //文本输入
       case 'text':
         return <FilterType
+          locale={locale}
           rendertype={type}
           clsPrefix={clsPrefix}
           className={`${clsPrefix} filter-text`}
@@ -265,6 +266,7 @@ class TableHeader extends Component {
           selectDataSource = rows[1][index]['filterdropdowndata']
         }
         return <FilterType
+          locale={locale}
           rendertype={type}
           className={`${clsPrefix} filter-dropdown`}
           data={selectDataSource}
@@ -276,6 +278,7 @@ class TableHeader extends Component {
       //日期
       case 'date':
         return <FilterType
+          locale={locale}
           rendertype={type}
           className={`filter-date`}
           onClick={() => { }}
