@@ -52,7 +52,7 @@ import 'bee-table/build/Table.css';
 | filterDelay       | 触发过滤输入的时候的ms延迟时间 | number | 300
 | onFilterRowsChange       | 触发过滤输入操作以及其他的回调，回车执行函数或者失去焦点触发回调 | (key,val) => () | () => ()
 | onFilterRowsDropChange       | 过滤下拉条件的回调 | (key,val)=>() | () => ()
-
+| headerScroll       | 表头下是否显示滚动条 | bool| false
 
 
 *注意: data参数中的key值必需，否则会导致部分功能出现问题！建议使用唯一的值，如id*
