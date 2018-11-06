@@ -105,8 +105,9 @@ export default function filterColumn(Table,Popover) {
         da.ifshow  = true;
       });
       this.setState({
-        ...this.state
+        columns
       })
+      this.props.afterFilter(this.state.columns,this.state.columns);
     }
 
     getCloumnsScroll=(columns)=>{

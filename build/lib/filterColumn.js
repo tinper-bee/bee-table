@@ -232,7 +232,10 @@ function filterColumn(Table, Popover) {
         da.checked = true;
         da.ifshow = true;
       });
-      _this2.setState(_extends({}, _this2.state));
+      _this2.setState({
+        columns: columns
+      });
+      _this2.props.afterFilter(_this2.state.columns, _this2.state.columns);
     };
 
     this.getCloumnsScroll = function (columns) {
