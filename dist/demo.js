@@ -11300,11 +11300,11 @@
 	      if (fixed) {
 	        // bodyStyle.height = bodyStyle.height || scroll.y;
 	        innerBodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
-	        innerBodyStyle.overflowY = bodyStyle.overflowY || 'auto';
+	        innerBodyStyle.overflowY = bodyStyle.overflowY || 'scroll';
 	      } else {
 	        bodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
 	      }
-	      bodyStyle.overflowY = bodyStyle.overflowY || 'auto';
+	      bodyStyle.overflowY = bodyStyle.overflowY || 'scroll';
 	      useFixedHeader = true;
 	
 	      // Add negative margin bottom for scroll bar overflow bug
@@ -59422,7 +59422,7 @@
 	      _this2.setState({
 	        columns: columns
 	      });
-	      afterFilter(_this2.state.columns, _this2.state.columns);
+	      _this2.props.afterFilter(_this2.state.columns, _this2.state.columns);
 	    };
 	
 	    this.getCloumnsScroll = function (columns) {
