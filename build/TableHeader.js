@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -6,23 +6,23 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _react = require('react');
+var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = require('prop-types');
+var _propTypes = require("prop-types");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _shallowequal = require('shallowequal');
+var _shallowequal = require("shallowequal");
 
 var _shallowequal2 = _interopRequireDefault(_shallowequal);
 
-var _throttleDebounce = require('throttle-debounce');
+var _throttleDebounce = require("throttle-debounce");
 
-var _utils = require('./utils');
+var _utils = require("./utils");
 
-var _FilterType = require('./FilterType');
+var _FilterType = require("./FilterType");
 
 var _FilterType2 = _interopRequireDefault(_FilterType);
 
@@ -81,13 +81,13 @@ var TableHeader = function (_Component) {
       if (_this.border || data.fixed) return;
       var clsPrefix = _this.props.clsPrefix;
 
-      event.target.className = clsPrefix + '-thead-th-drag-gap th-drag-gap-hover';
+      event.target.className = clsPrefix + "-thead-th-drag-gap th-drag-gap-hover";
     };
 
     _this.onMouseMove = function (event, data) {
       //如果是固定列没有拖拽功能
       if (_this.border || data.fixed) return;
-      // const {clsPrefix} = this.props; 
+      // const {clsPrefix} = this.props;
       // event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap-hover`;
     };
 
@@ -95,7 +95,7 @@ var TableHeader = function (_Component) {
       if (_this.border) return;
       var clsPrefix = _this.props.clsPrefix;
 
-      event.target.className = clsPrefix + '-thead-th-drag-gap th-drag-gap';
+      event.target.className = clsPrefix + "-thead-th-drag-gap th-drag-gap";
     };
 
     _this.onMouseDown = function (event, data) {
@@ -113,13 +113,13 @@ var TableHeader = function (_Component) {
 
       var contentTableDom = document.getElementById("u-table-drag-thead-" + _this.theadKey).parentNode;
       var styleWidth = contentTableDom.style.width;
-      if (styleWidth && (typeof styleWidth == 'number' || styleWidth.includes('px'))) {
+      if (styleWidth && (typeof styleWidth == "number" || styleWidth.includes("px"))) {
         _this.contentTableWidth = parseInt(styleWidth);
       } else {
         _this.contentTableWidth = parseInt(contentTableDom.scrollWidth);
       }
       var dragColWidth = _this.drag.data[_this.drag.currIndex].width;
-      if (typeof dragColWidth == 'string' && dragColWidth.indexOf('%') > -1) {
+      if (typeof dragColWidth == "string" && dragColWidth.indexOf("%") > -1) {
         _this.drag.width = _this.contentTableWidth * parseInt(dragColWidth) / 100;
       } else {
         _this.drag.width = parseInt(_this.drag.data[_this.drag.currIndex].width);
@@ -130,30 +130,32 @@ var TableHeader = function (_Component) {
       _this.border = false;
       var clsPrefix = _this.props.clsPrefix;
 
-      event.target.className = clsPrefix + '-thead-th-drag-gap th-drag-gap';
+      event.target.className = clsPrefix + "-thead-th-drag-gap th-drag-gap";
     };
 
     _this.onThMouseUp = function (event, data) {
       _this.border = false;
       var _this$props2 = _this.props,
           clsPrefix = _this$props2.clsPrefix,
-          rows = _this$props2.rows;
+          rows = _this$props2.rows,
+          columns = _this$props2.columns;
 
       var eventDom = event.target;
       var optDom = void 0;
-      if (eventDom.classList.contains('.th-drag-gap-hover')) {
-
+      if (eventDom.classList.contains(".th-drag-gap-hover")) {
         optDom = eventDom;
       } else {
-        optDom = eventDom.querySelector('.' + clsPrefix + '-thead-th-drag-gap');
+        optDom = eventDom.querySelector("." + clsPrefix + "-thead-th-drag-gap");
       }
       if (optDom) {
-        optDom.classList.remove('th-drag-gap-hover');
-        optDom.classList.add('th-drag-gap');
+        optDom.classList.remove("th-drag-gap-hover");
+        optDom.classList.add("th-drag-gap");
       }
+      // console.log(data.width);
+      // columns[this.drag.currIndex].width = data.width;
       //宽度拖拽后，增加回调函数，外部可以记录宽度
-      if (typeof _this.props.afterDragColWidth == 'function' && rows && rows[0] && _this.drag.currIndex) {
-        _this.props.afterDragColWidth(rows[0][_this.drag.currIndex]);
+      if (typeof _this.props.afterDragColWidth == "function" && rows && rows[0] && _this.drag.currIndex) {
+        _this.props.afterDragColWidth(rows[0][_this.drag.currIndex], _this.drag.currIndex);
       }
     };
 
@@ -170,7 +172,7 @@ var TableHeader = function (_Component) {
 
       if (!_this.contentTableWidth) {
         var styleWidth = contentTableDom.style.width;
-        if (styleWidth && (typeof styleWidth == 'number' || styleWidth.includes('px'))) {
+        if (styleWidth && (typeof styleWidth == "number" || styleWidth.includes("px"))) {
           _this.contentTableWidth = parseInt(styleWidth);
         } else {
           _this.contentTableWidth = parseInt(contentTableDom.scrollWidth);
@@ -180,8 +182,8 @@ var TableHeader = function (_Component) {
       var newWidth = _this.drag.width + x;
       if (newWidth < _this.props.minColumnWidth) {
         //清楚样式
-        var moveDom = event.target.querySelector('.th-drag-gap-hover');
-        moveDom && moveDom.classList.remove('th-drag-gap-hover');
+        var moveDom = event.target.querySelector(".th-drag-gap-hover");
+        moveDom && moveDom.classList.remove("th-drag-gap-hover");
         // event.target.classList.remove('th-drag-gap-hover');
         return;
       }
@@ -202,31 +204,32 @@ var TableHeader = function (_Component) {
       // if(currLeft <= minWidth){
       //   return;
       // }
-      // currentHideDom.style.left =  currLeft+"px"; 
+      // currentHideDom.style.left =  currLeft+"px";
 
-      //设置当前的宽度 
+      //设置当前的宽度
       var currentData = _this.drag.data[_this.drag.currIndex];
       currentData.width = newWidth;
       var currentDom = document.getElementById("u-table-drag-thead-" + _this.theadKey).getElementsByTagName("th")[_this.drag.currIndex];
       currentDom.style.width = newWidth + "px";
       // this.contentTableWidth = newTableWidth;
-      contentTableDom.style.width = newTableWidth + 'px';
+      contentTableDom.style.width = newTableWidth + "px";
       data.width = newWidth;
 
       _this.drag.x = x;
-      var contentColDomArr = contentTableDom.querySelectorAll('colgroup col');
+      var contentColDomArr = contentTableDom.querySelectorAll("colgroup col");
       contentColDomArr[_this.drag.currIndex].style.width = newWidth + "px";
       //固定表头时，表头和表体分开，拖拽时表体的宽度也需要一起联动
       var siblingDom = contentTableDom.parentNode.nextElementSibling;
       if (siblingDom) {
-        var bodyTableDom = siblingDom.querySelector('table');
+        var bodyTableDom = siblingDom.querySelector("table");
         //2、是的话将表头对应的表格的宽度给表体对应的表格的宽度
-        bodyTableDom.style.width = newTableWidth + 'px';
+        bodyTableDom.style.width = newTableWidth + "px";
         //3、对应的col也要跟这变
-        var colDomArr = bodyTableDom.querySelectorAll('colgroup col');
+        var colDomArr = bodyTableDom.querySelectorAll("colgroup col");
         colDomArr[_this.drag.currIndex].style.width = newWidth + "px";
         //4、设置overflow属性
       }
+      console.log('newWidth---' + newWidth + '---data--' + data.width);
     };
 
     _this.handlerFilterTextChange = function (key, val) {
@@ -254,66 +257,70 @@ var TableHeader = function (_Component) {
 
       switch (type) {
         //文本输入
-        case 'text':
+        case "text":
           return _react2["default"].createElement(_FilterType2["default"], {
             locale: locale,
             rendertype: type,
             clsPrefix: clsPrefix,
-            className: clsPrefix + ' filter-text',
+            className: clsPrefix + " filter-text",
             onChange: (0, _throttleDebounce.debounce)(filterDelay || 300, _this.handlerFilterTextChange.bind(_this, dataIndex))
             // onChange={this.handlerFilterTextChange.bind(this, dataIndex)}
             , onSelectDropdown: _this.handlerFilterDropChange.bind(_this, dataIndex),
-            filterDropdown: rows[1][index]['filterdropdown']
+            filterDropdown: rows[1][index]["filterdropdown"]
           });
         //下拉框选择
-        case 'dropdown':
+        case "dropdown":
           var selectDataSource = [];
-          if (rows.length > 0 && (rows[1][index]['filterdropdownauto'] || 'auto') == 'auto') {
+          if (rows.length > 0 && (rows[1][index]["filterdropdownauto"] || "auto") == "auto") {
             var hash = {};
             //处理下拉重复对象组装dropdown
             selectDataSource = Array.from(rows[1][0].datasource, function (x) {
-              return { key: x[dataIndex], value: x[dataIndex] };
+              return {
+                key: x[dataIndex],
+                value: x[dataIndex]
+              };
             });
             selectDataSource = selectDataSource.reduceRight(function (item, next) {
-              hash[next.key] ? '' : hash[next.key] = true && item.push(next);
+              hash[next.key] ? "" : hash[next.key] = true && item.push(next);
               return item;
             }, []);
           } else {
-            selectDataSource = rows[1][index]['filterdropdowndata'];
+            selectDataSource = rows[1][index]["filterdropdowndata"];
           }
           return _react2["default"].createElement(_FilterType2["default"], {
             locale: locale,
             rendertype: type,
-            className: clsPrefix + ' filter-dropdown',
+            className: clsPrefix + " filter-dropdown",
             data: selectDataSource,
             onChange: _this.handlerFilterTextChange.bind(_this, dataIndex),
             onSelectDropdown: _this.handlerFilterDropChange.bind(_this, dataIndex),
-            filterDropdown: rows[1][index]['filterdropdown'],
-            onFocus: rows[1][index]['filterdropdownfocus']
+            filterDropdown: rows[1][index]["filterdropdown"],
+            onFocus: rows[1][index]["filterdropdownfocus"]
           });
         //日期
-        case 'date':
+        case "date":
           return _react2["default"].createElement(_FilterType2["default"], {
             locale: locale,
             rendertype: type,
-            className: 'filter-date',
+            className: "filter-date",
             onClick: function onClick() {},
-            format: rows[1][index]['format'] || "YYYY-MM-DD",
+            format: rows[1][index]["format"] || "YYYY-MM-DD",
             onChange: _this.handlerFilterTextChange.bind(_this, dataIndex),
             onSelectDropdown: _this.handlerFilterDropChange.bind(_this, dataIndex),
-            filterDropdown: rows[1][index]['filterdropdown']
+            filterDropdown: rows[1][index]["filterdropdown"]
           });
         default:
           //不匹配类型默认文本输入
-          return _react2["default"].createElement('div', null);
+          return _react2["default"].createElement("div", null);
       }
     };
 
     _this.currentObj = null;
     _this.state = {
       border: false
-      //拖拽宽度处理
-    };if (!props.dragborder) return _possibleConstructorReturn(_this);
+    };
+    //拖拽宽度处理
+    if (!props.dragborder) return _possibleConstructorReturn(_this);
     _this.border = false;
     _this.theadKey = new Date().getTime();
     _this.drag = {
@@ -321,18 +328,18 @@ var TableHeader = function (_Component) {
       initLeft: 0,
       x: 0,
       width: 0
-      // let _da = {};
-      // Object.assign(_da,this.props.rows[0]);
-      // this.drag.data = JSON.parse(JSON.stringify(this.props.rows[0]));
-      // let a = this.props.rows[0];
+    };
+    // let _da = {};
+    // Object.assign(_da,this.props.rows[0]);
+    // this.drag.data = JSON.parse(JSON.stringify(this.props.rows[0]));
+    // let a = this.props.rows[0];
 
-    };var _row = [];
+    var _row = [];
     _this.props.rows[0] && _this.props.rows[0].forEach(function (item) {
       var newItem = item.key != "checkbox" ? (0, _utils.ObjectAssign)(item) : item;
       _row.push(newItem);
     });
     _this.drag.data = _row; //JSON.parse(JSON.stringify(this.props.rows[0]));
-
     return _this;
   }
 
@@ -375,37 +382,37 @@ var TableHeader = function (_Component) {
         fixed = _props.fixed,
         lastShowIndex = _props.lastShowIndex;
 
-    var attr = dragborder ? { id: 'u-table-drag-thead-' + this.theadKey } : {};
+    var attr = dragborder ? { id: "u-table-drag-thead-" + this.theadKey } : {};
     return _react2["default"].createElement(
-      'thead',
-      _extends({ className: clsPrefix + '-thead' }, attr),
+      "thead",
+      _extends({ className: clsPrefix + "-thead" }, attr),
       rows.map(function (row, index) {
         return _react2["default"].createElement(
-          'tr',
+          "tr",
           { key: index, style: rowStyle },
           row.map(function (da, i, arr) {
-            var thHover = da.drgHover ? ' ' + clsPrefix + '-thead th-drag-hover' : "";
+            var thHover = da.drgHover ? " " + clsPrefix + "-thead th-drag-hover" : "";
             delete da.drgHover;
-            var fixedStyle = '';
-            var canDotDrag = '';
+            var fixedStyle = "";
+            var canDotDrag = "";
             if (!fixed && da.fixed) {
-              fixedStyle = clsPrefix + '-row-fixed-columns-in-body';
+              fixedStyle = clsPrefix + "-row-fixed-columns-in-body";
             }
-            if (typeof da.width == 'string' && da.width.indexOf('%') > -1 && _this2.props.contentWidth) {
+            if (typeof da.width == "string" && da.width.indexOf("%") > -1 && _this2.props.contentWidth) {
               da.width = parseInt(_this2.props.contentWidth * parseInt(da.width) / 100);
             } else if (da.width) {
               da.width = parseInt(da.width);
             }
             if (lastShowIndex == i) {
               da.width = parseInt(da.width) + contentWidthDiff;
-              canDotDrag = 'th-can-not-drag';
+              canDotDrag = "th-can-not-drag";
             }
             if (filterable && index == rows.length - 1) {
-              da.children = _this2.filterRenderType(da['filtertype'], da.dataindex, i);
+              da.children = _this2.filterRenderType(da["filtertype"], da.dataindex, i);
               delete da.filterdropdownfocus;
             }
             if (draggable) {
-              return _react2["default"].createElement('th', _extends({}, da, {
+              return _react2["default"].createElement("th", _extends({}, da, {
                 onDragStart: function onDragStart(event) {
                   _this2.onDragStart(event, da);
                 },
@@ -419,12 +426,12 @@ var TableHeader = function (_Component) {
                   _this2.onDragEnter(event, da);
                 },
                 draggable: draggable,
-                className: da.className + ' ' + clsPrefix + '-thead th-drag ' + thHover + ' ' + fixedStyle,
-                key: da.key }));
+                className: da.className + " " + clsPrefix + "-thead th-drag " + thHover + " " + fixedStyle,
+                key: da.key
+              }));
             } else if (dragborder) {
-
               return _react2["default"].createElement(
-                'th',
+                "th",
                 {
                   style: { width: da.width },
                   onMouseMove: function onMouseMove(event) {
@@ -433,10 +440,12 @@ var TableHeader = function (_Component) {
                   onMouseUp: function onMouseUp(event) {
                     _this2.onThMouseUp(event, da);
                   },
-                  className: da.className + ' ' + clsPrefix + '-thead-th ' + canDotDrag + '  ' + fixedStyle,
-                  key: i },
+                  className: da.className + " " + clsPrefix + "-thead-th " + canDotDrag + "  " + fixedStyle,
+                  key: i
+                },
                 da.children,
-                _react2["default"].createElement('div', { ref: function ref(el) {
+                da.fixed ? "" : _react2["default"].createElement("div", {
+                  ref: function ref(el) {
                     return _this2.gap = el;
                   },
                   onMouseMove: function onMouseMove(event) {
@@ -454,13 +463,21 @@ var TableHeader = function (_Component) {
                   onMouseOver: function onMouseOver(event) {
                     _this2.onMouseOver(event, da);
                   },
-                  className: clsPrefix + '-thead-th-drag-gap ' })
+                  className: clsPrefix + "-thead-th-drag-gap "
+                })
               );
             } else {
               var th = void 0;
-              th = da.onClick ? _react2["default"].createElement('th', _extends({}, da, { className: da.className + ' ' + fixedStyle, key: i, onClick: function onClick(event) {
+              th = da.onClick ? _react2["default"].createElement("th", _extends({}, da, {
+                className: da.className + " " + fixedStyle,
+                key: i,
+                onClick: function onClick(event) {
                   da.onClick(da, event);
-                } })) : _react2["default"].createElement('th', _extends({}, da, { key: i, className: da.className + '  ' + fixedStyle }));
+                }
+              })) : _react2["default"].createElement("th", _extends({}, da, {
+                key: i,
+                className: da.className + "  " + fixedStyle
+              }));
               return th;
             }
           })
@@ -475,9 +492,9 @@ var TableHeader = function (_Component) {
 TableHeader.defaultProps = {
   contentWidthDiff: 0
 };
-;
+
 
 TableHeader.propTypes = propTypes;
 
 exports["default"] = TableHeader;
-module.exports = exports['default'];
+module.exports = exports["default"];
