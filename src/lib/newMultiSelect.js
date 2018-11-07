@@ -88,7 +88,7 @@ export default function newMultiSelect(Table, Checkbox) {
           selectList.push(da);
         }
       })
-      this.props.getSelectedDataFunc(selectList);
+      this.props.getSelectedDataFunc(selectList,record,index);
     };
 
     
