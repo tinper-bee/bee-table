@@ -151,7 +151,6 @@ var TableHeader = function (_Component) {
         optDom.classList.remove("th-drag-gap-hover");
         optDom.classList.add("th-drag-gap");
       }
-      // console.log(data.width);
       // columns[this.drag.currIndex].width = data.width;
       //宽度拖拽后，增加回调函数，外部可以记录宽度
       if (typeof _this.props.afterDragColWidth == "function" && rows && rows[0] && _this.drag.currIndex) {
@@ -229,7 +228,6 @@ var TableHeader = function (_Component) {
         colDomArr[_this.drag.currIndex].style.width = newWidth + "px";
         //4、设置overflow属性
       }
-      console.log('newWidth---' + newWidth + '---data--' + data.width);
     };
 
     _this.handlerFilterTextChange = function (key, val) {

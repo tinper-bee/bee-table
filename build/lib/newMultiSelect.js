@@ -156,7 +156,7 @@ function newMultiSelect(Table, Checkbox) {
             selectList.push(da);
           }
         });
-        _this2.props.getSelectedDataFunc(selectList);
+        _this2.props.getSelectedDataFunc(selectList, record, index);
       };
     };
 
