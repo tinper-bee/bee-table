@@ -275,6 +275,7 @@ var Table = function (_Component) {
   };
 
   Table.prototype.computeTableWidth = function computeTableWidth() {
+
     //如果用户传了scroll.x按用户传的为主
     var setWidthParam = this.props.scroll.x;
     if (typeof setWidthParam == 'number') {
@@ -295,6 +296,10 @@ var Table = function (_Component) {
     this.computeWidth = computeObj.computeWidth;
     if (this.computeWidth < this.contentWidth) {
       var contentWidthDiff = this.scrollbarWidth ? this.contentWidth - this.computeWidth - this.scrollbarWidth : this.contentWidth - this.computeWidth;
+      //bordered的表格需要减去边框的差值1
+      if (this.props.bordered) {
+        contentWidthDiff = contentWidthDiff - 1;
+      }
       this.setState({ contentWidthDiff: contentWidthDiff, lastShowIndex: lastShowIndex });
     } else {
       this.contentWidth = this.computeWidth;

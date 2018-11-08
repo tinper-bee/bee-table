@@ -200,6 +200,7 @@ class Table extends Component {
   }
 
   computeTableWidth() {
+    
     //如果用户传了scroll.x按用户传的为主
     let setWidthParam = this.props.scroll.x
     if (typeof (setWidthParam) == 'number') {
@@ -220,6 +221,10 @@ class Table extends Component {
     this.computeWidth = computeObj.computeWidth;
     if (this.computeWidth < this.contentWidth) {
       let contentWidthDiff = this.scrollbarWidth?this.contentWidth - this.computeWidth-this.scrollbarWidth:this.contentWidth - this.computeWidth;
+      //bordered的表格需要减去边框的差值1
+      if(this.props.bordered){
+        contentWidthDiff = contentWidthDiff-1;
+      }
       this.setState({ contentWidthDiff, lastShowIndex });
     } else {
       this.contentWidth = this.computeWidth;
