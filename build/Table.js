@@ -211,6 +211,10 @@ var Table = function (_Component) {
 
   Table.prototype.componentDidMount = function componentDidMount() {
     setTimeout(this.resetScrollY, 300);
+    //含有纵向滚动条
+    if (this.props.scroll.y) {
+      this.scrollbarWidth = (0, _utils.measureScrollbar)();
+    }
     //后续也放在recevice里面
     if (!this.props.originWidth) {
       this.computeTableWidth();
@@ -290,7 +294,7 @@ var Table = function (_Component) {
     var lastShowIndex = computeObj.lastShowIndex;
     this.computeWidth = computeObj.computeWidth;
     if (this.computeWidth < this.contentWidth) {
-      var contentWidthDiff = this.contentWidth - this.computeWidth;
+      var contentWidthDiff = this.scrollbarWidth ? this.contentWidth - this.computeWidth - this.scrollbarWidth : this.contentWidth - this.computeWidth;
       this.setState({ contentWidthDiff: contentWidthDiff, lastShowIndex: lastShowIndex });
     } else {
       this.contentWidth = this.computeWidth;
@@ -740,7 +744,7 @@ var Table = function (_Component) {
       useFixedHeader = true;
 
       // Add negative margin bottom for scroll bar overflow bug
-      var scrollbarWidth = (0, _utils.measureScrollbar)();
+      var scrollbarWidth = this.scrollbarWidth;
       if (scrollbarWidth >= 0) {
         (fixed ? bodyStyle : headStyle).paddingBottom = '0px';
         //显示表头滚动条
