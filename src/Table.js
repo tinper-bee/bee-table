@@ -129,6 +129,10 @@ class Table extends Component {
 
   componentDidMount() {
     setTimeout(this.resetScrollY, 300);
+    //含有纵向滚动条
+    if(this.props.scroll.y){
+       this.scrollbarWidth = measureScrollbar();
+    }
     //后续也放在recevice里面
     if (!this.props.originWidth) {
       this.computeTableWidth();
@@ -215,7 +219,7 @@ class Table extends Component {
     let lastShowIndex = computeObj.lastShowIndex;
     this.computeWidth = computeObj.computeWidth;
     if (this.computeWidth < this.contentWidth) {
-      let contentWidthDiff = this.contentWidth - this.computeWidth;
+      let contentWidthDiff = this.scrollbarWidth?this.contentWidth - this.computeWidth-this.scrollbarWidth:this.contentWidth - this.computeWidth;
       this.setState({ contentWidthDiff, lastShowIndex });
     } else {
       this.contentWidth = this.computeWidth;
@@ -645,7 +649,7 @@ class Table extends Component {
       useFixedHeader = true;
 
       // Add negative margin bottom for scroll bar overflow bug
-      const scrollbarWidth = measureScrollbar();
+      const scrollbarWidth = this.scrollbarWidth;
       if (scrollbarWidth >= 0) {
         (fixed ? bodyStyle : headStyle).paddingBottom = '0px';
         //显示表头滚动条
