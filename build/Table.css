@@ -222,7 +222,7 @@
     height: 100%;
     overflow: scroll; }
   .u-table-fixed-header .u-table-scroll .u-table-header {
-    overflow-x: auto;
+    overflow-x: scroll;
     padding-bottom: 20px;
     margin-bottom: -20px;
     overflow-y: scroll;

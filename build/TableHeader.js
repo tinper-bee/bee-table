@@ -387,7 +387,7 @@ var TableHeader = function (_Component) {
       rows.map(function (row, index) {
         return _react2["default"].createElement(
           "tr",
-          { key: index, style: rowStyle },
+          { key: index, style: rowStyle, className: filterable && index == rows.length - 1 ? 'filterable' : '' },
           row.map(function (da, i, arr) {
             var thHover = da.drgHover ? " " + clsPrefix + "-thead th-drag-hover" : "";
             delete da.drgHover;

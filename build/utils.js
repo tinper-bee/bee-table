@@ -14,6 +14,8 @@ exports.addClass = addClass;
 exports.removeClass = removeClass;
 exports.ObjectAssign = ObjectAssign;
 exports.closest = closest;
+exports.getMaxColChildrenLength = getMaxColChildrenLength;
+exports.getColChildrenLength = getColChildrenLength;
 
 var _warning = require('warning');
 
@@ -162,4 +164,27 @@ function closest(ele, selector) {
     }
   }
   return null;
+}
+
+function getMaxColChildrenLength(columns) {
+  var arr = [];
+  arr = columns.map(function (item, index) {
+    var chilrenLen = 0;
+    if (item.children) {
+      chilrenLen = getColChildrenLength(item.children, chilrenLen + 1);
+    }
+    return chilrenLen;
+  });
+  var max = Math.max.apply(null, arr);
+  return max;
+}
+
+function getColChildrenLength(columns, chilrenLen) {
+  columns.forEach(function (item, index) {
+    if (item.children) {
+      chilrenLen = getColChildrenLength(item.children, chilrenLen + 1);
+    }
+  });
+  console.log(chilrenLen);
+  return chilrenLen;
 }

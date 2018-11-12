@@ -390,7 +390,7 @@ var Table = function (_Component) {
       });
     }
 
-    var trStyle = headerHeight ? { height: headerHeight } : fixed ? this.getHeaderRowStyle(columns, rows) : null;
+    var trStyle = headerHeight && !fixed ? { height: headerHeight } : fixed ? this.getHeaderRowStyle(columns, rows) : null;
     var drop = draggable ? { onDragStart: onDragStart, onDragOver: onDragOver, onDrop: onDrop, onDragEnter: onDragEnter, draggable: draggable } : {};
     var dragBorder = dragborder ? { onMouseDown: onMouseDown, onMouseMove: onMouseMove, onMouseUp: onMouseUp, dragborder: dragborder, onThMouseMove: onThMouseMove, dragborderKey: dragborderKey } : {};
     var contentWidthDiff = 0;
@@ -922,12 +922,17 @@ var Table = function (_Component) {
     var _props7 = this.props,
         clsPrefix = _props7.clsPrefix,
         height = _props7.height,
-        headerHeight = _props7.headerHeight;
+        headerHeight = _props7.headerHeight,
+        columns = _props7.columns;
 
     var headRows = this.refs.headTable ? this.refs.headTable.querySelectorAll('thead') : this.refs.bodyTable.querySelectorAll('thead');
     var bodyRows = this.refs.bodyTable.querySelectorAll('.' + clsPrefix + '-row') || [];
     var fixedColumnsHeadRowsHeight = [].map.call(headRows, function (row) {
-      return headerHeight ? headerHeight : row.getBoundingClientRect().height || 'auto';
+      var height = headerHeight;
+      if (headerHeight) {
+        height = ((0, _utils.getMaxColChildrenLength)(columns) + 1) * headerHeight;
+      }
+      return headerHeight ? height : row.getBoundingClientRect().height || 'auto';
     });
     var fixedColumnsBodyRowsHeight = [].map.call(bodyRows, function (row) {
       return height ? height : row.getBoundingClientRect().height || 'auto';

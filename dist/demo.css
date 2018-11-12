@@ -8481,7 +8481,7 @@ ul {
     height: 100%;
     overflow: scroll; }
   .u-table-fixed-header .u-table-scroll .u-table-header {
-    overflow-x: auto;
+    overflow-x: scroll;
     padding-bottom: 20px;
     margin-bottom: -20px;
     overflow-y: scroll;
@@ -10301,5 +10301,9 @@ th .drop-menu .uf {
 
 th:hover .uf {
   visibility: visible; }
+
+.demo3 .u-table-thead th {
+  padding-top: 0px;
+  padding-bottom: 0px; }
 
 /*# sourceMappingURL=demo.css.map */
