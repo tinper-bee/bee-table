@@ -185,6 +185,5 @@ function getColChildrenLength(columns, chilrenLen) {
       chilrenLen = getColChildrenLength(item.children, chilrenLen + 1);
     }
   });
-  console.log(chilrenLen);
   return chilrenLen;
 }

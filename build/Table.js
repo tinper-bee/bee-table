@@ -278,6 +278,9 @@ var Table = function (_Component) {
 
     //如果用户传了scroll.x按用户传的为主
     var setWidthParam = this.props.scroll.x;
+    var computeObj = this.columnManager.getColumnWidth(this.contentWidth);
+    var lastShowIndex = computeObj.lastShowIndex;
+    this.computeWidth = computeObj.computeWidth;
     if (typeof setWidthParam == 'number') {
       var numSetWidthParam = parseInt(setWidthParam);
       this.contentWidth = numSetWidthParam;
@@ -287,13 +290,12 @@ var Table = function (_Component) {
       this.contentDomWidth = this.contentTable.getBoundingClientRect().width; //表格容器宽度
 
       this.contentWidth = this.contentDomWidth; //默认与容器宽度一样
+      this.domWidthDiff = this.contentDomWidth - this.computeWidth;
       if (typeof setWidthParam == 'string' && setWidthParam.indexOf('%')) {
         this.contentWidth = this.contentWidth * parseInt(setWidthParam) / 100;
       }
     }
-    var computeObj = this.columnManager.getColumnWidth(this.contentWidth);
-    var lastShowIndex = computeObj.lastShowIndex;
-    this.computeWidth = computeObj.computeWidth;
+
     if (this.computeWidth < this.contentWidth) {
       var contentWidthDiff = this.scrollbarWidth ? this.contentWidth - this.computeWidth - this.scrollbarWidth : this.contentWidth - this.computeWidth;
       //bordered的表格需要减去边框的差值1
@@ -761,7 +763,15 @@ var Table = function (_Component) {
             headStyle.marginBottom = '0px';
           }
         } else {
-          (fixed ? bodyStyle : headStyle).marginBottom = '-' + scrollbarWidth + 'px';
+          if (fixed) {
+            if (this.domWidthDiff > 0) {
+              innerBodyStyle.overflowX = 'auto';
+            } else {
+              bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
+            }
+          } else {
+            headStyle.marginBottom = '-' + scrollbarWidth + 'px';
+          }
         }
       }
     }
