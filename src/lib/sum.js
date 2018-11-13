@@ -27,29 +27,32 @@ export default function sum(Table) {
     currentFooter = () => {
       let data_2 = this.props.data;
       let columns_sum = this.props.columns.concat();
-      let sumCol_index;
+      let sumCol_index,sumColIndexArr=[];
       //用一个对象存储合计数据，这里合计对象的属性对应每列字段
       for (let i = 0; i < columns_sum.length; i++) {
         if (columns_sum[i].sumCol) {
-          sumCol_index = columns_sum[i].dataIndex;
-          break;
+          sumColIndexArr.push(columns_sum[i].dataIndex);
         }
       }
       let obj = {};
-      obj[sumCol_index] = 0;
-      if (Array.isArray(data_2)) {
-        for (let i = 0; i < data_2.length; i++) {
-          if (
-            typeof data_2[i][sumCol_index] == "number" ||
-            !isNaN(data_2[i][sumCol_index])
-          ) {
-            obj[sumCol_index] -= -data_2[i][sumCol_index];
-          } else {
-            obj[sumCol_index] = "";
+      sumColIndexArr.forEach(sumCol_index=>{
+        
+        obj[sumCol_index] = 0;
+        if (Array.isArray(data_2)) {
+          for (let i = 0; i < data_2.length; i++) {
+            if (
+              typeof data_2[i][sumCol_index] == "number" ||
+              !isNaN(data_2[i][sumCol_index])
+            ) {
+              obj[sumCol_index] -= -data_2[i][sumCol_index];
+            } else {
+              obj[sumCol_index] = "";
+            }
           }
         }
-      }
-      obj.key = "sumData";
+        obj.key = sumCol_index+"sumData";
+        
+      })
       obj.showSum = "合计";
       obj = [obj];
       //将设置的和用户传入的合并属性

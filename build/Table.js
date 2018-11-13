@@ -211,6 +211,10 @@ var Table = function (_Component) {
 
   Table.prototype.componentDidMount = function componentDidMount() {
     setTimeout(this.resetScrollY, 300);
+    //含有纵向滚动条
+    if (this.props.scroll.y) {
+      this.scrollbarWidth = (0, _utils.measureScrollbar)();
+    }
     //后续也放在recevice里面
     if (!this.props.originWidth) {
       this.computeTableWidth();
@@ -271,8 +275,12 @@ var Table = function (_Component) {
   };
 
   Table.prototype.computeTableWidth = function computeTableWidth() {
+
     //如果用户传了scroll.x按用户传的为主
     var setWidthParam = this.props.scroll.x;
+    var computeObj = this.columnManager.getColumnWidth(this.contentWidth);
+    var lastShowIndex = computeObj.lastShowIndex;
+    this.computeWidth = computeObj.computeWidth;
     if (typeof setWidthParam == 'number') {
       var numSetWidthParam = parseInt(setWidthParam);
       this.contentWidth = numSetWidthParam;
@@ -282,15 +290,18 @@ var Table = function (_Component) {
       this.contentDomWidth = this.contentTable.getBoundingClientRect().width; //表格容器宽度
 
       this.contentWidth = this.contentDomWidth; //默认与容器宽度一样
+      this.domWidthDiff = this.contentDomWidth - this.computeWidth;
       if (typeof setWidthParam == 'string' && setWidthParam.indexOf('%')) {
         this.contentWidth = this.contentWidth * parseInt(setWidthParam) / 100;
       }
     }
-    var computeObj = this.columnManager.getColumnWidth(this.contentWidth);
-    var lastShowIndex = computeObj.lastShowIndex;
-    this.computeWidth = computeObj.computeWidth;
+
     if (this.computeWidth < this.contentWidth) {
-      var contentWidthDiff = this.contentWidth - this.computeWidth;
+      var contentWidthDiff = this.scrollbarWidth ? this.contentWidth - this.computeWidth - this.scrollbarWidth : this.contentWidth - this.computeWidth;
+      //bordered的表格需要减去边框的差值1
+      if (this.props.bordered) {
+        contentWidthDiff = contentWidthDiff - 1;
+      }
       this.setState({ contentWidthDiff: contentWidthDiff, lastShowIndex: lastShowIndex });
     } else {
       this.contentWidth = this.computeWidth;
@@ -381,7 +392,7 @@ var Table = function (_Component) {
       });
     }
 
-    var trStyle = headerHeight ? { height: headerHeight } : fixed ? this.getHeaderRowStyle(columns, rows) : null;
+    var trStyle = headerHeight && !fixed ? { height: headerHeight } : fixed ? this.getHeaderRowStyle(columns, rows) : null;
     var drop = draggable ? { onDragStart: onDragStart, onDragOver: onDragOver, onDrop: onDrop, onDragEnter: onDragEnter, draggable: draggable } : {};
     var dragBorder = dragborder ? { onMouseDown: onMouseDown, onMouseMove: onMouseMove, onMouseUp: onMouseUp, dragborder: dragborder, onThMouseMove: onThMouseMove, dragborderKey: dragborderKey } : {};
     var contentWidthDiff = 0;
@@ -740,19 +751,36 @@ var Table = function (_Component) {
       useFixedHeader = true;
 
       // Add negative margin bottom for scroll bar overflow bug
-      var scrollbarWidth = (0, _utils.measureScrollbar)();
+      var scrollbarWidth = this.scrollbarWidth;
       if (scrollbarWidth >= 0) {
         (fixed ? bodyStyle : headStyle).paddingBottom = '0px';
         //显示表头滚动条
         if (headerScroll) {
           if (fixed) {
-            bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
-            headStyle.marginBottom = scrollbarWidth + 'px';
+            //内容少，不用显示滚动条
+            if (this.domWidthDiff <= 0) {
+              headStyle.marginBottom = scrollbarWidth + 'px';
+              bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
+            } else {
+              innerBodyStyle.overflowX = 'auto';
+            }
           } else {
+            //内容少，不用显示滚动条
+            if (this.domWidthDiff > 0) {
+              headStyle.overflowX = 'auto';
+            }
             headStyle.marginBottom = '0px';
           }
         } else {
-          (fixed ? bodyStyle : headStyle).marginBottom = '-' + scrollbarWidth + 'px';
+          if (fixed) {
+            if (this.domWidthDiff > 0) {
+              innerBodyStyle.overflowX = 'auto';
+            } else {
+              bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
+            }
+          } else {
+            headStyle.marginBottom = '-' + scrollbarWidth + 'px';
+          }
         }
       }
     }
@@ -913,12 +941,17 @@ var Table = function (_Component) {
     var _props7 = this.props,
         clsPrefix = _props7.clsPrefix,
         height = _props7.height,
-        headerHeight = _props7.headerHeight;
+        headerHeight = _props7.headerHeight,
+        columns = _props7.columns;
 
     var headRows = this.refs.headTable ? this.refs.headTable.querySelectorAll('thead') : this.refs.bodyTable.querySelectorAll('thead');
     var bodyRows = this.refs.bodyTable.querySelectorAll('.' + clsPrefix + '-row') || [];
     var fixedColumnsHeadRowsHeight = [].map.call(headRows, function (row) {
-      return headerHeight ? headerHeight : row.getBoundingClientRect().height || 'auto';
+      var height = headerHeight;
+      if (headerHeight) {
+        height = ((0, _utils.getMaxColChildrenLength)(columns) + 1) * headerHeight;
+      }
+      return headerHeight ? height : row.getBoundingClientRect().height || 'auto';
     });
     var fixedColumnsBodyRowsHeight = [].map.call(bodyRows, function (row) {
       return height ? height : row.getBoundingClientRect().height || 'auto';

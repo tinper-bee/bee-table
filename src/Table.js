@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import TableRow from './TableRow';
 import TableHeader from './TableHeader';
-import { measureScrollbar, debounce, warningOnce } from './utils';
+import { measureScrollbar, debounce, warningOnce ,getMaxColChildrenLength} from './utils';
 import shallowequal from 'shallowequal';
 import addEventListener from 'tinper-bee-core/lib/addEventListener';
 import ColumnManager from './ColumnManager';
@@ -129,6 +129,10 @@ class Table extends Component {
 
   componentDidMount() {
     setTimeout(this.resetScrollY, 300);
+    //含有纵向滚动条
+    if(this.props.scroll.y){
+       this.scrollbarWidth = measureScrollbar();
+    }
     //后续也放在recevice里面
     if (!this.props.originWidth) {
       this.computeTableWidth();
@@ -196,8 +200,12 @@ class Table extends Component {
   }
 
   computeTableWidth() {
+    
     //如果用户传了scroll.x按用户传的为主
     let setWidthParam = this.props.scroll.x
+    const computeObj = this.columnManager.getColumnWidth(this.contentWidth);
+    let lastShowIndex = computeObj.lastShowIndex;
+    this.computeWidth = computeObj.computeWidth;
     if (typeof (setWidthParam) == 'number') {
       let numSetWidthParam = parseInt(setWidthParam);
       this.contentWidth = numSetWidthParam;
@@ -207,15 +215,18 @@ class Table extends Component {
       this.contentDomWidth = this.contentTable.getBoundingClientRect().width//表格容器宽度
 
       this.contentWidth = this.contentDomWidth;//默认与容器宽度一样
+      this.domWidthDiff = this.contentDomWidth - this.computeWidth;
       if (typeof (setWidthParam) == 'string' && setWidthParam.indexOf('%')) {
         this.contentWidth = this.contentWidth * parseInt(setWidthParam) / 100
       }
     }
-    const computeObj = this.columnManager.getColumnWidth(this.contentWidth);
-    let lastShowIndex = computeObj.lastShowIndex;
-    this.computeWidth = computeObj.computeWidth;
+
     if (this.computeWidth < this.contentWidth) {
-      let contentWidthDiff = this.contentWidth - this.computeWidth;
+      let contentWidthDiff = this.scrollbarWidth?this.contentWidth - this.computeWidth-this.scrollbarWidth:this.contentWidth - this.computeWidth;
+      //bordered的表格需要减去边框的差值1
+      if(this.props.bordered){
+        contentWidthDiff = contentWidthDiff-1;
+      }
       this.setState({ contentWidthDiff, lastShowIndex });
     } else {
       this.contentWidth = this.computeWidth;
@@ -290,7 +301,7 @@ class Table extends Component {
       });
     }
 
-    const trStyle = headerHeight ? { height: headerHeight } : (fixed ? this.getHeaderRowStyle(columns, rows) : null);
+    const trStyle = headerHeight&&!fixed ? { height: headerHeight } : (fixed ? this.getHeaderRowStyle(columns, rows) : null);
     let drop = draggable ? { onDragStart, onDragOver, onDrop, onDragEnter, draggable } : {};
     let dragBorder = dragborder ? { onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey } : {};
     let contentWidthDiff = 0;
@@ -645,19 +656,38 @@ class Table extends Component {
       useFixedHeader = true;
 
       // Add negative margin bottom for scroll bar overflow bug
-      const scrollbarWidth = measureScrollbar();
+      const scrollbarWidth = this.scrollbarWidth;
       if (scrollbarWidth >= 0) {
         (fixed ? bodyStyle : headStyle).paddingBottom = '0px';
         //显示表头滚动条
         if(headerScroll){
           if(fixed){
-            bodyStyle.marginBottom = `-${scrollbarWidth}px`;
-            headStyle.marginBottom = `${scrollbarWidth}px`;
+           //内容少，不用显示滚动条
+           if(this.domWidthDiff <= 0){
+              headStyle.marginBottom = `${scrollbarWidth}px`;
+              bodyStyle.marginBottom = `-${scrollbarWidth}px`;
+            }else{
+              innerBodyStyle.overflowX = 'auto';
+            }
           }else{
+               //内容少，不用显示滚动条
+               if(this.domWidthDiff > 0){
+                headStyle.overflowX = 'auto';
+              }
             headStyle.marginBottom = `0px`;
           }
         }else{
-          (fixed ? bodyStyle : headStyle).marginBottom = `-${scrollbarWidth}px`;
+          if(fixed){
+            if(this.domWidthDiff > 0){
+              innerBodyStyle.overflowX = 'auto';
+            }else{
+              bodyStyle.marginBottom = `-${scrollbarWidth}px`;
+            }
+            
+          }else{
+            headStyle.marginBottom = `-${scrollbarWidth}px`;
+          }
+          
         }
       }
     }
@@ -795,13 +825,18 @@ class Table extends Component {
 
   syncFixedTableRowHeight() {
     //this.props.height、headerHeight分别为用户传入的行高和表头高度，如果有值，所有行的高度都是固定的，主要为了避免在千行数据中有固定列时获取行高度有问题
-    const { clsPrefix, height, headerHeight } = this.props;
+    const { clsPrefix, height, headerHeight,columns } = this.props;
     const headRows = this.refs.headTable ?
       this.refs.headTable.querySelectorAll('thead') :
       this.refs.bodyTable.querySelectorAll('thead');
     const bodyRows = this.refs.bodyTable.querySelectorAll(`.${clsPrefix}-row`) || [];
     const fixedColumnsHeadRowsHeight = [].map.call(
-      headRows, row => headerHeight ? headerHeight : (row.getBoundingClientRect().height || 'auto')
+      headRows, row =>{ 
+        let height = headerHeight; 
+        if(headerHeight){
+          height = (getMaxColChildrenLength(columns)+1)*headerHeight;
+        }
+        return headerHeight ? height : (row.getBoundingClientRect().height || 'auto')}
     );
     const fixedColumnsBodyRowsHeight = [].map.call(
       bodyRows, row => height ? height : (row.getBoundingClientRect().height || 'auto')

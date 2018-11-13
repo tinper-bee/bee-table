@@ -52,7 +52,7 @@ class FilterDropDown extends Component {
                 <Item key="3">{locale['end']}</Item>
             </Menu>
         );
-        return (<div>
+        return (<div className="filter-btns">
             {isShowCondition == 'show' && <Dropdown
                 trigger={['click']}
                 overlay={dropmenu}

@@ -143,3 +143,26 @@ export function closest(ele, selector) {
   }
   return null;
 }
+
+
+export function getMaxColChildrenLength(columns){
+  let  arr=[];
+  arr = columns.map((item,index)=>{
+    let chilrenLen = 0;
+    if(item.children){
+      chilrenLen = getColChildrenLength(item.children,chilrenLen+1)
+    }
+    return chilrenLen
+  })
+  var max = Math.max.apply(null,arr);
+  return max;
+} 
+
+export function getColChildrenLength(columns,chilrenLen){
+  columns.forEach((item,index)=>{
+    if(item.children){
+      chilrenLen = getColChildrenLength(item.children,chilrenLen+1);
+    }
+  })
+  return chilrenLen;
+}

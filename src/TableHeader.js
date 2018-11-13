@@ -406,7 +406,7 @@ class TableHeader extends Component {
     return (
       <thead className={`${clsPrefix}-thead`} {...attr}>
         {rows.map((row, index) => (
-          <tr key={index} style={rowStyle}>
+          <tr key={index} style={rowStyle} className={(filterable && index == rows.length - 1)?'filterable':''}>
             {row.map((da, i, arr) => {
               let thHover = da.drgHover
                 ? ` ${clsPrefix}-thead th-drag-hover`

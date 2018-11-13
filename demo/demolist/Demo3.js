@@ -1,7 +1,8 @@
 /**
  *
- * @title 表头分组
+ * @title 表头分组并自定义表头高度
  * @description columns[n] 可以内嵌 children，以渲染分组表头。
+ * 自定义表头高度需要传headerHeight，注：修改th的padding top和bottom置为0，否则会有影响
  *
  */
 
@@ -105,8 +106,10 @@ class Demo3 extends Component {
   render() {
     return (
       <Table
+        className={'demo3'}
         columns={columns}
         data={data}
+        headerHeight={40} //自定义表头高度
         bordered
         scroll={{ y: 240 }}
       />
