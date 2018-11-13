@@ -14,13 +14,13 @@ const columns23 = [
     title: "名字",
     dataIndex: "a",
     key: "a",
-    width: '100'
+    width: '200'
   },
   {
     title: "性别",
     dataIndex: "b",
     key: "b",
-    width: '200'
+    width: '100'
   },
   {
     title: "年龄",
@@ -59,6 +59,7 @@ class Demo23 extends Component {
   render() {
     return <DragColumnTable columns={columns23} data={data23} bordered
     dragborder={true} 
+    draggable={false} 
     />;
   }
 }
