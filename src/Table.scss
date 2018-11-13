@@ -345,6 +345,9 @@ $table-move-in-color: $bg-color-base;
     .th-drag{
       cursor: move;
     }
+    .th-drag:hover{
+      background: rgb(227,242,253);
+    }
     //为了区分是拖拽宽度还是交换列，先注释上面了
     // .th-drag:hover{
     //   background:#ccc;
@@ -360,25 +363,27 @@ $table-move-in-color: $bg-color-base;
         position: absolute;
         right: 0px;
         top: 0;
-        background:transparent;
-        width: 1px;
+        // background:transparent;
+        // width: 1px;
+        background:#ccc;
+        width: 2px;
         
         box-sizing: border-box;
-        z-index: 100;
+        z-index: 1;
       }
       .th-drag-gap{
         background:transparent;
       }
       .th-drag-gap-hover{
-        background: #ccc;
+        // background: #ccc;
         cursor: col-resize;
       }
-      &.th-can-not-drag{
-        .th-drag-gap-hover{
-          cursor: none;
-          width: 0px;
-        }
-      }
+      // &.th-can-not-drag{
+      //   .th-drag-gap-hover{
+      //     cursor: none;
+      //     width: 0px;
+      //   }
+      // }
     }
     &-th:last-child {
       &-drag-gap{
