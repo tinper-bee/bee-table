@@ -282,6 +282,11 @@ $table-move-in-color: $bg-color-base;
     }
     .filter-wrap{
       display: flex;
+      justify-content: center;
+      align-items: center;
+      .filter-btns{
+        min-width: 58px;
+      }
     }
     th{
       background: $table-head-background-color;

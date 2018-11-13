@@ -8583,7 +8583,13 @@ ul {
     font-weight: normal; }
   .u-table-thead .filter-wrap {
     display: -ms-flexbox;
-    display: flex; }
+    display: flex;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-align: center;
+    align-items: center; }
+    .u-table-thead .filter-wrap .filter-btns {
+      min-width: 58px; }
   .u-table-thead th {
     background: #f7f7f7;
     overflow: hidden;

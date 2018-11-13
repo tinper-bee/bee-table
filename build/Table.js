@@ -757,9 +757,18 @@ var Table = function (_Component) {
         //显示表头滚动条
         if (headerScroll) {
           if (fixed) {
-            bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
-            headStyle.marginBottom = scrollbarWidth + 'px';
+            //内容少，不用显示滚动条
+            if (this.domWidthDiff <= 0) {
+              headStyle.marginBottom = scrollbarWidth + 'px';
+              bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
+            } else {
+              innerBodyStyle.overflowX = 'auto';
+            }
           } else {
+            //内容少，不用显示滚动条
+            if (this.domWidthDiff > 0) {
+              headStyle.overflowX = 'auto';
+            }
             headStyle.marginBottom = '0px';
           }
         } else {

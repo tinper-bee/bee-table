@@ -127,7 +127,7 @@ var FilterDropDown = function (_Component) {
         );
         return _react2["default"].createElement(
             'div',
-            null,
+            { className: 'filter-btns' },
             isShowCondition == 'show' && _react2["default"].createElement(
                 _beeDropdown2["default"],
                 {

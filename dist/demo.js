@@ -11325,9 +11325,18 @@
 	        //显示表头滚动条
 	        if (headerScroll) {
 	          if (fixed) {
-	            bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
-	            headStyle.marginBottom = scrollbarWidth + 'px';
+	            //内容少，不用显示滚动条
+	            if (this.domWidthDiff <= 0) {
+	              headStyle.marginBottom = scrollbarWidth + 'px';
+	              bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
+	            } else {
+	              innerBodyStyle.overflowX = 'auto';
+	            }
 	          } else {
+	            //内容少，不用显示滚动条
+	            if (this.domWidthDiff > 0) {
+	              headStyle.overflowX = 'auto';
+	            }
 	            headStyle.marginBottom = '0px';
 	          }
 	        } else {
@@ -50850,7 +50859,7 @@
 	        );
 	        return _react2['default'].createElement(
 	            'div',
-	            null,
+	            { className: 'filter-btns' },
 	            isShowCondition == 'show' && _react2['default'].createElement(
 	                _beeDropdown2['default'],
 	                {
