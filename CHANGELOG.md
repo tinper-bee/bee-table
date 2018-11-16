@@ -1,3 +1,18 @@
+<a name="1.5.0"></a>
+# [1.5.0](https://github.com/tinper-bee/bee-table/compare/v1.4.39...v1.5.0) (2018-11-16)
+
+
+### Features
+
+* 合并multiSelect 和newmultiSelect ([d65f3d1](https://github.com/tinper-bee/bee-table/commit/d65f3d1))
+
+
+### BREAKING CHANGES
+
+* 合并multiSelect 和newmultiSelect
+
+
+
 <a name="1.4.39"></a>
 ## [1.4.39](https://github.com/tinper-bee/bee-table/compare/v1.4.38...v1.4.39) (2018-11-13)
 
@@ -264,7 +279,12 @@
 
 
 <a name="1.2.9"></a>
-## [1.2.9](https://github.com/tinper-bee/bee-table/compare/v1.2.7...v1.2.9) (2018-07-16)
+## [1.2.9](https://github.com/tinper-bee/bee-table/compare/v1.2.8...v1.2.9) (2018-07-16)
+
+
+
+<a name="1.2.8"></a>
+## [1.2.8](https://github.com/tinper-bee/bee-table/compare/v1.2.7...v1.2.8) (2018-07-06)
 
 
 
