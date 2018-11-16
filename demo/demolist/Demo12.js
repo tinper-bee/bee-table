@@ -8,7 +8,7 @@
 
 import React, { Component } from 'react';
 import Table from '../../src';
-import multiSelect from "../../src/lib/newMultiSelect.js";
+import multiSelect from "../../src/lib/multiSelect.js";
 import Checkbox from 'bee-checkbox';
 
 const columns12 = [

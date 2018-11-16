@@ -1,232 +1,175 @@
 import React, { Component } from "react";
-
-function indexOf(array, val) {
-    for (let i = 0; i < array.length; i++) {
-        if (array[i] === val) return i;
-    }
-    return -1;
-};
-
-function remove (array, val) {
-    let index = indexOf(array, val);
-    if (index > -1) {
-        array.splice(index, 1);
-    }
-};
-
+import Checkbox from 'bee-checkbox';
+import {ObjectAssign} from './util';
 /**
- * multiSelect={
- *  type--默认值为checkbox
- *  param--可以设置返回的选中的数据属性；默认值：null；
- * }
- * getSelectedDataFunc--function，能获取到选中的数据
- * 使用全选时得注意，data中的key值一定要是唯一值
+ * 参数: 过滤表头
+ * @param {*} Table
+ * @param {*} Checkbox
+ * @param {*} Popover
+ * @param {*} Icon
  */
+
 export default function multiSelect(Table, Checkbox) {
 
+  return class NewMultiSelect extends Component {
+    static defaultProps = {
+      prefixCls: "u-table-mult-select"
+    }
 
-  return class MultiSelect extends Component {
     constructor(props) {
       super(props);
+      let obj = this.getCheckedOrIndeter(props.data);
       this.state = {
-        checkedAll: false,
-        checkedObj: {},
-        selIds: [],
-        data: props.data
-      };
+        ...obj,
+        data:ObjectAssign(props.data),
+      }
     }
-    componentDidMount(){
-      this.setState(this.initCheckedObj(this.props));
-    }
-    componentWillReceiveProps(nextProps) {
-      let props = this.props,
-        { selectDisabled, selectedRow, data } = props,
-        selIds,obj,
-        checkedObj = {};
-      if (
-        nextProps.data !== data ||
-        nextProps.selectDisabled !== selectDisabled ||
-        nextProps.selectedRow !== selectedRow
-      ) {
-        obj = this.initCheckedObj(nextProps);
-        checkedObj = obj.checkedObj;
-        selIds = obj.selIds;
+
+    componentWillReceiveProps(nextProps){
+      if(this.props.data != nextProps.data){
+        let obj = this.getCheckedOrIndeter(props.data);
         this.setState({
-          checkedAll: false,
-          checkedObj: checkedObj,
-          selIds: selIds,
-          data: nextProps.data
-        });
+          ...obj,
+          data:ObjectAssign(nextProps.data),
+        })
       }
     }
-    getRowKey=(record, index) => {
-      const rowKey = this.props.rowKey || 'key';
-      const key = (typeof rowKey === 'function') ?
-        rowKey(record, index) : record[rowKey];
-      return key;
+
+    /**
+     * @param {*} data 
+     */
+    getCheckedOrIndeter(data){
+      let obj = {};
+      let checkStatus = this.setChecked(data);
+      if(!checkStatus){
+        obj.checkedAll = false;
+        obj.indeterminate = false;
+        return obj;
+      }
+      if(checkStatus == 'indeter'){
+        obj.indeterminate = true;
+        obj.checkedAll = false;
+      }else if(checkStatus == 'all'){
+        obj.checkedAll = true;
+        obj.indeterminate = false;
+      }
+      return obj;
     }
-    initCheckedObj = (props) => {
-      let checkedObj = {},
-        { selectDisabled, selectedRow, data } = props,
-        selIds_ = [...this.state.selIds],
-        selIds_length = selIds_.length;
-      for (var i = 0; i < data.length; i++) {
-        let bool = (selectDisabled && selectDisabled(data[i], i)) || false;
-        let rowKey = data[i]["key"] ? data[i]["key"] : this.getRowKey(data[i],i);
-        if (!bool) {
-          if(selectedRow && selectedRow(data[i], i)){
-            if(selIds_length>0){
-              for (let index = 0; index < selIds_length; index++) {
-                const selid = selIds_[index];
-                if(selid[rowKey] !== data[i][rowKey]){
-                  selIds_.push(data[i]);
-                }
-              }
-            }else{
-              selIds_.push(data[i]);
-            }
-            checkedObj[rowKey] = true;
-          }else{
-            checkedObj[rowKey] = false;
-          }
+
+    /**
+     * 判断数据是否全部选中
+     * @param {*} data 
+     * reutnr  string  all(全选)、indeter(半选)
+     */
+    setChecked(data){
+      if(!this.isArray(data))return false;
+      let count = 0;
+      data.forEach(da=>{
+        if(da._checked){
+          count ++;
+        }
+      })
+
+      if(data.length == count){
+        return "all";
+      }
+      return count == 0?false:"indeter";
+    }
+
+    /**
+     * 判断是否是数组
+     * @param {*} o 
+     */
+    isArray(o){
+        return Object.prototype.toString.call(o)=='[object Array]';
+    }
+
+
+    onAllCheckChange=()=>{
+      let {data,checkedAll,indeterminate} = this.state;
+      let check = false;
+      if(checkedAll){
+        check = false;
+      }else{
+        if(indeterminate){
+          check = true;
+        }else{
+          check = true;
         }
       }
-      return {
-        checkedObj:checkedObj,
-        selIds:selIds_
-      };
-    };
-    onAllCheckChange = () => {
-      let self = this;
-      let listData = self.state.data.concat();
-      let checkedObj = Object.assign({}, self.state.checkedObj);
-      let { data } = self.props;
-      let selIds = [];
-      let id = self.props.multiSelect.param;
-      if (self.state.checkedAll) {
-        selIds = [];
-      } else {
-        for (var i = 0; i < listData.length; i++) {
-          if (id) {
-            selIds[i] = listData[i][id];
-          } else {
-            selIds[i] = listData[i];
-          }
+      let selectList = [];
+      data.forEach(item => {
+        item._checked = check;
+        if(item._checked){
+          selectList.push(item);
         }
-      }
-      for (var i = 0; i < data.length; i++) {
-        let rowKey = data[i]["key"] ? data[i]["key"] : this.getRowKey(data[i],i);
-        let bool = checkedObj.hasOwnProperty(rowKey);
-        if (!bool) {
-          selIds.splice(i, 1);
-        } else {
-          checkedObj[rowKey] = !self.state.checkedAll;
-        }
-      }
-      self.setState({
-        checkedAll: !self.state.checkedAll,
-        checkedObj: checkedObj,
-        selIds: selIds
       });
-      self.props.getSelectedDataFunc(selIds);
-    };
-    onCheckboxChange = (text, record, index) => {
-      let self = this;
-      let allFlag = false;
-      let selIds = self.state.selIds;
-      let id = self.props.multiSelect
-        ? self.props.multiSelect.param
-          ? record[self.props.multiSelect.param]
-          : record
-        : record;
-      let checkedObj = Object.assign({}, self.state.checkedObj);
-      let checkedArray = Object.keys(checkedObj);
-      let { getSelectedDataFunc } = self.props;
-      let rowKey = record["key"] ? record["key"] : this.getRowKey(record,i);
-      if (checkedObj[rowKey]) {
-        remove(selIds, id);
-      } else {
-        selIds.push(id);
-      }
-      checkedObj[rowKey] = !checkedObj[rowKey];
-      for (var i = 0; i < checkedArray.length; i++) {
-        if (!checkedObj[checkedArray[i]]) {
-          allFlag = false;
-          break;
-        } else {
-          allFlag = true;
-        }
-      }
-      self.setState({
-        checkedAll: allFlag,
-        checkedObj: checkedObj,
-        selIds: selIds
+      this.setState({
+        indeterminate:false,
+        checkedAll:check
       });
-      if (typeof getSelectedDataFunc === "function") {
-        getSelectedDataFunc(selIds);
-      }
-    };
-    handleClick = (e) => {
-      e.stopPropagation();
+      this.props.getSelectedDataFunc(selectList);
     }
-    renderColumnsMultiSelect(columns) {
-      const { data } = this.state;
-      let checkedObj = Object.assign({}, this.state.checkedObj);
-      let checkedArray = Object.keys(checkedObj);
-      let { multiSelect } = this.props;
-      let select_column = {};
-      let indeterminate_bool = false;
-      if (!multiSelect || !multiSelect.type) {
-        multiSelect = Object.assign({}, multiSelect, { type: "checkbox" });
-      }
-      if (multiSelect && multiSelect.type === "checkbox") {
-        let i = checkedArray.length;
-        while (i--) {
-          if (checkedObj[checkedArray[i]]) {
-            indeterminate_bool = true;
-            break;
-          }
+
+    handleClick=()=>{
+      
+    }
+ 
+    onCheckboxChange = (text, record, index) => () => {
+      let {data} = this.state;
+      let selectList = [];
+      record._checked = record._checked?false:true;
+      let obj = this.getCheckedOrIndeter(data);
+      this.setState({
+        data:data,
+        ...obj
+      })
+      data.forEach((da)=>{
+        if(da._checked){
+          selectList.push(da);
         }
-        let defaultColumns = [
-          {
-            title: (
-              <Checkbox
+      })
+      this.props.getSelectedDataFunc(selectList,record,index);
+    };
+
+    
+
+    getDefaultColumns=(columns)=>{
+      let {checkedAll,indeterminate} = this.state;
+      let checkAttr = {checked:checkedAll?true:false};
+      indeterminate?checkAttr.indeterminate = true:"";
+      let _defaultColumns =[{
+          title: (
+            <Checkbox
+              className="table-checkbox"
+              {...checkAttr}
+              onChange={this.onAllCheckChange}
+            />
+          ),
+          key: "checkbox",
+          dataIndex: "checkbox",
+         fixed:"left",
+          width: 50, 
+          render: (text, record, index) => {
+            let attr = {};
+            record._disabled?attr.disabled = record._disabled:"";
+            return <Checkbox
+                key={index}
                 className="table-checkbox"
-                checked={this.state.checkedAll}
-                indeterminate={indeterminate_bool && !this.state.checkedAll}
-                onChange={this.onAllCheckChange}
-              />
-            ),
-            key: "checkbox",
-            dataIndex: "checkbox",
-            width: "55",
-            render: (text, record, index) => {
-              let rowKey = record["key"] ? record["key"] : this.getRowKey(record,i);
-              let bool = checkedObj.hasOwnProperty(rowKey);
-              return (
-                <Checkbox
-                  className="table-checkbox"
-                  checked={checkedObj[rowKey]}
-                  disabled={!bool}
-                  onClick={this.handleClick}
-                  onChange={this.onCheckboxChange.bind(
-                    this,
-                    text,
-                    record,
-                    index
-                  )}
-                />
-              );
-            }
+                {...attr}
+                checked={record._checked}
+                onClick={this.handleClick}
+                onChange={this.onCheckboxChange(text, record, index)}
+              ></Checkbox>
           }
-        ];
-        columns = defaultColumns.concat(columns);
-      }
-      return columns;
+        }]
+        return _defaultColumns.concat(columns);
     }
+
     render() {
-      let columns = this.renderColumnsMultiSelect(this.props.columns).concat();
-      return <Table ref={(table_ref) => { this.table_ref = table_ref; }} {...this.props} columns={columns} />;
+      const {columns} = this.props;
+      const {data} = this.state;
+      return <Table {...this.props} columns={this.getDefaultColumns(columns)} data={data} />
     }
   };
 }

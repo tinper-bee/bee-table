@@ -9,7 +9,7 @@
  */
 import React, { Component } from 'react';
 import Table from '../../src';
-import multiSelect from '../../src/lib/newMultiSelect';
+import multiSelect from '../../src/lib/multiSelect';
 import filterColumn from '../../src/lib/filterColumn';
 import dragColumn from "../../src/lib/dragColumn";
 
