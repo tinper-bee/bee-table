@@ -2420,9 +2420,6 @@ i.uf {
 /*
  * 选择时删除文本阴影，及设置默认选中颜色
  */
-::-moz-selection {
-  background: rgb(187,222,251);
-  text-shadow: none; }
 ::selection {
   background: rgb(187,222,251);
   text-shadow: none; }
@@ -6672,7 +6669,8 @@ input.u-button[type="submit"] {
   border-radius: 0 500px 500px 0; }
 
 .u-pagination {
-  font-size: 14px; }
+  font-size: 14px;
+  position: relative; }
   .u-pagination-list {
     float: left;
     margin: 5px; }
@@ -6810,6 +6808,15 @@ input.u-button[type="submit"] {
     margin: 5px; }
     .u-pagination-total span {
       padding: 0 5px; }
+  .u-pagination.u-pagination-disabled .u-pagination-disabled-mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 46px;
+    background: rgba(255, 255, 255, 0.6);
+    z-index: 2;
+    cursor: not-allowed; }
 
 .pagination-state {
   float: left;
@@ -8635,6 +8642,8 @@ ul {
       display: inline-block; }
   .u-table-thead .th-drag {
     cursor: move; }
+  .u-table-thead .th-drag:hover {
+    background: #e3f2fd; }
   .u-table-thead .th-drag-hover {
     background: #ccc; }
   .u-table-thead-th {
@@ -8644,18 +8653,14 @@ ul {
       position: absolute;
       right: 0px;
       top: 0;
-      background: transparent;
-      width: 1px;
+      background: #ccc;
+      width: 2px;
       box-sizing: border-box;
-      z-index: 100; }
+      z-index: 1; }
     .u-table-thead-th .th-drag-gap {
       background: transparent; }
     .u-table-thead-th .th-drag-gap-hover {
-      background: #ccc;
       cursor: col-resize; }
-    .u-table-thead-th.th-can-not-drag .th-drag-gap-hover {
-      cursor: none;
-      width: 0px; }
   .u-table-thead-th:last-child-drag-gap {
     border: none; }
   .u-table-filter-column-pop-cont {
