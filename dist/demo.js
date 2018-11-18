@@ -52629,7 +52629,7 @@
 	
 	    NewMultiSelect.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
 	      if (this.props.data != nextProps.data) {
-	        var obj = this.getCheckedOrIndeter(props.data);
+	        var obj = this.getCheckedOrIndeter(nextProps.data);
 	        this.setState(_extends({}, obj, {
 	          data: (0, _util.ObjectAssign)(nextProps.data)
 	        }));
@@ -61215,7 +61215,7 @@
 	
 	    NewMultiSelect.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
 	      if (this.props.data != nextProps.data) {
-	        var obj = this.getCheckedOrIndeter(props.data);
+	        var obj = this.getCheckedOrIndeter(nextProps.data);
 	        this.setState(_extends({}, obj, {
 	          data: (0, _util.ObjectAssign)(nextProps.data)
 	        }));
