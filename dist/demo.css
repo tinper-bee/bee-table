@@ -2420,6 +2420,9 @@ i.uf {
 /*
  * 选择时删除文本阴影，及设置默认选中颜色
  */
+::-moz-selection {
+  background: rgb(187,222,251);
+  text-shadow: none; }
 ::selection {
   background: rgb(187,222,251);
   text-shadow: none; }
@@ -6669,8 +6672,7 @@ input.u-button[type="submit"] {
   border-radius: 0 500px 500px 0; }
 
 .u-pagination {
-  font-size: 14px;
-  position: relative; }
+  font-size: 14px; }
   .u-pagination-list {
     float: left;
     margin: 5px; }
@@ -6808,15 +6810,6 @@ input.u-button[type="submit"] {
     margin: 5px; }
     .u-pagination-total span {
       padding: 0 5px; }
-  .u-pagination.u-pagination-disabled .u-pagination-disabled-mask {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 46px;
-    background: rgba(255, 255, 255, 0.6);
-    z-index: 2;
-    cursor: not-allowed; }
 
 .pagination-state {
   float: left;

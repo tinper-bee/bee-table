@@ -703,8 +703,8 @@ class Table extends Component {
         }
       }
       // 自动出现滚动条
-      if (this.contentDomWidth > this.contentWidth) {
-        tableStyle.width = this.contentDomWidth;
+      if ( !fixed && this.contentDomWidth < this.contentWidth) {
+        tableStyle.width = this.contentWidth;
       }
       const tableBody = hasBody ? getBodyWrapper(
         <tbody className={`${clsPrefix}-tbody`}>

@@ -799,8 +799,8 @@ var Table = function (_Component) {
         }
       }
       // 自动出现滚动条
-      if (_this3.contentDomWidth > _this3.contentWidth) {
-        tableStyle.width = _this3.contentDomWidth;
+      if (!fixed && _this3.contentDomWidth < _this3.contentWidth) {
+        tableStyle.width = _this3.contentWidth;
       }
       var tableBody = hasBody ? getBodyWrapper(_react2["default"].createElement(
         'tbody',
