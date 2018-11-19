@@ -293,6 +293,7 @@ var Table = function (_Component) {
       this.domWidthDiff = this.contentDomWidth - this.computeWidth;
       if (typeof setWidthParam == 'string' && setWidthParam.indexOf('%')) {
         this.contentWidth = this.contentWidth * parseInt(setWidthParam) / 100;
+        this.domWidthDiff = this.contentDomWidth - this.contentWidth;
       }
     }
 
