@@ -217,7 +217,8 @@ class Table extends Component {
       this.contentWidth = this.contentDomWidth;//默认与容器宽度一样
       this.domWidthDiff = this.contentDomWidth - this.computeWidth;
       if (typeof (setWidthParam) == 'string' && setWidthParam.indexOf('%')) {
-        this.contentWidth = this.contentWidth * parseInt(setWidthParam) / 100
+        this.contentWidth = this.contentWidth * parseInt(setWidthParam) / 100;
+        this.domWidthDiff = this.contentDomWidth - this.contentWidth;
       }
     }
 
