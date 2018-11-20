@@ -10861,6 +10861,7 @@
 	      this.domWidthDiff = this.contentDomWidth - this.computeWidth;
 	      if (typeof setWidthParam == 'string' && setWidthParam.indexOf('%')) {
 	        this.contentWidth = this.contentWidth * parseInt(setWidthParam) / 100;
+	        this.domWidthDiff = this.contentDomWidth - this.contentWidth;
 	      }
 	    }
 	
@@ -52674,7 +52675,7 @@
 	
 	    NewMultiSelect.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
 	      if (this.props.data != nextProps.data) {
-	        var obj = this.getCheckedOrIndeter(props.data);
+	        var obj = this.getCheckedOrIndeter(nextProps.data);
 	        this.setState(_extends({}, obj, {
 	          data: (0, _util.ObjectAssign)(nextProps.data)
 	        }));
@@ -61228,7 +61229,7 @@
 	
 	    NewMultiSelect.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
 	      if (this.props.data != nextProps.data) {
-	        var obj = this.getCheckedOrIndeter(props.data);
+	        var obj = this.getCheckedOrIndeter(nextProps.data);
 	        this.setState(_extends({}, obj, {
 	          data: (0, _util.ObjectAssign)(nextProps.data)
 	        }));

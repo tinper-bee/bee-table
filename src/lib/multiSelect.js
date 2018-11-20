@@ -27,7 +27,7 @@ export default function multiSelect(Table, Checkbox) {
 
     componentWillReceiveProps(nextProps){
       if(this.props.data != nextProps.data){
-        let obj = this.getCheckedOrIndeter(props.data);
+        let obj = this.getCheckedOrIndeter(nextProps.data);
         this.setState({
           ...obj,
           data:ObjectAssign(nextProps.data),
