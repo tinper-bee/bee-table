@@ -203,9 +203,7 @@ class Table extends Component {
     
     //如果用户传了scroll.x按用户传的为主
     let setWidthParam = this.props.scroll.x
-    const computeObj = this.columnManager.getColumnWidth(this.contentWidth);
-    let lastShowIndex = computeObj.lastShowIndex;
-    this.computeWidth = computeObj.computeWidth;
+
     if (typeof (setWidthParam) == 'number') {
       let numSetWidthParam = parseInt(setWidthParam);
       this.contentWidth = numSetWidthParam;
@@ -215,11 +213,16 @@ class Table extends Component {
       this.contentDomWidth = this.contentTable.getBoundingClientRect().width//表格容器宽度
 
       this.contentWidth = this.contentDomWidth;//默认与容器宽度一样
-      this.domWidthDiff = this.contentDomWidth - this.computeWidth;
-      if (typeof (setWidthParam) == 'string' && setWidthParam.indexOf('%')) {
-        this.contentWidth = this.contentWidth * parseInt(setWidthParam) / 100;
-        this.domWidthDiff = this.contentDomWidth - this.contentWidth;
-      }
+      
+    }
+    const computeObj = this.columnManager.getColumnWidth(this.contentWidth);
+    let lastShowIndex = computeObj.lastShowIndex;
+    this.computeWidth = computeObj.computeWidth;
+
+    this.domWidthDiff = this.contentDomWidth - this.computeWidth;
+    if (typeof (setWidthParam) == 'string' && setWidthParam.indexOf('%')) {
+      this.contentWidth = this.contentWidth * parseInt(setWidthParam) / 100;
+      this.domWidthDiff = this.contentDomWidth - this.contentWidth;
     }
 
     if (this.computeWidth < this.contentWidth) {
