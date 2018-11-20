@@ -589,7 +589,7 @@ class Table extends Component {
       } else if (width) {
         width = parseInt(width);
       }
-      if (lastShowIndex == i) {
+      if (lastShowIndex == i && width) {
         width = width + contentWidthDiff;
       }
 
