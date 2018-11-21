@@ -412,7 +412,7 @@ var TableHeader = function (_Component) {
 
 
   TableHeader.prototype.render = function render() {
-    var _this3 = this;
+    var _this2 = this;
 
     var _state = this.state,
         dragAbleOrBord = _state.dragAbleOrBord,
@@ -434,7 +434,8 @@ var TableHeader = function (_Component) {
         onMouseOut = _props.onMouseOut,
         contentWidthDiff = _props.contentWidthDiff,
         fixed = _props.fixed,
-        lastShowIndex = _props.lastShowIndex;
+        lastShowIndex = _props.lastShowIndex,
+        contentTable = _props.contentTable;
 
     var attr = dragborder ? { id: "u-table-drag-thead-" + this.theadKey } : {};
 
@@ -453,8 +454,8 @@ var TableHeader = function (_Component) {
             if (!fixed && da.fixed) {
               fixedStyle = clsPrefix + "-row-fixed-columns-in-body";
             }
-            if (typeof da.width == "string" && da.width.indexOf("%") > -1 && _this3.props.contentWidth) {
-              da.width = parseInt(_this3.props.contentWidth * parseInt(da.width) / 100);
+            if (typeof da.width == "string" && da.width.indexOf("%") > -1 && _this2.props.contentWidth) {
+              da.width = parseInt(_this2.props.contentWidth * parseInt(da.width) / 100);
             } else if (da.width) {
               da.width = parseInt(da.width);
             }
@@ -463,7 +464,7 @@ var TableHeader = function (_Component) {
               canDotDrag = "th-can-not-drag";
             }
             if (filterable && index == rows.length - 1) {
-              da.children = _this3.filterRenderType(da["filtertype"], da.dataindex, i);
+              da.children = _this2.filterRenderType(da["filtertype"], da.dataindex, i);
               delete da.filterdropdownfocus;
             }
 
@@ -476,23 +477,23 @@ var TableHeader = function (_Component) {
               if (draggable && dragAbleOrBordStart != "borderStart") {
                 thAbleObj = _extends({}, da, {
                   onDragStart: function onDragStart(e) {
-                    _this3.onDragStart(e, da);
+                    _this2.onDragStart(e, da);
                   },
                   onDragOver: function onDragOver(e) {
-                    _this3.onDragOver(e, da);
+                    _this2.onDragOver(e, da);
                   },
                   onDrop: function onDrop(e) {
-                    _this3.onDrop(e, da);
+                    _this2.onDrop(e, da);
                   },
                   onDragEnter: function onDragEnter(e) {
-                    _this3.onDragEnter(e, da);
+                    _this2.onDragEnter(e, da);
                   },
                   onMouseMove: function onMouseMove(e) {
-                    _this3.ableOnMouseMove(e, da);
+                    _this2.ableOnMouseMove(e, da);
                   },
                   onMouseDown: function onMouseDown(e) {
                     //避免表头其他元素对其影响
-                    var filterDom = _this2.props.contentTable.querySelector('.filterable');
+                    var filterDom = contentTable.querySelector('.filterable');
                     //是否是过滤行元素，是的话不触发
                     var isFilterDom = filterDom ? filterDom.contains(e.target) : false;
 
@@ -502,11 +503,11 @@ var TableHeader = function (_Component) {
                     if (e.target.classList.contains('uf')) {
                       return;
                     }
-                    var _state2 = _this3.state,
+                    var _state2 = _this2.state,
                         dragAbleOrBord = _state2.dragAbleOrBord,
                         dragAbleOrBordStart = _state2.dragAbleOrBordStart;
 
-                    _this3.setState({
+                    _this2.setState({
                       dragAbleOrBordStart: dragAbleOrBord === "able" ? "ableStart" : ""
                     });
                   },
@@ -522,12 +523,12 @@ var TableHeader = function (_Component) {
                   // thObj.className= thObj.className+`${clsPrefix}-thead-th ${canDotDrag}`,
                 };thBorObj.onMouseMove = function (e) {
                   if (draggable) {
-                    _this3.ableOnMouseMove(e, da);
+                    _this2.ableOnMouseMove(e, da);
                   }
-                  _this3.onThMouseMove(e, da);
+                  _this2.onThMouseMove(e, da);
                 };
                 thBorObj.onMouseUp = function (e) {
-                  _this3.onThMouseUp(e, da);
+                  _this2.onThMouseUp(e, da);
                 };
 
                 thClassName += clsPrefix + "-thead-th " + canDotDrag;
@@ -540,19 +541,19 @@ var TableHeader = function (_Component) {
               if (!da.fixed) {
                 thLineObj = {
                   onMouseMove: function onMouseMove(e) {
-                    e.stopPropagation();_this3.onMouseMove(e, da);
+                    e.stopPropagation();_this2.onMouseMove(e, da);
                   },
                   onMouseOut: function onMouseOut(e) {
-                    _this3.onMouseOut(e, da);
+                    _this2.onMouseOut(e, da);
                   },
                   onMouseDown: function onMouseDown(e) {
-                    e.stopPropagation();_this3.onMouseDown(e, da);
+                    e.stopPropagation();_this2.onMouseDown(e, da);
                   },
                   onMouseUp: function onMouseUp(e) {
-                    _this3.onMouseUp(e, da);
+                    _this2.onMouseUp(e, da);
                   },
                   onMouseOver: function onMouseOver(e) {
-                    _this3.onMouseOver(e, da);
+                    _this2.onMouseOver(e, da);
                   },
                   className: clsPrefix + "-thead-th-drag-gap "
                 };
@@ -562,7 +563,7 @@ var TableHeader = function (_Component) {
                 _extends({ key: Math.random() }, thAbleObj, thBorObj, { className: thClassName }),
                 da.children,
                 da.fixed ? "" : _react2["default"].createElement("div", _extends({ ref: function ref(el) {
-                    return _this3.gap = el;
+                    return _this2.gap = el;
                   } }, thLineObj))
               );
             } else {

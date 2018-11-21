@@ -399,7 +399,8 @@ class TableHeader extends Component {
       onMouseOut,
       contentWidthDiff,
       fixed,
-      lastShowIndex
+      lastShowIndex,
+      contentTable
     } = this.props;
     let attr = dragborder ? { id: `u-table-drag-thead-${this.theadKey}` } : {};
 
@@ -454,7 +455,7 @@ class TableHeader extends Component {
                     onMouseMove:(e)=>{this.ableOnMouseMove(e, da)},
                     onMouseDown:(e)=>{
                       //避免表头其他元素对其影响
-                      const filterDom =  _this2.props.contentTable.querySelector('.filterable');
+                      const filterDom = contentTable.querySelector('.filterable');
                      //是否是过滤行元素，是的话不触发
                       const isFilterDom =filterDom ?filterDom.contains(e.target):false;
                       
