@@ -453,6 +453,17 @@ class TableHeader extends Component {
                     onDragEnter:(e)=>{this.onDragEnter(e, da)},
                     onMouseMove:(e)=>{this.ableOnMouseMove(e, da)},
                     onMouseDown:(e)=>{
+                      //避免表头其他元素对其影响
+                      const filterDom =  _this2.props.contentTable.querySelector('.filterable');
+                     //是否是过滤行元素，是的话不触发
+                      const isFilterDom =filterDom ?filterDom.contains(e.target):false;
+                      
+                      if(e.target.classList.contains('uf') ||isFilterDom){
+                        return;
+                      }
+                      if(e.target.classList.contains('uf')){
+                        return;
+                      }
                       let {dragAbleOrBord,dragAbleOrBordStart} = this.state;
                       this.setState({
                         dragAbleOrBordStart:dragAbleOrBord==="able"?"ableStart":""
