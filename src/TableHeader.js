@@ -204,7 +204,7 @@ class TableHeader extends Component {
     if (!this.border) return;
     //固定表头拖拽
 
-    const { dragborderKey, contentTable } = this.props;
+    const { dragborderKey, contentTable,headerScroll ,contentDomWidth,scrollbarWidth,bordered} = this.props;
     let x = event.pageX - this.drag.initPageLeftX + this.drag.initLeft - 0;
     let contentTableDom = document.getElementById(
       "u-table-drag-thead-" + this.theadKey
@@ -275,6 +275,26 @@ class TableHeader extends Component {
       let colDomArr = bodyTableDom.querySelectorAll("colgroup col");
       colDomArr[this.drag.currIndex].style.width = newWidth + "px";
       //4、设置overflow属性
+    }
+
+    //表头需要显示滚动条时，需兼容含有固定列
+    if(headerScroll){
+
+      let showScroll =  contentDomWidth - newTableWidth - scrollbarWidth ;
+      if(bordered){
+        showScroll = showScroll -1;
+      }
+      const fixedLeftTable = contentTable.querySelector('.u-table-fixed-left .u-table-header') ;
+      const fixedRightTable = contentTable.querySelector('.u-table-fixed-rigth .u-table-header');
+      if(showScroll < 0){
+        //找到固定列表格，设置表头的marginBottom值为scrollbarWidth;
+  
+        fixedLeftTable && (fixedLeftTable.style.marginBottom = scrollbarWidth + "px");
+        fixedRightTable && (fixedRightTable.style.marginBottom = scrollbarWidth + "px");
+      }else{
+        fixedLeftTable && (fixedLeftTable.style.marginBottom = '0px');
+        fixedRightTable && (fixedRightTable.style.marginBottom = '0px');
+      }
     }
   };
 

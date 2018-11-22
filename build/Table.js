@@ -383,7 +383,9 @@ var Table = function (_Component) {
         dragborderKey = _props.dragborderKey,
         minColumnWidth = _props.minColumnWidth,
         headerHeight = _props.headerHeight,
-        afterDragColWidth = _props.afterDragColWidth;
+        afterDragColWidth = _props.afterDragColWidth,
+        headerScroll = _props.headerScroll,
+        bordered = _props.bordered;
 
     var rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
@@ -418,7 +420,11 @@ var Table = function (_Component) {
       onFilterRowsChange: onFilterRowsChange,
       onFilterRowsDropChange: onFilterRowsDropChange,
       filterDelay: filterDelay,
-      afterDragColWidth: afterDragColWidth
+      afterDragColWidth: afterDragColWidth,
+      contentDomWidth: this.contentDomWidth,
+      scrollbarWidth: this.scrollbarWidth,
+      headerScroll: headerScroll,
+      bordered: bordered
     })) : null;
   };
 

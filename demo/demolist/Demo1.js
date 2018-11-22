@@ -28,7 +28,7 @@ const columns = [
       );
     }
   },
-  { id: "123", title: "性别", dataIndex: "b", key: "b", width: '10%' },
+  { id: "123", title: "性别", dataIndex: "b", key: "b", width: 1000 },
   { title: "年龄", dataIndex: "c", key: "c", width: 200 },
   {
     title: "操作",
@@ -77,6 +77,7 @@ class Demo1 extends Component {
           parentNodeId='parent'
           height={43}
           headerHeight={42}
+          dragborder={true}
           onRowClick={(record, index, indent) => {
             this.setState({
               selectedRowIndex: index

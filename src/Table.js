@@ -294,7 +294,7 @@ class Table extends Component {
 
   getHeader(columns, fixed) {
     const { filterDelay, onFilterRowsDropChange, onFilterRowsChange, filterable, showHeader, expandIconAsCell, clsPrefix, onDragStart, onDragEnter, onDragOver, onDrop, draggable,
-      onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey, minColumnWidth, headerHeight,afterDragColWidth } = this.props;
+      onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey, minColumnWidth, headerHeight,afterDragColWidth,headerScroll ,bordered} = this.props;
     const rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
       rows[0].unshift({
@@ -332,6 +332,10 @@ class Table extends Component {
         onFilterRowsDropChange={onFilterRowsDropChange}
         filterDelay={filterDelay}
         afterDragColWidth = {afterDragColWidth}
+        contentDomWidth={this.contentDomWidth}
+        scrollbarWidth = {this.scrollbarWidth}
+        headerScroll = {headerScroll}
+        bordered = {bordered}
       />
     ) : null;
   }
