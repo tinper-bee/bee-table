@@ -384,6 +384,19 @@ var TableHeader = function (_Component) {
             filterDropdown: rows[1][index]["filterdropdown"],
             filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
           });
+        //日期范围
+        case "daterange":
+          return _react2["default"].createElement(_FilterType2["default"], {
+            locale: locale,
+            rendertype: type,
+            className: "filter-date",
+            onClick: function onClick() {},
+            format: rows[1][index]["format"] || "YYYY-MM-DD",
+            onChange: _this.handlerFilterTextChange.bind(_this, dataIndex),
+            onSelectDropdown: _this.handlerFilterDropChange.bind(_this, dataIndex),
+            filterDropdown: rows[1][index]["filterdropdown"],
+            filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
+          });
         default:
           //不匹配类型默认文本输入
           return _react2["default"].createElement("div", null);

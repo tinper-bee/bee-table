@@ -14,6 +14,10 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
+var _zh_CN = require('rc-calendar/lib/locale/zh_CN');
+
+var _zh_CN2 = _interopRequireDefault(_zh_CN);
+
 var _beeFormControl = require('bee-form-control');
 
 var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
@@ -43,6 +47,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+
+var RangePicker = _beeDatepicker2["default"].RangePicker;
+
 
 var propTypes = {
     filterDropdown: _propTypes2["default"].string
@@ -146,6 +153,7 @@ var FilterType = function (_Component) {
             var _this$props = _this.props,
                 filterDropdown = _this$props.filterDropdown,
                 filterDropdownType = _this$props.filterDropdownType,
+                format = _this$props.format,
                 className = _this$props.className,
                 onChange = _this$props.onChange,
                 onSelectDropdown = _this$props.onSelectDropdown,
@@ -217,7 +225,31 @@ var FilterType = function (_Component) {
                         _react2["default"].createElement(_beeDatepicker2["default"], _extends({}, _this.props, {
                             value: _this.state.dateValue,
                             onChange: _this.changeDate,
-                            open: _this.state.open
+                            open: _this.state.open,
+                            format: format,
+                            locale: _zh_CN2["default"]
+                        })),
+                        filterDropdown == 'show' && _react2["default"].createElement(_FilterDropDown2["default"], {
+                            locale: locale,
+                            onSelectDropdown: onSelectDropdown,
+                            onClickClear: _this.clearDateValue,
+                            isShowCondition: filterDropdown,
+                            isShowClear: _this.state.dateValue
+                        })
+                    );
+                case 'daterange':
+                    return _react2["default"].createElement(
+                        'div',
+                        { className: clsPrefix + ' filter-wrap' },
+                        _react2["default"].createElement(RangePicker, _extends({}, _this.props, {
+                            value: _this.state.dateValue,
+                            onChange: _this.changeDate,
+                            open: _this.state.open,
+                            format: format,
+                            locale: _zh_CN2["default"],
+                            placeholder: '开始 ~ 结束',
+                            dateInputPlaceholder: ['开始', '结束'],
+                            showClear: true
                         })),
                         filterDropdown == 'show' && _react2["default"].createElement(_FilterDropDown2["default"], {
                             locale: locale,
