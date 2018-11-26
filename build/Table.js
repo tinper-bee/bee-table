@@ -278,9 +278,7 @@ var Table = function (_Component) {
 
     //如果用户传了scroll.x按用户传的为主
     var setWidthParam = this.props.scroll.x;
-    var computeObj = this.columnManager.getColumnWidth(this.contentWidth);
-    var lastShowIndex = computeObj.lastShowIndex;
-    this.computeWidth = computeObj.computeWidth;
+
     if (typeof setWidthParam == 'number') {
       var numSetWidthParam = parseInt(setWidthParam);
       this.contentWidth = numSetWidthParam;
@@ -290,10 +288,15 @@ var Table = function (_Component) {
       this.contentDomWidth = this.contentTable.getBoundingClientRect().width; //表格容器宽度
 
       this.contentWidth = this.contentDomWidth; //默认与容器宽度一样
-      this.domWidthDiff = this.contentDomWidth - this.computeWidth;
-      if (typeof setWidthParam == 'string' && setWidthParam.indexOf('%')) {
-        this.contentWidth = this.contentWidth * parseInt(setWidthParam) / 100;
-      }
+    }
+    var computeObj = this.columnManager.getColumnWidth(this.contentWidth);
+    var lastShowIndex = computeObj.lastShowIndex;
+    this.computeWidth = computeObj.computeWidth;
+
+    this.domWidthDiff = this.contentDomWidth - this.computeWidth;
+    if (typeof setWidthParam == 'string' && setWidthParam.indexOf('%')) {
+      this.contentWidth = this.contentWidth * parseInt(setWidthParam) / 100;
+      this.domWidthDiff = this.contentDomWidth - this.contentWidth;
     }
 
     if (this.computeWidth < this.contentWidth) {
@@ -380,7 +383,9 @@ var Table = function (_Component) {
         dragborderKey = _props.dragborderKey,
         minColumnWidth = _props.minColumnWidth,
         headerHeight = _props.headerHeight,
-        afterDragColWidth = _props.afterDragColWidth;
+        afterDragColWidth = _props.afterDragColWidth,
+        headerScroll = _props.headerScroll,
+        bordered = _props.bordered;
 
     var rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
@@ -415,7 +420,11 @@ var Table = function (_Component) {
       onFilterRowsChange: onFilterRowsChange,
       onFilterRowsDropChange: onFilterRowsDropChange,
       filterDelay: filterDelay,
-      afterDragColWidth: afterDragColWidth
+      afterDragColWidth: afterDragColWidth,
+      contentDomWidth: this.contentDomWidth,
+      scrollbarWidth: this.scrollbarWidth,
+      headerScroll: headerScroll,
+      bordered: bordered
     })) : null;
   };
 
@@ -682,7 +691,7 @@ var Table = function (_Component) {
       } else if (width) {
         width = parseInt(width);
       }
-      if (lastShowIndex == i) {
+      if (lastShowIndex == i && width) {
         width = width + contentWidthDiff;
       }
 
@@ -799,8 +808,8 @@ var Table = function (_Component) {
         }
       }
       // 自动出现滚动条
-      if (_this3.contentDomWidth > _this3.contentWidth) {
-        tableStyle.width = _this3.contentDomWidth;
+      if (!fixed && _this3.contentDomWidth < _this3.contentWidth) {
+        tableStyle.width = _this3.contentWidth;
       }
       var tableBody = hasBody ? getBodyWrapper(_react2["default"].createElement(
         'tbody',

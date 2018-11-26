@@ -208,7 +208,7 @@ class TableHeader extends Component {
     if (!this.border) return;
     //固定表头拖拽
 
-    const { dragborderKey, contentTable } = this.props;
+    const { dragborderKey, contentTable,headerScroll ,contentDomWidth,scrollbarWidth,bordered} = this.props;
     let x = event.pageX - this.drag.initPageLeftX + this.drag.initLeft - 0;
     let contentTableDom = document.getElementById(
       "u-table-drag-thead-" + this.theadKey
@@ -280,6 +280,26 @@ class TableHeader extends Component {
       colDomArr[this.drag.currIndex].style.width = newWidth + "px";
       //4、设置overflow属性
     }
+
+    //表头需要显示滚动条时，需兼容含有固定列
+    if(headerScroll){
+
+      let showScroll =  contentDomWidth - newTableWidth - scrollbarWidth ;
+      if(bordered){
+        showScroll = showScroll -1;
+      }
+      const fixedLeftTable = contentTable.querySelector('.u-table-fixed-left .u-table-header') ;
+      const fixedRightTable = contentTable.querySelector('.u-table-fixed-rigth .u-table-header');
+      if(showScroll < 0){
+        //找到固定列表格，设置表头的marginBottom值为scrollbarWidth;
+  
+        fixedLeftTable && (fixedLeftTable.style.marginBottom = scrollbarWidth + "px");
+        fixedRightTable && (fixedRightTable.style.marginBottom = scrollbarWidth + "px");
+      }else{
+        fixedLeftTable && (fixedLeftTable.style.marginBottom = '0px');
+        fixedRightTable && (fixedRightTable.style.marginBottom = '0px');
+      }
+    }
   };
 
   /**
@@ -324,6 +344,27 @@ class TableHeader extends Component {
               dataIndex
             )}
             filterDropdown={rows[1][index]["filterdropdown"]}
+            filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
+          />
+        );
+        //数值输入
+      case "number":
+        return (
+          <FilterType
+            locale={locale}
+            rendertype={type}
+            clsPrefix={clsPrefix}
+            className={`${clsPrefix} filter-text`}
+            onChange={debounce(
+              filterDelay || 300,
+              this.handlerFilterTextChange.bind(this, dataIndex)
+            )}
+            onSelectDropdown={this.handlerFilterDropChange.bind(
+              this,
+              dataIndex
+            )}
+            filterDropdown={rows[1][index]["filterdropdown"]}
+            filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
           />
         );
       //下拉框选择
@@ -359,6 +400,7 @@ class TableHeader extends Component {
             )}
             filterDropdown={rows[1][index]["filterdropdown"]}
             onFocus={rows[1][index]["filterdropdownfocus"]}
+            filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
           />
         );
       //日期
@@ -376,6 +418,7 @@ class TableHeader extends Component {
               dataIndex
             )}
             filterDropdown={rows[1][index]["filterdropdown"]}
+            filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
           />
         );
       default:
@@ -403,7 +446,8 @@ class TableHeader extends Component {
       onMouseOut,
       contentWidthDiff,
       fixed,
-      lastShowIndex
+      lastShowIndex,
+      contentTable
     } = this.props;
     let attr = dragborder ? { id: `u-table-drag-thead-${this.theadKey}` } : {};
 
@@ -457,6 +501,17 @@ class TableHeader extends Component {
                     onDragEnter:(e)=>{this.onDragEnter(e, da)},
                     onMouseMove:(e)=>{this.ableOnMouseMove(e, da)},
                     onMouseDown:(e)=>{
+                      //避免表头其他元素对其影响
+                      const filterDom = contentTable.querySelector('.filterable');
+                     //是否是过滤行元素，是的话不触发
+                      const isFilterDom =filterDom ?filterDom.contains(e.target):false;
+                      
+                      if(e.target.classList.contains('uf') ||isFilterDom){
+                        return;
+                      }
+                      if(e.target.classList.contains('uf')){
+                        return;
+                      }
                       let {dragAbleOrBord,dragAbleOrBordStart} = this.state;
                       this.setState({
                         dragAbleOrBordStart:dragAbleOrBord==="able"?"ableStart":""

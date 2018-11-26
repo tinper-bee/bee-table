@@ -203,9 +203,7 @@ class Table extends Component {
     
     //如果用户传了scroll.x按用户传的为主
     let setWidthParam = this.props.scroll.x
-    const computeObj = this.columnManager.getColumnWidth(this.contentWidth);
-    let lastShowIndex = computeObj.lastShowIndex;
-    this.computeWidth = computeObj.computeWidth;
+
     if (typeof (setWidthParam) == 'number') {
       let numSetWidthParam = parseInt(setWidthParam);
       this.contentWidth = numSetWidthParam;
@@ -215,10 +213,16 @@ class Table extends Component {
       this.contentDomWidth = this.contentTable.getBoundingClientRect().width//表格容器宽度
 
       this.contentWidth = this.contentDomWidth;//默认与容器宽度一样
-      this.domWidthDiff = this.contentDomWidth - this.computeWidth;
-      if (typeof (setWidthParam) == 'string' && setWidthParam.indexOf('%')) {
-        this.contentWidth = this.contentWidth * parseInt(setWidthParam) / 100
-      }
+      
+    }
+    const computeObj = this.columnManager.getColumnWidth(this.contentWidth);
+    let lastShowIndex = computeObj.lastShowIndex;
+    this.computeWidth = computeObj.computeWidth;
+
+    this.domWidthDiff = this.contentDomWidth - this.computeWidth;
+    if (typeof (setWidthParam) == 'string' && setWidthParam.indexOf('%')) {
+      this.contentWidth = this.contentWidth * parseInt(setWidthParam) / 100;
+      this.domWidthDiff = this.contentDomWidth - this.contentWidth;
     }
 
     if (this.computeWidth < this.contentWidth) {
@@ -290,7 +294,7 @@ class Table extends Component {
 
   getHeader(columns, fixed) {
     const { filterDelay, onFilterRowsDropChange, onFilterRowsChange, filterable, showHeader, expandIconAsCell, clsPrefix, onDragStart, onDragEnter, onDragOver, onDrop, draggable,
-      onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey, minColumnWidth, headerHeight,afterDragColWidth } = this.props;
+      onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey, minColumnWidth, headerHeight,afterDragColWidth,headerScroll ,bordered} = this.props;
     const rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
       rows[0].unshift({
@@ -328,6 +332,10 @@ class Table extends Component {
         onFilterRowsDropChange={onFilterRowsDropChange}
         filterDelay={filterDelay}
         afterDragColWidth = {afterDragColWidth}
+        contentDomWidth={this.contentDomWidth}
+        scrollbarWidth = {this.scrollbarWidth}
+        headerScroll = {headerScroll}
+        bordered = {bordered}
       />
     ) : null;
   }
@@ -374,14 +382,15 @@ class Table extends Component {
           key: column.key,
           children: "过滤渲染",
           width: column.width,
-          filtertype: column.filterType,
-          dataindex: column.dataIndex,
-          datasource: this.props.data,
-          format: column.format,
-          filterdropdown: column.filterDropdown,
+          filtertype: column.filterType,//下拉的类型 包括['text','dropdown','date','daterange','number']
+          dataindex: column.dataIndex,//field
+          datasource: this.props.data,//需要单独拿到数据处理
+          format: column.format,//设置日期的格式
+          filterdropdown: column.filterDropdown,//是否显示 show hide
           filterdropdownauto: column.filterDropdownAuto,//是否自定义数据
           filterdropdowndata: column.filterDropdownData,//自定义数据格式
-          filterdropdownfocus: column.filterDropdownFocus//焦点触发函数回调
+          filterdropdownfocus: column.filterDropdownFocus,//焦点触发函数回调
+          filterdropdowntype: column.filterDropdownType//下拉的类型分为 String,Number 默认是String
         });
       }
     });
@@ -588,7 +597,7 @@ class Table extends Component {
       } else if (width) {
         width = parseInt(width);
       }
-      if (lastShowIndex == i) {
+      if (lastShowIndex == i && width) {
         width = width + contentWidthDiff;
       }
 
@@ -703,8 +712,8 @@ class Table extends Component {
         }
       }
       // 自动出现滚动条
-      if (this.contentDomWidth > this.contentWidth) {
-        tableStyle.width = this.contentDomWidth;
+      if ( !fixed && this.contentDomWidth < this.contentWidth) {
+        tableStyle.width = this.contentWidth;
       }
       const tableBody = hasBody ? getBodyWrapper(
         <tbody className={`${clsPrefix}-tbody`}>

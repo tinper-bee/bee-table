@@ -5,6 +5,7 @@
 /*  Navlayout  */
 @import url(../node_modules/bee-message/build/Message.css);
 @import url(../node_modules/bee-dropdown/build/Dropdown.css);
+@import url(../node_modules/bee-input-number/build/InputNumber.css);
 .red {
   color: rgb(244,67,54) !important; }
 
@@ -8598,10 +8599,7 @@ ul {
     .u-table-thead .filter-wrap .filter-btns {
       min-width: 58px; }
   .u-table-thead th {
-    background: #f7f7f7;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis; }
+    background: #f7f7f7; }
     .u-table-thead th .bee-table-column-sorter {
       position: relative;
       margin-left: 4px;
@@ -8651,16 +8649,26 @@ ul {
     .u-table-thead-th-drag-gap {
       height: 100%;
       position: absolute;
-      right: 0px;
+      right: -10px;
       top: 0;
-      background: #ccc;
-      width: 2px;
+      width: 20px;
       box-sizing: border-box;
       z-index: 1; }
+      .u-table-thead-th-drag-gap .online {
+        height: 100%;
+        width: 1px;
+        background: transparent;
+        margin: 0 auto; }
+      .u-table-thead-th-drag-gap .online-hover {
+        background: #000000; }
     .u-table-thead-th .th-drag-gap {
       background: transparent; }
     .u-table-thead-th .th-drag-gap-hover {
       cursor: col-resize; }
+    .u-table-thead-th .th-drag-gap > div {
+      background: transparent; }
+    .u-table-thead-th .th-drag-gap-hover > div {
+      background: #000000; }
   .u-table-thead-th:last-child-drag-gap {
     border: none; }
   .u-table-filter-column-pop-cont {

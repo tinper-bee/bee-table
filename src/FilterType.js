@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import FormControl from 'bee-form-control';
 import Select from 'bee-select';
+import InputNumber from 'bee-input-number';
 import DatePicker from 'bee-datepicker';
 import FilterDropDown from './FilterDropDown';
 
@@ -16,7 +17,8 @@ class FilterType extends Component {
             text: "",
             selectValue: "",
             dateValue: "",
-            open: false
+            open: false,
+            number: 0
         }
     }
     //清除文本
@@ -27,7 +29,22 @@ class FilterType extends Component {
         let { onChange } = this.props;
         onChange && onChange("");
     }
-
+    //设置数值
+    changeNumber = (number) => {
+        let { onChange } = this.props;
+        onChange && onChange(number);
+        this.setState({
+            number
+        });
+    }
+    //清除数值
+    clearNumber = () => {
+        let { onChange } = this.props;
+        onChange && onChange("");
+        this.setState({
+            number: ""
+        });
+    }
     //设置文本
     changeText = (eve) => {
         this.setState({
@@ -84,8 +101,14 @@ class FilterType extends Component {
         }
     }
     //组件渲染
+    /**
+     * 根据不同的类型生成对应的组件类型包含一些参数的适应
+     *
+     * @param {*} rendertype 参数类型，包括['text','dropdown','date','daterange','number']
+     * @returns
+     */
     renderControl = (rendertype) => {
-        let { filterDropdown, className, onChange, onSelectDropdown, clsPrefix, locale } = this.props;
+        let { filterDropdown, filterDropdownType, className, onChange, onSelectDropdown, clsPrefix, locale } = this.props;
         switch (rendertype) {
             case 'text':
                 return <div className={`${clsPrefix} filter-wrap`}><FormControl
@@ -102,6 +125,24 @@ class FilterType extends Component {
                         onClickClear={this.clearText}
                         isShowClear={this.state.text}
                         isShowCondition={filterDropdown}
+                        filterDropdownType={filterDropdownType}
+                    >
+                    </FilterDropDown>
+                </div>
+            case 'number':
+                return <div className={`${clsPrefix} filter-wrap`}>
+                    <InputNumber
+                        className={className}
+                        value={this.state.number}
+                        onChange={this.changeNumber}
+                    />
+                    <FilterDropDown
+                        locale={locale}
+                        onSelectDropdown={onSelectDropdown}
+                        onClickClear={this.clearNumber}
+                        isShowClear={this.state.number}
+                        isShowCondition={filterDropdown}
+                        filterDropdownType={filterDropdownType}
                     >
                     </FilterDropDown>
                 </div>
@@ -144,7 +185,7 @@ class FilterType extends Component {
                     </FilterDropDown>}
                 </div>
             default:
-                break;
+                return <div></div>;
         }
 
     }

@@ -1,6 +1,6 @@
 {
  "name": "bee-table",
- "version": "1.5.1",
+ "version": "1.5.8",
  "description": "Table ui component for react",
  "keywords": [
   "react",
@@ -52,6 +52,7 @@
   "bee-dropdown": "^1.0.1",
   "bee-form-control": "latest",
   "bee-icon": "^1.0.5",
+  "bee-input-number": "^1.1.14",
   "bee-loading": "^1.0.3",
   "bee-locale": "0.0.11",
   "bee-menus": "^1.0.7",

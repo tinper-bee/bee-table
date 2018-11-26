@@ -1,3 +1,43 @@
+<a name="1.5.8"></a>
+## [1.5.8](https://github.com/tinper-bee/bee-table/compare/v1.5.7...v1.5.8) (2018-11-22)
+
+
+
+<a name="1.5.7"></a>
+## [1.5.7](https://github.com/tinper-bee/bee-table/compare/v1.5.6...v1.5.7) (2018-11-21)
+
+
+
+<a name="1.5.6"></a>
+## [1.5.6](https://github.com/tinper-bee/bee-table/compare/v1.5.5...v1.5.6) (2018-11-21)
+
+
+
+<a name="1.5.5"></a>
+## [1.5.5](https://github.com/tinper-bee/bee-table/compare/v1.5.4...v1.5.5) (2018-11-20)
+
+
+
+<a name="1.5.4"></a>
+## [1.5.4](https://github.com/tinper-bee/bee-table/compare/v1.5.3...v1.5.4) (2018-11-19)
+
+
+
+<a name="1.5.3"></a>
+## [1.5.3](https://github.com/tinper-bee/bee-table/compare/v1.5.2...v1.5.3) (2018-11-19)
+
+
+
+<a name="1.5.2"></a>
+## [1.5.2](https://github.com/tinper-bee/bee-table/compare/v1.5.1...v1.5.2) (2018-11-19)
+
+
+
+<a name="1.5.1"></a>
+## [1.5.1](https://github.com/tinper-bee/bee-table/compare/v1.5.0...v1.5.1) (2018-11-19)
+
+
+
 <a name="1.5.0"></a>
 # [1.5.0](https://github.com/tinper-bee/bee-table/compare/v1.4.39...v1.5.0) (2018-11-16)
 
@@ -279,12 +319,7 @@
 
 
 <a name="1.2.9"></a>
-## [1.2.9](https://github.com/tinper-bee/bee-table/compare/v1.2.8...v1.2.9) (2018-07-16)
-
-
-
-<a name="1.2.8"></a>
-## [1.2.8](https://github.com/tinper-bee/bee-table/compare/v1.2.7...v1.2.8) (2018-07-06)
+## [1.2.9](https://github.com/tinper-bee/bee-table/compare/v1.2.7...v1.2.9) (2018-07-16)
 
 
 
