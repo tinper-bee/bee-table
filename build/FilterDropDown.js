@@ -8,6 +8,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _beeDropdown = require('bee-dropdown');
 
 var _beeDropdown2 = _interopRequireDefault(_beeDropdown);
@@ -38,7 +42,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * 过滤行功能内的下拉条件
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
 var Item = _beeMenus2["default"].Item;
 
@@ -74,57 +80,124 @@ var FilterDropDown = function (_Component) {
             }
         };
 
+        _this.getMenu = function () {
+            var selectValue = _this.state.selectValue;
+            var filterDropdownType = _this.props.filterDropdownType;
+
+            var locale = (0, _tool.getComponentLocale)(_this.props, _this.context, 'Table', function () {
+                return _i18n2["default"];
+            });
+            switch (filterDropdownType) {
+                case 'string':
+                    return _react2["default"].createElement(
+                        _beeMenus2["default"],
+                        {
+                            onSelect: _this.onSelectDropdown,
+                            selectedKeys: selectValue
+                        },
+                        _react2["default"].createElement(
+                            Item,
+                            { key: '2' },
+                            locale['include']
+                        ),
+                        _react2["default"].createElement(
+                            Item,
+                            { key: '6' },
+                            locale['exclusive']
+                        ),
+                        _react2["default"].createElement(
+                            Item,
+                            { key: '1' },
+                            locale['equal']
+                        ),
+                        _react2["default"].createElement(
+                            Item,
+                            { key: '5' },
+                            locale['unequal']
+                        ),
+                        _react2["default"].createElement(
+                            Item,
+                            { key: '7' },
+                            locale['begin']
+                        ),
+                        _react2["default"].createElement(
+                            Item,
+                            { key: '3' },
+                            locale['end']
+                        )
+                    );
+                case 'number':
+                    return _react2["default"].createElement(
+                        _beeMenus2["default"],
+                        {
+                            onSelect: _this.onSelectDropdown,
+                            selectedKeys: selectValue
+                        },
+                        _react2["default"].createElement(
+                            Item,
+                            { key: '1' },
+                            locale['greater_than']
+                        ),
+                        _react2["default"].createElement(
+                            Item,
+                            { key: '2' },
+                            locale['great_than_equal_to']
+                        ),
+                        _react2["default"].createElement(
+                            Item,
+                            { key: '3' },
+                            locale['less_than']
+                        ),
+                        _react2["default"].createElement(
+                            Item,
+                            { key: '4' },
+                            locale['less_than_equal_to']
+                        ),
+                        _react2["default"].createElement(
+                            Item,
+                            { key: '5' },
+                            locale['be_equal_to']
+                        ),
+                        _react2["default"].createElement(
+                            Item,
+                            { key: '6' },
+                            locale['not_equal_to']
+                        )
+                    );
+                default:
+                    return _react2["default"].createElement('div', null);
+            }
+        };
+
         _this.state = {
-            selectValue: []
+            selectValue: [] //选择的条件的值
         };
         return _this;
     }
+    /**
+     * 点击下拉菜单
+     *
+     * @param {*} s 选中的selectRecord
+     */
+
+
+    /**
+     * 清除事件
+     *
+     */
+
+
+    /**
+     * 根据props来获得指定的Menu,分为String和Number
+     *
+     * @returns JSX Menu
+     */
+
 
     FilterDropDown.prototype.render = function render() {
         var isShowCondition = this.props.isShowCondition;
 
 
-        var locale = (0, _tool.getComponentLocale)(this.props, this.context, 'Table', function () {
-            return _i18n2["default"];
-        });
-
-        var dropmenu = _react2["default"].createElement(
-            _beeMenus2["default"],
-            {
-                onSelect: this.onSelectDropdown,
-                selectedKeys: this.state.selectValue
-            },
-            _react2["default"].createElement(
-                Item,
-                { key: '2' },
-                locale['include']
-            ),
-            _react2["default"].createElement(
-                Item,
-                { key: '6' },
-                locale['exclusive']
-            ),
-            _react2["default"].createElement(
-                Item,
-                { key: '1' },
-                locale['equal']
-            ),
-            _react2["default"].createElement(
-                Item,
-                { key: '5' },
-                locale['unequal']
-            ),
-            _react2["default"].createElement(
-                Item,
-                { key: '7' },
-                locale['begin']
-            ),
-            _react2["default"].createElement(
-                Item,
-                { key: '3' },
-                locale['end']
-            )
-        );
         return _react2["default"].createElement(
             'div',
             { className: 'filter-btns' },
@@ -132,25 +205,42 @@ var FilterDropDown = function (_Component) {
                 _beeDropdown2["default"],
                 {
                     trigger: ['click'],
-                    overlay: dropmenu,
+                    overlay: this.getMenu(),
                     animation: 'slide-up'
                 },
                 _react2["default"].createElement(
                     _beeButton2["default"],
-                    { shape: 'border', style: { marginLeft: "3px", minWidth: "0px", width: "24px", padding: 0 } },
-                    _react2["default"].createElement(_beeIcon2["default"], { style: { padding: 0 }, type: 'uf-filter' })
+                    {
+                        shape: 'border',
+                        style: { marginLeft: "3px", minWidth: "0px", width: "24px", padding: 0 }
+                    },
+                    _react2["default"].createElement(_beeIcon2["default"], { style: { padding: 0, color: '#585858' }, type: 'uf-filter' })
                 )
             ),
             _react2["default"].createElement(
                 _beeButton2["default"],
-                { onClick: this.onClickClear, shape: 'border', style: { marginLeft: "1px", minWidth: "0px", width: "24px", padding: 0, "visibility": this.props.isShowClear || this.state.selectValue.length > 0 ? "visible" : "hidden" } },
-                _react2["default"].createElement(_beeIcon2["default"], { style: { padding: 0, "visibility": this.props.isShowClear || this.state.selectValue.length > 0 ? "visible" : "hidden" }, type: 'uf-filterno' })
+                {
+                    onClick: this.onClickClear,
+                    shape: 'border',
+                    style: { marginLeft: "1px", minWidth: "0px", width: "24px", padding: 0, "visibility": this.props.isShowClear || this.state.selectValue.length > 0 ? "visible" : "hidden" }
+                },
+                _react2["default"].createElement(_beeIcon2["default"], { style: { padding: 0, color: '#585858', "visibility": this.props.isShowClear || this.state.selectValue.length > 0 ? "visible" : "hidden" }, type: 'uf-filterno' })
             )
         );
     };
 
     return FilterDropDown;
 }(_react.Component);
+
+FilterDropDown.propTypes = {
+    isShowCondition: _propTypes2["default"].string,
+    filterDropdownType: _propTypes2["default"].oneOf(['string', 'number'])
+};
+
+FilterDropDown.defaultProps = {
+    isShowCondition: 'show',
+    filterDropdownType: 'string'
+};
 
 exports["default"] = FilterDropDown;
 module.exports = exports['default'];
