@@ -343,6 +343,26 @@ class TableHeader extends Component {
             filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
           />
         );
+        //数值输入
+      case "number":
+        return (
+          <FilterType
+            locale={locale}
+            rendertype={type}
+            clsPrefix={clsPrefix}
+            className={`${clsPrefix} filter-text`}
+            onChange={debounce(
+              filterDelay || 300,
+              this.handlerFilterTextChange.bind(this, dataIndex)
+            )}
+            onSelectDropdown={this.handlerFilterDropChange.bind(
+              this,
+              dataIndex
+            )}
+            filterDropdown={rows[1][index]["filterdropdown"]}
+            filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
+          />
+        );
       //下拉框选择
       case "dropdown":
         let selectDataSource = [];

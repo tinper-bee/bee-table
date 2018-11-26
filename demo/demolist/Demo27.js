@@ -160,10 +160,10 @@ class Demo27 extends Component {
       },
       {
         title: "区间",
-        width: 150,
+        width: 200,
         dataIndex: "mark",
         key: "mark",
-        filterType: "text",//输入框类型
+        filterType: "number",//输入框类型
         filterDropdownType: "number"//数值类条件
       },
       {

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import FormControl from 'bee-form-control';
 import Select from 'bee-select';
+import InputNumber from 'bee-input-number';
 import DatePicker from 'bee-datepicker';
 import FilterDropDown from './FilterDropDown';
 
@@ -16,7 +17,8 @@ class FilterType extends Component {
             text: "",
             selectValue: "",
             dateValue: "",
-            open: false
+            open: false,
+            number: 0
         }
     }
     //清除文本
@@ -27,7 +29,22 @@ class FilterType extends Component {
         let { onChange } = this.props;
         onChange && onChange("");
     }
-
+    //设置数值
+    changeNumber = (number) => {
+        let { onChange } = this.props;
+        onChange && onChange(number);
+        this.setState({
+            number
+        });
+    }
+    //清除数值
+    clearNumber = () => {
+        let { onChange } = this.props;
+        onChange && onChange("");
+        this.setState({
+            number: ""
+        });
+    }
     //设置文本
     changeText = (eve) => {
         this.setState({
@@ -107,6 +124,23 @@ class FilterType extends Component {
                         onSelectDropdown={onSelectDropdown}
                         onClickClear={this.clearText}
                         isShowClear={this.state.text}
+                        isShowCondition={filterDropdown}
+                        filterDropdownType={filterDropdownType}
+                    >
+                    </FilterDropDown>
+                </div>
+            case 'number':
+                return <div className={`${clsPrefix} filter-wrap`}>
+                    <InputNumber
+                        className={className}
+                        value={this.state.number}
+                        onChange={this.changeNumber}
+                    />
+                    <FilterDropDown
+                        locale={locale}
+                        onSelectDropdown={onSelectDropdown}
+                        onClickClear={this.clearNumber}
+                        isShowClear={this.state.number}
                         isShowCondition={filterDropdown}
                         filterDropdownType={filterDropdownType}
                     >
