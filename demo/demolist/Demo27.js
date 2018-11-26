@@ -149,7 +149,23 @@ class Demo27 extends Component {
           </Dropdown>
         }
       },
-      { title: "姓名", width: 180, dataIndex: "name", key: "name", filterType: "text", filterDropdown: "show" },
+      {
+        title: "姓名",
+        width: 180,
+        dataIndex: "name",
+        key: "name",
+        filterType: "text",//输入框类型
+        filterDropdown: "show",//显示条件
+        filterDropdownType: "string"//字符条件
+      },
+      {
+        title: "区间",
+        width: 150,
+        dataIndex: "mark",
+        key: "mark",
+        filterType: "text",//输入框类型
+        filterDropdownType: "number"//数值类条件
+      },
       {
         title: "年龄",
         width: 180,
@@ -157,7 +173,7 @@ class Demo27 extends Component {
         dataIndex: "age",
         key: "age",
         filterType: "dropdown",
-        filterDropdown: "hide",
+        filterDropdown: "hide",//不显示条件
         filterDropdownAuto: "manual",//切换手动传入模式
         filterDropdownData: this.state.dropdownvalue,
         filterDropdownFocus: () => {

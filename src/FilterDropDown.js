@@ -52,7 +52,7 @@ class FilterDropDown extends Component {
     }
 
     /**
-     * 根据props来获得指定的Menu
+     * 根据props来获得指定的Menu,分为String和Number
      *
      * @returns JSX Menu
      */
@@ -86,7 +86,7 @@ class FilterDropDown extends Component {
                     <Item key="6">{locale['not_equal_to']}</Item>
                 </Menu>
             default:
-                return null;
+                return <div></div>;
         }
     }
     render() {
@@ -124,7 +124,7 @@ FilterDropDown.propTypes = {
 
 FilterDropDown.defaultProps = {
     isShowCondition: 'show',
-    filterDropdownType: 'number'
+    filterDropdownType: 'string'
 }
 
 export default FilterDropDown;

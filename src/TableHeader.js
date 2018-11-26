@@ -340,6 +340,7 @@ class TableHeader extends Component {
               dataIndex
             )}
             filterDropdown={rows[1][index]["filterdropdown"]}
+            filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
           />
         );
       //下拉框选择
@@ -375,6 +376,7 @@ class TableHeader extends Component {
             )}
             filterDropdown={rows[1][index]["filterdropdown"]}
             onFocus={rows[1][index]["filterdropdownfocus"]}
+            filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
           />
         );
       //日期
@@ -392,6 +394,7 @@ class TableHeader extends Component {
               dataIndex
             )}
             filterDropdown={rows[1][index]["filterdropdown"]}
+            filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
           />
         );
       default:

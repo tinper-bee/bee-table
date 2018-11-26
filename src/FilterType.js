@@ -84,8 +84,14 @@ class FilterType extends Component {
         }
     }
     //组件渲染
+    /**
+     * 根据不同的类型生成对应的组件类型包含一些参数的适应
+     *
+     * @param {*} rendertype 参数类型，包括['text','dropdown','date','daterange','number']
+     * @returns
+     */
     renderControl = (rendertype) => {
-        let { filterDropdown, className, onChange, onSelectDropdown, clsPrefix, locale } = this.props;
+        let { filterDropdown, filterDropdownType, className, onChange, onSelectDropdown, clsPrefix, locale } = this.props;
         switch (rendertype) {
             case 'text':
                 return <div className={`${clsPrefix} filter-wrap`}><FormControl
@@ -102,6 +108,7 @@ class FilterType extends Component {
                         onClickClear={this.clearText}
                         isShowClear={this.state.text}
                         isShowCondition={filterDropdown}
+                        filterDropdownType={filterDropdownType}
                     >
                     </FilterDropDown>
                 </div>
@@ -144,7 +151,7 @@ class FilterType extends Component {
                     </FilterDropDown>}
                 </div>
             default:
-                break;
+                return <div></div>;
         }
 
     }
