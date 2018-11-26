@@ -86,7 +86,9 @@ var TableHeader = function (_Component) {
       if (_this.border || data.fixed) return;
       var clsPrefix = _this.props.clsPrefix;
 
-      event.target.className = clsPrefix + "-thead-th-drag-gap th-drag-gap-hover";
+      if (event.target.id != 'th-online') {
+        event.target.className = clsPrefix + "-thead-th-drag-gap th-drag-gap-hover";
+      }
     };
 
     _this.ableOnMouseMove = function (event, data) {
@@ -118,7 +120,9 @@ var TableHeader = function (_Component) {
       if (_this.border) return;
       var clsPrefix = _this.props.clsPrefix;
 
-      event.target.className = clsPrefix + "-thead-th-drag-gap th-drag-gap";
+      if (event.target.id != 'th-online') {
+        event.target.className = clsPrefix + "-thead-th-drag-gap th-drag-gap";
+      }
     };
 
     _this.onMouseDown = function (event, data) {
@@ -322,7 +326,20 @@ var TableHeader = function (_Component) {
             onChange: (0, _throttleDebounce.debounce)(filterDelay || 300, _this.handlerFilterTextChange.bind(_this, dataIndex))
             // onChange={this.handlerFilterTextChange.bind(this, dataIndex)}
             , onSelectDropdown: _this.handlerFilterDropChange.bind(_this, dataIndex),
-            filterDropdown: rows[1][index]["filterdropdown"]
+            filterDropdown: rows[1][index]["filterdropdown"],
+            filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
+          });
+        //数值输入
+        case "number":
+          return _react2["default"].createElement(_FilterType2["default"], {
+            locale: locale,
+            rendertype: type,
+            clsPrefix: clsPrefix,
+            className: clsPrefix + " filter-text",
+            onChange: (0, _throttleDebounce.debounce)(filterDelay || 300, _this.handlerFilterTextChange.bind(_this, dataIndex)),
+            onSelectDropdown: _this.handlerFilterDropChange.bind(_this, dataIndex),
+            filterDropdown: rows[1][index]["filterdropdown"],
+            filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
           });
         //下拉框选择
         case "dropdown":
@@ -351,7 +368,8 @@ var TableHeader = function (_Component) {
             onChange: _this.handlerFilterTextChange.bind(_this, dataIndex),
             onSelectDropdown: _this.handlerFilterDropChange.bind(_this, dataIndex),
             filterDropdown: rows[1][index]["filterdropdown"],
-            onFocus: rows[1][index]["filterdropdownfocus"]
+            onFocus: rows[1][index]["filterdropdownfocus"],
+            filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
           });
         //日期
         case "date":
@@ -363,7 +381,8 @@ var TableHeader = function (_Component) {
             format: rows[1][index]["format"] || "YYYY-MM-DD",
             onChange: _this.handlerFilterTextChange.bind(_this, dataIndex),
             onSelectDropdown: _this.handlerFilterDropChange.bind(_this, dataIndex),
-            filterDropdown: rows[1][index]["filterdropdown"]
+            filterDropdown: rows[1][index]["filterdropdown"],
+            filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
           });
         default:
           //不匹配类型默认文本输入
@@ -564,6 +583,7 @@ var TableHeader = function (_Component) {
               thClassName += "" + fixedStyle;
               if (!da.fixed) {
                 thLineObj = {
+                  //----------------
                   onMouseMove: function onMouseMove(e) {
                     e.stopPropagation();_this2.onMouseMove(e, da);
                   },
@@ -579,16 +599,20 @@ var TableHeader = function (_Component) {
                   onMouseOver: function onMouseOver(e) {
                     _this2.onMouseOver(e, da);
                   },
-                  className: clsPrefix + "-thead-th-drag-gap "
+                  className: clsPrefix + "-thead-th-drag-gap th-drag-gap"
                 };
               }
               return _react2["default"].createElement(
                 "th",
                 _extends({ key: Math.random() }, thAbleObj, thBorObj, { className: thClassName }),
                 da.children,
-                da.fixed ? "" : _react2["default"].createElement("div", _extends({ ref: function ref(el) {
-                    return _this2.gap = el;
-                  } }, thLineObj))
+                da.fixed ? "" : _react2["default"].createElement(
+                  "div",
+                  _extends({ ref: function ref(el) {
+                      return _this2.gap = el;
+                    } }, thLineObj),
+                  _react2["default"].createElement("div", { id: "th-online", className: "online" })
+                )
               );
             } else {
               thDefaultObj = _extends({}, da, {

@@ -22,6 +22,10 @@ var _beeSelect = require('bee-select');
 
 var _beeSelect2 = _interopRequireDefault(_beeSelect);
 
+var _beeInputNumber = require('bee-input-number');
+
+var _beeInputNumber2 = _interopRequireDefault(_beeInputNumber);
+
 var _beeDatepicker = require('bee-datepicker');
 
 var _beeDatepicker2 = _interopRequireDefault(_beeDatepicker);
@@ -59,6 +63,24 @@ var FilterType = function (_Component) {
             var onChange = _this.props.onChange;
 
             onChange && onChange("");
+        };
+
+        _this.changeNumber = function (number) {
+            var onChange = _this.props.onChange;
+
+            onChange && onChange(number);
+            _this.setState({
+                number: number
+            });
+        };
+
+        _this.clearNumber = function () {
+            var onChange = _this.props.onChange;
+
+            onChange && onChange("");
+            _this.setState({
+                number: ""
+            });
         };
 
         _this.changeText = function (eve) {
@@ -123,6 +145,7 @@ var FilterType = function (_Component) {
         _this.renderControl = function (rendertype) {
             var _this$props = _this.props,
                 filterDropdown = _this$props.filterDropdown,
+                filterDropdownType = _this$props.filterDropdownType,
                 className = _this$props.className,
                 onChange = _this$props.onChange,
                 onSelectDropdown = _this$props.onSelectDropdown,
@@ -149,7 +172,26 @@ var FilterType = function (_Component) {
                             onSelectDropdown: onSelectDropdown,
                             onClickClear: _this.clearText,
                             isShowClear: _this.state.text,
-                            isShowCondition: filterDropdown
+                            isShowCondition: filterDropdown,
+                            filterDropdownType: filterDropdownType
+                        })
+                    );
+                case 'number':
+                    return _react2["default"].createElement(
+                        'div',
+                        { className: clsPrefix + ' filter-wrap' },
+                        _react2["default"].createElement(_beeInputNumber2["default"], {
+                            className: className,
+                            value: _this.state.number,
+                            onChange: _this.changeNumber
+                        }),
+                        _react2["default"].createElement(_FilterDropDown2["default"], {
+                            locale: locale,
+                            onSelectDropdown: onSelectDropdown,
+                            onClickClear: _this.clearNumber,
+                            isShowClear: _this.state.number,
+                            isShowCondition: filterDropdown,
+                            filterDropdownType: filterDropdownType
                         })
                     );
                 case 'dropdown':
@@ -198,7 +240,7 @@ var FilterType = function (_Component) {
                         })
                     );
                 default:
-                    break;
+                    return _react2["default"].createElement('div', null);
             }
         };
 
@@ -206,12 +248,16 @@ var FilterType = function (_Component) {
             text: "",
             selectValue: "",
             dateValue: "",
-            open: false
+            open: false,
+            number: 0
         };
         return _this;
     }
     //清除文本
 
+    //设置数值
+
+    //清除数值
 
     //设置文本
 
@@ -228,6 +274,12 @@ var FilterType = function (_Component) {
     //设置日期值
 
     //组件渲染
+    /**
+     * 根据不同的类型生成对应的组件类型包含一些参数的适应
+     *
+     * @param {*} rendertype 参数类型，包括['text','dropdown','date','daterange','number']
+     * @returns
+     */
 
 
     FilterType.prototype.render = function render() {
