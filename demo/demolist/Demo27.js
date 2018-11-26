@@ -182,7 +182,20 @@ class Demo27 extends Component {
           });
         }
       },
-      { title: "居住地址", width: 150, dataIndex: "address", key: "address", filterType: "dropdown", filterDropdown: "hide" },
+      {
+        title: "居住地址",
+        width: 350,
+        dataIndex: "address",
+        key: "address",
+        filterType: "daterange",
+        filterDropdown: "show"
+      },
+      {
+        title: "操作",
+        width: 100,
+        key: "other",
+        dataIndex: "other"
+      }
     ];
     return <ComplexTable
       onFilterRowsDropChange={this.handlerFilterRowsDropChange}//下拉条件的回调(key,val)=>()

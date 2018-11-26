@@ -417,6 +417,24 @@ class TableHeader extends Component {
             filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
           />
         );
+      //日期范围
+      case "daterange":
+        return (
+          <FilterType
+            locale={locale}
+            rendertype={type}
+            className={`filter-date`}
+            onClick={() => {}}
+            format={rows[1][index]["format"] || "YYYY-MM-DD"}
+            onChange={this.handlerFilterTextChange.bind(this, dataIndex)}
+            onSelectDropdown={this.handlerFilterDropChange.bind(
+              this,
+              dataIndex
+            )}
+            filterDropdown={rows[1][index]["filterdropdown"]}
+            filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
+          />
+        );
       default:
         //不匹配类型默认文本输入
         return <div />;

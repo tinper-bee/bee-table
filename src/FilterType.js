@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import zhCN from "rc-calendar/lib/locale/zh_CN";
 import FormControl from 'bee-form-control';
 import Select from 'bee-select';
 import InputNumber from 'bee-input-number';
 import DatePicker from 'bee-datepicker';
 import FilterDropDown from './FilterDropDown';
+
+const { RangePicker } = DatePicker;
 
 const propTypes = {
     filterDropdown: PropTypes.string
@@ -108,17 +111,18 @@ class FilterType extends Component {
      * @returns
      */
     renderControl = (rendertype) => {
-        let { filterDropdown, filterDropdownType, className, onChange, onSelectDropdown, clsPrefix, locale } = this.props;
+        let { filterDropdown, filterDropdownType, format, className, onChange, onSelectDropdown, clsPrefix, locale } = this.props;
         switch (rendertype) {
             case 'text':
-                return <div className={`${clsPrefix} filter-wrap`}><FormControl
-                    ref={el => this.text = el}
-                    value={this.state.text}
-                    className={className}
-                    onChange={this.changeText}
-                    onKeyDown={this.changeTextCall}
-                    onBlur={this.changeTextCallBlur}
-                />
+                return <div className={`${clsPrefix} filter-wrap`}>
+                    <FormControl
+                        ref={el => this.text = el}
+                        value={this.state.text}
+                        className={className}
+                        onChange={this.changeText}
+                        onKeyDown={this.changeTextCall}
+                        onBlur={this.changeTextCallBlur}
+                    />
                     <FilterDropDown
                         locale={locale}
                         onSelectDropdown={onSelectDropdown}
@@ -147,38 +151,64 @@ class FilterType extends Component {
                     </FilterDropDown>
                 </div>
             case 'dropdown':
-                return <div className={`${clsPrefix} filter-wrap`}><Select
-                    {...this.props}
-                    value={this.state.selectValue}
-                    onChange={this.changeSelect}
-                /><FilterDropDown
-                    locale={locale}
-                    onSelectDropdown={onSelectDropdown}
-                    onClickClear={this.clearSelectValue}
-                    isShowCondition={filterDropdown}
-                    isShowClear={this.state.selectValue}
-                >
+                return <div className={`${clsPrefix} filter-wrap`}>
+                    <Select
+                        {...this.props}
+                        value={this.state.selectValue}
+                        onChange={this.changeSelect}
+                    /><FilterDropDown
+                        locale={locale}
+                        onSelectDropdown={onSelectDropdown}
+                        onClickClear={this.clearSelectValue}
+                        isShowCondition={filterDropdown}
+                        isShowClear={this.state.selectValue}
+                    >
                     </FilterDropDown></div>
             case 'date':
-                return <div className={`${clsPrefix} filter-wrap`}><DatePicker
-                    {...this.props}
-                    value={this.state.dateValue}
-                    onChange={this.changeDate}
-                    open={this.state.open}
-                />{filterDropdown == 'show' && <FilterDropDown
-                    locale={locale}
-                    onSelectDropdown={onSelectDropdown}
-                    onClickClear={this.clearDateValue}
-                    isShowCondition={filterDropdown}
-                    isShowClear={this.state.dateValue}
-                >
-                </FilterDropDown>}
+                return <div className={`${clsPrefix} filter-wrap`}>
+                    <DatePicker
+                        {...this.props}
+                        value={this.state.dateValue}
+                        onChange={this.changeDate}
+                        open={this.state.open}
+                        format={format}
+                        locale={zhCN}
+                    />{filterDropdown == 'show' && <FilterDropDown
+                        locale={locale}
+                        onSelectDropdown={onSelectDropdown}
+                        onClickClear={this.clearDateValue}
+                        isShowCondition={filterDropdown}
+                        isShowClear={this.state.dateValue}
+                    >
+                    </FilterDropDown>}
+                </div>
+            case 'daterange':
+                return <div className={`${clsPrefix} filter-wrap`}>
+                    <RangePicker
+                        {...this.props}
+                        value={this.state.dateValue}
+                        onChange={this.changeDate}
+                        open={this.state.open}
+                        format={format}
+                        locale={zhCN}
+                        placeholder={'开始 ~ 结束'}
+                        dateInputPlaceholder={['开始', '结束']}
+                        showClear={true}
+                    />{filterDropdown == 'show' && <FilterDropDown
+                        locale={locale}
+                        onSelectDropdown={onSelectDropdown}
+                        onClickClear={this.clearDateValue}
+                        isShowCondition={filterDropdown}
+                        isShowClear={this.state.dateValue}
+                    >
+                    </FilterDropDown>}
                 </div>
             case 'bool':
-                return <div className={`${clsPrefix} filter-wrap`}><Switch
-                    className={className}
-                    onChange={onChange}
-                />
+                return <div className={`${clsPrefix} filter-wrap`}>
+                    <Switch
+                        className={className}
+                        onChange={onChange}
+                    />
                     {filterDropdown == 'show' && <FilterDropDown locale={locale}
                         onSelectDropdown={onSelectDropdown}
                     >
