@@ -152,7 +152,7 @@ class Demo27 extends Component {
       { title: "姓名", width: 180, dataIndex: "name", key: "name", filterType: "text", filterDropdown: "show" },
       {
         title: "年龄",
-        width: 150,
+        width: 180,
         sorter: (a, b) => a.age - b.age,
         dataIndex: "age",
         key: "age",
