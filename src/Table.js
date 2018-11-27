@@ -341,15 +341,25 @@ class Table extends Component {
   }
 
   getHeaderRows(columns, currentRow = 0, rows) {
+    let { contentWidthDiff = 0, lastShowIndex = 0 } = this.state;
     let filterCol = [];
     rows = rows || [];
     rows[currentRow] = rows[currentRow] || [];
 
-    columns.forEach(column => {
+    columns.forEach((column,i) => {
       if (column.rowSpan && rows.length < column.rowSpan) {
         while (rows.length < column.rowSpan) {
           rows.push([]);
         }
+      }
+      let width = column.width;
+      if (typeof (width) == 'string' && width.indexOf('%') > -1 && this.contentWidth) {
+        width = parseInt(this.contentWidth * parseInt(width) / 100);
+      } else if (width) {
+        width = parseInt(width);
+      }
+      if (lastShowIndex == i && width) {
+        width = width + contentWidthDiff;
       }
       const cell = {
         key: column.key,
@@ -357,7 +367,7 @@ class Table extends Component {
         children: column.title,
         drgHover: column.drgHover,
         fixed: column.fixed,
-        width: column.width,
+        width: width,
         dataindex:column.dataIndex
       };
       if (column.onHeadCellClick) {

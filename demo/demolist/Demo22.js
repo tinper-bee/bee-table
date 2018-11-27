@@ -57,6 +57,7 @@ class Demo22 extends Component {
  
   render() {
     return <DragColumnTable columns={columns22} data={data22} bordered
+    
     draggable={true} 
     />;
   }

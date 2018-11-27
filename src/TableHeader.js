@@ -400,6 +400,7 @@ class TableHeader extends Component {
     }
   };
 
+
   render() {
     const {dragAbleOrBord,dragAbleOrBordStart} = this.state;
     const {
@@ -438,19 +439,8 @@ class TableHeader extends Component {
               if (!fixed && da.fixed) {
                 fixedStyle = `${clsPrefix}-row-fixed-columns-in-body`;
               }
-              if (
-                typeof da.width == "string" &&
-                da.width.indexOf("%") > -1 &&
-                this.props.contentWidth
-              ) {
-                da.width = parseInt(
-                  (this.props.contentWidth * parseInt(da.width)) / 100
-                );
-              } else if (da.width) {
-                da.width = parseInt(da.width);
-              }
+           
               if (lastShowIndex == i) {
-                da.width = parseInt(da.width) + contentWidthDiff;
                 canDotDrag = "th-can-not-drag";
               }
               if (filterable && index == rows.length - 1) {
