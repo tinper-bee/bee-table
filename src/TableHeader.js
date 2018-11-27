@@ -102,7 +102,9 @@ class TableHeader extends Component {
     //如果是固定列没有拖拽功能
     if (this.border || data.fixed) return;
     const { clsPrefix } = this.props;
-    event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap-hover`;
+    if(event.target.id != 'th-online'){
+      event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap-hover`;
+    }
   };
 
   ableOnMouseMove = (event, data) => {
@@ -130,7 +132,9 @@ class TableHeader extends Component {
   onMouseOut = (event, data) => {
     if (this.border) return;
     const { clsPrefix } = this.props;
-    event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap`;
+    if(event.target.id != 'th-online'){
+      event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap`; 
+    }
   };
   onMouseDown = (event, data) => {
     let {dragAbleOrBord,dragAbleOrBordStart} = this.state;
@@ -196,15 +200,15 @@ class TableHeader extends Component {
       rows[0] &&
       this.drag.currIndex
     ) {
-      this.props.afterDragColWidth(rows[0][this.drag.currIndex],this.drag.currIndex);
+      this.props.afterDragColWidth(rows[0],this.drag.currIndex);
     }
   };
 
   onThMouseMove = (event, data) => {
     if (!this.border) return;
     //固定表头拖拽
-
-    const { dragborderKey, contentTable,headerScroll ,contentDomWidth,scrollbarWidth,bordered} = this.props;
+  
+    const { dragborderKey, contentTable,headerScroll ,contentDomWidth,scrollbarWidth,bordered,rows} = this.props;
     let x = event.pageX - this.drag.initPageLeftX + this.drag.initLeft - 0;
     let contentTableDom = document.getElementById(
       "u-table-drag-thead-" + this.theadKey
@@ -260,8 +264,8 @@ class TableHeader extends Component {
     currentDom.style.width = newWidth + "px";
     // this.contentTableWidth = newTableWidth;
     contentTableDom.style.width = newTableWidth + "px";
-    data.width = newWidth;
-
+    // data.width = newWidth;
+    rows[0][this.drag.currIndex].width = newWidth;
     this.drag.x = x;
     let contentColDomArr = contentTableDom.querySelectorAll("colgroup col");
     contentColDomArr[this.drag.currIndex].style.width = newWidth + "px";
@@ -340,6 +344,27 @@ class TableHeader extends Component {
               dataIndex
             )}
             filterDropdown={rows[1][index]["filterdropdown"]}
+            filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
+          />
+        );
+        //数值输入
+      case "number":
+        return (
+          <FilterType
+            locale={locale}
+            rendertype={type}
+            clsPrefix={clsPrefix}
+            className={`${clsPrefix} filter-text`}
+            onChange={debounce(
+              filterDelay || 300,
+              this.handlerFilterTextChange.bind(this, dataIndex)
+            )}
+            onSelectDropdown={this.handlerFilterDropChange.bind(
+              this,
+              dataIndex
+            )}
+            filterDropdown={rows[1][index]["filterdropdown"]}
+            filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
           />
         );
       //下拉框选择
@@ -375,6 +400,7 @@ class TableHeader extends Component {
             )}
             filterDropdown={rows[1][index]["filterdropdown"]}
             onFocus={rows[1][index]["filterdropdownfocus"]}
+            filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
           />
         );
       //日期
@@ -392,6 +418,25 @@ class TableHeader extends Component {
               dataIndex
             )}
             filterDropdown={rows[1][index]["filterdropdown"]}
+            filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
+          />
+        );
+      //日期范围
+      case "daterange":
+        return (
+          <FilterType
+            locale={locale}
+            rendertype={type}
+            className={`filter-date`}
+            onClick={() => {}}
+            format={rows[1][index]["format"] || "YYYY-MM-DD"}
+            onChange={this.handlerFilterTextChange.bind(this, dataIndex)}
+            onSelectDropdown={this.handlerFilterDropChange.bind(
+              this,
+              dataIndex
+            )}
+            filterDropdown={rows[1][index]["filterdropdown"]}
+            filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
           />
         );
       default:
@@ -506,18 +551,19 @@ class TableHeader extends Component {
                 thClassName += `${fixedStyle}`;
                 if(!da.fixed){
                   thLineObj = {
+                    //----------------
                     onMouseMove:(e)=>{ e.stopPropagation();this.onMouseMove(e, da)},
                     onMouseOut:(e)=>{this.onMouseOut(e, da)},
                     onMouseDown:(e)=>{ e.stopPropagation();this.onMouseDown(e, da)},
                     onMouseUp:(e)=>{this.onMouseUp(e, da)},
                     onMouseOver:(e)=>{this.onMouseOver(e, da)},
-                    className:`${clsPrefix}-thead-th-drag-gap `,
+                    className:`${clsPrefix}-thead-th-drag-gap th-drag-gap`,
                   };
                 }
                 return (<th key={Math.random()} {...thAbleObj} {...thBorObj} className={thClassName}  >
                   {da.children}
                   {
-                    da.fixed ? "":<div ref={el => (this.gap = el)} {...thLineObj} />
+                    da.fixed ? "":<div ref={el => (this.gap = el)} {...thLineObj} ><div id='th-online' className='online' /></div>
                   }
                 </th>)
               }else{

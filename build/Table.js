@@ -433,16 +433,30 @@ var Table = function (_Component) {
 
     var currentRow = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
     var rows = arguments[2];
+    var _state = this.state,
+        _state$contentWidthDi = _state.contentWidthDiff,
+        contentWidthDiff = _state$contentWidthDi === undefined ? 0 : _state$contentWidthDi,
+        _state$lastShowIndex = _state.lastShowIndex,
+        lastShowIndex = _state$lastShowIndex === undefined ? 0 : _state$lastShowIndex;
 
     var filterCol = [];
     rows = rows || [];
     rows[currentRow] = rows[currentRow] || [];
 
-    columns.forEach(function (column) {
+    columns.forEach(function (column, i) {
       if (column.rowSpan && rows.length < column.rowSpan) {
         while (rows.length < column.rowSpan) {
           rows.push([]);
         }
+      }
+      var width = column.width;
+      if (typeof width == 'string' && width.indexOf('%') > -1 && _this2.contentWidth) {
+        width = parseInt(_this2.contentWidth * parseInt(width) / 100);
+      } else if (width) {
+        width = parseInt(width);
+      }
+      if (lastShowIndex == i && width) {
+        width = width + contentWidthDiff;
       }
       var cell = {
         key: column.key,
@@ -450,7 +464,7 @@ var Table = function (_Component) {
         children: column.title,
         drgHover: column.drgHover,
         fixed: column.fixed,
-        width: column.width,
+        width: width,
         dataindex: column.dataIndex
       };
       if (column.onHeadCellClick) {
@@ -475,14 +489,15 @@ var Table = function (_Component) {
           key: column.key,
           children: "过滤渲染",
           width: column.width,
-          filtertype: column.filterType,
-          dataindex: column.dataIndex,
-          datasource: _this2.props.data,
-          format: column.format,
-          filterdropdown: column.filterDropdown,
+          filtertype: column.filterType, //下拉的类型 包括['text','dropdown','date','daterange','number']
+          dataindex: column.dataIndex, //field
+          datasource: _this2.props.data, //需要单独拿到数据处理
+          format: column.format, //设置日期的格式
+          filterdropdown: column.filterDropdown, //是否显示 show hide
           filterdropdownauto: column.filterDropdownAuto, //是否自定义数据
           filterdropdowndata: column.filterDropdownData, //自定义数据格式
-          filterdropdownfocus: column.filterDropdownFocus //焦点触发函数回调
+          filterdropdownfocus: column.filterDropdownFocus, //焦点触发函数回调
+          filterdropdowntype: column.filterDropdownType //下拉的类型分为 String,Number 默认是String
         });
       }
     });
@@ -662,11 +677,11 @@ var Table = function (_Component) {
   Table.prototype.getColGroup = function getColGroup(columns, fixed) {
     var cols = [];
     var self = this;
-    var _state = this.state,
-        _state$contentWidthDi = _state.contentWidthDiff,
-        contentWidthDiff = _state$contentWidthDi === undefined ? 0 : _state$contentWidthDi,
-        _state$lastShowIndex = _state.lastShowIndex,
-        lastShowIndex = _state$lastShowIndex === undefined ? 0 : _state$lastShowIndex;
+    var _state2 = this.state,
+        _state2$contentWidthD = _state2.contentWidthDiff,
+        contentWidthDiff = _state2$contentWidthD === undefined ? 0 : _state2$contentWidthD,
+        _state2$lastShowIndex = _state2.lastShowIndex,
+        lastShowIndex = _state2$lastShowIndex === undefined ? 0 : _state2$lastShowIndex;
 
     if (this.props.expandIconAsCell && fixed !== 'right') {
       cols.push(_react2["default"].createElement('col', {

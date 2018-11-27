@@ -290,9 +290,9 @@ $table-move-in-color: $bg-color-base;
     }
     th{
       background: $table-head-background-color;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
+      // overflow: hidden;
+      // white-space: nowrap;
+      // text-overflow: ellipsis;
       .bee-table-column-sorter {
         position: relative;
         margin-left: 4px;
@@ -366,15 +366,25 @@ $table-move-in-color: $bg-color-base;
       &-drag-gap{
         height: 100%;
         position: absolute;
-        right: 0px;
+        right: -10px;
         top: 0;
         // background:transparent;
         // width: 1px;
-        background:#ccc;
-        width: 2px;
+        // background:#ccc;
+        width: 20px;
         
         box-sizing: border-box;
         z-index: 1;
+
+        .online{
+          height: 100%;
+          width: 1px;
+          background:transparent;
+          margin: 0 auto;
+        }
+        .online-hover{
+          background:#000000;
+        }
       }
       .th-drag-gap{
         background:transparent;
@@ -382,6 +392,12 @@ $table-move-in-color: $bg-color-base;
       .th-drag-gap-hover{
         // background: #ccc;
         cursor: col-resize;
+      }
+      .th-drag-gap>div{
+        background:transparent;
+      }
+      .th-drag-gap-hover>div{
+        background: #000000
       }
       // &.th-can-not-drag{
       //   .th-drag-gap-hover{

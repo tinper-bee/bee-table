@@ -392,14 +392,15 @@ class Table extends Component {
           key: column.key,
           children: "过滤渲染",
           width: column.width,
-          filtertype: column.filterType,
-          dataindex: column.dataIndex,
-          datasource: this.props.data,
-          format: column.format,
-          filterdropdown: column.filterDropdown,
+          filtertype: column.filterType,//下拉的类型 包括['text','dropdown','date','daterange','number']
+          dataindex: column.dataIndex,//field
+          datasource: this.props.data,//需要单独拿到数据处理
+          format: column.format,//设置日期的格式
+          filterdropdown: column.filterDropdown,//是否显示 show hide
           filterdropdownauto: column.filterDropdownAuto,//是否自定义数据
           filterdropdowndata: column.filterDropdownData,//自定义数据格式
-          filterdropdownfocus: column.filterDropdownFocus//焦点触发函数回调
+          filterdropdownfocus: column.filterDropdownFocus,//焦点触发函数回调
+          filterdropdowntype: column.filterDropdownType//下拉的类型分为 String,Number 默认是String
         });
       }
     });
