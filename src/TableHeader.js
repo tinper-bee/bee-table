@@ -561,19 +561,21 @@ class TableHeader extends Component {
                 thClassName += `${fixedStyle}`;
                 if(!da.fixed){
                   thLineObj = {
-                    //----------------
                     onMouseMove:(e)=>{ e.stopPropagation();this.onMouseMove(e, da)},
                     onMouseOut:(e)=>{this.onMouseOut(e, da)},
                     onMouseDown:(e)=>{ e.stopPropagation();this.onMouseDown(e, da)},
                     onMouseUp:(e)=>{this.onMouseUp(e, da)},
                     onMouseOver:(e)=>{this.onMouseOver(e, da)},
-                    className:`${clsPrefix}-thead-th-drag-gap th-drag-gap`,
+                    // className:`${clsPrefix}-thead-th-drag-gap th-drag-gap`,
                   };
+                  if(dragAbleOrBordStart !== 'ableStart'){
+                    thLineObj.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap`;
+                  }
                 }
-                return (<th key={Math.random()} {...thAbleObj} {...thBorObj} className={thClassName}  >
+                return (<th key={Math.random()+new Date().getTime()} {...thAbleObj} {...thBorObj} className={thClassName}  >
                   {da.children}
                   {
-                    da.fixed ? "":<div ref={el => (this.gap = el)} {...thLineObj} ><div id='th-online' className='online' /></div>
+                    da.fixed ? "":<div ref={el => (this.gap = el)}  {...thLineObj}  ><div id='th-online' className='online' /></div>
                   }
                 </th>)
               }else{
