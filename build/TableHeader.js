@@ -592,7 +592,6 @@ var TableHeader = function (_Component) {
               thClassName += "" + fixedStyle;
               if (!da.fixed) {
                 thLineObj = {
-                  //----------------
                   onMouseMove: function onMouseMove(e) {
                     e.stopPropagation();_this2.onMouseMove(e, da);
                   },
@@ -607,13 +606,16 @@ var TableHeader = function (_Component) {
                   },
                   onMouseOver: function onMouseOver(e) {
                     _this2.onMouseOver(e, da);
-                  },
-                  className: clsPrefix + "-thead-th-drag-gap th-drag-gap"
+                  }
+                  // className:`${clsPrefix}-thead-th-drag-gap th-drag-gap`,
                 };
+                if (dragAbleOrBordStart !== 'ableStart') {
+                  thLineObj.className = clsPrefix + "-thead-th-drag-gap th-drag-gap";
+                }
               }
               return _react2["default"].createElement(
                 "th",
-                _extends({ key: Math.random() }, thAbleObj, thBorObj, { className: thClassName }),
+                _extends({ key: Math.random() + new Date().getTime() }, thAbleObj, thBorObj, { className: thClassName }),
                 da.children,
                 da.fixed ? "" : _react2["default"].createElement(
                   "div",
