@@ -192,7 +192,7 @@ var TableHeader = function (_Component) {
       // columns[this.drag.currIndex].width = data.width;
       //宽度拖拽后，增加回调函数，外部可以记录宽度
       if (typeof _this.props.afterDragColWidth == "function" && rows && rows[0] && _this.drag.currIndex) {
-        _this.props.afterDragColWidth(rows[0][_this.drag.currIndex], _this.drag.currIndex);
+        _this.props.afterDragColWidth(rows[0], _this.drag.currIndex);
       }
     };
 
@@ -206,7 +206,8 @@ var TableHeader = function (_Component) {
           headerScroll = _this$props3.headerScroll,
           contentDomWidth = _this$props3.contentDomWidth,
           scrollbarWidth = _this$props3.scrollbarWidth,
-          bordered = _this$props3.bordered;
+          bordered = _this$props3.bordered,
+          rows = _this$props3.rows;
 
       var x = event.pageX - _this.drag.initPageLeftX + _this.drag.initLeft - 0;
       var contentTableDom = document.getElementById("u-table-drag-thead-" + _this.theadKey).parentNode;
@@ -254,8 +255,8 @@ var TableHeader = function (_Component) {
       currentDom.style.width = newWidth + "px";
       // this.contentTableWidth = newTableWidth;
       contentTableDom.style.width = newTableWidth + "px";
-      data.width = newWidth;
-
+      // data.width = newWidth;
+      rows[0][_this.drag.currIndex].width = newWidth;
       _this.drag.x = x;
       var contentColDomArr = contentTableDom.querySelectorAll("colgroup col");
       contentColDomArr[_this.drag.currIndex].style.width = newWidth + "px";
@@ -510,13 +511,8 @@ var TableHeader = function (_Component) {
             if (!fixed && da.fixed) {
               fixedStyle = clsPrefix + "-row-fixed-columns-in-body";
             }
-            if (typeof da.width == "string" && da.width.indexOf("%") > -1 && _this2.props.contentWidth) {
-              da.width = parseInt(_this2.props.contentWidth * parseInt(da.width) / 100);
-            } else if (da.width) {
-              da.width = parseInt(da.width);
-            }
+
             if (lastShowIndex == i) {
-              da.width = parseInt(da.width) + contentWidthDiff;
               canDotDrag = "th-can-not-drag";
             }
             if (filterable && index == rows.length - 1) {

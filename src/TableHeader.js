@@ -200,15 +200,15 @@ class TableHeader extends Component {
       rows[0] &&
       this.drag.currIndex
     ) {
-      this.props.afterDragColWidth(rows[0][this.drag.currIndex],this.drag.currIndex);
+      this.props.afterDragColWidth(rows[0],this.drag.currIndex);
     }
   };
 
   onThMouseMove = (event, data) => {
     if (!this.border) return;
     //固定表头拖拽
-
-    const { dragborderKey, contentTable,headerScroll ,contentDomWidth,scrollbarWidth,bordered} = this.props;
+  
+    const { dragborderKey, contentTable,headerScroll ,contentDomWidth,scrollbarWidth,bordered,rows} = this.props;
     let x = event.pageX - this.drag.initPageLeftX + this.drag.initLeft - 0;
     let contentTableDom = document.getElementById(
       "u-table-drag-thead-" + this.theadKey
@@ -264,8 +264,8 @@ class TableHeader extends Component {
     currentDom.style.width = newWidth + "px";
     // this.contentTableWidth = newTableWidth;
     contentTableDom.style.width = newTableWidth + "px";
-    data.width = newWidth;
-
+    // data.width = newWidth;
+    rows[0][this.drag.currIndex].width = newWidth;
     this.drag.x = x;
     let contentColDomArr = contentTableDom.querySelectorAll("colgroup col");
     contentColDomArr[this.drag.currIndex].style.width = newWidth + "px";
@@ -445,6 +445,7 @@ class TableHeader extends Component {
     }
   };
 
+
   render() {
     const {dragAbleOrBord,dragAbleOrBordStart} = this.state;
     const {
@@ -483,19 +484,8 @@ class TableHeader extends Component {
               if (!fixed && da.fixed) {
                 fixedStyle = `${clsPrefix}-row-fixed-columns-in-body`;
               }
-              if (
-                typeof da.width == "string" &&
-                da.width.indexOf("%") > -1 &&
-                this.props.contentWidth
-              ) {
-                da.width = parseInt(
-                  (this.props.contentWidth * parseInt(da.width)) / 100
-                );
-              } else if (da.width) {
-                da.width = parseInt(da.width);
-              }
+           
               if (lastShowIndex == i) {
-                da.width = parseInt(da.width) + contentWidthDiff;
                 canDotDrag = "th-can-not-drag";
               }
               if (filterable && index == rows.length - 1) {

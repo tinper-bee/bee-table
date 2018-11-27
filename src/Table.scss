@@ -296,7 +296,6 @@ $table-move-in-color: $bg-color-base;
       .bee-table-column-sorter {
         position: relative;
         margin-left: 4px;
-        width: 14px;
         height: 1em;
         vertical-align: middle;
         text-align: center;
@@ -306,7 +305,7 @@ $table-move-in-color: $bg-color-base;
         & > .bee-table-column-sorter-up, & > .bee-table-column-sorter-flat {
           line-height: 6px;
           display: block;
-          width: 14px;
+          width: 34px;
           cursor: pointer;
         }
        

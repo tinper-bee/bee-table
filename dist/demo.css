@@ -2421,6 +2421,9 @@ i.uf {
 /*
  * 选择时删除文本阴影，及设置默认选中颜色
  */
+::-moz-selection {
+  background: rgb(187,222,251);
+  text-shadow: none; }
 ::selection {
   background: rgb(187,222,251);
   text-shadow: none; }
@@ -6670,8 +6673,7 @@ input.u-button[type="submit"] {
   border-radius: 0 500px 500px 0; }
 
 .u-pagination {
-  font-size: 14px;
-  position: relative; }
+  font-size: 14px; }
   .u-pagination-list {
     float: left;
     margin: 5px; }
@@ -6809,15 +6811,6 @@ input.u-button[type="submit"] {
     margin: 5px; }
     .u-pagination-total span {
       padding: 0 5px; }
-  .u-pagination.u-pagination-disabled .u-pagination-disabled-mask {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 46px;
-    background: rgba(255, 255, 255, 0.6);
-    z-index: 2;
-    cursor: not-allowed; }
 
 .pagination-state {
   float: left;
@@ -8603,7 +8596,6 @@ ul {
     .u-table-thead th .bee-table-column-sorter {
       position: relative;
       margin-left: 4px;
-      width: 14px;
       height: 1em;
       vertical-align: middle;
       text-align: center;
@@ -8612,7 +8604,7 @@ ul {
       .u-table-thead th .bee-table-column-sorter > .bee-table-column-sorter-up, .u-table-thead th .bee-table-column-sorter > .bee-table-column-sorter-flat {
         line-height: 6px;
         display: block;
-        width: 14px;
+        width: 34px;
         cursor: pointer; }
     .u-table-thead th .bee-table-column-sorter-down.on .uf-triangle-down,
     .u-table-thead th .bee-table-column-sorter-down.on .uf-triangle-up,

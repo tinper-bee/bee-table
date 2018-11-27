@@ -433,16 +433,30 @@ var Table = function (_Component) {
 
     var currentRow = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
     var rows = arguments[2];
+    var _state = this.state,
+        _state$contentWidthDi = _state.contentWidthDiff,
+        contentWidthDiff = _state$contentWidthDi === undefined ? 0 : _state$contentWidthDi,
+        _state$lastShowIndex = _state.lastShowIndex,
+        lastShowIndex = _state$lastShowIndex === undefined ? 0 : _state$lastShowIndex;
 
     var filterCol = [];
     rows = rows || [];
     rows[currentRow] = rows[currentRow] || [];
 
-    columns.forEach(function (column) {
+    columns.forEach(function (column, i) {
       if (column.rowSpan && rows.length < column.rowSpan) {
         while (rows.length < column.rowSpan) {
           rows.push([]);
         }
+      }
+      var width = column.width;
+      if (typeof width == 'string' && width.indexOf('%') > -1 && _this2.contentWidth) {
+        width = parseInt(_this2.contentWidth * parseInt(width) / 100);
+      } else if (width) {
+        width = parseInt(width);
+      }
+      if (lastShowIndex == i && width) {
+        width = width + contentWidthDiff;
       }
       var cell = {
         key: column.key,
@@ -450,7 +464,7 @@ var Table = function (_Component) {
         children: column.title,
         drgHover: column.drgHover,
         fixed: column.fixed,
-        width: column.width,
+        width: width,
         dataindex: column.dataIndex
       };
       if (column.onHeadCellClick) {
@@ -663,11 +677,11 @@ var Table = function (_Component) {
   Table.prototype.getColGroup = function getColGroup(columns, fixed) {
     var cols = [];
     var self = this;
-    var _state = this.state,
-        _state$contentWidthDi = _state.contentWidthDiff,
-        contentWidthDiff = _state$contentWidthDi === undefined ? 0 : _state$contentWidthDi,
-        _state$lastShowIndex = _state.lastShowIndex,
-        lastShowIndex = _state$lastShowIndex === undefined ? 0 : _state$lastShowIndex;
+    var _state2 = this.state,
+        _state2$contentWidthD = _state2.contentWidthDiff,
+        contentWidthDiff = _state2$contentWidthD === undefined ? 0 : _state2$contentWidthD,
+        _state2$lastShowIndex = _state2.lastShowIndex,
+        lastShowIndex = _state2$lastShowIndex === undefined ? 0 : _state2$lastShowIndex;
 
     if (this.props.expandIconAsCell && fixed !== 'right') {
       cols.push(_react2["default"].createElement('col', {
