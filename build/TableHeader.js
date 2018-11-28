@@ -281,12 +281,14 @@ var TableHeader = function (_Component) {
         }
         var fixedLeftTable = contentTable.querySelector('.u-table-fixed-left .u-table-header');
         var fixedRightTable = contentTable.querySelector('.u-table-fixed-rigth .u-table-header');
+        var contentTableHeader = contentTable.querySelector('.u-table-scroll .u-table-header');
         if (showScroll < 0) {
           //找到固定列表格，设置表头的marginBottom值为scrollbarWidth;
-
+          contentTableHeader.style.overflowX = 'scroll';
           fixedLeftTable && (fixedLeftTable.style.marginBottom = scrollbarWidth + "px");
           fixedRightTable && (fixedRightTable.style.marginBottom = scrollbarWidth + "px");
         } else {
+          contentTableHeader.style.overflowX = 'hidden';
           fixedLeftTable && (fixedLeftTable.style.marginBottom = '0px');
           fixedRightTable && (fixedRightTable.style.marginBottom = '0px');
         }
