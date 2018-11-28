@@ -11072,7 +11072,7 @@
 	        _state$contentWidthDi = _state.contentWidthDiff,
 	        contentWidthDiff = _state$contentWidthDi === undefined ? 0 : _state$contentWidthDi,
 	        _state$lastShowIndex = _state.lastShowIndex,
-	        lastShowIndex = _state$lastShowIndex === undefined ? 0 : _state$lastShowIndex;
+	        lastShowIndex = _state$lastShowIndex === undefined ? -1 : _state$lastShowIndex;
 	
 	    var filterCol = [];
 	    rows = rows || [];
@@ -11426,7 +11426,7 @@
 	          } else {
 	            //内容少，不用显示滚动条
 	            if (this.domWidthDiff > 0) {
-	              headStyle.overflowX = 'auto';
+	              headStyle.overflowX = 'hidden';
 	            }
 	            headStyle.marginBottom = '0px';
 	          }
@@ -14247,7 +14247,7 @@
 	                            format: format,
 	                            locale: _zh_CN2['default']
 	                        })),
-	                        filterDropdown == 'show' && _react2['default'].createElement(_FilterDropDown2['default'], {
+	                        _react2['default'].createElement(_FilterDropDown2['default'], {
 	                            locale: locale,
 	                            onSelectDropdown: onSelectDropdown,
 	                            onClickClear: _this.clearDateValue,
@@ -14269,7 +14269,7 @@
 	                            dateInputPlaceholder: ['开始', '结束'],
 	                            showClear: true
 	                        })),
-	                        filterDropdown == 'show' && _react2['default'].createElement(_FilterDropDown2['default'], {
+	                        _react2['default'].createElement(_FilterDropDown2['default'], {
 	                            locale: locale,
 	                            onSelectDropdown: onSelectDropdown,
 	                            onClickClear: _this.clearDateValue,
@@ -14285,7 +14285,7 @@
 	                            className: className,
 	                            onChange: onChange
 	                        }),
-	                        filterDropdown == 'show' && _react2['default'].createElement(_FilterDropDown2['default'], { locale: locale,
+	                        _react2['default'].createElement(_FilterDropDown2['default'], { locale: locale,
 	                            onSelectDropdown: onSelectDropdown
 	                        })
 	                    );
@@ -56955,7 +56955,7 @@
 	
 	  ColumnManager.prototype.getColumnWidth = function getColumnWidth(contentWidth) {
 	    var columns = this.leafColumns();
-	    var res = { computeWidth: 0, lastShowIndex: 0 };
+	    var res = { computeWidth: 0, lastShowIndex: -1 };
 	    columns.forEach(function (col, index) {
 	      //如果列显示
 	      if (col.ifshow) {

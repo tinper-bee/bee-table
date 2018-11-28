@@ -791,7 +791,7 @@ var Table = function (_Component) {
           } else {
             //内容少，不用显示滚动条
             if (this.domWidthDiff > 0) {
-              headStyle.overflowX = 'auto';
+              headStyle.overflowX = 'hidden';
             }
             headStyle.marginBottom = '0px';
           }
