@@ -437,7 +437,7 @@ var Table = function (_Component) {
         _state$contentWidthDi = _state.contentWidthDiff,
         contentWidthDiff = _state$contentWidthDi === undefined ? 0 : _state$contentWidthDi,
         _state$lastShowIndex = _state.lastShowIndex,
-        lastShowIndex = _state$lastShowIndex === undefined ? 0 : _state$lastShowIndex;
+        lastShowIndex = _state$lastShowIndex === undefined ? -1 : _state$lastShowIndex;
 
     var filterCol = [];
     rows = rows || [];

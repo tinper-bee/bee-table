@@ -341,7 +341,7 @@ class Table extends Component {
   }
 
   getHeaderRows(columns, currentRow = 0, rows) {
-    let { contentWidthDiff = 0, lastShowIndex = 0 } = this.state;
+    let { contentWidthDiff = 0, lastShowIndex = -1 } = this.state;
     let filterCol = [];
     rows = rows || [];
     rows[currentRow] = rows[currentRow] || [];
@@ -691,7 +691,7 @@ class Table extends Component {
           }else{
                //内容少，不用显示滚动条
                if(this.domWidthDiff > 0){
-                headStyle.overflowX = 'auto';
+                headStyle.overflowX = 'hidden';
               }
             headStyle.marginBottom = `0px`;
           }

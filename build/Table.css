@@ -192,6 +192,8 @@
   .u-table td {
     padding: 12px 8px;
     word-break: break-all; }
+  .u-table tr th:last-child {
+    overflow: hidden; }
   .u-table-row-hover {
     background: #e3f2fd; }
   .u-table-scroll {

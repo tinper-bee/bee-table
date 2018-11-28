@@ -160,7 +160,7 @@ export default class ColumnManager {
   }
   getColumnWidth(contentWidth){
     let columns = this.leafColumns();
-    let res={computeWidth:0,lastShowIndex:0};
+    let res={computeWidth:0,lastShowIndex:-1};
     columns.forEach((col,index)=>{
       //如果列显示
       if(col.ifshow){

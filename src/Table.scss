@@ -73,7 +73,11 @@ $table-move-in-color: $bg-color-base;
     padding: $vertical-padding $horizontal-padding;
     word-break: break-all;
   }
-
+  tr {
+    th:last-child{ //拖拽tag影响了表格整体宽度
+      overflow: hidden;
+    }
+  }
   &-row-hover {
     background: rgb(227, 242, 253);
   }
