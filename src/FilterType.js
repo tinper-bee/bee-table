@@ -139,6 +139,7 @@ class FilterType extends Component {
                         className={className}
                         value={this.state.number}
                         onChange={this.changeNumber}
+                        iconStyle="one"
                     />
                     <FilterDropDown
                         locale={locale}
