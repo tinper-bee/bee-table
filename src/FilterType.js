@@ -174,14 +174,14 @@ class FilterType extends Component {
                         open={this.state.open}
                         format={format}
                         locale={zhCN}
-                    />{filterDropdown == 'show' && <FilterDropDown
+                    /><FilterDropDown
                         locale={locale}
                         onSelectDropdown={onSelectDropdown}
                         onClickClear={this.clearDateValue}
                         isShowCondition={filterDropdown}
                         isShowClear={this.state.dateValue}
                     >
-                    </FilterDropDown>}
+                    </FilterDropDown>
                 </div>
             case 'daterange':
                 return <div className={`${clsPrefix} filter-wrap`}>
@@ -195,14 +195,14 @@ class FilterType extends Component {
                         placeholder={'开始 ~ 结束'}
                         dateInputPlaceholder={['开始', '结束']}
                         showClear={true}
-                    />{filterDropdown == 'show' && <FilterDropDown
+                    /><FilterDropDown
                         locale={locale}
                         onSelectDropdown={onSelectDropdown}
                         onClickClear={this.clearDateValue}
                         isShowCondition={filterDropdown}
                         isShowClear={this.state.dateValue}
                     >
-                    </FilterDropDown>}
+                    </FilterDropDown>
                 </div>
             case 'bool':
                 return <div className={`${clsPrefix} filter-wrap`}>
@@ -210,10 +210,10 @@ class FilterType extends Component {
                         className={className}
                         onChange={onChange}
                     />
-                    {filterDropdown == 'show' && <FilterDropDown locale={locale}
+                    <FilterDropDown locale={locale}
                         onSelectDropdown={onSelectDropdown}
                     >
-                    </FilterDropDown>}
+                    </FilterDropDown>
                 </div>
             default:
                 return <div></div>;

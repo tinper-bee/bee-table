@@ -14182,7 +14182,7 @@
 	                            format: format,
 	                            locale: _zh_CN2['default']
 	                        })),
-	                        filterDropdown == 'show' && _react2['default'].createElement(_FilterDropDown2['default'], {
+	                        _react2['default'].createElement(_FilterDropDown2['default'], {
 	                            locale: locale,
 	                            onSelectDropdown: onSelectDropdown,
 	                            onClickClear: _this.clearDateValue,
@@ -14204,7 +14204,7 @@
 	                            dateInputPlaceholder: ['开始', '结束'],
 	                            showClear: true
 	                        })),
-	                        filterDropdown == 'show' && _react2['default'].createElement(_FilterDropDown2['default'], {
+	                        _react2['default'].createElement(_FilterDropDown2['default'], {
 	                            locale: locale,
 	                            onSelectDropdown: onSelectDropdown,
 	                            onClickClear: _this.clearDateValue,
@@ -14220,7 +14220,7 @@
 	                            className: className,
 	                            onChange: onChange
 	                        }),
-	                        filterDropdown == 'show' && _react2['default'].createElement(_FilterDropDown2['default'], { locale: locale,
+	                        _react2['default'].createElement(_FilterDropDown2['default'], { locale: locale,
 	                            onSelectDropdown: onSelectDropdown
 	                        })
 	                    );
