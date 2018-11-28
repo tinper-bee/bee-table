@@ -191,7 +191,8 @@ var FilterType = function (_Component) {
                         _react2["default"].createElement(_beeInputNumber2["default"], {
                             className: className,
                             value: _this.state.number,
-                            onChange: _this.changeNumber
+                            onChange: _this.changeNumber,
+                            iconStyle: 'one'
                         }),
                         _react2["default"].createElement(_FilterDropDown2["default"], {
                             locale: locale,
