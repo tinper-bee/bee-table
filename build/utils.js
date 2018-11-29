@@ -43,7 +43,7 @@ function measureScrollbar() {
     return 0;
   }
   if (window.scrollbarWidth) {
-    return scrollbarWidth;
+    return window.scrollbarWidth;
   }
   var scrollDiv = document.createElement('div');
   for (var scrollProp in scrollbarMeasure) {
