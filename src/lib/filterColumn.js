@@ -89,23 +89,29 @@ export default function filterColumn(Table, Popover) {
       const { prefixCls } = this.props;
       const { columns } = this.state;
       return columns.map((da, i) => {
-        if (!da.fixed) {
+          let paramObj = {
+            id:da.key,
+            checked:da.checked
+          }
+          if(da.fixed){
+            paramObj.disabled = true
+          }else{
+            paramObj.onClick = () => {
+              this.checkedColumItemClick(da);
+            }
+          }
+          
           return (
             <div
               key={da.key + "_" + i}
               className={`${prefixCls}-pop-cont-item`}
             >
-              <Checkbox
-                id={da.key}
-                checked={da.checked}
-                onClick={() => {
-                  this.checkedColumItemClick(da);
-                }}
-              />
+            <Checkbox {...paramObj}/>
+            
               <span>{da.title}</span>
             </div>
           );
-        }
+        
       });
     };
 
