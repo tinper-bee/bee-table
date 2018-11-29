@@ -775,7 +775,7 @@ var Table = function (_Component) {
       useFixedHeader = true;
 
       // Add negative margin bottom for scroll bar overflow bug
-      var scrollbarWidth = this.scrollbarWidth;
+      var scrollbarWidth = this.scrollbarWidth ? this.scrollbarWidth : 15;
       if (scrollbarWidth >= 0) {
         (fixed ? bodyStyle : headStyle).paddingBottom = '0px';
         //显示表头滚动条

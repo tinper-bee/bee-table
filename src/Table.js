@@ -675,7 +675,7 @@ class Table extends Component {
       useFixedHeader = true;
 
       // Add negative margin bottom for scroll bar overflow bug
-      const scrollbarWidth = this.scrollbarWidth;
+      const scrollbarWidth = this.scrollbarWidth ?this.scrollbarWidth: 15;
       if (scrollbarWidth >= 0) {
         (fixed ? bodyStyle : headStyle).paddingBottom = '0px';
         //显示表头滚动条

@@ -27,7 +27,7 @@ var _parseInt2 = _interopRequireDefault(_parseInt);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var scrollbarWidth = void 0;
+var scrollbarSize = void 0;
 
 // Measure scrollbar width for padding body during modal show/hide
 var scrollbarMeasure = {
@@ -39,24 +39,29 @@ var scrollbarMeasure = {
 };
 
 function measureScrollbar() {
+  var direction = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'vertical';
+
   if (typeof document === 'undefined' || typeof window === 'undefined') {
     return 0;
   }
-  if (window.scrollbarWidth) {
-    return window.scrollbarWidth;
+  if (scrollbarSize) {
+    return scrollbarSize;
   }
   var scrollDiv = document.createElement('div');
-  for (var scrollProp in scrollbarMeasure) {
-    if (scrollbarMeasure.hasOwnProperty(scrollProp)) {
-      scrollDiv.style[scrollProp] = scrollbarMeasure[scrollProp];
-    }
-  }
+  Object.keys(scrollbarMeasure).forEach(function (scrollProp) {
+    scrollDiv.style[scrollProp] = scrollbarMeasure[scrollProp];
+  });
   document.body.appendChild(scrollDiv);
-  var width = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+  var size = 0;
+  if (direction === 'vertical') {
+    size = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+  } else if (direction === 'horizontal') {
+    size = scrollDiv.offsetHeight - scrollDiv.clientHeight;
+  }
+
   document.body.removeChild(scrollDiv);
-  scrollbarWidth = width;
-  window.scrollbarWidth = scrollbarWidth;
-  return scrollbarWidth;
+  scrollbarSize = size;
+  return scrollbarSize;
 }
 
 function debounce(func, wait, immediate) {
