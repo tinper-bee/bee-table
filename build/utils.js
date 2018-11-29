@@ -42,7 +42,7 @@ function measureScrollbar() {
   if (typeof document === 'undefined' || typeof window === 'undefined') {
     return 0;
   }
-  if (scrollbarWidth) {
+  if (window.scrollbarWidth) {
     return scrollbarWidth;
   }
   var scrollDiv = document.createElement('div');
@@ -55,6 +55,7 @@ function measureScrollbar() {
   var width = scrollDiv.offsetWidth - scrollDiv.clientWidth;
   document.body.removeChild(scrollDiv);
   scrollbarWidth = width;
+  window.scrollbarWidth = scrollbarWidth;
   return scrollbarWidth;
 }
 

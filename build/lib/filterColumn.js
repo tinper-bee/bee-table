@@ -212,6 +212,17 @@ function filterColumn(Table, Popover) {
       var columns = _this2.state.columns;
 
       return columns.map(function (da, i) {
+        var paramObj = {
+          id: da.key,
+          checked: da.checked
+        };
+        if (da.fixed) {
+          paramObj.disabled = true;
+        } else {
+          paramObj.onClick = function () {
+            _this2.checkedColumItemClick(da);
+          };
+        }
 
         return _react2["default"].createElement(
           "div",
@@ -219,14 +230,7 @@ function filterColumn(Table, Popover) {
             key: da.key + "_" + i,
             className: prefixCls + "-pop-cont-item"
           },
-          _react2["default"].createElement(_beeCheckbox2["default"], {
-            id: da.key,
-            disabled: da.fixed,
-            checked: da.checked,
-            onClick: function onClick() {
-              _this2.checkedColumItemClick(da);
-            }
-          }),
+          _react2["default"].createElement(_beeCheckbox2["default"], paramObj),
           _react2["default"].createElement(
             "span",
             null,

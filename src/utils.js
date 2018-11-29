@@ -17,8 +17,8 @@ export function measureScrollbar() {
   if (typeof document === 'undefined' || typeof window === 'undefined') {
     return 0;
   }
-  if (scrollbarWidth) {
-    return scrollbarWidth;
+  if (window.scrollbarWidth) {
+    return window.scrollbarWidth;
   }
   const scrollDiv = document.createElement('div');
   for (const scrollProp in scrollbarMeasure) {
@@ -30,6 +30,7 @@ export function measureScrollbar() {
   const width = scrollDiv.offsetWidth - scrollDiv.clientWidth;
   document.body.removeChild(scrollDiv);
   scrollbarWidth = width;
+  window.scrollbarWidth = scrollbarWidth;
   return scrollbarWidth;
 }
 
