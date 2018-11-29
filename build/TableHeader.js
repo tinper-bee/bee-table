@@ -295,19 +295,19 @@ var TableHeader = function (_Component) {
       }
     };
 
-    _this.handlerFilterTextChange = function (key, val) {
-      var onFilterRowsChange = _this.props.onFilterRowsChange;
+    _this.handlerFilterChange = function (key, value, condition) {
+      var onFilterChange = _this.props.onFilterChange;
 
-      if (onFilterRowsChange) {
-        onFilterRowsChange(key, val);
+      if (onFilterChange) {
+        onFilterChange(key, value, condition);
       }
     };
 
-    _this.handlerFilterDropChange = function (key, val) {
-      var onFilterRowsDropChange = _this.props.onFilterRowsDropChange;
+    _this.handlerFilterClear = function (field) {
+      var onFilterClear = _this.props.onFilterClear;
 
-      if (onFilterRowsDropChange) {
-        onFilterRowsDropChange(key, val.key);
+      if (onFilterClear) {
+        onFilterClear(field);
       }
     };
 
@@ -322,15 +322,15 @@ var TableHeader = function (_Component) {
         //文本输入
         case "text":
           return _react2["default"].createElement(_FilterType2["default"], {
-            locale: locale,
-            rendertype: type,
-            clsPrefix: clsPrefix,
-            className: clsPrefix + " filter-text",
-            onChange: (0, _throttleDebounce.debounce)(filterDelay || 300, _this.handlerFilterTextChange.bind(_this, dataIndex))
-            // onChange={this.handlerFilterTextChange.bind(this, dataIndex)}
-            , onSelectDropdown: _this.handlerFilterDropChange.bind(_this, dataIndex),
-            filterDropdown: rows[1][index]["filterdropdown"],
-            filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
+            locale: locale //多语
+            , rendertype: type //渲染类型
+            , clsPrefix: clsPrefix //css前缀
+            , className: clsPrefix + " filter-text",
+            dataIndex: dataIndex //字段
+            , onFilterChange: _this.handlerFilterChange //输入框回调
+            , onFilterClear: _this.handlerFilterClear //清除回调
+            , filterDropdown: rows[1][index]["filterdropdown"] //是否显示下拉条件
+            , filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
           });
         //数值输入
         case "number":
@@ -339,14 +339,16 @@ var TableHeader = function (_Component) {
             rendertype: type,
             clsPrefix: clsPrefix,
             className: clsPrefix + " filter-text",
-            onChange: (0, _throttleDebounce.debounce)(filterDelay || 300, _this.handlerFilterTextChange.bind(_this, dataIndex)),
-            onSelectDropdown: _this.handlerFilterDropChange.bind(_this, dataIndex),
-            filterDropdown: rows[1][index]["filterdropdown"],
+            dataIndex: dataIndex //字段
+            , onFilterChange: (0, _throttleDebounce.debounce)(filterDelay || 300, _this.handlerFilterChange) //输入框回调并且函数防抖动
+            , onFilterClear: _this.handlerFilterClear //清除回调
+            , filterDropdown: rows[1][index]["filterdropdown"],
             filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
           });
         //下拉框选择
         case "dropdown":
           var selectDataSource = [];
+          //处理没有输入数据源的时候，系统自动查找自带的数据筛选后注入
           if (rows.length > 0 && (rows[1][index]["filterdropdownauto"] || "auto") == "auto") {
             var hash = {};
             //处理下拉重复对象组装dropdown
@@ -361,6 +363,7 @@ var TableHeader = function (_Component) {
               return item;
             }, []);
           } else {
+            //从外部数据源加载系统数据
             selectDataSource = rows[1][index]["filterdropdowndata"];
           }
           return _react2["default"].createElement(_FilterType2["default"], {
@@ -368,9 +371,10 @@ var TableHeader = function (_Component) {
             rendertype: type,
             className: clsPrefix + " filter-dropdown",
             data: selectDataSource,
-            onChange: _this.handlerFilterTextChange.bind(_this, dataIndex),
-            onSelectDropdown: _this.handlerFilterDropChange.bind(_this, dataIndex),
-            filterDropdown: rows[1][index]["filterdropdown"],
+            dataIndex: dataIndex //字段
+            , onFilterChange: _this.handlerFilterChange //输入框回调
+            , onFilterClear: _this.handlerFilterClear //清除回调
+            , filterDropdown: rows[1][index]["filterdropdown"],
             onFocus: rows[1][index]["filterdropdownfocus"],
             filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
           });
@@ -382,9 +386,10 @@ var TableHeader = function (_Component) {
             className: "filter-date",
             onClick: function onClick() {},
             format: rows[1][index]["format"] || "YYYY-MM-DD",
-            onChange: _this.handlerFilterTextChange.bind(_this, dataIndex),
-            onSelectDropdown: _this.handlerFilterDropChange.bind(_this, dataIndex),
-            filterDropdown: rows[1][index]["filterdropdown"],
+            dataIndex: dataIndex //字段
+            , onFilterChange: _this.handlerFilterChange //输入框回调
+            , onFilterClear: _this.handlerFilterClear //清除回调
+            , filterDropdown: rows[1][index]["filterdropdown"],
             filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
           });
         //日期范围
@@ -395,9 +400,10 @@ var TableHeader = function (_Component) {
             className: "filter-date",
             onClick: function onClick() {},
             format: rows[1][index]["format"] || "YYYY-MM-DD",
-            onChange: _this.handlerFilterTextChange.bind(_this, dataIndex),
-            onSelectDropdown: _this.handlerFilterDropChange.bind(_this, dataIndex),
-            filterDropdown: rows[1][index]["filterdropdown"],
+            dataIndex: dataIndex //字段
+            , onFilterChange: _this.handlerFilterChange //输入框回调
+            , onFilterClear: _this.handlerFilterClear //清除回调
+            , filterDropdown: rows[1][index]["filterdropdown"],
             filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
           });
         default:
@@ -458,15 +464,17 @@ var TableHeader = function (_Component) {
   // }
 
   /**
-   * @description 过滤输入后的回调函数
+   * 过滤输入后或下拉条件的回调函数
    */
 
-  /**
-   * @description 过滤输入后的回调函数
-   */
 
   /**
-   * @description 过滤渲染的组件类型
+   * 过滤行清除回调
+   */
+
+
+  /**
+   * 过滤渲染的组件类型
    */
 
 

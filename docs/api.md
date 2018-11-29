@@ -50,8 +50,8 @@ import 'bee-table/build/Table.css';
 | haveExpandIcon       | 控制是否显示行展开icon.**注：该参数只有在和expandedRowRender同时使用才生效** | Function(record, index):bool   | () =>false |
 | filterable       | 是否开启根据条件来过滤数据 | bool | false
 | filterDelay       | 触发过滤输入的时候的ms延迟时间 | number | 300
-| onFilterRowsChange       | 触发过滤输入操作以及其他的回调，回车执行函数或者失去焦点触发回调 | (key,val) => () | () => ()
-| onFilterRowsDropChange       | 过滤下拉条件的回调 | (key,val)=>() | () => ()
+| onFilterChange       | 触发过滤输入操作以及下拉条件的回调 | function | (field,value,condition) => ()
+| onFilterClear       | 清除过滤条件的回调函数，回调参数为清空的字段 | function | (field) => ()
 | headerScroll       | 表头下是否显示滚动条 | bool| false
 
 
@@ -72,9 +72,9 @@ import 'bee-table/build/Table.css';
 |render|cell的render函数有三个参数：这个单元格的文本，这行的记录，这行的索引，它返回一个对象：{children：value，props：{colSpan：1，rowSpan：1}} ==>'children'是这个单元格的文本，props是这个单元格的一些设置，可以设置单元格行/列合并|-|
 |onCellClick|单击列的单元格时调用|Function(row, event)|-|
 | order | 设置排序 | string（"descend"、"ascend"） | -|
-| filterType | 过滤下拉的类型.可选`text`,`dropdown`,`date` | string | text |
+| filterType | 过滤下拉的类型.可选`text(文本框)`,`dropdown(下拉)`,`date(日期)`,`daterange(日期范围)`,`number(数值)` | string | text |
 | filterDropdown | 是否显示过滤下拉.可选`show`,`hide` | string | show |
-| format | 设置日期类的格式 | string | YYYY-MM-DD |
+| format | 针对过滤下拉设置日期类的格式 | string | YYYY-MM-DD |
 | filterDropdownAuto | 设置下拉条件是否自动设置选项，`auto`自动根据当前数据生成，`manual`手动传入，可以使用`filterDropdownData`来传入自定义数据 | string | auto |
 | filterDropdownData | 下拉条件自定义数据，filterDropdownAuto=manual生效，传入格式：[{ key : "自定义", value : "自定义" }] | array | [] |
 | filterDropdownFocus | 触发点击下拉条件的回调，一般用于异步点击请求数据使用 | function | () => () |

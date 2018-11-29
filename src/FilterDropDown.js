@@ -25,14 +25,16 @@ class FilterDropDown extends Component {
      *
      * @param {*} s 选中的selectRecord
      */
-    onSelectDropdown = (s) => {
-        let { onSelectDropdown } = this.props;
+    onSelectDropdown = (item) => {
+        let { onSelectDropdown, dataText } = this.props;
         if (onSelectDropdown) {
-            this.setState({
-                selectValue: [s.key]
-            }, () => {
-                onSelectDropdown(s);
-            });
+            if (dataText != "") {
+                this.setState({
+                    selectValue: [item.key]
+                }, () => {
+                    onSelectDropdown(item);
+                });
+            }
         }
     }
 
@@ -66,24 +68,24 @@ class FilterDropDown extends Component {
                     onSelect={this.onSelectDropdown}
                     selectedKeys={selectValue}
                 >
-                    <Item key="2">{locale['include']}</Item>
-                    <Item key="6">{locale['exclusive']}</Item>
-                    <Item key="1">{locale['equal']}</Item>
-                    <Item key="5">{locale['unequal']}</Item>
-                    <Item key="7">{locale['begin']}</Item>
-                    <Item key="3">{locale['end']}</Item>
+                    <Item key="LIKE">{locale['include']}</Item>
+                    <Item key="ULIKE">{locale['exclusive']}</Item>
+                    <Item key="EQ">{locale['equal']}</Item>
+                    <Item key="UEQ">{locale['unequal']}</Item>
+                    <Item key="START">{locale['begin']}</Item>
+                    <Item key="END">{locale['end']}</Item>
                 </Menu>
             case 'number':
                 return <Menu
                     onSelect={this.onSelectDropdown}
                     selectedKeys={selectValue}
                 >
-                    <Item key="1">{locale['greater_than']}</Item>
-                    <Item key="2">{locale['great_than_equal_to']}</Item>
-                    <Item key="3">{locale['less_than']}</Item>
-                    <Item key="4">{locale['less_than_equal_to']}</Item>
-                    <Item key="5">{locale['be_equal_to']}</Item>
-                    <Item key="6">{locale['not_equal_to']}</Item>
+                    <Item key="GT">{locale['greater_than']}</Item>
+                    <Item key="GTEQ">{locale['great_than_equal_to']}</Item>
+                    <Item key="LT">{locale['less_than']}</Item>
+                    <Item key="LTEQ">{locale['less_than_equal_to']}</Item>
+                    <Item key="EQ">{locale['be_equal_to']}</Item>
+                    <Item key="UEQ">{locale['not_equal_to']}</Item>
                 </Menu>
             default:
                 return <div></div>;
@@ -94,6 +96,7 @@ class FilterDropDown extends Component {
 
         return (<div className="filter-btns">
             {isShowCondition == 'show' && <Dropdown
+                overlayClassName="u-filter-dropdown-menu-wrap"
                 trigger={['click']}
                 overlay={this.getMenu()}
                 animation="slide-up"

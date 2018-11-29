@@ -106,12 +106,12 @@ class Demo27 extends Component {
       dropdownvalue: []
     }
   }
-  handlerFilterRowsChange = (key, val) => {
-    console.log('准备构建AJAX请求，接收参数：key=', key, ' value=', val);
+  handlerFilterChange = (key, val, condition) => {
+    console.log('参数：key=', key, ' value=', val, 'condition=', condition);
   }
 
-  handlerFilterRowsDropChange = (key, val) => {
-    console.log('过滤条件类型:', key, val);
+  handlerFilterClear = (key) => {
+    console.log('清除条件', key);
   }
   getSelectedDataFunc = data => {
     console.log(data);
@@ -159,48 +159,46 @@ class Demo27 extends Component {
         filterDropdownType: "string"//字符条件
       },
       {
-        title: "区间",
-        width: 200,
-        dataIndex: "mark",
-        key: "mark",
-        filterType: "number",//输入框类型
-        filterDropdownType: "number"//数值类条件
-      },
-      {
         title: "年龄",
         width: 180,
-        sorter: (a, b) => a.age - b.age,
         dataIndex: "age",
         key: "age",
-        filterType: "dropdown",
-        filterDropdown: "hide",//不显示条件
-        filterDropdownAuto: "manual",//切换手动传入模式
-        filterDropdownData: this.state.dropdownvalue,
-        filterDropdownFocus: () => {
-          this.setState({
-            dropdownvalue: [{ key: "自定义数据1", value: "1" }, { key: "自定义数据2", value: "2" }]
-          });
-        }
+        filterType: "number",//输入框类型
+        filterDropdown: "show",//显示条件
+        filterDropdownType: "number"//字符条件
       },
       {
-        title: "居住地址",
-        width: 350,
+        title: "日期",
+        width: 190,
+        dataIndex: "date",
+        key: "date",
+        filterType: "date",//输入框类型
+        filterDropdown: "show",//显示条件
+        filterDropdownType: "string"//字符条件
+      },
+      {
+        title: "时间范围",
+        width: 290,
+        dataIndex: "mark",
+        key: "mark",
+        filterType: "daterange",//输入框类型
+        filterDropdown: "show",//显示条件
+        filterDropdownType: "number"//字符条件
+      },
+      {
+        title: "地址",
+        width: 100,
         dataIndex: "address",
         key: "address",
-        filterType: "daterange",
-        filterDropdown: "show"
-      },
-      {
-        title: "操作",
-        width: 100,
-        key: "other",
-        dataIndex: "other"
+        filterType: "dropdown",//输入框类型
+        filterDropdown: "show",//显示条件
+        filterDropdownType: "number"//字符条件
       }
     ];
     return <ComplexTable
-      onFilterRowsDropChange={this.handlerFilterRowsDropChange}//下拉条件的回调(key,val)=>()
-      onFilterRowsChange={this.handlerFilterRowsChange}//触发输入操作以及其他的回调(key,val)=>()
-      filterDelay={500}//输入文本多少ms触发回调函数，默认300ms
+      onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()
+      onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()
+      filterDelay={500}//输入文本多少ms触发回调函数，默认500ms
       filterable={true}//是否开启过滤数据功能
       getSelectedDataFunc={this.getSelectedDataFunc}
       bordered

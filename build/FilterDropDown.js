@@ -56,15 +56,19 @@ var FilterDropDown = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, _Component.call(this));
 
-        _this.onSelectDropdown = function (s) {
-            var onSelectDropdown = _this.props.onSelectDropdown;
+        _this.onSelectDropdown = function (item) {
+            var _this$props = _this.props,
+                onSelectDropdown = _this$props.onSelectDropdown,
+                dataText = _this$props.dataText;
 
             if (onSelectDropdown) {
-                _this.setState({
-                    selectValue: [s.key]
-                }, function () {
-                    onSelectDropdown(s);
-                });
+                if (dataText != "") {
+                    _this.setState({
+                        selectValue: [item.key]
+                    }, function () {
+                        onSelectDropdown(item);
+                    });
+                }
             }
         };
 
@@ -97,32 +101,32 @@ var FilterDropDown = function (_Component) {
                         },
                         _react2["default"].createElement(
                             Item,
-                            { key: '2' },
+                            { key: 'LIKE' },
                             locale['include']
                         ),
                         _react2["default"].createElement(
                             Item,
-                            { key: '6' },
+                            { key: 'ULIKE' },
                             locale['exclusive']
                         ),
                         _react2["default"].createElement(
                             Item,
-                            { key: '1' },
+                            { key: 'EQ' },
                             locale['equal']
                         ),
                         _react2["default"].createElement(
                             Item,
-                            { key: '5' },
+                            { key: 'UEQ' },
                             locale['unequal']
                         ),
                         _react2["default"].createElement(
                             Item,
-                            { key: '7' },
+                            { key: 'START' },
                             locale['begin']
                         ),
                         _react2["default"].createElement(
                             Item,
-                            { key: '3' },
+                            { key: 'END' },
                             locale['end']
                         )
                     );
@@ -135,32 +139,32 @@ var FilterDropDown = function (_Component) {
                         },
                         _react2["default"].createElement(
                             Item,
-                            { key: '1' },
+                            { key: 'GT' },
                             locale['greater_than']
                         ),
                         _react2["default"].createElement(
                             Item,
-                            { key: '2' },
+                            { key: 'GTEQ' },
                             locale['great_than_equal_to']
                         ),
                         _react2["default"].createElement(
                             Item,
-                            { key: '3' },
+                            { key: 'LT' },
                             locale['less_than']
                         ),
                         _react2["default"].createElement(
                             Item,
-                            { key: '4' },
+                            { key: 'LTEQ' },
                             locale['less_than_equal_to']
                         ),
                         _react2["default"].createElement(
                             Item,
-                            { key: '5' },
+                            { key: 'EQ' },
                             locale['be_equal_to']
                         ),
                         _react2["default"].createElement(
                             Item,
-                            { key: '6' },
+                            { key: 'UEQ' },
                             locale['not_equal_to']
                         )
                     );
@@ -204,6 +208,7 @@ var FilterDropDown = function (_Component) {
             isShowCondition == 'show' && _react2["default"].createElement(
                 _beeDropdown2["default"],
                 {
+                    overlayClassName: 'u-filter-dropdown-menu-wrap',
                     trigger: ['click'],
                     overlay: this.getMenu(),
                     animation: 'slide-up'

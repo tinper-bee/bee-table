@@ -293,7 +293,7 @@ class Table extends Component {
   }
 
   getHeader(columns, fixed) {
-    const { filterDelay, onFilterRowsDropChange, onFilterRowsChange, filterable, showHeader, expandIconAsCell, clsPrefix, onDragStart, onDragEnter, onDragOver, onDrop, draggable,
+    const { filterDelay, onFilterChange, onFilterClear, filterable, showHeader, expandIconAsCell, clsPrefix, onDragStart, onDragEnter, onDragOver, onDrop, draggable,
       onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey, minColumnWidth, headerHeight,afterDragColWidth,headerScroll ,bordered} = this.props;
     const rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
@@ -328,8 +328,8 @@ class Table extends Component {
         rowStyle={trStyle}
         fixed={fixed}
         filterable={filterable}
-        onFilterRowsChange={onFilterRowsChange}
-        onFilterRowsDropChange={onFilterRowsDropChange}
+        onFilterChange={onFilterChange}//过滤行输入或下拉之后回调
+        onFilterClear={onFilterClear}//过滤行清除后回调
         filterDelay={filterDelay}
         afterDragColWidth = {afterDragColWidth}
         contentDomWidth={this.contentDomWidth}

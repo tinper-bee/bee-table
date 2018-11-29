@@ -58,26 +58,68 @@ var propTypes = {
 var FilterType = function (_Component) {
     _inherits(FilterType, _Component);
 
-    function FilterType() {
+    function FilterType(props) {
         _classCallCheck(this, FilterType);
 
-        var _this = _possibleConstructorReturn(this, _Component.call(this));
+        var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
-        _this.clearText = function () {
+        _this.clearFilter = function () {
+            var _this$props = _this.props,
+                onFilterClear = _this$props.onFilterClear,
+                dataIndex = _this$props.dataIndex;
+
             _this.setState({
-                text: ""
+                value: "", //清空值
+                condition: _this.props.filterDropdownType == 'string' ? 'LIKE' : 'EQ' //切回默认查询条件
+            }, function () {
+                //调用清除方法参数为当前字段的field
+                onFilterClear && onFilterClear(dataIndex);
             });
-            var onChange = _this.props.onChange;
-
-            onChange && onChange("");
         };
 
-        _this.changeNumber = function (number) {
-            var onChange = _this.props.onChange;
-
-            onChange && onChange(number);
+        _this.changeText = function (val) {
             _this.setState({
-                number: number
+                value: val
+            });
+        };
+
+        _this.changeTextCall = function (e) {
+            var _this$props2 = _this.props,
+                onFilterChange = _this$props2.onFilterChange,
+                dataIndex = _this$props2.dataIndex;
+
+            if (e.keyCode == 13) {
+                onFilterChange(dataIndex, e.target.value, _this.state.condition);
+            }
+        };
+
+        _this.changeValue = function () {
+            _this.setState({
+                value: ""
+            });
+        };
+
+        _this.onSelectDropdown = function (item) {
+            var _this$props3 = _this.props,
+                onFilterChange = _this$props3.onFilterChange,
+                dataIndex = _this$props3.dataIndex;
+
+            _this.setState({
+                condition: item.key
+            }, function () {
+                onFilterChange && onFilterChange(dataIndex, _this.state.value, _this.state.condition);
+            });
+        };
+
+        _this.changeNumber = function (value) {
+            var _this$props4 = _this.props,
+                onFilterChange = _this$props4.onFilterChange,
+                dataIndex = _this$props4.dataIndex;
+
+            _this.setState({
+                value: value
+            }, function () {
+                onFilterChange(dataIndex, value, _this.state.condition);
             });
         };
 
@@ -86,22 +128,8 @@ var FilterType = function (_Component) {
 
             onChange && onChange("");
             _this.setState({
-                number: ""
+                value: ""
             });
-        };
-
-        _this.changeText = function (eve) {
-            _this.setState({
-                text: eve
-            });
-        };
-
-        _this.changeTextCall = function (eve) {
-            var onChange = _this.props.onChange;
-
-            if (eve.keyCode == 13) {
-                onChange(eve.target.value);
-            }
         };
 
         _this.changeTextCallBlur = function (val) {
@@ -110,13 +138,15 @@ var FilterType = function (_Component) {
             onChange && onChange(val);
         };
 
-        _this.changeSelect = function (val) {
-            var onChange = _this.props.onChange;
+        _this.changeSelect = function (value) {
+            var _this$props5 = _this.props,
+                onFilterChange = _this$props5.onFilterChange,
+                dataIndex = _this$props5.dataIndex;
 
-            if (onChange) {
-                onChange(val);
+            if (onFilterChange) {
+                onFilterChange(dataIndex, value, _this.state.condition);
                 _this.setState({
-                    selectValue: val
+                    value: value
                 });
             }
         };
@@ -137,28 +167,31 @@ var FilterType = function (_Component) {
             });
         };
 
-        _this.changeDate = function (val) {
-            var onChange = _this.props.onChange;
+        _this.changeDate = function (value) {
+            var _this$props6 = _this.props,
+                onFilterChange = _this$props6.onFilterChange,
+                dataIndex = _this$props6.dataIndex;
 
-            if (onChange) {
-                onChange(val);
+            if (onFilterChange) {
+                onFilterChange(dataIndex, value, _this.state.condition);
                 _this.setState({
-                    dateValue: val,
+                    value: value,
                     open: false
                 });
             }
         };
 
         _this.renderControl = function (rendertype) {
-            var _this$props = _this.props,
-                filterDropdown = _this$props.filterDropdown,
-                filterDropdownType = _this$props.filterDropdownType,
-                format = _this$props.format,
-                className = _this$props.className,
-                onChange = _this$props.onChange,
-                onSelectDropdown = _this$props.onSelectDropdown,
-                clsPrefix = _this$props.clsPrefix,
-                locale = _this$props.locale;
+            var _this$props7 = _this.props,
+                dataIndex = _this$props7.dataIndex,
+                filterDropdown = _this$props7.filterDropdown,
+                filterDropdownType = _this$props7.filterDropdownType,
+                format = _this$props7.format,
+                className = _this$props7.className,
+                onChange = _this$props7.onChange,
+                onSelectDropdown = _this$props7.onSelectDropdown,
+                clsPrefix = _this$props7.clsPrefix,
+                locale = _this$props7.locale;
 
             switch (rendertype) {
                 case 'text':
@@ -166,20 +199,19 @@ var FilterType = function (_Component) {
                         'div',
                         { className: clsPrefix + ' filter-wrap' },
                         _react2["default"].createElement(_beeFormControl2["default"], {
-                            ref: function ref(el) {
-                                return _this.text = el;
-                            },
-                            value: _this.state.text,
+                            value: _this.state.value,
                             className: className,
                             onChange: _this.changeText,
-                            onKeyDown: _this.changeTextCall,
-                            onBlur: _this.changeTextCallBlur
+                            onKeyDown: _this.changeTextCall
+                            //onBlur={this.changeTextCallBlur}
                         }),
                         _react2["default"].createElement(_FilterDropDown2["default"], {
                             locale: locale,
-                            onSelectDropdown: onSelectDropdown,
-                            onClickClear: _this.clearText,
-                            isShowClear: _this.state.text,
+                            dataIndex: dataIndex,
+                            dataText: _this.state.value,
+                            onSelectDropdown: _this.onSelectDropdown,
+                            onClickClear: _this.clearFilter,
+                            isShowClear: _this.state.value,
                             isShowCondition: filterDropdown,
                             filterDropdownType: filterDropdownType
                         })
@@ -190,15 +222,17 @@ var FilterType = function (_Component) {
                         { className: clsPrefix + ' filter-wrap' },
                         _react2["default"].createElement(_beeInputNumber2["default"], {
                             className: className,
-                            value: _this.state.number,
+                            value: _this.state.value,
                             onChange: _this.changeNumber,
                             iconStyle: 'one'
                         }),
                         _react2["default"].createElement(_FilterDropDown2["default"], {
                             locale: locale,
-                            onSelectDropdown: onSelectDropdown,
-                            onClickClear: _this.clearNumber,
-                            isShowClear: _this.state.number,
+                            dataIndex: dataIndex,
+                            dataText: _this.state.value,
+                            onSelectDropdown: _this.onSelectDropdown,
+                            onClickClear: _this.clearFilter,
+                            isShowClear: _this.state.value != 0,
                             isShowCondition: filterDropdown,
                             filterDropdownType: filterDropdownType
                         })
@@ -208,15 +242,18 @@ var FilterType = function (_Component) {
                         'div',
                         { className: clsPrefix + ' filter-wrap' },
                         _react2["default"].createElement(_beeSelect2["default"], _extends({}, _this.props, {
-                            value: _this.state.selectValue,
+                            value: _this.state.value,
                             onChange: _this.changeSelect
                         })),
                         _react2["default"].createElement(_FilterDropDown2["default"], {
                             locale: locale,
-                            onSelectDropdown: onSelectDropdown,
-                            onClickClear: _this.clearSelectValue,
+                            dataIndex: dataIndex,
+                            dataText: _this.state.value,
+                            onSelectDropdown: _this.onSelectDropdown,
+                            onClickClear: _this.clearFilter,
                             isShowCondition: filterDropdown,
-                            isShowClear: _this.state.selectValue
+                            isShowClear: _this.state.value,
+                            filterDropdownType: filterDropdownType
                         })
                     );
                 case 'date':
@@ -224,7 +261,7 @@ var FilterType = function (_Component) {
                         'div',
                         { className: clsPrefix + ' filter-wrap' },
                         _react2["default"].createElement(_beeDatepicker2["default"], _extends({}, _this.props, {
-                            value: _this.state.dateValue,
+                            value: _this.state.value,
                             onChange: _this.changeDate,
                             open: _this.state.open,
                             format: format,
@@ -232,10 +269,13 @@ var FilterType = function (_Component) {
                         })),
                         _react2["default"].createElement(_FilterDropDown2["default"], {
                             locale: locale,
-                            onSelectDropdown: onSelectDropdown,
-                            onClickClear: _this.clearDateValue,
+                            dataIndex: dataIndex,
+                            dataText: _this.state.value,
+                            onSelectDropdown: _this.onSelectDropdown,
+                            onClickClear: _this.clearFilter,
                             isShowCondition: filterDropdown,
-                            isShowClear: _this.state.dateValue
+                            isShowClear: _this.state.value,
+                            filterDropdownType: filterDropdownType
                         })
                     );
                 case 'daterange':
@@ -243,10 +283,11 @@ var FilterType = function (_Component) {
                         'div',
                         { className: clsPrefix + ' filter-wrap' },
                         _react2["default"].createElement(RangePicker, _extends({}, _this.props, {
-                            value: _this.state.dateValue,
+                            value: _this.state.value,
                             onChange: _this.changeDate,
                             open: _this.state.open,
                             format: format,
+                            showTime: true,
                             locale: _zh_CN2["default"],
                             placeholder: '开始 ~ 结束',
                             dateInputPlaceholder: ['开始', '结束'],
@@ -254,10 +295,12 @@ var FilterType = function (_Component) {
                         })),
                         _react2["default"].createElement(_FilterDropDown2["default"], {
                             locale: locale,
-                            onSelectDropdown: onSelectDropdown,
-                            onClickClear: _this.clearDateValue,
+                            dataIndex: dataIndex,
+                            dataText: _this.state.value,
+                            onSelectDropdown: _this.onSelectDropdown,
+                            onClickClear: _this.clearFilter,
                             isShowCondition: filterDropdown,
-                            isShowClear: _this.state.dateValue
+                            isShowClear: _this.state.value
                         })
                     );
                 case 'bool':
@@ -278,23 +321,54 @@ var FilterType = function (_Component) {
         };
 
         _this.state = {
+            value: "",
             text: "",
             selectValue: "",
             dateValue: "",
             open: false,
+            condition: props.filterDropdownType == 'string' ? 'LIKE' : 'EQ',
             number: 0
         };
         return _this;
     }
-    //清除文本
 
-    //设置数值
+    /**
+     * 清除过滤条件
+     *
+     */
+
+
+    /**
+     * 设置输入文本的值
+     *
+     */
+
+
+    /**
+     * 输入框回车执行回调
+     *
+     */
+
+    /**
+     * 更改修改值
+     *
+     */
+
+    /**
+     * 下拉条件的回调
+     *
+     * @param {*} key 字段
+     * @param {*} value 值1,2,3...6
+     */
+
+
+    /**
+     * 修改数值型的值
+     *
+     */
 
     //清除数值
 
-    //设置文本
-
-    //回车执行函数
 
     //失去焦点后执行函数
 
