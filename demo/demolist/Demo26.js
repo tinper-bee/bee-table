@@ -85,16 +85,17 @@ const data26 = [
 ];
 
 class Demo26 extends Component {
-  handlerFilterRowsChange = (key, val) => {
-    console.log('准备构建AJAX请求，接收参数：key=', key, ' value=', val);
+  handlerFilterChange = (key, val, condition) => {
+    console.log('参数：key=', key, ' value=', val, 'condition=', condition);
   }
-  handlerFilterRowsDropChange = (key, val) => {
-    console.log('过滤条件类型:', key, val);
+
+  handlerFilterClear = (key) => {
+    console.log('清除条件', key);
   }
   render() {
     return <Table
-      onFilterRowsDropChange={this.handlerFilterRowsDropChange}//下拉条件的回调(key,val)=>()
-      onFilterRowsChange={this.handlerFilterRowsChange}//触发输入操作以及其他的回调(key,val)=>()
+      onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()
+      onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()
       filterDelay={500}//输入文本多少ms触发回调函数，默认300ms
       filterable={true}//是否开启过滤数据功能
       bordered

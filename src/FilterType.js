@@ -14,30 +14,88 @@ const propTypes = {
 };
 
 class FilterType extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
+            value: "",
             text: "",
             selectValue: "",
             dateValue: "",
             open: false,
+            condition: props.filterDropdownType == 'string' ? 'LIKE' : 'EQ',
             number: 0
         }
     }
-    //清除文本
-    clearText = () => {
+
+    /**
+     * 清除过滤条件
+     *
+     */
+    clearFilter = () => {
+        let { onFilterClear, dataIndex } = this.props;
         this.setState({
-            text: ""
+            value: "",//清空值
+            condition: this.props.filterDropdownType == 'string' ? 'LIKE' : 'EQ'//切回默认查询条件
+        }, () => {
+            //调用清除方法参数为当前字段的field
+            onFilterClear && onFilterClear(dataIndex);
         });
-        let { onChange } = this.props;
-        onChange && onChange("");
     }
-    //设置数值
-    changeNumber = (number) => {
-        let { onChange } = this.props;
-        onChange && onChange(number);
+
+    /**
+     * 设置输入文本的值
+     *
+     */
+    changeText = (val) => {
         this.setState({
-            number
+            value: val
+        });
+    }
+
+    /**
+     * 输入框回车执行回调
+     *
+     */
+    changeTextCall = (e) => {
+        let { onFilterChange, dataIndex } = this.props;
+        if (e.keyCode == 13) {
+            onFilterChange(dataIndex, e.target.value, this.state.condition);
+        }
+    }
+    /**
+     * 更改修改值
+     *
+     */
+    changeValue = () => {
+        this.setState({
+            value: ""
+        });
+    }
+    /**
+     * 下拉条件的回调
+     *
+     * @param {*} key 字段
+     * @param {*} value 值1,2,3...6
+     */
+    onSelectDropdown = (item) => {
+        let { onFilterChange, dataIndex } = this.props;
+        this.setState({
+            condition: item.key
+        }, () => {
+            onFilterChange && onFilterChange(dataIndex, this.state.value, this.state.condition);
+        });
+    }
+
+    /**
+     * 修改数值型的值
+     *
+     */
+    changeNumber = (value) => {
+        let { onFilterChange, dataIndex } = this.props;
+        this.setState({
+            value
+        }, () => {
+            onFilterChange(dataIndex, value, this.state.condition);
         });
     }
     //清除数值
@@ -45,34 +103,22 @@ class FilterType extends Component {
         let { onChange } = this.props;
         onChange && onChange("");
         this.setState({
-            number: ""
+            value: ""
         });
     }
-    //设置文本
-    changeText = (eve) => {
-        this.setState({
-            text: eve
-        });
-    }
-    //回车执行函数
-    changeTextCall = (eve) => {
-        let { onChange } = this.props;
-        if (eve.keyCode == 13) {
-            onChange(eve.target.value);
-        }
-    }
+
     //失去焦点后执行函数
     changeTextCallBlur = (val) => {
         let { onChange } = this.props;
         onChange && onChange(val);
     }
     //设置下拉值
-    changeSelect = (val) => {
-        let { onChange } = this.props;
-        if (onChange) {
-            onChange(val);
+    changeSelect = (value) => {
+        let { onFilterChange, dataIndex } = this.props;
+        if (onFilterChange) {
+            onFilterChange(dataIndex, value, this.state.condition);
             this.setState({
-                selectValue: val
+                value
             });
         }
     }
@@ -93,12 +139,12 @@ class FilterType extends Component {
         });
     }
     //设置日期值
-    changeDate = (val) => {
-        let { onChange } = this.props;
-        if (onChange) {
-            onChange(val);
+    changeDate = (value) => {
+        let { onFilterChange, dataIndex } = this.props;
+        if (onFilterChange) {
+            onFilterChange(dataIndex, value, this.state.condition);
             this.setState({
-                dateValue: val,
+                value,
                 open: false
             });
         }
@@ -111,23 +157,24 @@ class FilterType extends Component {
      * @returns
      */
     renderControl = (rendertype) => {
-        let { filterDropdown, filterDropdownType, format, className, onChange, onSelectDropdown, clsPrefix, locale } = this.props;
+        let { dataIndex, filterDropdown, filterDropdownType, format, className, onChange, onSelectDropdown, clsPrefix, locale } = this.props;
         switch (rendertype) {
             case 'text':
                 return <div className={`${clsPrefix} filter-wrap`}>
                     <FormControl
-                        ref={el => this.text = el}
-                        value={this.state.text}
+                        value={this.state.value}
                         className={className}
                         onChange={this.changeText}
                         onKeyDown={this.changeTextCall}
-                        onBlur={this.changeTextCallBlur}
+                    //onBlur={this.changeTextCallBlur}
                     />
                     <FilterDropDown
                         locale={locale}
-                        onSelectDropdown={onSelectDropdown}
-                        onClickClear={this.clearText}
-                        isShowClear={this.state.text}
+                        dataIndex={dataIndex}
+                        dataText={this.state.value}
+                        onSelectDropdown={this.onSelectDropdown}
+                        onClickClear={this.clearFilter}
+                        isShowClear={this.state.value}
                         isShowCondition={filterDropdown}
                         filterDropdownType={filterDropdownType}
                     >
@@ -137,15 +184,17 @@ class FilterType extends Component {
                 return <div className={`${clsPrefix} filter-wrap`}>
                     <InputNumber
                         className={className}
-                        value={this.state.number}
+                        value={this.state.value}
                         onChange={this.changeNumber}
                         iconStyle="one"
                     />
                     <FilterDropDown
                         locale={locale}
-                        onSelectDropdown={onSelectDropdown}
-                        onClickClear={this.clearNumber}
-                        isShowClear={this.state.number}
+                        dataIndex={dataIndex}
+                        dataText={this.state.value}
+                        onSelectDropdown={this.onSelectDropdown}
+                        onClickClear={this.clearFilter}
+                        isShowClear={this.state.value != 0}
                         isShowCondition={filterDropdown}
                         filterDropdownType={filterDropdownType}
                     >
@@ -155,31 +204,37 @@ class FilterType extends Component {
                 return <div className={`${clsPrefix} filter-wrap`}>
                     <Select
                         {...this.props}
-                        value={this.state.selectValue}
+                        value={this.state.value}
                         onChange={this.changeSelect}
                     /><FilterDropDown
                         locale={locale}
-                        onSelectDropdown={onSelectDropdown}
-                        onClickClear={this.clearSelectValue}
+                        dataIndex={dataIndex}
+                        dataText={this.state.value}
+                        onSelectDropdown={this.onSelectDropdown}
+                        onClickClear={this.clearFilter}
                         isShowCondition={filterDropdown}
-                        isShowClear={this.state.selectValue}
+                        isShowClear={this.state.value}
+                        filterDropdownType={filterDropdownType}
                     >
                     </FilterDropDown></div>
             case 'date':
                 return <div className={`${clsPrefix} filter-wrap`}>
                     <DatePicker
                         {...this.props}
-                        value={this.state.dateValue}
+                        value={this.state.value}
                         onChange={this.changeDate}
                         open={this.state.open}
                         format={format}
                         locale={zhCN}
                     /><FilterDropDown
                         locale={locale}
-                        onSelectDropdown={onSelectDropdown}
-                        onClickClear={this.clearDateValue}
+                        dataIndex={dataIndex}
+                        dataText={this.state.value}
+                        onSelectDropdown={this.onSelectDropdown}
+                        onClickClear={this.clearFilter}
                         isShowCondition={filterDropdown}
-                        isShowClear={this.state.dateValue}
+                        isShowClear={this.state.value}
+                        filterDropdownType={filterDropdownType}
                     >
                     </FilterDropDown>
                 </div>
@@ -187,20 +242,23 @@ class FilterType extends Component {
                 return <div className={`${clsPrefix} filter-wrap`}>
                     <RangePicker
                         {...this.props}
-                        value={this.state.dateValue}
+                        value={this.state.value}
                         onChange={this.changeDate}
                         open={this.state.open}
                         format={format}
+                        showTime={true}
                         locale={zhCN}
                         placeholder={'开始 ~ 结束'}
                         dateInputPlaceholder={['开始', '结束']}
                         showClear={true}
                     /><FilterDropDown
                         locale={locale}
-                        onSelectDropdown={onSelectDropdown}
-                        onClickClear={this.clearDateValue}
+                        dataIndex={dataIndex}
+                        dataText={this.state.value}
+                        onSelectDropdown={this.onSelectDropdown}
+                        onClickClear={this.clearFilter}
                         isShowCondition={filterDropdown}
-                        isShowClear={this.state.dateValue}
+                        isShowClear={this.state.value}
                     >
                     </FilterDropDown>
                 </div>

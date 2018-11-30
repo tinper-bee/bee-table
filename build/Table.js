@@ -364,8 +364,8 @@ var Table = function (_Component) {
   Table.prototype.getHeader = function getHeader(columns, fixed) {
     var _props = this.props,
         filterDelay = _props.filterDelay,
-        onFilterRowsDropChange = _props.onFilterRowsDropChange,
-        onFilterRowsChange = _props.onFilterRowsChange,
+        onFilterChange = _props.onFilterChange,
+        onFilterClear = _props.onFilterClear,
         filterable = _props.filterable,
         showHeader = _props.showHeader,
         expandIconAsCell = _props.expandIconAsCell,
@@ -417,9 +417,9 @@ var Table = function (_Component) {
       rowStyle: trStyle,
       fixed: fixed,
       filterable: filterable,
-      onFilterRowsChange: onFilterRowsChange,
-      onFilterRowsDropChange: onFilterRowsDropChange,
-      filterDelay: filterDelay,
+      onFilterChange: onFilterChange //过滤行输入或下拉之后回调
+      , onFilterClear: onFilterClear //过滤行清除后回调
+      , filterDelay: filterDelay,
       afterDragColWidth: afterDragColWidth,
       contentDomWidth: this.contentDomWidth,
       scrollbarWidth: this.scrollbarWidth,

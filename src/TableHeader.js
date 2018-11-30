@@ -304,26 +304,29 @@ class TableHeader extends Component {
     }
   };
 
+  
   /**
-   * @description 过滤输入后的回调函数
+   * 过滤输入后或下拉条件的回调函数
    */
-  handlerFilterTextChange = (key, val) => {
-    let { onFilterRowsChange } = this.props;
-    if (onFilterRowsChange) {
-      onFilterRowsChange(key, val);
+  handlerFilterChange = (key, value, condition) => {
+    let { onFilterChange } = this.props;
+    if (onFilterChange) {
+      onFilterChange(key, value, condition);
     }
   };
+
   /**
-   * @description 过滤输入后的回调函数
+   * 过滤行清除回调
    */
-  handlerFilterDropChange = (key, val) => {
-    let { onFilterRowsDropChange } = this.props;
-    if (onFilterRowsDropChange) {
-      onFilterRowsDropChange(key, val.key);
+  handlerFilterClear = (field) => {
+    let { onFilterClear } = this.props;
+    if (onFilterClear) {
+      onFilterClear(field);
     }
-  };
+  }
+
   /**
-   * @description 过滤渲染的组件类型
+   * 过滤渲染的组件类型
    */
   filterRenderType = (type, dataIndex, index) => {
     const { clsPrefix, rows, filterDelay, locale } = this.props;
@@ -332,24 +335,18 @@ class TableHeader extends Component {
       case "text":
         return (
           <FilterType
-            locale={locale}
-            rendertype={type}
-            clsPrefix={clsPrefix}
+            locale={locale}//多语
+            rendertype={type}//渲染类型
+            clsPrefix={clsPrefix}//css前缀
             className={`${clsPrefix} filter-text`}
-            onChange={debounce(
-              filterDelay || 300,
-              this.handlerFilterTextChange.bind(this, dataIndex)
-            )}
-            // onChange={this.handlerFilterTextChange.bind(this, dataIndex)}
-            onSelectDropdown={this.handlerFilterDropChange.bind(
-              this,
-              dataIndex
-            )}
-            filterDropdown={rows[1][index]["filterdropdown"]}
+            dataIndex={dataIndex}//字段
+            onFilterChange={this.handlerFilterChange}//输入框回调
+            onFilterClear={this.handlerFilterClear}//清除回调
+            filterDropdown={rows[1][index]["filterdropdown"]}//是否显示下拉条件
             filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
           />
         );
-        //数值输入
+      //数值输入
       case "number":
         return (
           <FilterType
@@ -357,14 +354,9 @@ class TableHeader extends Component {
             rendertype={type}
             clsPrefix={clsPrefix}
             className={`${clsPrefix} filter-text`}
-            onChange={debounce(
-              filterDelay || 300,
-              this.handlerFilterTextChange.bind(this, dataIndex)
-            )}
-            onSelectDropdown={this.handlerFilterDropChange.bind(
-              this,
-              dataIndex
-            )}
+            dataIndex={dataIndex}//字段
+            onFilterChange={debounce(filterDelay || 300, this.handlerFilterChange)}//输入框回调并且函数防抖动
+            onFilterClear={this.handlerFilterClear}//清除回调
             filterDropdown={rows[1][index]["filterdropdown"]}
             filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
           />
@@ -372,10 +364,8 @@ class TableHeader extends Component {
       //下拉框选择
       case "dropdown":
         let selectDataSource = [];
-        if (
-          rows.length > 0 &&
-          (rows[1][index]["filterdropdownauto"] || "auto") == "auto"
-        ) {
+        //处理没有输入数据源的时候，系统自动查找自带的数据筛选后注入
+        if (rows.length > 0 && (rows[1][index]["filterdropdownauto"] || "auto") == "auto") {
           let hash = {};
           //处理下拉重复对象组装dropdown
           selectDataSource = Array.from(rows[1][0].datasource, x => ({
@@ -387,6 +377,7 @@ class TableHeader extends Component {
             return item;
           }, []);
         } else {
+          //从外部数据源加载系统数据
           selectDataSource = rows[1][index]["filterdropdowndata"];
         }
         return (
@@ -395,11 +386,9 @@ class TableHeader extends Component {
             rendertype={type}
             className={`${clsPrefix} filter-dropdown`}
             data={selectDataSource}
-            onChange={this.handlerFilterTextChange.bind(this, dataIndex)}
-            onSelectDropdown={this.handlerFilterDropChange.bind(
-              this,
-              dataIndex
-            )}
+            dataIndex={dataIndex}//字段
+            onFilterChange={this.handlerFilterChange}//输入框回调
+            onFilterClear={this.handlerFilterClear}//清除回调
             filterDropdown={rows[1][index]["filterdropdown"]}
             onFocus={rows[1][index]["filterdropdownfocus"]}
             filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
@@ -412,13 +401,11 @@ class TableHeader extends Component {
             locale={locale}
             rendertype={type}
             className={`filter-date`}
-            onClick={() => {}}
+            onClick={() => { }}
             format={rows[1][index]["format"] || "YYYY-MM-DD"}
-            onChange={this.handlerFilterTextChange.bind(this, dataIndex)}
-            onSelectDropdown={this.handlerFilterDropChange.bind(
-              this,
-              dataIndex
-            )}
+            dataIndex={dataIndex}//字段
+            onFilterChange={this.handlerFilterChange}//输入框回调
+            onFilterClear={this.handlerFilterClear}//清除回调
             filterDropdown={rows[1][index]["filterdropdown"]}
             filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
           />
@@ -430,13 +417,11 @@ class TableHeader extends Component {
             locale={locale}
             rendertype={type}
             className={`filter-date`}
-            onClick={() => {}}
+            onClick={() => { }}
             format={rows[1][index]["format"] || "YYYY-MM-DD"}
-            onChange={this.handlerFilterTextChange.bind(this, dataIndex)}
-            onSelectDropdown={this.handlerFilterDropChange.bind(
-              this,
-              dataIndex
-            )}
+            dataIndex={dataIndex}//字段
+            onFilterChange={this.handlerFilterChange}//输入框回调
+            onFilterClear={this.handlerFilterClear}//清除回调
             filterDropdown={rows[1][index]["filterdropdown"]}
             filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
           />
