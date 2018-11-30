@@ -745,7 +745,8 @@ var Table = function (_Component) {
         scroll = _props3$scroll === undefined ? {} : _props3$scroll,
         getBodyWrapper = _props3.getBodyWrapper,
         footerScroll = _props3.footerScroll,
-        headerScroll = _props3.headerScroll;
+        headerScroll = _props3.headerScroll,
+        hideBodyScroll = _props3.hideBodyScroll;
     var useFixedHeader = this.props.useFixedHeader;
 
     var bodyStyle = _extends({}, this.props.bodyStyle);
@@ -781,7 +782,6 @@ var Table = function (_Component) {
         //显示表头滚动条
         if (headerScroll) {
           if (fixed) {
-
             if (this.domWidthDiff <= 0) {
               headStyle.marginBottom = scrollbarWidth + 'px';
               bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
@@ -792,6 +792,8 @@ var Table = function (_Component) {
             //内容少，不用显示滚动条
             if (this.domWidthDiff > 0) {
               headStyle.overflowX = 'hidden';
+            } else if (hideBodyScroll) {
+              bodyStyle.overflowX = 'hidden';
             }
             headStyle.marginBottom = '0px';
           }

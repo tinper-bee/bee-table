@@ -646,7 +646,7 @@ class Table extends Component {
 
   getTable(options = {}) {
     const { columns, fixed } = options;
-    const { clsPrefix, scroll = {}, getBodyWrapper, footerScroll,headerScroll } = this.props;
+    const { clsPrefix, scroll = {}, getBodyWrapper, footerScroll,headerScroll,hideBodyScroll } = this.props;
     let { useFixedHeader } = this.props;
     const bodyStyle = { ...this.props.bodyStyle };
     const headStyle = {};
@@ -681,7 +681,6 @@ class Table extends Component {
         //显示表头滚动条
         if(headerScroll){
           if(fixed){
-           
            if(this.domWidthDiff <= 0){
               headStyle.marginBottom = `${scrollbarWidth}px`;
               bodyStyle.marginBottom = `-${scrollbarWidth}px`;
@@ -690,11 +689,14 @@ class Table extends Component {
             }
           }else{
                //内容少，不用显示滚动条
-               if(this.domWidthDiff > 0){
+              if(this.domWidthDiff > 0){
                 headStyle.overflowX = 'hidden';
+              }else if(hideBodyScroll){
+                bodyStyle.overflowX = 'hidden';
               }
             headStyle.marginBottom = `0px`;
           }
+
         }else{
           if(fixed){
             if(this.domWidthDiff > 0){
@@ -970,7 +972,7 @@ class Table extends Component {
         {this.getTitle()}
         <div className={`${clsPrefix}-content`}>
          
-          <div className={isTableScroll ? `${clsPrefix}-scroll` : ''}>
+          <div className={isTableScroll ? `${clsPrefix}-scroll` : ''} >
             {this.getTable({ columns: this.columnManager.groupedColumns() })}
             {this.getEmptyText()}
             {this.getFooter()}
