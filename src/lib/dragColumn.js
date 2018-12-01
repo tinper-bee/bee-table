@@ -33,43 +33,65 @@ export default function dragColumn(Table) {
     }
 
 
-    onDragStart=(event,data)=>{
-      if(this.props.onDragStart){
-        this.props.onDragStart(event,data)
-      }
-    }
+    // onDragStart=(event,data)=>{
+    //   if(this.props.onDragStart){
+    //     this.props.onDragStart(event,data)
+    //   }
+    // }
 
-    onDragOver=(event,data)=>{
-      if(this.props.onDragOver){
-       this.props.onDragOver(event,data)
-      }
-    }
+    // onDragOver=(event,data)=>{
+    //   if(this.props.onDragOver){
+    //    this.props.onDragOver(event,data)
+    //   }
+    // }
 
-    onDragEnter=(event,data)=>{
-      if(data.key == "checkbox")return;
-      const {columns:_columns} = this.state;
-      let columns = [];
-      Object.assign(columns,_columns);
-      columns.forEach((da)=>da.drgHover = false)
-      let current = columns.find((da)=>da.key == data.key);
-      if(current.fixed)return;
-      current.drgHover = true;
-      this.setState({
-        columns
-      });
-      if(this.props.onDragEnter){
-        this.props.onDragEnter(event,data);
-      }
-    }
+    // onDragEnter=(event,data)=>{
+    //   console.log('--------onDragEnter------------',data);
+
+    //   if(data.key == "checkbox")return;
+    //   const {columns:_columns} = this.state;
+    //   let columns = [];
+    //   Object.assign(columns,_columns);
+    //   columns.forEach((da)=>da.drgHover = false)
+    //   let current = columns.find((da)=>da.key == data.key);
+    //   if(current.fixed)return;
+    //   current.drgHover = true;
+    //   this.setState({
+    //     columns
+    //   });
+    //   if(this.props.onDragEnter){
+    //     this.props.onDragEnter(event,data);
+    //   }
+    // }
 
     onDrop=(event,data)=>{
+      let {dragSource,dragTarg} = data;
+      let {columns} = this.state;
+      let dragSourceColum =  columns.find((da,i)=>da.key == dragSource.key);
+      let dragTargColum = columns.find((da,i)=>da.key == dragTarg.key);
+
+      for (let index = 0; index < columns.length; index++) {
+        const da = columns[index];
+        if(da.key === dragSource.key){
+          columns[index] = dragTargColum;
+        }
+        if(da.key === dragTarg.key){
+          columns[index] = dragSourceColum;
+        }
+      }
+      this.setState({
+        columns:JSON.parse(JSON.stringify(columns))
+      });
+    }
+
+    onDrop_bak=(event,data)=>{
       if(data.key == "checkbox")return;
       let {columns} = this.state;
       const id = event.dataTransfer.getData("Text");
       let objIndex =  columns.findIndex((_da,i)=>_da.key == id);
       let targetIndex = columns.findIndex((_da,i)=>_da.key == data.key);
-      if(columns[objIndex].fixed)return;//固定列不让拖拽
-      if(columns[targetIndex].fixed)return;//固定列不让拖拽
+      // if(columns[objIndex].fixed)return;//固定列不让拖拽
+      // if(columns[targetIndex].fixed)return;//固定列不让拖拽
       columns.forEach((da,i)=>{
         da.drgHover = false;
         if(da.key == id){//obj
