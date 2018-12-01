@@ -70,55 +70,31 @@ class TableHeader extends Component {
   // shouldComponentUpdate(nextProps) {
   //   return !shallowequal(nextProps, this.props);
   // }
-
+ 
   /**
    * 动态绑定th line 事件
    * type 为false 为增加事件
    * eventSource 为false 给 th 内部的div增加事件
    */
-  thEventListen(events,type){
+  thEventListen(events,type,eventSource){
     let {ths,cols} = this.table;
     for (let index = 0; index < ths.length; index++) {
       const element = ths[index];//.getAttribute('data-type');
       if(!element.getAttribute('data-th-fixed')){
+        const colLine = element.children[0];
         for (let i = 0; i < events.length; i++) {
           const _event = events[i];
-          if(type == "remove"){
-            element.removeEventListener(_event.key,_event.fun);  
+          let _dataSource = eventSource?element:colLine;
+          if(type === "remove"){
+            _dataSource.removeEventListener(_event.key,_event.fun);  
           }else{
-            element.addEventListener(_event.key,_event.fun);
+            _dataSource.addEventListener(_event.key,_event.fun);
           }
         }
       }
     }
   }
 
-    /**
-   * 动态绑定th line 事件
-   * type 为false 为增加事件
-   * eventSource 为false 给 th 内部的div增加事件
-   */
-  // thEventListen(events,type,eventSource){
-  //   let {ths,cols} = this.table;
-  //   for (let index = 0; index < ths.length; index++) {
-  //     const element = ths[index];//.getAttribute('data-type');
-  //     const colLine = element.children[0];
-  //     debugger;
-  //     // const online = (ths[index]).get
-  //     // .getAttribute('data-type');
-  //     if(!element.getAttribute('data-th-fixed')){
-  //       for (let i = 0; i < events.length; i++) {
-  //         const _event = events[i];
-  //         let _dataSource = eventSource?element:colLine;
-  //         if(type == "remove"){
-  //           _dataSource.removeEventListener(_event.key,_event.fun);  
-  //         }else{
-  //           _dataSource.addEventListener(_event.key,_event.fun);
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
  
   bodyEventListen(events,type){
     for (let i = 0; i < events.length; i++) {
@@ -134,13 +110,13 @@ class TableHeader extends Component {
   componentDidUpdate(){
     this.initTable(); 
     this.initEvent();
-    this.initDragAbleEvent();
+    // this.initDragAbleEvent();
   }
 
   componentDidMount(){
     this.initTable();
     this.initEvent();
-    this.initDragAbleEvent();
+    // this.initDragAbleEvent();
   } 
   
   /**
@@ -148,12 +124,28 @@ class TableHeader extends Component {
    */
   initEvent(){
     let  events = [
-      {key:'mousedown',fun:this.onLineMouseDown},
       {key:'mouseup', fun:this.onLineMouseUp},
       {key:'mousemove', fun:this.onLineMouseMove}
     ];
-    this.thEventListen(events);
+    this.thEventListen(events,'',true);//表示把事件添加到th元素上
+    this.thEventListen([{key:'mousedown',fun:this.onLineMouseDown}]);//表示把事件添加到竖线
     this.bodyEventListen([{key:'mouseup',fun:this.bodyonLineMouseMove}]);
+
+    //拖拽交换列事件
+    this.thEventListen([{key:'mousedown',fun:this.dragAbleMouseDown}],'',true);//表示把事件添加到竖线
+  }
+
+  /**
+   * 移除拖拽宽度的事件
+   */
+  removeDragBorderEvent(){
+    let  events = [
+      {key:'mouseup', fun:this.onLineMouseUp},
+      {key:'mousemove', fun:this.onLineMouseMove}
+    ];
+    this.thEventListen(events,'remove',true);//表示把事件添加到th元素上
+    this.thEventListen([{key:'mousedown',fun:this.onLineMouseDown}],'remove');//表示把事件添加到竖线
+    this.bodyEventListen([{key:'mouseup',fun:this.bodyonLineMouseMove}],'remove');
   }
 
   /**
@@ -177,7 +169,6 @@ class TableHeader extends Component {
       const { clsPrefix } = this.props;
       Event.stopPropagation(e); 
       let event = Event.getEvent(e);
-      console.log(event.target,this.drag.option);
       if(this.drag.option != "border"){
         return false;
       }
@@ -188,14 +179,13 @@ class TableHeader extends Component {
       if(newWidth > this.drag.minWidth){
         currentCols.style.width = newWidth +'px';
       }
-      console.log("------------",newWidth);
   };
 
   onLineMouseDown = (e) => {
     Event.stopPropagation(e); 
     let event = Event.getEvent(e);
     const { clsPrefix, contentTable } = this.props;
-
+    console.log("--this.onLineMouseDown----");
     let currentIndex = parseInt(Event.getTarget(event).getAttribute("data-line-index"));
     let defaultWidth = Event.getTarget(event).getAttribute("data-th-width");
     let currentObj = this.table.cols[currentIndex];
@@ -221,44 +211,110 @@ class TableHeader extends Component {
   }
 
   // --------------------------------------th----------------------------------------
-
+ 
+  dragAbleMouseDown = (e) => {
+    Event.stopPropagation(e); 
+    let event = Event.getEvent(e);
+    event.target.setAttribute('draggable',true);//添加交换列效果
+    this.drag.option = 'dragAble';
+    this.removeDragBorderEvent();//清理掉拖拽列宽的事件
+    this.addDragAbleEvent(); //添加拖拽交换列的事件
+  }
+  
   /**
    * 拖拽交换列的事件处理
    */
-  initDragAbleEvent(){
+  addDragAbleEvent (){
     let  events = [
-      {key:'dragstart',fun:this.onDragStart},
-      {key:'dragover', fun:this.onDragOver},
-      {key:'drop', fun:this.onDrop},
-      {key:'dragenter', fun:this.onDragEnter}
+      {key:'dragstart',fun:this.onDragStart},//用户开始拖动元素时触发
+      {key:'dragover', fun:this.onDragOver},//当某被拖动的对象在另一对象容器范围内拖动时触发此事件
+      {key:'drop', fun:this.onDrop},        //在一个拖动过程中，释放鼠标键时触发此事件 
+      {key:'dragenter', fun:this.onDragEnter}  //当被鼠标拖动的对象进入其容器范围内时触发此事件
     ];
-    this.thEventListen(events,'',"th");
+    this.thEventListen(events,'',true);
     // this.bodyEventListen([{key:'mouseup',fun:this.bodyonDragMouseMove}]);
   }
   
-  onDragStart = (event, data) => { 
+  // removeDragAbleEvent(){
+  //   let  events = [
+  //     {key:'dragstart',fun:this.onDragStart},
+  //     {key:'dragover', fun:this.onDragOver},
+  //     {key:'drop', fun:this.onDrop},
+  //     {key:'dragenter', fun:this.onDragEnter}
+  //   ];
+  //   this.thEventListen(events,'remove',true);
+  // }
+
+  onDragStart = (e) => {
+    let event = Event.getEvent(e);
+    if(this.drag.option === 'border'){return;}
+    let currentIndex = parseInt(Event.getTarget(event).getAttribute("data-line-index"));
+     
+    let currentKey = event.target.getAttribute('data-line-key');
     event.dataTransfer.effectAllowed = "move";
-    event.dataTransfer.setData("Text", data.key);
-    this.currentObj = data;
+    event.dataTransfer.setData("Text", currentKey);
+    this.currentObj = this.props.rows[0][currentIndex];
     event.dataTransfer.setDragImage(event.target, 0, 0);
-    this.props.onDragStart(event, data);
+    // this.props.onDragStart(event, this.currentObj);
   };
 
-  onDragOver = (event, data) => {
-    if (!this.currentObj || this.currentObj.key == data.key) return;
+  onDragOver = (e) => {
+    // let event = Event.getEvent(e);
+    // if(this.drag.option === 'border'){return;}
+    // let data = this.getCurrentEventData(e);
+    // if (!this.currentObj || this.currentObj.key == data.key) return;
     event.preventDefault();
-    this.props.onDragOver(event, data);
   };
 
-  onDragEnter = (event, data) => {
-    if (!this.currentObj || this.currentObj.key == data.key) return;
-    this.props.onDragEnter(event, data);
+  /**
+   * 当被鼠标拖动的对象进入其容器范围内时触发此事件。【目标事件】
+   * @memberof TableHeader
+   */
+  onDragEnter = (e) => { 
+    // let event = Event.getEvent(e);
+    if(this.drag.option === 'border'){return;}
+    let data = this.getCurrentEventData(e);
+    if (!this.currentObj || this.currentObj.key == data.key) return; 
+    // this.props.onDragEnter(event, data);
   };
 
-  onDrop = (event, data) => {
+  /**
+   * 在一个拖动过程中，释放鼠标键时触发此事件。【目标事件】
+   * @memberof TableHeader
+   */
+  onDrop = (e) => {
+    if(this.drag.option === 'border'){return;}
+    let data = this.getCurrentEventData(e);
     if (!this.currentObj || this.currentObj.key == data.key) return;
-    this.props.onDrop(event, data);
+    this.props.onDrop(event,{dragSource:this.currentObj,dragTarg:data});
   };
+
+  getCurrentEventData(e){
+    let event = Event.getEvent(e);
+    let key = event.target.getAttribute('data-line-key');
+    let data = this.props.rows[0].find(da=>da.key == key);
+    if(data){
+      return data;
+    }else{
+      console.log(" getCurrentEventData data is null ");
+      return null;
+    }
+  }
+
+  // --------------------------------------拖拽列交换----------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   onMouseOver = (event, data) => {
     //如果是固定列没有拖拽功能
@@ -694,7 +750,7 @@ class TableHeader extends Component {
                   key:columIndex
                 };
                 da.onClick ?thDefaultObj.onClick = (e)=>{da.onClick(da, e)}:"";
-                return (<th {...thDefaultObj} />)
+                return (<th {...thDefaultObj} data-th-fixed={da.fixed} />)
               }
             })}
           </tr>
