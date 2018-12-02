@@ -153,7 +153,7 @@ class TableHeader extends Component {
 
   //---拖拽列宽代码逻辑----start-----
   onLineMouseMove = (e) => {
-      const { clsPrefix ,dragborder} = this.props;
+      const { clsPrefix ,dragborder,contentDomWidth,scrollbarWidth,contentTable,headerScroll} = this.props;
       Event.stopPropagation(e); 
       let event = Event.getEvent(e);
       if (!this.props.dragborder) return;
@@ -166,11 +166,39 @@ class TableHeader extends Component {
       let newWidth = this.drag.oldWidth + diff;
       if(newWidth > this.drag.minWidth){
         currentCols.style.width = newWidth +'px';
-        //hao 修改表体的width
-          this.fixedTable.cols[this.drag.currIndex].style.width = newWidth + "px";
+        //hao 支持固定表头拖拽 修改表体的width
+        if(this.fixedTable.cols){
+            this.fixedTable.cols[this.drag.currIndex].style.width = newWidth + "px";
+        }
+        
+        //表头滚动条处理
+        if(headerScroll){
+            let oldTableWidth = parseInt(this.table.table.style.width ?this.table.table.style.width:this.table.table.scrollWidth);
+            const newTableWidth = oldTableWidth + diff ;
+            this.table.table.style.width  = newTableWidth;//改变table的width
+
+            let showScroll =  contentDomWidth - newTableWidth - scrollbarWidth ;
+            // if(bordered){
+            //     showScroll = showScroll -1;
+            // }
+            const fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header') ;
+            const fixedRighHeadertTable = contentTable.querySelector('.u-table-fixed-right .u-table-header');
+            const contentTableHeader  = contentTable.querySelector('.u-table-scroll .u-table-header');
+            if(showScroll < 0){
+                //找到固定列表格，设置表头的marginBottom值为scrollbarWidth;
+                contentTableHeader.style.overflowX = 'scroll';
+                fixedLeftHeaderTable && (fixedLeftHeaderTable.style.marginBottom = scrollbarWidth + "px");
+                fixedRighHeadertTable && (fixedRighHeadertTable.style.marginBottom = scrollbarWidth + "px");
+            }else{
+                contentTableHeader.style.overflowX = 'hidden';
+                fixedLeftHeaderTable && (fixedLeftHeaderTable.style.marginBottom = '0px');
+                fixedRighHeadertTable && (fixedRighHeadertTable.style.marginBottom = '0px');
+            }
+        }
+        
       }
-      //hao todo
-      this.table.table.style.width  = (parseInt(this.table.table.style.width) + diff);//改变table的width
+      
+      
   };
 
   onLineMouseDown = (e) => {
