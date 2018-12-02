@@ -217,6 +217,9 @@ class TableHeader extends Component {
   };
 
   onLineMouseUp = (event) => {
+    let {rows} = this.props;
+    let data = {rows:rows[0],cols:this.table.cols,currIndex:this.drag.currIndex};
+    this.props.afterDragColWidth && this.props.afterDragColWidth(data);
     this.clearDragBorder(event);
   };
   bodyonLineMouseMove = (event) => {
@@ -225,9 +228,7 @@ class TableHeader extends Component {
 
   clearDragBorder(){
     if (!this.props.dragborder) return;
-    let {rows} = this.props;
-    let data = {rows:rows[0],cols:this.table.cols,currIndex:this.drag.currIndex};
-    this.props.afterDragColWidth && this.props.afterDragColWidth(data);
+   
     this.drag = {
       option:""
     };

@@ -49,71 +49,30 @@ function dragColumn(Table) {
         return _column;
       };
 
-      _this.onDragStart = function (event, data) {
-        if (_this.props.onDragStart) {
-          _this.props.onDragStart(event, data);
-        }
-      };
-
-      _this.onDragOver = function (event, data) {
-        if (_this.props.onDragOver) {
-          _this.props.onDragOver(event, data);
-        }
-      };
-
-      _this.onDragEnter = function (event, data) {
-        if (data.key == "checkbox") return;
-        var _columns = _this.state.columns;
-
-        var columns = [];
-        _extends(columns, _columns);
-        columns.forEach(function (da) {
-          return da.drgHover = false;
-        });
-        var current = columns.find(function (da) {
-          return da.key == data.key;
-        });
-        if (current.fixed) return;
-        current.drgHover = true;
-        _this.setState({
-          columns: columns
-        });
-        if (_this.props.onDragEnter) {
-          _this.props.onDragEnter(event, data);
-        }
-      };
-
       _this.onDrop = function (event, data) {
-        if (data.key == "checkbox") return;
+        var dragSource = data.dragSource,
+            dragTarg = data.dragTarg;
         var columns = _this.state.columns;
 
-        var id = event.dataTransfer.getData("Text");
-        var objIndex = columns.findIndex(function (_da, i) {
-          return _da.key == id;
+        var dragSourceColum = columns.find(function (da, i) {
+          return da.key == dragSource.key;
         });
-        var targetIndex = columns.findIndex(function (_da, i) {
-          return _da.key == data.key;
+        var dragTargColum = columns.find(function (da, i) {
+          return da.key == dragTarg.key;
         });
-        if (columns[objIndex].fixed) return; //固定列不让拖拽
-        if (columns[targetIndex].fixed) return; //固定列不让拖拽
-        columns.forEach(function (da, i) {
-          da.drgHover = false;
-          if (da.key == id) {
-            //obj
-            da.dragIndex = targetIndex;
+
+        for (var index = 0; index < columns.length; index++) {
+          var da = columns[index];
+          if (da.key === dragSource.key) {
+            columns[index] = dragTargColum;
           }
-          if (da.key == data.key) {
-            //targetObj
-            da.dragIndex = objIndex;
+          if (da.key === dragTarg.key) {
+            columns[index] = dragSourceColum;
           }
-        });
-        var _columns = columns.sort((0, _util.compare)('dragIndex'));
-        _this.setState({
-          columns: _columns.slice()
-        });
-        if (_this.props.onDrop) {
-          _this.props.onDrop(event, data, columns);
         }
+        _this.setState({
+          columns: JSON.parse(JSON.stringify(columns))
+        });
       };
 
       _this.getTarget = function (evt) {
