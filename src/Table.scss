@@ -388,26 +388,14 @@ $table-move-in-color: $bg-color-base;
         .online-hover{
           background:#000000;
         }
+      
       }
-      .th-drag-gap{
-        background:transparent;
-      }
-      .th-drag-gap-hover{
-        // background: #ccc;
+      &-drag-gap:hover{
         cursor: col-resize;
+        .online{
+          background: #000000
+        }
       }
-      .th-drag-gap>div{
-        background:transparent;
-      }
-      .th-drag-gap-hover>div{
-        background: #000000
-      }
-      // &.th-can-not-drag{
-      //   .th-drag-gap-hover{
-      //     cursor: none;
-      //     width: 0px;
-      //   }
-      // }
     }
     &-th:last-child {
       &-drag-gap{
