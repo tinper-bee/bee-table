@@ -31,24 +31,59 @@ export default function dragColumn(Table) {
       });
       return _column; 
     }
- 
+
+   cloneDeep(obj){
+        if( typeof obj !== 'object' || Object.keys(obj).length === 0 ){
+            return obj
+        }
+        let resultData = {}
+        return this.recursion(obj, resultData)
+    }
+
+    recursion(obj, data={}){
+        for(key in obj){
+            if( typeof obj[key] == 'object' && Object.keys(obj[key].length>0 )){
+                data[key] = recursion(obj[key])
+            }else{
+                data[key] = obj[key]
+            }
+        }
+        return data
+    }
+
     onDrop=(event,data)=>{
       let {dragSource,dragTarg} = data;
-      let {columns} = this.state;
+      let {columns} = this.state; 
       let dragSourceColum =  columns.find((da,i)=>da.key == dragSource.key);
       let dragTargColum = columns.find((da,i)=>da.key == dragTarg.key);
-
       for (let index = 0; index < columns.length; index++) {
         const da = columns[index];
         if(da.key === dragSource.key){
-          columns[index] = dragTargColum;
+          columns[index] = dragTargColum; 
         }
         if(da.key === dragTarg.key){
           columns[index] = dragSourceColum;
         }
       }
+      let titles = [];
+      columns.forEach(da=>{
+        if(typeof da.title != "string"){
+          titles.push(da.title);
+          delete da.title;
+        }
+      });
+      let newColumns = null;
+      if(titles.length != 0){
+        newColumns = JSON.parse(JSON.stringify(columns));
+        for (let index = 0; index < newColumns.length; index++) {
+          newColumns[index].title = titles[index];
+        }
+        console.log("----columns----",newColumns);
+      }else{
+        newColumns = JSON.parse(JSON.stringify(columns));
+      }
       this.setState({
-        columns:JSON.parse(JSON.stringify(columns))
+        columns:newColumns
       });
     }
  
