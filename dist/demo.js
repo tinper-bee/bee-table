@@ -7237,7 +7237,7 @@
 	  duration: _propTypes2["default"].number,
 	  onClose: _propTypes2["default"].func,
 	  children: _propTypes2["default"].any,
-	  color: _propTypes2["default"].oneOf(['light']),
+	  color: _propTypes2["default"].oneOf(['info', 'success', 'danger', 'warning', 'light', 'dark', 'news', 'infolight', 'successlight', 'dangerlight', 'warninglight']),
 	  title: _propTypes2["default"].any
 	};
 	
@@ -7336,7 +7336,7 @@
 	
 	;
 	
-	Notice.PropTypes = _propTypes2["default"];
+	Notice.propTypes = propTypes;
 	Notice.defaultProps = defaultProps;
 	
 	exports["default"] = Notice;
@@ -12563,6 +12563,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactDom = __webpack_require__(12);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
 	var _propTypes = __webpack_require__(5);
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -12605,247 +12609,103 @@
 	
 	    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 	
-	    _this.onDragStart = function (event, data) {
-	      event.dataTransfer.effectAllowed = "move";
-	      event.dataTransfer.setData("Text", data.key);
-	      _this.currentObj = data;
-	      event.dataTransfer.setDragImage(event.target, 0, 0);
-	      _this.props.onDragStart(event, data);
-	    };
-	
-	    _this.onDragOver = function (event, data) {
-	      var dragAbleOrBordStart = _this.state.dragAbleOrBordStart;
-	
-	      _this.setState({
-	        dragAbleOrBordStart: ""
-	      });
-	      if (!_this.currentObj || _this.currentObj.key == data.key) return;
-	      event.preventDefault();
-	      _this.props.onDragOver(event, data);
-	    };
-	
-	    _this.onDragEnter = function (event, data) {
-	      if (!_this.currentObj || _this.currentObj.key == data.key) return;
-	      _this.props.onDragEnter(event, data);
-	    };
-	
-	    _this.onDrop = function (event, data) {
-	      if (!_this.currentObj || _this.currentObj.key == data.key) return;
-	      _this.props.onDrop(event, data);
-	    };
-	
-	    _this.onMouseOver = function (event, data) {
-	      //如果是固定列没有拖拽功能
-	      if (_this.border || data.fixed) return;
-	      var clsPrefix = _this.props.clsPrefix;
-	
-	      if (event.target.id != 'th-online') {
-	        event.target.className = clsPrefix + "-thead-th-drag-gap th-drag-gap-hover";
-	      }
-	    };
-	
-	    _this.ableOnMouseMove = function (event, data) {
-	      var dragAbleOrBord = _this.state.dragAbleOrBord;
-	
-	      if (dragAbleOrBord === "borderStart" || dragAbleOrBord === "ableStart") return;
-	      if (dragAbleOrBord === "able") return;
-	      _this.setState({
-	        dragAbleOrBord: "able"
-	      });
-	    };
-	
-	    _this.onMouseMove = function (event, data) {
-	      var dragAbleOrBord = _this.state.dragAbleOrBord;
-	
-	      if (dragAbleOrBord === "borderStart" || dragAbleOrBord === "ableStart") return;
-	      if (dragAbleOrBord != "border") {
-	        _this.setState({
-	          dragAbleOrBord: "border"
-	        });
-	      }
-	      //如果是固定列没有拖拽功能
-	      if (_this.border || data.fixed) return;
-	      // const {clsPrefix} = this.props;
-	      // event.target.className = `${clsPrefix}-thead-th-drag-gap th-drag-gap-hover`;
-	    };
-	
-	    _this.onMouseOut = function (event, data) {
-	      if (_this.border) return;
-	      var clsPrefix = _this.props.clsPrefix;
-	
-	      if (event.target.id != 'th-online') {
-	        event.target.className = clsPrefix + "-thead-th-drag-gap th-drag-gap";
-	      }
-	    };
-	
-	    _this.onMouseDown = function (event, data) {
-	      var _this$state = _this.state,
-	          dragAbleOrBord = _this$state.dragAbleOrBord,
-	          dragAbleOrBordStart = _this$state.dragAbleOrBordStart;
-	
-	      _this.setState({
-	        dragAbleOrBordStart: dragAbleOrBord === "border" ? "borderStart" : ""
-	      });
-	      // console.log("-改变宽-----度--",dragAbleOrBordStart);
-	      _this.border = true;
+	    _this.onLineMouseMove = function (e) {
 	      var _this$props = _this.props,
 	          clsPrefix = _this$props.clsPrefix,
-	          contentTable = _this$props.contentTable;
+	          dragborder = _this$props.dragborder;
 	
-	      _this.drag.initPageLeftX = event.pageX;
-	      _this.drag.initLeft = (0, _utils.tryParseInt)(event.target.style.left);
-	      _this.drag.x = _this.drag.initLeft;
-	      _this.drag.currIndex = _this.props.rows[0].findIndex(function (da) {
-	        return da.key == data.key;
-	      });
-	
-	      var contentTableDom = document.getElementById("u-table-drag-thead-" + _this.theadKey).parentNode;
-	      var styleWidth = contentTableDom.style.width;
-	      if (styleWidth && (typeof styleWidth == "number" || styleWidth.includes("px"))) {
-	        _this.contentTableWidth = parseInt(styleWidth);
-	      } else {
-	        _this.contentTableWidth = parseInt(contentTableDom.scrollWidth);
+	      _utils.Event.stopPropagation(e);
+	      var event = _utils.Event.getEvent(e);
+	      if (!_this.props.dragborder) return;
+	      if (_this.drag.option != "border") {
+	        return false;
 	      }
-	      var dragColWidth = _this.drag.data[_this.drag.currIndex].width;
-	      if (typeof dragColWidth == "string" && dragColWidth.indexOf("%") > -1) {
-	        _this.drag.width = _this.contentTableWidth * parseInt(dragColWidth) / 100;
-	      } else {
-	        _this.drag.width = parseInt(_this.drag.data[_this.drag.currIndex].width);
+	      //移动改变宽度
+	      var currentCols = _this.table.cols[_this.drag.currIndex];
+	      var diff = event.x - _this.drag.oldLeft;
+	      var newWidth = _this.drag.oldWidth + diff;
+	      if (newWidth > _this.drag.minWidth) {
+	        currentCols.style.width = newWidth + 'px';
+	        //hao 修改表体的width
+	        _this.fixedTable.cols[_this.drag.currIndex].style.width = newWidth + "px";
 	      }
+	      //hao todo
+	      _this.table.table.style.width = parseInt(_this.table.table.style.width) + diff; //改变table的width
 	    };
 	
-	    _this.onMouseUp = function (event, data) {
-	      _this.setState({
-	        dragAbleOrBordStart: ""
-	      });
-	      _this.border = false;
-	      var clsPrefix = _this.props.clsPrefix;
-	
-	      event.target.className = clsPrefix + "-thead-th-drag-gap th-drag-gap";
-	    };
-	
-	    _this.onThMouseUp = function (event, data) {
-	      _this.border = false;
+	    _this.onLineMouseDown = function (e) {
+	      _utils.Event.stopPropagation(e);
+	      var event = _utils.Event.getEvent(e);
 	      var _this$props2 = _this.props,
 	          clsPrefix = _this$props2.clsPrefix,
-	          rows = _this$props2.rows,
-	          columns = _this$props2.columns;
+	          contentTable = _this$props2.contentTable;
 	
-	      var eventDom = event.target;
-	      var optDom = void 0;
-	      if (eventDom.classList.contains(".th-drag-gap-hover")) {
-	        optDom = eventDom;
-	      } else {
-	        optDom = eventDom.querySelector("." + clsPrefix + "-thead-th-drag-gap");
-	      }
-	      if (optDom) {
-	        optDom.classList.remove("th-drag-gap-hover");
-	        optDom.classList.add("th-drag-gap");
-	      }
-	      // columns[this.drag.currIndex].width = data.width;
-	      //宽度拖拽后，增加回调函数，外部可以记录宽度
-	      if (typeof _this.props.afterDragColWidth == "function" && rows && rows[0] && _this.drag.currIndex) {
-	        _this.props.afterDragColWidth(rows[0], _this.drag.currIndex);
-	      }
+	      if (!_this.props.dragborder) return;
+	      var currentIndex = parseInt(_utils.Event.getTarget(event).getAttribute("data-line-index"));
+	      var defaultWidth = _utils.Event.getTarget(event).getAttribute("data-th-width");
+	      var currentObj = _this.table.cols[currentIndex];
+	      _this.drag.option = "border"; //拖拽操作
+	      _this.drag.currIndex = currentIndex;
+	      _this.drag.oldLeft = event.x;
+	      _this.drag.oldWidth = parseInt(currentObj.style.width);
+	      _this.drag.minWidth = currentObj.style.minWidth != "" ? parseInt(currentObj.style.minWidth) : defaultWidth;
 	    };
 	
-	    _this.onThMouseMove = function (event, data) {
-	      if (!_this.border) return;
-	      //固定表头拖拽
+	    _this.onLineMouseUp = function (event) {
+	      _this.clearDragBorder(event);
+	    };
 	
-	      var _this$props3 = _this.props,
-	          dragborderKey = _this$props3.dragborderKey,
-	          contentTable = _this$props3.contentTable,
-	          headerScroll = _this$props3.headerScroll,
-	          contentDomWidth = _this$props3.contentDomWidth,
-	          scrollbarWidth = _this$props3.scrollbarWidth,
-	          bordered = _this$props3.bordered,
-	          rows = _this$props3.rows;
+	    _this.bodyonLineMouseMove = function (event) {
+	      _this.clearDragBorder(event);
+	    };
 	
-	      var x = event.pageX - _this.drag.initPageLeftX + _this.drag.initLeft - 0;
-	      var contentTableDom = document.getElementById("u-table-drag-thead-" + _this.theadKey).parentNode;
+	    _this.dragAbleMouseDown = function (e) {
+	      _utils.Event.stopPropagation(e);
+	      var event = _utils.Event.getEvent(e);
+	      if (!_this.props.draggable) return;
+	      event.target.setAttribute('draggable', true); //添加交换列效果
+	      _this.drag.option = 'dragAble';
+	      _this.removeDragBorderEvent(); //清理掉拖拽列宽的事件
+	      _this.addDragAbleEvent(); //添加拖拽交换列的事件
+	    };
 	
-	      if (!_this.contentTableWidth) {
-	        var styleWidth = contentTableDom.style.width;
-	        if (styleWidth && (typeof styleWidth == "number" || styleWidth.includes("px"))) {
-	          _this.contentTableWidth = parseInt(styleWidth);
-	        } else {
-	          _this.contentTableWidth = parseInt(contentTableDom.scrollWidth);
-	        }
-	      }
-	      var newTableWidth = _this.contentTableWidth + x;
-	      var newWidth = _this.drag.width + x;
-	      if (newWidth < _this.props.minColumnWidth) {
-	        //清楚样式
-	        var moveDom = event.target.querySelector(".th-drag-gap-hover");
-	        moveDom && moveDom.classList.remove("th-drag-gap-hover");
-	        // event.target.classList.remove('th-drag-gap-hover');
+	    _this.onDragStart = function (e) {
+	      var event = _utils.Event.getEvent(e);
+	      if (!_this.props.draggable) return;
+	      if (_this.drag.option === 'border') {
 	        return;
 	      }
-	      //设置hiden的left
-	      //"u-table-drag-hide-table"
-	      var currentHideDom = document.getElementById("u-table-drag-hide-table-" + dragborderKey).getElementsByTagName("div")[_this.drag.currIndex];
-	      currentHideDom.style.left = _this.drag.initPageLeftX + x - grap + "px";
+	      var currentIndex = parseInt(_utils.Event.getTarget(event).getAttribute("data-line-index"));
 	
-	      //获取最小宽度，不让拖动
-	      // let minWidth = 0;
-	      // for(let i=0;i<=this.drag.currIndex;i++){
-	      //   minWidth += this.drag.data[i].width;
-	      // }
+	      var currentKey = event.target.getAttribute('data-line-key');
+	      event.dataTransfer.effectAllowed = "move";
+	      event.dataTransfer.setData("Text", currentKey);
+	      _this.currentObj = _this.props.rows[0][currentIndex];
+	      event.dataTransfer.setDragImage(event.target, 0, 0);
+	    };
 	
-	      // //判断最小值后在赋值 todo
-	      // let currLeft = this.drag.initPageLeftX+x-grap;
-	      // console.log("currLeft minWidth ",currLeft + " "+minWidth);
-	      // if(currLeft <= minWidth){
-	      //   return;
-	      // }
-	      // currentHideDom.style.left =  currLeft+"px";
+	    _this.onDragOver = function (e) {
+	      event.preventDefault();
+	    };
 	
-	      //设置当前的宽度
-	      var currentData = _this.drag.data[_this.drag.currIndex];
-	      currentData.width = newWidth;
-	      var currentDom = document.getElementById("u-table-drag-thead-" + _this.theadKey).getElementsByTagName("th")[_this.drag.currIndex];
-	      currentDom.style.width = newWidth + "px";
-	      // this.contentTableWidth = newTableWidth;
-	      contentTableDom.style.width = newTableWidth + "px";
-	      // data.width = newWidth;
-	      rows[0][_this.drag.currIndex].width = newWidth;
-	      _this.drag.x = x;
-	      var contentColDomArr = contentTableDom.querySelectorAll("colgroup col");
-	      contentColDomArr[_this.drag.currIndex].style.width = newWidth + "px";
-	      //固定表头时，表头和表体分开，拖拽时表体的宽度也需要一起联动
-	      var siblingDom = contentTableDom.parentNode.nextElementSibling;
-	      if (siblingDom) {
-	        var bodyTableDom = siblingDom.querySelector("table");
-	        //2、是的话将表头对应的表格的宽度给表体对应的表格的宽度
-	        bodyTableDom.style.width = newTableWidth + "px";
-	        //3、对应的col也要跟这变
-	        var colDomArr = bodyTableDom.querySelectorAll("colgroup col");
-	        colDomArr[_this.drag.currIndex].style.width = newWidth + "px";
-	        //4、设置overflow属性
+	    _this.onDragEnter = function (e) {
+	      if (!_this.props.draggable) return;
+	      if (_this.drag.option === 'border') {
+	        return;
 	      }
+	      var data = _this.getCurrentEventData(e);
+	      if (!_this.currentObj || _this.currentObj.key == data.key) return;
+	    };
 	
-	      //表头需要显示滚动条时，需兼容含有固定列
-	      if (headerScroll) {
-	
-	        var showScroll = contentDomWidth - newTableWidth - scrollbarWidth;
-	        if (bordered) {
-	          showScroll = showScroll - 1;
-	        }
-	        var fixedLeftTable = contentTable.querySelector('.u-table-fixed-left .u-table-header');
-	        var fixedRightTable = contentTable.querySelector('.u-table-fixed-rigth .u-table-header');
-	        var contentTableHeader = contentTable.querySelector('.u-table-scroll .u-table-header');
-	        if (showScroll < 0) {
-	          //找到固定列表格，设置表头的marginBottom值为scrollbarWidth;
-	          contentTableHeader.style.overflowX = 'scroll';
-	          fixedLeftTable && (fixedLeftTable.style.marginBottom = scrollbarWidth + "px");
-	          fixedRightTable && (fixedRightTable.style.marginBottom = scrollbarWidth + "px");
-	        } else {
-	          contentTableHeader.style.overflowX = 'hidden';
-	          fixedLeftTable && (fixedLeftTable.style.marginBottom = '0px');
-	          fixedRightTable && (fixedRightTable.style.marginBottom = '0px');
-	        }
+	    _this.onDrop = function (e) {
+	      if (!_this.props.draggable) return;
+	      if (_this.drag.option === 'border') {
+	        return;
 	      }
+	      var data = _this.getCurrentEventData(e);
+	      if (!_this.currentObj || _this.currentObj.key == data.key) return;
+	      if (!_this.props.onDrop) return;
+	      _this.props.onDrop(event, { dragSource: _this.currentObj, dragTarg: data });
 	    };
 	
 	    _this.handlerFilterTextChange = function (key, val) {
@@ -12865,11 +12725,11 @@
 	    };
 	
 	    _this.filterRenderType = function (type, dataIndex, index) {
-	      var _this$props4 = _this.props,
-	          clsPrefix = _this$props4.clsPrefix,
-	          rows = _this$props4.rows,
-	          filterDelay = _this$props4.filterDelay,
-	          locale = _this$props4.locale;
+	      var _this$props3 = _this.props,
+	          clsPrefix = _this$props3.clsPrefix,
+	          rows = _this$props3.rows,
+	          filterDelay = _this$props3.filterDelay,
+	          locale = _this$props3.locale;
 	
 	      switch (type) {
 	        //文本输入
@@ -12960,13 +12820,6 @@
 	    };
 	
 	    _this.currentObj = null;
-	    _this.state = {
-	      border: false,
-	      dragAbleOrBord: props.draggable ? "able" : "", //border 拖拽列宽，able 交换列,
-	      dragAbleOrBordStart: "" // borderStart 开始拖拽宽度 ableStart 开始交换列
-	
-	      // draggable:props.draggable?props.draggable:false,
-	    };
 	    //拖拽宽度处理
 	    if (!props.dragborder) return _possibleConstructorReturn(_this);
 	    _this.border = false;
@@ -12975,13 +12828,10 @@
 	      initPageLeftX: 0,
 	      initLeft: 0,
 	      x: 0,
-	      width: 0
+	      width: 0,
+	      option: ''
 	    };
-	    // let _da = {};
-	    // Object.assign(_da,this.props.rows[0]);
-	    // this.drag.data = JSON.parse(JSON.stringify(this.props.rows[0]));
-	    // let a = this.props.rows[0];
-	
+	    _this.table = null;
 	    var _row = [];
 	    _this.props.rows[0] && _this.props.rows[0].forEach(function (item) {
 	      var newItem = item.key != "checkbox" ? (0, _utils.ObjectAssign)(item) : item;
@@ -12991,25 +12841,177 @@
 	    return _this;
 	  }
 	
-	  TableHeader.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-	    if (this.props.draggable != nextProps.draggable) {
-	      this.setState({
-	        dragAbleOrBord: nextProps.draggable ? "able" : "" //border 拖拽列宽，able 交换列
-	        // draggable:nextProps.draggable,
-	      });
-	    }
+	  /**
+	   * 动态绑定th line 事件
+	   * type 为false 为增加事件
+	   * eventSource 为false 给 th 内部的div增加事件
+	   */
+	  TableHeader.prototype.thEventListen = function thEventListen(events, type, eventSource) {
+	    var _table = this.table,
+	        ths = _table.ths,
+	        cols = _table.cols;
 	
-	    if (this.props.dragborder != nextProps.dragborder) {
-	      this.setState({
-	        dragAbleOrBord: nextProps.dragborder ? "border" : "" //border 拖拽列宽，able 交换列
-	      });
+	    for (var index = 0; index < ths.length; index++) {
+	      var element = ths[index]; //.getAttribute('data-type');
+	      if (!element.getAttribute('data-th-fixed')) {
+	        var colLine = element.children.length > 1 ? element.lastElementChild : element.children[0];
+	        // const colLine = element.children[0];
+	        for (var i = 0; i < events.length; i++) {
+	          var _event = events[i];
+	          var _dataSource = eventSource ? element : colLine;
+	          if (type === "remove") {
+	            _dataSource.removeEventListener(_event.key, _event.fun);
+	          } else {
+	            _dataSource.addEventListener(_event.key, _event.fun);
+	          }
+	        }
+	      }
 	    }
 	  };
 	
-	  // shouldComponentUpdate(nextProps) {
-	  //   return !shallowequal(nextProps, this.props);
-	  // }
+	  TableHeader.prototype.bodyEventListen = function bodyEventListen(events, type) {
+	    for (var i = 0; i < events.length; i++) {
+	      var _event = events[i];
+	      if (type == "remove") {
+	        document.removeEventListener(_event.key, _event.fun);
+	      } else {
+	        document.addEventListener(_event.key, _event.fun);
+	      }
+	    }
+	  };
 	
+	  TableHeader.prototype.componentDidUpdate = function componentDidUpdate() {
+	    this.initTable();
+	    this.initEvent();
+	  };
+	
+	  TableHeader.prototype.componentDidMount = function componentDidMount() {
+	    this.initTable();
+	    this.initEvent();
+	  };
+	
+	  /**
+	   * 拖拽列宽的事件处理
+	   */
+	
+	
+	  TableHeader.prototype.initEvent = function initEvent() {
+	    var events = [{ key: 'mouseup', fun: this.onLineMouseUp }, { key: 'mousemove', fun: this.onLineMouseMove }];
+	
+	    if (this.props.dragborder) {
+	      this.thEventListen(events, '', true); //表示把事件添加到th元素上
+	      this.thEventListen([{ key: 'mousedown', fun: this.onLineMouseDown }]); //表示把事件添加到竖线
+	      this.bodyEventListen([{ key: 'mouseup', fun: this.bodyonLineMouseMove }]);
+	    }
+	    if (!this.props.draggable) return;
+	    //拖拽交换列事件
+	    this.thEventListen([{ key: 'mousedown', fun: this.dragAbleMouseDown }], '', true); //表示把事件添加到竖线
+	  };
+	
+	  /**
+	   * 移除拖拽宽度的事件
+	   */
+	
+	
+	  TableHeader.prototype.removeDragBorderEvent = function removeDragBorderEvent() {
+	    var events = [{ key: 'mouseup', fun: this.onLineMouseUp }, { key: 'mousemove', fun: this.onLineMouseMove }];
+	    this.thEventListen(events, 'remove', true); //表示把事件添加到th元素上
+	    this.thEventListen([{ key: 'mousedown', fun: this.onLineMouseDown }], 'remove'); //表示把事件添加到竖线
+	    this.bodyEventListen([{ key: 'mouseup', fun: this.bodyonLineMouseMove }], 'remove');
+	  };
+	
+	  /**
+	   * 获取table的属性存放在this.table 中。(公用方法)
+	   */
+	
+	
+	  TableHeader.prototype.initTable = function initTable() {
+	    if (!this.props.dragborder && !this.props.draggable) return;
+	    var el = _reactDom2["default"].findDOMNode(this);
+	    var tableDome = el.parentNode;
+	    var table = {};
+	    if (tableDome && tableDome.nodeName && tableDome.nodeName.toUpperCase() == "TABLE") {
+	      table.table = tableDome;
+	      table.cols = tableDome.getElementsByTagName("col");
+	      table.ths = tableDome.getElementsByTagName("th");
+	    }
+	    this.table = table;
+	
+	    if (!this.props.dragborder) return;
+	    if (document.getElementById("u-table-drag-thead-" + this.theadKey)) {
+	      //hao 固定列table
+	      this.fixedTable = {};
+	      var _fixedParentContext = document.getElementById("u-table-drag-thead-" + this.theadKey).parentNode;
+	      var siblingDom = _fixedParentContext.parentNode.nextElementSibling;
+	      if (siblingDom) {
+	        var fixedTable = siblingDom.querySelector("table");
+	        this.fixedTable.table = fixedTable;
+	        this.fixedTable.cols = fixedTable.getElementsByTagName("col");
+	        // this.fixedTable.ths = fixedTable.tableDome.getElementsByTagName("th");
+	      }
+	    }
+	  };
+	
+	  //---拖拽列宽代码逻辑----start-----
+	
+	
+	  TableHeader.prototype.clearDragBorder = function clearDragBorder() {
+	    if (!this.props.dragborder) return;
+	    var rows = this.props.rows;
+	
+	    var data = { rows: rows[0], cols: this.table.cols, currIndex: this.drag.currIndex };
+	    this.props.afterDragColWidth && this.props.afterDragColWidth(data);
+	    this.drag = {
+	      option: ""
+	    };
+	  };
+	
+	  //---拖拽列宽代码逻辑----start-----
+	
+	  /**
+	   * 拖拽交换列的事件处理
+	   */
+	  TableHeader.prototype.addDragAbleEvent = function addDragAbleEvent() {
+	    var events = [{ key: 'dragstart', fun: this.onDragStart }, //用户开始拖动元素时触发
+	    { key: 'dragover', fun: this.onDragOver }, //当某被拖动的对象在另一对象容器范围内拖动时触发此事件
+	    { key: 'drop', fun: this.onDrop }, //在一个拖动过程中，释放鼠标键时触发此事件 
+	    { key: 'dragenter', fun: this.onDragEnter //当被鼠标拖动的对象进入其容器范围内时触发此事件
+	    }];
+	    this.thEventListen(events, '', true);
+	    // this.bodyEventListen([{key:'mouseup',fun:this.bodyonDragMouseMove}]);
+	  };
+	
+	  TableHeader.prototype.removeDragAbleEvent = function removeDragAbleEvent() {
+	    var events = [{ key: 'dragstart', fun: this.onDragStart }, { key: 'dragover', fun: this.onDragOver }, { key: 'drop', fun: this.onDrop }, { key: 'dragenter', fun: this.onDragEnter }];
+	    this.thEventListen(events, 'remove', true);
+	  };
+	
+	  /**
+	   * 当被鼠标拖动的对象进入其容器范围内时触发此事件。【目标事件】
+	   * @memberof TableHeader
+	   */
+	
+	
+	  /**
+	   * 在一个拖动过程中，释放鼠标键时触发此事件。【目标事件】
+	   * @memberof TableHeader
+	   */
+	
+	
+	  TableHeader.prototype.getCurrentEventData = function getCurrentEventData(e) {
+	    var event = _utils.Event.getEvent(e);
+	    var key = event.target.getAttribute('data-line-key');
+	    var data = this.props.rows[0].find(function (da) {
+	      return da.key == key;
+	    });
+	    if (data) {
+	      return data;
+	    } else {
+	      console.log(" getCurrentEventData data is null ");
+	      return null;
+	    }
+	  };
+	  //---拖拽列交换----end----- 
 	  /**
 	   * @description 过滤输入后的回调函数
 	   */
@@ -13026,9 +13028,6 @@
 	  TableHeader.prototype.render = function render() {
 	    var _this2 = this;
 	
-	    var _state = this.state,
-	        dragAbleOrBord = _state.dragAbleOrBord,
-	        dragAbleOrBordStart = _state.dragAbleOrBordStart;
 	    var _props = this.props,
 	        clsPrefix = _props.clsPrefix,
 	        rowStyle = _props.rowStyle,
@@ -13053,12 +13052,12 @@
 	
 	    return _react2["default"].createElement(
 	      "thead",
-	      _extends({ className: clsPrefix + "-thead" }, attr),
+	      _extends({ className: clsPrefix + "-thead" }, attr, { "data-theader-fixed": "scroll" }),
 	      rows.map(function (row, index) {
 	        return _react2["default"].createElement(
 	          "tr",
 	          { key: index, style: rowStyle, className: filterable && index == rows.length - 1 ? 'filterable' : '' },
-	          row.map(function (da, i, arr) {
+	          row.map(function (da, columIndex, arr) {
 	            var thHover = da.drgHover ? " " + clsPrefix + "-thead th-drag-hover" : "";
 	            delete da.drgHover;
 	            var fixedStyle = "";
@@ -13067,128 +13066,48 @@
 	              fixedStyle = clsPrefix + "-row-fixed-columns-in-body";
 	            }
 	
-	            if (lastShowIndex == i) {
+	            if (lastShowIndex == columIndex) {
 	              canDotDrag = "th-can-not-drag";
 	            }
 	            if (filterable && index == rows.length - 1) {
-	              da.children = _this2.filterRenderType(da["filtertype"], da.dataindex, i);
+	              da.children = _this2.filterRenderType(da["filtertype"], da.dataindex, columIndex);
 	              delete da.filterdropdownfocus;
 	            }
 	
-	            var thAbleObj = {},
-	                thBorObj = {},
-	                thDefaultObj = {},
-	                thLineObj = {};
+	            var thDefaultObj = {};
 	            var thClassName = "" + da.className;
-	            if (draggable || dragborder) {
-	              if (draggable && dragAbleOrBordStart != "borderStart") {
-	                thAbleObj = _extends({}, da, {
-	                  onDragStart: function onDragStart(e) {
-	                    _this2.onDragStart(e, da);
-	                  },
-	                  onDragOver: function onDragOver(e) {
-	                    _this2.onDragOver(e, da);
-	                  },
-	                  onDrop: function onDrop(e) {
-	                    _this2.onDrop(e, da);
-	                  },
-	                  onDragEnter: function onDragEnter(e) {
-	                    _this2.onDragEnter(e, da);
-	                  },
-	                  onMouseMove: function onMouseMove(e) {
-	                    _this2.ableOnMouseMove(e, da);
-	                  },
-	                  onMouseDown: function onMouseDown(e) {
-	                    //避免表头其他元素对其影响
-	                    var filterDom = contentTable.querySelector('.filterable');
-	                    //是否是过滤行元素，是的话不触发
-	                    var isFilterDom = filterDom ? filterDom.contains(e.target) : false;
-	
-	                    if (e.target.classList.contains('uf') || isFilterDom) {
-	                      return;
-	                    }
-	                    if (e.target.classList.contains('uf')) {
-	                      return;
-	                    }
-	                    var _state2 = _this2.state,
-	                        dragAbleOrBord = _state2.dragAbleOrBord,
-	                        dragAbleOrBordStart = _state2.dragAbleOrBordStart;
-	
-	                    _this2.setState({
-	                      dragAbleOrBordStart: dragAbleOrBord === "able" ? "ableStart" : ""
-	                    });
-	                  },
-	                  draggable: draggable,
-	                  // className:thObj.className+`${clsPrefix}-thead th-drag ${thHover}`,
-	                  key: da.key
-	                });
-	                thClassName += clsPrefix + "-thead th-drag " + thHover + " ";
-	              }
-	              // if (dragborder && dragAbleOrBord === "border") {
-	              if (dragborder && dragAbleOrBordStart != "ableStart") {
-	                thBorObj.style = { 'width': da.width
-	                  // thObj.className= thObj.className+`${clsPrefix}-thead-th ${canDotDrag}`,
-	                };thBorObj.onMouseMove = function (e) {
-	                  if (draggable) {
-	                    _this2.ableOnMouseMove(e, da);
-	                  }
-	                  _this2.onThMouseMove(e, da);
-	                };
-	                thBorObj.onMouseUp = function (e) {
-	                  _this2.onThMouseUp(e, da);
-	                };
-	
-	                thClassName += clsPrefix + "-thead-th " + canDotDrag;
-	                thBorObj.style = { width: da.width
-	                  // key:i
-	                };
-	              }
-	              // thObj.className = thObj.className+`${fixedStyle}`;
-	              thClassName += "" + fixedStyle;
-	              if (!da.fixed) {
-	                thLineObj = {
-	                  onMouseMove: function onMouseMove(e) {
-	                    e.stopPropagation();_this2.onMouseMove(e, da);
-	                  },
-	                  onMouseOut: function onMouseOut(e) {
-	                    _this2.onMouseOut(e, da);
-	                  },
-	                  onMouseDown: function onMouseDown(e) {
-	                    e.stopPropagation();_this2.onMouseDown(e, da);
-	                  },
-	                  onMouseUp: function onMouseUp(e) {
-	                    _this2.onMouseUp(e, da);
-	                  },
-	                  onMouseOver: function onMouseOver(e) {
-	                    _this2.onMouseOver(e, da);
-	                  }
-	                  // className:`${clsPrefix}-thead-th-drag-gap th-drag-gap`,
-	                };
-	                if (dragAbleOrBordStart !== 'ableStart') {
-	                  thLineObj.className = clsPrefix + "-thead-th-drag-gap th-drag-gap";
-	                }
-	              }
+	            if (draggable) {
+	              thClassName += clsPrefix + "-thead th-drag " + thHover + " ";
+	            }
+	            if (dragborder) {
+	              thClassName += clsPrefix + "-thead-th " + canDotDrag;
+	            }
+	            thClassName += "" + fixedStyle;
+	            if (!da.fixed) {
 	              return _react2["default"].createElement(
 	                "th",
-	                _extends({ key: Math.random() + new Date().getTime() }, thAbleObj, thBorObj, { className: thClassName }),
+	                { key: Math.random() + new Date().getTime(), className: thClassName, "data-th-fixed": da.fixed,
+	                  "data-line-key": da.key, "data-line-index": columIndex, "data-th-width": da.width },
 	                da.children,
-	                da.fixed ? "" : _react2["default"].createElement(
+	                dragborder ? _react2["default"].createElement(
 	                  "div",
-	                  _extends({ ref: function ref(el) {
+	                  { ref: function ref(el) {
 	                      return _this2.gap = el;
-	                    } }, thLineObj),
-	                  _react2["default"].createElement("div", { id: "th-online", className: "online" })
-	                )
+	                    }, "data-line-key": da.key,
+	                    "data-line-index": columIndex, "data-th-width": da.width,
+	                    "data-type": "online", className: clsPrefix + "-thead-th-drag-gap" },
+	                  _react2["default"].createElement("div", { id: "th-online", className: "online", "data-line-key": da.key, "data-line-index": columIndex, "data-th-width": da.width })
+	                ) : ""
 	              );
 	            } else {
 	              thDefaultObj = _extends({}, da, {
 	                className: da.className + " " + fixedStyle,
-	                key: i
+	                key: columIndex
 	              });
 	              da.onClick ? thDefaultObj.onClick = function (e) {
 	                da.onClick(da, e);
 	              } : "";
-	              return _react2["default"].createElement("th", thDefaultObj);
+	              return _react2["default"].createElement("th", _extends({}, thDefaultObj, { "data-th-fixed": da.fixed }));
 	            }
 	          })
 	        );
@@ -13354,7 +13273,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.tryParseInt = undefined;
+	exports.Event = exports.tryParseInt = undefined;
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
@@ -13538,6 +13457,65 @@
 	  });
 	  return chilrenLen;
 	}
+	
+	function addHandler(element, type, handler) {
+	
+	  if (element.addEventListener) {
+	    //检测是否为DOM2级方法
+	    element.addEventListener(type, handler, false);
+	  } else if (element.attachEvent) {
+	    //检测是否为IE级方法
+	    element.attachEvent("on" + type, handler);
+	  } else {
+	    //检测是否为DOM0级方法
+	    element["on" + type] = handler;
+	  }
+	}
+	
+	function removeHandler(element, type, handler) {
+	  if (element.removeEventListener) {
+	    element.removeEventListener(type, handler, false);
+	  } else if (element.detachEvent) {
+	    element.detachEvent("on" + type, handler);
+	  } else {
+	    element["on" + type] = null;
+	  }
+	}
+	
+	//获取事件对象的兼容性写法
+	function getEvent(event) {
+	  return event ? event : window.event;
+	}
+	
+	//获取事件对象目标的兼容性写法
+	function getTarget(event) {
+	  return event.target || event.srcElement;
+	}
+	
+	function preventDefault(event) {
+	  if (event.preventDefault) {
+	    event.preventDefault();
+	  } else {
+	    event.returnValue = false;
+	  }
+	}
+	
+	function stopPropagation(event) {
+	  if (event.stopPropagation) {
+	    event.stopPropagation();
+	  } else {
+	    event.cancelBubble = true;
+	  }
+	}
+	
+	var Event = exports.Event = {
+	  addHandler: addHandler,
+	  removeHandler: removeHandler,
+	  getEvent: getEvent,
+	  getTarget: getTarget,
+	  preventDefault: preventDefault,
+	  stopPropagation: stopPropagation
+	};
 
 /***/ }),
 /* 114 */
@@ -21319,7 +21297,7 @@
 	                _this.tempStorage = value;
 	            }
 	            _this.setState({ value: value });
-	            onChange && onChange(value);
+	            onChange && onChange(Number(value));
 	        };
 	
 	        _this.handleFocus = function (v) {
@@ -21418,7 +21396,7 @@
 	            _this.setState({
 	                value: value
 	            });
-	            onChange && onChange(value);
+	            onChange && onChange(Number(value));
 	            _this.detailDisable(value);
 	        };
 	
@@ -21474,7 +21452,7 @@
 	            _this.setState({
 	                value: value
 	            });
-	            onChange && onChange(value);
+	            onChange && onChange(Number(value));
 	            _this.detailDisable(value);
 	        };
 	
@@ -59316,18 +59294,18 @@
 	    }
 	  };
 	
-	  Popconfirm.prototype.handleClose = function handleClose() {
+	  Popconfirm.prototype.handleClose = function handleClose(e) {
 	    var onClose = this.props.onClose;
 	
 	    this.hide();
-	    onClose && onClose();
+	    onClose && onClose(e);
 	  };
 	
-	  Popconfirm.prototype.handleCancel = function handleCancel() {
+	  Popconfirm.prototype.handleCancel = function handleCancel(e) {
 	    var onCancel = this.props.onCancel;
 	
 	    this.hide();
-	    onCancel && onCancel();
+	    onCancel && onCancel(e);
 	  };
 	
 	  Popconfirm.prototype.handleHide = function handleHide() {
@@ -59363,7 +59341,8 @@
 	        content = _props.content,
 	        children = _props.children,
 	        onClick = _props.onClick,
-	        props = _objectWithoutProperties(_props, ['content', 'children', 'onClick']);
+	        stopbubble = _props.stopbubble,
+	        props = _objectWithoutProperties(_props, ['content', 'children', 'onClick', 'stopbubble']);
 	
 	    delete props.defaultOverlayShown;
 	
@@ -59380,6 +59359,7 @@
 	      _extends({}, confirmProps, {
 	        onClose: this.handleClose,
 	        onCancel: this.handleCancel,
+	        stopbubble: stopbubble,
 	        placement: props.placement }),
 	      content
 	    );
@@ -59495,6 +59475,11 @@
 	    arrowOffsetLeft: _propTypes2["default"].oneOfType([_propTypes2["default"].number, _propTypes2["default"].string]),
 	
 	    /**
+	     * 阻止冒泡
+	     */
+	    stopbubble: _propTypes2["default"].number,
+	
+	    /**
 	     * Title content
 	     */
 	    title: _propTypes2["default"].node,
@@ -59504,6 +59489,7 @@
 	};
 	
 	var defaultProps = {
+	    stopbubble: 0,
 	    placement: 'right',
 	    clsPrefix: 'u-popconfirm',
 	    locale: {}
@@ -59515,7 +59501,27 @@
 	    function Confirm(props) {
 	        _classCallCheck(this, Confirm);
 	
-	        return _possibleConstructorReturn(this, _React$Component.call(this, props));
+	        var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+	
+	        _this.cancel = function (e) {
+	            var _this$props = _this.props,
+	                stopbubble = _this$props.stopbubble,
+	                onCancel = _this$props.onCancel;
+	
+	            stopbubble && e.stopPropagation();
+	            onCancel(e);
+	        };
+	
+	        _this.close = function (e) {
+	            var _this$props2 = _this.props,
+	                stopbubble = _this$props2.stopbubble,
+	                onClose = _this$props2.onClose;
+	
+	            stopbubble && e.stopPropagation();
+	            onClose(e);
+	        };
+	
+	        return _this;
 	    }
 	
 	    Confirm.prototype.render = function render() {
@@ -59537,7 +59543,8 @@
 	            onClose = _props.onClose,
 	            color = _props.color,
 	            onCancel = _props.onCancel,
-	            props = _objectWithoutProperties(_props, ['placement', 'positionTop', 'positionLeft', 'arrowOffsetTop', 'arrowOffsetLeft', 'clsPrefix', 'trigger', 'title', 'className', 'style', 'children', 'locale', 'onClose', 'color', 'onCancel']);
+	            stopbubble = _props.stopbubble,
+	            props = _objectWithoutProperties(_props, ['placement', 'positionTop', 'positionLeft', 'arrowOffsetTop', 'arrowOffsetLeft', 'clsPrefix', 'trigger', 'title', 'className', 'style', 'children', 'locale', 'onClose', 'color', 'onCancel', 'stopbubble']);
 	
 	        var local = (0, _tool.getComponentLocale)(this.props, this.context, 'Popconfirm', function () {
 	            return _i18n2["default"];
@@ -59563,7 +59570,10 @@
 	            _extends({}, props, {
 	                role: 'tooltip',
 	                className: (0, _classnames2["default"])(className, classes),
-	                style: outerStyle
+	                style: outerStyle,
+	                onClick: function onClick(e) {
+	                    return stopbubble && e.stopPropagation();
+	                }
 	            }),
 	            _react2["default"].createElement('div', { className: 'arrow', style: arrowStyle }),
 	            _react2["default"].createElement(
@@ -59576,13 +59586,13 @@
 	                { className: (0, _classnames2["default"])(clsPrefix + '-confirm') },
 	                _react2["default"].createElement(
 	                    _beeButton2["default"],
-	                    { onClick: onCancel, size: 'sm', style: { minWidth: 50 },
+	                    { onClick: this.cancel, size: 'sm', style: { minWidth: 50 },
 	                        shape: 'border' },
 	                    local['cancel']
 	                ),
 	                _react2["default"].createElement(
 	                    _beeButton2["default"],
-	                    { onClick: onClose, size: 'sm', style: { minWidth: 50 }, colors: 'primary' },
+	                    { onClick: this.close, size: 'sm', style: { minWidth: 50 }, colors: 'primary' },
 	                    local['ok']
 	                )
 	            )
@@ -60853,71 +60863,30 @@
 	        return _column;
 	      };
 	
-	      _this.onDragStart = function (event, data) {
-	        if (_this.props.onDragStart) {
-	          _this.props.onDragStart(event, data);
-	        }
-	      };
-	
-	      _this.onDragOver = function (event, data) {
-	        if (_this.props.onDragOver) {
-	          _this.props.onDragOver(event, data);
-	        }
-	      };
-	
-	      _this.onDragEnter = function (event, data) {
-	        if (data.key == "checkbox") return;
-	        var _columns = _this.state.columns;
-	
-	        var columns = [];
-	        _extends(columns, _columns);
-	        columns.forEach(function (da) {
-	          return da.drgHover = false;
-	        });
-	        var current = columns.find(function (da) {
-	          return da.key == data.key;
-	        });
-	        if (current.fixed) return;
-	        current.drgHover = true;
-	        _this.setState({
-	          columns: columns
-	        });
-	        if (_this.props.onDragEnter) {
-	          _this.props.onDragEnter(event, data);
-	        }
-	      };
-	
 	      _this.onDrop = function (event, data) {
-	        if (data.key == "checkbox") return;
+	        var dragSource = data.dragSource,
+	            dragTarg = data.dragTarg;
 	        var columns = _this.state.columns;
 	
-	        var id = event.dataTransfer.getData("Text");
-	        var objIndex = columns.findIndex(function (_da, i) {
-	          return _da.key == id;
+	        var dragSourceColum = columns.find(function (da, i) {
+	          return da.key == dragSource.key;
 	        });
-	        var targetIndex = columns.findIndex(function (_da, i) {
-	          return _da.key == data.key;
+	        var dragTargColum = columns.find(function (da, i) {
+	          return da.key == dragTarg.key;
 	        });
-	        if (columns[objIndex].fixed) return; //固定列不让拖拽
-	        if (columns[targetIndex].fixed) return; //固定列不让拖拽
-	        columns.forEach(function (da, i) {
-	          da.drgHover = false;
-	          if (da.key == id) {
-	            //obj
-	            da.dragIndex = targetIndex;
+	
+	        for (var index = 0; index < columns.length; index++) {
+	          var da = columns[index];
+	          if (da.key === dragSource.key) {
+	            columns[index] = dragTargColum;
 	          }
-	          if (da.key == data.key) {
-	            //targetObj
-	            da.dragIndex = objIndex;
+	          if (da.key === dragTarg.key) {
+	            columns[index] = dragSourceColum;
 	          }
-	        });
-	        var _columns = columns.sort((0, _util.compare)('dragIndex'));
-	        _this.setState({
-	          columns: _columns.slice()
-	        });
-	        if (_this.props.onDrop) {
-	          _this.props.onDrop(event, data, columns);
 	        }
+	        _this.setState({
+	          columns: JSON.parse(JSON.stringify(columns))
+	        });
 	      };
 	
 	      _this.getTarget = function (evt) {

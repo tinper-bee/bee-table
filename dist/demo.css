@@ -8655,14 +8655,10 @@ ul {
         margin: 0 auto; }
       .u-table-thead-th-drag-gap .online-hover {
         background: #000000; }
-    .u-table-thead-th .th-drag-gap {
-      background: transparent; }
-    .u-table-thead-th .th-drag-gap-hover {
+    .u-table-thead-th-drag-gap:hover {
       cursor: col-resize; }
-    .u-table-thead-th .th-drag-gap > div {
-      background: transparent; }
-    .u-table-thead-th .th-drag-gap-hover > div {
-      background: #000000; }
+      .u-table-thead-th-drag-gap:hover .online {
+        background: #000000; }
   .u-table-thead-th:last-child-drag-gap {
     border: none; }
   .u-table-filter-column-pop-cont {
