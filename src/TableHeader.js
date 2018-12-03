@@ -227,11 +227,14 @@ class TableHeader extends Component {
   };
 
   clearDragBorder(){
-    if (!this.props.dragborder) return;
-   
+    // if (!this.props.dragborder || !this.props.draggable) return;
+    if(!this.drag)return;
     this.drag = {
       option:""
     };
+    if (!this.props.draggable){
+      this.removeDragAbleEvent();
+    }
   }
 
   //---拖拽列宽代码逻辑----start-----
@@ -254,7 +257,7 @@ class TableHeader extends Component {
       {key:'dragstart',fun:this.onDragStart},//用户开始拖动元素时触发
       {key:'dragover', fun:this.onDragOver},//当某被拖动的对象在另一对象容器范围内拖动时触发此事件
       {key:'drop', fun:this.onDrop},        //在一个拖动过程中，释放鼠标键时触发此事件 
-      {key:'dragenter', fun:this.onDragEnter}  //当被鼠标拖动的对象进入其容器范围内时触发此事件
+      // {key:'dragenter', fun:this.onDragEnter}  //当被鼠标拖动的对象进入其容器范围内时触发此事件
     ];
     this.thEventListen(events,'',true);
     // this.bodyEventListen([{key:'mouseup',fun:this.bodyonDragMouseMove}]);
@@ -291,12 +294,12 @@ class TableHeader extends Component {
    * 当被鼠标拖动的对象进入其容器范围内时触发此事件。【目标事件】
    * @memberof TableHeader
    */
-  onDragEnter = (e) => { 
-    if (!this.props.draggable) return;
-    if(this.drag.option === 'border'){return;}
-    let data = this.getCurrentEventData(e);
-    if (!this.currentObj || this.currentObj.key == data.key) return;
-  };
+  // onDragEnter = (e) => { 
+  //   if (!this.props.draggable) return;
+  //   if(this.drag.option === 'border'){return;}
+  //   let data = this.getCurrentEventData(e);
+  //   if (!this.currentObj || this.currentObj.key == data.key) return;
+  // };
 
   /**
    * 在一个拖动过程中，释放鼠标键时触发此事件。【目标事件】
