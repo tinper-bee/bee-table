@@ -296,7 +296,7 @@ class TableHeader extends Component {
   //   if(this.drag.option === 'border'){return;}
   //   let data = this.getCurrentEventData(e);
   //   if (!this.currentObj || this.currentObj.key == data.key) return;
-  // };
+  // }; 
 
   /**
    * 在一个拖动过程中，释放鼠标键时触发此事件。【目标事件】
