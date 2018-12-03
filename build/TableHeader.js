@@ -46,8 +46,6 @@ var propTypes = {
   rows: _propTypes2["default"].array
 };
 
-var grap = 16; //偏移数值
-
 var TableHeader = function (_Component) {
   _inherits(TableHeader, _Component);
 
@@ -156,7 +154,10 @@ var TableHeader = function (_Component) {
       if (_this.drag.option === 'border') {
         return;
       }
-      var currentIndex = parseInt(_utils.Event.getTarget(event).getAttribute("data-line-index"));
+      // console.log('-------onDragStart----------',event.target);
+      var th = _this.getThDome(event.target);
+      if (!th) return;
+      var currentIndex = parseInt(th.getAttribute("data-line-index"));
 
       var currentKey = event.target.getAttribute('data-line-key');
       event.dataTransfer.effectAllowed = "move";
@@ -176,6 +177,7 @@ var TableHeader = function (_Component) {
       }
       var data = _this.getCurrentEventData(e);
       if (!data) return;
+      // console.log('-------onDrop----------',event.target);
       if (!_this.currentObj || _this.currentObj.key == data.key) return;
       if (!_this.props.onDrop) return;
       _this.props.onDrop(event, { dragSource: _this.currentObj, dragTarg: data });
@@ -299,25 +301,12 @@ var TableHeader = function (_Component) {
     };
 
     _this.currentObj = null;
-    //拖拽宽度处理
-    if (!props.dragborder) return _possibleConstructorReturn(_this);
-    _this.border = false;
     _this.theadKey = new Date().getTime();
     _this.drag = {
-      initPageLeftX: 0,
-      initLeft: 0,
-      x: 0,
-      width: 0,
       option: ''
     };
     _this.minWidth = 80; //确定最小宽度就是80
     _this.table = null;
-    var _row = [];
-    _this.props.rows[0] && _this.props.rows[0].forEach(function (item) {
-      var newItem = item.key != "checkbox" ? (0, _utils.ObjectAssign)(item) : item;
-      _row.push(newItem);
-    });
-    _this.drag.data = _row; //JSON.parse(JSON.stringify(this.props.rows[0]));
     return _this;
   }
 
@@ -334,8 +323,15 @@ var TableHeader = function (_Component) {
     for (var index = 0; index < ths.length; index++) {
       var element = ths[index]; //.getAttribute('data-type');
       if (!element.getAttribute('data-th-fixed')) {
-        var colLine = element.children.length > 1 ? element.lastElementChild : element.children[0];
-        // const colLine = element.children[0];
+        var colLine = null;
+        if (element.children.length === 0) {
+          colLine = element;
+        } else if (element.children.length > 0) {
+          colLine = element.lastElementChild;
+        } else if (element.children.length === 1) {
+          colLine = element.children[0];
+        }
+        // const colLine =  element.children.length > 1?element.lastElementChild:element.children[0];
         for (var i = 0; i < events.length; i++) {
           var _event = events[i];
           var _dataSource = eventSource ? element : colLine;
@@ -483,7 +479,12 @@ var TableHeader = function (_Component) {
 
   TableHeader.prototype.getCurrentEventData = function getCurrentEventData(e) {
     var event = _utils.Event.getEvent(e);
-    var key = event.target.getAttribute('data-line-key');
+    var th = this.getThDome(event.target);
+    if (!th) {
+      console.log(" event target is not th ! ");
+      return null;
+    }
+    var key = th.getAttribute('data-line-key');
     var data = this.props.rows[0].find(function (da) {
       return da.key == key;
     });
@@ -494,7 +495,27 @@ var TableHeader = function (_Component) {
       return null;
     }
   };
+
+  /**
+   *根据拖拽，获取当前的Th属性
+   * @param {*} element
+   * @returns
+   * @memberof TableHeader
+   */
+
+
+  TableHeader.prototype.getThDome = function getThDome(element) {
+    var _tagName = element.tagName.toLowerCase();
+    if (_tagName === 'i') return null;
+    if (_tagName != 'th') {
+      return this.getThDome(element.parentElement);
+    } else {
+      return element;
+    }
+  };
+
   //---拖拽列交换----end----- 
+
   /**
    * 过滤输入后或下拉条件的回调函数
    */

@@ -28,6 +28,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 
+var cloneDeep = require('lodash.clonedeep');
 /**
  * 参数: 列拖拽
  * @param {*} Table
@@ -71,26 +72,36 @@ function dragColumn(Table) {
             columns[index] = dragSourceColum;
           }
         }
-        var titles = [];
-        columns.forEach(function (da) {
-          if (typeof da.title != "string") {
-            titles.push(da.title);
-            delete da.title;
-          }
-        });
-        var newColumns = null;
-        if (titles.length != 0) {
-          newColumns = JSON.parse(JSON.stringify(columns));
-          for (var _index = 0; _index < newColumns.length; _index++) {
-            newColumns[_index].title = titles[_index];
-          }
-          console.log("----columns----", newColumns);
-        } else {
-          newColumns = JSON.parse(JSON.stringify(columns));
-        }
+        // let titles = [];
+        // columns.forEach(da=>{
+        //   for(let attr of da){
+
+        //   }
+        //   if(typeof da.title != "string"){
+        //     titles.push(da.title);
+        //     delete da.title;
+        //   }
+        // });
+        // let newColumns = null;
+        // if(titles.length != 0){
+        //   newColumns = JSON.parse(JSON.stringify(columns));
+        //   for (let index = 0; index < newColumns.length; index++) {
+        //     newColumns[index].title = titles[index];
+        //   }
+        //   console.log("----columns----",newColumns);
+        // }else{
+        //   newColumns = JSON.parse(JSON.stringify(columns));
+        // }
+        // this.setState({
+        //   columns:newColumns
+        // });
+
         _this.setState({
-          columns: newColumns
+          columns: cloneDeep(columns)
         });
+        if (_this.props.dragDrop) {
+          _this.props.dragDrop(event, data, newColumns);
+        }
       };
 
       _this.getTarget = function (evt) {

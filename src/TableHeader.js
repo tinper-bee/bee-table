@@ -271,7 +271,10 @@ class TableHeader extends Component {
     let event = Event.getEvent(e);
     if (!this.props.draggable) return;
     if(this.drag.option === 'border'){return;}
-    let currentIndex = parseInt(Event.getTarget(event).getAttribute("data-line-index"));
+    // console.log('-------onDragStart----------',event.target);
+    let th = this.getThDome(event.target);
+    if(!th)return;
+    let currentIndex = parseInt(th.getAttribute("data-line-index"));
      
     let currentKey = event.target.getAttribute('data-line-key');
     event.dataTransfer.effectAllowed = "move";
@@ -304,6 +307,7 @@ class TableHeader extends Component {
     if(this.drag.option === 'border'){return;}
     let data = this.getCurrentEventData(e);
     if(!data)return;
+    // console.log('-------onDrop----------',event.target);
     if (!this.currentObj || this.currentObj.key == data.key) return;
     if(!this.props.onDrop)return;
     this.props.onDrop(event,{dragSource:this.currentObj,dragTarg:data});
@@ -311,7 +315,12 @@ class TableHeader extends Component {
 
   getCurrentEventData(e){
     let event = Event.getEvent(e);
-    let key = event.target.getAttribute('data-line-key');
+    let th = this.getThDome(event.target)
+    if(!th){
+      console.log(" event target is not th ! ");
+      return null;
+    }
+    let key = th.getAttribute('data-line-key');
     let data = this.props.rows[0].find(da=>da.key == key);
     if(data){
       return data;
@@ -320,7 +329,25 @@ class TableHeader extends Component {
       return null;
     }
   }
+
+  /**
+   *根据拖拽，获取当前的Th属性
+   * @param {*} element
+   * @returns
+   * @memberof TableHeader
+   */
+  getThDome(element){
+    let _tagName = element.tagName.toLowerCase();
+    if(_tagName === 'i')return null;
+    if(_tagName != 'th'){
+      return this.getThDome(element.parentElement);
+    }else{
+      return element;
+    }
+  }
+
 //---拖拽列交换----end----- 
+
   /**
    * 过滤输入后或下拉条件的回调函数
    */

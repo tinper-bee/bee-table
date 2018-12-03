@@ -76,7 +76,7 @@
 	
 	var CARETUP = _react2['default'].createElement('i', { className: 'uf uf-arrow-up' });
 	
-	var Demo1 = __webpack_require__(79);var Demo10 = __webpack_require__(481);var Demo11 = __webpack_require__(482);var Demo12 = __webpack_require__(484);var Demo13 = __webpack_require__(489);var Demo14 = __webpack_require__(491);var Demo15 = __webpack_require__(501);var Demo16 = __webpack_require__(502);var Demo17 = __webpack_require__(503);var Demo18 = __webpack_require__(504);var Demo19 = __webpack_require__(505);var Demo2 = __webpack_require__(506);var Demo20 = __webpack_require__(511);var Demo21 = __webpack_require__(512);var Demo22 = __webpack_require__(517);var Demo23 = __webpack_require__(519);var Demo24 = __webpack_require__(520);var Demo25 = __webpack_require__(521);var Demo26 = __webpack_require__(522);var Demo27 = __webpack_require__(523);var Demo28 = __webpack_require__(525);var Demo3 = __webpack_require__(526);var Demo4 = __webpack_require__(527);var Demo5 = __webpack_require__(528);var Demo6 = __webpack_require__(529);var Demo7 = __webpack_require__(530);var Demo8 = __webpack_require__(531);var Demo9 = __webpack_require__(536);var DemoArray = [{ "example": _react2['default'].createElement(Demo1, null), "title": " 简单表格、文字过长，两种tip", "code": "/**\n*\n* @title 简单表格、文字过长，两种tip\n* 【Tooltip】\n* @description\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Tooltip, Button } from 'tinper-bee';\n\nconst columns = [\n  {\n    title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 80, className: \"rowClassName\",\n    render: (text, record, index) => {\n      return (\n        <Tooltip inverse overlay={text}>\n          <span tootip={text} style={{\n            display: \"inline-block\",\n            width: \"60px\",\n            textOverflow: \"ellipsis\",\n            overflow: \"hidden\",\n            whiteSpace: \"nowrap\",\n            verticalAlign: \"middle\",\n          }}>{text}</span>\n        </Tooltip>\n      );\n    }\n  },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: '10%' },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    render(text, record, index) {\n      return (\n        <div style={{ position: 'relative' }} title={text} >\n          <a\n            href=\"javascript:;\"\n            tooltip={text}\n            onClick={() => {\n              alert('这是第' + index + '列，内容为:' + text);\n            }}\n          >\n            一些操作\n              </a>\n        </div>\n      );\n    }\n  }\n];\n\nconst data = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过叔叔的女儿黄蓉\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\nclass Demo1 extends Component {\n\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: data,\n      selectedRowIndex: 0\n    }\n  }\n\n  render() {\n    return (\n   \n        <Table\n          columns={columns}\n          data={data}\n          parentNodeId='parent'\n          height={43}\n          headerHeight={42}\n          onRowClick={(record, index, indent) => {\n            this.setState({\n              selectedRowIndex: index\n            });\n          }}\n        />\n\n     \n    );\n  }\n}\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo10, null), "title": " 无数据时显示", "code": "/**\n*\n* @title 无数据时显示\n* @description 无数据时显示效果展示（可自定义）\n *\n* import {Table} from 'tinper-bee';\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\nconst columns10 = [\n    {\n      title: \"Name\",\n      dataIndex: \"name\",\n      key: \"name\",\n      width: \"40%\"\n    },\n    {\n      title: \"Age\",\n      dataIndex: \"age\",\n      key: \"age\",\n      width: \"30%\"\n    },\n    {\n      title: \"Address\",\n      dataIndex: \"address\",\n      key: \"address\"\n    }\n  ];\n  \n  const data10 = [\n    \n  ];\n\n  const emptyFunc = () => <span>这里没有数据！</span>\n  \n  class Demo10 extends Component {\n    render() {\n      return <Table columns={columns10} data={data10} emptyText={emptyFunc} />;\n    }\n  }\n\n", "desc": " 无数据时显示效果展示（可自定义）" }, { "example": _react2['default'].createElement(Demo11, null), "title": " 列排序", "code": "/**\n*\n* @title 列排序\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee';\nimport sort from \"tinper-bee/lib/sort.js\";;\nlet ComplexTable = sort(Table, Icon);\nconst columns11 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst data11 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\n];\n\nconst defaultProps11 = {\n  prefixCls: \"bee-table\"\n};\nclass Demo11 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      sortOrder: \"\",\n      data: data11\n    };\n  }\n  render() {\n\n    return <ComplexTable columns={columns11} data={this.state.data} />;\n  }\n}\nDemo11.defaultProps = defaultProps11;\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo12, null), "title": " 全选功能", "code": "/**\n*\n* @title 全选功能\n* @description 点击表格左列按钮即可选中，并且在选中的回调函数中能获取到选中的数据（未使用封装好的全选功能）\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Checkbox } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/multiSelect.js\";;\n\nconst columns12 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst data12 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\",_checked:true },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" ,_checked:true},\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" ,_checked:true}\n];\n//拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常\nlet MultiSelectTable  = multiSelect(Table, Checkbox);\n\nclass Demo12 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: data12\n    };\n  }\n  getSelectedDataFunc = data => {\n    console.log(data);\n  };\n  \n  render() {\n    let multiObj = {\n      type: \"checkbox\"\n    };\n    return (\n      <MultiSelectTable \n        columns={columns12} \n        data={data12} \n        multiSelect={multiObj}\n        getSelectedDataFunc={this.getSelectedDataFunc}/>\n    );\n  }\n}\n\n", "desc": " 点击表格左列按钮即可选中，并且在选中的回调函数中能获取到选中的数据（未使用封装好的全选功能）" }, { "example": _react2['default'].createElement(Demo13, null), "title": " 多列排序、全选功能、合计", "code": "/**\n *\n * @title 多列排序、全选功能、合计\n * @description 多列排序、全选功能、合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）新增回调函数(sorterClick)\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table, Icon, Button, Checkbox } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/multiSelect.js\";;\nimport sort from \"tinper-bee/lib/sort.js\";;\nimport sum from \"tinper-bee/lib/sum.js\";;\n\nconst columns13 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    className:'dfasd',\n    width: 200\n  },\n  {\n    title: \"功力指数\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c,\n    sorterClick:(data,type)=>{//排序的回调函数\n      //type value is up or down\n      console.log(\"data\",data);\n    }\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c,\n    sorterClick:(data,type)=>{//排序的回调函数\n      //type value is up or down\n      console.log(\"data\",data);\n    }\n  },\n  {\n    title: \"成绩\",\n    dataIndex: \"e\",\n    key: \"e\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c,\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width: 200\n  }\n];\n\nconst data13 = [\n  { a: \"杨过\", b: 675, c: 30, d: \"内行\",e:100, key: \"2\" },\n  { a: \"令狐冲\", b: 43, c: 41, d: \"大侠\",e:90, key: \"1\" },\n  { a: \"令狐冲1\", b: 43, c: 81, d: \"大侠\", e:120,key: \"4\" },\n  { a: \"令狐冲2\", b: 43, c: 81, d: \"大侠\", e:130,key: \"5\" },\n  { a: \"郭靖\", b: 153, c: 25, d: \"大侠\",e:90, key: \"3\" }\n];\n\n//拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常\nlet ComplexTable = multiSelect(sum(sort(Table, Icon)), Checkbox);\n\nclass Demo13 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data13: data13,\n      selectedRow: this.selectedRow,\n      selectDisabled: this.selectDisabled\n    };\n  }\n  getSelectedDataFunc = data => {\n    console.log(data);\n  };\n  selectDisabled = (record, index) => {\n    // console.log(record);\n    if (index === 1) {\n      return true;\n    }\n    return false;\n  };\n  selectedRow = (record, index) => {\n    // console.log(record);\n    if (index === 0) {\n      return true;\n    }\n    return false;\n  };\n  onClick = () => {\n    this.setState({\n      selectedRow: function() {}\n    });\n  };\n\n  render() {\n    let multiObj = {\n      type: \"checkbox\"\n    };\n    let sortObj = {\n      mode:'multiple'\n    }\n   \n    return (\n      <div>\n        <Button className=\"editable-add-btn\" onClick={this.onClick}>\n          change selectedRow\n        </Button>\n        <ComplexTable\n          selectDisabled={this.state.selectDisabled}\n          selectedRow={this.state.selectedRow}\n          columns={columns13}\n          data={this.state.data13}\n          multiSelect={multiObj}\n          sort={sortObj}\n          getSelectedDataFunc={this.getSelectedDataFunc}\n        />\n      </div>\n    );\n  }\n}\n\n", "desc": " 多列排序、全选功能、合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）新增回调函数(sorterClick)" }, { "example": _react2['default'].createElement(Demo14, null), "title": " 编辑态表格", "code": "/**\n*\n* @title 编辑态表格\n* @description 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）\n*\n*/\n\nimport React from \"react\";\nimport { Table, Select, Datepicker, Checkbox, Input, Icon, Form, Button, Tooltip, Animate } from 'tinper-bee';\nimport renderInput from \"tinper-bee/lib/InputRender.js\";;\nimport renderDate from \"tinper-bee/lib/DateRender.js\";;\nimport renderSelect from \"tinper-bee/lib/SelectRender.js\";;\n\nconst InputRender = renderInput(Form, Input, Icon);\nconst DateRender = renderDate(Datepicker, Icon);\nconst SelectRender = renderSelect(Select, Icon);\n\nconst format = \"YYYY-MM-DD\";\nconst format2 = \"YYYY-MM\";\nconst format3 = \"YYYY-MM-DD HH:mm:ss\";\n\nconst dateInputPlaceholder = \"选择日期\";\nconst dateInputPlaceholder2 = \"选择年月\";\nconst dataSource = [\n  {\n    key: \"boyuzhou\",\n    value: \"jack\"\n  },\n  {\n    key: \"renhualiu\",\n    value: \"lucy\"\n  },\n  {\n    key: \"yuzhao\",\n    value: \"yiminghe\"\n  }\n];\nclass Demo14 extends React.Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      dataSource: [\n        {\n          key: \"0\",\n          name: \"沉鱼\",\n          number: \"10\",\n          age: \"y\",\n          address: \"jack\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"1\",\n          name: \"落雁\",\n          number: \"100\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"2\",\n          name: \"闭月\",\n          number: \"1000\",\n          age: \"n\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"3\",\n          name: \"羞花\",\n          number: \"9999\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        }\n      ],\n      count: 4\n    };\n    this.columns = [\n      {\n        title: \"普通输入\",\n        dataIndex: \"name\",\n        key: \"name\",\n        width: \"150px\",\n        render: (text, record, index) => (\n          <InputRender\n            name=\"name\"\n            placeholder=\"请输入姓名\"\n            value={text}\n            isclickTrigger={true}\n            check={this.check}\n            onChange={this.onInputChange(index, \"name\")}\n            isRequire={true}\n            method=\"blur\"\n            errorMessage={\n              <Tooltip overlay={\"错误提示\"}>\n                <Icon type=\"uf-exc-c\" className=\"\" />\n              </Tooltip>\n            }\n          />\n        )\n      },\n      {\n        title: \"货币输入\",\n        dataIndex: \"number\",\n        key: \"number\",\n        width: \"150px\",\n        render: (text, record, index) => (\n          <InputRender\n            format=\"Currency\"\n            name=\"number\"\n            placeholder=\"请输入货币\"\n            value={text}\n            isclickTrigger={true}\n            check={this.check}\n            onChange={this.onInputChange(index, \"number\")}\n            isRequire={true}\n            method=\"blur\"\n            errorMessage={\n              <Tooltip overlay={\"错误提示\"}>\n                <Icon type=\"uf-exc-c\" className=\"\" />\n              </Tooltip>\n            }\n            reg={/^[0-9]+$/}\n          />\n        )\n      },\n      {\n        title: \"复选\",\n        dataIndex: \"age\",\n        key: \"age\",\n        width: \"100px\",\n        render: (text, record, index) => (\n          <Checkbox\n            checked={record.age}\n            onChange={this.onCheckChange(index, \"age\")}\n          />\n        )\n      },\n      {\n        title: \"下拉框\",\n        dataIndex: \"address\",\n        key: \"address\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <SelectRender\n              dataSource={dataSource}\n              isclickTrigger={true}\n              value={text}\n              onChange={this.onSelectChange(index, \"address\")}\n            >\n              <Option value=\"jack\">boyuzhou</Option>\n              <Option value=\"lucy\">renhualiu</Option>\n              <Option value=\"disabled\" disabled>\n                Disabled\n              </Option>\n              <Option value=\"yiminghe\">yuzhao</Option>\n            </SelectRender>\n          );\n        }\n      },\n      {\n        title: \"年月日\",\n        dataIndex: \"datepicker\",\n        key: \"datepicker\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <DateRender\n              value={text}\n              isclickTrigger={true}\n              format={format}\n              onSelect={this.onDateSelect}\n              onChange={this.onDateChange}\n              placeholder={dateInputPlaceholder}\n            />\n          );\n        }\n      },\n      {\n        title: \"年月\",\n        dataIndex: \"MonthPicker\",\n        key: \"MonthPicker\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <DateRender\n              value={text}\n              type=\"MonthPicker\"\n              isclickTrigger={true}\n              format={format2}\n              onSelect={this.onSelect}\n              onChange={this.onChange}\n              placeholder={dateInputPlaceholder2}\n            />\n          );\n        }\n      }\n    ];\n  }\n  check = (flag, obj) => {\n    console.log(flag);\n    console.log(obj);\n  };\n\n  onInputChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onCheckChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onSelectChange = (index, key) => {\n    return value => {\n      console.log(`selected ${value}`);\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onDateChange = d => {\n    console.log(d);\n  };\n  onDateSelect = d => {\n    console.log(d);\n  };\n  onDelete = index => {\n    return () => {\n      const dataSource = [...this.state.dataSource];\n      dataSource.splice(index, 1);\n      this.setState({ dataSource });\n    };\n  };\n  handleAdd = () => {\n    const { count, dataSource } = this.state;\n    const newData = {\n      key: count,\n      name: `凤姐 ${count}`,\n      age: 32,\n      address: \"jack\",\n      datepicker: \"2017-06-12\",\n      MonthPicker: \"2017-02\"\n    };\n    this.setState({\n      dataSource: [...dataSource, newData],\n      count: count + 1\n    });\n  };\n\n  getBodyWrapper = body => {\n    return (\n      <Animate\n        transitionName=\"move\"\n        component=\"tbody\"\n        className={body.props.className}\n      >\n        {body.props.children}\n      </Animate>\n    );\n  };\n  getData = () => {\n    console.log(this.state.dataSource);\n  };\n  render() {\n    const { dataSource } = this.state;\n    const columns = this.columns;\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.handleAdd}\n        >\n          添加一行\n        </Button>\n        <Button\n          style={{marginLeft:\"5px\"}}\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.getData}\n        >\n          获取数据\n        </Button>\n        <Table\n          data={dataSource}\n          columns={columns}\n          getBodyWrapper={this.getBodyWrapper}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）" }, { "example": _react2['default'].createElement(Demo15, null), "title": " 表格行/列合并", "code": "/**\n*\n* @title 表格行/列合并\n* @description 表头只支持列合并，使用 column 里的 colSpan 进行设置。表格支持行/列合并，使用 render 里的单元格属性 colSpan 或者 rowSpan 设值为 0 时，设置的表格不会渲染。\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\n\nconst renderContent = (value, row, index) => {\n  const obj = {\n    children: value,\n    props: {},\n  };\n  if (index === 4) {\n    obj.props.colSpan = 0;\n  }\n  return obj;\n};\n\nconst columns = [{\n  title: 'Name',\n  key: \"name\",\n  dataIndex: 'name',\n  render: (text, row, index) => {\n    if (index < 4) {\n      return <a href=\"#\">{text}</a>;\n    }\n    return {\n      children: <a href=\"#\">{text}</a>,\n      props: {\n        colSpan: 5,\n      },\n    };\n  },\n}, {\n  title: 'Age',\n  key: \"Age\",\n  dataIndex: 'age',\n  render: renderContent,\n}, {\n  title: 'Home phone',\n  colSpan: 2,\n  key: \"tel\",\n  dataIndex: 'tel',\n  render: (value, row, index) => {\n    const obj = {\n      children: value,\n      props: {},\n    };\n    if (index === 2) {\n      obj.props.rowSpan = 2;\n    }\n    if (index === 3) {\n      obj.props.rowSpan = 0;\n    }\n    if (index === 4) {\n      obj.props.colSpan = 0;\n    }\n    return obj;\n  },\n}, {\n  title: 'Phone',\n  colSpan: 0,\n  key: \"phone\",\n  dataIndex: 'phone',\n  render: renderContent,\n}, {\n  title: 'Address',\n  key: \"address\",\n  dataIndex: 'address',\n  render: renderContent,\n}];\n\nconst data = [{\n  key: '1',\n  name: 'John Brown',\n  age: 32,\n  tel: '0571-22098909',\n  phone: 18889898989,\n  address: 'New York No. 1 Lake Park',\n}, {\n  key: '2',\n  name: 'Jim Green',\n  tel: '0571-22098333',\n  phone: 18889898888,\n  age: 42,\n  address: 'London No. 1 Lake Park',\n}, {\n  key: '3',\n  name: 'Joe Black',\n  age: 32,\n  tel: '0575-22098909',\n  phone: 18900010002,\n  address: 'Sidney No. 1 Lake Park',\n}, {\n  key: '4',\n  name: 'Jim Red',\n  age: 18,\n  tel: '0575-22098909',\n  phone: 18900010002,\n  address: 'London No. 2 Lake Park',\n}, {\n  key: '5',\n  name: 'Jake White',\n  age: 18,\n  tel: '0575-22098909',\n  phone: 18900010002,\n  address: 'Dublin No. 2 Lake Park',\n}];\n\nclass Demo15 extends Component {\n  render() {\n    return (\n       <Table columns={columns} data={data}/>\n    );\n  }\n}\n\n\n\n", "desc": " 表头只支持列合并，使用 column 里的 colSpan 进行设置。表格支持行/列合并，使用 render 里的单元格属性 colSpan 或者 rowSpan 设值为 0 时，设置的表格不会渲染。" }, { "example": _react2['default'].createElement(Demo16, null), "title": " 嵌套子表格", "code": "/**\n*\n* @title 嵌套子表格\n* @description 通过expandedRowRender参数来实现子表格\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\n\nconst columns16 = [\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\", \n    width:200,\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert(\"这是第\" + index + \"列，内容为:\" + text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  },\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 250 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  \n];\nconst columns17 = [\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width:200,\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert(\"这是第\" + index + \"列，内容为:\" + text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  },\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  \n];\n\nconst data16 = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\n\nclass Demo16 extends Component {\n  constructor(props){\n    super(props);\n    this.state={\n      data_obj:{}\n    }\n  }\n  expandedRowRender = (record, index, indent) => {\n    let height = 42 * (this.state.data_obj[record.key].length+ 2);\n    \n    return (\n      <Table\n        columns={columns17}\n        style={{height:height}}\n        data={this.state.data_obj[record.key]} \n\n      />\n    );\n  };\n  getData=(expanded, record)=>{\n    //当点击展开的时候才去请求数据\n    let new_obj = Object.assign({},this.state.data_obj);\n    if(expanded){\n      if(record.key==='1'){\n        new_obj[record.key] = [\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n          { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" }\n        ]\n        this.setState({\n          data_obj:new_obj\n        })\n      }else{\n        new_obj[record.key] = [\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" }\n        ]\n        this.setState({\n          data_obj:new_obj\n        })\n      }\n    }\n  }\n  haveExpandIcon=(record, index)=>{\n    //控制是否显示行展开icon，该参数只有在和expandedRowRender同时使用才生效\n    if(index == 0){\n      return true;\n    }\n    return false;\n  }\n  render() {\n    return (\n      <Table\n        columns={columns16}\n        data={data16}\n        onExpand={this.getData}\n        expandedRowRender={this.expandedRowRender}\n        scroll={{x:true}}\n        title={currentData => <div>标题: 这是一个标题</div>}\n        footer={currentData => <div>表尾: 我是小尾巴</div>}\n      />\n    );\n  }\n}\n\n\n", "desc": " 通过expandedRowRender参数来实现子表格" }, { "example": _react2['default'].createElement(Demo17, null), "title": " loading属性指定表格是否加载中", "code": "/**\n*\n* @title loading属性指定表格是否加载中\n* @description  loading可以传boolean或者obj对象，obj为bee-loading组件的参数类型\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Button } from 'tinper-bee';\n\nconst columns17 = [\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert('这是第'+index+'列，内容为:'+text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  }\n];\n\nconst data17 = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\nclass Demo17 extends Component {\n  constructor(props){\n    super(props);\n    this.state = {\n      loading : true\n    }\n  }\n  changeLoading = () => {\n    this.setState({\n      loading : !this.state.loading\n    })\n  }\n  render() {\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.changeLoading}\n        >\n          切换loading\n        </Button>\n        <Table\n          columns={columns17}\n          data={data17}\n          title={currentData => <div>标题: 这是一个标题</div>}\n          footer={currentData => <div>表尾: 我是小尾巴</div>}\n          // loading={this.state.loading}或者是boolean\n          loading={{show:this.state.loading,loadingType:\"line\"}}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": "  loading可以传boolean或者obj对象，obj为bee-loading组件的参数类型" }, { "example": _react2['default'].createElement(Demo18, null), "title": " 合并标题后的合计,且支持多字段统计", "code": "/**\n *\n * @title 合并标题后的合计,且支持多字段统计\n * @description 合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table, Button } from 'tinper-bee'; \nimport sum from \"tinper-bee/lib/sum.js\";;\n \nlet ComplexTable = sum(Table);\n\nconst columns = [\n  {\n    title: \"Name\",\n    dataIndex: \"name\",\n    key: \"name\",\n    width: 100,\n    fixed: \"left\"\n  },\n  {\n    title: \"Other\",\n    children: [\n      {\n        title: \"Age\",\n        dataIndex: \"age\",\n        key: \"age\",\n        width: 200,\n        sumCol: true,\n      },\n      {\n        title: \"Address\",\n        children: [\n          {\n            title: \"Street\",\n            dataIndex: \"street\",\n            key: \"street\",\n            width: 200\n          },\n          {\n            title: \"Block\",\n            children: [\n              {\n                title: \"Building\",\n                dataIndex: \"building\",\n                key: \"building\",\n                width: 100\n              },\n              {\n                title: \"Door No.\",\n                dataIndex: \"number\",\n                key: \"number\",\n                // width: 100,\n                sumCol: true,\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  // {\n  //   title: \"Company\",\n  //   children: [\n  //     {\n  //       title: \"Company Address\",\n  //       dataIndex: \"companyAddress\",\n  //       key: \"companyAddress\",\n  //       width: 100,\n  //     },\n  //     {\n  //       title: \"Company Name\",\n  //       dataIndex: \"companyName\",\n  //       key: \"companyName\",\n  //       width: 100,\n  //     }\n  //   ]\n  // },\n  {\n    title: \"Gender\",\n    dataIndex: \"gender\",\n    key: \"gender\",\n    width: 80,\n    fixed: \"right\"\n  }\n];\n\nfunction getData(){\n  const data = [];\n  for (let i = 0; i < 5; i++) {\n    data.push({\n      key: i,\n      name: \"John Brown\"+i,\n      age: i + Math.floor(Math.random()*10),\n      street: \"Lake Park\",\n      building: \"C\",\n      number: 20 *  Math.floor(Math.random()*10),\n      companyAddress: \"Lake Street 42\",\n      companyName: \"SoftLake Co\",\n      gender: \"M\"\n    });\n  }\n  return data;\n}\n\nclass Demo18 extends Component {\n  \n  constructor(props) {\n    super(props);\n    this.state = {\n      data: getData()\n    };\n  }\n\n  changeData = ()=>{\n    this.setState({\n      data: getData()\n    });\n  }\n\n  render() {\n    const {data} = this.state;\n    return (\n      <div>\n        <Button \n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.changeData}\n        >\n          动态设置数据源\n        </Button>\n\n         <ComplexTable \n          columns={columns}\n          data={data}\n          bordered\n          // scroll={{ x: \"130%\", y: 140 }}\n        />\n      </div>\n    );\n  }\n}\n\n", "desc": " 合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）" }, { "example": _react2['default'].createElement(Demo19, null), "title": " 编辑态表格", "code": "/**\n*\n* @title 编辑态表格\n* @description 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）\n*\n*/\n\nimport React from \"react\";\nimport { Table, Select, Form, Input, Icon, Tooltip, Animate, Button } from 'tinper-bee';\nimport renderInput from \"tinper-bee/lib/InputRender.js\";;\nimport renderSelect from \"tinper-bee/lib/SelectRender.js\";;\n\nconst InputRender = renderInput(Form, Input, Icon);\nconst SelectRender = renderSelect(Select, Icon);\n\nconst Option = Select.Option;\n\nconst dataSource = [\n  {\n    key: \"boyuzhou\",\n    value: \"jack\"\n  },\n  {\n    key: \"renhualiu\",\n    value: \"lucy\"\n  },\n  {\n    key: \"yuzhao\",\n    value: \"yiminghe\"\n  }\n];\nclass Demo19 extends React.Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      dataSource: [\n        {\n          key: \"0\",\n          name: \"沉鱼\",\n          number: \"10\",\n          age: \"y\",\n          address: \"jack\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"1\",\n          name: \"落雁\",\n          number: \"100\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"2\",\n          name: \"闭月\",\n          number: \"1000\",\n          age: \"n\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"3\",\n          name: \"羞花\",\n          number: \"9999\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        }\n      ],\n      count: 4\n    };\n    this.columns = [ \n      {\n        title: \"货币输入\",\n        dataIndex: \"number\",\n        key: \"number\",\n        width: \"150px\",\n        render: (text, record, index) => (\n          <InputRender\n            format=\"Currency\"\n            name=\"name\"\n            placeholder=\"请输入姓名\"\n            value={text}\n            isclickTrigger={true}\n            check={this.check}\n            onChange={this.onInputChange(index, \"name\")}\n            isRequire={true}\n            method=\"blur\"\n            errorMessage={\n              <Tooltip overlay={\"错误提示\"}>\n                <Icon type=\"uf-exc-c\" className=\"\" />\n              </Tooltip>\n            }\n            reg={/^[0-9]+$/}\n          />\n        )\n      },\n       \n      {\n        title:(<div>下拉框的div</div>),\n        dataIndex: \"address\",\n        key: \"address\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <SelectRender\n              dataSource={dataSource}\n              isclickTrigger={true}\n              value={text}\n              onChange={this.onSelectChange(index, \"address\")}\n              onFocus={this.handFocus}\n              onBlur={this.onBlur}\n              autofocus\n            >\n              <Option value=\"jack\">boyuzhou</Option>\n              <Option value=\"lucy\">renhualiu</Option>\n              <Option value=\"disabled\" disabled>\n                Disabled\n              </Option>\n              <Option value=\"yiminghe\">yuzhao</Option>\n            </SelectRender>\n          );\n        }\n      }\n    ];\n  }\n  check = (flag, obj) => {\n    console.log(flag);\n    console.log(obj);\n  };\n\n  handFocus = (value,e) => {\n    console.log(value+` 获取焦点事件`);\n  };\n  onBlur = (value,e) => {\n    console.log(value+` onBlur`);\n  };\n\n  onInputChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n\n  onSelectChange = (index, key) => {\n    return value => {\n      console.log(`selected ${value}`);\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n\n  handleAdd = () => {\n    const { count, dataSource } = this.state;\n    const newData = {\n      key: count,\n      name: `凤姐 ${count}`,\n      age: 32,\n      address: \"jack\",\n      datepicker: \"2017-06-12\",\n      MonthPicker: \"2017-02\"\n    };\n    this.setState({\n      dataSource: [...dataSource, newData],\n      count: count + 1\n    });\n  };\n\n  getBodyWrapper = body => {\n    return (\n      <Animate\n        transitionName=\"move\"\n        component=\"tbody\"\n        className={body.props.className}\n      >\n        {body.props.children}\n      </Animate>\n    );\n  };\n  getData = () => {\n    console.log(this.state.dataSource);\n  };\n  render() {\n    const { dataSource } = this.state;\n    const columns = this.columns;\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.handleAdd}\n        >\n          添加一行\n        </Button>\n        <Button\n          style={{marginLeft:\"5px\"}}\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.getData}\n        >\n          获取数据\n        </Button>\n        <Table\n          data={dataSource}\n          columns={columns}\n          getBodyWrapper={this.getBodyWrapper}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）" }, { "example": _react2['default'].createElement(Demo2, null), "title": " 增删改表格", "code": "/**\n*\n* @title 增删改表格\n* @description 这是带有增删改功能的表格（此编辑功能未使用render组件）\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Popconfirm, Input, Icon, Animate, Button } from 'tinper-bee';\n\nclass EditableCell extends React.Component {\n  state = {\n    value: this.props.value,\n    editable: false\n  };\n  handleChange = e => {\n    const value = e;\n    this.setState({ value });\n  };\n  check = () => {\n    this.setState({ editable: false });\n    if (this.props.onChange) {\n      this.props.onChange(this.state.value);\n    }\n  };\n  edit = () => {\n    this.setState({ editable: true });\n  };\n  handleKeydown = event => {\n    if (event.keyCode == 13) {\n      this.check();\n    }\n  };\n  render() {\n    const { value, editable } = this.state;\n    return (\n      <div className=\"editable-cell\">\n        {editable ? (\n          <div className=\"editable-cell-input-wrapper\">\n            <Input\n              value={value}\n              onChange={this.handleChange}\n              onKeyDown={this.handleKeydown}\n            />\n            <Icon\n              type=\"uf-correct\"\n              className=\"editable-cell-icon-check\"\n              onClick={this.check}\n            />\n          </div>\n        ) : (\n          <div className=\"editable-cell-text-wrapper\">\n            {value || \" \"}\n            <Icon\n              type=\"uf-pencil\"\n              className=\"editable-cell-icon\"\n              onClick={this.edit}\n            />\n          </div>\n        )}\n      </div>\n    );\n  }\n}\n\nclass Demo2 extends React.Component {\n  constructor(props) {\n    super(props);\n    this.columns = [\n      {\n        title: \"姓名\",\n        dataIndex: \"name\",\n        key: \"name\",\n        width: \"30%\",\n        render: (text, record, index) => (\n          <EditableCell\n            value={text}\n            onChange={this.onCellChange(index, \"name\")}\n          />\n        )\n      },\n      {\n        title: \"年龄\",\n        dataIndex: \"age\",\n        key: \"age\"\n      },\n      {\n        title: \"你懂的\",\n        dataIndex: \"address\",\n        key: \"address\"\n      },\n      {\n        title: \"操作\",\n        dataIndex: \"operation\",\n        key: \"operation\",\n        render: (text, record, index) => {\n          return this.state.dataSource.length > 1 ? (\n            <Popconfirm content=\"确认删除?\" id=\"aa\" onClose={this.onDelete(index)}>\n              <Icon type=\"uf-del\" />\n            </Popconfirm>\n          ) : null;\n        }\n      }\n    ];\n\n    this.state = {\n      dataSource: [\n        {\n          key: \"0\",\n          name: \"沉鱼\",\n          age: \"18\",\n          address: \"96, 77, 89\"\n        },\n        {\n          key: \"1\",\n          name: \"落雁\",\n          age: \"16\",\n          address: \"90, 70, 80\"\n        },\n        {\n          key: \"2\",\n          name: \"闭月\",\n          age: \"17\",\n          address: \"80, 60, 80\"\n        },\n        {\n          key: \"3\",\n          name: \"羞花\",\n          age: \"20\",\n          address: \"120, 60, 90\"\n        }\n      ],\n      count: 4\n    };\n  }\n  onCellChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onDelete = (index) => {\n    return () => {\n      const dataSource = [...this.state.dataSource];\n      dataSource.splice(index, 1);\n      this.setState({ dataSource });\n    }\n  };\n  handleAdd = () => {\n    const { count, dataSource } = this.state;\n    const newData = {\n      key: count,\n      name: `凤姐 ${count}`,\n      age: 32,\n      address: `100 100 100`\n    };\n    this.setState({\n      dataSource: [...dataSource, newData],\n      count: count + 1\n    });\n  };\n\n  getBodyWrapper = body => {\n    return (\n      <Animate\n        transitionName=\"move\"\n        component=\"tbody\"\n        className={body.props.className}\n      >\n        {body.props.children}\n      </Animate>\n    );\n  };\n  render() {\n    const { dataSource } = this.state;\n    const columns = this.columns;\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.handleAdd}\n        >\n          添加\n        </Button>\n        <Table\n          data={dataSource}\n          columns={columns}\n          getBodyWrapper={this.getBodyWrapper}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 这是带有增删改功能的表格（此编辑功能未使用render组件）" }, { "example": _react2['default'].createElement(Demo20, null), "title": " 简单表格选中行的背景色、表头表尾", "code": "/**\n*\n* @title 简单表格选中行的背景色、表头表尾\n* @description\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Tooltip, Button } from 'tinper-bee';\n\nconst columns = [\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width:80 , className:\"rowClassName\"},\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n];\n\nconst data = [\n  { a: \"令狐冲\", b: \"男\", c: 41, key: \"1\" },\n  { a: \"杨过叔叔的女儿黄蓉\", b: \"男\", c: 67, key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, key: \"3\" }\n];\n\nclass Demo26 extends Component {\n\n  constructor(props){\n      super(props);\n      this.state = {\n        data: data,\n        selectedRowIndex: 0\n      }\n  }\n\n  render() {\n    return (\n      <Table\n        columns={columns}\n        data={data}\n        rowClassName={(record,index,indent)=>{\n          if (this.state.selectedRowIndex == index) {\n              return 'selected';\n          } else {\n              return '';\n          }\n        }}\n        onRowClick={(record,index,indent)=>{\n          this.setState({ \n              selectedRowIndex: index\n          });\n        }}\n        title={currentData => <div>标题: 这是一个标题</div>}\n        footer={currentData => <div>表尾: 我是小尾巴</div>}\n      /> \n    );\n  }\n}\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo21, null), "title": " 根据列进行过滤", "code": "/**\n*\n* @title 根据列进行过滤\n* @description 点击表格右侧按钮，进行表格列的数据过滤。可以自定义设置显示某列，通过ifshow属性控制，默认为true都显示。afterFilter为过滤之后的回调函数\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Popover, Checkbox, Icon } from 'tinper-bee';\nimport filterColumn from \"tinper-bee/lib/filterColumn\";;\nimport sum from \"tinper-bee/lib/sum\";;\n\nconst data21 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行',e: \"操作\", key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠',e: \"操作\", key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠',e: \"操作\", key: \"3\" }\n];\n\nconst FilterColumnTable = filterColumn(Table, Popover, Icon);\n\nconst defaultProps21 = {\n  prefixCls: \"bee-table\"\n};\n\nclass Demo21 extends Component {\n  constructor(props) {\n    super(props);\n    this.state ={\n              columns21: [\n                {\n                  title: \"名字\",\n                  dataIndex: \"a\",\n                  key: \"a\"\n                  // width: 100\n                },\n                {\n                  title: \"性别\",\n                  dataIndex: \"b\",\n                  key: \"b\",\n                  // width: 100\n                },\n                {\n                  title: \"年龄\",\n                  dataIndex: \"c\",\n                  key: \"c\",\n                  ifshow:false,\n                  // width: 200,\n                  // sumCol: true,\n                  sorter: (a, b) => a.c - b.c\n                },\n                {\n                  title: \"武功级别\",\n                  dataIndex: \"d\",\n                  key: \"d\"\n                },\n                {\n                  title: \"操作\",\n                  dataIndex: \"e\",\n                  key: \"e\",\n                  render(text, record, index){\n                    return (\n                      <div  title={text} >\n                          <a href=\"#\"\n                              tooltip={text}\n                              onClick={() => {\n                                alert('这是第'+index+'列，内容为:'+text);\n                              }}\n                              // style={{\n                              //     position: 'absolute',\n                              //     top: 5,\n                              //     left: 0\n                              // }}\n                            >\n                              一些操作\n                            </a>\n                      </div>\n                    );\n                  }\n                }\n              ]};\n  }\n  afterFilter = (optData,columns)=>{\n    if(optData.key == 'b'){\n        if(optData.ifshow){\n          columns[2].ifshow = false;\n        }else{\n          columns[2].ifshow = true;\n        }\n        this.setState({\n          columns21 :columns,\n          showFilterPopover:true\n        });\n    }\n    \n  }\n \n  render() {\n    \n    return <FilterColumnTable columns={this.state.columns21} data={data21} afterFilter={this.afterFilter} showFilterPopover={this.state.showFilterPopover}/>;\n  }\n}\nDemo21.defaultProps = defaultProps21;\n\n\n", "desc": " 点击表格右侧按钮，进行表格列的数据过滤。可以自定义设置显示某列，通过ifshow属性控制，默认为true都显示。afterFilter为过滤之后的回调函数" }, { "example": _react2['default'].createElement(Demo22, null), "title": " 列的拖拽，交换表头的顺序", "code": "/**\n*\n* @title 列的拖拽，交换表头的顺序\n* @description 点击列的表头，进行左右拖拽\n*/\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee'; \nimport dragColumn from \"tinper-bee/lib/dragColumn\";;\n\n\nconst columns22 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 200\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width: 200,\n  }\n];\n\nconst data22 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\n];\n\nconst DragColumnTable = dragColumn(Table);\n\nconst defaultProps22 = {\n  prefixCls: \"bee-table\"\n};\n\nclass Demo22 extends Component {\n  constructor(props) {\n    super(props); \n  }\n \n  render() {\n    return <DragColumnTable columns={columns22} data={data22} bordered\n    \n    draggable={true} \n    />;\n  }\n}\nDemo22.defaultProps = defaultProps22;\n\n\n", "desc": " 点击列的表头，进行左右拖拽" }, { "example": _react2['default'].createElement(Demo23, null), "title": " 拖拽调整列的宽度", "code": "/**\n*\n* @title 拖拽调整列的宽度\n* @description 注：不支持tree结构的表头、合并表头的table【目前支持表头拖拽宽度、交互列一起使用】\n*/\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee'; \nimport dragColumn from \"tinper-bee/lib/dragColumn\";;\n\n\nconst columns23 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: '200'\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: '100'\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: '200',\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    fixed:'right',\n    width: 200,\n  }\n];\n\nconst data23 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\n];\n\nconst DragColumnTable = dragColumn(Table);\n\nconst defaultProps23 = {\n  prefixCls: \"bee-table\"\n};\n\nclass Demo23 extends Component {\n  constructor(props) {\n    super(props); \n  }\n\n  render() {\n    return <DragColumnTable columns={columns23} data={data23} bordered\n    dragborder={true} \n    draggable={true} \n    />;\n  }\n}\nDemo23.defaultProps = defaultProps23;\n\n\n", "desc": " 注：不支持tree结构的表头、合并表头的table【目前支持表头拖拽宽度、交互列一起使用】" }, { "example": _react2['default'].createElement(Demo24, null), "title": " 动态设置固、取消固定列", "code": "/**\n*\n* @title 动态设置固、取消固定列\n* @description 动态设置固、取消固定列\n* @description 动态固定列设置 一个table动态设置一个方向【fixed: \"left\"，fixed: \"right\"】。\n*\n*/\nimport React, { Component } from 'react';\nimport { Table, Dropdown, Menu, Icon } from 'tinper-bee';\n\n\nconst { Item } = Menu;\n// const columns24 = [\n//   {\n//     title: \"Full Name\",\n//     width: 100,\n//     dataIndex: \"name\",\n//     key: \"name\",\n//     fixed: \"left\",\n//   },\n//   { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\", fixed: \"left\" },\n//   { title: \"Column 1\", dataIndex: \"address\", key: \"1\"  },\n//   { title: \"Column 2\", dataIndex: \"address2\", key: \"2\" },\n//   { title: \"Column 3\", dataIndex: \"address\", key: \"3\" },\n//   { title: \"Column 4\", dataIndex: \"address\", key: \"4\" },\n//   { title: \"Column 24\", dataIndex: \"address\", key: \"24\" },\n//   { title: \"Column 6\", dataIndex: \"address\", key: \"6\" },\n//   { title: \"Column 7\", dataIndex: \"address\", key: \"7\" },\n//   { title: \"Column 8\", dataIndex: \"address\", key: \"8\" }\n// ];\n\n\nconst columns24 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100,\n    fixed: \"left\",\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100,\n    fixed: \"left\",\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 100, \n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width: 150 \n  },\n  {\n    title: \"对手\",\n    dataIndex: \"e\",\n    key: \"e\",\n    width: 100 \n  },\n  {\n    title: \"帮派\",\n    dataIndex: \"f\",\n    key: \"f\",\n    width: 100 \n  },\n  {\n    title: \"武功类型\",\n    dataIndex: \"g\",\n    key: \"g\",\n    width: 100 \n  },\n  {\n    title: \"师傅\",\n    dataIndex: \"k\",\n    key: \"k\",\n    // width: 100 \n  },\n  {\n    title: \"攻击系数\",\n    dataIndex: \"h\",\n    key: \"h\",\n    width: 100 \n  }\n];\n\n\nconst data24 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行',e:'黄荣',f:'古墓派',g:'剑术',k:'小龙女',h:'0.5', key: \"1\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'剑客',e:'自己',f:'无',g:'剑术',k:'无',h:'0.5', key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠',e:'黄荣',f:'朝廷',g:'内容',k:'外侵势力',h:'0.6', key: \"3\" }\n]; \n \nclass Demo24 extends Component {\n\n  constructor(props) {\n    super(props);\n    // let columns = [];\n    // Object.assign(columns,columns24);\n    // columns.forEach(da=>da.onHeadCellClick=this.onHeadCellClick);\n    this.state = {\n      columns:columns24\n    }\n  }\n\n  \n    onSelect = ({key,item})=>{ \n      console.log(`${key} selected`); //获取key\n      let currentObject = item.props.data; //获取选中对象的数据\n      let {columns} = this.state;\n      let fixedCols = [];\n      let nonColums = [];\n      columns.find(da=>{\n        if(da.key == key){\n          da.fixed?delete da.fixed:da.fixed = 'left';\n        }\n        da.fixed?fixedCols.push(da):nonColums.push(da);\n      });\n    \n      columns = [...fixedCols,...nonColums]\n\n      this.setState({\n        columns\n      });\n    }\n  //表头增加下拉菜单\n  renderColumnsDropdown(columns) {\n    const icon ='uf-arrow-down';\n    \n    return columns.map((originColumn,index) => {\n      let column = Object.assign({}, originColumn);\n      let menuInfo = [], title='锁定';\n      if(originColumn.fixed){\n        title = '解锁'\n      }\n      menuInfo.push({\n        info:title,\n        key:originColumn.key,\n        index:index\n      });\n      const menu = (\n        <Menu onSelect={this.onSelect} >{\n            menuInfo.map(da=>{ return <Item key={da.key} data={da} >{da.info}</Item> })\n            }\n        </Menu>)\n      column.title = (\n        <span className='title-con drop-menu'>\n          {column.title}\n          <Dropdown\n            trigger={['click']} \n            overlay={menu}\n            animation=\"slide-up\"\n          >\n           <Icon type={icon}/>\n          </Dropdown> \n          \n        </span>\n      );\n      return column;\n    });\n    \n  }\n\n  render() {\n    let {columns} = this.state;\n     columns = this.renderColumnsDropdown(columns);\n    return <div className=\"demo24\">\n            <Table columns={columns} data={data24} scroll={{ x: \"110%\", y: 240 }}/>\n          </div>;\n  }\n}\n\n", "desc": " 动态设置固、取消固定列", "scss_code": "th{\n    .drop-menu{\n        .uf{\n            font-size: 12px;\n            visibility: hidden;\n            margin-left: 15px;\n        }\n        \n    \n    }\n    &:hover{\n        .uf{\n                visibility: visible;\n        }\n    }\n\n}\n\n" }, { "example": _react2['default'].createElement(Demo25, null), "title": " 根据列进行过滤、拖拽交换列综合使用案例", "code": "/**\n* @title 根据列进行过滤、拖拽交换列综合使用案例\n* @description 新增属性【checkMinSize 当前表格显示最少列数 】 1. 当所有列都设置了width属性后，需要给table增加checkMinSize属性 2. 所有列不设置width。\n*/\n\n/**注：\n *  在使用过滤列的时候，如果每一列都设置了width属性，勾选的时候回出现重复列问题。当表格的宽度小于合计宽度的时候，就会出现此问题。 \n *  必须有个别列不设置width属性，即可避免此问题。\n */\nimport React, { Component } from 'react';\nimport { Table, Popover, Checkbox, Icon } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/multiSelect\";;\nimport filterColumn from \"tinper-bee/lib/filterColumn\";;\nimport dragColumn from \"tinper-bee/lib/dragColumn\";;\n\nimport sum from \"tinper-bee/lib/sum\";;\n\n //Cloumns1\nfunction getCloumns(){\n  const column = [\n      {\n          title: \"序号\",\n          dataIndex: \"index\",\n          key: \"index\",\n          width: 100, \n      },\n      {\n          title: \"订单编号\",\n          dataIndex: \"orderCode\",\n          key: \"orderCode\",\n          width: 100, \n      },\n      {\n          title: \"供应商名称\",\n          dataIndex: \"supplierName\",\n          key: \"supplierName\",\n          width: 100\n      },\n      {\n          title: \"类型\",\n          dataIndex: \"type_name\",\n          key: \"type_name\",\n          width: 100\n      },\n      {\n          title: \"采购组织\",\n          dataIndex: \"purchasing\",\n          key: \"purchasing\",\n          width: 100\n      },\n      {\n          title: \"采购组\",\n          dataIndex: \"purchasingGroup\",\n          key: \"purchasingGroup\",\n           width: 300\n      },\n      {\n          title: \"凭证日期\",\n          dataIndex: \"voucherDate\",\n          key: \"voucherDate\",\n          width: 100,\n          \n      },\n      {\n          title: \"审批状态\",\n          dataIndex: \"approvalState_name\",\n          key: \"approvalState_name\",\n          width: 100\n      },\n      {\n          title: \"确认状态\",\n          dataIndex: \"confirmState_name\",\n          key: \"confirmState_name\",\n           width: 100\n      }, \n      {\n          title: \"关闭状态\",\n          dataIndex: \"closeState_name\",\n          key: \"closeState_name\",\n          width: 100\n      },\n      {\n          title: \"操作\",\n          dataIndex: \"d\",\n          key: \"d\",\n          width:100,\n          fixed: \"right\",\n          render(text, record, index) {\n              return (\n                  <div className='operation-btn'>\n                    <a href=\"#\"\n                      tooltip={text}\n                      onClick={() => {\n                        alert('这是第'+index+'列，内容为:'+text);\n                      }}\n                    >\n                      一些操作\n                    </a>\n                  </div>\n              )\n          }\n      }\n  ];\n  return column;\n}\n\nconst dataList = [ \n  { \n      index: 1, \n      orderCode:\"2343\", \n      supplierName: \"xxx\",\n      type_name: \"123\",\n      purchasing:'内行', \n      purchasingGroup:\"323\",\n      voucherDate:\"kkkk\",\n      approvalState_name:\"vvvv\",\n      confirmState_name:\"aaaa\",\n      closeState_name:\"vnnnnn\",\n      d:\"操作\",\n      key: \"1\"\n  }, \n  { \n    index: 2, \n    _checked:true,\n    orderCode:\"222\", \n    supplierName: \"22xxx\",\n    type_name: \"1223\",\n    purchasing:'内行2', \n    purchasingGroup:\"3223\",\n    voucherDate:\"222kk\",\n    approvalState_name:\"22vvvv\",\n    confirmState_name:\"2aaaa\",\n    closeState_name:\"2vnnnnn\",\n    d:\"2操作\",\n    key: \"2\"\n  },\n  { \n    index: 3, \n    orderCode:\"222\", \n    supplierName: \"22xxx\",\n    _disabled:true,\n    type_name: \"1223\",\n    purchasing:'内行2', \n    purchasingGroup:\"3223\",\n    voucherDate:\"222kk\",\n    approvalState_name:\"22vvvv\",\n    confirmState_name:\"2aaaa\",\n    closeState_name:\"2vnnnnn\",\n    d:\"3操作\",\n    key: \"3\"\n  },\n  { \n    index: 4, \n    orderCode:\"222\", \n    supplierName: \"22xxx\",\n    type_name: \"1223\",\n    purchasing:'内行2', \n    purchasingGroup:\"3223\",\n    voucherDate:\"222kk\",\n    approvalState_name:\"22vvvv\",\n    confirmState_name:\"2aaaa\",\n    closeState_name:\"2vnnnnn\",\n    d:\"4操作\",\n    key: \"4\"\n  },\n]\n\nconst DragColumnTable = filterColumn(dragColumn(multiSelect(Table, Checkbox)),Popover);\n\nconst defaultProps25 = {\n  prefixCls: \"bee-table\"\n};\n\nclass Demo25 extends Component {\n  constructor(props) {\n    super(props);\n  }\n\n  getSelectedDataFunc=(data)=>{\n      console.log(\"data\",data);\n  }\n \n  getCloumnsScroll=(columns)=>{\n    let sum = 0;\n    columns.forEach((da)=>{\n        sum += da.width;\n    })\n    console.log(\"sum\",sum);\n    return (sum);\n  }\n\n  selectedRow=(record, index)=>{\n\n  }\n\n  render() {\n    let columns = getCloumns();\n    \n    return <div className=\"demo25\">\n            <DragColumnTable \n                columns={columns}\n                data={dataList} \n                getSelectedDataFunc={this.getSelectedDataFunc}\n                bordered\n                checkMinSize={7}\n                draggable={true}\n                multiSelect={{type: \"checkbox\"}}\n                scroll={{x:\"130%\", y: 100}}\n                selectedRow={this.selectedRow}\n                // scroll={{x:this.getCloumnsScroll(columns), y: 150}}\n                />\n            </div>\n  }\n}\nDemo25.defaultProps = defaultProps25;\n\n\n", "desc": " 新增属性【checkMinSize 当前表格显示最少列数 】 1. 当所有列都设置了width属性后，需要给table增加checkMinSize属性 2. 所有列不设置width。" }, { "example": _react2['default'].createElement(Demo26, null), "title": " 按条件和值过滤", "code": "/**\n*\n* @title 按条件和值过滤\n* @description 可以根据输入项目以及判断条件对表格内的数据进行过滤\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\nconst columns26 = [\n  { title: \"姓名\", width: 180, dataIndex: \"name\", key: \"name\", filterType: \"text\", filterDropdown: \"show\" },\n  { title: \"年龄\", width: 150, dataIndex: \"age\", key: \"age\", filterType: \"dropdown\", filterDropdown: \"show\" },\n  { title: \"日期\", width: 200, dataIndex: \"date\", key: \"date\", filterType: \"date\", filterDropdown: \"show\", format: \"YYYY-MM-DD\" },\n  { title: \"居住地址\", width: 150, dataIndex: \"address\", key: \"address\", filterType: \"dropdown\", filterDropdown: \"show\" },\n  { title: \"备注\", dataIndex: \"mark\", key: \"mark\" }\n];\n\nconst data26 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-19\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  }, {\n    key: \"5\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"6\",\n    name: \"Jim Green\",\n    age: 48,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"7\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"8\",\n    name: \"Jim Green\",\n    age: 38,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  }\n];\n\nclass Demo26 extends Component {\n  handlerFilterChange = (key, val, condition) => {\n    console.log('参数：key=', key, ' value=', val, 'condition=', condition);\n  }\n\n  handlerFilterClear = (key) => {\n    console.log('清除条件', key);\n  }\n  render() {\n    return <Table\n      onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()\n      onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()\n      filterDelay={500}//输入文本多少ms触发回调函数，默认300ms\n      filterable={true}//是否开启过滤数据功能\n      bordered\n      columns={columns26}\n      data={data26} />;\n  }\n}\n\n", "desc": " 可以根据输入项目以及判断条件对表格内的数据进行过滤" }, { "example": _react2['default'].createElement(Demo27, null), "title": " 组合过滤和其他功能使用", "code": "/**\n*\n* @title 组合过滤和其他功能使用\n* @description 在过滤数据行的基础上增加列拖拽、动态菜单显示、下拉条件动态传入自定义等\n*\n*/\n\n/**\n * @description \n */\n\nimport React, { Component } from 'react';\nimport { Table, Dropdown, Menu, Icon, Checkbox } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/MultiSelect\";;\nimport sort from \"tinper-bee/lib/sort\";;\n\n\nconst { Item } = Menu;\nconst SubMenu = Menu.SubMenu;\nconst MenuItemGroup = Menu.ItemGroup;\n\n\nconst dataList = [\n  { \"key\": \"1\", value: \"库存明细\", id: \"a\" },\n  { \"key\": \"2\", value: \"订单明细\", id: \"v\" },\n  { \"key\": \"3\", value: \"发货明细\", id: \"c\" }\n]\n\nconst data27 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-19\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  }, {\n    key: \"5\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"6\",\n    name: \"Jim Green\",\n    age: 48,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"7\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"8\",\n    name: \"Jim Green\",\n    age: 38,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  }\n];\n\n\nconst MultiSelectTable = multiSelect(Table, Checkbox);\nconst ComplexTable = sort(MultiSelectTable, Icon);\nclass Demo27 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      dropdownvalue: []\n    }\n  }\n  handlerFilterChange = (key, val, condition) => {\n    console.log('参数：key=', key, ' value=', val, 'condition=', condition);\n  }\n\n  handlerFilterClear = (key) => {\n    console.log('清除条件', key);\n  }\n  getSelectedDataFunc = data => {\n    console.log(data);\n  }\n  onClick = (item) => {\n    console.log(item);\n  }\n\n  render() {\n    const menu1 = (\n      <Menu onClick={this.onClick} style={{ width: 240 }} mode=\"vertical\" >\n        <SubMenu key=\"sub1\" title={<span><span>组织 1</span></span>}>\n          <MenuItemGroup title=\"Item 1\">\n            <Menu.Item key=\"1\">选项 1</Menu.Item>\n            <Menu.Item key=\"2\">选项 2</Menu.Item>\n          </MenuItemGroup>\n          <MenuItemGroup title=\"Iteom 2\">\n            <Menu.Item key=\"3\">选项 3</Menu.Item>\n            <Menu.Item key=\"4\">选项 4</Menu.Item>\n          </MenuItemGroup>\n        </SubMenu>\n      </Menu>)\n    let multiObj = {\n      type: \"checkbox\"\n    };\n    let columns27 = [\n      {\n        title: \"\", width: 40, dataIndex: \"key\", key: \"key\", render: (text, record, index) => {\n          return <Dropdown\n            trigger={['click']}\n            overlay={menu1}\n            animation=\"slide-up\"\n          >\n            <Icon style={{ \"visibility\": \"hidden\" }} type=\"uf-eye\" />\n          </Dropdown>\n        }\n      },\n      {\n        title: \"姓名\",\n        width: 180,\n        dataIndex: \"name\",\n        key: \"name\",\n        filterType: \"text\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"string\"//字符条件\n      },\n      {\n        title: \"年龄\",\n        width: 180,\n        dataIndex: \"age\",\n        key: \"age\",\n        filterType: \"number\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"number\"//字符条件\n      },\n      {\n        title: \"日期\",\n        width: 190,\n        dataIndex: \"date\",\n        key: \"date\",\n        filterType: \"date\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"string\"//字符条件\n      },\n      {\n        title: \"时间范围\",\n        width: 290,\n        dataIndex: \"mark\",\n        key: \"mark\",\n        filterType: \"daterange\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"number\"//字符条件\n      },\n      {\n        title: \"地址\",\n        width: 100,\n        dataIndex: \"address\",\n        key: \"address\",\n        filterType: \"dropdown\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"number\"//字符条件\n      }\n    ];\n    return <ComplexTable\n      onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()\n      onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()\n      filterDelay={500}//输入文本多少ms触发回调函数，默认500ms\n      filterable={true}//是否开启过滤数据功能\n      getSelectedDataFunc={this.getSelectedDataFunc}\n      bordered\n      multiSelect={multiObj}\n      columns={columns27}\n      data={data27} />;\n  }\n}\n\n", "desc": " 在过滤数据行的基础上增加列拖拽、动态菜单显示、下拉条件动态传入自定义等" }, { "example": _react2['default'].createElement(Demo28, null), "title": " 列排序,后端排序", "code": "/**\n*\n* @title 列排序,后端排序\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee';\nimport sort from \"tinper-bee/lib/sort.js\";;\nlet ComplexTable = sort(Table, Icon);\nconst columns11 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  },\n  {\n    title: \"分数\",\n    dataIndex: \"e\",\n    key: \"e\",\n    sorter: (a, b) => a.c - b.c\n  },\n];\n\nconst data11 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', e:139,key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', e:109, key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', e:159, key: \"3\" }\n];\n\nconst defaultProps = {\n  prefixCls: \"bee-table\"\n};\nclass Demo28 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      sortOrder: \"\",\n      data: data11\n    };\n  }\n  /**\n   * 后端获取数据\n   */\n  sortFun = (sortParam)=>{\n    console.info(sortParam);\n    //将参数传递给后端排序\n  }\n  render() {\n    let sortObj = {\n      mode:'multiple',\n      backSource:true,\n      sortFun:this.sortFun\n    }\n    return <ComplexTable columns={columns11} data={this.state.data} sort={sortObj}/>;\n  }\n}\nDemo28.defaultProps = defaultProps;\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo3, null), "title": " 表头分组并自定义表头高度", "code": "/**\n *\n * @title 表头分组并自定义表头高度\n * @description columns[n] 可以内嵌 children，以渲染分组表头。\n * 自定义表头高度需要传headerHeight，注：修改th的padding top和bottom置为0，否则会有影响\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table, Button } from 'tinper-bee';\n\nconst { ColumnGroup, Column } = Table;\n\nconst columns = [\n  {\n    title: \"Name\",\n    dataIndex: \"name\",\n    key: \"name\",\n    width: 100,\n    fixed: \"left\"\n  },\n  {\n    title: \"Other\",\n    width:600,\n    children: [\n      {\n        title: \"Age\",\n        dataIndex: \"age\",\n        key: \"age\",\n        width: 200\n      },\n      {\n        title: \"Address\",\n        children: [\n          {\n            title: \"Street\",\n            dataIndex: \"street\",\n            key: \"street\",\n            width: 200\n          },\n          {\n            title: \"Block\",\n            children: [\n              {\n                title: \"Building\",\n                dataIndex: \"building\",\n                key: \"building\",\n                width: 100\n              },\n              {\n                title: \"Door No.\",\n                dataIndex: \"number\",\n                key: \"number\",\n                width: 100\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  {\n    title: \"Company\",\n    width:400,\n    children: [\n      {\n        title: \"Company Address\",\n        dataIndex: \"companyAddress\",\n        key: \"companyAddress\",\n        width:200,\n      },\n      {\n        title: \"Company Name\",\n        dataIndex: \"companyName\",\n        key: \"companyName\",\n        width:200,\n      }\n    ]\n  },\n  {\n    title: \"Gender\",\n    dataIndex: \"gender\",\n    key: \"gender\",\n    width: 60,\n    fixed: \"right\"\n  }\n];\n\nconst data = [];\nfor (let i = 0; i < 20; i++) {\n  data.push({\n    key: i,\n    name: \"John Brown\",\n    age: i + 1,\n    street: \"Lake Park\",\n    building: \"C\",\n    number: 2035,\n    companyAddress: \"Lake Street 42\",\n    companyName: \"SoftLake Co\",\n    gender: \"M\"\n  });\n}\n\nclass Demo3 extends Component {\n  render() {\n    return (\n      <Table\n        className={'demo3'}\n        columns={columns}\n        data={data}\n        headerHeight={40} //自定义表头高度\n        bordered\n        scroll={{ y: 240 }}\n      />\n    );\n  }\n}\n\n\n", "desc": " columns[n] 可以内嵌 children，以渲染分组表头。", "scss_code": ".demo3{\n    .u-table-thead th {\n        padding-top: 0px;\n        padding-bottom: 0px;\n    }\n}" }, { "example": _react2['default'].createElement(Demo4, null), "title": " 树形数据展示", "code": "/**\n*\n* @title 树形数据展示\n* @description 通过在data中配置children数据，来自动生成树形数据\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\nconst columns4 = [\n  {\n    title: \"Name\",\n    dataIndex: \"name\",\n    key: \"name\",\n    width: \"40%\"\n  },\n  {\n    title: \"Age\",\n    dataIndex: \"age\",\n    key: \"age\",\n    width: \"30%\"\n  },\n  {\n    title: \"Address\",\n    dataIndex: \"address\",\n    key: \"address\"\n  }\n];\n\nconst data4 = [\n  {\n    key: 1,\n    name: \"John Brown sr.\",\n    age: 60,\n    address: \"New York No. 1 Lake Park\",\n    children: [\n      {\n        key: 11,\n        name: \"John Brown\",\n        age: 42,\n        address: \"New York No. 2 Lake Park\"\n      },\n      {\n        key: 12,\n        name: \"John Brown jr.\",\n        age: 30,\n        address: \"New York No. 3 Lake Park\",\n        children: [\n          {\n            key: 121,\n            name: \"Jimmy Brown\",\n            age: 16,\n            address: \"New York No. 3 Lake Park\"\n          }\n        ]\n      },\n      {\n        key: 13,\n        name: \"Jim Green sr.\",\n        age: 72,\n        address: \"London No. 1 Lake Park\",\n        children: [\n          {\n            key: 131,\n            name: \"Jim Green\",\n            age: 42,\n            address: \"London No. 2 Lake Park\",\n            children: [\n              {\n                key: 1311,\n                name: \"Jim Green jr.\",\n                age: 25,\n                address: \"London No. 3 Lake Park\"\n              },\n              {\n                key: 1312,\n                name: \"Jimmy Green sr.\",\n                age: 18,\n                address: \"London No. 4 Lake Park\"\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  {\n    key: 2,\n    name: \"Joe Black\",\n    age: 32,\n    address: \"Sidney No. 1 Lake Park\"\n  }\n];\nclass Demo4 extends Component {\n\n  constructor(props){\n      super(props);\n      this.state = {\n        data: data4,\n        factoryValue: 0,\n        selectedRow: new Array(data4.length)//状态同步\n      }\n  }\n\n  render() {\n    return <Table \n    rowClassName={(record,index,indent)=>{\n      if (this.state.selectedRow[index]) {\n          return 'selected';\n      } else {\n          return '';\n      }\n    }}\n    onRowClick={(record,index,indent)=>{\n      let selectedRow = new Array(this.state.data.length);\n      selectedRow[index] = true;\n      this.setState({\n          factoryValue: record,\n          selectedRow: selectedRow\n      });\n    }}\n    \n    columns={columns4} data={data4} />;\n  }\n}\n\n\n", "desc": " 通过在data中配置children数据，来自动生成树形数据" }, { "example": _react2['default'].createElement(Demo5, null), "title": " 固定列", "code": "/**\n*\n* @title 固定列\n* @description 固定列到表格的某侧\n*\n*/\n\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\n\nconst columns5 = [\n  {\n    title: \"Full Name\",\n    width: 100,\n    dataIndex: \"name\",\n    key: \"name\",\n    fixed: \"left\"\n  },\n  { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\", fixed: \"left\" },\n  { title: \"Column 1\", dataIndex: \"address\", key: \"1\" },\n  { title: \"Column 2\", dataIndex: \"address\", key: \"2\" },\n  { title: \"Column 3\", dataIndex: \"address\", key: \"3\" },\n  { title: \"Column 4\", dataIndex: \"address\", key: \"4\" },\n  { title: \"Column 5\", dataIndex: \"address\", key: \"5\" },\n  { title: \"Column 6\", dataIndex: \"address\", key: \"6\" },\n  { title: \"Column 7\", dataIndex: \"address\", key: \"7\" },\n  { title: \"Column 8\", dataIndex: \"address\", key: \"8\" }\n];\n\nconst data5 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    address: \"New York Park\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  }\n];\n\nclass Demo5 extends Component {\n  render() {\n    return <Table columns={columns5} data={data5}scroll={{ x: \"130%\", y: 140 }}/>;\n  }\n}\n\n", "desc": " 固定列到表格的某侧" }, { "example": _react2['default'].createElement(Demo6, null), "title": " 固定表头", "code": "/**\n*\n* @title 固定表头\n* @description 方便一页内展示大量数据。需要指定 column 的 width 属性，否则列头和内容可能不对齐。(还可以设置scroll来支持横向或纵向滚动)\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\nimport dragColumn from \"tinper-bee/lib/dragColumn\";;;\nconst DragColumnTable = dragColumn(Table);\n\nconst columns6 = [\n  {\n    title: \"Full Name\",\n    width: 100,\n    dataIndex: \"name\",\n    key: \"name\"\n  },\n  { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\"},\n  { title: \"Address\", dataIndex: \"address\", key: \"1\" }\n];\n\nconst data6 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    address: \"New York Park\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },{\n    key: \"11\",\n    name: \"John Brown\",\n    age: 32,\n    address: \"New York Park\"\n  },\n  {\n    key: \"12\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"13\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"14\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  }\n];\n\nclass Demo6 extends Component {\n  render() {\n    return <DragColumnTable columns={columns6} data={data6} scroll={{y: 150 }} dragborder={true}  />;\n  }\n}\n\n", "desc": " 方便一页内展示大量数据。需要指定 column 的 width 属性，否则列头和内容可能不对齐。(还可以设置scroll来支持横向或纵向滚动)" }, { "example": _react2['default'].createElement(Demo7, null), "title": " 主子表", "code": "/**\n *\n * @title 主子表\n * @description 主表点击子表联动\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\n\nconst columns7 = [\n  { title: \"班级\", dataIndex: \"a\", key: \"a\" },\n  { title: \"人数\", dataIndex: \"b\", key: \"b\" },\n  { title: \"班主任\", dataIndex: \"c\", key: \"c\" },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst data7 = [\n  { a: \"02级一班\", b: \"2\", c: \"欧阳锋\", d: \"大侠\", key: \"1\" },\n  { a: \"03级二班\", b: \"3\", c: \"归海一刀\", d: \"大侠\", key: \"2\" },\n  { a: \"05级三班\", b: \"1\", c: \"一拳超人\", d: \"愣头青\", key: \"3\" }\n];\n\nconst columns7_1 = [\n  { title: \"姓名\", dataIndex: \"a\", key: \"a\" },\n  { title: \"班级\", dataIndex: \"b\", key: \"b\" },\n  { title: \"系别\", dataIndex: \"c\", key: \"c\" }\n];\n\nclass Demo7 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      children_data: []\n    };\n  }\n\n  rowclick = (record, index) => {\n    if (record.a === \"02级一班\") {\n      this.setState({\n        children_data: [\n          { a: \"郭靖\", b: \"02级一班\", c: \"文学系\", key: \"1\" },\n          { a: \"黄蓉\", b: \"02级一班\", c: \"文学系\", key: \"2\" }\n        ]\n      });\n    } else if (record.a === \"03级二班\") {\n      this.setState({\n        children_data: [\n          { a: \"杨过\", b: \"03级二班\", c: \"外语系\", key: \"1\" },\n          { a: \"小龙女\", b: \"03级二班\", c: \"外语系\", key: \"2\" },\n          { a: \"傻姑\", b: \"03级二班\", c: \"外语系\", key: \"3\" }\n        ]\n      });\n    } else if (record.a === \"05级三班\") {\n      this.setState({\n        children_data: [{ a: \"金圣叹\", b: \"05级三班\", c: \"美术系\", key: \"1\" }]\n      });\n    }\n  };\n\n  render() {\n    return (\n      <div>\n        <Table\n          columns={columns7}\n          data={data7}\n          onRowClick={this.rowclick}\n          title={currentData => <div>标题: 我是主表</div>}\n        />\n        <Table\n          style={{ marginTop: 40 }}\n          columns={columns7_1}\n          data={this.state.children_data}\n          title={currentData => <div>标题: 我是子表</div>}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 主表点击子表联动" }, { "example": _react2['default'].createElement(Demo8, null), "title": " 表格+分页", "code": "/**\n *\n * @title 表格+分页\n * @description 点击分页联动表格\n */\n\nimport React, { Component } from \"react\";\n\nimport { Table, Pagination } from 'tinper-bee';\n\nconst columns8 = [\n  { title: \"姓名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst pageData = {\n  1: [\n    { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"2\" },\n    { a: \"令狐冲\", b: \"男\", c: 41, d: \"大侠\", key: \"1\" },\n    { a: \"郭靖\", b: \"男\", c: 25, d: \"大侠\", key: \"3\" }\n  ],\n  2: [\n    { a: \"芙蓉姐姐\", b: \"女\", c: 23, d: \"大侠\", key: \"1\" },\n    { a: \"芙蓉妹妹\", b: \"女\", c: 23, d: \"内行\", key: \"2\" }\n  ]\n};\n\nclass Demo8 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: pageData[1],\n      activePage: 1\n    };\n  }\n\n  handleSelect(eventKey) {\n    this.setState({\n      data: pageData[eventKey],\n      activePage: eventKey\n    });\n  }\n\n  render() {\n    return (\n      <div>\n        <Table columns={columns8} data={this.state.data} />\n        <Pagination\n          first\n          last\n          prev\n          next\n          maxButtons={5}\n          boundaryLinks\n          activePage={this.state.activePage}\n          onSelect={this.handleSelect.bind(this)}\n          onDataNumSelect={this.dataNumSelect}\n          showJump={true}\n          total={100}\n          dataNum={2}\n        />\n      </div>\n    );\n  }\n}\n\n", "desc": " 点击分页联动表格" }, { "example": _react2['default'].createElement(Demo9, null), "title": " 表格+搜索", "code": "/**\n *\n * @title 表格+搜索\n * @description 搜索刷新表格数据\n *\n *\n * import {Table} from 'tinper-bee';\n */\n\nimport React, { Component } from \"react\";\n\nimport { Table, FormControl, InputGroup, Icon } from 'tinper-bee';\n\nclass Search extends Component {\n  state = {\n    searchValue: \"\",\n    empty: false\n  };\n\n  /**\n     * 搜索\n     */\n  handleSearch = () => {\n    let { onSearch } = this.props;\n    this.setState({\n      empty: true\n    });\n    onSearch && onSearch(this.state.searchValue);\n  };\n\n  /**\n     * 捕获回车\n     * @param e\n     */\n  handleKeyDown = e => {\n    if (e.keyCode === 13) {\n      this.handleSearch();\n    }\n  };\n\n  /**\n     * 输入框改变\n     * @param e\n     */\n  handleChange = (e) => {\n    this.setState({\n      searchValue: e\n    });\n  };\n\n  /**\n     * 清空输入框\n     */\n  emptySearch = () => {\n    let { onEmpty } = this.props;\n    this.setState({\n      searchValue: \"\",\n      empty: false\n    });\n    onEmpty && onEmpty();\n  };\n\n  render() {\n    return (\n      <InputGroup simple className=\"search-component\">\n        <FormControl\n          onChange={this.handleChange}\n          value={this.state.searchValue}\n          onKeyDown={this.handleKeyDown}\n          placeholder=\"请输入用户名\"\n          type=\"text\"\n        />\n        {this.state.empty ? (\n          <Icon\n            type=\"uf-close-c\"\n            onClick={this.emptySearch}\n            className=\"empty-search\"\n          />\n        ) : null}\n\n        <InputGroup.Button onClick={this.handleSearch} shape=\"border\">\n          <Icon type=\"uf-search\" />\n        </InputGroup.Button>\n      </InputGroup>\n    );\n  }\n}\n\nconst columns9 = [\n  {\n    title: \"姓名\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst userData = [\n  { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"大侠\", key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"大侠\", key: \"3\" }\n];\n\nclass Demo9 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: userData\n    };\n  }\n\n  handleSearch = value => {\n    if (value === \"\") {\n      return this.setState({\n        data: userData\n      });\n    }\n    let regExp = new RegExp(value, \"ig\");\n    let data = userData.filter(item => regExp.test(item.a));\n    this.setState({\n      data\n    });\n  };\n\n  handleEmpty = () => {\n    this.setState({\n      data: userData\n    });\n  };\n\n  render() {\n    return (\n      <div>\n        <div className=\"clearfix\">\n          <Search onSearch={this.handleSearch} onEmpty={this.handleEmpty} />\n        </div>\n        <Table columns={columns9} data={this.state.data} />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 搜索刷新表格数据" }];
+	var Demo1 = __webpack_require__(79);var Demo10 = __webpack_require__(481);var Demo11 = __webpack_require__(482);var Demo12 = __webpack_require__(484);var Demo13 = __webpack_require__(489);var Demo14 = __webpack_require__(491);var Demo15 = __webpack_require__(501);var Demo16 = __webpack_require__(502);var Demo17 = __webpack_require__(503);var Demo18 = __webpack_require__(504);var Demo19 = __webpack_require__(505);var Demo2 = __webpack_require__(506);var Demo20 = __webpack_require__(511);var Demo21 = __webpack_require__(512);var Demo22 = __webpack_require__(517);var Demo23 = __webpack_require__(520);var Demo24 = __webpack_require__(521);var Demo25 = __webpack_require__(522);var Demo26 = __webpack_require__(523);var Demo27 = __webpack_require__(524);var Demo28 = __webpack_require__(526);var Demo3 = __webpack_require__(527);var Demo4 = __webpack_require__(528);var Demo5 = __webpack_require__(529);var Demo6 = __webpack_require__(530);var Demo7 = __webpack_require__(531);var Demo8 = __webpack_require__(532);var Demo9 = __webpack_require__(537);var DemoArray = [{ "example": _react2['default'].createElement(Demo1, null), "title": " 简单表格、文字过长，两种tip", "code": "/**\n*\n* @title 简单表格、文字过长，两种tip\n* 【Tooltip】\n* @description\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Tooltip, Button } from 'tinper-bee';\n\nconst columns = [\n  {\n    title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 80, className: \"rowClassName\",\n    render: (text, record, index) => {\n      return (\n        <Tooltip inverse overlay={text}>\n          <span tootip={text} style={{\n            display: \"inline-block\",\n            width: \"60px\",\n            textOverflow: \"ellipsis\",\n            overflow: \"hidden\",\n            whiteSpace: \"nowrap\",\n            verticalAlign: \"middle\",\n          }}>{text}</span>\n        </Tooltip>\n      );\n    }\n  },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: '10%' },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    render(text, record, index) {\n      return (\n        <div style={{ position: 'relative' }} title={text} >\n          <a\n            href=\"javascript:;\"\n            tooltip={text}\n            onClick={() => {\n              alert('这是第' + index + '列，内容为:' + text);\n            }}\n          >\n            一些操作\n              </a>\n        </div>\n      );\n    }\n  }\n];\n\nconst data = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过叔叔的女儿黄蓉\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\nclass Demo1 extends Component {\n\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: data,\n      selectedRowIndex: 0\n    }\n  }\n\n  render() {\n    return (\n   \n        <Table\n          columns={columns}\n          data={data}\n          parentNodeId='parent'\n          height={43}\n          headerHeight={42}\n          onRowClick={(record, index, indent) => {\n            this.setState({\n              selectedRowIndex: index\n            });\n          }}\n        />\n\n     \n    );\n  }\n}\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo10, null), "title": " 无数据时显示", "code": "/**\n*\n* @title 无数据时显示\n* @description 无数据时显示效果展示（可自定义）\n *\n* import {Table} from 'tinper-bee';\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\nconst columns10 = [\n    {\n      title: \"Name\",\n      dataIndex: \"name\",\n      key: \"name\",\n      width: \"40%\"\n    },\n    {\n      title: \"Age\",\n      dataIndex: \"age\",\n      key: \"age\",\n      width: \"30%\"\n    },\n    {\n      title: \"Address\",\n      dataIndex: \"address\",\n      key: \"address\"\n    }\n  ];\n  \n  const data10 = [\n    \n  ];\n\n  const emptyFunc = () => <span>这里没有数据！</span>\n  \n  class Demo10 extends Component {\n    render() {\n      return <Table columns={columns10} data={data10} emptyText={emptyFunc} />;\n    }\n  }\n\n", "desc": " 无数据时显示效果展示（可自定义）" }, { "example": _react2['default'].createElement(Demo11, null), "title": " 列排序", "code": "/**\n*\n* @title 列排序\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee';\nimport sort from \"tinper-bee/lib/sort.js\";;\nlet ComplexTable = sort(Table, Icon);\nconst columns11 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst data11 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\n];\n\nconst defaultProps11 = {\n  prefixCls: \"bee-table\"\n};\nclass Demo11 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      sortOrder: \"\",\n      data: data11\n    };\n  }\n  render() {\n\n    return <ComplexTable columns={columns11} data={this.state.data} />;\n  }\n}\nDemo11.defaultProps = defaultProps11;\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo12, null), "title": " 全选功能", "code": "/**\n*\n* @title 全选功能\n* @description 点击表格左列按钮即可选中，并且在选中的回调函数中能获取到选中的数据（未使用封装好的全选功能）\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Checkbox } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/multiSelect.js\";;\n\nconst columns12 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst data12 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\",_checked:true },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" ,_checked:true},\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" ,_checked:true}\n];\n//拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常\nlet MultiSelectTable  = multiSelect(Table, Checkbox);\n\nclass Demo12 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: data12\n    };\n  }\n  getSelectedDataFunc = data => {\n    console.log(data);\n  };\n  \n  render() {\n    let multiObj = {\n      type: \"checkbox\"\n    };\n    return (\n      <MultiSelectTable \n        columns={columns12} \n        data={data12} \n        multiSelect={multiObj}\n        getSelectedDataFunc={this.getSelectedDataFunc}/>\n    );\n  }\n}\n\n", "desc": " 点击表格左列按钮即可选中，并且在选中的回调函数中能获取到选中的数据（未使用封装好的全选功能）" }, { "example": _react2['default'].createElement(Demo13, null), "title": " 多列排序、全选功能、合计", "code": "/**\n *\n * @title 多列排序、全选功能、合计\n * @description 多列排序、全选功能、合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）新增回调函数(sorterClick)\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table, Icon, Button, Checkbox } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/multiSelect.js\";;\nimport sort from \"tinper-bee/lib/sort.js\";;\nimport sum from \"tinper-bee/lib/sum.js\";;\n\nconst columns13 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    className:'dfasd',\n    width: 200\n  },\n  {\n    title: \"功力指数\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c,\n    sorterClick:(data,type)=>{//排序的回调函数\n      //type value is up or down\n      console.log(\"data\",data);\n    }\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c,\n    sorterClick:(data,type)=>{//排序的回调函数\n      //type value is up or down\n      console.log(\"data\",data);\n    }\n  },\n  {\n    title: \"成绩\",\n    dataIndex: \"e\",\n    key: \"e\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c,\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width: 200\n  }\n];\n\nconst data13 = [\n  { a: \"杨过\", b: 675, c: 30, d: \"内行\",e:100, key: \"2\" },\n  { a: \"令狐冲\", b: 43, c: 41, d: \"大侠\",e:90, key: \"1\" },\n  { a: \"令狐冲1\", b: 43, c: 81, d: \"大侠\", e:120,key: \"4\" },\n  { a: \"令狐冲2\", b: 43, c: 81, d: \"大侠\", e:130,key: \"5\" },\n  { a: \"郭靖\", b: 153, c: 25, d: \"大侠\",e:90, key: \"3\" }\n];\n\n//拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常\nlet ComplexTable = multiSelect(sum(sort(Table, Icon)), Checkbox);\n\nclass Demo13 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data13: data13,\n      selectedRow: this.selectedRow,\n      selectDisabled: this.selectDisabled\n    };\n  }\n  getSelectedDataFunc = data => {\n    console.log(data);\n  };\n  selectDisabled = (record, index) => {\n    // console.log(record);\n    if (index === 1) {\n      return true;\n    }\n    return false;\n  };\n  selectedRow = (record, index) => {\n    // console.log(record);\n    if (index === 0) {\n      return true;\n    }\n    return false;\n  };\n  onClick = () => {\n    this.setState({\n      selectedRow: function() {}\n    });\n  };\n\n  render() {\n    let multiObj = {\n      type: \"checkbox\"\n    };\n    let sortObj = {\n      mode:'multiple'\n    }\n   \n    return (\n      <div>\n        <Button className=\"editable-add-btn\" onClick={this.onClick}>\n          change selectedRow\n        </Button>\n        <ComplexTable\n          selectDisabled={this.state.selectDisabled}\n          selectedRow={this.state.selectedRow}\n          columns={columns13}\n          data={this.state.data13}\n          multiSelect={multiObj}\n          sort={sortObj}\n          getSelectedDataFunc={this.getSelectedDataFunc}\n        />\n      </div>\n    );\n  }\n}\n\n", "desc": " 多列排序、全选功能、合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）新增回调函数(sorterClick)" }, { "example": _react2['default'].createElement(Demo14, null), "title": " 编辑态表格", "code": "/**\n*\n* @title 编辑态表格\n* @description 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）\n*\n*/\n\nimport React from \"react\";\nimport { Table, Select, Datepicker, Checkbox, Input, Icon, Form, Button, Tooltip, Animate } from 'tinper-bee';\nimport renderInput from \"tinper-bee/lib/InputRender.js\";;\nimport renderDate from \"tinper-bee/lib/DateRender.js\";;\nimport renderSelect from \"tinper-bee/lib/SelectRender.js\";;\n\nconst InputRender = renderInput(Form, Input, Icon);\nconst DateRender = renderDate(Datepicker, Icon);\nconst SelectRender = renderSelect(Select, Icon);\n\nconst format = \"YYYY-MM-DD\";\nconst format2 = \"YYYY-MM\";\nconst format3 = \"YYYY-MM-DD HH:mm:ss\";\n\nconst dateInputPlaceholder = \"选择日期\";\nconst dateInputPlaceholder2 = \"选择年月\";\nconst dataSource = [\n  {\n    key: \"boyuzhou\",\n    value: \"jack\"\n  },\n  {\n    key: \"renhualiu\",\n    value: \"lucy\"\n  },\n  {\n    key: \"yuzhao\",\n    value: \"yiminghe\"\n  }\n];\nclass Demo14 extends React.Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      dataSource: [\n        {\n          key: \"0\",\n          name: \"沉鱼\",\n          number: \"10\",\n          age: \"y\",\n          address: \"jack\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"1\",\n          name: \"落雁\",\n          number: \"100\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"2\",\n          name: \"闭月\",\n          number: \"1000\",\n          age: \"n\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"3\",\n          name: \"羞花\",\n          number: \"9999\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        }\n      ],\n      count: 4\n    };\n    this.columns = [\n      {\n        title: \"普通输入\",\n        dataIndex: \"name\",\n        key: \"name\",\n        width: \"150px\",\n        render: (text, record, index) => (\n          <InputRender\n            name=\"name\"\n            placeholder=\"请输入姓名\"\n            value={text}\n            isclickTrigger={true}\n            check={this.check}\n            onChange={this.onInputChange(index, \"name\")}\n            isRequire={true}\n            method=\"blur\"\n            errorMessage={\n              <Tooltip overlay={\"错误提示\"}>\n                <Icon type=\"uf-exc-c\" className=\"\" />\n              </Tooltip>\n            }\n          />\n        )\n      },\n      {\n        title: \"货币输入\",\n        dataIndex: \"number\",\n        key: \"number\",\n        width: \"150px\",\n        render: (text, record, index) => (\n          <InputRender\n            format=\"Currency\"\n            name=\"number\"\n            placeholder=\"请输入货币\"\n            value={text}\n            isclickTrigger={true}\n            check={this.check}\n            onChange={this.onInputChange(index, \"number\")}\n            isRequire={true}\n            method=\"blur\"\n            errorMessage={\n              <Tooltip overlay={\"错误提示\"}>\n                <Icon type=\"uf-exc-c\" className=\"\" />\n              </Tooltip>\n            }\n            reg={/^[0-9]+$/}\n          />\n        )\n      },\n      {\n        title: \"复选\",\n        dataIndex: \"age\",\n        key: \"age\",\n        width: \"100px\",\n        render: (text, record, index) => (\n          <Checkbox\n            checked={record.age}\n            onChange={this.onCheckChange(index, \"age\")}\n          />\n        )\n      },\n      {\n        title: \"下拉框\",\n        dataIndex: \"address\",\n        key: \"address\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <SelectRender\n              dataSource={dataSource}\n              isclickTrigger={true}\n              value={text}\n              onChange={this.onSelectChange(index, \"address\")}\n            >\n              <Option value=\"jack\">boyuzhou</Option>\n              <Option value=\"lucy\">renhualiu</Option>\n              <Option value=\"disabled\" disabled>\n                Disabled\n              </Option>\n              <Option value=\"yiminghe\">yuzhao</Option>\n            </SelectRender>\n          );\n        }\n      },\n      {\n        title: \"年月日\",\n        dataIndex: \"datepicker\",\n        key: \"datepicker\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <DateRender\n              value={text}\n              isclickTrigger={true}\n              format={format}\n              onSelect={this.onDateSelect}\n              onChange={this.onDateChange}\n              placeholder={dateInputPlaceholder}\n            />\n          );\n        }\n      },\n      {\n        title: \"年月\",\n        dataIndex: \"MonthPicker\",\n        key: \"MonthPicker\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <DateRender\n              value={text}\n              type=\"MonthPicker\"\n              isclickTrigger={true}\n              format={format2}\n              onSelect={this.onSelect}\n              onChange={this.onChange}\n              placeholder={dateInputPlaceholder2}\n            />\n          );\n        }\n      }\n    ];\n  }\n  check = (flag, obj) => {\n    console.log(flag);\n    console.log(obj);\n  };\n\n  onInputChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onCheckChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onSelectChange = (index, key) => {\n    return value => {\n      console.log(`selected ${value}`);\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onDateChange = d => {\n    console.log(d);\n  };\n  onDateSelect = d => {\n    console.log(d);\n  };\n  onDelete = index => {\n    return () => {\n      const dataSource = [...this.state.dataSource];\n      dataSource.splice(index, 1);\n      this.setState({ dataSource });\n    };\n  };\n  handleAdd = () => {\n    const { count, dataSource } = this.state;\n    const newData = {\n      key: count,\n      name: `凤姐 ${count}`,\n      age: 32,\n      address: \"jack\",\n      datepicker: \"2017-06-12\",\n      MonthPicker: \"2017-02\"\n    };\n    this.setState({\n      dataSource: [...dataSource, newData],\n      count: count + 1\n    });\n  };\n\n  getBodyWrapper = body => {\n    return (\n      <Animate\n        transitionName=\"move\"\n        component=\"tbody\"\n        className={body.props.className}\n      >\n        {body.props.children}\n      </Animate>\n    );\n  };\n  getData = () => {\n    console.log(this.state.dataSource);\n  };\n  render() {\n    const { dataSource } = this.state;\n    const columns = this.columns;\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.handleAdd}\n        >\n          添加一行\n        </Button>\n        <Button\n          style={{marginLeft:\"5px\"}}\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.getData}\n        >\n          获取数据\n        </Button>\n        <Table\n          data={dataSource}\n          columns={columns}\n          getBodyWrapper={this.getBodyWrapper}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）" }, { "example": _react2['default'].createElement(Demo15, null), "title": " 表格行/列合并", "code": "/**\n*\n* @title 表格行/列合并\n* @description 表头只支持列合并，使用 column 里的 colSpan 进行设置。表格支持行/列合并，使用 render 里的单元格属性 colSpan 或者 rowSpan 设值为 0 时，设置的表格不会渲染。\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\n\nconst renderContent = (value, row, index) => {\n  const obj = {\n    children: value,\n    props: {},\n  };\n  if (index === 4) {\n    obj.props.colSpan = 0;\n  }\n  return obj;\n};\n\nconst columns = [{\n  title: 'Name',\n  key: \"name\",\n  dataIndex: 'name',\n  render: (text, row, index) => {\n    if (index < 4) {\n      return <a href=\"#\">{text}</a>;\n    }\n    return {\n      children: <a href=\"#\">{text}</a>,\n      props: {\n        colSpan: 5,\n      },\n    };\n  },\n}, {\n  title: 'Age',\n  key: \"Age\",\n  dataIndex: 'age',\n  render: renderContent,\n}, {\n  title: 'Home phone',\n  colSpan: 2,\n  key: \"tel\",\n  dataIndex: 'tel',\n  render: (value, row, index) => {\n    const obj = {\n      children: value,\n      props: {},\n    };\n    if (index === 2) {\n      obj.props.rowSpan = 2;\n    }\n    if (index === 3) {\n      obj.props.rowSpan = 0;\n    }\n    if (index === 4) {\n      obj.props.colSpan = 0;\n    }\n    return obj;\n  },\n}, {\n  title: 'Phone',\n  colSpan: 0,\n  key: \"phone\",\n  dataIndex: 'phone',\n  render: renderContent,\n}, {\n  title: 'Address',\n  key: \"address\",\n  dataIndex: 'address',\n  render: renderContent,\n}];\n\nconst data = [{\n  key: '1',\n  name: 'John Brown',\n  age: 32,\n  tel: '0571-22098909',\n  phone: 18889898989,\n  address: 'New York No. 1 Lake Park',\n}, {\n  key: '2',\n  name: 'Jim Green',\n  tel: '0571-22098333',\n  phone: 18889898888,\n  age: 42,\n  address: 'London No. 1 Lake Park',\n}, {\n  key: '3',\n  name: 'Joe Black',\n  age: 32,\n  tel: '0575-22098909',\n  phone: 18900010002,\n  address: 'Sidney No. 1 Lake Park',\n}, {\n  key: '4',\n  name: 'Jim Red',\n  age: 18,\n  tel: '0575-22098909',\n  phone: 18900010002,\n  address: 'London No. 2 Lake Park',\n}, {\n  key: '5',\n  name: 'Jake White',\n  age: 18,\n  tel: '0575-22098909',\n  phone: 18900010002,\n  address: 'Dublin No. 2 Lake Park',\n}];\n\nclass Demo15 extends Component {\n  render() {\n    return (\n       <Table columns={columns} data={data}/>\n    );\n  }\n}\n\n\n\n", "desc": " 表头只支持列合并，使用 column 里的 colSpan 进行设置。表格支持行/列合并，使用 render 里的单元格属性 colSpan 或者 rowSpan 设值为 0 时，设置的表格不会渲染。" }, { "example": _react2['default'].createElement(Demo16, null), "title": " 嵌套子表格", "code": "/**\n*\n* @title 嵌套子表格\n* @description 通过expandedRowRender参数来实现子表格\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\n\nconst columns16 = [\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\", \n    width:200,\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert(\"这是第\" + index + \"列，内容为:\" + text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  },\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 250 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  \n];\nconst columns17 = [\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width:200,\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert(\"这是第\" + index + \"列，内容为:\" + text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  },\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  \n];\n\nconst data16 = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\n\nclass Demo16 extends Component {\n  constructor(props){\n    super(props);\n    this.state={\n      data_obj:{}\n    }\n  }\n  expandedRowRender = (record, index, indent) => {\n    let height = 42 * (this.state.data_obj[record.key].length+ 2);\n    \n    return (\n      <Table\n        columns={columns17}\n        style={{height:height}}\n        data={this.state.data_obj[record.key]} \n\n      />\n    );\n  };\n  getData=(expanded, record)=>{\n    //当点击展开的时候才去请求数据\n    let new_obj = Object.assign({},this.state.data_obj);\n    if(expanded){\n      if(record.key==='1'){\n        new_obj[record.key] = [\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n          { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" }\n        ]\n        this.setState({\n          data_obj:new_obj\n        })\n      }else{\n        new_obj[record.key] = [\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" }\n        ]\n        this.setState({\n          data_obj:new_obj\n        })\n      }\n    }\n  }\n  haveExpandIcon=(record, index)=>{\n    //控制是否显示行展开icon，该参数只有在和expandedRowRender同时使用才生效\n    if(index == 0){\n      return true;\n    }\n    return false;\n  }\n  render() {\n    return (\n      <Table\n        columns={columns16}\n        data={data16}\n        onExpand={this.getData}\n        expandedRowRender={this.expandedRowRender}\n        scroll={{x:true}}\n        title={currentData => <div>标题: 这是一个标题</div>}\n        footer={currentData => <div>表尾: 我是小尾巴</div>}\n      />\n    );\n  }\n}\n\n\n", "desc": " 通过expandedRowRender参数来实现子表格" }, { "example": _react2['default'].createElement(Demo17, null), "title": " loading属性指定表格是否加载中", "code": "/**\n*\n* @title loading属性指定表格是否加载中\n* @description  loading可以传boolean或者obj对象，obj为bee-loading组件的参数类型\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Button } from 'tinper-bee';\n\nconst columns17 = [\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert('这是第'+index+'列，内容为:'+text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  }\n];\n\nconst data17 = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\nclass Demo17 extends Component {\n  constructor(props){\n    super(props);\n    this.state = {\n      loading : true\n    }\n  }\n  changeLoading = () => {\n    this.setState({\n      loading : !this.state.loading\n    })\n  }\n  render() {\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.changeLoading}\n        >\n          切换loading\n        </Button>\n        <Table\n          columns={columns17}\n          data={data17}\n          title={currentData => <div>标题: 这是一个标题</div>}\n          footer={currentData => <div>表尾: 我是小尾巴</div>}\n          // loading={this.state.loading}或者是boolean\n          loading={{show:this.state.loading,loadingType:\"line\"}}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": "  loading可以传boolean或者obj对象，obj为bee-loading组件的参数类型" }, { "example": _react2['default'].createElement(Demo18, null), "title": " 合并标题后的合计,且支持多字段统计", "code": "/**\n *\n * @title 合并标题后的合计,且支持多字段统计\n * @description 合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table, Button } from 'tinper-bee'; \nimport sum from \"tinper-bee/lib/sum.js\";;\n \nlet ComplexTable = sum(Table);\n\nconst columns = [\n  {\n    title: \"Name\",\n    dataIndex: \"name\",\n    key: \"name\",\n    width: 100,\n    fixed: \"left\"\n  },\n  {\n    title: \"Other\",\n    children: [\n      {\n        title: \"Age\",\n        dataIndex: \"age\",\n        key: \"age\",\n        width: 200,\n        sumCol: true,\n      },\n      {\n        title: \"Address\",\n        children: [\n          {\n            title: \"Street\",\n            dataIndex: \"street\",\n            key: \"street\",\n            width: 200\n          },\n          {\n            title: \"Block\",\n            children: [\n              {\n                title: \"Building\",\n                dataIndex: \"building\",\n                key: \"building\",\n                width: 100\n              },\n              {\n                title: \"Door No.\",\n                dataIndex: \"number\",\n                key: \"number\",\n                // width: 100,\n                sumCol: true,\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  // {\n  //   title: \"Company\",\n  //   children: [\n  //     {\n  //       title: \"Company Address\",\n  //       dataIndex: \"companyAddress\",\n  //       key: \"companyAddress\",\n  //       width: 100,\n  //     },\n  //     {\n  //       title: \"Company Name\",\n  //       dataIndex: \"companyName\",\n  //       key: \"companyName\",\n  //       width: 100,\n  //     }\n  //   ]\n  // },\n  {\n    title: \"Gender\",\n    dataIndex: \"gender\",\n    key: \"gender\",\n    width: 80,\n    fixed: \"right\"\n  }\n];\n\nfunction getData(){\n  const data = [];\n  for (let i = 0; i < 5; i++) {\n    data.push({\n      key: i,\n      name: \"John Brown\"+i,\n      age: i + Math.floor(Math.random()*10),\n      street: \"Lake Park\",\n      building: \"C\",\n      number: 20 *  Math.floor(Math.random()*10),\n      companyAddress: \"Lake Street 42\",\n      companyName: \"SoftLake Co\",\n      gender: \"M\"\n    });\n  }\n  return data;\n}\n\nclass Demo18 extends Component {\n  \n  constructor(props) {\n    super(props);\n    this.state = {\n      data: getData()\n    };\n  }\n\n  changeData = ()=>{\n    this.setState({\n      data: getData()\n    });\n  }\n\n  render() {\n    const {data} = this.state;\n    return (\n      <div>\n        <Button \n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.changeData}\n        >\n          动态设置数据源\n        </Button>\n\n         <ComplexTable \n          columns={columns}\n          data={data}\n          bordered\n          // scroll={{ x: \"130%\", y: 140 }}\n        />\n      </div>\n    );\n  }\n}\n\n", "desc": " 合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）" }, { "example": _react2['default'].createElement(Demo19, null), "title": " 编辑态表格", "code": "/**\n*\n* @title 编辑态表格\n* @description 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）\n*\n*/\n\nimport React from \"react\";\nimport { Table, Select, Form, Input, Icon, Tooltip, Animate, Button } from 'tinper-bee';\nimport renderInput from \"tinper-bee/lib/InputRender.js\";;\nimport renderSelect from \"tinper-bee/lib/SelectRender.js\";;\n\nconst InputRender = renderInput(Form, Input, Icon);\nconst SelectRender = renderSelect(Select, Icon);\n\nconst Option = Select.Option;\n\nconst dataSource = [\n  {\n    key: \"boyuzhou\",\n    value: \"jack\"\n  },\n  {\n    key: \"renhualiu\",\n    value: \"lucy\"\n  },\n  {\n    key: \"yuzhao\",\n    value: \"yiminghe\"\n  }\n];\nclass Demo19 extends React.Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      dataSource: [\n        {\n          key: \"0\",\n          name: \"沉鱼\",\n          number: \"10\",\n          age: \"y\",\n          address: \"jack\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"1\",\n          name: \"落雁\",\n          number: \"100\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"2\",\n          name: \"闭月\",\n          number: \"1000\",\n          age: \"n\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"3\",\n          name: \"羞花\",\n          number: \"9999\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        }\n      ],\n      count: 4\n    };\n    this.columns = [ \n      {\n        title: \"货币输入\",\n        dataIndex: \"number\",\n        key: \"number\",\n        width: \"150px\",\n        render: (text, record, index) => (\n          <InputRender\n            format=\"Currency\"\n            name=\"name\"\n            placeholder=\"请输入姓名\"\n            value={text}\n            isclickTrigger={true}\n            check={this.check}\n            onChange={this.onInputChange(index, \"name\")}\n            isRequire={true}\n            method=\"blur\"\n            errorMessage={\n              <Tooltip overlay={\"错误提示\"}>\n                <Icon type=\"uf-exc-c\" className=\"\" />\n              </Tooltip>\n            }\n            reg={/^[0-9]+$/}\n          />\n        )\n      },\n       \n      {\n        title:(<div>下拉框的div</div>),\n        dataIndex: \"address\",\n        key: \"address\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <SelectRender\n              dataSource={dataSource}\n              isclickTrigger={true}\n              value={text}\n              onChange={this.onSelectChange(index, \"address\")}\n              onFocus={this.handFocus}\n              onBlur={this.onBlur}\n              autofocus\n            >\n              <Option value=\"jack\">boyuzhou</Option>\n              <Option value=\"lucy\">renhualiu</Option>\n              <Option value=\"disabled\" disabled>\n                Disabled\n              </Option>\n              <Option value=\"yiminghe\">yuzhao</Option>\n            </SelectRender>\n          );\n        }\n      }\n    ];\n  }\n  check = (flag, obj) => {\n    console.log(flag);\n    console.log(obj);\n  };\n\n  handFocus = (value,e) => {\n    console.log(value+` 获取焦点事件`);\n  };\n  onBlur = (value,e) => {\n    console.log(value+` onBlur`);\n  };\n\n  onInputChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n\n  onSelectChange = (index, key) => {\n    return value => {\n      console.log(`selected ${value}`);\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n\n  handleAdd = () => {\n    const { count, dataSource } = this.state;\n    const newData = {\n      key: count,\n      name: `凤姐 ${count}`,\n      age: 32,\n      address: \"jack\",\n      datepicker: \"2017-06-12\",\n      MonthPicker: \"2017-02\"\n    };\n    this.setState({\n      dataSource: [...dataSource, newData],\n      count: count + 1\n    });\n  };\n\n  getBodyWrapper = body => {\n    return (\n      <Animate\n        transitionName=\"move\"\n        component=\"tbody\"\n        className={body.props.className}\n      >\n        {body.props.children}\n      </Animate>\n    );\n  };\n  getData = () => {\n    console.log(this.state.dataSource);\n  };\n  render() {\n    const { dataSource } = this.state;\n    const columns = this.columns;\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.handleAdd}\n        >\n          添加一行\n        </Button>\n        <Button\n          style={{marginLeft:\"5px\"}}\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.getData}\n        >\n          获取数据\n        </Button>\n        <Table\n          data={dataSource}\n          columns={columns}\n          getBodyWrapper={this.getBodyWrapper}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）" }, { "example": _react2['default'].createElement(Demo2, null), "title": " 增删改表格", "code": "/**\n*\n* @title 增删改表格\n* @description 这是带有增删改功能的表格（此编辑功能未使用render组件）\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Popconfirm, Input, Icon, Animate, Button } from 'tinper-bee';\n\nclass EditableCell extends React.Component {\n  state = {\n    value: this.props.value,\n    editable: false\n  };\n  handleChange = e => {\n    const value = e;\n    this.setState({ value });\n  };\n  check = () => {\n    this.setState({ editable: false });\n    if (this.props.onChange) {\n      this.props.onChange(this.state.value);\n    }\n  };\n  edit = () => {\n    this.setState({ editable: true });\n  };\n  handleKeydown = event => {\n    if (event.keyCode == 13) {\n      this.check();\n    }\n  };\n  render() {\n    const { value, editable } = this.state;\n    return (\n      <div className=\"editable-cell\">\n        {editable ? (\n          <div className=\"editable-cell-input-wrapper\">\n            <Input\n              value={value}\n              onChange={this.handleChange}\n              onKeyDown={this.handleKeydown}\n            />\n            <Icon\n              type=\"uf-correct\"\n              className=\"editable-cell-icon-check\"\n              onClick={this.check}\n            />\n          </div>\n        ) : (\n          <div className=\"editable-cell-text-wrapper\">\n            {value || \" \"}\n            <Icon\n              type=\"uf-pencil\"\n              className=\"editable-cell-icon\"\n              onClick={this.edit}\n            />\n          </div>\n        )}\n      </div>\n    );\n  }\n}\n\nclass Demo2 extends React.Component {\n  constructor(props) {\n    super(props);\n    this.columns = [\n      {\n        title: \"姓名\",\n        dataIndex: \"name\",\n        key: \"name\",\n        width: \"30%\",\n        render: (text, record, index) => (\n          <EditableCell\n            value={text}\n            onChange={this.onCellChange(index, \"name\")}\n          />\n        )\n      },\n      {\n        title: \"年龄\",\n        dataIndex: \"age\",\n        key: \"age\"\n      },\n      {\n        title: \"你懂的\",\n        dataIndex: \"address\",\n        key: \"address\"\n      },\n      {\n        title: \"操作\",\n        dataIndex: \"operation\",\n        key: \"operation\",\n        render: (text, record, index) => {\n          return this.state.dataSource.length > 1 ? (\n            <Popconfirm content=\"确认删除?\" id=\"aa\" onClose={this.onDelete(index)}>\n              <Icon type=\"uf-del\" />\n            </Popconfirm>\n          ) : null;\n        }\n      }\n    ];\n\n    this.state = {\n      dataSource: [\n        {\n          key: \"0\",\n          name: \"沉鱼\",\n          age: \"18\",\n          address: \"96, 77, 89\"\n        },\n        {\n          key: \"1\",\n          name: \"落雁\",\n          age: \"16\",\n          address: \"90, 70, 80\"\n        },\n        {\n          key: \"2\",\n          name: \"闭月\",\n          age: \"17\",\n          address: \"80, 60, 80\"\n        },\n        {\n          key: \"3\",\n          name: \"羞花\",\n          age: \"20\",\n          address: \"120, 60, 90\"\n        }\n      ],\n      count: 4\n    };\n  }\n  onCellChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onDelete = (index) => {\n    return () => {\n      const dataSource = [...this.state.dataSource];\n      dataSource.splice(index, 1);\n      this.setState({ dataSource });\n    }\n  };\n  handleAdd = () => {\n    const { count, dataSource } = this.state;\n    const newData = {\n      key: count,\n      name: `凤姐 ${count}`,\n      age: 32,\n      address: `100 100 100`\n    };\n    this.setState({\n      dataSource: [...dataSource, newData],\n      count: count + 1\n    });\n  };\n\n  getBodyWrapper = body => {\n    return (\n      <Animate\n        transitionName=\"move\"\n        component=\"tbody\"\n        className={body.props.className}\n      >\n        {body.props.children}\n      </Animate>\n    );\n  };\n  render() {\n    const { dataSource } = this.state;\n    const columns = this.columns;\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.handleAdd}\n        >\n          添加\n        </Button>\n        <Table\n          data={dataSource}\n          columns={columns}\n          getBodyWrapper={this.getBodyWrapper}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 这是带有增删改功能的表格（此编辑功能未使用render组件）" }, { "example": _react2['default'].createElement(Demo20, null), "title": " 简单表格选中行的背景色、表头表尾", "code": "/**\n*\n* @title 简单表格选中行的背景色、表头表尾\n* @description\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Tooltip, Button } from 'tinper-bee';\n\nconst columns = [\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width:80 , className:\"rowClassName\"},\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n];\n\nconst data = [\n  { a: \"令狐冲\", b: \"男\", c: 41, key: \"1\" },\n  { a: \"杨过叔叔的女儿黄蓉\", b: \"男\", c: 67, key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, key: \"3\" }\n];\n\nclass Demo26 extends Component {\n\n  constructor(props){\n      super(props);\n      this.state = {\n        data: data,\n        selectedRowIndex: 0\n      }\n  }\n\n  render() {\n    return (\n      <Table\n        columns={columns}\n        data={data}\n        rowClassName={(record,index,indent)=>{\n          if (this.state.selectedRowIndex == index) {\n              return 'selected';\n          } else {\n              return '';\n          }\n        }}\n        onRowClick={(record,index,indent)=>{\n          this.setState({ \n              selectedRowIndex: index\n          });\n        }}\n        title={currentData => <div>标题: 这是一个标题</div>}\n        footer={currentData => <div>表尾: 我是小尾巴</div>}\n      /> \n    );\n  }\n}\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo21, null), "title": " 根据列进行过滤", "code": "/**\n*\n* @title 根据列进行过滤\n* @description 点击表格右侧按钮，进行表格列的数据过滤。可以自定义设置显示某列，通过ifshow属性控制，默认为true都显示。afterFilter为过滤之后的回调函数\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Popover, Checkbox, Icon } from 'tinper-bee';\nimport filterColumn from \"tinper-bee/lib/filterColumn\";;\nimport sum from \"tinper-bee/lib/sum\";;\n\nconst data21 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行',e: \"操作\", key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠',e: \"操作\", key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠',e: \"操作\", key: \"3\" }\n];\n\nconst FilterColumnTable = filterColumn(Table, Popover, Icon);\n\nconst defaultProps21 = {\n  prefixCls: \"bee-table\"\n};\n\nclass Demo21 extends Component {\n  constructor(props) {\n    super(props);\n    this.state ={\n              columns21: [\n                {\n                  title: \"名字\",\n                  dataIndex: \"a\",\n                  key: \"a\"\n                  // width: 100\n                },\n                {\n                  title: \"性别\",\n                  dataIndex: \"b\",\n                  key: \"b\",\n                  // width: 100\n                },\n                {\n                  title: \"年龄\",\n                  dataIndex: \"c\",\n                  key: \"c\",\n                  ifshow:false,\n                  // width: 200,\n                  // sumCol: true,\n                  sorter: (a, b) => a.c - b.c\n                },\n                {\n                  title: \"武功级别\",\n                  dataIndex: \"d\",\n                  key: \"d\"\n                },\n                {\n                  title: \"操作\",\n                  dataIndex: \"e\",\n                  key: \"e\",\n                  render(text, record, index){\n                    return (\n                      <div  title={text} >\n                          <a href=\"#\"\n                              tooltip={text}\n                              onClick={() => {\n                                alert('这是第'+index+'列，内容为:'+text);\n                              }}\n                              // style={{\n                              //     position: 'absolute',\n                              //     top: 5,\n                              //     left: 0\n                              // }}\n                            >\n                              一些操作\n                            </a>\n                      </div>\n                    );\n                  }\n                }\n              ]};\n  }\n  afterFilter = (optData,columns)=>{\n    if(optData.key == 'b'){\n        if(optData.ifshow){\n          columns[2].ifshow = false;\n        }else{\n          columns[2].ifshow = true;\n        }\n        this.setState({\n          columns21 :columns,\n          showFilterPopover:true\n        });\n    }\n    \n  }\n \n  render() {\n    \n    return <FilterColumnTable columns={this.state.columns21} data={data21} afterFilter={this.afterFilter} showFilterPopover={this.state.showFilterPopover}/>;\n  }\n}\nDemo21.defaultProps = defaultProps21;\n\n\n", "desc": " 点击表格右侧按钮，进行表格列的数据过滤。可以自定义设置显示某列，通过ifshow属性控制，默认为true都显示。afterFilter为过滤之后的回调函数" }, { "example": _react2['default'].createElement(Demo22, null), "title": " 列的拖拽，交换表头的顺序", "code": "/**\n*\n* @title 列的拖拽，交换表头的顺序\n* @description 点击列的表头，进行左右拖拽\n*/\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee'; \nimport dragColumn from \"tinper-bee/lib/dragColumn\";;\n\n\nconst columns22 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 200\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width: 200,\n  }\n];\n\nconst data22 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\n];\n\nconst DragColumnTable = dragColumn(Table);\n\nconst defaultProps22 = {\n  prefixCls: \"bee-table\"\n};\n\nclass Demo22 extends Component {\n  constructor(props) {\n    super(props); \n  }\n \n  render() {\n    return <DragColumnTable columns={columns22} data={data22} bordered\n    \n    draggable={true} \n    />;\n  }\n}\nDemo22.defaultProps = defaultProps22;\n\n\n", "desc": " 点击列的表头，进行左右拖拽" }, { "example": _react2['default'].createElement(Demo23, null), "title": " 拖拽调整列的宽度", "code": "/**\n*\n* @title 拖拽调整列的宽度\n* @description 注：不支持tree结构的表头、合并表头的table【目前支持表头拖拽宽度、交互列一起使用】\n*/\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee'; \nimport dragColumn from \"tinper-bee/lib/dragColumn\";;\n\n\nconst columns23 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: '200'\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: '100'\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: '200',\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    fixed:'right',\n    width: 200,\n  }\n];\n\nconst data23 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\n];\n\nconst DragColumnTable = dragColumn(Table);\n\nconst defaultProps23 = {\n  prefixCls: \"bee-table\"\n};\n\nclass Demo23 extends Component {\n  constructor(props) {\n    super(props); \n  }\n\n  render() {\n    return <DragColumnTable columns={columns23} data={data23} bordered\n    dragborder={true} \n    draggable={true} \n    />;\n  }\n}\nDemo23.defaultProps = defaultProps23;\n\n\n", "desc": " 注：不支持tree结构的表头、合并表头的table【目前支持表头拖拽宽度、交互列一起使用】" }, { "example": _react2['default'].createElement(Demo24, null), "title": " 动态设置固、取消固定列", "code": "/**\n*\n* @title 动态设置固、取消固定列\n* @description 动态设置固、取消固定列\n* @description 动态固定列设置 一个table动态设置一个方向【fixed: \"left\"，fixed: \"right\"】。\n*\n*/\nimport React, { Component } from 'react';\nimport { Table, Dropdown, Menu, Icon } from 'tinper-bee';\n\n\nconst { Item } = Menu;\n// const columns24 = [\n//   {\n//     title: \"Full Name\",\n//     width: 100,\n//     dataIndex: \"name\",\n//     key: \"name\",\n//     fixed: \"left\",\n//   },\n//   { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\", fixed: \"left\" },\n//   { title: \"Column 1\", dataIndex: \"address\", key: \"1\"  },\n//   { title: \"Column 2\", dataIndex: \"address2\", key: \"2\" },\n//   { title: \"Column 3\", dataIndex: \"address\", key: \"3\" },\n//   { title: \"Column 4\", dataIndex: \"address\", key: \"4\" },\n//   { title: \"Column 24\", dataIndex: \"address\", key: \"24\" },\n//   { title: \"Column 6\", dataIndex: \"address\", key: \"6\" },\n//   { title: \"Column 7\", dataIndex: \"address\", key: \"7\" },\n//   { title: \"Column 8\", dataIndex: \"address\", key: \"8\" }\n// ];\n\n\nconst columns24 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100,\n    fixed: \"left\",\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100,\n    fixed: \"left\",\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 100, \n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width: 150 \n  },\n  {\n    title: \"对手\",\n    dataIndex: \"e\",\n    key: \"e\",\n    width: 100 \n  },\n  {\n    title: \"帮派\",\n    dataIndex: \"f\",\n    key: \"f\",\n    width: 100 \n  },\n  {\n    title: \"武功类型\",\n    dataIndex: \"g\",\n    key: \"g\",\n    width: 100 \n  },\n  {\n    title: \"师傅\",\n    dataIndex: \"k\",\n    key: \"k\",\n    // width: 100 \n  },\n  {\n    title: \"攻击系数\",\n    dataIndex: \"h\",\n    key: \"h\",\n    width: 100 \n  }\n];\n\n\nconst data24 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行',e:'黄荣',f:'古墓派',g:'剑术',k:'小龙女',h:'0.5', key: \"1\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'剑客',e:'自己',f:'无',g:'剑术',k:'无',h:'0.5', key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠',e:'黄荣',f:'朝廷',g:'内容',k:'外侵势力',h:'0.6', key: \"3\" }\n]; \n \nclass Demo24 extends Component {\n\n  constructor(props) {\n    super(props);\n    // let columns = [];\n    // Object.assign(columns,columns24);\n    // columns.forEach(da=>da.onHeadCellClick=this.onHeadCellClick);\n    this.state = {\n      columns:columns24\n    }\n  }\n\n  \n    onSelect = ({key,item})=>{ \n      console.log(`${key} selected`); //获取key\n      let currentObject = item.props.data; //获取选中对象的数据\n      let {columns} = this.state;\n      let fixedCols = [];\n      let nonColums = [];\n      columns.find(da=>{\n        if(da.key == key){\n          da.fixed?delete da.fixed:da.fixed = 'left';\n        }\n        da.fixed?fixedCols.push(da):nonColums.push(da);\n      });\n    \n      columns = [...fixedCols,...nonColums]\n\n      this.setState({\n        columns\n      });\n    }\n  //表头增加下拉菜单\n  renderColumnsDropdown(columns) {\n    const icon ='uf-arrow-down';\n    \n    return columns.map((originColumn,index) => {\n      let column = Object.assign({}, originColumn);\n      let menuInfo = [], title='锁定';\n      if(originColumn.fixed){\n        title = '解锁'\n      }\n      menuInfo.push({\n        info:title,\n        key:originColumn.key,\n        index:index\n      });\n      const menu = (\n        <Menu onSelect={this.onSelect} >{\n            menuInfo.map(da=>{ return <Item key={da.key} data={da} >{da.info}</Item> })\n            }\n        </Menu>)\n      column.title = (\n        <span className='title-con drop-menu'>\n          {column.title}\n          <Dropdown\n            trigger={['click']} \n            overlay={menu}\n            animation=\"slide-up\"\n          >\n           <Icon type={icon}/>\n          </Dropdown> \n          \n        </span>\n      );\n      return column;\n    });\n    \n  }\n\n  render() {\n    let {columns} = this.state;\n     columns = this.renderColumnsDropdown(columns);\n    return <div className=\"demo24\">\n            <Table columns={columns} data={data24} scroll={{ x: \"110%\", y: 240 }}/>\n          </div>;\n  }\n}\n\n", "desc": " 动态设置固、取消固定列", "scss_code": "th{\n    .drop-menu{\n        .uf{\n            font-size: 12px;\n            visibility: hidden;\n            margin-left: 15px;\n        }\n        \n    \n    }\n    &:hover{\n        .uf{\n                visibility: visible;\n        }\n    }\n\n}\n\n" }, { "example": _react2['default'].createElement(Demo25, null), "title": " 根据列进行过滤、拖拽交换列综合使用案例", "code": "/**\n* @title 根据列进行过滤、拖拽交换列综合使用案例\n* @description 新增属性【checkMinSize 当前表格显示最少列数 】 1. 当所有列都设置了width属性后，需要给table增加checkMinSize属性 2. 所有列不设置width。\n*/\n\n/**注：\n *  在使用过滤列的时候，如果每一列都设置了width属性，勾选的时候回出现重复列问题。当表格的宽度小于合计宽度的时候，就会出现此问题。 \n *  必须有个别列不设置width属性，即可避免此问题。\n */\nimport React, { Component } from 'react';\nimport { Table, Popover, Checkbox, Icon } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/multiSelect\";;\nimport filterColumn from \"tinper-bee/lib/filterColumn\";;\nimport dragColumn from \"tinper-bee/lib/dragColumn\";;\n\nimport sum from \"tinper-bee/lib/sum\";;\n\n //Cloumns1\nfunction getCloumns(){\n  const column = [\n      {\n          title: \"序号\",\n          dataIndex: \"index\",\n          key: \"index\",\n          width: 100, \n      },\n      {\n          title: \"订单编号\",\n          dataIndex: \"orderCode\",\n          key: \"orderCode\",\n          width: 100, \n      },\n      {\n          title: \"供应商名称\",\n          dataIndex: \"supplierName\",\n          key: \"supplierName\",\n          width: 100\n      },\n      {\n          title: \"类型\",\n          dataIndex: \"type_name\",\n          key: \"type_name\",\n          width: 100\n      },\n      {\n          title: \"采购组织\",\n          dataIndex: \"purchasing\",\n          key: \"purchasing\",\n          width: 100\n      },\n      {\n          title: \"采购组\",\n          dataIndex: \"purchasingGroup\",\n          key: \"purchasingGroup\",\n           width: 300\n      },\n      {\n          title: \"凭证日期\",\n          dataIndex: \"voucherDate\",\n          key: \"voucherDate\",\n          width: 100,\n          \n      },\n      {\n          title: \"审批状态\",\n          dataIndex: \"approvalState_name\",\n          key: \"approvalState_name\",\n          width: 100\n      },\n      {\n          title: \"确认状态\",\n          dataIndex: \"confirmState_name\",\n          key: \"confirmState_name\",\n           width: 100\n      }, \n      {\n          title: \"关闭状态\",\n          dataIndex: \"closeState_name\",\n          key: \"closeState_name\",\n          width: 100\n      },\n      {\n          title: \"操作\",\n          dataIndex: \"d\",\n          key: \"d\",\n          width:100,\n          fixed: \"right\",\n          render(text, record, index) {\n              return (\n                  <div className='operation-btn'>\n                    <a href=\"#\"\n                      tooltip={text}\n                      onClick={() => {\n                        alert('这是第'+index+'列，内容为:'+text);\n                      }}\n                    >\n                      一些操作\n                    </a>\n                  </div>\n              )\n          }\n      }\n  ];\n  return column;\n}\n\nconst dataList = [ \n  { \n      index: 1, \n      orderCode:\"2343\", \n      supplierName: \"xxx\",\n      type_name: \"123\",\n      purchasing:'内行', \n      purchasingGroup:\"323\",\n      voucherDate:\"kkkk\",\n      approvalState_name:\"vvvv\",\n      confirmState_name:\"aaaa\",\n      closeState_name:\"vnnnnn\",\n      d:\"操作\",\n      key: \"1\"\n  }, \n  { \n    index: 2, \n    _checked:true,\n    orderCode:\"222\", \n    supplierName: \"22xxx\",\n    type_name: \"1223\",\n    purchasing:'内行2', \n    purchasingGroup:\"3223\",\n    voucherDate:\"222kk\",\n    approvalState_name:\"22vvvv\",\n    confirmState_name:\"2aaaa\",\n    closeState_name:\"2vnnnnn\",\n    d:\"2操作\",\n    key: \"2\"\n  },\n  { \n    index: 3, \n    orderCode:\"222\", \n    supplierName: \"22xxx\",\n    _disabled:true,\n    type_name: \"1223\",\n    purchasing:'内行2', \n    purchasingGroup:\"3223\",\n    voucherDate:\"222kk\",\n    approvalState_name:\"22vvvv\",\n    confirmState_name:\"2aaaa\",\n    closeState_name:\"2vnnnnn\",\n    d:\"3操作\",\n    key: \"3\"\n  },\n  { \n    index: 4, \n    orderCode:\"222\", \n    supplierName: \"22xxx\",\n    type_name: \"1223\",\n    purchasing:'内行2', \n    purchasingGroup:\"3223\",\n    voucherDate:\"222kk\",\n    approvalState_name:\"22vvvv\",\n    confirmState_name:\"2aaaa\",\n    closeState_name:\"2vnnnnn\",\n    d:\"4操作\",\n    key: \"4\"\n  },\n]\n\nconst DragColumnTable = filterColumn(dragColumn(multiSelect(Table, Checkbox)),Popover);\n\nconst defaultProps25 = {\n  prefixCls: \"bee-table\"\n};\n\nclass Demo25 extends Component {\n  constructor(props) {\n    super(props);\n  }\n\n  getSelectedDataFunc=(data)=>{\n      console.log(\"data\",data);\n  }\n \n  getCloumnsScroll=(columns)=>{\n    let sum = 0;\n    columns.forEach((da)=>{\n        sum += da.width;\n    })\n    console.log(\"sum\",sum);\n    return (sum);\n  }\n\n  selectedRow=(record, index)=>{\n\n  }\n\n  render() {\n    let columns = getCloumns();\n    \n    return <div className=\"demo25\">\n            <DragColumnTable \n                columns={columns}\n                data={dataList} \n                getSelectedDataFunc={this.getSelectedDataFunc}\n                bordered\n                checkMinSize={7}\n                draggable={true}\n                multiSelect={{type: \"checkbox\"}}\n                scroll={{x:\"130%\", y: 100}}\n                selectedRow={this.selectedRow}\n                // scroll={{x:this.getCloumnsScroll(columns), y: 150}}\n                />\n            </div>\n  }\n}\nDemo25.defaultProps = defaultProps25;\n\n\n", "desc": " 新增属性【checkMinSize 当前表格显示最少列数 】 1. 当所有列都设置了width属性后，需要给table增加checkMinSize属性 2. 所有列不设置width。" }, { "example": _react2['default'].createElement(Demo26, null), "title": " 按条件和值过滤", "code": "/**\n*\n* @title 按条件和值过滤\n* @description 可以根据输入项目以及判断条件对表格内的数据进行过滤\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\nconst columns26 = [\n  { title: \"姓名\", width: 180, dataIndex: \"name\", key: \"name\", filterType: \"text\", filterDropdown: \"show\" },\n  { title: \"年龄\", width: 150, dataIndex: \"age\", key: \"age\", filterType: \"dropdown\", filterDropdown: \"show\" },\n  { title: \"日期\", width: 200, dataIndex: \"date\", key: \"date\", filterType: \"date\", filterDropdown: \"show\", format: \"YYYY-MM-DD\" },\n  { title: \"居住地址\", width: 150, dataIndex: \"address\", key: \"address\", filterType: \"dropdown\", filterDropdown: \"show\" },\n  { title: \"备注\", dataIndex: \"mark\", key: \"mark\" }\n];\n\nconst data26 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-19\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  }, {\n    key: \"5\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"6\",\n    name: \"Jim Green\",\n    age: 48,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"7\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"8\",\n    name: \"Jim Green\",\n    age: 38,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  }\n];\n\nclass Demo26 extends Component {\n  handlerFilterChange = (key, val, condition) => {\n    console.log('参数：key=', key, ' value=', val, 'condition=', condition);\n  }\n\n  handlerFilterClear = (key) => {\n    console.log('清除条件', key);\n  }\n  render() {\n    return <Table\n      onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()\n      onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()\n      filterDelay={500}//输入文本多少ms触发回调函数，默认300ms\n      filterable={true}//是否开启过滤数据功能\n      bordered\n      columns={columns26}\n      data={data26} />;\n  }\n}\n\n", "desc": " 可以根据输入项目以及判断条件对表格内的数据进行过滤" }, { "example": _react2['default'].createElement(Demo27, null), "title": " 组合过滤和其他功能使用", "code": "/**\n*\n* @title 组合过滤和其他功能使用\n* @description 在过滤数据行的基础上增加列拖拽、动态菜单显示、下拉条件动态传入自定义等\n*\n*/\n\n/**\n * @description \n */\n\nimport React, { Component } from 'react';\nimport { Table, Dropdown, Menu, Icon, Checkbox } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/MultiSelect\";;\nimport sort from \"tinper-bee/lib/sort\";;\n\n\nconst { Item } = Menu;\nconst SubMenu = Menu.SubMenu;\nconst MenuItemGroup = Menu.ItemGroup;\n\n\nconst dataList = [\n  { \"key\": \"1\", value: \"库存明细\", id: \"a\" },\n  { \"key\": \"2\", value: \"订单明细\", id: \"v\" },\n  { \"key\": \"3\", value: \"发货明细\", id: \"c\" }\n]\n\nconst data27 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-19\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  }, {\n    key: \"5\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"6\",\n    name: \"Jim Green\",\n    age: 48,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"7\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"8\",\n    name: \"Jim Green\",\n    age: 38,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  }\n];\n\n\nconst MultiSelectTable = multiSelect(Table, Checkbox);\nconst ComplexTable = sort(MultiSelectTable, Icon);\nclass Demo27 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      dropdownvalue: []\n    }\n  }\n  handlerFilterChange = (key, val, condition) => {\n    console.log('参数：key=', key, ' value=', val, 'condition=', condition);\n  }\n\n  handlerFilterClear = (key) => {\n    console.log('清除条件', key);\n  }\n  getSelectedDataFunc = data => {\n    console.log(data);\n  }\n  onClick = (item) => {\n    console.log(item);\n  }\n\n  render() {\n    const menu1 = (\n      <Menu onClick={this.onClick} style={{ width: 240 }} mode=\"vertical\" >\n        <SubMenu key=\"sub1\" title={<span><span>组织 1</span></span>}>\n          <MenuItemGroup title=\"Item 1\">\n            <Menu.Item key=\"1\">选项 1</Menu.Item>\n            <Menu.Item key=\"2\">选项 2</Menu.Item>\n          </MenuItemGroup>\n          <MenuItemGroup title=\"Iteom 2\">\n            <Menu.Item key=\"3\">选项 3</Menu.Item>\n            <Menu.Item key=\"4\">选项 4</Menu.Item>\n          </MenuItemGroup>\n        </SubMenu>\n      </Menu>)\n    let multiObj = {\n      type: \"checkbox\"\n    };\n    let columns27 = [\n      {\n        title: \"\", width: 40, dataIndex: \"key\", key: \"key\", render: (text, record, index) => {\n          return <Dropdown\n            trigger={['click']}\n            overlay={menu1}\n            animation=\"slide-up\"\n          >\n            <Icon style={{ \"visibility\": \"hidden\" }} type=\"uf-eye\" />\n          </Dropdown>\n        }\n      },\n      {\n        title: \"姓名\",\n        width: 180,\n        dataIndex: \"name\",\n        key: \"name\",\n        filterType: \"text\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"string\"//字符条件\n      },\n      {\n        title: \"年龄\",\n        width: 180,\n        dataIndex: \"age\",\n        key: \"age\",\n        filterType: \"number\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"number\"//字符条件\n      },\n      {\n        title: \"日期\",\n        width: 190,\n        dataIndex: \"date\",\n        key: \"date\",\n        filterType: \"date\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"string\"//字符条件\n      },\n      {\n        title: \"时间范围\",\n        width: 290,\n        dataIndex: \"mark\",\n        key: \"mark\",\n        filterType: \"daterange\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"number\"//字符条件\n      },\n      {\n        title: \"地址\",\n        width: 100,\n        dataIndex: \"address\",\n        key: \"address\",\n        filterType: \"dropdown\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"number\"//字符条件\n      }\n    ];\n    return <ComplexTable\n      onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()\n      onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()\n      filterDelay={500}//输入文本多少ms触发回调函数，默认500ms\n      filterable={true}//是否开启过滤数据功能\n      getSelectedDataFunc={this.getSelectedDataFunc}\n      bordered\n      multiSelect={multiObj}\n      columns={columns27}\n      data={data27} />;\n  }\n}\n\n", "desc": " 在过滤数据行的基础上增加列拖拽、动态菜单显示、下拉条件动态传入自定义等" }, { "example": _react2['default'].createElement(Demo28, null), "title": " 列排序,后端排序", "code": "/**\n*\n* @title 列排序,后端排序\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee';\nimport sort from \"tinper-bee/lib/sort.js\";;\nlet ComplexTable = sort(Table, Icon);\nconst columns11 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  },\n  {\n    title: \"分数\",\n    dataIndex: \"e\",\n    key: \"e\",\n    sorter: (a, b) => a.c - b.c\n  },\n];\n\nconst data11 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', e:139,key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', e:109, key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', e:159, key: \"3\" }\n];\n\nconst defaultProps = {\n  prefixCls: \"bee-table\"\n};\nclass Demo28 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      sortOrder: \"\",\n      data: data11\n    };\n  }\n  /**\n   * 后端获取数据\n   */\n  sortFun = (sortParam)=>{\n    console.info(sortParam);\n    //将参数传递给后端排序\n  }\n  render() {\n    let sortObj = {\n      mode:'multiple',\n      backSource:true,\n      sortFun:this.sortFun\n    }\n    return <ComplexTable columns={columns11} data={this.state.data} sort={sortObj}/>;\n  }\n}\nDemo28.defaultProps = defaultProps;\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo3, null), "title": " 表头分组并自定义表头高度", "code": "/**\n *\n * @title 表头分组并自定义表头高度\n * @description columns[n] 可以内嵌 children，以渲染分组表头。\n * 自定义表头高度需要传headerHeight，注：修改th的padding top和bottom置为0，否则会有影响\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table, Button } from 'tinper-bee';\n\nconst { ColumnGroup, Column } = Table;\n\nconst columns = [\n  {\n    title: \"Name\",\n    dataIndex: \"name\",\n    key: \"name\",\n    width: 100,\n    fixed: \"left\"\n  },\n  {\n    title: \"Other\",\n    width:600,\n    children: [\n      {\n        title: \"Age\",\n        dataIndex: \"age\",\n        key: \"age\",\n        width: 200\n      },\n      {\n        title: \"Address\",\n        children: [\n          {\n            title: \"Street\",\n            dataIndex: \"street\",\n            key: \"street\",\n            width: 200\n          },\n          {\n            title: \"Block\",\n            children: [\n              {\n                title: \"Building\",\n                dataIndex: \"building\",\n                key: \"building\",\n                width: 100\n              },\n              {\n                title: \"Door No.\",\n                dataIndex: \"number\",\n                key: \"number\",\n                width: 100\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  {\n    title: \"Company\",\n    width:400,\n    children: [\n      {\n        title: \"Company Address\",\n        dataIndex: \"companyAddress\",\n        key: \"companyAddress\",\n        width:200,\n      },\n      {\n        title: \"Company Name\",\n        dataIndex: \"companyName\",\n        key: \"companyName\",\n        width:200,\n      }\n    ]\n  },\n  {\n    title: \"Gender\",\n    dataIndex: \"gender\",\n    key: \"gender\",\n    width: 60,\n    fixed: \"right\"\n  }\n];\n\nconst data = [];\nfor (let i = 0; i < 20; i++) {\n  data.push({\n    key: i,\n    name: \"John Brown\",\n    age: i + 1,\n    street: \"Lake Park\",\n    building: \"C\",\n    number: 2035,\n    companyAddress: \"Lake Street 42\",\n    companyName: \"SoftLake Co\",\n    gender: \"M\"\n  });\n}\n\nclass Demo3 extends Component {\n  render() {\n    return (\n      <Table\n        className={'demo3'}\n        columns={columns}\n        data={data}\n        headerHeight={40} //自定义表头高度\n        bordered\n        scroll={{ y: 240 }}\n      />\n    );\n  }\n}\n\n\n", "desc": " columns[n] 可以内嵌 children，以渲染分组表头。", "scss_code": ".demo3{\n    .u-table-thead th {\n        padding-top: 0px;\n        padding-bottom: 0px;\n    }\n}" }, { "example": _react2['default'].createElement(Demo4, null), "title": " 树形数据展示", "code": "/**\n*\n* @title 树形数据展示\n* @description 通过在data中配置children数据，来自动生成树形数据\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\nconst columns4 = [\n  {\n    title: \"Name\",\n    dataIndex: \"name\",\n    key: \"name\",\n    width: \"40%\"\n  },\n  {\n    title: \"Age\",\n    dataIndex: \"age\",\n    key: \"age\",\n    width: \"30%\"\n  },\n  {\n    title: \"Address\",\n    dataIndex: \"address\",\n    key: \"address\"\n  }\n];\n\nconst data4 = [\n  {\n    key: 1,\n    name: \"John Brown sr.\",\n    age: 60,\n    address: \"New York No. 1 Lake Park\",\n    children: [\n      {\n        key: 11,\n        name: \"John Brown\",\n        age: 42,\n        address: \"New York No. 2 Lake Park\"\n      },\n      {\n        key: 12,\n        name: \"John Brown jr.\",\n        age: 30,\n        address: \"New York No. 3 Lake Park\",\n        children: [\n          {\n            key: 121,\n            name: \"Jimmy Brown\",\n            age: 16,\n            address: \"New York No. 3 Lake Park\"\n          }\n        ]\n      },\n      {\n        key: 13,\n        name: \"Jim Green sr.\",\n        age: 72,\n        address: \"London No. 1 Lake Park\",\n        children: [\n          {\n            key: 131,\n            name: \"Jim Green\",\n            age: 42,\n            address: \"London No. 2 Lake Park\",\n            children: [\n              {\n                key: 1311,\n                name: \"Jim Green jr.\",\n                age: 25,\n                address: \"London No. 3 Lake Park\"\n              },\n              {\n                key: 1312,\n                name: \"Jimmy Green sr.\",\n                age: 18,\n                address: \"London No. 4 Lake Park\"\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  {\n    key: 2,\n    name: \"Joe Black\",\n    age: 32,\n    address: \"Sidney No. 1 Lake Park\"\n  }\n];\nclass Demo4 extends Component {\n\n  constructor(props){\n      super(props);\n      this.state = {\n        data: data4,\n        factoryValue: 0,\n        selectedRow: new Array(data4.length)//状态同步\n      }\n  }\n\n  render() {\n    return <Table \n    rowClassName={(record,index,indent)=>{\n      if (this.state.selectedRow[index]) {\n          return 'selected';\n      } else {\n          return '';\n      }\n    }}\n    onRowClick={(record,index,indent)=>{\n      let selectedRow = new Array(this.state.data.length);\n      selectedRow[index] = true;\n      this.setState({\n          factoryValue: record,\n          selectedRow: selectedRow\n      });\n    }}\n    \n    columns={columns4} data={data4} />;\n  }\n}\n\n\n", "desc": " 通过在data中配置children数据，来自动生成树形数据" }, { "example": _react2['default'].createElement(Demo5, null), "title": " 固定列", "code": "/**\n*\n* @title 固定列\n* @description 固定列到表格的某侧\n*\n*/\n\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\n\nconst columns5 = [\n  {\n    title: \"Full Name\",\n    width: 100,\n    dataIndex: \"name\",\n    key: \"name\",\n    fixed: \"left\"\n  },\n  { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\", fixed: \"left\" },\n  { title: \"Column 1\", dataIndex: \"address\", key: \"1\" },\n  { title: \"Column 2\", dataIndex: \"address\", key: \"2\" },\n  { title: \"Column 3\", dataIndex: \"address\", key: \"3\" },\n  { title: \"Column 4\", dataIndex: \"address\", key: \"4\" },\n  { title: \"Column 5\", dataIndex: \"address\", key: \"5\" },\n  { title: \"Column 6\", dataIndex: \"address\", key: \"6\" },\n  { title: \"Column 7\", dataIndex: \"address\", key: \"7\" },\n  { title: \"Column 8\", dataIndex: \"address\", key: \"8\" }\n];\n\nconst data5 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    address: \"New York Park\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  }\n];\n\nclass Demo5 extends Component {\n  render() {\n    return <Table columns={columns5} data={data5}scroll={{ x: \"130%\", y: 140 }}/>;\n  }\n}\n\n", "desc": " 固定列到表格的某侧" }, { "example": _react2['default'].createElement(Demo6, null), "title": " 固定表头", "code": "/**\n*\n* @title 固定表头\n* @description 方便一页内展示大量数据。需要指定 column 的 width 属性，否则列头和内容可能不对齐。(还可以设置scroll来支持横向或纵向滚动)\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\nimport dragColumn from \"tinper-bee/lib/dragColumn\";;;\nconst DragColumnTable = dragColumn(Table);\n\nconst columns6 = [\n  {\n    title: \"Full Name\",\n    width: 100,\n    dataIndex: \"name\",\n    key: \"name\"\n  },\n  { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\"},\n  { title: \"Address\", dataIndex: \"address\", key: \"1\" }\n];\n\nconst data6 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    address: \"New York Park\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },{\n    key: \"11\",\n    name: \"John Brown\",\n    age: 32,\n    address: \"New York Park\"\n  },\n  {\n    key: \"12\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"13\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"14\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  }\n];\n\nclass Demo6 extends Component {\n  render() {\n    return <DragColumnTable columns={columns6} data={data6} scroll={{y: 150 }} dragborder={true}  />;\n  }\n}\n\n", "desc": " 方便一页内展示大量数据。需要指定 column 的 width 属性，否则列头和内容可能不对齐。(还可以设置scroll来支持横向或纵向滚动)" }, { "example": _react2['default'].createElement(Demo7, null), "title": " 主子表", "code": "/**\n *\n * @title 主子表\n * @description 主表点击子表联动\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\n\nconst columns7 = [\n  { title: \"班级\", dataIndex: \"a\", key: \"a\" },\n  { title: \"人数\", dataIndex: \"b\", key: \"b\" },\n  { title: \"班主任\", dataIndex: \"c\", key: \"c\" },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst data7 = [\n  { a: \"02级一班\", b: \"2\", c: \"欧阳锋\", d: \"大侠\", key: \"1\" },\n  { a: \"03级二班\", b: \"3\", c: \"归海一刀\", d: \"大侠\", key: \"2\" },\n  { a: \"05级三班\", b: \"1\", c: \"一拳超人\", d: \"愣头青\", key: \"3\" }\n];\n\nconst columns7_1 = [\n  { title: \"姓名\", dataIndex: \"a\", key: \"a\" },\n  { title: \"班级\", dataIndex: \"b\", key: \"b\" },\n  { title: \"系别\", dataIndex: \"c\", key: \"c\" }\n];\n\nclass Demo7 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      children_data: []\n    };\n  }\n\n  rowclick = (record, index) => {\n    if (record.a === \"02级一班\") {\n      this.setState({\n        children_data: [\n          { a: \"郭靖\", b: \"02级一班\", c: \"文学系\", key: \"1\" },\n          { a: \"黄蓉\", b: \"02级一班\", c: \"文学系\", key: \"2\" }\n        ]\n      });\n    } else if (record.a === \"03级二班\") {\n      this.setState({\n        children_data: [\n          { a: \"杨过\", b: \"03级二班\", c: \"外语系\", key: \"1\" },\n          { a: \"小龙女\", b: \"03级二班\", c: \"外语系\", key: \"2\" },\n          { a: \"傻姑\", b: \"03级二班\", c: \"外语系\", key: \"3\" }\n        ]\n      });\n    } else if (record.a === \"05级三班\") {\n      this.setState({\n        children_data: [{ a: \"金圣叹\", b: \"05级三班\", c: \"美术系\", key: \"1\" }]\n      });\n    }\n  };\n\n  render() {\n    return (\n      <div>\n        <Table\n          columns={columns7}\n          data={data7}\n          onRowClick={this.rowclick}\n          title={currentData => <div>标题: 我是主表</div>}\n        />\n        <Table\n          style={{ marginTop: 40 }}\n          columns={columns7_1}\n          data={this.state.children_data}\n          title={currentData => <div>标题: 我是子表</div>}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 主表点击子表联动" }, { "example": _react2['default'].createElement(Demo8, null), "title": " 表格+分页", "code": "/**\n *\n * @title 表格+分页\n * @description 点击分页联动表格\n */\n\nimport React, { Component } from \"react\";\n\nimport { Table, Pagination } from 'tinper-bee';\n\nconst columns8 = [\n  { title: \"姓名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst pageData = {\n  1: [\n    { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"2\" },\n    { a: \"令狐冲\", b: \"男\", c: 41, d: \"大侠\", key: \"1\" },\n    { a: \"郭靖\", b: \"男\", c: 25, d: \"大侠\", key: \"3\" }\n  ],\n  2: [\n    { a: \"芙蓉姐姐\", b: \"女\", c: 23, d: \"大侠\", key: \"1\" },\n    { a: \"芙蓉妹妹\", b: \"女\", c: 23, d: \"内行\", key: \"2\" }\n  ]\n};\n\nclass Demo8 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: pageData[1],\n      activePage: 1\n    };\n  }\n\n  handleSelect(eventKey) {\n    this.setState({\n      data: pageData[eventKey],\n      activePage: eventKey\n    });\n  }\n\n  render() {\n    return (\n      <div>\n        <Table columns={columns8} data={this.state.data} />\n        <Pagination\n          first\n          last\n          prev\n          next\n          maxButtons={5}\n          boundaryLinks\n          activePage={this.state.activePage}\n          onSelect={this.handleSelect.bind(this)}\n          onDataNumSelect={this.dataNumSelect}\n          showJump={true}\n          total={100}\n          dataNum={2}\n        />\n      </div>\n    );\n  }\n}\n\n", "desc": " 点击分页联动表格" }, { "example": _react2['default'].createElement(Demo9, null), "title": " 表格+搜索", "code": "/**\n *\n * @title 表格+搜索\n * @description 搜索刷新表格数据\n *\n *\n * import {Table} from 'tinper-bee';\n */\n\nimport React, { Component } from \"react\";\n\nimport { Table, FormControl, InputGroup, Icon } from 'tinper-bee';\n\nclass Search extends Component {\n  state = {\n    searchValue: \"\",\n    empty: false\n  };\n\n  /**\n     * 搜索\n     */\n  handleSearch = () => {\n    let { onSearch } = this.props;\n    this.setState({\n      empty: true\n    });\n    onSearch && onSearch(this.state.searchValue);\n  };\n\n  /**\n     * 捕获回车\n     * @param e\n     */\n  handleKeyDown = e => {\n    if (e.keyCode === 13) {\n      this.handleSearch();\n    }\n  };\n\n  /**\n     * 输入框改变\n     * @param e\n     */\n  handleChange = (e) => {\n    this.setState({\n      searchValue: e\n    });\n  };\n\n  /**\n     * 清空输入框\n     */\n  emptySearch = () => {\n    let { onEmpty } = this.props;\n    this.setState({\n      searchValue: \"\",\n      empty: false\n    });\n    onEmpty && onEmpty();\n  };\n\n  render() {\n    return (\n      <InputGroup simple className=\"search-component\">\n        <FormControl\n          onChange={this.handleChange}\n          value={this.state.searchValue}\n          onKeyDown={this.handleKeyDown}\n          placeholder=\"请输入用户名\"\n          type=\"text\"\n        />\n        {this.state.empty ? (\n          <Icon\n            type=\"uf-close-c\"\n            onClick={this.emptySearch}\n            className=\"empty-search\"\n          />\n        ) : null}\n\n        <InputGroup.Button onClick={this.handleSearch} shape=\"border\">\n          <Icon type=\"uf-search\" />\n        </InputGroup.Button>\n      </InputGroup>\n    );\n  }\n}\n\nconst columns9 = [\n  {\n    title: \"姓名\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst userData = [\n  { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"大侠\", key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"大侠\", key: \"3\" }\n];\n\nclass Demo9 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: userData\n    };\n  }\n\n  handleSearch = value => {\n    if (value === \"\") {\n      return this.setState({\n        data: userData\n      });\n    }\n    let regExp = new RegExp(value, \"ig\");\n    let data = userData.filter(item => regExp.test(item.a));\n    this.setState({\n      data\n    });\n  };\n\n  handleEmpty = () => {\n    this.setState({\n      data: userData\n    });\n  };\n\n  render() {\n    return (\n      <div>\n        <div className=\"clearfix\">\n          <Search onSearch={this.handleSearch} onEmpty={this.handleEmpty} />\n        </div>\n        <Table columns={columns9} data={this.state.data} />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 搜索刷新表格数据" }];
 	
 	var Demo = function (_Component) {
 	    _inherits(Demo, _Component);
@@ -12601,8 +12601,6 @@
 	  rows: _propTypes2["default"].array
 	};
 	
-	var grap = 16; //偏移数值
-	
 	var TableHeader = function (_Component) {
 	  _inherits(TableHeader, _Component);
 	
@@ -12854,25 +12852,12 @@
 	    };
 	
 	    _this.currentObj = null;
-	    //拖拽宽度处理
-	    if (!props.dragborder) return _possibleConstructorReturn(_this);
-	    _this.border = false;
 	    _this.theadKey = new Date().getTime();
 	    _this.drag = {
-	      initPageLeftX: 0,
-	      initLeft: 0,
-	      x: 0,
-	      width: 0,
 	      option: ''
 	    };
 	    _this.minWidth = 80; //确定最小宽度就是80
 	    _this.table = null;
-	    var _row = [];
-	    _this.props.rows[0] && _this.props.rows[0].forEach(function (item) {
-	      var newItem = item.key != "checkbox" ? (0, _utils.ObjectAssign)(item) : item;
-	      _row.push(newItem);
-	    });
-	    _this.drag.data = _row; //JSON.parse(JSON.stringify(this.props.rows[0]));
 	    return _this;
 	  }
 	
@@ -12889,8 +12874,15 @@
 	    for (var index = 0; index < ths.length; index++) {
 	      var element = ths[index]; //.getAttribute('data-type');
 	      if (!element.getAttribute('data-th-fixed')) {
-	        var colLine = element.children.length > 1 ? element.lastElementChild : element.children[0];
-	        // const colLine = element.children[0];
+	        var colLine = null;
+	        if (element.children.length === 0) {
+	          colLine = element;
+	        } else if (element.children.length > 0) {
+	          colLine = element.lastElementChild;
+	        } else if (element.children.length === 1) {
+	          colLine = element.children[0];
+	        }
+	        // const colLine =  element.children.length > 1?element.lastElementChild:element.children[0];
 	        for (var i = 0; i < events.length; i++) {
 	          var _event = events[i];
 	          var _dataSource = eventSource ? element : colLine;
@@ -60982,6 +60974,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 	
+	var cloneDeep = __webpack_require__(519);
 	/**
 	 * 参数: 列拖拽
 	 * @param {*} Table
@@ -61025,26 +61018,36 @@
 	            columns[index] = dragSourceColum;
 	          }
 	        }
-	        var titles = [];
-	        columns.forEach(function (da) {
-	          if (typeof da.title != "string") {
-	            titles.push(da.title);
-	            delete da.title;
-	          }
-	        });
-	        var newColumns = null;
-	        if (titles.length != 0) {
-	          newColumns = JSON.parse(JSON.stringify(columns));
-	          for (var _index = 0; _index < newColumns.length; _index++) {
-	            newColumns[_index].title = titles[_index];
-	          }
-	          console.log("----columns----", newColumns);
-	        } else {
-	          newColumns = JSON.parse(JSON.stringify(columns));
-	        }
+	        // let titles = [];
+	        // columns.forEach(da=>{
+	        //   for(let attr of da){
+	
+	        //   }
+	        //   if(typeof da.title != "string"){
+	        //     titles.push(da.title);
+	        //     delete da.title;
+	        //   }
+	        // });
+	        // let newColumns = null;
+	        // if(titles.length != 0){
+	        //   newColumns = JSON.parse(JSON.stringify(columns));
+	        //   for (let index = 0; index < newColumns.length; index++) {
+	        //     newColumns[index].title = titles[index];
+	        //   }
+	        //   console.log("----columns----",newColumns);
+	        // }else{
+	        //   newColumns = JSON.parse(JSON.stringify(columns));
+	        // }
+	        // this.setState({
+	        //   columns:newColumns
+	        // });
+	
 	        _this.setState({
-	          columns: newColumns
+	          columns: cloneDeep(columns)
 	        });
+	        if (_this.props.dragDrop) {
+	          _this.props.dragDrop(event, data, newColumns);
+	        }
 	      };
 	
 	      _this.getTarget = function (evt) {
@@ -61132,6 +61135,1761 @@
 
 /***/ }),
 /* 519 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global, module) {/**
+	 * lodash (Custom Build) <https://lodash.com/>
+	 * Build: `lodash modularize exports="npm" -o ./`
+	 * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+	 * Released under MIT license <https://lodash.com/license>
+	 * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+	 * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	 */
+	
+	/** Used as the size to enable large array optimizations. */
+	var LARGE_ARRAY_SIZE = 200;
+	
+	/** Used to stand-in for `undefined` hash values. */
+	var HASH_UNDEFINED = '__lodash_hash_undefined__';
+	
+	/** Used as references for various `Number` constants. */
+	var MAX_SAFE_INTEGER = 9007199254740991;
+	
+	/** `Object#toString` result references. */
+	var argsTag = '[object Arguments]',
+	    arrayTag = '[object Array]',
+	    boolTag = '[object Boolean]',
+	    dateTag = '[object Date]',
+	    errorTag = '[object Error]',
+	    funcTag = '[object Function]',
+	    genTag = '[object GeneratorFunction]',
+	    mapTag = '[object Map]',
+	    numberTag = '[object Number]',
+	    objectTag = '[object Object]',
+	    promiseTag = '[object Promise]',
+	    regexpTag = '[object RegExp]',
+	    setTag = '[object Set]',
+	    stringTag = '[object String]',
+	    symbolTag = '[object Symbol]',
+	    weakMapTag = '[object WeakMap]';
+	
+	var arrayBufferTag = '[object ArrayBuffer]',
+	    dataViewTag = '[object DataView]',
+	    float32Tag = '[object Float32Array]',
+	    float64Tag = '[object Float64Array]',
+	    int8Tag = '[object Int8Array]',
+	    int16Tag = '[object Int16Array]',
+	    int32Tag = '[object Int32Array]',
+	    uint8Tag = '[object Uint8Array]',
+	    uint8ClampedTag = '[object Uint8ClampedArray]',
+	    uint16Tag = '[object Uint16Array]',
+	    uint32Tag = '[object Uint32Array]';
+	
+	/**
+	 * Used to match `RegExp`
+	 * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+	 */
+	var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+	
+	/** Used to match `RegExp` flags from their coerced string values. */
+	var reFlags = /\w*$/;
+	
+	/** Used to detect host constructors (Safari). */
+	var reIsHostCtor = /^\[object .+?Constructor\]$/;
+	
+	/** Used to detect unsigned integer values. */
+	var reIsUint = /^(?:0|[1-9]\d*)$/;
+	
+	/** Used to identify `toStringTag` values supported by `_.clone`. */
+	var cloneableTags = {};
+	cloneableTags[argsTag] = cloneableTags[arrayTag] =
+	cloneableTags[arrayBufferTag] = cloneableTags[dataViewTag] =
+	cloneableTags[boolTag] = cloneableTags[dateTag] =
+	cloneableTags[float32Tag] = cloneableTags[float64Tag] =
+	cloneableTags[int8Tag] = cloneableTags[int16Tag] =
+	cloneableTags[int32Tag] = cloneableTags[mapTag] =
+	cloneableTags[numberTag] = cloneableTags[objectTag] =
+	cloneableTags[regexpTag] = cloneableTags[setTag] =
+	cloneableTags[stringTag] = cloneableTags[symbolTag] =
+	cloneableTags[uint8Tag] = cloneableTags[uint8ClampedTag] =
+	cloneableTags[uint16Tag] = cloneableTags[uint32Tag] = true;
+	cloneableTags[errorTag] = cloneableTags[funcTag] =
+	cloneableTags[weakMapTag] = false;
+	
+	/** Detect free variable `global` from Node.js. */
+	var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
+	
+	/** Detect free variable `self`. */
+	var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+	
+	/** Used as a reference to the global object. */
+	var root = freeGlobal || freeSelf || Function('return this')();
+	
+	/** Detect free variable `exports`. */
+	var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
+	
+	/** Detect free variable `module`. */
+	var freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;
+	
+	/** Detect the popular CommonJS extension `module.exports`. */
+	var moduleExports = freeModule && freeModule.exports === freeExports;
+	
+	/**
+	 * Adds the key-value `pair` to `map`.
+	 *
+	 * @private
+	 * @param {Object} map The map to modify.
+	 * @param {Array} pair The key-value pair to add.
+	 * @returns {Object} Returns `map`.
+	 */
+	function addMapEntry(map, pair) {
+	  // Don't return `map.set` because it's not chainable in IE 11.
+	  map.set(pair[0], pair[1]);
+	  return map;
+	}
+	
+	/**
+	 * Adds `value` to `set`.
+	 *
+	 * @private
+	 * @param {Object} set The set to modify.
+	 * @param {*} value The value to add.
+	 * @returns {Object} Returns `set`.
+	 */
+	function addSetEntry(set, value) {
+	  // Don't return `set.add` because it's not chainable in IE 11.
+	  set.add(value);
+	  return set;
+	}
+	
+	/**
+	 * A specialized version of `_.forEach` for arrays without support for
+	 * iteratee shorthands.
+	 *
+	 * @private
+	 * @param {Array} [array] The array to iterate over.
+	 * @param {Function} iteratee The function invoked per iteration.
+	 * @returns {Array} Returns `array`.
+	 */
+	function arrayEach(array, iteratee) {
+	  var index = -1,
+	      length = array ? array.length : 0;
+	
+	  while (++index < length) {
+	    if (iteratee(array[index], index, array) === false) {
+	      break;
+	    }
+	  }
+	  return array;
+	}
+	
+	/**
+	 * Appends the elements of `values` to `array`.
+	 *
+	 * @private
+	 * @param {Array} array The array to modify.
+	 * @param {Array} values The values to append.
+	 * @returns {Array} Returns `array`.
+	 */
+	function arrayPush(array, values) {
+	  var index = -1,
+	      length = values.length,
+	      offset = array.length;
+	
+	  while (++index < length) {
+	    array[offset + index] = values[index];
+	  }
+	  return array;
+	}
+	
+	/**
+	 * A specialized version of `_.reduce` for arrays without support for
+	 * iteratee shorthands.
+	 *
+	 * @private
+	 * @param {Array} [array] The array to iterate over.
+	 * @param {Function} iteratee The function invoked per iteration.
+	 * @param {*} [accumulator] The initial value.
+	 * @param {boolean} [initAccum] Specify using the first element of `array` as
+	 *  the initial value.
+	 * @returns {*} Returns the accumulated value.
+	 */
+	function arrayReduce(array, iteratee, accumulator, initAccum) {
+	  var index = -1,
+	      length = array ? array.length : 0;
+	
+	  if (initAccum && length) {
+	    accumulator = array[++index];
+	  }
+	  while (++index < length) {
+	    accumulator = iteratee(accumulator, array[index], index, array);
+	  }
+	  return accumulator;
+	}
+	
+	/**
+	 * The base implementation of `_.times` without support for iteratee shorthands
+	 * or max array length checks.
+	 *
+	 * @private
+	 * @param {number} n The number of times to invoke `iteratee`.
+	 * @param {Function} iteratee The function invoked per iteration.
+	 * @returns {Array} Returns the array of results.
+	 */
+	function baseTimes(n, iteratee) {
+	  var index = -1,
+	      result = Array(n);
+	
+	  while (++index < n) {
+	    result[index] = iteratee(index);
+	  }
+	  return result;
+	}
+	
+	/**
+	 * Gets the value at `key` of `object`.
+	 *
+	 * @private
+	 * @param {Object} [object] The object to query.
+	 * @param {string} key The key of the property to get.
+	 * @returns {*} Returns the property value.
+	 */
+	function getValue(object, key) {
+	  return object == null ? undefined : object[key];
+	}
+	
+	/**
+	 * Checks if `value` is a host object in IE < 9.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+	 */
+	function isHostObject(value) {
+	  // Many host objects are `Object` objects that can coerce to strings
+	  // despite having improperly defined `toString` methods.
+	  var result = false;
+	  if (value != null && typeof value.toString != 'function') {
+	    try {
+	      result = !!(value + '');
+	    } catch (e) {}
+	  }
+	  return result;
+	}
+	
+	/**
+	 * Converts `map` to its key-value pairs.
+	 *
+	 * @private
+	 * @param {Object} map The map to convert.
+	 * @returns {Array} Returns the key-value pairs.
+	 */
+	function mapToArray(map) {
+	  var index = -1,
+	      result = Array(map.size);
+	
+	  map.forEach(function(value, key) {
+	    result[++index] = [key, value];
+	  });
+	  return result;
+	}
+	
+	/**
+	 * Creates a unary function that invokes `func` with its argument transformed.
+	 *
+	 * @private
+	 * @param {Function} func The function to wrap.
+	 * @param {Function} transform The argument transform.
+	 * @returns {Function} Returns the new function.
+	 */
+	function overArg(func, transform) {
+	  return function(arg) {
+	    return func(transform(arg));
+	  };
+	}
+	
+	/**
+	 * Converts `set` to an array of its values.
+	 *
+	 * @private
+	 * @param {Object} set The set to convert.
+	 * @returns {Array} Returns the values.
+	 */
+	function setToArray(set) {
+	  var index = -1,
+	      result = Array(set.size);
+	
+	  set.forEach(function(value) {
+	    result[++index] = value;
+	  });
+	  return result;
+	}
+	
+	/** Used for built-in method references. */
+	var arrayProto = Array.prototype,
+	    funcProto = Function.prototype,
+	    objectProto = Object.prototype;
+	
+	/** Used to detect overreaching core-js shims. */
+	var coreJsData = root['__core-js_shared__'];
+	
+	/** Used to detect methods masquerading as native. */
+	var maskSrcKey = (function() {
+	  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
+	  return uid ? ('Symbol(src)_1.' + uid) : '';
+	}());
+	
+	/** Used to resolve the decompiled source of functions. */
+	var funcToString = funcProto.toString;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/**
+	 * Used to resolve the
+	 * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var objectToString = objectProto.toString;
+	
+	/** Used to detect if a method is native. */
+	var reIsNative = RegExp('^' +
+	  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
+	  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+	);
+	
+	/** Built-in value references. */
+	var Buffer = moduleExports ? root.Buffer : undefined,
+	    Symbol = root.Symbol,
+	    Uint8Array = root.Uint8Array,
+	    getPrototype = overArg(Object.getPrototypeOf, Object),
+	    objectCreate = Object.create,
+	    propertyIsEnumerable = objectProto.propertyIsEnumerable,
+	    splice = arrayProto.splice;
+	
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeGetSymbols = Object.getOwnPropertySymbols,
+	    nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined,
+	    nativeKeys = overArg(Object.keys, Object);
+	
+	/* Built-in method references that are verified to be native. */
+	var DataView = getNative(root, 'DataView'),
+	    Map = getNative(root, 'Map'),
+	    Promise = getNative(root, 'Promise'),
+	    Set = getNative(root, 'Set'),
+	    WeakMap = getNative(root, 'WeakMap'),
+	    nativeCreate = getNative(Object, 'create');
+	
+	/** Used to detect maps, sets, and weakmaps. */
+	var dataViewCtorString = toSource(DataView),
+	    mapCtorString = toSource(Map),
+	    promiseCtorString = toSource(Promise),
+	    setCtorString = toSource(Set),
+	    weakMapCtorString = toSource(WeakMap);
+	
+	/** Used to convert symbols to primitives and strings. */
+	var symbolProto = Symbol ? Symbol.prototype : undefined,
+	    symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
+	
+	/**
+	 * Creates a hash object.
+	 *
+	 * @private
+	 * @constructor
+	 * @param {Array} [entries] The key-value pairs to cache.
+	 */
+	function Hash(entries) {
+	  var index = -1,
+	      length = entries ? entries.length : 0;
+	
+	  this.clear();
+	  while (++index < length) {
+	    var entry = entries[index];
+	    this.set(entry[0], entry[1]);
+	  }
+	}
+	
+	/**
+	 * Removes all key-value entries from the hash.
+	 *
+	 * @private
+	 * @name clear
+	 * @memberOf Hash
+	 */
+	function hashClear() {
+	  this.__data__ = nativeCreate ? nativeCreate(null) : {};
+	}
+	
+	/**
+	 * Removes `key` and its value from the hash.
+	 *
+	 * @private
+	 * @name delete
+	 * @memberOf Hash
+	 * @param {Object} hash The hash to modify.
+	 * @param {string} key The key of the value to remove.
+	 * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+	 */
+	function hashDelete(key) {
+	  return this.has(key) && delete this.__data__[key];
+	}
+	
+	/**
+	 * Gets the hash value for `key`.
+	 *
+	 * @private
+	 * @name get
+	 * @memberOf Hash
+	 * @param {string} key The key of the value to get.
+	 * @returns {*} Returns the entry value.
+	 */
+	function hashGet(key) {
+	  var data = this.__data__;
+	  if (nativeCreate) {
+	    var result = data[key];
+	    return result === HASH_UNDEFINED ? undefined : result;
+	  }
+	  return hasOwnProperty.call(data, key) ? data[key] : undefined;
+	}
+	
+	/**
+	 * Checks if a hash value for `key` exists.
+	 *
+	 * @private
+	 * @name has
+	 * @memberOf Hash
+	 * @param {string} key The key of the entry to check.
+	 * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+	 */
+	function hashHas(key) {
+	  var data = this.__data__;
+	  return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
+	}
+	
+	/**
+	 * Sets the hash `key` to `value`.
+	 *
+	 * @private
+	 * @name set
+	 * @memberOf Hash
+	 * @param {string} key The key of the value to set.
+	 * @param {*} value The value to set.
+	 * @returns {Object} Returns the hash instance.
+	 */
+	function hashSet(key, value) {
+	  var data = this.__data__;
+	  data[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;
+	  return this;
+	}
+	
+	// Add methods to `Hash`.
+	Hash.prototype.clear = hashClear;
+	Hash.prototype['delete'] = hashDelete;
+	Hash.prototype.get = hashGet;
+	Hash.prototype.has = hashHas;
+	Hash.prototype.set = hashSet;
+	
+	/**
+	 * Creates an list cache object.
+	 *
+	 * @private
+	 * @constructor
+	 * @param {Array} [entries] The key-value pairs to cache.
+	 */
+	function ListCache(entries) {
+	  var index = -1,
+	      length = entries ? entries.length : 0;
+	
+	  this.clear();
+	  while (++index < length) {
+	    var entry = entries[index];
+	    this.set(entry[0], entry[1]);
+	  }
+	}
+	
+	/**
+	 * Removes all key-value entries from the list cache.
+	 *
+	 * @private
+	 * @name clear
+	 * @memberOf ListCache
+	 */
+	function listCacheClear() {
+	  this.__data__ = [];
+	}
+	
+	/**
+	 * Removes `key` and its value from the list cache.
+	 *
+	 * @private
+	 * @name delete
+	 * @memberOf ListCache
+	 * @param {string} key The key of the value to remove.
+	 * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+	 */
+	function listCacheDelete(key) {
+	  var data = this.__data__,
+	      index = assocIndexOf(data, key);
+	
+	  if (index < 0) {
+	    return false;
+	  }
+	  var lastIndex = data.length - 1;
+	  if (index == lastIndex) {
+	    data.pop();
+	  } else {
+	    splice.call(data, index, 1);
+	  }
+	  return true;
+	}
+	
+	/**
+	 * Gets the list cache value for `key`.
+	 *
+	 * @private
+	 * @name get
+	 * @memberOf ListCache
+	 * @param {string} key The key of the value to get.
+	 * @returns {*} Returns the entry value.
+	 */
+	function listCacheGet(key) {
+	  var data = this.__data__,
+	      index = assocIndexOf(data, key);
+	
+	  return index < 0 ? undefined : data[index][1];
+	}
+	
+	/**
+	 * Checks if a list cache value for `key` exists.
+	 *
+	 * @private
+	 * @name has
+	 * @memberOf ListCache
+	 * @param {string} key The key of the entry to check.
+	 * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+	 */
+	function listCacheHas(key) {
+	  return assocIndexOf(this.__data__, key) > -1;
+	}
+	
+	/**
+	 * Sets the list cache `key` to `value`.
+	 *
+	 * @private
+	 * @name set
+	 * @memberOf ListCache
+	 * @param {string} key The key of the value to set.
+	 * @param {*} value The value to set.
+	 * @returns {Object} Returns the list cache instance.
+	 */
+	function listCacheSet(key, value) {
+	  var data = this.__data__,
+	      index = assocIndexOf(data, key);
+	
+	  if (index < 0) {
+	    data.push([key, value]);
+	  } else {
+	    data[index][1] = value;
+	  }
+	  return this;
+	}
+	
+	// Add methods to `ListCache`.
+	ListCache.prototype.clear = listCacheClear;
+	ListCache.prototype['delete'] = listCacheDelete;
+	ListCache.prototype.get = listCacheGet;
+	ListCache.prototype.has = listCacheHas;
+	ListCache.prototype.set = listCacheSet;
+	
+	/**
+	 * Creates a map cache object to store key-value pairs.
+	 *
+	 * @private
+	 * @constructor
+	 * @param {Array} [entries] The key-value pairs to cache.
+	 */
+	function MapCache(entries) {
+	  var index = -1,
+	      length = entries ? entries.length : 0;
+	
+	  this.clear();
+	  while (++index < length) {
+	    var entry = entries[index];
+	    this.set(entry[0], entry[1]);
+	  }
+	}
+	
+	/**
+	 * Removes all key-value entries from the map.
+	 *
+	 * @private
+	 * @name clear
+	 * @memberOf MapCache
+	 */
+	function mapCacheClear() {
+	  this.__data__ = {
+	    'hash': new Hash,
+	    'map': new (Map || ListCache),
+	    'string': new Hash
+	  };
+	}
+	
+	/**
+	 * Removes `key` and its value from the map.
+	 *
+	 * @private
+	 * @name delete
+	 * @memberOf MapCache
+	 * @param {string} key The key of the value to remove.
+	 * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+	 */
+	function mapCacheDelete(key) {
+	  return getMapData(this, key)['delete'](key);
+	}
+	
+	/**
+	 * Gets the map value for `key`.
+	 *
+	 * @private
+	 * @name get
+	 * @memberOf MapCache
+	 * @param {string} key The key of the value to get.
+	 * @returns {*} Returns the entry value.
+	 */
+	function mapCacheGet(key) {
+	  return getMapData(this, key).get(key);
+	}
+	
+	/**
+	 * Checks if a map value for `key` exists.
+	 *
+	 * @private
+	 * @name has
+	 * @memberOf MapCache
+	 * @param {string} key The key of the entry to check.
+	 * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+	 */
+	function mapCacheHas(key) {
+	  return getMapData(this, key).has(key);
+	}
+	
+	/**
+	 * Sets the map `key` to `value`.
+	 *
+	 * @private
+	 * @name set
+	 * @memberOf MapCache
+	 * @param {string} key The key of the value to set.
+	 * @param {*} value The value to set.
+	 * @returns {Object} Returns the map cache instance.
+	 */
+	function mapCacheSet(key, value) {
+	  getMapData(this, key).set(key, value);
+	  return this;
+	}
+	
+	// Add methods to `MapCache`.
+	MapCache.prototype.clear = mapCacheClear;
+	MapCache.prototype['delete'] = mapCacheDelete;
+	MapCache.prototype.get = mapCacheGet;
+	MapCache.prototype.has = mapCacheHas;
+	MapCache.prototype.set = mapCacheSet;
+	
+	/**
+	 * Creates a stack cache object to store key-value pairs.
+	 *
+	 * @private
+	 * @constructor
+	 * @param {Array} [entries] The key-value pairs to cache.
+	 */
+	function Stack(entries) {
+	  this.__data__ = new ListCache(entries);
+	}
+	
+	/**
+	 * Removes all key-value entries from the stack.
+	 *
+	 * @private
+	 * @name clear
+	 * @memberOf Stack
+	 */
+	function stackClear() {
+	  this.__data__ = new ListCache;
+	}
+	
+	/**
+	 * Removes `key` and its value from the stack.
+	 *
+	 * @private
+	 * @name delete
+	 * @memberOf Stack
+	 * @param {string} key The key of the value to remove.
+	 * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+	 */
+	function stackDelete(key) {
+	  return this.__data__['delete'](key);
+	}
+	
+	/**
+	 * Gets the stack value for `key`.
+	 *
+	 * @private
+	 * @name get
+	 * @memberOf Stack
+	 * @param {string} key The key of the value to get.
+	 * @returns {*} Returns the entry value.
+	 */
+	function stackGet(key) {
+	  return this.__data__.get(key);
+	}
+	
+	/**
+	 * Checks if a stack value for `key` exists.
+	 *
+	 * @private
+	 * @name has
+	 * @memberOf Stack
+	 * @param {string} key The key of the entry to check.
+	 * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+	 */
+	function stackHas(key) {
+	  return this.__data__.has(key);
+	}
+	
+	/**
+	 * Sets the stack `key` to `value`.
+	 *
+	 * @private
+	 * @name set
+	 * @memberOf Stack
+	 * @param {string} key The key of the value to set.
+	 * @param {*} value The value to set.
+	 * @returns {Object} Returns the stack cache instance.
+	 */
+	function stackSet(key, value) {
+	  var cache = this.__data__;
+	  if (cache instanceof ListCache) {
+	    var pairs = cache.__data__;
+	    if (!Map || (pairs.length < LARGE_ARRAY_SIZE - 1)) {
+	      pairs.push([key, value]);
+	      return this;
+	    }
+	    cache = this.__data__ = new MapCache(pairs);
+	  }
+	  cache.set(key, value);
+	  return this;
+	}
+	
+	// Add methods to `Stack`.
+	Stack.prototype.clear = stackClear;
+	Stack.prototype['delete'] = stackDelete;
+	Stack.prototype.get = stackGet;
+	Stack.prototype.has = stackHas;
+	Stack.prototype.set = stackSet;
+	
+	/**
+	 * Creates an array of the enumerable property names of the array-like `value`.
+	 *
+	 * @private
+	 * @param {*} value The value to query.
+	 * @param {boolean} inherited Specify returning inherited property names.
+	 * @returns {Array} Returns the array of property names.
+	 */
+	function arrayLikeKeys(value, inherited) {
+	  // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
+	  // Safari 9 makes `arguments.length` enumerable in strict mode.
+	  var result = (isArray(value) || isArguments(value))
+	    ? baseTimes(value.length, String)
+	    : [];
+	
+	  var length = result.length,
+	      skipIndexes = !!length;
+	
+	  for (var key in value) {
+	    if ((inherited || hasOwnProperty.call(value, key)) &&
+	        !(skipIndexes && (key == 'length' || isIndex(key, length)))) {
+	      result.push(key);
+	    }
+	  }
+	  return result;
+	}
+	
+	/**
+	 * Assigns `value` to `key` of `object` if the existing value is not equivalent
+	 * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+	 * for equality comparisons.
+	 *
+	 * @private
+	 * @param {Object} object The object to modify.
+	 * @param {string} key The key of the property to assign.
+	 * @param {*} value The value to assign.
+	 */
+	function assignValue(object, key, value) {
+	  var objValue = object[key];
+	  if (!(hasOwnProperty.call(object, key) && eq(objValue, value)) ||
+	      (value === undefined && !(key in object))) {
+	    object[key] = value;
+	  }
+	}
+	
+	/**
+	 * Gets the index at which the `key` is found in `array` of key-value pairs.
+	 *
+	 * @private
+	 * @param {Array} array The array to inspect.
+	 * @param {*} key The key to search for.
+	 * @returns {number} Returns the index of the matched value, else `-1`.
+	 */
+	function assocIndexOf(array, key) {
+	  var length = array.length;
+	  while (length--) {
+	    if (eq(array[length][0], key)) {
+	      return length;
+	    }
+	  }
+	  return -1;
+	}
+	
+	/**
+	 * The base implementation of `_.assign` without support for multiple sources
+	 * or `customizer` functions.
+	 *
+	 * @private
+	 * @param {Object} object The destination object.
+	 * @param {Object} source The source object.
+	 * @returns {Object} Returns `object`.
+	 */
+	function baseAssign(object, source) {
+	  return object && copyObject(source, keys(source), object);
+	}
+	
+	/**
+	 * The base implementation of `_.clone` and `_.cloneDeep` which tracks
+	 * traversed objects.
+	 *
+	 * @private
+	 * @param {*} value The value to clone.
+	 * @param {boolean} [isDeep] Specify a deep clone.
+	 * @param {boolean} [isFull] Specify a clone including symbols.
+	 * @param {Function} [customizer] The function to customize cloning.
+	 * @param {string} [key] The key of `value`.
+	 * @param {Object} [object] The parent object of `value`.
+	 * @param {Object} [stack] Tracks traversed objects and their clone counterparts.
+	 * @returns {*} Returns the cloned value.
+	 */
+	function baseClone(value, isDeep, isFull, customizer, key, object, stack) {
+	  var result;
+	  if (customizer) {
+	    result = object ? customizer(value, key, object, stack) : customizer(value);
+	  }
+	  if (result !== undefined) {
+	    return result;
+	  }
+	  if (!isObject(value)) {
+	    return value;
+	  }
+	  var isArr = isArray(value);
+	  if (isArr) {
+	    result = initCloneArray(value);
+	    if (!isDeep) {
+	      return copyArray(value, result);
+	    }
+	  } else {
+	    var tag = getTag(value),
+	        isFunc = tag == funcTag || tag == genTag;
+	
+	    if (isBuffer(value)) {
+	      return cloneBuffer(value, isDeep);
+	    }
+	    if (tag == objectTag || tag == argsTag || (isFunc && !object)) {
+	      if (isHostObject(value)) {
+	        return object ? value : {};
+	      }
+	      result = initCloneObject(isFunc ? {} : value);
+	      if (!isDeep) {
+	        return copySymbols(value, baseAssign(result, value));
+	      }
+	    } else {
+	      if (!cloneableTags[tag]) {
+	        return object ? value : {};
+	      }
+	      result = initCloneByTag(value, tag, baseClone, isDeep);
+	    }
+	  }
+	  // Check for circular references and return its corresponding clone.
+	  stack || (stack = new Stack);
+	  var stacked = stack.get(value);
+	  if (stacked) {
+	    return stacked;
+	  }
+	  stack.set(value, result);
+	
+	  if (!isArr) {
+	    var props = isFull ? getAllKeys(value) : keys(value);
+	  }
+	  arrayEach(props || value, function(subValue, key) {
+	    if (props) {
+	      key = subValue;
+	      subValue = value[key];
+	    }
+	    // Recursively populate clone (susceptible to call stack limits).
+	    assignValue(result, key, baseClone(subValue, isDeep, isFull, customizer, key, value, stack));
+	  });
+	  return result;
+	}
+	
+	/**
+	 * The base implementation of `_.create` without support for assigning
+	 * properties to the created object.
+	 *
+	 * @private
+	 * @param {Object} prototype The object to inherit from.
+	 * @returns {Object} Returns the new object.
+	 */
+	function baseCreate(proto) {
+	  return isObject(proto) ? objectCreate(proto) : {};
+	}
+	
+	/**
+	 * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
+	 * `keysFunc` and `symbolsFunc` to get the enumerable property names and
+	 * symbols of `object`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @param {Function} keysFunc The function to get the keys of `object`.
+	 * @param {Function} symbolsFunc The function to get the symbols of `object`.
+	 * @returns {Array} Returns the array of property names and symbols.
+	 */
+	function baseGetAllKeys(object, keysFunc, symbolsFunc) {
+	  var result = keysFunc(object);
+	  return isArray(object) ? result : arrayPush(result, symbolsFunc(object));
+	}
+	
+	/**
+	 * The base implementation of `getTag`.
+	 *
+	 * @private
+	 * @param {*} value The value to query.
+	 * @returns {string} Returns the `toStringTag`.
+	 */
+	function baseGetTag(value) {
+	  return objectToString.call(value);
+	}
+	
+	/**
+	 * The base implementation of `_.isNative` without bad shim checks.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a native function,
+	 *  else `false`.
+	 */
+	function baseIsNative(value) {
+	  if (!isObject(value) || isMasked(value)) {
+	    return false;
+	  }
+	  var pattern = (isFunction(value) || isHostObject(value)) ? reIsNative : reIsHostCtor;
+	  return pattern.test(toSource(value));
+	}
+	
+	/**
+	 * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 */
+	function baseKeys(object) {
+	  if (!isPrototype(object)) {
+	    return nativeKeys(object);
+	  }
+	  var result = [];
+	  for (var key in Object(object)) {
+	    if (hasOwnProperty.call(object, key) && key != 'constructor') {
+	      result.push(key);
+	    }
+	  }
+	  return result;
+	}
+	
+	/**
+	 * Creates a clone of  `buffer`.
+	 *
+	 * @private
+	 * @param {Buffer} buffer The buffer to clone.
+	 * @param {boolean} [isDeep] Specify a deep clone.
+	 * @returns {Buffer} Returns the cloned buffer.
+	 */
+	function cloneBuffer(buffer, isDeep) {
+	  if (isDeep) {
+	    return buffer.slice();
+	  }
+	  var result = new buffer.constructor(buffer.length);
+	  buffer.copy(result);
+	  return result;
+	}
+	
+	/**
+	 * Creates a clone of `arrayBuffer`.
+	 *
+	 * @private
+	 * @param {ArrayBuffer} arrayBuffer The array buffer to clone.
+	 * @returns {ArrayBuffer} Returns the cloned array buffer.
+	 */
+	function cloneArrayBuffer(arrayBuffer) {
+	  var result = new arrayBuffer.constructor(arrayBuffer.byteLength);
+	  new Uint8Array(result).set(new Uint8Array(arrayBuffer));
+	  return result;
+	}
+	
+	/**
+	 * Creates a clone of `dataView`.
+	 *
+	 * @private
+	 * @param {Object} dataView The data view to clone.
+	 * @param {boolean} [isDeep] Specify a deep clone.
+	 * @returns {Object} Returns the cloned data view.
+	 */
+	function cloneDataView(dataView, isDeep) {
+	  var buffer = isDeep ? cloneArrayBuffer(dataView.buffer) : dataView.buffer;
+	  return new dataView.constructor(buffer, dataView.byteOffset, dataView.byteLength);
+	}
+	
+	/**
+	 * Creates a clone of `map`.
+	 *
+	 * @private
+	 * @param {Object} map The map to clone.
+	 * @param {Function} cloneFunc The function to clone values.
+	 * @param {boolean} [isDeep] Specify a deep clone.
+	 * @returns {Object} Returns the cloned map.
+	 */
+	function cloneMap(map, isDeep, cloneFunc) {
+	  var array = isDeep ? cloneFunc(mapToArray(map), true) : mapToArray(map);
+	  return arrayReduce(array, addMapEntry, new map.constructor);
+	}
+	
+	/**
+	 * Creates a clone of `regexp`.
+	 *
+	 * @private
+	 * @param {Object} regexp The regexp to clone.
+	 * @returns {Object} Returns the cloned regexp.
+	 */
+	function cloneRegExp(regexp) {
+	  var result = new regexp.constructor(regexp.source, reFlags.exec(regexp));
+	  result.lastIndex = regexp.lastIndex;
+	  return result;
+	}
+	
+	/**
+	 * Creates a clone of `set`.
+	 *
+	 * @private
+	 * @param {Object} set The set to clone.
+	 * @param {Function} cloneFunc The function to clone values.
+	 * @param {boolean} [isDeep] Specify a deep clone.
+	 * @returns {Object} Returns the cloned set.
+	 */
+	function cloneSet(set, isDeep, cloneFunc) {
+	  var array = isDeep ? cloneFunc(setToArray(set), true) : setToArray(set);
+	  return arrayReduce(array, addSetEntry, new set.constructor);
+	}
+	
+	/**
+	 * Creates a clone of the `symbol` object.
+	 *
+	 * @private
+	 * @param {Object} symbol The symbol object to clone.
+	 * @returns {Object} Returns the cloned symbol object.
+	 */
+	function cloneSymbol(symbol) {
+	  return symbolValueOf ? Object(symbolValueOf.call(symbol)) : {};
+	}
+	
+	/**
+	 * Creates a clone of `typedArray`.
+	 *
+	 * @private
+	 * @param {Object} typedArray The typed array to clone.
+	 * @param {boolean} [isDeep] Specify a deep clone.
+	 * @returns {Object} Returns the cloned typed array.
+	 */
+	function cloneTypedArray(typedArray, isDeep) {
+	  var buffer = isDeep ? cloneArrayBuffer(typedArray.buffer) : typedArray.buffer;
+	  return new typedArray.constructor(buffer, typedArray.byteOffset, typedArray.length);
+	}
+	
+	/**
+	 * Copies the values of `source` to `array`.
+	 *
+	 * @private
+	 * @param {Array} source The array to copy values from.
+	 * @param {Array} [array=[]] The array to copy values to.
+	 * @returns {Array} Returns `array`.
+	 */
+	function copyArray(source, array) {
+	  var index = -1,
+	      length = source.length;
+	
+	  array || (array = Array(length));
+	  while (++index < length) {
+	    array[index] = source[index];
+	  }
+	  return array;
+	}
+	
+	/**
+	 * Copies properties of `source` to `object`.
+	 *
+	 * @private
+	 * @param {Object} source The object to copy properties from.
+	 * @param {Array} props The property identifiers to copy.
+	 * @param {Object} [object={}] The object to copy properties to.
+	 * @param {Function} [customizer] The function to customize copied values.
+	 * @returns {Object} Returns `object`.
+	 */
+	function copyObject(source, props, object, customizer) {
+	  object || (object = {});
+	
+	  var index = -1,
+	      length = props.length;
+	
+	  while (++index < length) {
+	    var key = props[index];
+	
+	    var newValue = customizer
+	      ? customizer(object[key], source[key], key, object, source)
+	      : undefined;
+	
+	    assignValue(object, key, newValue === undefined ? source[key] : newValue);
+	  }
+	  return object;
+	}
+	
+	/**
+	 * Copies own symbol properties of `source` to `object`.
+	 *
+	 * @private
+	 * @param {Object} source The object to copy symbols from.
+	 * @param {Object} [object={}] The object to copy symbols to.
+	 * @returns {Object} Returns `object`.
+	 */
+	function copySymbols(source, object) {
+	  return copyObject(source, getSymbols(source), object);
+	}
+	
+	/**
+	 * Creates an array of own enumerable property names and symbols of `object`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names and symbols.
+	 */
+	function getAllKeys(object) {
+	  return baseGetAllKeys(object, keys, getSymbols);
+	}
+	
+	/**
+	 * Gets the data for `map`.
+	 *
+	 * @private
+	 * @param {Object} map The map to query.
+	 * @param {string} key The reference key.
+	 * @returns {*} Returns the map data.
+	 */
+	function getMapData(map, key) {
+	  var data = map.__data__;
+	  return isKeyable(key)
+	    ? data[typeof key == 'string' ? 'string' : 'hash']
+	    : data.map;
+	}
+	
+	/**
+	 * Gets the native function at `key` of `object`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @param {string} key The key of the method to get.
+	 * @returns {*} Returns the function if it's native, else `undefined`.
+	 */
+	function getNative(object, key) {
+	  var value = getValue(object, key);
+	  return baseIsNative(value) ? value : undefined;
+	}
+	
+	/**
+	 * Creates an array of the own enumerable symbol properties of `object`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of symbols.
+	 */
+	var getSymbols = nativeGetSymbols ? overArg(nativeGetSymbols, Object) : stubArray;
+	
+	/**
+	 * Gets the `toStringTag` of `value`.
+	 *
+	 * @private
+	 * @param {*} value The value to query.
+	 * @returns {string} Returns the `toStringTag`.
+	 */
+	var getTag = baseGetTag;
+	
+	// Fallback for data views, maps, sets, and weak maps in IE 11,
+	// for data views in Edge < 14, and promises in Node.js.
+	if ((DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag) ||
+	    (Map && getTag(new Map) != mapTag) ||
+	    (Promise && getTag(Promise.resolve()) != promiseTag) ||
+	    (Set && getTag(new Set) != setTag) ||
+	    (WeakMap && getTag(new WeakMap) != weakMapTag)) {
+	  getTag = function(value) {
+	    var result = objectToString.call(value),
+	        Ctor = result == objectTag ? value.constructor : undefined,
+	        ctorString = Ctor ? toSource(Ctor) : undefined;
+	
+	    if (ctorString) {
+	      switch (ctorString) {
+	        case dataViewCtorString: return dataViewTag;
+	        case mapCtorString: return mapTag;
+	        case promiseCtorString: return promiseTag;
+	        case setCtorString: return setTag;
+	        case weakMapCtorString: return weakMapTag;
+	      }
+	    }
+	    return result;
+	  };
+	}
+	
+	/**
+	 * Initializes an array clone.
+	 *
+	 * @private
+	 * @param {Array} array The array to clone.
+	 * @returns {Array} Returns the initialized clone.
+	 */
+	function initCloneArray(array) {
+	  var length = array.length,
+	      result = array.constructor(length);
+	
+	  // Add properties assigned by `RegExp#exec`.
+	  if (length && typeof array[0] == 'string' && hasOwnProperty.call(array, 'index')) {
+	    result.index = array.index;
+	    result.input = array.input;
+	  }
+	  return result;
+	}
+	
+	/**
+	 * Initializes an object clone.
+	 *
+	 * @private
+	 * @param {Object} object The object to clone.
+	 * @returns {Object} Returns the initialized clone.
+	 */
+	function initCloneObject(object) {
+	  return (typeof object.constructor == 'function' && !isPrototype(object))
+	    ? baseCreate(getPrototype(object))
+	    : {};
+	}
+	
+	/**
+	 * Initializes an object clone based on its `toStringTag`.
+	 *
+	 * **Note:** This function only supports cloning values with tags of
+	 * `Boolean`, `Date`, `Error`, `Number`, `RegExp`, or `String`.
+	 *
+	 * @private
+	 * @param {Object} object The object to clone.
+	 * @param {string} tag The `toStringTag` of the object to clone.
+	 * @param {Function} cloneFunc The function to clone values.
+	 * @param {boolean} [isDeep] Specify a deep clone.
+	 * @returns {Object} Returns the initialized clone.
+	 */
+	function initCloneByTag(object, tag, cloneFunc, isDeep) {
+	  var Ctor = object.constructor;
+	  switch (tag) {
+	    case arrayBufferTag:
+	      return cloneArrayBuffer(object);
+	
+	    case boolTag:
+	    case dateTag:
+	      return new Ctor(+object);
+	
+	    case dataViewTag:
+	      return cloneDataView(object, isDeep);
+	
+	    case float32Tag: case float64Tag:
+	    case int8Tag: case int16Tag: case int32Tag:
+	    case uint8Tag: case uint8ClampedTag: case uint16Tag: case uint32Tag:
+	      return cloneTypedArray(object, isDeep);
+	
+	    case mapTag:
+	      return cloneMap(object, isDeep, cloneFunc);
+	
+	    case numberTag:
+	    case stringTag:
+	      return new Ctor(object);
+	
+	    case regexpTag:
+	      return cloneRegExp(object);
+	
+	    case setTag:
+	      return cloneSet(object, isDeep, cloneFunc);
+	
+	    case symbolTag:
+	      return cloneSymbol(object);
+	  }
+	}
+	
+	/**
+	 * Checks if `value` is a valid array-like index.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
+	 * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
+	 */
+	function isIndex(value, length) {
+	  length = length == null ? MAX_SAFE_INTEGER : length;
+	  return !!length &&
+	    (typeof value == 'number' || reIsUint.test(value)) &&
+	    (value > -1 && value % 1 == 0 && value < length);
+	}
+	
+	/**
+	 * Checks if `value` is suitable for use as unique object key.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
+	 */
+	function isKeyable(value) {
+	  var type = typeof value;
+	  return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')
+	    ? (value !== '__proto__')
+	    : (value === null);
+	}
+	
+	/**
+	 * Checks if `func` has its source masked.
+	 *
+	 * @private
+	 * @param {Function} func The function to check.
+	 * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+	 */
+	function isMasked(func) {
+	  return !!maskSrcKey && (maskSrcKey in func);
+	}
+	
+	/**
+	 * Checks if `value` is likely a prototype object.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
+	 */
+	function isPrototype(value) {
+	  var Ctor = value && value.constructor,
+	      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;
+	
+	  return value === proto;
+	}
+	
+	/**
+	 * Converts `func` to its source code.
+	 *
+	 * @private
+	 * @param {Function} func The function to process.
+	 * @returns {string} Returns the source code.
+	 */
+	function toSource(func) {
+	  if (func != null) {
+	    try {
+	      return funcToString.call(func);
+	    } catch (e) {}
+	    try {
+	      return (func + '');
+	    } catch (e) {}
+	  }
+	  return '';
+	}
+	
+	/**
+	 * This method is like `_.clone` except that it recursively clones `value`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 1.0.0
+	 * @category Lang
+	 * @param {*} value The value to recursively clone.
+	 * @returns {*} Returns the deep cloned value.
+	 * @see _.clone
+	 * @example
+	 *
+	 * var objects = [{ 'a': 1 }, { 'b': 2 }];
+	 *
+	 * var deep = _.cloneDeep(objects);
+	 * console.log(deep[0] === objects[0]);
+	 * // => false
+	 */
+	function cloneDeep(value) {
+	  return baseClone(value, true, true);
+	}
+	
+	/**
+	 * Performs a
+	 * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+	 * comparison between two values to determine if they are equivalent.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to compare.
+	 * @param {*} other The other value to compare.
+	 * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+	 * @example
+	 *
+	 * var object = { 'a': 1 };
+	 * var other = { 'a': 1 };
+	 *
+	 * _.eq(object, object);
+	 * // => true
+	 *
+	 * _.eq(object, other);
+	 * // => false
+	 *
+	 * _.eq('a', 'a');
+	 * // => true
+	 *
+	 * _.eq('a', Object('a'));
+	 * // => false
+	 *
+	 * _.eq(NaN, NaN);
+	 * // => true
+	 */
+	function eq(value, other) {
+	  return value === other || (value !== value && other !== other);
+	}
+	
+	/**
+	 * Checks if `value` is likely an `arguments` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+	 *  else `false`.
+	 * @example
+	 *
+	 * _.isArguments(function() { return arguments; }());
+	 * // => true
+	 *
+	 * _.isArguments([1, 2, 3]);
+	 * // => false
+	 */
+	function isArguments(value) {
+	  // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
+	  return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') &&
+	    (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
+	}
+	
+	/**
+	 * Checks if `value` is classified as an `Array` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an array, else `false`.
+	 * @example
+	 *
+	 * _.isArray([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isArray(document.body.children);
+	 * // => false
+	 *
+	 * _.isArray('abc');
+	 * // => false
+	 *
+	 * _.isArray(_.noop);
+	 * // => false
+	 */
+	var isArray = Array.isArray;
+	
+	/**
+	 * Checks if `value` is array-like. A value is considered array-like if it's
+	 * not a function and has a `value.length` that's an integer greater than or
+	 * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+	 * @example
+	 *
+	 * _.isArrayLike([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isArrayLike(document.body.children);
+	 * // => true
+	 *
+	 * _.isArrayLike('abc');
+	 * // => true
+	 *
+	 * _.isArrayLike(_.noop);
+	 * // => false
+	 */
+	function isArrayLike(value) {
+	  return value != null && isLength(value.length) && !isFunction(value);
+	}
+	
+	/**
+	 * This method is like `_.isArrayLike` except that it also checks if `value`
+	 * is an object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an array-like object,
+	 *  else `false`.
+	 * @example
+	 *
+	 * _.isArrayLikeObject([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isArrayLikeObject(document.body.children);
+	 * // => true
+	 *
+	 * _.isArrayLikeObject('abc');
+	 * // => false
+	 *
+	 * _.isArrayLikeObject(_.noop);
+	 * // => false
+	 */
+	function isArrayLikeObject(value) {
+	  return isObjectLike(value) && isArrayLike(value);
+	}
+	
+	/**
+	 * Checks if `value` is a buffer.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.3.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.
+	 * @example
+	 *
+	 * _.isBuffer(new Buffer(2));
+	 * // => true
+	 *
+	 * _.isBuffer(new Uint8Array(2));
+	 * // => false
+	 */
+	var isBuffer = nativeIsBuffer || stubFalse;
+	
+	/**
+	 * Checks if `value` is classified as a `Function` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+	 * @example
+	 *
+	 * _.isFunction(_);
+	 * // => true
+	 *
+	 * _.isFunction(/abc/);
+	 * // => false
+	 */
+	function isFunction(value) {
+	  // The use of `Object#toString` avoids issues with the `typeof` operator
+	  // in Safari 8-9 which returns 'object' for typed array and other constructors.
+	  var tag = isObject(value) ? objectToString.call(value) : '';
+	  return tag == funcTag || tag == genTag;
+	}
+	
+	/**
+	 * Checks if `value` is a valid array-like length.
+	 *
+	 * **Note:** This method is loosely based on
+	 * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+	 * @example
+	 *
+	 * _.isLength(3);
+	 * // => true
+	 *
+	 * _.isLength(Number.MIN_VALUE);
+	 * // => false
+	 *
+	 * _.isLength(Infinity);
+	 * // => false
+	 *
+	 * _.isLength('3');
+	 * // => false
+	 */
+	function isLength(value) {
+	  return typeof value == 'number' &&
+	    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+	}
+	
+	/**
+	 * Checks if `value` is the
+	 * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+	 * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+	 * @example
+	 *
+	 * _.isObject({});
+	 * // => true
+	 *
+	 * _.isObject([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isObject(_.noop);
+	 * // => true
+	 *
+	 * _.isObject(null);
+	 * // => false
+	 */
+	function isObject(value) {
+	  var type = typeof value;
+	  return !!value && (type == 'object' || type == 'function');
+	}
+	
+	/**
+	 * Checks if `value` is object-like. A value is object-like if it's not `null`
+	 * and has a `typeof` result of "object".
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+	 * @example
+	 *
+	 * _.isObjectLike({});
+	 * // => true
+	 *
+	 * _.isObjectLike([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isObjectLike(_.noop);
+	 * // => false
+	 *
+	 * _.isObjectLike(null);
+	 * // => false
+	 */
+	function isObjectLike(value) {
+	  return !!value && typeof value == 'object';
+	}
+	
+	/**
+	 * Creates an array of the own enumerable property names of `object`.
+	 *
+	 * **Note:** Non-object values are coerced to objects. See the
+	 * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
+	 * for more details.
+	 *
+	 * @static
+	 * @since 0.1.0
+	 * @memberOf _
+	 * @category Object
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.a = 1;
+	 *   this.b = 2;
+	 * }
+	 *
+	 * Foo.prototype.c = 3;
+	 *
+	 * _.keys(new Foo);
+	 * // => ['a', 'b'] (iteration order is not guaranteed)
+	 *
+	 * _.keys('hi');
+	 * // => ['0', '1']
+	 */
+	function keys(object) {
+	  return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
+	}
+	
+	/**
+	 * This method returns a new empty array.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.13.0
+	 * @category Util
+	 * @returns {Array} Returns the new empty array.
+	 * @example
+	 *
+	 * var arrays = _.times(2, _.stubArray);
+	 *
+	 * console.log(arrays);
+	 * // => [[], []]
+	 *
+	 * console.log(arrays[0] === arrays[1]);
+	 * // => false
+	 */
+	function stubArray() {
+	  return [];
+	}
+	
+	/**
+	 * This method returns `false`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.13.0
+	 * @category Util
+	 * @returns {boolean} Returns `false`.
+	 * @example
+	 *
+	 * _.times(2, _.stubFalse);
+	 * // => [false, false]
+	 */
+	function stubFalse() {
+	  return false;
+	}
+	
+	module.exports = cloneDeep;
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(273)(module)))
+
+/***/ }),
+/* 520 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61231,7 +62989,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 520 */
+/* 521 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61457,7 +63215,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 521 */
+/* 522 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61718,7 +63476,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 522 */
+/* 523 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61847,7 +63605,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 523 */
+/* 524 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61864,7 +63622,7 @@
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _MultiSelect = __webpack_require__(524);
+	var _MultiSelect = __webpack_require__(525);
 	
 	var _MultiSelect2 = _interopRequireDefault(_MultiSelect);
 	
@@ -62125,7 +63883,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 524 */
+/* 525 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62351,7 +64109,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 525 */
+/* 526 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62470,7 +64228,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 526 */
+/* 527 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -62611,7 +64369,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 527 */
+/* 528 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62756,7 +64514,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 528 */
+/* 529 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62838,7 +64596,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 529 */
+/* 530 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62946,7 +64704,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 530 */
+/* 531 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -63056,7 +64814,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 531 */
+/* 532 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -63073,7 +64831,7 @@
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _beePagination = __webpack_require__(532);
+	var _beePagination = __webpack_require__(533);
 	
 	var _beePagination2 = _interopRequireDefault(_beePagination);
 	
@@ -63153,7 +64911,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 532 */
+/* 533 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63162,7 +64920,7 @@
 	  value: true
 	});
 	
-	var _Pagination = __webpack_require__(533);
+	var _Pagination = __webpack_require__(534);
 	
 	var _Pagination2 = _interopRequireDefault(_Pagination);
 	
@@ -63172,7 +64930,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 533 */
+/* 534 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -63191,7 +64949,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _PaginationButton = __webpack_require__(534);
+	var _PaginationButton = __webpack_require__(535);
 	
 	var _PaginationButton2 = _interopRequireDefault(_PaginationButton);
 	
@@ -63207,7 +64965,7 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _i18n = __webpack_require__(535);
+	var _i18n = __webpack_require__(536);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
@@ -63696,7 +65454,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 534 */
+/* 535 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63810,7 +65568,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 535 */
+/* 536 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -63833,7 +65591,7 @@
 	};
 
 /***/ }),
-/* 536 */
+/* 537 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
