@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classes from 'component-classes';
 import TableRow from './TableRow';
 import TableHeader from './TableHeader';
 import { measureScrollbar, debounce, warningOnce ,getMaxColChildrenLength} from './utils';
@@ -906,20 +907,27 @@ class Table extends Component {
       return;
     }
     if (e.target.scrollLeft !== this.lastScrollLeft) {
+      let position = '';
       if (e.target === bodyTable && headTable) {
         headTable.scrollLeft = e.target.scrollLeft;
       } else if (e.target === headTable && bodyTable) {
         bodyTable.scrollLeft = e.target.scrollLeft;
       }
       if (e.target.scrollLeft === 0) {
-        this.setState({ scrollPosition: 'left' });
+        position='left';
       } else if (e.target.scrollLeft + 1 >=
         e.target.children[0].getBoundingClientRect().width -
         e.target.getBoundingClientRect().width) {
-        this.setState({ scrollPosition: 'right' });
+          position='right';
       } else if (this.state.scrollPosition !== 'middle') {
-        this.setState({ scrollPosition: 'middle' });
+        position='middle';
       }
+      if(position){
+        classes(this.contentTable)
+        .remove(new RegExp(`^${prefixCls}-scroll-position-.+$`))
+        .add(`${prefixCls}-scroll-position-${position}`);
+      }
+    
     }
     if (scroll.y) {
       if (fixedColumnsBodyLeft && e.target !== fixedColumnsBodyLeft) {

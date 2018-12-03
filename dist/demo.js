@@ -7237,7 +7237,7 @@
 	  duration: _propTypes2["default"].number,
 	  onClose: _propTypes2["default"].func,
 	  children: _propTypes2["default"].any,
-	  color: _propTypes2["default"].oneOf(['info', 'success', 'danger', 'warning', 'light', 'dark', 'news', 'infolight', 'successlight', 'dangerlight', 'warninglight']),
+	  color: _propTypes2["default"].oneOf(['light']),
 	  title: _propTypes2["default"].any
 	};
 	
@@ -7336,7 +7336,7 @@
 	
 	;
 	
-	Notice.propTypes = propTypes;
+	Notice.PropTypes = _propTypes2["default"];
 	Notice.defaultProps = defaultProps;
 	
 	exports["default"] = Notice;
@@ -10582,6 +10582,10 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
+	var _componentClasses = __webpack_require__(46);
+	
+	var _componentClasses2 = _interopRequireDefault(_componentClasses);
+	
 	var _TableRow = __webpack_require__(106);
 	
 	var _TableRow2 = _interopRequireDefault(_TableRow);
@@ -11602,18 +11606,24 @@
 	      return;
 	    }
 	    if (e.target.scrollLeft !== this.lastScrollLeft) {
+	      var position = '';
 	      if (e.target === bodyTable && headTable) {
 	        headTable.scrollLeft = e.target.scrollLeft;
 	      } else if (e.target === headTable && bodyTable) {
 	        bodyTable.scrollLeft = e.target.scrollLeft;
 	      }
 	      if (e.target.scrollLeft === 0) {
-	        this.setState({ scrollPosition: 'left' });
+	        position = 'left';
 	      } else if (e.target.scrollLeft + 1 >= e.target.children[0].getBoundingClientRect().width - e.target.getBoundingClientRect().width) {
-	        this.setState({ scrollPosition: 'right' });
+	        position = 'right';
 	      } else if (this.state.scrollPosition !== 'middle') {
-	        this.setState({ scrollPosition: 'middle' });
+	        position = 'middle';
 	      }
+	      // if(position){
+	      //   classes(this.contentTable)
+	      //   .remove(new RegExp(`^${prefixCls}-scroll-position-.+$`))
+	      //   .add(`${prefixCls}-scroll-position-${position}`);
+	      // }
 	    }
 	    if (scroll.y) {
 	      if (fixedColumnsBodyLeft && e.target !== fixedColumnsBodyLeft) {
@@ -12983,8 +12993,13 @@
 	
 	
 	  TableHeader.prototype.clearDragBorder = function clearDragBorder() {
+<<<<<<< HEAD
 	    // if (!this.props.dragborder || !this.props.draggable) return;
 	    if (!this.drag) return;
+=======
+	    if (!this.props.dragborder) return;
+	
+>>>>>>> ne-drag
 	    this.drag = {
 	      option: ""
 	    };
@@ -21620,15 +21635,15 @@
 	    InputNumber.prototype.ComponentWillMount = function ComponentWillMount() {};
 	
 	    InputNumber.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-	        if (!nextProps.hasOwnProperty('precision')) {
-	            var data = judgeValue(nextProps);
-	            this.setState({
-	                value: data.value,
-	                minusDisabled: data.minusDisabled,
-	                plusDisabled: data.plusDisabled
-	            });
-	            this.tempStorage = data.value;
-	        }
+	        //  if(!nextProps.hasOwnProperty('precision')){//如果没有 precision
+	        var data = judgeValue(nextProps);
+	        this.setState({
+	            value: data.value,
+	            minusDisabled: data.minusDisabled,
+	            plusDisabled: data.plusDisabled
+	        });
+	        this.tempStorage = data.value;
+	        //  }
 	    };
 	
 	    InputNumber.prototype.ComponentWillUnMount = function ComponentWillUnMount() {
@@ -59411,18 +59426,18 @@
 	    }
 	  };
 	
-	  Popconfirm.prototype.handleClose = function handleClose(e) {
+	  Popconfirm.prototype.handleClose = function handleClose() {
 	    var onClose = this.props.onClose;
 	
 	    this.hide();
-	    onClose && onClose(e);
+	    onClose && onClose();
 	  };
 	
-	  Popconfirm.prototype.handleCancel = function handleCancel(e) {
+	  Popconfirm.prototype.handleCancel = function handleCancel() {
 	    var onCancel = this.props.onCancel;
 	
 	    this.hide();
-	    onCancel && onCancel(e);
+	    onCancel && onCancel();
 	  };
 	
 	  Popconfirm.prototype.handleHide = function handleHide() {
@@ -59458,8 +59473,7 @@
 	        content = _props.content,
 	        children = _props.children,
 	        onClick = _props.onClick,
-	        stopbubble = _props.stopbubble,
-	        props = _objectWithoutProperties(_props, ['content', 'children', 'onClick', 'stopbubble']);
+	        props = _objectWithoutProperties(_props, ['content', 'children', 'onClick']);
 	
 	    delete props.defaultOverlayShown;
 	
@@ -59476,7 +59490,6 @@
 	      _extends({}, confirmProps, {
 	        onClose: this.handleClose,
 	        onCancel: this.handleCancel,
-	        stopbubble: stopbubble,
 	        placement: props.placement }),
 	      content
 	    );
@@ -59592,11 +59605,6 @@
 	    arrowOffsetLeft: _propTypes2["default"].oneOfType([_propTypes2["default"].number, _propTypes2["default"].string]),
 	
 	    /**
-	     * 阻止冒泡
-	     */
-	    stopbubble: _propTypes2["default"].number,
-	
-	    /**
 	     * Title content
 	     */
 	    title: _propTypes2["default"].node,
@@ -59606,7 +59614,6 @@
 	};
 	
 	var defaultProps = {
-	    stopbubble: 0,
 	    placement: 'right',
 	    clsPrefix: 'u-popconfirm',
 	    locale: {}
@@ -59618,27 +59625,7 @@
 	    function Confirm(props) {
 	        _classCallCheck(this, Confirm);
 	
-	        var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
-	
-	        _this.cancel = function (e) {
-	            var _this$props = _this.props,
-	                stopbubble = _this$props.stopbubble,
-	                onCancel = _this$props.onCancel;
-	
-	            stopbubble && e.stopPropagation();
-	            onCancel(e);
-	        };
-	
-	        _this.close = function (e) {
-	            var _this$props2 = _this.props,
-	                stopbubble = _this$props2.stopbubble,
-	                onClose = _this$props2.onClose;
-	
-	            stopbubble && e.stopPropagation();
-	            onClose(e);
-	        };
-	
-	        return _this;
+	        return _possibleConstructorReturn(this, _React$Component.call(this, props));
 	    }
 	
 	    Confirm.prototype.render = function render() {
@@ -59660,8 +59647,7 @@
 	            onClose = _props.onClose,
 	            color = _props.color,
 	            onCancel = _props.onCancel,
-	            stopbubble = _props.stopbubble,
-	            props = _objectWithoutProperties(_props, ['placement', 'positionTop', 'positionLeft', 'arrowOffsetTop', 'arrowOffsetLeft', 'clsPrefix', 'trigger', 'title', 'className', 'style', 'children', 'locale', 'onClose', 'color', 'onCancel', 'stopbubble']);
+	            props = _objectWithoutProperties(_props, ['placement', 'positionTop', 'positionLeft', 'arrowOffsetTop', 'arrowOffsetLeft', 'clsPrefix', 'trigger', 'title', 'className', 'style', 'children', 'locale', 'onClose', 'color', 'onCancel']);
 	
 	        var local = (0, _tool.getComponentLocale)(this.props, this.context, 'Popconfirm', function () {
 	            return _i18n2["default"];
@@ -59687,10 +59673,7 @@
 	            _extends({}, props, {
 	                role: 'tooltip',
 	                className: (0, _classnames2["default"])(className, classes),
-	                style: outerStyle,
-	                onClick: function onClick(e) {
-	                    return stopbubble && e.stopPropagation();
-	                }
+	                style: outerStyle
 	            }),
 	            _react2["default"].createElement('div', { className: 'arrow', style: arrowStyle }),
 	            _react2["default"].createElement(
@@ -59703,13 +59686,13 @@
 	                { className: (0, _classnames2["default"])(clsPrefix + '-confirm') },
 	                _react2["default"].createElement(
 	                    _beeButton2["default"],
-	                    { onClick: this.cancel, size: 'sm', style: { minWidth: 50 },
+	                    { onClick: onCancel, size: 'sm', style: { minWidth: 50 },
 	                        shape: 'border' },
 	                    local['cancel']
 	                ),
 	                _react2["default"].createElement(
 	                    _beeButton2["default"],
-	                    { onClick: this.close, size: 'sm', style: { minWidth: 50 }, colors: 'primary' },
+	                    { onClick: onClose, size: 'sm', style: { minWidth: 50 }, colors: 'primary' },
 	                    local['ok']
 	                )
 	            )
