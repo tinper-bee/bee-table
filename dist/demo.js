@@ -10936,8 +10936,8 @@
 	  Table.prototype.getHeader = function getHeader(columns, fixed) {
 	    var _props = this.props,
 	        filterDelay = _props.filterDelay,
-	        onFilterChange = _props.onFilterChange,
-	        onFilterClear = _props.onFilterClear,
+	        onFilterRowsDropChange = _props.onFilterRowsDropChange,
+	        onFilterRowsChange = _props.onFilterRowsChange,
 	        filterable = _props.filterable,
 	        showHeader = _props.showHeader,
 	        expandIconAsCell = _props.expandIconAsCell,
@@ -10989,9 +10989,9 @@
 	      rowStyle: trStyle,
 	      fixed: fixed,
 	      filterable: filterable,
-	      onFilterChange: onFilterChange //过滤行输入或下拉之后回调
-	      , onFilterClear: onFilterClear //过滤行清除后回调
-	      , filterDelay: filterDelay,
+	      onFilterRowsChange: onFilterRowsChange,
+	      onFilterRowsDropChange: onFilterRowsDropChange,
+	      filterDelay: filterDelay,
 	      afterDragColWidth: afterDragColWidth,
 	      contentDomWidth: this.contentDomWidth,
 	      scrollbarWidth: this.scrollbarWidth,
@@ -11317,8 +11317,7 @@
 	        scroll = _props3$scroll === undefined ? {} : _props3$scroll,
 	        getBodyWrapper = _props3.getBodyWrapper,
 	        footerScroll = _props3.footerScroll,
-	        headerScroll = _props3.headerScroll,
-	        hideBodyScroll = _props3.hideBodyScroll;
+	        headerScroll = _props3.headerScroll;
 	    var useFixedHeader = this.props.useFixedHeader;
 	
 	    var bodyStyle = _extends({}, this.props.bodyStyle);
@@ -11354,6 +11353,7 @@
 	        //显示表头滚动条
 	        if (headerScroll) {
 	          if (fixed) {
+	            //内容少，不用显示滚动条
 	            if (this.domWidthDiff <= 0) {
 	              headStyle.marginBottom = scrollbarWidth + 'px';
 	              bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
@@ -11364,8 +11364,6 @@
 	            //内容少，不用显示滚动条
 	            if (this.domWidthDiff > 0) {
 	              headStyle.overflowX = 'hidden';
-	            } else if (hideBodyScroll) {
-	              bodyStyle.overflowX = 'hidden';
 	            }
 	            headStyle.marginBottom = '0px';
 	          }
@@ -11592,8 +11590,10 @@
 	  };
 	
 	  Table.prototype.handleBodyScroll = function handleBodyScroll(e) {
-	    var _props$scroll = this.props.scroll,
-	        scroll = _props$scroll === undefined ? {} : _props$scroll;
+	    var _props8 = this.props,
+	        _props8$scroll = _props8.scroll,
+	        scroll = _props8$scroll === undefined ? {} : _props8$scroll,
+	        clsPrefix = _props8.clsPrefix;
 	    var _refs = this.refs,
 	        headTable = _refs.headTable,
 	        bodyTable = _refs.bodyTable,
@@ -11619,11 +11619,9 @@
 	      } else if (this.state.scrollPosition !== 'middle') {
 	        position = 'middle';
 	      }
-	      // if(position){
-	      //   classes(this.contentTable)
-	      //   .remove(new RegExp(`^${prefixCls}-scroll-position-.+$`))
-	      //   .add(`${prefixCls}-scroll-position-${position}`);
-	      // }
+	      if (position) {
+	        (0, _componentClasses2['default'])(this.contentTable).remove(new RegExp('^' + clsPrefix + '-scroll-position-.+$')).add(clsPrefix + '-scroll-position-' + position);
+	      }
 	    }
 	    if (scroll.y) {
 	      if (fixedColumnsBodyLeft && e.target !== fixedColumnsBodyLeft) {
@@ -12719,7 +12717,10 @@
 	      if (_this.drag.option === 'border') {
 	        return;
 	      }
-	      var currentIndex = parseInt(_utils.Event.getTarget(event).getAttribute("data-line-index"));
+	      // console.log('-------onDragStart----------',event.target);
+	      var th = _this.getThDome(event.target);
+	      if (!th) return;
+	      var currentIndex = parseInt(th.getAttribute("data-line-index"));
 	
 	      var currentKey = event.target.getAttribute('data-line-key');
 	      event.dataTransfer.effectAllowed = "move";
@@ -12739,6 +12740,7 @@
 	      }
 	      var data = _this.getCurrentEventData(e);
 	      if (!data) return;
+	      // console.log('-------onDrop----------',event.target);
 	      if (!_this.currentObj || _this.currentObj.key == data.key) return;
 	      if (!_this.props.onDrop) return;
 	      _this.props.onDrop(event, { dragSource: _this.currentObj, dragTarg: data });
@@ -12993,13 +12995,8 @@
 	
 	
 	  TableHeader.prototype.clearDragBorder = function clearDragBorder() {
-<<<<<<< HEAD
 	    // if (!this.props.dragborder || !this.props.draggable) return;
 	    if (!this.drag) return;
-=======
-	    if (!this.props.dragborder) return;
-	
->>>>>>> ne-drag
 	    this.drag = {
 	      option: ""
 	    };
@@ -13035,7 +13032,7 @@
 	  //   if(this.drag.option === 'border'){return;}
 	  //   let data = this.getCurrentEventData(e);
 	  //   if (!this.currentObj || this.currentObj.key == data.key) return;
-	  // };
+	  // }; 
 	
 	  /**
 	   * 在一个拖动过程中，释放鼠标键时触发此事件。【目标事件】
@@ -13045,7 +13042,12 @@
 	
 	  TableHeader.prototype.getCurrentEventData = function getCurrentEventData(e) {
 	    var event = _utils.Event.getEvent(e);
-	    var key = event.target.getAttribute('data-line-key');
+	    var th = this.getThDome(event.target);
+	    if (!th) {
+	      console.log(" event target is not th ! ");
+	      return null;
+	    }
+	    var key = th.getAttribute('data-line-key');
 	    var data = this.props.rows[0].find(function (da) {
 	      return da.key == key;
 	    });
@@ -13056,7 +13058,27 @@
 	      return null;
 	    }
 	  };
+	
+	  /**
+	   *根据拖拽，获取当前的Th属性
+	   * @param {*} element
+	   * @returns
+	   * @memberof TableHeader
+	   */
+	
+	
+	  TableHeader.prototype.getThDome = function getThDome(element) {
+	    var _tagName = element.tagName.toLowerCase();
+	    if (_tagName === 'i') return null;
+	    if (_tagName != 'th') {
+	      return this.getThDome(element.parentElement);
+	    } else {
+	      return element;
+	    }
+	  };
+	
 	  //---拖拽列交换----end----- 
+	
 	  /**
 	   * 过滤输入后或下拉条件的回调函数
 	   */

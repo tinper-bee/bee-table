@@ -368,8 +368,8 @@ var Table = function (_Component) {
   Table.prototype.getHeader = function getHeader(columns, fixed) {
     var _props = this.props,
         filterDelay = _props.filterDelay,
-        onFilterChange = _props.onFilterChange,
-        onFilterClear = _props.onFilterClear,
+        onFilterRowsDropChange = _props.onFilterRowsDropChange,
+        onFilterRowsChange = _props.onFilterRowsChange,
         filterable = _props.filterable,
         showHeader = _props.showHeader,
         expandIconAsCell = _props.expandIconAsCell,
@@ -421,9 +421,9 @@ var Table = function (_Component) {
       rowStyle: trStyle,
       fixed: fixed,
       filterable: filterable,
-      onFilterChange: onFilterChange //过滤行输入或下拉之后回调
-      , onFilterClear: onFilterClear //过滤行清除后回调
-      , filterDelay: filterDelay,
+      onFilterRowsChange: onFilterRowsChange,
+      onFilterRowsDropChange: onFilterRowsDropChange,
+      filterDelay: filterDelay,
       afterDragColWidth: afterDragColWidth,
       contentDomWidth: this.contentDomWidth,
       scrollbarWidth: this.scrollbarWidth,
@@ -749,8 +749,7 @@ var Table = function (_Component) {
         scroll = _props3$scroll === undefined ? {} : _props3$scroll,
         getBodyWrapper = _props3.getBodyWrapper,
         footerScroll = _props3.footerScroll,
-        headerScroll = _props3.headerScroll,
-        hideBodyScroll = _props3.hideBodyScroll;
+        headerScroll = _props3.headerScroll;
     var useFixedHeader = this.props.useFixedHeader;
 
     var bodyStyle = _extends({}, this.props.bodyStyle);
@@ -786,6 +785,7 @@ var Table = function (_Component) {
         //显示表头滚动条
         if (headerScroll) {
           if (fixed) {
+            //内容少，不用显示滚动条
             if (this.domWidthDiff <= 0) {
               headStyle.marginBottom = scrollbarWidth + 'px';
               bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
@@ -796,8 +796,6 @@ var Table = function (_Component) {
             //内容少，不用显示滚动条
             if (this.domWidthDiff > 0) {
               headStyle.overflowX = 'hidden';
-            } else if (hideBodyScroll) {
-              bodyStyle.overflowX = 'hidden';
             }
             headStyle.marginBottom = '0px';
           }
@@ -1024,8 +1022,10 @@ var Table = function (_Component) {
   };
 
   Table.prototype.handleBodyScroll = function handleBodyScroll(e) {
-    var _props$scroll = this.props.scroll,
-        scroll = _props$scroll === undefined ? {} : _props$scroll;
+    var _props8 = this.props,
+        _props8$scroll = _props8.scroll,
+        scroll = _props8$scroll === undefined ? {} : _props8$scroll,
+        clsPrefix = _props8.clsPrefix;
     var _refs = this.refs,
         headTable = _refs.headTable,
         bodyTable = _refs.bodyTable,
@@ -1052,7 +1052,7 @@ var Table = function (_Component) {
         position = 'middle';
       }
       if (position) {
-        (0, _componentClasses2["default"])(this.contentTable).remove(new RegExp('^' + prefixCls + '-scroll-position-.+$')).add(prefixCls + '-scroll-position-' + position);
+        (0, _componentClasses2["default"])(this.contentTable).remove(new RegExp('^' + clsPrefix + '-scroll-position-.+$')).add(clsPrefix + '-scroll-position-' + position);
       }
     }
     if (scroll.y) {
