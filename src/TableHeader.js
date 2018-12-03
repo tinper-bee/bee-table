@@ -227,11 +227,14 @@ class TableHeader extends Component {
   };
 
   clearDragBorder(){
-    if (!this.props.dragborder) return;
-   
+    // if (!this.props.dragborder || !this.props.draggable) return;
+    if(!this.drag)return;
     this.drag = {
       option:""
     };
+    if (!this.props.draggable){
+      this.removeDragAbleEvent();
+    }
   }
 
   //---拖拽列宽代码逻辑----start-----
