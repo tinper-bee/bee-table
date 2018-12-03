@@ -2421,6 +2421,9 @@ i.uf {
 /*
  * 选择时删除文本阴影，及设置默认选中颜色
  */
+::-moz-selection {
+  background: rgb(187,222,251);
+  text-shadow: none; }
 ::selection {
   background: rgb(187,222,251);
   text-shadow: none; }
@@ -5284,7 +5287,7 @@ a, .mdl-accordion, .mdl-button, .mdl-card, .mdl-checkbox, .mdl-dropdown-menu,
   .u-panel .u-panel-body {
     padding: 15px 15px;
     position: relative; }
-    .u-panel .u-panel-body .u-panel-copy {
+    .u-panel .u-panel-body .uf {
       position: absolute;
       right: 25px;
       top: 30px;
@@ -5294,7 +5297,7 @@ a, .mdl-accordion, .mdl-button, .mdl-card, .mdl-checkbox, .mdl-dropdown-menu,
       margin: 8px;
       border-radius: 4px;
       cursor: pointer; }
-      .u-panel .u-panel-body .u-panel-copy:hover {
+      .u-panel .u-panel-body .uf:hover {
         color: #a8a7a7; }
 
 .u-panel-default {
@@ -6670,8 +6673,7 @@ input.u-button[type="submit"] {
   border-radius: 0 500px 500px 0; }
 
 .u-pagination {
-  font-size: 14px;
-  position: relative; }
+  font-size: 14px; }
   .u-pagination-list {
     float: left;
     margin: 5px; }
@@ -6809,15 +6811,6 @@ input.u-button[type="submit"] {
     margin: 5px; }
     .u-pagination-total span {
       padding: 0 5px; }
-  .u-pagination.u-pagination-disabled .u-pagination-disabled-mask {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 46px;
-    background: rgba(255, 255, 255, 0.6);
-    z-index: 2;
-    cursor: not-allowed; }
 
 .pagination-state {
   float: left;
@@ -6924,29 +6917,15 @@ input.u-button[type="submit"] {
   margin: 0 5px;
   height: 18px;
   line-height: 18px;
-  font-size: 14px;
-  white-space: nowrap;
-  cursor: pointer;
-  outline: none;
-  position: relative;
-  line-height: 1;
-  vertical-align: middle; }
+  font-size: 14px; }
   .u-checkbox.disabled .u-checkbox-label {
     cursor: not-allowed;
     opacity: 0.5; }
   .u-checkbox input[type='checkbox'] {
-    position: absolute;
-    z-index: 3;
-    cursor: pointer;
-    opacity: 0;
-    box-sizing: border-box;
-    padding: 0;
-    width: 100%;
-    height: 100%; }
+    display: none;
+    cursor: pointer; }
   .u-checkbox input[disabled] {
     cursor: not-allowed; }
-  .u-checkbox input[type='checkbox']:focus + .u-checkbox-label:before {
-    border-color: #1e88e5; }
   .u-checkbox.is-checked .u-checkbox-label:before {
     box-shadow: inset 0 0 0 10px rgb(30,136,229);
     border-color: rgb(30,136,229); }
@@ -6998,35 +6977,20 @@ input.u-button[type="submit"] {
   box-shadow: inset 0 0 0 10px rgb(76,175,80);
   border-color: rgb(76,175,80); }
 
-.u-checkbox.u-checkbox-success input[type='checkbox']:focus + .u-checkbox-label:before {
-  border-color: rgb(76,175,80); }
-
 .u-checkbox.u-checkbox-warning.is-checked .u-checkbox-label:before {
   box-shadow: inset 0 0 0 10px rgb(255,152,0);
-  border-color: rgb(255,152,0); }
-
-.u-checkbox.u-checkbox-warning input[type='checkbox']:focus + .u-checkbox-label:before {
   border-color: rgb(255,152,0); }
 
 .u-checkbox.u-checkbox-danger.is-checked .u-checkbox-label:before {
   box-shadow: inset 0 0 0 10px rgb(244,67,54);
   border-color: rgb(244,67,54); }
 
-.u-checkbox.u-checkbox-danger input[type='checkbox']:focus + .u-checkbox-label:before {
-  border-color: rgb(244,67,54); }
-
 .u-checkbox.u-checkbox-dark.is-checked .u-checkbox-label:before {
   box-shadow: inset 0 0 0 10px rgb(97,97,97);
   border-color: rgb(97,97,97); }
 
-.u-checkbox.u-checkbox-dark input[type='checkbox']:focus + .u-checkbox-label:before {
-  border-color: rgb(97,97,97); }
-
 .u-checkbox.u-checkbox-info.is-checked .u-checkbox-label:before {
   box-shadow: inset 0 0 0 10px rgb(0,188,212);
-  border-color: rgb(0,188,212); }
-
-.u-checkbox.u-checkbox-info input[type='checkbox']:focus + .u-checkbox-label:before {
   border-color: rgb(0,188,212); }
 
 /* FormGroup */
@@ -7566,8 +7530,7 @@ ul {
     zoom: 1;
     position: absolute;
     right: 4px;
-    padding: 0 0 0 8px;
-    top: -3px; }
+    padding: 0 0 0 8px; }
   .u-select-selection--multiple .u-select-selection-choice-remove:before {
     display: block;
     font-family: "uf"; }
@@ -8692,14 +8655,10 @@ ul {
         margin: 0 auto; }
       .u-table-thead-th-drag-gap .online-hover {
         background: #000000; }
-    .u-table-thead-th .th-drag-gap {
-      background: transparent; }
-    .u-table-thead-th .th-drag-gap-hover {
+    .u-table-thead-th-drag-gap:hover {
       cursor: col-resize; }
-    .u-table-thead-th .th-drag-gap > div {
-      background: transparent; }
-    .u-table-thead-th .th-drag-gap-hover > div {
-      background: #000000; }
+      .u-table-thead-th-drag-gap:hover .online {
+        background: #000000; }
   .u-table-thead-th:last-child-drag-gap {
     border: none; }
   .u-table-filter-column-pop-cont {

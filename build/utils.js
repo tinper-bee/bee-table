@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.tryParseInt = undefined;
+exports.Event = exports.tryParseInt = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -193,3 +193,62 @@ function getColChildrenLength(columns, chilrenLen) {
   });
   return chilrenLen;
 }
+
+function addHandler(element, type, handler) {
+
+  if (element.addEventListener) {
+    //检测是否为DOM2级方法
+    element.addEventListener(type, handler, false);
+  } else if (element.attachEvent) {
+    //检测是否为IE级方法
+    element.attachEvent("on" + type, handler);
+  } else {
+    //检测是否为DOM0级方法
+    element["on" + type] = handler;
+  }
+}
+
+function removeHandler(element, type, handler) {
+  if (element.removeEventListener) {
+    element.removeEventListener(type, handler, false);
+  } else if (element.detachEvent) {
+    element.detachEvent("on" + type, handler);
+  } else {
+    element["on" + type] = null;
+  }
+}
+
+//获取事件对象的兼容性写法
+function getEvent(event) {
+  return event ? event : window.event;
+}
+
+//获取事件对象目标的兼容性写法
+function getTarget(event) {
+  return event.target || event.srcElement;
+}
+
+function preventDefault(event) {
+  if (event.preventDefault) {
+    event.preventDefault();
+  } else {
+    event.returnValue = false;
+  }
+}
+
+function stopPropagation(event) {
+  if (event.stopPropagation) {
+    event.stopPropagation();
+  } else {
+    event.cancelBubble = true;
+  }
+}
+
+var Event = exports.Event = {
+  addHandler: addHandler,
+  removeHandler: removeHandler,
+  getEvent: getEvent,
+  getTarget: getTarget,
+  preventDefault: preventDefault,
+  stopPropagation: stopPropagation
+};

@@ -171,3 +171,60 @@ export function getColChildrenLength(columns,chilrenLen){
   })
   return chilrenLen;
 }
+
+
+ function addHandler(element,type,handler){
+
+  if(element.addEventListener){//检测是否为DOM2级方法
+      element.addEventListener(type, handler, false);
+  }else if (element.attachEvent){//检测是否为IE级方法
+      element.attachEvent("on" + type, handler);
+  } else {//检测是否为DOM0级方法
+      element["on" + type] = handler;
+  }
+}
+
+ function removeHandler(element, type, handler){
+  if (element.removeEventListener){
+      element.removeEventListener(type, handler, false);
+  } else if (element.detachEvent){
+      element.detachEvent("on" + type, handler);
+  } else {
+      element["on" + type] = null;
+  }
+}
+
+//获取事件对象的兼容性写法
+function getEvent(event){
+  return event ? event : window.event;
+}
+
+//获取事件对象目标的兼容性写法
+function getTarget(event){
+  return event.target || event.srcElement;
+}
+
+function preventDefault(event){
+  if (event.preventDefault){
+      event.preventDefault();
+  } else {
+      event.returnValue = false;
+  }
+}
+
+function stopPropagation(event){
+  if (event.stopPropagation){
+      event.stopPropagation();
+  } else {
+      event.cancelBubble = true;
+  }
+}
+
+export const Event = {
+  addHandler,
+  removeHandler,
+  getEvent,
+  getTarget,
+  preventDefault,
+  stopPropagation
+}
