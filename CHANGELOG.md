@@ -1,3 +1,13 @@
+<a name="1.6.1"></a>
+## [1.6.1](https://github.com/tinper-bee/bee-table/compare/v1.5.19...v1.6.1) (2018-12-03)
+
+
+### Bug Fixes
+
+* **拖拽列宽和交换列代码重构,且二者可共存:** 拖拽列宽和交换列代码重构,且二者可共存 ([26f6cd3](https://github.com/tinper-bee/bee-table/commit/26f6cd3))
+
+
+
 <a name="1.5.19"></a>
 ## [1.5.19](https://github.com/tinper-bee/bee-table/compare/v1.5.18...v1.5.19) (2018-11-30)
 
@@ -89,7 +99,7 @@
 
 
 <a name="1.5.1"></a>
-## [1.5.1](https://github.com/tinper-bee/bee-table/compare/v1.5.0...v1.5.1) (2018-11-19)
+## [1.5.1](https://github.com/tinper-bee/bee-table/compare/v1.5.0...v1.5.1) (2018-11-18)
 
 
 
