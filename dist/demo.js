@@ -12630,7 +12630,8 @@
 	      var currentCols = _this.table.cols[_this.drag.currIndex];
 	      var diff = event.x - _this.drag.oldLeft;
 	      var newWidth = _this.drag.oldWidth + diff;
-	      if (newWidth > _this.drag.minWidth) {
+	      // if(newWidth > this.drag.minWidth){
+	      if (newWidth > _this.minWidth) {
 	        currentCols.style.width = newWidth + 'px';
 	        //hao 支持固定表头拖拽 修改表体的width
 	        if (_this.fixedTable.cols) {
@@ -12729,6 +12730,7 @@
 	        return;
 	      }
 	      var data = _this.getCurrentEventData(e);
+	      if (!data) return;
 	      if (!_this.currentObj || _this.currentObj.key == data.key) return;
 	      if (!_this.props.onDrop) return;
 	      _this.props.onDrop(event, { dragSource: _this.currentObj, dragTarg: data });
@@ -12863,6 +12865,7 @@
 	      width: 0,
 	      option: ''
 	    };
+	    _this.minWidth = 80; //确定最小宽度就是80
 	    _this.table = null;
 	    var _row = [];
 	    _this.props.rows[0] && _this.props.rows[0].forEach(function (item) {

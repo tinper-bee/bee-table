@@ -29,6 +29,7 @@ class TableHeader extends Component {
       width: 0,
       option:''
     };
+    this.minWidth = 80;//确定最小宽度就是80
     this.table = null;
     let _row = [];
     this.props.rows[0] &&
@@ -164,7 +165,8 @@ class TableHeader extends Component {
       let currentCols = this.table.cols[this.drag.currIndex];
       let diff = (event.x - this.drag.oldLeft); 
       let newWidth = this.drag.oldWidth + diff;
-      if(newWidth > this.drag.minWidth){
+      // if(newWidth > this.drag.minWidth){
+      if(newWidth > this.minWidth){
         currentCols.style.width = newWidth +'px';
         //hao 支持固定表头拖拽 修改表体的width
         if(this.fixedTable.cols){
@@ -309,6 +311,7 @@ class TableHeader extends Component {
     if (!this.props.draggable) return;
     if(this.drag.option === 'border'){return;}
     let data = this.getCurrentEventData(e);
+    if(!data)return;
     if (!this.currentObj || this.currentObj.key == data.key) return;
     if(!this.props.onDrop)return;
     this.props.onDrop(event,{dragSource:this.currentObj,dragTarg:data});
