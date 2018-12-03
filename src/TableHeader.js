@@ -12,33 +12,18 @@ const propTypes = {
   rows: PropTypes.array
 };
 
-const grap = 16; //偏移数值
-
 class TableHeader extends Component {
   constructor(props) {
     super(props);
-    this.currentObj = null;
-    //拖拽宽度处理
-    if (!props.dragborder) return;
-    this.border = false;
+    this.currentObj = null; 
     this.theadKey = new Date().getTime();
     this.drag = {
-      initPageLeftX: 0,
-      initLeft: 0,
-      x: 0,
-      width: 0,
       option:''
     };
     this.minWidth = 80;//确定最小宽度就是80
     this.table = null;
-    let _row = [];
-    this.props.rows[0] &&
-      this.props.rows[0].forEach(item => {
-        let newItem = item.key != "checkbox" ? ObjectAssign(item) : item;
-        _row.push(newItem);
-      });
-    this.drag.data = _row; //JSON.parse(JSON.stringify(this.props.rows[0]));
   }
+
   static defaultProps = {
     contentWidthDiff: 0
   };
@@ -53,8 +38,15 @@ class TableHeader extends Component {
     for (let index = 0; index < ths.length; index++) {
       const element = ths[index];//.getAttribute('data-type');
       if(!element.getAttribute('data-th-fixed')){
-        const colLine =  element.children.length > 1?element.lastElementChild:element.children[0];
-        // const colLine = element.children[0];
+        let colLine =  null;
+        if(element.children.length === 0){
+          colLine = element;
+        }else if(element.children.length > 0){
+          colLine = element.lastElementChild;
+        }else if(element.children.length === 1){
+          colLine = element.children[0];
+        }
+        // const colLine =  element.children.length > 1?element.lastElementChild:element.children[0];
         for (let i = 0; i < events.length; i++) {
           const _event = events[i];
           let _dataSource = eventSource?element:colLine;
