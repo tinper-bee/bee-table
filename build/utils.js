@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Event = exports.tryParseInt = undefined;
+exports.Event = exports.EventUtil = exports.tryParseInt = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -243,6 +243,29 @@ function stopPropagation(event) {
     event.cancelBubble = true;
   }
 }
+
+//用事件冒泡方式，如果想兼容事件捕获只需要添加个bool参数
+var EventUtil = exports.EventUtil = {
+  addHandler: function addHandler(element, type, handler) {
+    if (element.addEventListener) {
+      element.addEventListener(type, handler, false);
+    } else if (element.attachEvent) {
+      element.attachEvent('on' + type, handler);
+    } else {
+      element['on' + type] = handler;
+    }
+  },
+
+  removeHandler: function removeHandler(element, type, handler) {
+    if (element.removeEventListener) {
+      element.removeEventListener(type, handler, false);
+    } else if (element.detachEvent) {
+      element.detachEvent('on' + type, handler);
+    } else {
+      element['on' + type] = null;
+    }
+  }
+};
 
 var Event = exports.Event = {
   addHandler: addHandler,

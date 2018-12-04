@@ -97,6 +97,7 @@ function multiSelect(Table, Checkbox) {
 
     NewMultiSelect.prototype.setChecked = function setChecked(data) {
       if (!this.isArray(data)) return false;
+      if (data.length == 0) return false;
       var count = 0;
       data.forEach(function (da) {
         if (da._checked) {

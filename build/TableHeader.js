@@ -144,8 +144,20 @@ var TableHeader = function (_Component) {
       if (!_this.props.draggable) return;
       event.target.setAttribute('draggable', true); //添加交换列效果
       _this.drag.option = 'dragAble';
+      _this.currentDome = event.target;
+
+      _this.thEventListen([{ key: 'mouseup', fun: _this.dragAbleMouseUp }], '', true); //th
       _this.removeDragBorderEvent(); //清理掉拖拽列宽的事件
       _this.addDragAbleEvent(); //添加拖拽交换列的事件
+    };
+
+    _this.dragAbleMouseUp = function (e) {
+      _this.currentDome.setAttribute('draggable', false); //添加交换列效果
+      _this.removeDragAbleEvent();
+      _this.thEventListen([{ key: 'mouseup', fun: _this.dragAbleMouseUp }], 'remove', true); //th
+      //拖拽交换列事件
+      _this.thEventListen([{ key: 'mousedown', fun: _this.dragAbleMouseDown }], 'remove', true); //表示把事件添加到th元素上
+      _this.initEvent();
     };
 
     _this.onDragStart = function (e) {
@@ -154,7 +166,7 @@ var TableHeader = function (_Component) {
       if (_this.drag.option === 'border') {
         return;
       }
-      // console.log('-------onDragStart----------',event.target);
+      console.log(_this.drag.option + ' -------onDragStart----------', event.target);
       var th = _this.getThDome(event.target);
       if (!th) return;
       var currentIndex = parseInt(th.getAttribute("data-line-index"));
@@ -175,9 +187,10 @@ var TableHeader = function (_Component) {
       if (_this.drag.option === 'border') {
         return;
       }
+      _this.currentDome.setAttribute('draggable', false); //添加交换列效果
       var data = _this.getCurrentEventData(e);
       if (!data) return;
-      // console.log('-------onDrop----------',event.target);
+      console.log(_this.drag.option + ' -------onDrop----------', event.target);
       if (!_this.currentObj || _this.currentObj.key == data.key) return;
       if (!_this.props.onDrop) return;
       _this.props.onDrop(event, { dragSource: _this.currentObj, dragTarg: data });
@@ -336,9 +349,9 @@ var TableHeader = function (_Component) {
           var _event = events[i];
           var _dataSource = eventSource ? element : colLine;
           if (type === "remove") {
-            _dataSource.removeEventListener(_event.key, _event.fun);
+            _utils.EventUtil.removeHandler(_dataSource, _event.key, _event.fun);
           } else {
-            _dataSource.addEventListener(_event.key, _event.fun);
+            _utils.EventUtil.addHandler(_dataSource, _event.key, _event.fun);
           }
         }
       }
@@ -349,9 +362,9 @@ var TableHeader = function (_Component) {
     for (var i = 0; i < events.length; i++) {
       var _event = events[i];
       if (type == "remove") {
-        document.removeEventListener(_event.key, _event.fun);
+        _utils.EventUtil.removeHandler(document.body, _event.key, _event.fun);
       } else {
-        document.addEventListener(_event.key, _event.fun);
+        _utils.EventUtil.addHandler(document.body, _event.key, _event.fun);
       }
     }
   };
@@ -381,7 +394,7 @@ var TableHeader = function (_Component) {
     }
     if (!this.props.draggable) return;
     //拖拽交换列事件
-    this.thEventListen([{ key: 'mousedown', fun: this.dragAbleMouseDown }], '', true); //表示把事件添加到竖线
+    this.thEventListen([{ key: 'mousedown', fun: this.dragAbleMouseDown }], '', true); //表示把事件添加到th元素上
   };
 
   /**
@@ -437,7 +450,7 @@ var TableHeader = function (_Component) {
     this.drag = {
       option: ""
     };
-    if (!this.props.draggable) {
+    if (this.props.draggable) {
       this.removeDragAbleEvent();
     }
   };
@@ -592,7 +605,7 @@ var TableHeader = function (_Component) {
             if (!da.fixed) {
               return _react2["default"].createElement(
                 "th",
-                { key: da.dataindex, className: thClassName, "data-th-fixed": da.fixed,
+                { key: 'table-header-th-' + da.dataindex, className: thClassName, "data-th-fixed": da.fixed,
                   "data-line-key": da.key, "data-line-index": columIndex, "data-th-width": da.width },
                 da.children,
                 dragborder ? _react2["default"].createElement(

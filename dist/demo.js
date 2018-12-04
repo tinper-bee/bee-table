@@ -7237,7 +7237,7 @@
 	  duration: _propTypes2["default"].number,
 	  onClose: _propTypes2["default"].func,
 	  children: _propTypes2["default"].any,
-	  color: _propTypes2["default"].oneOf(['light']),
+	  color: _propTypes2["default"].oneOf(['info', 'success', 'danger', 'warning', 'light', 'dark', 'news', 'infolight', 'successlight', 'dangerlight', 'warninglight']),
 	  title: _propTypes2["default"].any
 	};
 	
@@ -7336,7 +7336,7 @@
 	
 	;
 	
-	Notice.PropTypes = _propTypes2["default"];
+	Notice.propTypes = propTypes;
 	Notice.defaultProps = defaultProps;
 	
 	exports["default"] = Notice;
@@ -10936,8 +10936,8 @@
 	  Table.prototype.getHeader = function getHeader(columns, fixed) {
 	    var _props = this.props,
 	        filterDelay = _props.filterDelay,
-	        onFilterRowsDropChange = _props.onFilterRowsDropChange,
-	        onFilterRowsChange = _props.onFilterRowsChange,
+	        onFilterChange = _props.onFilterChange,
+	        onFilterClear = _props.onFilterClear,
 	        filterable = _props.filterable,
 	        showHeader = _props.showHeader,
 	        expandIconAsCell = _props.expandIconAsCell,
@@ -10989,8 +10989,8 @@
 	      rowStyle: trStyle,
 	      fixed: fixed,
 	      filterable: filterable,
-	      onFilterRowsChange: onFilterRowsChange,
-	      onFilterRowsDropChange: onFilterRowsDropChange,
+	      onFilterChange: onFilterChange,
+	      onFilterClear: onFilterClear,
 	      filterDelay: filterDelay,
 	      afterDragColWidth: afterDragColWidth,
 	      contentDomWidth: this.contentDomWidth,
@@ -12707,8 +12707,20 @@
 	      if (!_this.props.draggable) return;
 	      event.target.setAttribute('draggable', true); //添加交换列效果
 	      _this.drag.option = 'dragAble';
+	      _this.currentDome = event.target;
+	
+	      _this.thEventListen([{ key: 'mouseup', fun: _this.dragAbleMouseUp }], '', true); //th
 	      _this.removeDragBorderEvent(); //清理掉拖拽列宽的事件
 	      _this.addDragAbleEvent(); //添加拖拽交换列的事件
+	    };
+	
+	    _this.dragAbleMouseUp = function (e) {
+	      _this.currentDome.setAttribute('draggable', false); //添加交换列效果
+	      _this.removeDragAbleEvent();
+	      _this.thEventListen([{ key: 'mouseup', fun: _this.dragAbleMouseUp }], 'remove', true); //th
+	      //拖拽交换列事件
+	      _this.thEventListen([{ key: 'mousedown', fun: _this.dragAbleMouseDown }], 'remove', true); //表示把事件添加到th元素上
+	      _this.initEvent();
 	    };
 	
 	    _this.onDragStart = function (e) {
@@ -12717,7 +12729,7 @@
 	      if (_this.drag.option === 'border') {
 	        return;
 	      }
-	      // console.log('-------onDragStart----------',event.target);
+	      console.log(_this.drag.option + ' -------onDragStart----------', event.target);
 	      var th = _this.getThDome(event.target);
 	      if (!th) return;
 	      var currentIndex = parseInt(th.getAttribute("data-line-index"));
@@ -12738,9 +12750,10 @@
 	      if (_this.drag.option === 'border') {
 	        return;
 	      }
+	      _this.currentDome.setAttribute('draggable', false); //添加交换列效果
 	      var data = _this.getCurrentEventData(e);
 	      if (!data) return;
-	      // console.log('-------onDrop----------',event.target);
+	      console.log(_this.drag.option + ' -------onDrop----------', event.target);
 	      if (!_this.currentObj || _this.currentObj.key == data.key) return;
 	      if (!_this.props.onDrop) return;
 	      _this.props.onDrop(event, { dragSource: _this.currentObj, dragTarg: data });
@@ -12899,9 +12912,9 @@
 	          var _event = events[i];
 	          var _dataSource = eventSource ? element : colLine;
 	          if (type === "remove") {
-	            _dataSource.removeEventListener(_event.key, _event.fun);
+	            _utils.EventUtil.removeHandler(_dataSource, _event.key, _event.fun);
 	          } else {
-	            _dataSource.addEventListener(_event.key, _event.fun);
+	            _utils.EventUtil.addHandler(_dataSource, _event.key, _event.fun);
 	          }
 	        }
 	      }
@@ -12912,9 +12925,9 @@
 	    for (var i = 0; i < events.length; i++) {
 	      var _event = events[i];
 	      if (type == "remove") {
-	        document.removeEventListener(_event.key, _event.fun);
+	        _utils.EventUtil.removeHandler(document.body, _event.key, _event.fun);
 	      } else {
-	        document.addEventListener(_event.key, _event.fun);
+	        _utils.EventUtil.addHandler(document.body, _event.key, _event.fun);
 	      }
 	    }
 	  };
@@ -12944,7 +12957,7 @@
 	    }
 	    if (!this.props.draggable) return;
 	    //拖拽交换列事件
-	    this.thEventListen([{ key: 'mousedown', fun: this.dragAbleMouseDown }], '', true); //表示把事件添加到竖线
+	    this.thEventListen([{ key: 'mousedown', fun: this.dragAbleMouseDown }], '', true); //表示把事件添加到th元素上
 	  };
 	
 	  /**
@@ -13000,7 +13013,7 @@
 	    this.drag = {
 	      option: ""
 	    };
-	    if (!this.props.draggable) {
+	    if (this.props.draggable) {
 	      this.removeDragAbleEvent();
 	    }
 	  };
@@ -13155,7 +13168,7 @@
 	            if (!da.fixed) {
 	              return _react2["default"].createElement(
 	                "th",
-	                { key: Math.random() + new Date().getTime(), className: thClassName, "data-th-fixed": da.fixed,
+	                { key: 'table-header-th-' + da.dataindex, className: thClassName, "data-th-fixed": da.fixed,
 	                  "data-line-key": da.key, "data-line-index": columIndex, "data-th-width": da.width },
 	                da.children,
 	                dragborder ? _react2["default"].createElement(
@@ -13342,7 +13355,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Event = exports.tryParseInt = undefined;
+	exports.Event = exports.EventUtil = exports.tryParseInt = undefined;
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
@@ -13582,6 +13595,29 @@
 	    event.cancelBubble = true;
 	  }
 	}
+	
+	//用事件冒泡方式，如果想兼容事件捕获只需要添加个bool参数
+	var EventUtil = exports.EventUtil = {
+	  addHandler: function addHandler(element, type, handler) {
+	    if (element.addEventListener) {
+	      element.addEventListener(type, handler, false);
+	    } else if (element.attachEvent) {
+	      element.attachEvent('on' + type, handler);
+	    } else {
+	      element['on' + type] = handler;
+	    }
+	  },
+	
+	  removeHandler: function removeHandler(element, type, handler) {
+	    if (element.removeEventListener) {
+	      element.removeEventListener(type, handler, false);
+	    } else if (element.detachEvent) {
+	      element.detachEvent('on' + type, handler);
+	    } else {
+	      element['on' + type] = null;
+	    }
+	  }
+	};
 	
 	var Event = exports.Event = {
 	  addHandler: addHandler,
@@ -21657,15 +21693,15 @@
 	    InputNumber.prototype.ComponentWillMount = function ComponentWillMount() {};
 	
 	    InputNumber.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-	        //  if(!nextProps.hasOwnProperty('precision')){//如果没有 precision
-	        var data = judgeValue(nextProps);
-	        this.setState({
-	            value: data.value,
-	            minusDisabled: data.minusDisabled,
-	            plusDisabled: data.plusDisabled
-	        });
-	        this.tempStorage = data.value;
-	        //  }
+	        if (!nextProps.hasOwnProperty('precision')) {
+	            var data = judgeValue(nextProps);
+	            this.setState({
+	                value: data.value,
+	                minusDisabled: data.minusDisabled,
+	                plusDisabled: data.plusDisabled
+	            });
+	            this.tempStorage = data.value;
+	        }
 	    };
 	
 	    InputNumber.prototype.ComponentWillUnMount = function ComponentWillUnMount() {
@@ -53625,6 +53661,7 @@
 	
 	    NewMultiSelect.prototype.setChecked = function setChecked(data) {
 	      if (!this.isArray(data)) return false;
+	      if (data.length == 0) return false;
 	      var count = 0;
 	      data.forEach(function (da) {
 	        if (da._checked) {
@@ -53671,21 +53708,31 @@
 	      if (checkedAll) {
 	        check = false;
 	      } else {
-	        if (indeterminate) {
-	          check = true;
-	        } else {
-	          check = true;
-	        }
+	        // if(indeterminate){
+	        //   check = true;
+	        // }else{
+	        //   check = true;
+	        // }
+	        check = true;
 	      }
 	      var selectList = [];
+	
 	      data.forEach(function (item) {
-	        item._checked = check;
+	        if (!item._disabled) {
+	          item._checked = check;
+	        }
+	
 	        if (item._checked) {
 	          selectList.push(item);
 	        }
 	      });
+	      if (selectList.length > 0) {
+	        indeterminate = true;
+	      } else {
+	        indeterminate = false;
+	      }
 	      _this2.setState({
-	        indeterminate: false,
+	        indeterminate: indeterminate,
 	        checkedAll: check
 	      });
 	      _this2.props.getSelectedDataFunc(selectList);
@@ -53718,11 +53765,22 @@
 	          indeterminate = _state2.indeterminate;
 	
 	      var checkAttr = { checked: checkedAll ? true : false };
+	      var data = _this2.props.data;
+	      var dataLength = data.length;
+	      var disabledCount = 0;
 	      indeterminate ? checkAttr.indeterminate = true : "";
+	      //设置表头Checkbox是否可以点击
+	      data.forEach(function (item, index, arr) {
+	        if (item._disabled) {
+	          disabledCount++;
+	        }
+	      });
+	
 	      var _defaultColumns = [{
 	        title: _react2['default'].createElement(Checkbox, _extends({
 	          className: 'table-checkbox'
 	        }, checkAttr, {
+	          disabled: disabledCount == dataLength ? true : false,
 	          onChange: _this2.onAllCheckChange
 	        })),
 	        key: "checkbox",
@@ -59448,18 +59506,18 @@
 	    }
 	  };
 	
-	  Popconfirm.prototype.handleClose = function handleClose() {
+	  Popconfirm.prototype.handleClose = function handleClose(e) {
 	    var onClose = this.props.onClose;
 	
 	    this.hide();
-	    onClose && onClose();
+	    onClose && onClose(e);
 	  };
 	
-	  Popconfirm.prototype.handleCancel = function handleCancel() {
+	  Popconfirm.prototype.handleCancel = function handleCancel(e) {
 	    var onCancel = this.props.onCancel;
 	
 	    this.hide();
-	    onCancel && onCancel();
+	    onCancel && onCancel(e);
 	  };
 	
 	  Popconfirm.prototype.handleHide = function handleHide() {
@@ -59495,7 +59553,8 @@
 	        content = _props.content,
 	        children = _props.children,
 	        onClick = _props.onClick,
-	        props = _objectWithoutProperties(_props, ['content', 'children', 'onClick']);
+	        stopbubble = _props.stopbubble,
+	        props = _objectWithoutProperties(_props, ['content', 'children', 'onClick', 'stopbubble']);
 	
 	    delete props.defaultOverlayShown;
 	
@@ -59512,6 +59571,7 @@
 	      _extends({}, confirmProps, {
 	        onClose: this.handleClose,
 	        onCancel: this.handleCancel,
+	        stopbubble: stopbubble,
 	        placement: props.placement }),
 	      content
 	    );
@@ -59627,6 +59687,11 @@
 	    arrowOffsetLeft: _propTypes2["default"].oneOfType([_propTypes2["default"].number, _propTypes2["default"].string]),
 	
 	    /**
+	     * 阻止冒泡
+	     */
+	    stopbubble: _propTypes2["default"].number,
+	
+	    /**
 	     * Title content
 	     */
 	    title: _propTypes2["default"].node,
@@ -59636,6 +59701,7 @@
 	};
 	
 	var defaultProps = {
+	    stopbubble: 0,
 	    placement: 'right',
 	    clsPrefix: 'u-popconfirm',
 	    locale: {}
@@ -59647,7 +59713,27 @@
 	    function Confirm(props) {
 	        _classCallCheck(this, Confirm);
 	
-	        return _possibleConstructorReturn(this, _React$Component.call(this, props));
+	        var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+	
+	        _this.cancel = function (e) {
+	            var _this$props = _this.props,
+	                stopbubble = _this$props.stopbubble,
+	                onCancel = _this$props.onCancel;
+	
+	            stopbubble && e.stopPropagation();
+	            onCancel(e);
+	        };
+	
+	        _this.close = function (e) {
+	            var _this$props2 = _this.props,
+	                stopbubble = _this$props2.stopbubble,
+	                onClose = _this$props2.onClose;
+	
+	            stopbubble && e.stopPropagation();
+	            onClose(e);
+	        };
+	
+	        return _this;
 	    }
 	
 	    Confirm.prototype.render = function render() {
@@ -59669,7 +59755,8 @@
 	            onClose = _props.onClose,
 	            color = _props.color,
 	            onCancel = _props.onCancel,
-	            props = _objectWithoutProperties(_props, ['placement', 'positionTop', 'positionLeft', 'arrowOffsetTop', 'arrowOffsetLeft', 'clsPrefix', 'trigger', 'title', 'className', 'style', 'children', 'locale', 'onClose', 'color', 'onCancel']);
+	            stopbubble = _props.stopbubble,
+	            props = _objectWithoutProperties(_props, ['placement', 'positionTop', 'positionLeft', 'arrowOffsetTop', 'arrowOffsetLeft', 'clsPrefix', 'trigger', 'title', 'className', 'style', 'children', 'locale', 'onClose', 'color', 'onCancel', 'stopbubble']);
 	
 	        var local = (0, _tool.getComponentLocale)(this.props, this.context, 'Popconfirm', function () {
 	            return _i18n2["default"];
@@ -59695,7 +59782,10 @@
 	            _extends({}, props, {
 	                role: 'tooltip',
 	                className: (0, _classnames2["default"])(className, classes),
-	                style: outerStyle
+	                style: outerStyle,
+	                onClick: function onClick(e) {
+	                    return stopbubble && e.stopPropagation();
+	                }
 	            }),
 	            _react2["default"].createElement('div', { className: 'arrow', style: arrowStyle }),
 	            _react2["default"].createElement(
@@ -59708,13 +59798,13 @@
 	                { className: (0, _classnames2["default"])(clsPrefix + '-confirm') },
 	                _react2["default"].createElement(
 	                    _beeButton2["default"],
-	                    { onClick: onCancel, size: 'sm', style: { minWidth: 50 },
+	                    { onClick: this.cancel, size: 'sm', style: { minWidth: 50 },
 	                        shape: 'border' },
 	                    local['cancel']
 	                ),
 	                _react2["default"].createElement(
 	                    _beeButton2["default"],
-	                    { onClick: onClose, size: 'sm', style: { minWidth: 50 }, colors: 'primary' },
+	                    { onClick: this.close, size: 'sm', style: { minWidth: 50 }, colors: 'primary' },
 	                    local['ok']
 	                )
 	            )
@@ -61023,35 +61113,11 @@
 	            columns[index] = dragSourceColum;
 	          }
 	        }
-	        // let titles = [];
-	        // columns.forEach(da=>{
-	        //   for(let attr of da){
-	
-	        //   }
-	        //   if(typeof da.title != "string"){
-	        //     titles.push(da.title);
-	        //     delete da.title;
-	        //   }
-	        // });
-	        // let newColumns = null;
-	        // if(titles.length != 0){
-	        //   newColumns = JSON.parse(JSON.stringify(columns));
-	        //   for (let index = 0; index < newColumns.length; index++) {
-	        //     newColumns[index].title = titles[index];
-	        //   }
-	        //   console.log("----columns----",newColumns);
-	        // }else{
-	        //   newColumns = JSON.parse(JSON.stringify(columns));
-	        // }
-	        // this.setState({
-	        //   columns:newColumns
-	        // });
-	
 	        _this.setState({
 	          columns: cloneDeep(columns)
 	        });
-	        if (_this.props.dragDrop) {
-	          _this.props.dragDrop(event, data, newColumns);
+	        if (_this.props.onDrop) {
+	          _this.props.onDrop(event, data, columns);
 	        }
 	      };
 	
@@ -63990,6 +64056,7 @@
 	
 	    NewMultiSelect.prototype.setChecked = function setChecked(data) {
 	      if (!this.isArray(data)) return false;
+	      if (data.length == 0) return false;
 	      var count = 0;
 	      data.forEach(function (da) {
 	        if (da._checked) {
@@ -64036,21 +64103,31 @@
 	      if (checkedAll) {
 	        check = false;
 	      } else {
-	        if (indeterminate) {
-	          check = true;
-	        } else {
-	          check = true;
-	        }
+	        // if(indeterminate){
+	        //   check = true;
+	        // }else{
+	        //   check = true;
+	        // }
+	        check = true;
 	      }
 	      var selectList = [];
+	
 	      data.forEach(function (item) {
-	        item._checked = check;
+	        if (!item._disabled) {
+	          item._checked = check;
+	        }
+	
 	        if (item._checked) {
 	          selectList.push(item);
 	        }
 	      });
+	      if (selectList.length > 0) {
+	        indeterminate = true;
+	      } else {
+	        indeterminate = false;
+	      }
 	      _this2.setState({
-	        indeterminate: false,
+	        indeterminate: indeterminate,
 	        checkedAll: check
 	      });
 	      _this2.props.getSelectedDataFunc(selectList);
@@ -64083,11 +64160,22 @@
 	          indeterminate = _state2.indeterminate;
 	
 	      var checkAttr = { checked: checkedAll ? true : false };
+	      var data = _this2.props.data;
+	      var dataLength = data.length;
+	      var disabledCount = 0;
 	      indeterminate ? checkAttr.indeterminate = true : "";
+	      //设置表头Checkbox是否可以点击
+	      data.forEach(function (item, index, arr) {
+	        if (item._disabled) {
+	          disabledCount++;
+	        }
+	      });
+	
 	      var _defaultColumns = [{
 	        title: _react2['default'].createElement(Checkbox, _extends({
 	          className: 'table-checkbox'
 	        }, checkAttr, {
+	          disabled: disabledCount == dataLength ? true : false,
 	          onChange: _this2.onAllCheckChange
 	        })),
 	        key: "checkbox",
