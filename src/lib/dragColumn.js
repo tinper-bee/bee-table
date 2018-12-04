@@ -93,8 +93,8 @@ export default function dragColumn(Table) {
       this.setState({
         columns:cloneDeep(columns)
       });
-      if(this.props.dragDrop){
-        this.props.dragDrop(event,data,newColumns);
+      if(this.props.onDrop){
+        this.props.onDrop(event,data,newColumns);
       }
     }
  
