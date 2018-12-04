@@ -63,6 +63,7 @@ export default function multiSelect(Table, Checkbox) {
      */
     setChecked(data){
       if(!this.isArray(data))return false;
+      if(data.length == 0)return false;
       let count = 0;
       data.forEach(da=>{
         if(da._checked){
@@ -181,7 +182,7 @@ export default function multiSelect(Table, Checkbox) {
                 checked={record._checked}
                 onClick={this.handleClick}
                 onChange={this.onCheckboxChange(text, record, index)}
-              ></Checkbox>
+              />
           }
         }]
         return _defaultColumns.concat(columns);
