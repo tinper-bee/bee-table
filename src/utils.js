@@ -220,6 +220,35 @@ function stopPropagation(event){
   }
 }
 
+
+//用事件冒泡方式，如果想兼容事件捕获只需要添加个bool参数
+export const EventUtil = {
+  addHandler: function(element,type,handler) {
+      if (element.addEventListener) {
+          element.addEventListener(type,handler,false);
+      }
+      else if (element.attachEvent) {
+          element.attachEvent('on'+type,handler);
+      }
+      else {
+          element['on'+type] = handler;
+      }
+  },
+
+  removeHandler: function(element,type,handler) {
+      if (element.removeEventListener)
+      {
+          element.removeEventListener(type,handler,false);
+      }
+      else if(element.detachEvent) {
+          element.detachEvent('on' +type,handler);
+      }
+      else {
+          element['on'+type] = null;
+      }
+  }
+}
+
 export const Event = {
   addHandler,
   removeHandler,

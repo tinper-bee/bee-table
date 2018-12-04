@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from "prop-types";
 import shallowequal from "shallowequal";
 import { throttle, debounce } from "throttle-debounce";
-import { tryParseInt, ObjectAssign ,Event} from "./utils";
+import { tryParseInt, ObjectAssign ,Event,EventUtil} from "./utils";
 import FilterType from "./FilterType";
 
 const propTypes = {
@@ -51,9 +51,10 @@ class TableHeader extends Component {
           const _event = events[i];
           let _dataSource = eventSource?element:colLine;
           if(type === "remove"){
-            _dataSource.removeEventListener(_event.key,_event.fun);  
+            EventUtil.removeHandler(_dataSource,_event.key,_event.fun);
           }else{
-            _dataSource.addEventListener(_event.key,_event.fun);
+            EventUtil.addHandler(_dataSource,_event.key,_event.fun);
+
           }
         }
       }
@@ -65,9 +66,9 @@ class TableHeader extends Component {
     for (let i = 0; i < events.length; i++) {
       const _event = events[i];
       if(type == "remove"){
-        document.removeEventListener(_event.key,_event.fun);  
+        EventUtil.removeHandler(document.body,_event.key,_event.fun);
       }else{
-        document.addEventListener(_event.key,_event.fun);
+        EventUtil.addHandler(document.body,_event.key,_event.fun);
       }
     }
   }
@@ -98,7 +99,7 @@ class TableHeader extends Component {
     }
     if(!this.props.draggable)return;
     //拖拽交换列事件
-    this.thEventListen([{key:'mousedown',fun:this.dragAbleMouseDown}],'',true);//表示把事件添加到竖线
+    this.thEventListen([{key:'mousedown',fun:this.dragAbleMouseDown}],'',true);//表示把事件添加到th元素上
   }
 
   /**
@@ -191,8 +192,6 @@ class TableHeader extends Component {
         }
         
       }
-      
-      
   };
 
   onLineMouseDown = (e) => {
@@ -226,7 +225,7 @@ class TableHeader extends Component {
     this.drag = {
       option:""
     };
-    if (!this.props.draggable){
+    if (this.props.draggable){
       this.removeDragAbleEvent();
     }
   }
@@ -239,10 +238,21 @@ class TableHeader extends Component {
     if (!this.props.draggable) return;
     event.target.setAttribute('draggable',true);//添加交换列效果
     this.drag.option = 'dragAble';
+    this.currentDome = event.target;
+
+    this.thEventListen([{key:'mouseup',fun:this.dragAbleMouseUp}],'',true);//th
     this.removeDragBorderEvent();//清理掉拖拽列宽的事件
     this.addDragAbleEvent(); //添加拖拽交换列的事件
   }
-  
+
+  dragAbleMouseUp = (e) => {
+    this.currentDome.setAttribute('draggable',false);//添加交换列效果
+    this.removeDragAbleEvent();
+    this.thEventListen([{key:'mouseup',fun:this.dragAbleMouseUp}],'remove',true);//th
+    //拖拽交换列事件
+    this.thEventListen([{key:'mousedown',fun:this.dragAbleMouseDown}],'remove',true);//表示把事件添加到th元素上
+    this.initEvent();
+  }
   /**
    * 拖拽交换列的事件处理
    */
@@ -271,7 +281,7 @@ class TableHeader extends Component {
     let event = Event.getEvent(e);
     if (!this.props.draggable) return;
     if(this.drag.option === 'border'){return;}
-    // console.log('-------onDragStart----------',event.target);
+    console.log(this.drag.option+' -------onDragStart----------',event.target);
     let th = this.getThDome(event.target);
     if(!th)return;
     let currentIndex = parseInt(th.getAttribute("data-line-index"));
@@ -305,9 +315,10 @@ class TableHeader extends Component {
   onDrop = (e) => {
     if (!this.props.draggable) return;
     if(this.drag.option === 'border'){return;}
+    this.currentDome.setAttribute('draggable',false);//添加交换列效果
     let data = this.getCurrentEventData(e);
     if(!data)return;
-    // console.log('-------onDrop----------',event.target);
+    console.log(this.drag.option+' -------onDrop----------',event.target);
     if (!this.currentObj || this.currentObj.key == data.key) return;
     if(!this.props.onDrop)return;
     this.props.onDrop(event,{dragSource:this.currentObj,dragTarg:data});
@@ -536,7 +547,7 @@ class TableHeader extends Component {
                   }
                   thClassName += `${fixedStyle}`;
                 if(!da.fixed){
-                  return (<th key={da.dataindex} className={thClassName} data-th-fixed={da.fixed} 
+                  return (<th key={'table-header-th-'+da.dataindex} className={thClassName} data-th-fixed={da.fixed} 
                         data-line-key={da.key} data-line-index={columIndex} data-th-width={da.width} >
                         {da.children}
                         {
