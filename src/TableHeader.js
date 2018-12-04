@@ -536,7 +536,7 @@ class TableHeader extends Component {
                   }
                   thClassName += `${fixedStyle}`;
                 if(!da.fixed){
-                  return (<th key={Math.random()+new Date().getTime()} className={thClassName} data-th-fixed={da.fixed} 
+                  return (<th key={da.dataindex} className={thClassName} data-th-fixed={da.fixed} 
                         data-line-key={da.key} data-line-index={columIndex} data-th-width={da.width} >
                         {da.children}
                         {

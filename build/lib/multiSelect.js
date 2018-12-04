@@ -143,21 +143,31 @@ function multiSelect(Table, Checkbox) {
       if (checkedAll) {
         check = false;
       } else {
-        if (indeterminate) {
-          check = true;
-        } else {
-          check = true;
-        }
+        // if(indeterminate){
+        //   check = true;
+        // }else{
+        //   check = true;
+        // }
+        check = true;
       }
       var selectList = [];
+
       data.forEach(function (item) {
-        item._checked = check;
+        if (!item._disabled) {
+          item._checked = check;
+        }
+
         if (item._checked) {
           selectList.push(item);
         }
       });
+      if (selectList.length > 0) {
+        indeterminate = true;
+      } else {
+        indeterminate = false;
+      }
       _this2.setState({
-        indeterminate: false,
+        indeterminate: indeterminate,
         checkedAll: check
       });
       _this2.props.getSelectedDataFunc(selectList);
@@ -190,11 +200,22 @@ function multiSelect(Table, Checkbox) {
           indeterminate = _state2.indeterminate;
 
       var checkAttr = { checked: checkedAll ? true : false };
+      var data = _this2.props.data;
+      var dataLength = data.length;
+      var disabledCount = 0;
       indeterminate ? checkAttr.indeterminate = true : "";
+      //设置表头Checkbox是否可以点击
+      data.forEach(function (item, index, arr) {
+        if (item._disabled) {
+          disabledCount++;
+        }
+      });
+
       var _defaultColumns = [{
         title: _react2["default"].createElement(Checkbox, _extends({
           className: 'table-checkbox'
         }, checkAttr, {
+          disabled: disabledCount == dataLength ? true : false,
           onChange: _this2.onAllCheckChange
         })),
         key: "checkbox",

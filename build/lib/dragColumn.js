@@ -72,35 +72,11 @@ function dragColumn(Table) {
             columns[index] = dragSourceColum;
           }
         }
-        // let titles = [];
-        // columns.forEach(da=>{
-        //   for(let attr of da){
-
-        //   }
-        //   if(typeof da.title != "string"){
-        //     titles.push(da.title);
-        //     delete da.title;
-        //   }
-        // });
-        // let newColumns = null;
-        // if(titles.length != 0){
-        //   newColumns = JSON.parse(JSON.stringify(columns));
-        //   for (let index = 0; index < newColumns.length; index++) {
-        //     newColumns[index].title = titles[index];
-        //   }
-        //   console.log("----columns----",newColumns);
-        // }else{
-        //   newColumns = JSON.parse(JSON.stringify(columns));
-        // }
-        // this.setState({
-        //   columns:newColumns
-        // });
-
         _this.setState({
           columns: cloneDeep(columns)
         });
-        if (_this.props.dragDrop) {
-          _this.props.dragDrop(event, data, newColumns);
+        if (_this.props.onDrop) {
+          _this.props.onDrop(event, data, columns);
         }
       };
 

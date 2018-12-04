@@ -592,7 +592,7 @@ var TableHeader = function (_Component) {
             if (!da.fixed) {
               return _react2["default"].createElement(
                 "th",
-                { key: Math.random() + new Date().getTime(), className: thClassName, "data-th-fixed": da.fixed,
+                { key: da.dataindex, className: thClassName, "data-th-fixed": da.fixed,
                   "data-line-key": da.key, "data-line-index": columIndex, "data-th-width": da.width },
                 da.children,
                 dragborder ? _react2["default"].createElement(
