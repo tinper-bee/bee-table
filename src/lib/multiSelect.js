@@ -91,21 +91,31 @@ export default function multiSelect(Table, Checkbox) {
       if(checkedAll){
         check = false;
       }else{
-        if(indeterminate){
-          check = true;
-        }else{
-          check = true;
-        }
+        // if(indeterminate){
+        //   check = true;
+        // }else{
+        //   check = true;
+        // }
+        check = true;
       }
       let selectList = [];
+      
       data.forEach(item => {
-        item._checked = check;
+        if(!item._disabled){
+          item._checked = check;
+        }
+       
         if(item._checked){
           selectList.push(item);
         }
       });
+      if(selectList.length > 0){
+        indeterminate = true;
+      }else{
+        indeterminate = false;
+      }
       this.setState({
-        indeterminate:false,
+        indeterminate:indeterminate,
         checkedAll:check
       });
       this.props.getSelectedDataFunc(selectList);
@@ -137,12 +147,23 @@ export default function multiSelect(Table, Checkbox) {
     getDefaultColumns=(columns)=>{
       let {checkedAll,indeterminate} = this.state;
       let checkAttr = {checked:checkedAll?true:false};
+      const data = this.props.data;
+      const dataLength = data.length;
+      let disabledCount = 0;
       indeterminate?checkAttr.indeterminate = true:"";
+      //设置表头Checkbox是否可以点击
+      data.forEach((item,index,arr)=>{
+        if(item._disabled){
+          disabledCount++;
+        }
+      })
+
       let _defaultColumns =[{
           title: (
             <Checkbox
               className="table-checkbox"
               {...checkAttr}
+              disabled={disabledCount==dataLength?true:false}
               onChange={this.onAllCheckChange}
             />
           ),
