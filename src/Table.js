@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classes from 'component-classes';
 import TableRow from './TableRow';
 import TableHeader from './TableHeader';
 import { measureScrollbar, debounce, warningOnce ,getMaxColChildrenLength} from './utils';
@@ -293,7 +294,7 @@ class Table extends Component {
   }
 
   getHeader(columns, fixed) {
-    const { filterDelay, onFilterChange, onFilterClear, filterable, showHeader, expandIconAsCell, clsPrefix, onDragStart, onDragEnter, onDragOver, onDrop, draggable,
+    const { filterDelay, onFilterRowsDropChange, onFilterRowsChange, filterable, showHeader, expandIconAsCell, clsPrefix, onDragStart, onDragEnter, onDragOver, onDrop, draggable,
       onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey, minColumnWidth, headerHeight,afterDragColWidth,headerScroll ,bordered} = this.props;
     const rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
@@ -328,8 +329,8 @@ class Table extends Component {
         rowStyle={trStyle}
         fixed={fixed}
         filterable={filterable}
-        onFilterChange={onFilterChange}//过滤行输入或下拉之后回调
-        onFilterClear={onFilterClear}//过滤行清除后回调
+        onFilterRowsChange={onFilterRowsChange}
+        onFilterRowsDropChange={onFilterRowsDropChange}
         filterDelay={filterDelay}
         afterDragColWidth = {afterDragColWidth}
         contentDomWidth={this.contentDomWidth}
@@ -646,7 +647,7 @@ class Table extends Component {
 
   getTable(options = {}) {
     const { columns, fixed } = options;
-    const { clsPrefix, scroll = {}, getBodyWrapper, footerScroll,headerScroll,hideBodyScroll } = this.props;
+    const { clsPrefix, scroll = {}, getBodyWrapper, footerScroll,headerScroll } = this.props;
     let { useFixedHeader } = this.props;
     const bodyStyle = { ...this.props.bodyStyle };
     const headStyle = {};
@@ -681,6 +682,7 @@ class Table extends Component {
         //显示表头滚动条
         if(headerScroll){
           if(fixed){
+           //内容少，不用显示滚动条
            if(this.domWidthDiff <= 0){
               headStyle.marginBottom = `${scrollbarWidth}px`;
               bodyStyle.marginBottom = `-${scrollbarWidth}px`;
@@ -689,14 +691,11 @@ class Table extends Component {
             }
           }else{
                //内容少，不用显示滚动条
-              if(this.domWidthDiff > 0){
+               if(this.domWidthDiff > 0){
                 headStyle.overflowX = 'hidden';
-              }else if(hideBodyScroll){
-                bodyStyle.overflowX = 'hidden';
               }
             headStyle.marginBottom = `0px`;
           }
-
         }else{
           if(fixed){
             if(this.domWidthDiff > 0){
@@ -898,7 +897,7 @@ class Table extends Component {
 
   handleBodyScroll(e) {
 
-    const { scroll = {} } = this.props;
+    const { scroll = {},clsPrefix } = this.props;
     const { headTable, bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this.refs;
     // Prevent scrollTop setter trigger onScroll event
     // http://stackoverflow.com/q/1386696
@@ -906,20 +905,27 @@ class Table extends Component {
       return;
     }
     if (e.target.scrollLeft !== this.lastScrollLeft) {
+      let position = '';
       if (e.target === bodyTable && headTable) {
         headTable.scrollLeft = e.target.scrollLeft;
       } else if (e.target === headTable && bodyTable) {
         bodyTable.scrollLeft = e.target.scrollLeft;
       }
       if (e.target.scrollLeft === 0) {
-        this.setState({ scrollPosition: 'left' });
+        position='left';
       } else if (e.target.scrollLeft + 1 >=
         e.target.children[0].getBoundingClientRect().width -
         e.target.getBoundingClientRect().width) {
-        this.setState({ scrollPosition: 'right' });
+          position='right';
       } else if (this.state.scrollPosition !== 'middle') {
-        this.setState({ scrollPosition: 'middle' });
+        position='middle';
       }
+      if(position){
+        classes(this.contentTable)
+        .remove(new RegExp(`^${clsPrefix}-scroll-position-.+$`))
+        .add(`${clsPrefix}-scroll-position-${position}`);
+      }
+    
     }
     if (scroll.y) {
       if (fixedColumnsBodyLeft && e.target !== fixedColumnsBodyLeft) {
@@ -972,7 +978,7 @@ class Table extends Component {
         {this.getTitle()}
         <div className={`${clsPrefix}-content`}>
          
-          <div className={isTableScroll ? `${clsPrefix}-scroll` : ''} >
+          <div className={isTableScroll ? `${clsPrefix}-scroll` : ''}>
             {this.getTable({ columns: this.columnManager.groupedColumns() })}
             {this.getEmptyText()}
             {this.getFooter()}
