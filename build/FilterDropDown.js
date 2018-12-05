@@ -59,15 +59,25 @@ var FilterDropDown = function (_Component) {
         _this.onSelectDropdown = function (item) {
             var _this$props = _this.props,
                 onSelectDropdown = _this$props.onSelectDropdown,
-                dataText = _this$props.dataText;
+                dataText = _this$props.dataText,
+                filterDropdownType = _this$props.filterDropdownType;
 
             if (onSelectDropdown) {
                 if (dataText != "") {
-                    _this.setState({
-                        selectValue: [item.key]
-                    }, function () {
-                        onSelectDropdown(item);
-                    });
+                    if (filterDropdownType == 'string') {
+                        _this.setState({
+                            selectValue: [item.key]
+                        }, function () {
+                            onSelectDropdown(item);
+                        });
+                    }
+                    if (filterDropdownType == 'number') {
+                        _this.setState({
+                            selectNumberValue: [item.key]
+                        }, function () {
+                            onSelectDropdown(item);
+                        });
+                    }
                 }
             }
         };
@@ -77,7 +87,8 @@ var FilterDropDown = function (_Component) {
 
             if (onClickClear) {
                 _this.setState({
-                    selectValue: []
+                    selectValue: [],
+                    selectNumberValue: []
                 }, function () {
                     onClickClear();
                 });
@@ -85,7 +96,9 @@ var FilterDropDown = function (_Component) {
         };
 
         _this.getMenu = function () {
-            var selectValue = _this.state.selectValue;
+            var _this$state = _this.state,
+                selectValue = _this$state.selectValue,
+                selectNumberValue = _this$state.selectNumberValue;
             var filterDropdownType = _this.props.filterDropdownType;
 
             var locale = (0, _tool.getComponentLocale)(_this.props, _this.context, 'Table', function () {
@@ -135,7 +148,7 @@ var FilterDropDown = function (_Component) {
                         _beeMenus2["default"],
                         {
                             onSelect: _this.onSelectDropdown,
-                            selectedKeys: selectValue
+                            selectedKeys: selectNumberValue
                         },
                         _react2["default"].createElement(
                             Item,
@@ -174,7 +187,8 @@ var FilterDropDown = function (_Component) {
         };
 
         _this.state = {
-            selectValue: [] //选择的条件的值
+            selectValue: ['LIKE'],
+            selectNumberValue: ['EQ']
         };
         return _this;
     }
