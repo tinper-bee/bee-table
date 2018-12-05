@@ -17,7 +17,8 @@ class FilterDropDown extends Component {
     constructor() {
         super();
         this.state = {
-            selectValue: []//选择的条件的值
+            selectValue: ['LIKE'],
+            selectNumberValue: ['EQ']
         }
     }
     /**
@@ -26,14 +27,24 @@ class FilterDropDown extends Component {
      * @param {*} s 选中的selectRecord
      */
     onSelectDropdown = (item) => {
-        let { onSelectDropdown, dataText } = this.props;
+        let { onSelectDropdown, dataText, filterDropdownType } = this.props;
         if (onSelectDropdown) {
             if (dataText != "") {
-                this.setState({
-                    selectValue: [item.key]
-                }, () => {
-                    onSelectDropdown(item);
-                });
+                if (filterDropdownType == 'string') {
+                    this.setState({
+                        selectValue: [item.key]
+                    }, () => {
+                        onSelectDropdown(item);
+                    });
+                }
+                if (filterDropdownType == 'number') {
+                    this.setState({
+                        selectNumberValue: [item.key]
+                    }, () => {
+                        onSelectDropdown(item);
+                    });
+                }
+
             }
         }
     }
@@ -46,7 +57,8 @@ class FilterDropDown extends Component {
         let { onClickClear } = this.props;
         if (onClickClear) {
             this.setState({
-                selectValue: []
+                selectValue: [],
+                selectNumberValue: []
             }, () => {
                 onClickClear();
             });
@@ -59,7 +71,7 @@ class FilterDropDown extends Component {
      * @returns JSX Menu
      */
     getMenu = () => {
-        let { selectValue } = this.state;
+        let { selectValue, selectNumberValue } = this.state;
         let { filterDropdownType } = this.props;
         let locale = getComponentLocale(this.props, this.context, 'Table', () => i18n);
         switch (filterDropdownType) {
@@ -78,7 +90,7 @@ class FilterDropDown extends Component {
             case 'number':
                 return <Menu
                     onSelect={this.onSelectDropdown}
-                    selectedKeys={selectValue}
+                    selectedKeys={selectNumberValue}
                 >
                     <Item key="GT">{locale['greater_than']}</Item>
                     <Item key="GTEQ">{locale['great_than_equal_to']}</Item>

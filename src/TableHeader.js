@@ -234,9 +234,11 @@ class TableHeader extends Component {
   //---拖拽列宽代码逻辑----start-----
  
   dragAbleMouseDown = (e) => {
-    Event.stopPropagation(e); 
+    // Event.stopPropagation(e); 
     let event = Event.getEvent(e);
     if (!this.props.draggable) return;
+    let th = this.getThDome(event.target);
+    if(!th)return;
     event.target.setAttribute('draggable',true);//添加交换列效果
     this.drag.option = 'dragAble';
     this.currentDome = event.target;
@@ -348,6 +350,7 @@ class TableHeader extends Component {
    */
   getThDome(element){
     let _tagName = element.tagName.toLowerCase();
+    if(element.getAttribute('data-filter-type') === 'filterContext')return null;
     if(_tagName === 'i')return null;
     if(_tagName != 'th'){
       return this.getThDome(element.parentElement);

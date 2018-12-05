@@ -12690,10 +12690,7 @@
 	    };
 	
 	    _this.onLineMouseUp = function (event) {
-	      var rows = _this.props.rows;
 	
-	      var data = { rows: rows[0], cols: _this.table.cols, currIndex: _this.drag.currIndex };
-	      _this.props.afterDragColWidth && _this.props.afterDragColWidth(data);
 	      _this.clearDragBorder(event);
 	    };
 	
@@ -12702,9 +12699,11 @@
 	    };
 	
 	    _this.dragAbleMouseDown = function (e) {
-	      _utils.Event.stopPropagation(e);
+	      // Event.stopPropagation(e); 
 	      var event = _utils.Event.getEvent(e);
 	      if (!_this.props.draggable) return;
+	      var th = _this.getThDome(event.target);
+	      if (!th) return;
 	      event.target.setAttribute('draggable', true); //添加交换列效果
 	      _this.drag.option = 'dragAble';
 	      _this.currentDome = event.target;
@@ -12729,7 +12728,6 @@
 	      if (_this.drag.option === 'border') {
 	        return;
 	      }
-	      console.log(_this.drag.option + ' -------onDragStart----------', event.target);
 	      var th = _this.getThDome(event.target);
 	      if (!th) return;
 	      var currentIndex = parseInt(th.getAttribute("data-line-index"));
@@ -12753,7 +12751,6 @@
 	      _this.currentDome.setAttribute('draggable', false); //添加交换列效果
 	      var data = _this.getCurrentEventData(e);
 	      if (!data) return;
-	      console.log(_this.drag.option + ' -------onDrop----------', event.target);
 	      if (!_this.currentObj || _this.currentObj.key == data.key) return;
 	      if (!_this.props.onDrop) return;
 	      _this.props.onDrop(event, { dragSource: _this.currentObj, dragTarg: data });
@@ -13009,7 +13006,11 @@
 	
 	  TableHeader.prototype.clearDragBorder = function clearDragBorder() {
 	    // if (!this.props.dragborder || !this.props.draggable) return;
-	    if (!this.drag) return;
+	    if (!this.drag || !this.drag.option) return;
+	    var rows = this.props.rows;
+	
+	    var data = { rows: rows[0], cols: this.table.cols, currIndex: this.drag.currIndex };
+	    this.props.afterDragColWidth && this.props.afterDragColWidth(data);
 	    this.drag = {
 	      option: ""
 	    };
@@ -13082,6 +13083,7 @@
 	
 	  TableHeader.prototype.getThDome = function getThDome(element) {
 	    var _tagName = element.tagName.toLowerCase();
+	    if (element.getAttribute('data-filter-type') === 'filterContext') return null;
 	    if (_tagName === 'i') return null;
 	    if (_tagName != 'th') {
 	      return this.getThDome(element.parentElement);
@@ -14433,7 +14435,11 @@
 	    FilterType.prototype.render = function render() {
 	        var rendertype = this.props.rendertype;
 	
-	        return this.renderControl(rendertype);
+	        return _react2['default'].createElement(
+	            'div',
+	            { 'data-filter-type': 'filterContext' },
+	            this.renderControl(rendertype)
+	        );
 	    };
 	
 	    return FilterType;
@@ -51712,15 +51718,25 @@
 	        _this.onSelectDropdown = function (item) {
 	            var _this$props = _this.props,
 	                onSelectDropdown = _this$props.onSelectDropdown,
-	                dataText = _this$props.dataText;
+	                dataText = _this$props.dataText,
+	                filterDropdownType = _this$props.filterDropdownType;
 	
 	            if (onSelectDropdown) {
 	                if (dataText != "") {
-	                    _this.setState({
-	                        selectValue: [item.key]
-	                    }, function () {
-	                        onSelectDropdown(item);
-	                    });
+	                    if (filterDropdownType == 'string') {
+	                        _this.setState({
+	                            selectValue: [item.key]
+	                        }, function () {
+	                            onSelectDropdown(item);
+	                        });
+	                    }
+	                    if (filterDropdownType == 'number') {
+	                        _this.setState({
+	                            selectNumberValue: [item.key]
+	                        }, function () {
+	                            onSelectDropdown(item);
+	                        });
+	                    }
 	                }
 	            }
 	        };
@@ -51730,7 +51746,8 @@
 	
 	            if (onClickClear) {
 	                _this.setState({
-	                    selectValue: []
+	                    selectValue: [],
+	                    selectNumberValue: []
 	                }, function () {
 	                    onClickClear();
 	                });
@@ -51738,7 +51755,9 @@
 	        };
 	
 	        _this.getMenu = function () {
-	            var selectValue = _this.state.selectValue;
+	            var _this$state = _this.state,
+	                selectValue = _this$state.selectValue,
+	                selectNumberValue = _this$state.selectNumberValue;
 	            var filterDropdownType = _this.props.filterDropdownType;
 	
 	            var locale = (0, _tool.getComponentLocale)(_this.props, _this.context, 'Table', function () {
@@ -51788,7 +51807,7 @@
 	                        _beeMenus2['default'],
 	                        {
 	                            onSelect: _this.onSelectDropdown,
-	                            selectedKeys: selectValue
+	                            selectedKeys: selectNumberValue
 	                        },
 	                        _react2['default'].createElement(
 	                            Item,
@@ -51827,7 +51846,8 @@
 	        };
 	
 	        _this.state = {
-	            selectValue: [] //选择的条件的值
+	            selectValue: ['LIKE'],
+	            selectNumberValue: ['EQ']
 	        };
 	        return _this;
 	    }
