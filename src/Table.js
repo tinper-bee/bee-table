@@ -582,6 +582,7 @@ class Table extends Component {
   getColGroup(columns, fixed) {
     let cols = [];
     let self = this;
+    
     let { contentWidthDiff = 0, lastShowIndex = 0 } = this.state;
     if (this.props.expandIconAsCell && fixed !== 'right') {
       cols.push(
@@ -602,6 +603,7 @@ class Table extends Component {
       leafColumns = this.columnManager.leafColumns();
     }
     cols = cols.concat(leafColumns.map((c, i, arr) => {
+      let fixedClass ='';
       let width = c.width;
       if (typeof (width) == 'string' && width.indexOf('%') > -1 && self.contentWidth) {
         width = parseInt(self.contentWidth * parseInt(width) / 100);
@@ -611,8 +613,10 @@ class Table extends Component {
       if (lastShowIndex == i && width) {
         width = width + contentWidthDiff;
       }
-
-      return <col key={c.key} style={{ width: width, minWidth: c.width }} />;
+      if (!fixed && c.fixed) {
+        fixedClass = `${this.props.clsPrefix}-row-fixed-columns-in-body`;
+      }
+      return <col key={c.key} style={{ width: width, minWidth: c.width }} className={fixedClass}/>;
     }));
     return <colgroup>{cols}</colgroup>;
   }
@@ -719,12 +723,12 @@ class Table extends Component {
         if (scroll.x === true) {
           tableStyle.tableLayout = 'fixed';
         } else {
-          tableStyle.width = this.contentWidth;
+          tableStyle.width = this.contentWidth - this.columnManager.getLeftColumnsWidth() - this.columnManager.getRightColumnsWidth();
         }
       }
       // 自动出现滚动条
       if ( !fixed && this.contentDomWidth < this.contentWidth) {
-        tableStyle.width = this.contentWidth;
+        tableStyle.width = this.contentWidth - this.columnManager.getLeftColumnsWidth() - this.columnManager.getRightColumnsWidth();
       }
       const tableBody = hasBody ? getBodyWrapper(
         <tbody className={`${clsPrefix}-tbody`}>
@@ -973,12 +977,14 @@ class Table extends Component {
         show: loading,
       };
     }
+    const leftFixedWidth = this.columnManager.getLeftColumnsWidth();
+    const rightFixedWidth = this.columnManager.getRightColumnsWidth();
     return (
       <div className={className} style={props.style} ref={el => this.contentTable = el}>
         {this.getTitle()}
         <div className={`${clsPrefix}-content`}>
          
-          <div className={isTableScroll ? `${clsPrefix}-scroll` : ''}>
+          <div className={isTableScroll ? `${clsPrefix}-scroll` : ''} style={{'marginLeft':leftFixedWidth}}>
             {this.getTable({ columns: this.columnManager.groupedColumns() })}
             {this.getEmptyText()}
             {this.getFooter()}

@@ -11247,8 +11247,11 @@
 	  };
 	
 	  Table.prototype.getColGroup = function getColGroup(columns, fixed) {
+	    var _this3 = this;
+	
 	    var cols = [];
 	    var self = this;
+	
 	    var _state2 = this.state,
 	        _state2$contentWidthD = _state2.contentWidthDiff,
 	        contentWidthDiff = _state2$contentWidthD === undefined ? 0 : _state2$contentWidthD,
@@ -11272,6 +11275,7 @@
 	      leafColumns = this.columnManager.leafColumns();
 	    }
 	    cols = cols.concat(leafColumns.map(function (c, i, arr) {
+	      var fixedClass = '';
 	      var width = c.width;
 	      if (typeof width == 'string' && width.indexOf('%') > -1 && self.contentWidth) {
 	        width = parseInt(self.contentWidth * parseInt(width) / 100);
@@ -11281,8 +11285,10 @@
 	      if (lastShowIndex == i && width) {
 	        width = width + contentWidthDiff;
 	      }
-	
-	      return _react2['default'].createElement('col', { key: c.key, style: { width: width, minWidth: c.width } });
+	      if (!fixed && c.fixed) {
+	        fixedClass = _this3.props.clsPrefix + '-row-fixed-columns-in-body';
+	      }
+	      return _react2['default'].createElement('col', { key: c.key, style: { width: width, minWidth: c.width }, className: fixedClass });
 	    }));
 	    return _react2['default'].createElement(
 	      'colgroup',
@@ -11306,7 +11312,7 @@
 	  };
 	
 	  Table.prototype.getTable = function getTable() {
-	    var _this3 = this;
+	    var _this4 = this;
 	
 	    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 	    var columns = options.columns,
@@ -11391,24 +11397,24 @@
 	        if (scroll.x === true) {
 	          tableStyle.tableLayout = 'fixed';
 	        } else {
-	          tableStyle.width = _this3.contentWidth;
+	          tableStyle.width = _this4.contentWidth - _this4.columnManager.getLeftColumnsWidth() - _this4.columnManager.getRightColumnsWidth();
 	        }
 	      }
 	      // 自动出现滚动条
-	      if (!fixed && _this3.contentDomWidth < _this3.contentWidth) {
-	        tableStyle.width = _this3.contentWidth;
+	      if (!fixed && _this4.contentDomWidth < _this4.contentWidth) {
+	        tableStyle.width = _this4.contentWidth - _this4.columnManager.getLeftColumnsWidth() - _this4.columnManager.getRightColumnsWidth();
 	      }
 	      var tableBody = hasBody ? getBodyWrapper(_react2['default'].createElement(
 	        'tbody',
 	        { className: clsPrefix + '-tbody' },
-	        _this3.getRows(columns, fixed)
+	        _this4.getRows(columns, fixed)
 	      )) : null;
-	      var _drag_class = _this3.props.dragborder ? "table-drag-bordered" : "";
+	      var _drag_class = _this4.props.dragborder ? "table-drag-bordered" : "";
 	      return _react2['default'].createElement(
 	        'table',
 	        { className: ' ' + tableClassName + '  table-bordered ' + _drag_class + ' ', style: tableStyle },
-	        _this3.getColGroup(columns, fixed),
-	        hasHead ? _this3.getHeader(columns, fixed) : null,
+	        _this4.getColGroup(columns, fixed),
+	        hasHead ? _this4.getHeader(columns, fixed) : null,
 	        tableBody
 	      );
 	    };
@@ -11571,10 +11577,10 @@
 	  };
 	
 	  Table.prototype.findExpandedRow = function findExpandedRow(record, index) {
-	    var _this4 = this;
+	    var _this5 = this;
 	
 	    var rows = this.getExpandedRows().filter(function (i) {
-	      return i === _this4.getRowKey(record, index);
+	      return i === _this5.getRowKey(record, index);
 	    });
 	    return rows[0];
 	  };
@@ -11645,7 +11651,7 @@
 	  };
 	
 	  Table.prototype.render = function render() {
-	    var _this5 = this;
+	    var _this6 = this;
 	
 	    var props = this.props;
 	    var clsPrefix = props.clsPrefix;
@@ -11669,10 +11675,12 @@
 	        show: loading
 	      };
 	    }
+	    var leftFixedWidth = this.columnManager.getLeftColumnsWidth();
+	    var rightFixedWidth = this.columnManager.getRightColumnsWidth();
 	    return _react2['default'].createElement(
 	      'div',
 	      { className: className, style: props.style, ref: function ref(el) {
-	          return _this5.contentTable = el;
+	          return _this6.contentTable = el;
 	        } },
 	      this.getTitle(),
 	      _react2['default'].createElement(
@@ -11680,7 +11688,7 @@
 	        { className: clsPrefix + '-content' },
 	        _react2['default'].createElement(
 	          'div',
-	          { className: isTableScroll ? clsPrefix + '-scroll' : '' },
+	          { className: isTableScroll ? clsPrefix + '-scroll' : '', style: { 'marginLeft': leftFixedWidth } },
 	          this.getTable({ columns: this.columnManager.groupedColumns() }),
 	          this.getEmptyText(),
 	          this.getFooter()

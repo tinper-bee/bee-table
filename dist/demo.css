@@ -8696,7 +8696,7 @@ ul {
     border: 1px solid #ccc;
     background: #fff; }
   .u-table-row-fixed-columns-in-body {
-    visibility: hidden;
+    display: none;
     pointer-events: none; }
 
 .u-table.bordered table {

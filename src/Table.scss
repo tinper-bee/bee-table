@@ -452,7 +452,8 @@ $table-move-in-color: $bg-color-base;
   }
   //拖拽宽度代码
   &-row-fixed-columns-in-body{
-    visibility: hidden;
+    // visibility: hidden;
+    display:none;
     pointer-events: none;
   }
 }
