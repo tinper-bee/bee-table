@@ -127,10 +127,7 @@ var TableHeader = function (_Component) {
     };
 
     _this.onLineMouseUp = function (event) {
-      var rows = _this.props.rows;
 
-      var data = { rows: rows[0], cols: _this.table.cols, currIndex: _this.drag.currIndex };
-      _this.props.afterDragColWidth && _this.props.afterDragColWidth(data);
       _this.clearDragBorder(event);
     };
 
@@ -446,7 +443,11 @@ var TableHeader = function (_Component) {
 
   TableHeader.prototype.clearDragBorder = function clearDragBorder() {
     // if (!this.props.dragborder || !this.props.draggable) return;
-    if (!this.drag) return;
+    if (!this.drag || !this.drag.option) return;
+    var rows = this.props.rows;
+
+    var data = { rows: rows[0], cols: this.table.cols, currIndex: this.drag.currIndex };
+    this.props.afterDragColWidth && this.props.afterDragColWidth(data);
     this.drag = {
       option: ""
     };
