@@ -392,7 +392,11 @@ var FilterType = function (_Component) {
     FilterType.prototype.render = function render() {
         var rendertype = this.props.rendertype;
 
-        return this.renderControl(rendertype);
+        return _react2["default"].createElement(
+            'div',
+            { 'data-filter-type': 'filterContext' },
+            this.renderControl(rendertype)
+        );
     };
 
     return FilterType;

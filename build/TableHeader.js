@@ -139,9 +139,11 @@ var TableHeader = function (_Component) {
     };
 
     _this.dragAbleMouseDown = function (e) {
-      _utils.Event.stopPropagation(e);
+      // Event.stopPropagation(e); 
       var event = _utils.Event.getEvent(e);
       if (!_this.props.draggable) return;
+      var th = _this.getThDome(event.target);
+      if (!th) return;
       event.target.setAttribute('draggable', true); //添加交换列效果
       _this.drag.option = 'dragAble';
       _this.currentDome = event.target;
@@ -166,7 +168,7 @@ var TableHeader = function (_Component) {
       if (_this.drag.option === 'border') {
         return;
       }
-      console.log(_this.drag.option + ' -------onDragStart----------', event.target);
+      // console.log(this.drag.option+' -------onDragStart----------',event.target);
       var th = _this.getThDome(event.target);
       if (!th) return;
       var currentIndex = parseInt(th.getAttribute("data-line-index"));
@@ -190,7 +192,7 @@ var TableHeader = function (_Component) {
       _this.currentDome.setAttribute('draggable', false); //添加交换列效果
       var data = _this.getCurrentEventData(e);
       if (!data) return;
-      console.log(_this.drag.option + ' -------onDrop----------', event.target);
+      // console.log(this.drag.option+' -------onDrop----------',event.target);
       if (!_this.currentObj || _this.currentObj.key == data.key) return;
       if (!_this.props.onDrop) return;
       _this.props.onDrop(event, { dragSource: _this.currentObj, dragTarg: data });
@@ -519,6 +521,7 @@ var TableHeader = function (_Component) {
 
   TableHeader.prototype.getThDome = function getThDome(element) {
     var _tagName = element.tagName.toLowerCase();
+    if (element.getAttribute('data-filter-type') === 'filterContext') return null;
     if (_tagName === 'i') return null;
     if (_tagName != 'th') {
       return this.getThDome(element.parentElement);
