@@ -99,13 +99,17 @@ function multiSelect(Table, Checkbox) {
       if (!this.isArray(data)) return false;
       if (data.length == 0) return false;
       var count = 0;
+      var disabledCount = 0;
       data.forEach(function (da) {
         if (da._checked) {
           count++;
         }
+        if (da._disabled) {
+          disabledCount++;
+        }
       });
 
-      if (data.length == count) {
+      if (data.length == count + disabledCount) {
         return "all";
       }
       return count == 0 ? false : "indeter";
