@@ -65,13 +65,17 @@ export default function multiSelect(Table, Checkbox) {
       if(!this.isArray(data))return false;
       if(data.length == 0)return false;
       let count = 0;
+      let disabledCount = 0;
       data.forEach(da=>{
         if(da._checked){
           count ++;
         }
+        if(da._disabled){
+          disabledCount ++;
+        }
       })
 
-      if(data.length == count){
+      if(data.length == count + disabledCount){
         return "all";
       }
       return count == 0?false:"indeter";
