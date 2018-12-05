@@ -165,7 +165,6 @@ var TableHeader = function (_Component) {
       if (_this.drag.option === 'border') {
         return;
       }
-      // console.log(this.drag.option+' -------onDragStart----------',event.target);
       var th = _this.getThDome(event.target);
       if (!th) return;
       var currentIndex = parseInt(th.getAttribute("data-line-index"));
@@ -189,7 +188,6 @@ var TableHeader = function (_Component) {
       _this.currentDome.setAttribute('draggable', false); //添加交换列效果
       var data = _this.getCurrentEventData(e);
       if (!data) return;
-      // console.log(this.drag.option+' -------onDrop----------',event.target);
       if (!_this.currentObj || _this.currentObj.key == data.key) return;
       if (!_this.props.onDrop) return;
       _this.props.onDrop(event, { dragSource: _this.currentObj, dragTarg: data });
