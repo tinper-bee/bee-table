@@ -233,9 +233,11 @@ class TableHeader extends Component {
   //---拖拽列宽代码逻辑----start-----
  
   dragAbleMouseDown = (e) => {
-    Event.stopPropagation(e); 
+    // Event.stopPropagation(e); 
     let event = Event.getEvent(e);
     if (!this.props.draggable) return;
+    let th = this.getThDome(event.target);
+    if(!th)return;
     event.target.setAttribute('draggable',true);//添加交换列效果
     this.drag.option = 'dragAble';
     this.currentDome = event.target;
@@ -281,7 +283,7 @@ class TableHeader extends Component {
     let event = Event.getEvent(e);
     if (!this.props.draggable) return;
     if(this.drag.option === 'border'){return;}
-    console.log(this.drag.option+' -------onDragStart----------',event.target);
+    // console.log(this.drag.option+' -------onDragStart----------',event.target);
     let th = this.getThDome(event.target);
     if(!th)return;
     let currentIndex = parseInt(th.getAttribute("data-line-index"));
@@ -318,7 +320,7 @@ class TableHeader extends Component {
     this.currentDome.setAttribute('draggable',false);//添加交换列效果
     let data = this.getCurrentEventData(e);
     if(!data)return;
-    console.log(this.drag.option+' -------onDrop----------',event.target);
+    // console.log(this.drag.option+' -------onDrop----------',event.target);
     if (!this.currentObj || this.currentObj.key == data.key) return;
     if(!this.props.onDrop)return;
     this.props.onDrop(event,{dragSource:this.currentObj,dragTarg:data});
@@ -349,6 +351,7 @@ class TableHeader extends Component {
    */
   getThDome(element){
     let _tagName = element.tagName.toLowerCase();
+    if(element.getAttribute('data-filter-type') === 'filterContext')return null;
     if(_tagName === 'i')return null;
     if(_tagName != 'th'){
       return this.getThDome(element.parentElement);

@@ -281,7 +281,7 @@ class FilterType extends Component {
     render() {
         let { rendertype } = this.props;
         return (
-            this.renderControl(rendertype)
+            <div data-filter-type='filterContext'>{this.renderControl(rendertype)}</div>
         );
     }
 }
