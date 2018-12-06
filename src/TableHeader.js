@@ -292,7 +292,7 @@ class TableHeader extends Component {
     event.dataTransfer.effectAllowed = "move";
     event.dataTransfer.setData("Text", currentKey);
     this.currentObj = this.props.rows[0][currentIndex];
-    event.dataTransfer.setDragImage(event.target, 0, 0);
+    // event.dataTransfer.setDragImage(event.target, 0, 0);
   };
 
   onDragOver = (e) => {

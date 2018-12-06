@@ -294,6 +294,17 @@ $table-move-in-color: $bg-color-base;
     }
     th{
       background: $table-head-background-color;
+      background-clip:padding-box;
+      //禁止选中文字
+      -moz-user-select: -moz-none;
+      -khtml-user-select: none;
+      -webkit-user-select: none; 
+      /*
+        Introduced in IE 10. 
+      */
+        -ms-user-select: none;
+        user-select: none;
+
       // overflow: hidden;
       // white-space: nowrap;
       // text-overflow: ellipsis;
