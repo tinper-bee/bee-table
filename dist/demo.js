@@ -11334,6 +11334,10 @@
 	    //表格元素的宽度大于容器的宽度也显示滚动条
 	    if (scroll.x || fixed || this.contentDomWidth < this.contentWidth) {
 	      tableClassName = clsPrefix + '-fixed';
+	      //没有数据并且含有顶部菜单时
+	      if (this.props.data.length == 0 && this.props.headerScroll) {
+	        bodyStyle.overflowX = 'hidden';
+	      }
 	      if (!footerScroll) {
 	        bodyStyle.overflowX = bodyStyle.overflowX || 'auto';
 	      }
