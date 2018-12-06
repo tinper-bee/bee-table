@@ -434,7 +434,7 @@
     border: 1px solid #ccc;
     background: #fff; }
   .u-table-row-fixed-columns-in-body {
-    visibility: hidden;
+    display: none;
     pointer-events: none; }
 
 .u-table.bordered table {
@@ -613,3 +613,7 @@
   height: 32px;
   padding: 0px 16px 0 16px;
   cursor: pointer; }
+
+.u-checkbox {
+  height: 16px;
+  line-height: 16px; }

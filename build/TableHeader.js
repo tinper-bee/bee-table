@@ -583,7 +583,7 @@ var TableHeader = function (_Component) {
             delete da.drgHover;
             var fixedStyle = "";
             var canDotDrag = "";
-            if (!fixed && da.fixed) {
+            if (!fixed && (da.fixed || rows[0][columIndex].fixed)) {
               fixedStyle = clsPrefix + "-row-fixed-columns-in-body";
             }
 
@@ -596,14 +596,14 @@ var TableHeader = function (_Component) {
             }
 
             var thDefaultObj = {};
-            var thClassName = "" + da.className;
+            var thClassName = "" + da.className ? "" + da.className : '';
             if (draggable) {
               thClassName += clsPrefix + "-thead th-drag " + thHover + " ";
             }
             if (dragborder) {
               thClassName += clsPrefix + "-thead-th " + canDotDrag;
             }
-            thClassName += "" + fixedStyle;
+            thClassName += " " + fixedStyle;
             if (!da.fixed) {
               return _react2["default"].createElement(
                 "th",

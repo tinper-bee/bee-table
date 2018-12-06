@@ -8876,6 +8876,10 @@ ul {
   padding: 0px 16px 0 16px;
   cursor: pointer; }
 
+.u-checkbox {
+  height: 16px;
+  line-height: 16px; }
+
 /* FormGroup */
 /*  Navlayout  */
 /* FormGroup */
