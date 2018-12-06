@@ -807,8 +807,13 @@ class Table extends Component {
         </div>
       );
     }
-
-    return <span>{headTable}{BodyTable}</span>;
+    const leftFixedWidth = this.columnManager.getLeftColumnsWidth();
+    const rightFixedWidth = this.columnManager.getRightColumnsWidth();
+    let parStyle = {}
+    if(!fixed){
+      parStyle = {'marginLeft':leftFixedWidth,'marginRight':rightFixedWidth}
+    }
+    return <div style={parStyle}>{headTable}{BodyTable}</div>;
   }
 
   getTitle() {
@@ -988,7 +993,7 @@ class Table extends Component {
         {this.getTitle()}
         <div className={`${clsPrefix}-content`}>
          
-          <div className={isTableScroll ? `${clsPrefix}-scroll` : ''} style={{'marginLeft':leftFixedWidth}}>
+          <div className={isTableScroll ? `${clsPrefix}-scroll` : ''} >
             {this.getTable({ columns: this.columnManager.groupedColumns() })}
             {this.getEmptyText()}
             {this.getFooter()}
