@@ -582,6 +582,7 @@ class Table extends Component {
   getColGroup(columns, fixed) {
     let cols = [];
     let self = this;
+    
     let { contentWidthDiff = 0, lastShowIndex = 0 } = this.state;
     if (this.props.expandIconAsCell && fixed !== 'right') {
       cols.push(
@@ -602,6 +603,7 @@ class Table extends Component {
       leafColumns = this.columnManager.leafColumns();
     }
     cols = cols.concat(leafColumns.map((c, i, arr) => {
+      let fixedClass ='';
       let width = c.width;
       if (typeof (width) == 'string' && width.indexOf('%') > -1 && self.contentWidth) {
         width = parseInt(self.contentWidth * parseInt(width) / 100);
@@ -611,8 +613,10 @@ class Table extends Component {
       if (lastShowIndex == i && width) {
         width = width + contentWidthDiff;
       }
-
-      return <col key={c.key} style={{ width: width, minWidth: c.width }} />;
+      if (!fixed && c.fixed) {
+        fixedClass = `${this.props.clsPrefix}-row-fixed-columns-in-body`;
+      }
+      return <col key={c.key} style={{ width: width, minWidth: c.width }} className={fixedClass}/>;
     }));
     return <colgroup>{cols}</colgroup>;
   }
@@ -657,6 +661,10 @@ class Table extends Component {
     //表格元素的宽度大于容器的宽度也显示滚动条
     if (scroll.x || fixed || this.contentDomWidth < this.contentWidth) {
       tableClassName = `${clsPrefix}-fixed`;
+      //没有数据并且含有顶部菜单时
+      if(this.props.data.length == 0 && this.props.headerScroll ){
+        bodyStyle.overflowX = 'hidden';
+      }
       if (!footerScroll) {
         bodyStyle.overflowX = bodyStyle.overflowX || 'auto';
       }
@@ -719,12 +727,12 @@ class Table extends Component {
         if (scroll.x === true) {
           tableStyle.tableLayout = 'fixed';
         } else {
-          tableStyle.width = this.contentWidth;
+          tableStyle.width = this.contentWidth - this.columnManager.getLeftColumnsWidth() - this.columnManager.getRightColumnsWidth();
         }
       }
       // 自动出现滚动条
       if ( !fixed && this.contentDomWidth < this.contentWidth) {
-        tableStyle.width = this.contentWidth;
+        tableStyle.width = this.contentWidth - this.columnManager.getLeftColumnsWidth() - this.columnManager.getRightColumnsWidth();
       }
       const tableBody = hasBody ? getBodyWrapper(
         <tbody className={`${clsPrefix}-tbody`}>
@@ -799,8 +807,13 @@ class Table extends Component {
         </div>
       );
     }
-
-    return <span>{headTable}{BodyTable}</span>;
+    const leftFixedWidth = this.columnManager.getLeftColumnsWidth();
+    const rightFixedWidth = this.columnManager.getRightColumnsWidth();
+    let parStyle = {}
+    if(!fixed){
+      parStyle = {'marginLeft':leftFixedWidth,'marginRight':rightFixedWidth}
+    }
+    return <div style={parStyle}>{headTable}{BodyTable}</div>;
   }
 
   getTitle() {
@@ -973,12 +986,14 @@ class Table extends Component {
         show: loading,
       };
     }
+    const leftFixedWidth = this.columnManager.getLeftColumnsWidth();
+    const rightFixedWidth = this.columnManager.getRightColumnsWidth();
     return (
       <div className={className} style={props.style} ref={el => this.contentTable = el}>
         {this.getTitle()}
         <div className={`${clsPrefix}-content`}>
          
-          <div className={isTableScroll ? `${clsPrefix}-scroll` : ''}>
+          <div className={isTableScroll ? `${clsPrefix}-scroll` : ''} >
             {this.getTable({ columns: this.columnManager.groupedColumns() })}
             {this.getEmptyText()}
             {this.getFooter()}

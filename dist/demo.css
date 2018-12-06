@@ -8696,7 +8696,7 @@ ul {
     border: 1px solid #ccc;
     background: #fff; }
   .u-table-row-fixed-columns-in-body {
-    visibility: hidden;
+    display: none;
     pointer-events: none; }
 
 .u-table.bordered table {
@@ -8875,6 +8875,10 @@ ul {
   height: 32px;
   padding: 0px 16px 0 16px;
   cursor: pointer; }
+
+.u-checkbox {
+  height: 16px;
+  line-height: 16px; }
 
 /* FormGroup */
 /*  Navlayout  */
@@ -10306,8 +10310,6 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   height: 100%; }
   .demo25 .u-table-filter-column-filter-icon {
     right: 15px; }
-  .demo25 .u-table-scroll .u-table-header {
-    margin-right: 15px; }
 
 th .drop-menu .uf {
   font-size: 12px;

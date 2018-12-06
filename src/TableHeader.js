@@ -210,9 +210,7 @@ class TableHeader extends Component {
   };
 
   onLineMouseUp = (event) => {
-    let {rows} = this.props;
-    let data = {rows:rows[0],cols:this.table.cols,currIndex:this.drag.currIndex};
-    this.props.afterDragColWidth && this.props.afterDragColWidth(data);
+ 
     this.clearDragBorder(event);
   };
   bodyonLineMouseMove = (event) => {
@@ -221,7 +219,10 @@ class TableHeader extends Component {
 
   clearDragBorder(){
     // if (!this.props.dragborder || !this.props.draggable) return;
-    if(!this.drag)return;
+    if(!this.drag || !this.drag.option)return;
+    let {rows} = this.props;
+    let data = {rows:rows[0],cols:this.table.cols,currIndex:this.drag.currIndex};
+    this.props.afterDragColWidth && this.props.afterDragColWidth(data);
     this.drag = {
       option:""
     };
@@ -283,7 +284,6 @@ class TableHeader extends Component {
     let event = Event.getEvent(e);
     if (!this.props.draggable) return;
     if(this.drag.option === 'border'){return;}
-    // console.log(this.drag.option+' -------onDragStart----------',event.target);
     let th = this.getThDome(event.target);
     if(!th)return;
     let currentIndex = parseInt(th.getAttribute("data-line-index"));
@@ -320,7 +320,6 @@ class TableHeader extends Component {
     this.currentDome.setAttribute('draggable',false);//添加交换列效果
     let data = this.getCurrentEventData(e);
     if(!data)return;
-    // console.log(this.drag.option+' -------onDrop----------',event.target);
     if (!this.currentObj || this.currentObj.key == data.key) return;
     if(!this.props.onDrop)return;
     this.props.onDrop(event,{dragSource:this.currentObj,dragTarg:data});
@@ -524,7 +523,7 @@ class TableHeader extends Component {
               delete da.drgHover;
               let fixedStyle = "";
               let canDotDrag = "";
-              if (!fixed && da.fixed) {
+              if (!fixed && (da.fixed || rows[0][columIndex].fixed) ) {
                 fixedStyle = `${clsPrefix}-row-fixed-columns-in-body`;
               }
            
@@ -541,14 +540,14 @@ class TableHeader extends Component {
               }
 
               let thDefaultObj = {};
-              let thClassName = `${da.className}`;
+              let thClassName = `${da.className}`?`${da.className}`:'';
                   if(draggable){
                     thClassName += `${clsPrefix}-thead th-drag ${thHover} `;
                   }
                   if(dragborder){
                     thClassName += `${clsPrefix}-thead-th ${canDotDrag}`;
                   }
-                  thClassName += `${fixedStyle}`;
+                  thClassName += ` ${fixedStyle}`;
                 if(!da.fixed){
                   return (<th key={'table-header-th-'+da.dataindex} className={thClassName} data-th-fixed={da.fixed} 
                         data-line-key={da.key} data-line-index={columIndex} data-th-width={da.width} >

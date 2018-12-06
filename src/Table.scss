@@ -13,7 +13,7 @@ $table-border-color: #e9e9e9;
 
 $table-hover-color: unquote("rgb(#{$palette-blue-50})") !default;
 $table-move-in-color: $bg-color-base;
-
+$checkbox-height:16px;
 .u-table {
   font-size: $font-size-base;
   color: $text-color;
@@ -463,7 +463,8 @@ $table-move-in-color: $bg-color-base;
   }
   //拖拽宽度代码
   &-row-fixed-columns-in-body{
-    visibility: hidden;
+    // visibility: hidden;
+    display:none;
     pointer-events: none;
   }
 }
@@ -702,4 +703,13 @@ $table-move-in-color: $bg-color-base;
             cursor: pointer;
         }
     }
+}
+
+//固定列含有checkbox 样式复写
+.u-checkbox {
+  height: $checkbox-height;
+  line-height:  $checkbox-height;
+}
+.u-checkbox .u-checkbox-label:after,.u-checkbox .u-checkbox-label::before  {
+
 }
