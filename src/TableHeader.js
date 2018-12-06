@@ -523,7 +523,8 @@ class TableHeader extends Component {
               delete da.drgHover;
               let fixedStyle = "";
               let canDotDrag = "";
-              if (!fixed && (da.fixed || rows[0][columIndex].fixed) ) {
+              //主表格下、固定列或者是过滤行中含有固定列时添加该属性
+              if (!fixed && (da.fixed || (filterable && index == rows.length - 1 && rows[0][columIndex].fixed)) ) {
                 fixedStyle = `${clsPrefix}-row-fixed-columns-in-body`;
               }
            
@@ -549,7 +550,7 @@ class TableHeader extends Component {
                   }
                   thClassName += ` ${fixedStyle}`;
                 if(!da.fixed){
-                  return (<th key={'table-header-th-'+da.dataindex} className={thClassName} data-th-fixed={da.fixed} 
+                  return (<th {...da} key={'table-header-th-'+da.dataindex} className={thClassName} data-th-fixed={da.fixed} 
                         data-line-key={da.key} data-line-index={columIndex} data-th-width={da.width} >
                         {da.children}
                         {

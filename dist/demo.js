@@ -13163,7 +13163,8 @@
 	            delete da.drgHover;
 	            var fixedStyle = "";
 	            var canDotDrag = "";
-	            if (!fixed && (da.fixed || rows[0][columIndex].fixed)) {
+	            //主表格下、固定列或者是过滤行中含有固定列时添加该属性
+	            if (!fixed && (da.fixed || filterable && index == rows.length - 1 && rows[0][columIndex].fixed)) {
 	              fixedStyle = clsPrefix + "-row-fixed-columns-in-body";
 	            }
 	
@@ -13187,8 +13188,8 @@
 	            if (!da.fixed) {
 	              return _react2["default"].createElement(
 	                "th",
-	                { key: 'table-header-th-' + da.dataindex, className: thClassName, "data-th-fixed": da.fixed,
-	                  "data-line-key": da.key, "data-line-index": columIndex, "data-th-width": da.width },
+	                _extends({}, da, { key: 'table-header-th-' + da.dataindex, className: thClassName, "data-th-fixed": da.fixed,
+	                  "data-line-key": da.key, "data-line-index": columIndex, "data-th-width": da.width }),
 	                da.children,
 	                dragborder ? _react2["default"].createElement(
 	                  "div",
