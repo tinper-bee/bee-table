@@ -53,8 +53,7 @@ import 'bee-table/build/Table.css';
 | onFilterChange       | 触发过滤输入操作以及下拉条件的回调 | function | (field,value,condition) => ()
 | onFilterClear       | 清除过滤条件的回调函数，回调参数为清空的字段 | function | (field) => ()
 | headerScroll       | 表头下是否显示滚动条 | bool| false
-
-
+| sort       | 排序的属性 | object| {  mode:'single'//单列排序,  backSource:false //默认是前端排序，值为true为后端排序 } mode:multiple-多列排序
 *注意: data参数中的key值必需，否则会导致部分功能出现问题！建议使用唯一的值，如id*
 
 
@@ -69,6 +68,8 @@ import 'bee-table/build/Table.css';
 |dataIndex|	显示数据记录的字段|String|-|
 |width|宽度的特定比例根据列的宽度计算|String/Number|-|
 |fixed|	当表水平滚动时，此列将被固定：true或'left'或'right'| true/'left'/'right'|-|
+|sorter|前端列排序方法，只要列上有此属性就说明这列可排序。**注：默认是前端排序**| function|-|
+|sorterClick|排序的回调函数|function|-|
 |render|cell的render函数有三个参数：这个单元格的文本，这行的记录，这行的索引，它返回一个对象：{children：value，props：{colSpan：1，rowSpan：1}} ==>'children'是这个单元格的文本，props是这个单元格的一些设置，可以设置单元格行/列合并|-|
 |onCellClick|单击列的单元格时调用|Function(row, event)|-|
 | order | 设置排序 | string（"descend"、"ascend"） | -|

@@ -63,21 +63,19 @@ var FilterDropDown = function (_Component) {
                 filterDropdownType = _this$props.filterDropdownType;
 
             if (onSelectDropdown) {
-                if (dataText != "") {
-                    if (filterDropdownType == 'string') {
-                        _this.setState({
-                            selectValue: [item.key]
-                        }, function () {
-                            onSelectDropdown(item);
-                        });
-                    }
-                    if (filterDropdownType == 'number') {
-                        _this.setState({
-                            selectNumberValue: [item.key]
-                        }, function () {
-                            onSelectDropdown(item);
-                        });
-                    }
+                if (filterDropdownType == 'string') {
+                    _this.setState({
+                        selectValue: [item.key]
+                    }, function () {
+                        onSelectDropdown(item);
+                    });
+                }
+                if (filterDropdownType == 'number') {
+                    _this.setState({
+                        selectNumberValue: [item.key]
+                    }, function () {
+                        onSelectDropdown(item);
+                    });
                 }
             }
         };
@@ -87,8 +85,8 @@ var FilterDropDown = function (_Component) {
 
             if (onClickClear) {
                 _this.setState({
-                    selectValue: [],
-                    selectNumberValue: []
+                    // selectValue: [],
+                    // selectNumberValue: []
                 }, function () {
                     onClickClear();
                 });

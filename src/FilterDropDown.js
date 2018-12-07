@@ -29,7 +29,6 @@ class FilterDropDown extends Component {
     onSelectDropdown = (item) => {
         let { onSelectDropdown, dataText, filterDropdownType } = this.props;
         if (onSelectDropdown) {
-            if (dataText != "") {
                 if (filterDropdownType == 'string') {
                     this.setState({
                         selectValue: [item.key]
@@ -44,8 +43,6 @@ class FilterDropDown extends Component {
                         onSelectDropdown(item);
                     });
                 }
-
-            }
         }
     }
 
@@ -57,8 +54,8 @@ class FilterDropDown extends Component {
         let { onClickClear } = this.props;
         if (onClickClear) {
             this.setState({
-                selectValue: [],
-                selectNumberValue: []
+                // selectValue: [],
+                // selectNumberValue: []
             }, () => {
                 onClickClear();
             });
