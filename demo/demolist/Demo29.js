@@ -1,7 +1,7 @@
 /**
 *
-* @title 从弹出框内显示过滤行
-* @description 
+* @title 从弹出框内显示过滤行并且设置可选下拉条件
+* @description 通过Modal组件来展示表格的过滤相关能力，并且通过filterDropdownIncludeKeys设置可选条件
 *
 */
 
@@ -13,11 +13,9 @@ import Button from 'bee-button';
 
 
 const columns29 = [
-  { title: "姓名", width: 180, dataIndex: "name", key: "name", filterType: "text", filterDropdown: "show" },
-  { title: "年龄", width: 150, dataIndex: "age", key: "age", filterType: "dropdown", filterDropdown: "show" },
-  { title: "日期", width: 200, dataIndex: "date", key: "date", filterType: "date", filterDropdown: "show", format: "YYYY-MM-DD" },
-  { title: "居住地址", width: 150, dataIndex: "address", key: "address", filterType: "dropdown", filterDropdown: "show" },
-  { title: "备注", dataIndex: "mark", key: "mark" }
+  { title: "姓名", width: 180, dataIndex: "name", key: "name", filterType: "text", filterDropdown: "show",filterDropdownIncludeKeys:['LIKE','EQ'] },
+  { title: "年龄", width: 150, dataIndex: "age", key: "age", filterType: "dropdown", filterDropdown: "show",filterDropdownType:"number",filterDropdownIncludeKeys:['EQ'] },
+  { title: "日期", width: 200, dataIndex: "date", key: "date", filterType: "date", filterDropdown: "show", format: "YYYY-MM-DD" }
 ];
 
 const data29 = [

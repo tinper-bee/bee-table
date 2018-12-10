@@ -157,7 +157,7 @@ class FilterType extends Component {
      * @returns
      */
     renderControl = (rendertype) => {
-        let { dataIndex, filterDropdown, filterDropdownType, format, className, onChange, onSelectDropdown, clsPrefix, locale } = this.props;
+        let { filterDropdownIncludeKeys, dataIndex, filterDropdown, filterDropdownType, format, className, onChange, onSelectDropdown, clsPrefix, locale } = this.props;
         switch (rendertype) {
             case 'text':
                 return <div className={`${clsPrefix} filter-wrap`}>
@@ -177,6 +177,7 @@ class FilterType extends Component {
                         isShowClear={this.state.value}
                         isShowCondition={filterDropdown}
                         filterDropdownType={filterDropdownType}
+                        filterDropdownIncludeKeys={filterDropdownIncludeKeys}
                     >
                     </FilterDropDown>
                 </div>
@@ -197,6 +198,7 @@ class FilterType extends Component {
                         isShowClear={this.state.value != 0}
                         isShowCondition={filterDropdown}
                         filterDropdownType={filterDropdownType}
+                        filterDropdownIncludeKeys={filterDropdownIncludeKeys}
                     >
                     </FilterDropDown>
                 </div>
@@ -215,6 +217,7 @@ class FilterType extends Component {
                         isShowCondition={filterDropdown}
                         isShowClear={this.state.value}
                         filterDropdownType={filterDropdownType}
+                        filterDropdownIncludeKeys={filterDropdownIncludeKeys}
                     >
                     </FilterDropDown></div>
             case 'date':
@@ -235,6 +238,7 @@ class FilterType extends Component {
                         isShowCondition={filterDropdown}
                         isShowClear={this.state.value}
                         filterDropdownType={filterDropdownType}
+                        filterDropdownIncludeKeys={filterDropdownIncludeKeys}
                     >
                     </FilterDropDown>
                 </div>
@@ -259,6 +263,7 @@ class FilterType extends Component {
                         onClickClear={this.clearFilter}
                         isShowCondition={filterDropdown}
                         isShowClear={this.state.value}
+                        filterDropdownIncludeKeys={filterDropdownIncludeKeys}
                     >
                     </FilterDropDown>
                 </div>
@@ -270,6 +275,7 @@ class FilterType extends Component {
                     />
                     <FilterDropDown locale={locale}
                         onSelectDropdown={onSelectDropdown}
+                        filterDropdownIncludeKeys={filterDropdownIncludeKeys}
                     >
                     </FilterDropDown>
                 </div>
