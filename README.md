@@ -16,12 +16,14 @@ react bee-table component for tinper-bee
   * 多选
   * 主子表
   * 固定表头
-  * 交互列
-  * 列拖拽
+  * 拖拽表头进行列交换
+  * 拖拽调整列宽度
   * 嵌套子表格
   * 行、列合并
   
 具体示例代码参考[!这里](http://bee.tinper.org/bee-table/)
+
+<font color="#dd0000">为了响应大家对bee-table的需求，我们新增加了表格的高级组件 [bee-complex-grid](http://bee.tinper.org/bee-complex-grid/)</font>
 
 ## 安装
 
@@ -214,7 +216,8 @@ import multiSelect from "bee-table/lib/multiSelect.js";
 
 | 参数     | 说明         | 类型       | 默认值  |
 | ------ | ---------- | -------- | ---- |
-| draggable | 当前表格可拖拽 | boolean | false |
+| draggable | 可拖拽交换列 | boolean | false |
+| dragborder | 可拖拽改变列宽 | boolean | false |
 | checkMinSize | 当前表格显示最少列数 | boolean | false |
 
  

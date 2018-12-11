@@ -9,11 +9,13 @@ Table拓展功能方法。注：拼接成复杂功能的table组件不能在rend
 import multiSelect from "tinper-bee/lib/multiSelect.js";
 ```
 
-### multiSelect
+### multiSelect 
 
-全选功能
+> 选中功能组件
 
-#### Table新增参数
+<font color="#ccc">
+
+#### <font color="#ccc">multiSelect 废弃部分的API</font>
 
 | 参数                  | 说明                         | 类型       | 默认值      |
 | ------------------- | -------------------------- | -------- | -------- |
@@ -23,6 +25,19 @@ import multiSelect from "tinper-bee/lib/multiSelect.js";
 | getSelectedDataFunc | 返回当前选中的数据数组                | Function | 无        |
 | selectDisabled | 设置某一行数据无法被选中，使用类似于rowClassName       | Function(record, index):bool | 无        |
 | selectedRow | 设置某一行数据是否被选中，使用类似于rowClassName       | Function(record, index):bool | 无        |
+
+</font>
+
+#### multiSelect 新增API
+
+> data 数据中新增参数
+
+| 参数                  | 说明                         | 类型       | 默认值      |
+| ------------------- | -------------------------- | -------- | -------- |
+| _checked         | 设置当前数据是否选中           |  boolean      | true/false       |
+| _disabled   | 禁用当前选中数据     |  boolean      | true/false     
+| getSelectedDataFunc | 返回当前选中的数据数组                | Function | 无        |
+
 
 
 #### 使用
@@ -84,11 +99,8 @@ const SumTable = sum(Table);
 
 | 参数     | 说明         | 类型       | 默认值  |
 | ------ | ---------- | -------- | ---- |
-| dragborder | 显示拖拽边框 | boolean | false |
-| draggable | 是否可拖拽 | boolean | false |
-| onDragStart | 拖拽开始回调函数 | function | () => {} |
-| onDragEnter |拖拽进入回调函数 | function | () => {} |
-| onDragOver | 拖拽划过回调函数 | function | () => {} |
+| dragborder | 拖拽调整列宽度 | boolean | false |
+| draggable | 拖拽交换列 | boolean | false |
 | onDrop | 拖拽释放回调函数 | function | () => {} |
 
 #### 使用
