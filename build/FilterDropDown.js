@@ -97,90 +97,145 @@ var FilterDropDown = function (_Component) {
             var _this$state = _this.state,
                 selectValue = _this$state.selectValue,
                 selectNumberValue = _this$state.selectNumberValue;
-            var filterDropdownType = _this.props.filterDropdownType;
+            var _this$props2 = _this.props,
+                filterDropdownType = _this$props2.filterDropdownType,
+                filterDropdownIncludeKeys = _this$props2.filterDropdownIncludeKeys;
 
             var locale = (0, _tool.getComponentLocale)(_this.props, _this.context, 'Table', function () {
                 return _i18n2["default"];
             });
-            switch (filterDropdownType) {
-                case 'string':
-                    return _react2["default"].createElement(
-                        _beeMenus2["default"],
-                        {
-                            onSelect: _this.onSelectDropdown,
-                            selectedKeys: selectValue
-                        },
-                        _react2["default"].createElement(
-                            Item,
-                            { key: 'LIKE' },
-                            locale['include']
-                        ),
-                        _react2["default"].createElement(
-                            Item,
-                            { key: 'ULIKE' },
-                            locale['exclusive']
-                        ),
-                        _react2["default"].createElement(
-                            Item,
-                            { key: 'EQ' },
-                            locale['equal']
-                        ),
-                        _react2["default"].createElement(
-                            Item,
-                            { key: 'UEQ' },
-                            locale['unequal']
-                        ),
-                        _react2["default"].createElement(
-                            Item,
-                            { key: 'START' },
-                            locale['begin']
-                        ),
-                        _react2["default"].createElement(
-                            Item,
-                            { key: 'END' },
-                            locale['end']
-                        )
-                    );
-                case 'number':
-                    return _react2["default"].createElement(
-                        _beeMenus2["default"],
-                        {
-                            onSelect: _this.onSelectDropdown,
-                            selectedKeys: selectNumberValue
-                        },
-                        _react2["default"].createElement(
-                            Item,
-                            { key: 'GT' },
-                            locale['greater_than']
-                        ),
-                        _react2["default"].createElement(
-                            Item,
-                            { key: 'GTEQ' },
-                            locale['great_than_equal_to']
-                        ),
-                        _react2["default"].createElement(
-                            Item,
-                            { key: 'LT' },
-                            locale['less_than']
-                        ),
-                        _react2["default"].createElement(
-                            Item,
-                            { key: 'LTEQ' },
-                            locale['less_than_equal_to']
-                        ),
-                        _react2["default"].createElement(
-                            Item,
-                            { key: 'EQ' },
-                            locale['be_equal_to']
-                        ),
-                        _react2["default"].createElement(
-                            Item,
-                            { key: 'UEQ' },
-                            locale['not_equal_to']
-                        )
-                    );
-                default:
-                    return _react2["default"].createElement('div', null);
+            var stringEnum = {
+                LIKE: 'include',
+                ULIKE: 'exclusive',
+                EQ: 'equal',
+                UEQ: 'unequal',
+                START: 'begin',
+                END: 'end'
+            };
+            var numberEnum = {
+                GT: 'greater_than',
+                GTEQ: 'great_than_equal_to',
+                LT: 'less_than',
+                LTEQ: 'less_than_equal_to',
+                EQ: 'be_equal_to',
+                UEQ: 'not_equal_to'
+            };
+            if (filterDropdownIncludeKeys != undefined) {
+                switch (filterDropdownType) {
+                    case 'string':
+                        return _react2["default"].createElement(
+                            _beeMenus2["default"],
+                            {
+                                onSelect: _this.onSelectDropdown,
+                                selectedKeys: selectValue
+                            },
+                            filterDropdownIncludeKeys.map(function (item) {
+                                return _react2["default"].createElement(
+                                    Item,
+                                    { key: item },
+                                    locale[stringEnum[item]]
+                                );
+                            })
+                        );
+                    case 'number':
+                        return _react2["default"].createElement(
+                            _beeMenus2["default"],
+                            {
+                                onSelect: _this.onSelectDropdown,
+                                selectedKeys: selectNumberValue
+                            },
+                            filterDropdownIncludeKeys.map(function (item) {
+                                return _react2["default"].createElement(
+                                    Item,
+                                    { key: item },
+                                    locale[numberEnum[item]]
+                                );
+                            })
+                        );
+                    default:
+                        return _react2["default"].createElement('div', null);
+                }
+            } else {
+                switch (filterDropdownType) {
+                    case 'string':
+                        return _react2["default"].createElement(
+                            _beeMenus2["default"],
+                            {
+                                onSelect: _this.onSelectDropdown,
+                                selectedKeys: selectValue
+                            },
+                            _react2["default"].createElement(
+                                Item,
+                                { key: 'LIKE' },
+                                locale['include']
+                            ),
+                            _react2["default"].createElement(
+                                Item,
+                                { key: 'ULIKE' },
+                                locale['exclusive']
+                            ),
+                            _react2["default"].createElement(
+                                Item,
+                                { key: 'EQ' },
+                                locale['equal']
+                            ),
+                            _react2["default"].createElement(
+                                Item,
+                                { key: 'UEQ' },
+                                locale['unequal']
+                            ),
+                            _react2["default"].createElement(
+                                Item,
+                                { key: 'RLIKE' },
+                                locale['begin']
+                            ),
+                            _react2["default"].createElement(
+                                Item,
+                                { key: 'LLIKE' },
+                                locale['end']
+                            )
+                        );
+                    case 'number':
+                        return _react2["default"].createElement(
+                            _beeMenus2["default"],
+                            {
+                                onSelect: _this.onSelectDropdown,
+                                selectedKeys: selectNumberValue
+                            },
+                            _react2["default"].createElement(
+                                Item,
+                                { key: 'GT' },
+                                locale['greater_than']
+                            ),
+                            _react2["default"].createElement(
+                                Item,
+                                { key: 'GTEQ' },
+                                locale['great_than_equal_to']
+                            ),
+                            _react2["default"].createElement(
+                                Item,
+                                { key: 'LT' },
+                                locale['less_than']
+                            ),
+                            _react2["default"].createElement(
+                                Item,
+                                { key: 'LTEQ' },
+                                locale['less_than_equal_to']
+                            ),
+                            _react2["default"].createElement(
+                                Item,
+                                { key: 'EQ' },
+                                locale['be_equal_to']
+                            ),
+                            _react2["default"].createElement(
+                                Item,
+                                { key: 'UEQ' },
+                                locale['not_equal_to']
+                            )
+                        );
+                    default:
+                        return _react2["default"].createElement('div', null);
+                }
             }
         };
 

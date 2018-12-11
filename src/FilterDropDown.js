@@ -125,8 +125,8 @@ class FilterDropDown extends Component {
                         <Item key="ULIKE">{locale['exclusive']}</Item>
                         <Item key="EQ">{locale['equal']}</Item>
                         <Item key="UEQ">{locale['unequal']}</Item>
-                        <Item key="START">{locale['begin']}</Item>
-                        <Item key="END">{locale['end']}</Item>
+                        <Item key="RLIKE">{locale['begin']}</Item>
+                        <Item key="LLIKE">{locale['end']}</Item>
                     </Menu>
                 case 'number':
                     return <Menu

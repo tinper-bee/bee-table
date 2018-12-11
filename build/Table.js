@@ -501,7 +501,8 @@ var Table = function (_Component) {
           filterdropdownauto: column.filterDropdownAuto, //是否自定义数据
           filterdropdowndata: column.filterDropdownData, //自定义数据格式
           filterdropdownfocus: column.filterDropdownFocus, //焦点触发函数回调
-          filterdropdowntype: column.filterDropdownType //下拉的类型分为 String,Number 默认是String
+          filterdropdowntype: column.filterDropdownType, //下拉的类型分为 String,Number 默认是String
+          filterdropdownincludekeys: column.filterDropdownIncludeKeys //下拉条件按照指定的keys去显示
         });
       }
     });

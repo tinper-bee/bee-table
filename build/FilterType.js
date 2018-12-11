@@ -183,6 +183,7 @@ var FilterType = function (_Component) {
 
         _this.renderControl = function (rendertype) {
             var _this$props7 = _this.props,
+                filterDropdownIncludeKeys = _this$props7.filterDropdownIncludeKeys,
                 dataIndex = _this$props7.dataIndex,
                 filterDropdown = _this$props7.filterDropdown,
                 filterDropdownType = _this$props7.filterDropdownType,
@@ -213,7 +214,8 @@ var FilterType = function (_Component) {
                             onClickClear: _this.clearFilter,
                             isShowClear: _this.state.value,
                             isShowCondition: filterDropdown,
-                            filterDropdownType: filterDropdownType
+                            filterDropdownType: filterDropdownType,
+                            filterDropdownIncludeKeys: filterDropdownIncludeKeys
                         })
                     );
                 case 'number':
@@ -234,7 +236,8 @@ var FilterType = function (_Component) {
                             onClickClear: _this.clearFilter,
                             isShowClear: _this.state.value != 0,
                             isShowCondition: filterDropdown,
-                            filterDropdownType: filterDropdownType
+                            filterDropdownType: filterDropdownType,
+                            filterDropdownIncludeKeys: filterDropdownIncludeKeys
                         })
                     );
                 case 'dropdown':
@@ -253,7 +256,8 @@ var FilterType = function (_Component) {
                             onClickClear: _this.clearFilter,
                             isShowCondition: filterDropdown,
                             isShowClear: _this.state.value,
-                            filterDropdownType: filterDropdownType
+                            filterDropdownType: filterDropdownType,
+                            filterDropdownIncludeKeys: filterDropdownIncludeKeys
                         })
                     );
                 case 'date':
@@ -275,7 +279,8 @@ var FilterType = function (_Component) {
                             onClickClear: _this.clearFilter,
                             isShowCondition: filterDropdown,
                             isShowClear: _this.state.value,
-                            filterDropdownType: filterDropdownType
+                            filterDropdownType: filterDropdownType,
+                            filterDropdownIncludeKeys: filterDropdownIncludeKeys
                         })
                     );
                 case 'daterange':
@@ -300,7 +305,8 @@ var FilterType = function (_Component) {
                             onSelectDropdown: _this.onSelectDropdown,
                             onClickClear: _this.clearFilter,
                             isShowCondition: filterDropdown,
-                            isShowClear: _this.state.value
+                            isShowClear: _this.state.value,
+                            filterDropdownIncludeKeys: filterDropdownIncludeKeys
                         })
                     );
                 case 'bool':
@@ -312,7 +318,8 @@ var FilterType = function (_Component) {
                             onChange: onChange
                         }),
                         _react2["default"].createElement(_FilterDropDown2["default"], { locale: locale,
-                            onSelectDropdown: onSelectDropdown
+                            onSelectDropdown: onSelectDropdown,
+                            filterDropdownIncludeKeys: filterDropdownIncludeKeys
                         })
                     );
                 default:
