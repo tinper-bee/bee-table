@@ -106,6 +106,7 @@ class Demo extends Component {
 | onFilterChange       | 触发过滤输入操作以及下拉条件的回调 | function | (field,value,condition) => ()
 | onFilterClear       | 清除过滤条件的回调函数，回调参数为清空的字段 | function | (field) => ()
 | headerScroll       | 表头下是否显示滚动条 | bool| false
+| syncHover       | 是否同步Hover状态到左侧Checkbox，关闭此功能有助于提升性能 | bool| true
 
 
 *注意: data参数中的key值必需，否则会导致部分功能出现问题！建议使用唯一的值，如id*

@@ -10727,7 +10727,13 @@
 	  getBodyWrapper: _propTypes2['default'].func,
 	  children: _propTypes2['default'].node,
 	  draggable: _propTypes2['default'].bool,
-	  minColumnWidth: _propTypes2['default'].number
+	  minColumnWidth: _propTypes2['default'].number,
+	  filterable: _propTypes2['default'].bool,
+	  filterDelay: _propTypes2['default'].number,
+	  onFilterChange: _propTypes2['default'].func,
+	  onFilterClear: _propTypes2['default'].func,
+	  syncHover: _propTypes2['default'].bool
+	
 	};
 	
 	var defaultProps = {
@@ -10767,7 +10773,8 @@
 	  },
 	  columns: [],
 	  minColumnWidth: 80,
-	  locale: {}
+	  locale: {},
+	  syncHover: true
 	};
 	
 	var Table = function (_Component) {
@@ -11723,9 +11730,14 @@
 	  };
 	
 	  Table.prototype.handleRowHover = function handleRowHover(isHover, key) {
-	    this.store.setState({
-	      currentHoverKey: isHover ? key : null
-	    });
+	    //增加新的API，设置是否同步Hover状态，提高性能，避免无关的渲染
+	    var syncHover = this.props.syncHover;
+	
+	    if (syncHover) {
+	      this.store.setState({
+	        currentHoverKey: isHover ? key : null
+	      });
+	    }
 	  };
 	
 	  Table.prototype.render = function render() {

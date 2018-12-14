@@ -42,7 +42,13 @@ const propTypes = {
   getBodyWrapper: PropTypes.func,
   children: PropTypes.node,
   draggable: PropTypes.bool,
-  minColumnWidth: PropTypes.number
+  minColumnWidth: PropTypes.number,
+  filterable: PropTypes.bool,
+  filterDelay: PropTypes.number,
+  onFilterChange: PropTypes.func,
+  onFilterClear: PropTypes.func,
+  syncHover: PropTypes.bool,
+
 };
 
 const defaultProps = {
@@ -71,7 +77,8 @@ const defaultProps = {
   emptyText: () => 'No Data',
   columns:[],
   minColumnWidth: 80,
-  locale:{}
+  locale:{},
+  syncHover: true
 };
 
 class Table extends Component {
@@ -958,9 +965,14 @@ class Table extends Component {
   }
 
   handleRowHover(isHover, key) {
-    this.store.setState({
-      currentHoverKey: isHover ? key : null,
-    });
+    //增加新的API，设置是否同步Hover状态，提高性能，避免无关的渲染
+    let { syncHover } = this.props;
+    if(syncHover){
+      this.store.setState({
+        currentHoverKey: isHover ? key : null,
+      });
+    }
+
   }
 
   render() {

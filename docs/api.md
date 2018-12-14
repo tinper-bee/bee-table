@@ -54,6 +54,9 @@ import 'bee-table/build/Table.css';
 | onFilterClear       | 清除过滤条件的回调函数，回调参数为清空的字段 | function | (field) => ()
 | headerScroll       | 表头下是否显示滚动条 | bool| false
 | sort       | 排序的属性 | object| {  mode:'single'//单列排序,  backSource:false //默认是前端排序，值为true为后端排序 } mode:multiple-多列排序
+| syncHover       | 是否同步Hover状态到左侧Checkbox，关闭此功能有助于提升性能 | bool| true
+
+
 *注意: data参数中的key值必需，否则会导致部分功能出现问题！建议使用唯一的值，如id*
 
 
