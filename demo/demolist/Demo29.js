@@ -13,9 +13,40 @@ import Button from 'bee-button';
 
 
 const columns29 = [
-  { title: "姓名", width: 180, dataIndex: "name", key: "name", filterType: "text", filterDropdown: "show",filterDropdownIncludeKeys:['LIKE','EQ'] },
-  { title: "年龄", width: 150, dataIndex: "age", key: "age", filterType: "dropdown", filterDropdown: "show",filterDropdownType:"number",filterDropdownIncludeKeys:['EQ'] },
-  { title: "日期", width: 200, dataIndex: "date", key: "date", filterType: "date", filterDropdown: "show", format: "YYYY-MM-DD" }
+  {
+    title: "姓名",
+    width: 180,
+    dataIndex: "name",
+    key: "name",
+    filterType: "text",
+    filterDropdown: "show",
+    filterDropdownIncludeKeys: ['LIKE', 'EQ']
+  },
+  {
+    title: "年龄",
+    width: 170,
+    dataIndex: "age",
+    key: "age",
+    filterType: "number",
+    filterDropdown: "show",
+    filterDropdownType: "number",
+    filterDropdownIncludeKeys: ['EQ'],
+    filterInputNumberOptions: {
+      max: 200,
+      min: 0,
+      step: 1,
+      precision: 0
+    }
+  },
+  {
+    title: "日期",
+    width: 200,
+    dataIndex: "date",
+    key: "date",
+    filterType: "date",
+    filterDropdown: "show",
+    format: "YYYY-MM-DD"
+  }
 ];
 
 const data29 = [
@@ -116,7 +147,7 @@ class Demo29 extends Component {
       onHide={this.close}
       autoFocus={false}
       enforceFocus={false}
-      >
+    >
       <Modal.Header closeButton>
         <Modal.Title>过滤行</Modal.Title>
       </Modal.Header>

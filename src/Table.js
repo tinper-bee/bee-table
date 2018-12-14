@@ -402,7 +402,8 @@ class Table extends Component {
           filterdropdowndata: column.filterDropdownData,//自定义数据格式
           filterdropdownfocus: column.filterDropdownFocus,//焦点触发函数回调
           filterdropdowntype: column.filterDropdownType,//下拉的类型分为 String,Number 默认是String
-          filterdropdownincludekeys: column.filterDropdownIncludeKeys//下拉条件按照指定的keys去显示
+          filterdropdownincludekeys: column.filterDropdownIncludeKeys,//下拉条件按照指定的keys去显示
+          filterinputnumberoptions: column.filterInputNumberOptions//设置数值框内的详细属性
         });
       }
     });

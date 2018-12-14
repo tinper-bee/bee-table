@@ -244,6 +244,7 @@ var TableHeader = function (_Component) {
             , filterDropdown: rows[1][index]["filterdropdown"],
             filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
             , filterDropdownIncludeKeys: rows[1][index]["filterdropdownincludekeys"] //下拉条件按照指定的keys去显示
+            , filterInputNumberOptions: rows[1][index]["filterinputnumberoptions"] //设置数值框内的详细属性
           });
         //下拉框选择
         case "dropdown":

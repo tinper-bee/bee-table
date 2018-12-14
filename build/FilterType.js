@@ -183,6 +183,7 @@ var FilterType = function (_Component) {
 
         _this.renderControl = function (rendertype) {
             var _this$props7 = _this.props,
+                filterInputNumberOptions = _this$props7.filterInputNumberOptions,
                 filterDropdownIncludeKeys = _this$props7.filterDropdownIncludeKeys,
                 dataIndex = _this$props7.dataIndex,
                 filterDropdown = _this$props7.filterDropdown,
@@ -222,12 +223,12 @@ var FilterType = function (_Component) {
                     return _react2["default"].createElement(
                         'div',
                         { className: clsPrefix + ' filter-wrap' },
-                        _react2["default"].createElement(_beeInputNumber2["default"], {
+                        _react2["default"].createElement(_beeInputNumber2["default"], _extends({}, filterInputNumberOptions, {
                             className: className,
                             value: _this.state.value,
                             onChange: _this.changeNumber,
                             iconStyle: 'one'
-                        }),
+                        })),
                         _react2["default"].createElement(_FilterDropDown2["default"], {
                             locale: locale,
                             dataIndex: dataIndex,

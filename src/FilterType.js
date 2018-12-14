@@ -157,7 +157,7 @@ class FilterType extends Component {
      * @returns
      */
     renderControl = (rendertype) => {
-        let { filterDropdownIncludeKeys, dataIndex, filterDropdown, filterDropdownType, format, className, onChange, onSelectDropdown, clsPrefix, locale } = this.props;
+        let { filterInputNumberOptions, filterDropdownIncludeKeys, dataIndex, filterDropdown, filterDropdownType, format, className, onChange, onSelectDropdown, clsPrefix, locale } = this.props;
         switch (rendertype) {
             case 'text':
                 return <div className={`${clsPrefix} filter-wrap`}>
@@ -184,6 +184,7 @@ class FilterType extends Component {
             case 'number':
                 return <div className={`${clsPrefix} filter-wrap`}>
                     <InputNumber
+                        {...filterInputNumberOptions}
                         className={className}
                         value={this.state.value}
                         onChange={this.changeNumber}
