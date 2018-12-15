@@ -27,7 +27,7 @@ class FilterDropDown extends Component {
      * @param {*} s 选中的selectRecord
      */
     onSelectDropdown = (item) => {
-        let { onSelectDropdown, dataText, filterDropdownType } = this.props;
+        let { onSelectDropdown, filterDropdownType } = this.props;
         if (onSelectDropdown) {
             if (filterDropdownType == 'string') {
                 this.setState({

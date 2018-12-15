@@ -68,13 +68,15 @@ var FilterType = function (_Component) {
                 onFilterClear = _this$props.onFilterClear,
                 dataIndex = _this$props.dataIndex;
 
-            _this.setState({
-                value: "", //清空值
-                condition: _this.props.filterDropdownType == 'string' ? 'LIKE' : 'EQ' //切回默认查询条件
-            }, function () {
-                //调用清除方法参数为当前字段的field
-                onFilterClear && onFilterClear(dataIndex);
-            });
+            if (_this.state.value !== "") {
+                _this.setState({
+                    value: "", //清空值
+                    condition: _this.props.filterDropdownType == 'string' ? 'LIKE' : 'EQ' //切回默认查询条件
+                }, function () {
+                    //调用清除方法参数为当前字段的field
+                    onFilterClear && onFilterClear(dataIndex);
+                });
+            }
         };
 
         _this.changeText = function (val) {
@@ -89,7 +91,7 @@ var FilterType = function (_Component) {
                 dataIndex = _this$props2.dataIndex;
 
             if (e.keyCode == 13) {
-                onFilterChange(dataIndex, e.target.value, _this.state.condition);
+                e.target.value !== "" && onFilterChange(dataIndex, e.target.value, _this.state.condition);
             }
         };
 
@@ -107,7 +109,7 @@ var FilterType = function (_Component) {
             _this.setState({
                 condition: item.key
             }, function () {
-                onFilterChange && onFilterChange(dataIndex, _this.state.value, _this.state.condition);
+                _this.state.value !== "" && onFilterChange && onFilterChange(dataIndex, _this.state.value, _this.state.condition);
             });
         };
 

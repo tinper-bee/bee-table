@@ -13079,7 +13079,8 @@
 	            rendertype: type,
 	            className: clsPrefix + " filter-dropdown",
 	            data: selectDataSource,
-	            dataIndex: dataIndex //字段
+	            notFoundContent: "Loading" //没有数据显示的默认字
+	            , dataIndex: dataIndex //字段
 	            , onFilterChange: _this.handlerFilterChange //输入框回调
 	            , onFilterClear: _this.handlerFilterClear //清除回调
 	            , filterDropdown: rows[1][index]["filterdropdown"],
@@ -14362,13 +14363,15 @@
 	                onFilterClear = _this$props.onFilterClear,
 	                dataIndex = _this$props.dataIndex;
 	
-	            _this.setState({
-	                value: "", //清空值
-	                condition: _this.props.filterDropdownType == 'string' ? 'LIKE' : 'EQ' //切回默认查询条件
-	            }, function () {
-	                //调用清除方法参数为当前字段的field
-	                onFilterClear && onFilterClear(dataIndex);
-	            });
+	            if (_this.state.value !== "") {
+	                _this.setState({
+	                    value: "", //清空值
+	                    condition: _this.props.filterDropdownType == 'string' ? 'LIKE' : 'EQ' //切回默认查询条件
+	                }, function () {
+	                    //调用清除方法参数为当前字段的field
+	                    onFilterClear && onFilterClear(dataIndex);
+	                });
+	            }
 	        };
 	
 	        _this.changeText = function (val) {
@@ -14383,7 +14386,7 @@
 	                dataIndex = _this$props2.dataIndex;
 	
 	            if (e.keyCode == 13) {
-	                onFilterChange(dataIndex, e.target.value, _this.state.condition);
+	                e.target.value !== "" && onFilterChange(dataIndex, e.target.value, _this.state.condition);
 	            }
 	        };
 	
@@ -14401,7 +14404,7 @@
 	            _this.setState({
 	                condition: item.key
 	            }, function () {
-	                onFilterChange && onFilterChange(dataIndex, _this.state.value, _this.state.condition);
+	                _this.state.value !== "" && onFilterChange && onFilterChange(dataIndex, _this.state.value, _this.state.condition);
 	            });
 	        };
 	
@@ -52530,7 +52533,6 @@
 	        _this.onSelectDropdown = function (item) {
 	            var _this$props = _this.props,
 	                onSelectDropdown = _this$props.onSelectDropdown,
-	                dataText = _this$props.dataText,
 	                filterDropdownType = _this$props.filterDropdownType;
 	
 	            if (onSelectDropdown) {

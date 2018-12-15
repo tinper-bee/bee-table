@@ -33,13 +33,15 @@ class FilterType extends Component {
      */
     clearFilter = () => {
         let { onFilterClear, dataIndex } = this.props;
-        this.setState({
-            value: "",//清空值
-            condition: this.props.filterDropdownType == 'string' ? 'LIKE' : 'EQ'//切回默认查询条件
-        }, () => {
-            //调用清除方法参数为当前字段的field
-            onFilterClear && onFilterClear(dataIndex);
-        });
+        if (this.state.value !== "") {
+            this.setState({
+                value: "",//清空值
+                condition: this.props.filterDropdownType == 'string' ? 'LIKE' : 'EQ'//切回默认查询条件
+            }, () => {
+                //调用清除方法参数为当前字段的field
+                onFilterClear && onFilterClear(dataIndex);
+            });
+        }
     }
 
     /**
@@ -59,7 +61,7 @@ class FilterType extends Component {
     changeTextCall = (e) => {
         let { onFilterChange, dataIndex } = this.props;
         if (e.keyCode == 13) {
-            onFilterChange(dataIndex, e.target.value, this.state.condition);
+            e.target.value !== "" && onFilterChange(dataIndex, e.target.value, this.state.condition);
         }
     }
     /**
@@ -82,7 +84,7 @@ class FilterType extends Component {
         this.setState({
             condition: item.key
         }, () => {
-            onFilterChange && onFilterChange(dataIndex, this.state.value, this.state.condition);
+            this.state.value !== "" && onFilterChange && onFilterChange(dataIndex, this.state.value, this.state.condition);
         });
     }
 

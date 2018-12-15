@@ -272,7 +272,8 @@ var TableHeader = function (_Component) {
             rendertype: type,
             className: clsPrefix + " filter-dropdown",
             data: selectDataSource,
-            dataIndex: dataIndex //字段
+            notFoundContent: "Loading" //没有数据显示的默认字
+            , dataIndex: dataIndex //字段
             , onFilterChange: _this.handlerFilterChange //输入框回调
             , onFilterClear: _this.handlerFilterClear //清除回调
             , filterDropdown: rows[1][index]["filterdropdown"],

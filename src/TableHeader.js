@@ -445,6 +445,7 @@ class TableHeader extends Component {
             rendertype={type}
             className={`${clsPrefix} filter-dropdown`}
             data={selectDataSource}
+            notFoundContent={"Loading"}//没有数据显示的默认字
             dataIndex={dataIndex}//字段
             onFilterChange={this.handlerFilterChange}//输入框回调
             onFilterClear={this.handlerFilterClear}//清除回调

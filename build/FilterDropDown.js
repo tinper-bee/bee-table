@@ -59,7 +59,6 @@ var FilterDropDown = function (_Component) {
         _this.onSelectDropdown = function (item) {
             var _this$props = _this.props,
                 onSelectDropdown = _this$props.onSelectDropdown,
-                dataText = _this$props.dataText,
                 filterDropdownType = _this$props.filterDropdownType;
 
             if (onSelectDropdown) {
