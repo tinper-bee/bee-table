@@ -76,7 +76,7 @@
 	
 	var CARETUP = _react2['default'].createElement('i', { className: 'uf uf-arrow-up' });
 	
-	var Demo1 = __webpack_require__(84);var Demo10 = __webpack_require__(504);var Demo11 = __webpack_require__(505);var Demo12 = __webpack_require__(507);var Demo13 = __webpack_require__(514);var Demo14 = __webpack_require__(516);var Demo15 = __webpack_require__(525);var Demo16 = __webpack_require__(526);var Demo17 = __webpack_require__(527);var Demo18 = __webpack_require__(528);var Demo19 = __webpack_require__(529);var Demo2 = __webpack_require__(530);var Demo20 = __webpack_require__(535);var Demo21 = __webpack_require__(536);var Demo22 = __webpack_require__(541);var Demo23 = __webpack_require__(544);var Demo24 = __webpack_require__(545);var Demo25 = __webpack_require__(546);var Demo26 = __webpack_require__(547);var Demo27 = __webpack_require__(548);var Demo28 = __webpack_require__(550);var Demo29 = __webpack_require__(551);var Demo3 = __webpack_require__(574);var Demo4 = __webpack_require__(575);var Demo5 = __webpack_require__(576);var Demo6 = __webpack_require__(577);var Demo7 = __webpack_require__(578);var Demo8 = __webpack_require__(579);var Demo9 = __webpack_require__(584);var DemoArray = [{ "example": _react2['default'].createElement(Demo1, null), "title": " 简单表格、文字过长，两种tip", "code": "/**\n*\n* @title 简单表格、文字过长，两种tip\n* 【Tooltip】\n* @description\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Tooltip, Button } from 'tinper-bee';\n\nconst columns = [\n  {\n    title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 80, className: \"rowClassName\",\n    render: (text, record, index) => {\n      return (\n        <Tooltip inverse overlay={text}>\n          <span tootip={text} style={{\n            display: \"inline-block\",\n            width: \"60px\",\n            textOverflow: \"ellipsis\",\n            overflow: \"hidden\",\n            whiteSpace: \"nowrap\",\n            verticalAlign: \"middle\",\n          }}>{text}</span>\n        </Tooltip>\n      );\n    }\n  },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: '10%' },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    render(text, record, index) {\n      return (\n        <div style={{ position: 'relative' }} title={text} >\n          <a\n            href=\"javascript:;\"\n            tooltip={text}\n            onClick={() => {\n              alert('这是第' + index + '列，内容为:' + text);\n            }}\n          >\n            一些操作\n              </a>\n        </div>\n      );\n    }\n  }\n];\n\nconst data = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过叔叔的女儿黄蓉\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\nclass Demo1 extends Component {\n\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: data,\n      selectedRowIndex: 0\n    }\n  }\n\n  render() {\n    return (\n   \n        <Table\n          columns={columns}\n          data={data}\n          parentNodeId='parent'\n          height={43}\n          headerHeight={42}\n          onRowClick={(record, index, indent) => {\n            this.setState({\n              selectedRowIndex: index\n            });\n          }}\n        />\n\n     \n    );\n  }\n}\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo10, null), "title": " 无数据时显示", "code": "/**\n*\n* @title 无数据时显示\n* @description 无数据时显示效果展示（可自定义）\n *\n* import {Table} from 'tinper-bee';\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\nconst columns10 = [\n    {\n      title: \"Name\",\n      dataIndex: \"name\",\n      key: \"name\",\n      width: \"40%\"\n    },\n    {\n      title: \"Age\",\n      dataIndex: \"age\",\n      key: \"age\",\n      width: \"30%\"\n    },\n    {\n      title: \"Address\",\n      dataIndex: \"address\",\n      key: \"address\"\n    }\n  ];\n  \n  const data10 = [\n    \n  ];\n\n  const emptyFunc = () => <span>这里没有数据！</span>\n  \n  class Demo10 extends Component {\n    render() {\n      return <Table columns={columns10} data={data10} emptyText={emptyFunc} />;\n    }\n  }\n\n", "desc": " 无数据时显示效果展示（可自定义）" }, { "example": _react2['default'].createElement(Demo11, null), "title": " 列排序", "code": "/**\n*\n* @title 列排序\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee';\nimport sort from \"tinper-bee/lib/sort.js\";;\nlet ComplexTable = sort(Table, Icon);\nconst columns11 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst data11 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\n];\n\nconst defaultProps11 = {\n  prefixCls: \"bee-table\"\n};\nclass Demo11 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      sortOrder: \"\",\n      data: data11\n    };\n  }\n  render() {\n\n    return <ComplexTable columns={columns11} data={this.state.data} />;\n  }\n}\nDemo11.defaultProps = defaultProps11;\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo12, null), "title": " 全选功能", "code": "/**\n*\n* @title 全选功能\n* @description 点击表格左列按钮即可选中，并且在选中的回调函数中能获取到选中的数据（未使用封装好的全选功能）\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Checkbox } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/multiSelect.js\";;\n\nconst columns12 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst data12 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\",_checked:true },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" ,_checked:true},\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" ,_checked:true}\n];\n//拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常\nlet MultiSelectTable  = multiSelect(Table, Checkbox);\n\nclass Demo12 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: data12\n    };\n  }\n  getSelectedDataFunc = data => {\n    console.log(data);\n  };\n  \n  render() {\n    let multiObj = {\n      type: \"checkbox\"\n    };\n    return (\n      <MultiSelectTable \n        columns={columns12} \n        data={data12} \n        multiSelect={multiObj}\n        getSelectedDataFunc={this.getSelectedDataFunc}/>\n    );\n  }\n}\n\n", "desc": " 点击表格左列按钮即可选中，并且在选中的回调函数中能获取到选中的数据（未使用封装好的全选功能）" }, { "example": _react2['default'].createElement(Demo13, null), "title": " 多列排序、全选功能、合计", "code": "/**\n *\n * @title 多列排序、全选功能、合计\n * @description 多列排序、全选功能、合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）新增回调函数(sorterClick)\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table, Icon, Button, Checkbox } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/multiSelect.js\";;\nimport sort from \"tinper-bee/lib/sort.js\";;\nimport sum from \"tinper-bee/lib/sum.js\";;\n\nconst columns13 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    className:'dfasd',\n    width: 200\n  },\n  {\n    title: \"功力指数\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c,\n    sorterClick:(data,type)=>{//排序的回调函数\n      //type value is up or down\n      console.log(\"data\",data);\n    }\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c,\n    sorterClick:(data,type)=>{//排序的回调函数\n      //type value is up or down\n      console.log(\"data\",data);\n    }\n  },\n  {\n    title: \"成绩\",\n    dataIndex: \"e\",\n    key: \"e\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c,\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width: 200\n  }\n];\n\nconst data13 = [\n  { a: \"杨过\", b: 675, c: 30, d: \"内行\",e:100, key: \"2\" },\n  { a: \"令狐冲\", b: 43, c: 41, d: \"大侠\",e:90, key: \"1\" },\n  { a: \"令狐冲1\", b: 43, c: 81, d: \"大侠\", e:120,key: \"4\" },\n  { a: \"令狐冲2\", b: 43, c: 81, d: \"大侠\", e:130,key: \"5\" },\n  { a: \"郭靖\", b: 153, c: 25, d: \"大侠\",e:90, key: \"3\" }\n];\n\n//拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常\nlet ComplexTable = multiSelect(sum(sort(Table, Icon)), Checkbox);\n\nclass Demo13 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data13: data13,\n      selectedRow: this.selectedRow,\n      selectDisabled: this.selectDisabled\n    };\n  }\n  getSelectedDataFunc = data => {\n    console.log(data);\n  };\n  selectDisabled = (record, index) => {\n    // console.log(record);\n    if (index === 1) {\n      return true;\n    }\n    return false;\n  };\n  selectedRow = (record, index) => {\n    // console.log(record);\n    if (index === 0) {\n      return true;\n    }\n    return false;\n  };\n  onClick = () => {\n    this.setState({\n      selectedRow: function() {}\n    });\n  };\n\n  render() {\n    let multiObj = {\n      type: \"checkbox\"\n    };\n    let sortObj = {\n      mode:'multiple'\n    }\n   \n    return (\n      <div>\n        <Button className=\"editable-add-btn\" onClick={this.onClick}>\n          change selectedRow\n        </Button>\n        <ComplexTable\n          selectDisabled={this.state.selectDisabled}\n          selectedRow={this.state.selectedRow}\n          columns={columns13}\n          data={this.state.data13}\n          multiSelect={multiObj}\n          sort={sortObj}\n          getSelectedDataFunc={this.getSelectedDataFunc}\n        />\n      </div>\n    );\n  }\n}\n\n", "desc": " 多列排序、全选功能、合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）新增回调函数(sorterClick)" }, { "example": _react2['default'].createElement(Demo14, null), "title": " 编辑态表格", "code": "/**\n*\n* @title 编辑态表格\n* @description 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）\n*\n*/\n\nimport React from \"react\";\nimport { Table, Select, Datepicker, Checkbox, Input, Icon, Form, Button, Tooltip, Animate } from 'tinper-bee';\nimport renderInput from \"tinper-bee/lib/InputRender.js\";;\nimport renderDate from \"tinper-bee/lib/DateRender.js\";;\nimport renderSelect from \"tinper-bee/lib/SelectRender.js\";;\n\nconst InputRender = renderInput(Form, Input, Icon);\nconst DateRender = renderDate(Datepicker, Icon);\nconst SelectRender = renderSelect(Select, Icon);\n\nconst format = \"YYYY-MM-DD\";\nconst format2 = \"YYYY-MM\";\nconst format3 = \"YYYY-MM-DD HH:mm:ss\";\n\nconst dateInputPlaceholder = \"选择日期\";\nconst dateInputPlaceholder2 = \"选择年月\";\nconst dataSource = [\n  {\n    key: \"boyuzhou\",\n    value: \"jack\"\n  },\n  {\n    key: \"renhualiu\",\n    value: \"lucy\"\n  },\n  {\n    key: \"yuzhao\",\n    value: \"yiminghe\"\n  }\n];\nclass Demo14 extends React.Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      dataSource: [\n        {\n          key: \"0\",\n          name: \"沉鱼\",\n          number: \"10\",\n          age: \"y\",\n          address: \"jack\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"1\",\n          name: \"落雁\",\n          number: \"100\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"2\",\n          name: \"闭月\",\n          number: \"1000\",\n          age: \"n\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"3\",\n          name: \"羞花\",\n          number: \"9999\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        }\n      ],\n      count: 4\n    };\n    this.columns = [\n      {\n        title: \"普通输入\",\n        dataIndex: \"name\",\n        key: \"name\",\n        width: \"150px\",\n        render: (text, record, index) => (\n          <InputRender\n            name=\"name\"\n            placeholder=\"请输入姓名\"\n            value={text}\n            isclickTrigger={true}\n            check={this.check}\n            onChange={this.onInputChange(index, \"name\")}\n            isRequire={true}\n            method=\"blur\"\n            errorMessage={\n              <Tooltip overlay={\"错误提示\"}>\n                <Icon type=\"uf-exc-c\" className=\"\" />\n              </Tooltip>\n            }\n          />\n        )\n      },\n      {\n        title: \"货币输入\",\n        dataIndex: \"number\",\n        key: \"number\",\n        width: \"150px\",\n        render: (text, record, index) => (\n          <InputRender\n            format=\"Currency\"\n            name=\"number\"\n            placeholder=\"请输入货币\"\n            value={text}\n            isclickTrigger={true}\n            check={this.check}\n            onChange={this.onInputChange(index, \"number\")}\n            isRequire={true}\n            method=\"blur\"\n            errorMessage={\n              <Tooltip overlay={\"错误提示\"}>\n                <Icon type=\"uf-exc-c\" className=\"\" />\n              </Tooltip>\n            }\n            reg={/^[0-9]+$/}\n          />\n        )\n      },\n      {\n        title: \"复选\",\n        dataIndex: \"age\",\n        key: \"age\",\n        width: \"100px\",\n        render: (text, record, index) => (\n          <Checkbox\n            checked={record.age}\n            onChange={this.onCheckChange(index, \"age\")}\n          />\n        )\n      },\n      {\n        title: \"下拉框\",\n        dataIndex: \"address\",\n        key: \"address\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <SelectRender\n              dataSource={dataSource}\n              isclickTrigger={true}\n              value={text}\n              onChange={this.onSelectChange(index, \"address\")}\n            >\n              <Option value=\"jack\">boyuzhou</Option>\n              <Option value=\"lucy\">renhualiu</Option>\n              <Option value=\"disabled\" disabled>\n                Disabled\n              </Option>\n              <Option value=\"yiminghe\">yuzhao</Option>\n            </SelectRender>\n          );\n        }\n      },\n      {\n        title: \"年月日\",\n        dataIndex: \"datepicker\",\n        key: \"datepicker\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <DateRender\n              value={text}\n              isclickTrigger={true}\n              format={format}\n              onSelect={this.onDateSelect}\n              onChange={this.onDateChange}\n              placeholder={dateInputPlaceholder}\n            />\n          );\n        }\n      },\n      {\n        title: \"年月\",\n        dataIndex: \"MonthPicker\",\n        key: \"MonthPicker\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <DateRender\n              value={text}\n              type=\"MonthPicker\"\n              isclickTrigger={true}\n              format={format2}\n              onSelect={this.onSelect}\n              onChange={this.onChange}\n              placeholder={dateInputPlaceholder2}\n            />\n          );\n        }\n      }\n    ];\n  }\n  check = (flag, obj) => {\n    console.log(flag);\n    console.log(obj);\n  };\n\n  onInputChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onCheckChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onSelectChange = (index, key) => {\n    return value => {\n      console.log(`selected ${value}`);\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onDateChange = d => {\n    console.log(d);\n  };\n  onDateSelect = d => {\n    console.log(d);\n  };\n  onDelete = index => {\n    return () => {\n      const dataSource = [...this.state.dataSource];\n      dataSource.splice(index, 1);\n      this.setState({ dataSource });\n    };\n  };\n  handleAdd = () => {\n    const { count, dataSource } = this.state;\n    const newData = {\n      key: count,\n      name: `凤姐 ${count}`,\n      age: 32,\n      address: \"jack\",\n      datepicker: \"2017-06-12\",\n      MonthPicker: \"2017-02\"\n    };\n    this.setState({\n      dataSource: [...dataSource, newData],\n      count: count + 1\n    });\n  };\n\n  getBodyWrapper = body => {\n    return (\n      <Animate\n        transitionName=\"move\"\n        component=\"tbody\"\n        className={body.props.className}\n      >\n        {body.props.children}\n      </Animate>\n    );\n  };\n  getData = () => {\n    console.log(this.state.dataSource);\n  };\n  render() {\n    const { dataSource } = this.state;\n    const columns = this.columns;\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.handleAdd}\n        >\n          添加一行\n        </Button>\n        <Button\n          style={{marginLeft:\"5px\"}}\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.getData}\n        >\n          获取数据\n        </Button>\n        <Table\n          data={dataSource}\n          columns={columns}\n          getBodyWrapper={this.getBodyWrapper}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）" }, { "example": _react2['default'].createElement(Demo15, null), "title": " 表格行/列合并", "code": "/**\n*\n* @title 表格行/列合并\n* @description 表头只支持列合并，使用 column 里的 colSpan 进行设置。表格支持行/列合并，使用 render 里的单元格属性 colSpan 或者 rowSpan 设值为 0 时，设置的表格不会渲染。\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\n\nconst renderContent = (value, row, index) => {\n  const obj = {\n    children: value,\n    props: {},\n  };\n  if (index === 4) {\n    obj.props.colSpan = 0;\n  }\n  return obj;\n};\n\nconst columns = [{\n  title: 'Name',\n  key: \"name\",\n  dataIndex: 'name',\n  render: (text, row, index) => {\n    if (index < 4) {\n      return <a href=\"#\">{text}</a>;\n    }\n    return {\n      children: <a href=\"#\">{text}</a>,\n      props: {\n        colSpan: 5,\n      },\n    };\n  },\n}, {\n  title: 'Age',\n  key: \"Age\",\n  dataIndex: 'age',\n  render: renderContent,\n}, {\n  title: 'Home phone',\n  colSpan: 2,\n  key: \"tel\",\n  dataIndex: 'tel',\n  render: (value, row, index) => {\n    const obj = {\n      children: value,\n      props: {},\n    };\n    if (index === 2) {\n      obj.props.rowSpan = 2;\n    }\n    if (index === 3) {\n      obj.props.rowSpan = 0;\n    }\n    if (index === 4) {\n      obj.props.colSpan = 0;\n    }\n    return obj;\n  },\n}, {\n  title: 'Phone',\n  colSpan: 0,\n  key: \"phone\",\n  dataIndex: 'phone',\n  render: renderContent,\n}, {\n  title: 'Address',\n  key: \"address\",\n  dataIndex: 'address',\n  render: renderContent,\n}];\n\nconst data = [{\n  key: '1',\n  name: 'John Brown',\n  age: 32,\n  tel: '0571-22098909',\n  phone: 18889898989,\n  address: 'New York No. 1 Lake Park',\n}, {\n  key: '2',\n  name: 'Jim Green',\n  tel: '0571-22098333',\n  phone: 18889898888,\n  age: 42,\n  address: 'London No. 1 Lake Park',\n}, {\n  key: '3',\n  name: 'Joe Black',\n  age: 32,\n  tel: '0575-22098909',\n  phone: 18900010002,\n  address: 'Sidney No. 1 Lake Park',\n}, {\n  key: '4',\n  name: 'Jim Red',\n  age: 18,\n  tel: '0575-22098909',\n  phone: 18900010002,\n  address: 'London No. 2 Lake Park',\n}, {\n  key: '5',\n  name: 'Jake White',\n  age: 18,\n  tel: '0575-22098909',\n  phone: 18900010002,\n  address: 'Dublin No. 2 Lake Park',\n}];\n\nclass Demo15 extends Component {\n  render() {\n    return (\n       <Table columns={columns} data={data}/>\n    );\n  }\n}\n\n\n\n", "desc": " 表头只支持列合并，使用 column 里的 colSpan 进行设置。表格支持行/列合并，使用 render 里的单元格属性 colSpan 或者 rowSpan 设值为 0 时，设置的表格不会渲染。" }, { "example": _react2['default'].createElement(Demo16, null), "title": " 嵌套子表格", "code": "/**\n*\n* @title 嵌套子表格\n* @description 通过expandedRowRender参数来实现子表格\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\n\nconst columns16 = [\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\", \n    width:200,\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert(\"这是第\" + index + \"列，内容为:\" + text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  },\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 250 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  \n];\nconst columns17 = [\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width:200,\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert(\"这是第\" + index + \"列，内容为:\" + text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  },\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  \n];\n\nconst data16 = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\n\nclass Demo16 extends Component {\n  constructor(props){\n    super(props);\n    this.state={\n      data_obj:{}\n    }\n  }\n  expandedRowRender = (record, index, indent) => {\n    let height = 42 * (this.state.data_obj[record.key].length+ 2);\n    \n    return (\n      <Table\n        columns={columns17}\n        style={{height:height}}\n        data={this.state.data_obj[record.key]} \n\n      />\n    );\n  };\n  getData=(expanded, record)=>{\n    //当点击展开的时候才去请求数据\n    let new_obj = Object.assign({},this.state.data_obj);\n    if(expanded){\n      if(record.key==='1'){\n        new_obj[record.key] = [\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n          { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" }\n        ]\n        this.setState({\n          data_obj:new_obj\n        })\n      }else{\n        new_obj[record.key] = [\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" }\n        ]\n        this.setState({\n          data_obj:new_obj\n        })\n      }\n    }\n  }\n  haveExpandIcon=(record, index)=>{\n    //控制是否显示行展开icon，该参数只有在和expandedRowRender同时使用才生效\n    if(index == 0){\n      return true;\n    }\n    return false;\n  }\n  render() {\n    return (\n      <Table\n        columns={columns16}\n        data={data16}\n        onExpand={this.getData}\n        expandedRowRender={this.expandedRowRender}\n        scroll={{x:true}}\n        title={currentData => <div>标题: 这是一个标题</div>}\n        footer={currentData => <div>表尾: 我是小尾巴</div>}\n      />\n    );\n  }\n}\n\n\n", "desc": " 通过expandedRowRender参数来实现子表格" }, { "example": _react2['default'].createElement(Demo17, null), "title": " loading属性指定表格是否加载中", "code": "/**\n*\n* @title loading属性指定表格是否加载中\n* @description  loading可以传boolean或者obj对象，obj为bee-loading组件的参数类型\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Button } from 'tinper-bee';\n\nconst columns17 = [\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert('这是第'+index+'列，内容为:'+text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  }\n];\n\nconst data17 = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\nclass Demo17 extends Component {\n  constructor(props){\n    super(props);\n    this.state = {\n      loading : true\n    }\n  }\n  changeLoading = () => {\n    this.setState({\n      loading : !this.state.loading\n    })\n  }\n  render() {\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.changeLoading}\n        >\n          切换loading\n        </Button>\n        <Table\n          columns={columns17}\n          data={data17}\n          title={currentData => <div>标题: 这是一个标题</div>}\n          footer={currentData => <div>表尾: 我是小尾巴</div>}\n          // loading={this.state.loading}或者是boolean\n          loading={{show:this.state.loading,loadingType:\"line\"}}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": "  loading可以传boolean或者obj对象，obj为bee-loading组件的参数类型" }, { "example": _react2['default'].createElement(Demo18, null), "title": " 合并标题后的合计,且支持多字段统计", "code": "/**\n *\n * @title 合并标题后的合计,且支持多字段统计\n * @description 合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table, Button } from 'tinper-bee'; \nimport sum from \"tinper-bee/lib/sum.js\";;\n \nlet ComplexTable = sum(Table);\n\nconst columns = [\n  {\n    title: \"Name\",\n    dataIndex: \"name\",\n    key: \"name\",\n    width: 100,\n    fixed: \"left\"\n  },\n  {\n    title: \"Other\",\n    children: [\n      {\n        title: \"Age\",\n        dataIndex: \"age\",\n        key: \"age\",\n        width: 200,\n        sumCol: true,\n      },\n      {\n        title: \"Address\",\n        children: [\n          {\n            title: \"Street\",\n            dataIndex: \"street\",\n            key: \"street\",\n            width: 200\n          },\n          {\n            title: \"Block\",\n            children: [\n              {\n                title: \"Building\",\n                dataIndex: \"building\",\n                key: \"building\",\n                width: 100\n              },\n              {\n                title: \"Door No.\",\n                dataIndex: \"number\",\n                key: \"number\",\n                // width: 100,\n                sumCol: true,\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  // {\n  //   title: \"Company\",\n  //   children: [\n  //     {\n  //       title: \"Company Address\",\n  //       dataIndex: \"companyAddress\",\n  //       key: \"companyAddress\",\n  //       width: 100,\n  //     },\n  //     {\n  //       title: \"Company Name\",\n  //       dataIndex: \"companyName\",\n  //       key: \"companyName\",\n  //       width: 100,\n  //     }\n  //   ]\n  // },\n  {\n    title: \"Gender\",\n    dataIndex: \"gender\",\n    key: \"gender\",\n    width: 80,\n    fixed: \"right\"\n  }\n];\n\nfunction getData(){\n  const data = [];\n  for (let i = 0; i < 5; i++) {\n    data.push({\n      key: i,\n      name: \"John Brown\"+i,\n      age: i + Math.floor(Math.random()*10),\n      street: \"Lake Park\",\n      building: \"C\",\n      number: 20 *  Math.floor(Math.random()*10),\n      companyAddress: \"Lake Street 42\",\n      companyName: \"SoftLake Co\",\n      gender: \"M\"\n    });\n  }\n  return data;\n}\n\nclass Demo18 extends Component {\n  \n  constructor(props) {\n    super(props);\n    this.state = {\n      data: getData()\n    };\n  }\n\n  changeData = ()=>{\n    this.setState({\n      data: getData()\n    });\n  }\n\n  render() {\n    const {data} = this.state;\n    return (\n      <div>\n        <Button \n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.changeData}\n        >\n          动态设置数据源\n        </Button>\n\n         <ComplexTable \n          columns={columns}\n          data={data}\n          bordered\n          // scroll={{ x: \"130%\", y: 140 }}\n        />\n      </div>\n    );\n  }\n}\n\n", "desc": " 合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）" }, { "example": _react2['default'].createElement(Demo19, null), "title": " 编辑态表格", "code": "/**\n*\n* @title 编辑态表格\n* @description 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）\n*\n*/\n\nimport React from \"react\";\nimport { Table, Select, Form, Input, Icon, Tooltip, Animate, Button } from 'tinper-bee';\nimport renderInput from \"tinper-bee/lib/InputRender.js\";;\nimport renderSelect from \"tinper-bee/lib/SelectRender.js\";;\n\nconst InputRender = renderInput(Form, Input, Icon);\nconst SelectRender = renderSelect(Select, Icon);\n\nconst Option = Select.Option;\n\nconst dataSource = [\n  {\n    key: \"boyuzhou\",\n    value: \"jack\"\n  },\n  {\n    key: \"renhualiu\",\n    value: \"lucy\"\n  },\n  {\n    key: \"yuzhao\",\n    value: \"yiminghe\"\n  }\n];\nclass Demo19 extends React.Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      dataSource: [\n        {\n          key: \"0\",\n          name: \"沉鱼\",\n          number: \"10\",\n          age: \"y\",\n          address: \"jack\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"1\",\n          name: \"落雁\",\n          number: \"100\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"2\",\n          name: \"闭月\",\n          number: \"1000\",\n          age: \"n\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"3\",\n          name: \"羞花\",\n          number: \"9999\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        }\n      ],\n      count: 4\n    };\n    this.columns = [ \n      {\n        title: \"货币输入\",\n        dataIndex: \"number\",\n        key: \"number\",\n        width: \"150px\",\n        render: (text, record, index) => (\n          <InputRender\n            format=\"Currency\"\n            name=\"name\"\n            placeholder=\"请输入姓名\"\n            value={text}\n            isclickTrigger={true}\n            check={this.check}\n            onChange={this.onInputChange(index, \"name\")}\n            isRequire={true}\n            method=\"blur\"\n            errorMessage={\n              <Tooltip overlay={\"错误提示\"}>\n                <Icon type=\"uf-exc-c\" className=\"\" />\n              </Tooltip>\n            }\n            reg={/^[0-9]+$/}\n          />\n        )\n      },\n       \n      {\n        title:(<div>下拉框的div</div>),\n        dataIndex: \"address\",\n        key: \"address\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <SelectRender\n              dataSource={dataSource}\n              isclickTrigger={true}\n              value={text}\n              onChange={this.onSelectChange(index, \"address\")}\n              onFocus={this.handFocus}\n              onBlur={this.onBlur}\n              autofocus\n            >\n              <Option value=\"jack\">boyuzhou</Option>\n              <Option value=\"lucy\">renhualiu</Option>\n              <Option value=\"disabled\" disabled>\n                Disabled\n              </Option>\n              <Option value=\"yiminghe\">yuzhao</Option>\n            </SelectRender>\n          );\n        }\n      }\n    ];\n  }\n  check = (flag, obj) => {\n    console.log(flag);\n    console.log(obj);\n  };\n\n  handFocus = (value,e) => {\n    console.log(value+` 获取焦点事件`);\n  };\n  onBlur = (value,e) => {\n    console.log(value+` onBlur`);\n  };\n\n  onInputChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n\n  onSelectChange = (index, key) => {\n    return value => {\n      console.log(`selected ${value}`);\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n\n  handleAdd = () => {\n    const { count, dataSource } = this.state;\n    const newData = {\n      key: count,\n      name: `凤姐 ${count}`,\n      age: 32,\n      address: \"jack\",\n      datepicker: \"2017-06-12\",\n      MonthPicker: \"2017-02\"\n    };\n    this.setState({\n      dataSource: [...dataSource, newData],\n      count: count + 1\n    });\n  };\n\n  getBodyWrapper = body => {\n    return (\n      <Animate\n        transitionName=\"move\"\n        component=\"tbody\"\n        className={body.props.className}\n      >\n        {body.props.children}\n      </Animate>\n    );\n  };\n  getData = () => {\n    console.log(this.state.dataSource);\n  };\n  render() {\n    const { dataSource } = this.state;\n    const columns = this.columns;\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.handleAdd}\n        >\n          添加一行\n        </Button>\n        <Button\n          style={{marginLeft:\"5px\"}}\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.getData}\n        >\n          获取数据\n        </Button>\n        <Table\n          data={dataSource}\n          columns={columns}\n          getBodyWrapper={this.getBodyWrapper}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）" }, { "example": _react2['default'].createElement(Demo2, null), "title": " 增删改表格", "code": "/**\n*\n* @title 增删改表格\n* @description 这是带有增删改功能的表格（此编辑功能未使用render组件）\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Popconfirm, Input, Icon, Animate, Button } from 'tinper-bee';\n\nclass EditableCell extends React.Component {\n  state = {\n    value: this.props.value,\n    editable: false\n  };\n  handleChange = e => {\n    const value = e;\n    this.setState({ value });\n  };\n  check = () => {\n    this.setState({ editable: false });\n    if (this.props.onChange) {\n      this.props.onChange(this.state.value);\n    }\n  };\n  edit = () => {\n    this.setState({ editable: true });\n  };\n  handleKeydown = event => {\n    if (event.keyCode == 13) {\n      this.check();\n    }\n  };\n  render() {\n    const { value, editable } = this.state;\n    return (\n      <div className=\"editable-cell\">\n        {editable ? (\n          <div className=\"editable-cell-input-wrapper\">\n            <Input\n              value={value}\n              onChange={this.handleChange}\n              onKeyDown={this.handleKeydown}\n            />\n            <Icon\n              type=\"uf-correct\"\n              className=\"editable-cell-icon-check\"\n              onClick={this.check}\n            />\n          </div>\n        ) : (\n          <div className=\"editable-cell-text-wrapper\">\n            {value || \" \"}\n            <Icon\n              type=\"uf-pencil\"\n              className=\"editable-cell-icon\"\n              onClick={this.edit}\n            />\n          </div>\n        )}\n      </div>\n    );\n  }\n}\n\nclass Demo2 extends React.Component {\n  constructor(props) {\n    super(props);\n    this.columns = [\n      {\n        title: \"姓名\",\n        dataIndex: \"name\",\n        key: \"name\",\n        width: \"30%\",\n        render: (text, record, index) => (\n          <EditableCell\n            value={text}\n            onChange={this.onCellChange(index, \"name\")}\n          />\n        )\n      },\n      {\n        title: \"年龄\",\n        dataIndex: \"age\",\n        key: \"age\"\n      },\n      {\n        title: \"你懂的\",\n        dataIndex: \"address\",\n        key: \"address\"\n      },\n      {\n        title: \"操作\",\n        dataIndex: \"operation\",\n        key: \"operation\",\n        render: (text, record, index) => {\n          return this.state.dataSource.length > 1 ? (\n            <Popconfirm content=\"确认删除?\" id=\"aa\" onClose={this.onDelete(index)}>\n              <Icon type=\"uf-del\" />\n            </Popconfirm>\n          ) : null;\n        }\n      }\n    ];\n\n    this.state = {\n      dataSource: [\n        {\n          key: \"0\",\n          name: \"沉鱼\",\n          age: \"18\",\n          address: \"96, 77, 89\"\n        },\n        {\n          key: \"1\",\n          name: \"落雁\",\n          age: \"16\",\n          address: \"90, 70, 80\"\n        },\n        {\n          key: \"2\",\n          name: \"闭月\",\n          age: \"17\",\n          address: \"80, 60, 80\"\n        },\n        {\n          key: \"3\",\n          name: \"羞花\",\n          age: \"20\",\n          address: \"120, 60, 90\"\n        }\n      ],\n      count: 4\n    };\n  }\n  onCellChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onDelete = (index) => {\n    return () => {\n      const dataSource = [...this.state.dataSource];\n      dataSource.splice(index, 1);\n      this.setState({ dataSource });\n    }\n  };\n  handleAdd = () => {\n    const { count, dataSource } = this.state;\n    const newData = {\n      key: count,\n      name: `凤姐 ${count}`,\n      age: 32,\n      address: `100 100 100`\n    };\n    this.setState({\n      dataSource: [...dataSource, newData],\n      count: count + 1\n    });\n  };\n\n  getBodyWrapper = body => {\n    return (\n      <Animate\n        transitionName=\"move\"\n        component=\"tbody\"\n        className={body.props.className}\n      >\n        {body.props.children}\n      </Animate>\n    );\n  };\n  render() {\n    const { dataSource } = this.state;\n    const columns = this.columns;\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.handleAdd}\n        >\n          添加\n        </Button>\n        <Table\n          data={dataSource}\n          columns={columns}\n          getBodyWrapper={this.getBodyWrapper}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 这是带有增删改功能的表格（此编辑功能未使用render组件）" }, { "example": _react2['default'].createElement(Demo20, null), "title": " 简单表格选中行的背景色、表头表尾", "code": "/**\n*\n* @title 简单表格选中行的背景色、表头表尾\n* @description\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Tooltip, Button } from 'tinper-bee';\n\nconst columns = [\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width:80 , className:\"rowClassName\"},\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n];\n\nconst data = [\n  { a: \"令狐冲\", b: \"男\", c: 41, key: \"1\" },\n  { a: \"杨过叔叔的女儿黄蓉\", b: \"男\", c: 67, key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, key: \"3\" }\n];\n\nclass Demo26 extends Component {\n\n  constructor(props){\n      super(props);\n      this.state = {\n        data: data,\n        selectedRowIndex: 0\n      }\n  }\n\n  render() {\n    return (\n      <Table\n        columns={columns}\n        data={data}\n        rowClassName={(record,index,indent)=>{\n          if (this.state.selectedRowIndex == index) {\n              return 'selected';\n          } else {\n              return '';\n          }\n        }}\n        onRowClick={(record,index,indent)=>{\n          this.setState({ \n              selectedRowIndex: index\n          });\n        }}\n        title={currentData => <div>标题: 这是一个标题</div>}\n        footer={currentData => <div>表尾: 我是小尾巴</div>}\n      /> \n    );\n  }\n}\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo21, null), "title": " 根据列进行过滤", "code": "/**\n*\n* @title 根据列进行过滤\n* @description 点击表格右侧按钮，进行表格列的数据过滤。可以自定义设置显示某列，通过ifshow属性控制，默认为true都显示。afterFilter为过滤之后的回调函数\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Popover, Checkbox, Icon } from 'tinper-bee';\nimport filterColumn from \"tinper-bee/lib/filterColumn\";;\nimport sum from \"tinper-bee/lib/sum\";;\n\nconst data21 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行',e: \"操作\", key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠',e: \"操作\", key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠',e: \"操作\", key: \"3\" }\n];\n\nconst FilterColumnTable = filterColumn(Table, Popover, Icon);\n\nconst defaultProps21 = {\n  prefixCls: \"bee-table\"\n};\n\nclass Demo21 extends Component {\n  constructor(props) {\n    super(props);\n    this.state ={\n              columns21: [\n                {\n                  title: \"名字\",\n                  dataIndex: \"a\",\n                  key: \"a\"\n                  // width: 100\n                },\n                {\n                  title: \"性别\",\n                  dataIndex: \"b\",\n                  key: \"b\",\n                  // width: 100\n                },\n                {\n                  title: \"年龄\",\n                  dataIndex: \"c\",\n                  key: \"c\",\n                  ifshow:false,\n                  // width: 200,\n                  // sumCol: true,\n                  sorter: (a, b) => a.c - b.c\n                },\n                {\n                  title: \"武功级别\",\n                  dataIndex: \"d\",\n                  key: \"d\"\n                },\n                {\n                  title: \"操作\",\n                  dataIndex: \"e\",\n                  key: \"e\",\n                  render(text, record, index){\n                    return (\n                      <div  title={text} >\n                          <a href=\"#\"\n                              tooltip={text}\n                              onClick={() => {\n                                alert('这是第'+index+'列，内容为:'+text);\n                              }}\n                              // style={{\n                              //     position: 'absolute',\n                              //     top: 5,\n                              //     left: 0\n                              // }}\n                            >\n                              一些操作\n                            </a>\n                      </div>\n                    );\n                  }\n                }\n              ]};\n  }\n  afterFilter = (optData,columns)=>{\n    if(optData.key == 'b'){\n        if(optData.ifshow){\n          columns[2].ifshow = false;\n        }else{\n          columns[2].ifshow = true;\n        }\n        this.setState({\n          columns21 :columns,\n          showFilterPopover:true\n        });\n    }\n    \n  }\n \n  render() {\n    \n    return <FilterColumnTable columns={this.state.columns21} data={data21} afterFilter={this.afterFilter} showFilterPopover={this.state.showFilterPopover}/>;\n  }\n}\nDemo21.defaultProps = defaultProps21;\n\n\n", "desc": " 点击表格右侧按钮，进行表格列的数据过滤。可以自定义设置显示某列，通过ifshow属性控制，默认为true都显示。afterFilter为过滤之后的回调函数" }, { "example": _react2['default'].createElement(Demo22, null), "title": " 列的拖拽，交换表头的顺序", "code": "/**\n*\n* @title 列的拖拽，交换表头的顺序\n* @description 点击列的表头，进行左右拖拽\n*/\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee'; \nimport dragColumn from \"tinper-bee/lib/dragColumn\";;\n\n\nconst columns22 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 200\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width: 200,\n  }\n];\n\nconst data22 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\n];\n\nconst DragColumnTable = dragColumn(Table);\n\nconst defaultProps22 = {\n  prefixCls: \"bee-table\"\n};\n\nclass Demo22 extends Component {\n  constructor(props) {\n    super(props); \n  }\n \n  render() {\n    return <DragColumnTable columns={columns22} data={data22} bordered\n    \n    draggable={true} \n    />;\n  }\n}\nDemo22.defaultProps = defaultProps22;\n\n\n", "desc": " 点击列的表头，进行左右拖拽" }, { "example": _react2['default'].createElement(Demo23, null), "title": " 拖拽调整列的宽度", "code": "/**\n*\n* @title 拖拽调整列的宽度\n* @description 注：不支持tree结构的表头、合并表头的table【目前支持表头拖拽宽度、交互列一起使用】\n*/\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee'; \nimport dragColumn from \"tinper-bee/lib/dragColumn\";;\n\n\nconst columns23 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: '200'\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: '100'\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: '200',\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    fixed:'right',\n    width: 200,\n  }\n];\n\nconst data23 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\n];\n\nconst DragColumnTable = dragColumn(Table);\n\nconst defaultProps23 = {\n  prefixCls: \"bee-table\"\n};\n\nclass Demo23 extends Component {\n  constructor(props) {\n    super(props); \n  }\n\n  render() {\n    return <DragColumnTable columns={columns23} data={data23} bordered\n    dragborder={true} \n    draggable={true} \n    />;\n  }\n}\nDemo23.defaultProps = defaultProps23;\n\n\n", "desc": " 注：不支持tree结构的表头、合并表头的table【目前支持表头拖拽宽度、交互列一起使用】" }, { "example": _react2['default'].createElement(Demo24, null), "title": " 动态设置固、取消固定列", "code": "/**\n*\n* @title 动态设置固、取消固定列\n* @description 动态设置固、取消固定列\n* @description 动态固定列设置 一个table动态设置一个方向【fixed: \"left\"，fixed: \"right\"】。\n*\n*/\nimport React, { Component } from 'react';\nimport { Table, Dropdown, Menu, Icon } from 'tinper-bee';\n\n\nconst { Item } = Menu;\n// const columns24 = [\n//   {\n//     title: \"Full Name\",\n//     width: 100,\n//     dataIndex: \"name\",\n//     key: \"name\",\n//     fixed: \"left\",\n//   },\n//   { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\", fixed: \"left\" },\n//   { title: \"Column 1\", dataIndex: \"address\", key: \"1\"  },\n//   { title: \"Column 2\", dataIndex: \"address2\", key: \"2\" },\n//   { title: \"Column 3\", dataIndex: \"address\", key: \"3\" },\n//   { title: \"Column 4\", dataIndex: \"address\", key: \"4\" },\n//   { title: \"Column 24\", dataIndex: \"address\", key: \"24\" },\n//   { title: \"Column 6\", dataIndex: \"address\", key: \"6\" },\n//   { title: \"Column 7\", dataIndex: \"address\", key: \"7\" },\n//   { title: \"Column 8\", dataIndex: \"address\", key: \"8\" }\n// ];\n\n\nconst columns24 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100,\n    fixed: \"left\",\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100,\n    fixed: \"left\",\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 100, \n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width: 150 \n  },\n  {\n    title: \"对手\",\n    dataIndex: \"e\",\n    key: \"e\",\n    width: 100 \n  },\n  {\n    title: \"帮派\",\n    dataIndex: \"f\",\n    key: \"f\",\n    width: 100 \n  },\n  {\n    title: \"武功类型\",\n    dataIndex: \"g\",\n    key: \"g\",\n    width: 100 \n  },\n  {\n    title: \"师傅\",\n    dataIndex: \"k\",\n    key: \"k\",\n    // width: 100 \n  },\n  {\n    title: \"攻击系数\",\n    dataIndex: \"h\",\n    key: \"h\",\n    width: 100 \n  }\n];\n\n\nconst data24 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行',e:'黄荣',f:'古墓派',g:'剑术',k:'小龙女',h:'0.5', key: \"1\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'剑客',e:'自己',f:'无',g:'剑术',k:'无',h:'0.5', key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠',e:'黄荣',f:'朝廷',g:'内容',k:'外侵势力',h:'0.6', key: \"3\" }\n]; \n \nclass Demo24 extends Component {\n\n  constructor(props) {\n    super(props);\n    // let columns = [];\n    // Object.assign(columns,columns24);\n    // columns.forEach(da=>da.onHeadCellClick=this.onHeadCellClick);\n    this.state = {\n      columns:columns24\n    }\n  }\n\n  \n    onSelect = ({key,item})=>{ \n      console.log(`${key} selected`); //获取key\n      let currentObject = item.props.data; //获取选中对象的数据\n      let {columns} = this.state;\n      let fixedCols = [];\n      let nonColums = [];\n      columns.find(da=>{\n        if(da.key == key){\n          da.fixed?delete da.fixed:da.fixed = 'left';\n        }\n        da.fixed?fixedCols.push(da):nonColums.push(da);\n      });\n    \n      columns = [...fixedCols,...nonColums]\n\n      this.setState({\n        columns\n      });\n    }\n  //表头增加下拉菜单\n  renderColumnsDropdown(columns) {\n    const icon ='uf-arrow-down';\n    \n    return columns.map((originColumn,index) => {\n      let column = Object.assign({}, originColumn);\n      let menuInfo = [], title='锁定';\n      if(originColumn.fixed){\n        title = '解锁'\n      }\n      menuInfo.push({\n        info:title,\n        key:originColumn.key,\n        index:index\n      });\n      const menu = (\n        <Menu onSelect={this.onSelect} >{\n            menuInfo.map(da=>{ return <Item key={da.key} data={da} >{da.info}</Item> })\n            }\n        </Menu>)\n      column.title = (\n        <span className='title-con drop-menu'>\n          {column.title}\n          <Dropdown\n            trigger={['click']} \n            overlay={menu}\n            animation=\"slide-up\"\n          >\n           <Icon type={icon}/>\n          </Dropdown> \n          \n        </span>\n      );\n      return column;\n    });\n    \n  }\n\n  render() {\n    let {columns} = this.state;\n     columns = this.renderColumnsDropdown(columns);\n    return <div className=\"demo24\">\n            <Table columns={columns} data={data24} scroll={{ x: \"110%\", y: 240 }}/>\n          </div>;\n  }\n}\n\n", "desc": " 动态设置固、取消固定列", "scss_code": "th{\n    .drop-menu{\n        .uf{\n            font-size: 12px;\n            visibility: hidden;\n            margin-left: 15px;\n        }\n        \n    \n    }\n    &:hover{\n        .uf{\n                visibility: visible;\n        }\n    }\n\n}\n\n" }, { "example": _react2['default'].createElement(Demo25, null), "title": " 根据列进行过滤、拖拽交换列综合使用案例", "code": "/**\n* @title 根据列进行过滤、拖拽交换列综合使用案例\n* @description 新增属性【checkMinSize 当前表格显示最少列数 】 1. 当所有列都设置了width属性后，需要给table增加checkMinSize属性 2. 所有列不设置width。\n*/\n\n/**注：\n *  在使用过滤列的时候，如果每一列都设置了width属性，勾选的时候回出现重复列问题。当表格的宽度小于合计宽度的时候，就会出现此问题。 \n *  必须有个别列不设置width属性，即可避免此问题。\n */\nimport React, { Component } from 'react';\nimport { Table, Popover, Checkbox, Icon } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/multiSelect\";;\nimport filterColumn from \"tinper-bee/lib/filterColumn\";;\nimport dragColumn from \"tinper-bee/lib/dragColumn\";;\n\nimport sum from \"tinper-bee/lib/sum\";;\n\n //Cloumns1\nfunction getCloumns(){\n  const column = [\n      {\n          title: \"序号\",\n          dataIndex: \"index\",\n          key: \"index\",\n          width: 100, \n      },\n      {\n          title: \"订单编号\",\n          dataIndex: \"orderCode\",\n          key: \"orderCode\",\n          width: 100, \n      },\n      {\n          title: \"供应商名称\",\n          dataIndex: \"supplierName\",\n          key: \"supplierName\",\n          width: 100\n      },\n      {\n          title: \"类型\",\n          dataIndex: \"type_name\",\n          key: \"type_name\",\n          width: 100\n      },\n      {\n          title: \"采购组织\",\n          dataIndex: \"purchasing\",\n          key: \"purchasing\",\n          width: 100\n      },\n      {\n          title: \"采购组\",\n          dataIndex: \"purchasingGroup\",\n          key: \"purchasingGroup\",\n           width: 300\n      },\n      {\n          title: \"凭证日期\",\n          dataIndex: \"voucherDate\",\n          key: \"voucherDate\",\n          width: 100,\n          \n      },\n      {\n          title: \"审批状态\",\n          dataIndex: \"approvalState_name\",\n          key: \"approvalState_name\",\n          width: 100\n      },\n      {\n          title: \"确认状态\",\n          dataIndex: \"confirmState_name\",\n          key: \"confirmState_name\",\n           width: 100\n      }, \n      {\n          title: \"关闭状态\",\n          dataIndex: \"closeState_name\",\n          key: \"closeState_name\",\n          width: 100\n      },\n      {\n          title: \"操作\",\n          dataIndex: \"d\",\n          key: \"d\",\n          width:100,\n          fixed: \"right\",\n          render(text, record, index) {\n              return (\n                  <div className='operation-btn'>\n                    <a href=\"#\"\n                      tooltip={text}\n                      onClick={() => {\n                        alert('这是第'+index+'列，内容为:'+text);\n                      }}\n                    >\n                      一些操作\n                    </a>\n                  </div>\n              )\n          }\n      }\n  ];\n  return column;\n}\n\nconst dataList = [ \n  { \n      index: 1, \n      orderCode:\"2343\", \n      supplierName: \"xxx\",\n      type_name: \"123\",\n      purchasing:'内行', \n      purchasingGroup:\"323\",\n      voucherDate:\"kkkk\",\n      approvalState_name:\"vvvv\",\n      confirmState_name:\"aaaa\",\n      closeState_name:\"vnnnnn\",\n      d:\"操作\",\n      key: \"1\"\n  }, \n  { \n    index: 2, \n    _checked:true,\n    orderCode:\"222\", \n    supplierName: \"22xxx\",\n    type_name: \"1223\",\n    purchasing:'内行2', \n    purchasingGroup:\"3223\",\n    voucherDate:\"222kk\",\n    approvalState_name:\"22vvvv\",\n    confirmState_name:\"2aaaa\",\n    closeState_name:\"2vnnnnn\",\n    d:\"2操作\",\n    key: \"2\"\n  },\n  { \n    index: 3, \n    orderCode:\"222\", \n    supplierName: \"22xxx\",\n    _disabled:true,\n    type_name: \"1223\",\n    purchasing:'内行2', \n    purchasingGroup:\"3223\",\n    voucherDate:\"222kk\",\n    approvalState_name:\"22vvvv\",\n    confirmState_name:\"2aaaa\",\n    closeState_name:\"2vnnnnn\",\n    d:\"3操作\",\n    key: \"3\"\n  },\n  { \n    index: 4, \n    orderCode:\"222\", \n    supplierName: \"22xxx\",\n    type_name: \"1223\",\n    purchasing:'内行2', \n    purchasingGroup:\"3223\",\n    voucherDate:\"222kk\",\n    approvalState_name:\"22vvvv\",\n    confirmState_name:\"2aaaa\",\n    closeState_name:\"2vnnnnn\",\n    d:\"4操作\",\n    key: \"4\"\n  },\n]\n\nconst DragColumnTable = filterColumn(dragColumn(multiSelect(Table, Checkbox)),Popover);\n\nconst defaultProps25 = {\n  prefixCls: \"bee-table\"\n};\n\nclass Demo25 extends Component {\n  constructor(props) {\n    super(props);\n  }\n\n  getSelectedDataFunc=(data)=>{\n      console.log(\"data\",data);\n  }\n \n  getCloumnsScroll=(columns)=>{\n    let sum = 0;\n    columns.forEach((da)=>{\n        sum += da.width;\n    })\n    console.log(\"sum\",sum);\n    return (sum);\n  }\n\n  selectedRow=(record, index)=>{\n\n  }\n\n  render() {\n    let columns = getCloumns();\n    \n    return <div className=\"demo25\">\n            <DragColumnTable \n                columns={columns}\n                data={dataList} \n                getSelectedDataFunc={this.getSelectedDataFunc}\n                bordered\n                checkMinSize={7}\n                draggable={true}\n                multiSelect={{type: \"checkbox\"}}\n                scroll={{x:\"130%\", y: 100}}\n                selectedRow={this.selectedRow}\n                // scroll={{x:this.getCloumnsScroll(columns), y: 150}}\n                />\n            </div>\n  }\n}\nDemo25.defaultProps = defaultProps25;\n\n\n", "desc": " 新增属性【checkMinSize 当前表格显示最少列数 】 1. 当所有列都设置了width属性后，需要给table增加checkMinSize属性 2. 所有列不设置width。" }, { "example": _react2['default'].createElement(Demo26, null), "title": " 按条件和值过滤", "code": "/**\n*\n* @title 按条件和值过滤\n* @description 可以根据输入项目以及判断条件对表格内的数据进行过滤\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\nconst columns26 = [\n  { title: \"姓名\", width: 180, dataIndex: \"name\", key: \"name\", filterType: \"text\", filterDropdown: \"show\" },\n  { title: \"年龄\", width: 150, dataIndex: \"age\", key: \"age\", filterType: \"dropdown\", filterDropdown: \"show\" },\n  { title: \"日期\", width: 200, dataIndex: \"date\", key: \"date\", filterType: \"date\", filterDropdown: \"show\", format: \"YYYY-MM-DD\" },\n  { title: \"居住地址\", width: 150, dataIndex: \"address\", key: \"address\", filterType: \"dropdown\", filterDropdown: \"show\" },\n  { title: \"备注\", dataIndex: \"mark\", key: \"mark\" }\n];\n\nconst data26 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-19\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  }, {\n    key: \"5\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"6\",\n    name: \"Jim Green\",\n    age: 48,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"7\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"8\",\n    name: \"Jim Green\",\n    age: 38,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  }\n];\n\nclass Demo26 extends Component {\n  handlerFilterChange = (key, val, condition) => {\n    console.log('参数：key=', key, ' value=', val, 'condition=', condition);\n  }\n\n  handlerFilterClear = (key) => {\n    console.log('清除条件', key);\n  }\n  render() {\n    return <Table\n      onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()\n      onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()\n      filterDelay={500}//输入文本多少ms触发回调函数，默认300ms\n      filterable={true}//是否开启过滤数据功能\n      bordered\n      columns={columns26}\n      data={data26} />;\n  }\n}\n\n", "desc": " 可以根据输入项目以及判断条件对表格内的数据进行过滤" }, { "example": _react2['default'].createElement(Demo27, null), "title": " 组合过滤和其他功能使用", "code": "/**\n*\n* @title 组合过滤和其他功能使用\n* @description 在过滤数据行的基础上增加列拖拽、动态菜单显示、下拉条件动态传入自定义等\n*\n*/\n\n/**\n * @description \n */\n\nimport React, { Component } from 'react';\nimport { Table, Dropdown, Menu, Icon, Checkbox } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/MultiSelect\";;\nimport sort from \"tinper-bee/lib/sort\";;\n\n\nconst { Item } = Menu;\nconst SubMenu = Menu.SubMenu;\nconst MenuItemGroup = Menu.ItemGroup;\n\n\nconst dataList = [\n  { \"key\": \"1\", value: \"库存明细\", id: \"a\" },\n  { \"key\": \"2\", value: \"订单明细\", id: \"v\" },\n  { \"key\": \"3\", value: \"发货明细\", id: \"c\" }\n]\n\nconst data27 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-19\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  }, {\n    key: \"5\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"6\",\n    name: \"Jim Green\",\n    age: 48,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"7\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"8\",\n    name: \"Jim Green\",\n    age: 38,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  }\n];\n\n\nconst MultiSelectTable = multiSelect(Table, Checkbox);\nconst ComplexTable = sort(MultiSelectTable, Icon);\nclass Demo27 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      dropdownvalue: []\n    }\n  }\n  handlerFilterChange = (key, val, condition) => {\n    console.log('参数：key=', key, ' value=', val, 'condition=', condition);\n  }\n\n  handlerFilterClear = (key) => {\n    console.log('清除条件', key);\n  }\n  getSelectedDataFunc = data => {\n    console.log(data);\n  }\n  onClick = (item) => {\n    console.log(item);\n  }\n\n  render() {\n    const menu1 = (\n      <Menu onClick={this.onClick} style={{ width: 240 }} mode=\"vertical\" >\n        <SubMenu key=\"sub1\" title={<span><span>组织 1</span></span>}>\n          <MenuItemGroup title=\"Item 1\">\n            <Menu.Item key=\"1\">选项 1</Menu.Item>\n            <Menu.Item key=\"2\">选项 2</Menu.Item>\n          </MenuItemGroup>\n          <MenuItemGroup title=\"Iteom 2\">\n            <Menu.Item key=\"3\">选项 3</Menu.Item>\n            <Menu.Item key=\"4\">选项 4</Menu.Item>\n          </MenuItemGroup>\n        </SubMenu>\n      </Menu>)\n    let multiObj = {\n      type: \"checkbox\"\n    };\n    let columns27 = [\n      {\n        title: \"\", width: 40, dataIndex: \"key\", key: \"key\", render: (text, record, index) => {\n          return <Dropdown\n            trigger={['click']}\n            overlay={menu1}\n            animation=\"slide-up\"\n          >\n            <Icon style={{ \"visibility\": \"hidden\" }} type=\"uf-eye\" />\n          </Dropdown>\n        }\n      },\n      {\n        title: \"姓名\",\n        width: 180,\n        dataIndex: \"name\",\n        key: \"name\",\n        filterType: \"text\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"string\"//字符条件\n      },\n      {\n        title: \"年龄\",\n        width: 180,\n        dataIndex: \"age\",\n        key: \"age\",\n        filterType: \"number\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"number\"//字符条件\n      },\n      {\n        title: \"日期\",\n        width: 190,\n        dataIndex: \"date\",\n        key: \"date\",\n        filterType: \"date\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"string\"//字符条件\n      },\n      {\n        title: \"时间范围\",\n        width: 290,\n        dataIndex: \"mark\",\n        key: \"mark\",\n        filterType: \"daterange\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"number\"//字符条件\n      },\n      {\n        title: \"地址\",\n        width: 100,\n        dataIndex: \"address\",\n        key: \"address\",\n        filterType: \"dropdown\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"number\"//字符条件\n      }\n    ];\n    return <ComplexTable\n      onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()\n      onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()\n      filterDelay={500}//输入文本多少ms触发回调函数，默认500ms\n      filterable={true}//是否开启过滤数据功能\n      getSelectedDataFunc={this.getSelectedDataFunc}\n      bordered\n      multiSelect={multiObj}\n      columns={columns27}\n      data={data27} />;\n  }\n}\n\n", "desc": " 在过滤数据行的基础上增加列拖拽、动态菜单显示、下拉条件动态传入自定义等" }, { "example": _react2['default'].createElement(Demo28, null), "title": " 列排序,后端排序", "code": "/**\n*\n* @title 列排序,后端排序\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee';\nimport sort from \"tinper-bee/lib/sort.js\";;\nlet ComplexTable = sort(Table, Icon);\nconst columns11 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  },\n  {\n    title: \"分数\",\n    dataIndex: \"e\",\n    key: \"e\",\n    sorter: (a, b) => a.c - b.c\n  },\n];\n\nconst data11 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', e:139,key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', e:109, key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', e:159, key: \"3\" }\n];\n\nconst defaultProps = {\n  prefixCls: \"bee-table\"\n};\nclass Demo28 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      sortOrder: \"\",\n      data: data11\n    };\n  }\n  /**\n   * 后端获取数据\n   */\n  sortFun = (sortParam)=>{\n    console.info(sortParam);\n    //将参数传递给后端排序\n  }\n  render() {\n    let sortObj = {\n      mode:'multiple',\n      backSource:true,\n      sortFun:this.sortFun\n    }\n    return <ComplexTable columns={columns11} data={this.state.data} sort={sortObj}/>;\n  }\n}\nDemo28.defaultProps = defaultProps;\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo29, null), "title": " 从弹出框内显示过滤行并且设置可选下拉条件", "code": "/**\n*\n* @title 从弹出框内显示过滤行并且设置可选下拉条件\n* @description 通过Modal组件来展示表格的过滤相关能力，并且通过filterDropdownIncludeKeys设置可选条件\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Button, Modal } from 'tinper-bee';\n\n\nconst columns29 = [\n  {\n    title: \"姓名\",\n    width: 180,\n    dataIndex: \"name\",\n    key: \"name\",\n    filterType: \"text\",\n    filterDropdown: \"show\",\n    filterDropdownIncludeKeys: ['LIKE', 'EQ']\n  },\n  {\n    title: \"年龄\",\n    width: 170,\n    dataIndex: \"age\",\n    key: \"age\",\n    filterType: \"number\",\n    filterDropdown: \"show\",\n    filterDropdownType: \"number\",\n    filterDropdownIncludeKeys: ['EQ'],\n    filterInputNumberOptions: {\n      max: 200,\n      min: 0,\n      step: 1,\n      precision: 0\n    }\n  },\n  {\n    title: \"日期\",\n    width: 200,\n    dataIndex: \"date\",\n    key: \"date\",\n    filterType: \"date\",\n    filterDropdown: \"show\",\n    format: \"YYYY-MM-DD\"\n  }\n];\n\nconst data29 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-19\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  }, {\n    key: \"5\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"6\",\n    name: \"Jim Green\",\n    age: 48,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"7\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"8\",\n    name: \"Jim Green\",\n    age: 38,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  }\n];\n\nclass Demo29 extends Component {\n  constructor() {\n    super();\n    this.state = {\n      show: false\n    }\n    this.close = this.close.bind(this);\n    this.open = this.open.bind(this);\n  }\n  handlerFilterChange = (key, val, condition) => {\n    console.log('参数：key=', key, ' value=', val, 'condition=', condition);\n  }\n\n  handlerFilterClear = (key) => {\n    console.log('清除条件', key);\n  }\n  close() {\n    this.setState({\n      show: false\n    });\n  }\n  open() {\n    this.setState({\n      show: true\n    });\n  }\n  render() {\n    return (<div><Modal\n      show={this.state.show}\n      onHide={this.close}\n      autoFocus={false}\n      enforceFocus={false}\n    >\n      <Modal.Header closeButton>\n        <Modal.Title>过滤行</Modal.Title>\n      </Modal.Header>\n      <Modal.Body>\n        <Table\n          onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()\n          onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()\n          filterDelay={500}//输入文本多少ms触发回调函数，默认300ms\n          filterable={true}//是否开启过滤数据功能\n          bordered\n          columns={columns29}\n          data={data29} />\n      </Modal.Body>\n    </Modal>\n      <Button colors=\"primary\" onClick={this.open}>显示表格</Button>\n    </div>)\n  }\n}\n\n", "desc": " 通过Modal组件来展示表格的过滤相关能力，并且通过filterDropdownIncludeKeys设置可选条件" }, { "example": _react2['default'].createElement(Demo3, null), "title": " 表头分组并自定义表头高度", "code": "/**\n *\n * @title 表头分组并自定义表头高度\n * @description columns[n] 可以内嵌 children，以渲染分组表头。\n * 自定义表头高度需要传headerHeight，注：修改th的padding top和bottom置为0，否则会有影响\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table, Button } from 'tinper-bee';\n\nconst { ColumnGroup, Column } = Table;\n\nconst columns = [\n  {\n    title: \"Name\",\n    dataIndex: \"name\",\n    key: \"name\",\n    width: 100,\n    fixed: \"left\"\n  },\n  {\n    title: \"Other\",\n    width:600,\n    children: [\n      {\n        title: \"Age\",\n        dataIndex: \"age\",\n        key: \"age\",\n        width: 200\n      },\n      {\n        title: \"Address\",\n        children: [\n          {\n            title: \"Street\",\n            dataIndex: \"street\",\n            key: \"street\",\n            width: 200\n          },\n          {\n            title: \"Block\",\n            children: [\n              {\n                title: \"Building\",\n                dataIndex: \"building\",\n                key: \"building\",\n                width: 100\n              },\n              {\n                title: \"Door No.\",\n                dataIndex: \"number\",\n                key: \"number\",\n                width: 100\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  {\n    title: \"Company\",\n    width:400,\n    children: [\n      {\n        title: \"Company Address\",\n        dataIndex: \"companyAddress\",\n        key: \"companyAddress\",\n        width:200,\n      },\n      {\n        title: \"Company Name\",\n        dataIndex: \"companyName\",\n        key: \"companyName\",\n        width:200,\n      }\n    ]\n  },\n  {\n    title: \"Gender\",\n    dataIndex: \"gender\",\n    key: \"gender\",\n    width: 60,\n    fixed: \"right\"\n  }\n];\n\nconst data = [];\nfor (let i = 0; i < 20; i++) {\n  data.push({\n    key: i,\n    name: \"John Brown\",\n    age: i + 1,\n    street: \"Lake Park\",\n    building: \"C\",\n    number: 2035,\n    companyAddress: \"Lake Street 42\",\n    companyName: \"SoftLake Co\",\n    gender: \"M\"\n  });\n}\n\nclass Demo3 extends Component {\n  render() {\n    return (\n      <Table\n        className={'demo3'}\n        columns={columns}\n        data={data}\n        headerHeight={40} //自定义表头高度\n        bordered\n        scroll={{ y: 240 }}\n      />\n    );\n  }\n}\n\n\n", "desc": " columns[n] 可以内嵌 children，以渲染分组表头。", "scss_code": ".demo3{\n    .u-table-thead th {\n        padding-top: 0px;\n        padding-bottom: 0px;\n    }\n}" }, { "example": _react2['default'].createElement(Demo4, null), "title": " 树形数据展示", "code": "/**\n*\n* @title 树形数据展示\n* @description 通过在data中配置children数据，来自动生成树形数据\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\nconst columns4 = [\n  {\n    title: \"Name\",\n    dataIndex: \"name\",\n    key: \"name\",\n    width: \"40%\"\n  },\n  {\n    title: \"Age\",\n    dataIndex: \"age\",\n    key: \"age\",\n    width: \"30%\"\n  },\n  {\n    title: \"Address\",\n    dataIndex: \"address\",\n    key: \"address\"\n  }\n];\n\nconst data4 = [\n  {\n    key: 1,\n    name: \"John Brown sr.\",\n    age: 60,\n    address: \"New York No. 1 Lake Park\",\n    children: [\n      {\n        key: 11,\n        name: \"John Brown\",\n        age: 42,\n        address: \"New York No. 2 Lake Park\"\n      },\n      {\n        key: 12,\n        name: \"John Brown jr.\",\n        age: 30,\n        address: \"New York No. 3 Lake Park\",\n        children: [\n          {\n            key: 121,\n            name: \"Jimmy Brown\",\n            age: 16,\n            address: \"New York No. 3 Lake Park\"\n          }\n        ]\n      },\n      {\n        key: 13,\n        name: \"Jim Green sr.\",\n        age: 72,\n        address: \"London No. 1 Lake Park\",\n        children: [\n          {\n            key: 131,\n            name: \"Jim Green\",\n            age: 42,\n            address: \"London No. 2 Lake Park\",\n            children: [\n              {\n                key: 1311,\n                name: \"Jim Green jr.\",\n                age: 25,\n                address: \"London No. 3 Lake Park\"\n              },\n              {\n                key: 1312,\n                name: \"Jimmy Green sr.\",\n                age: 18,\n                address: \"London No. 4 Lake Park\"\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  {\n    key: 2,\n    name: \"Joe Black\",\n    age: 32,\n    address: \"Sidney No. 1 Lake Park\"\n  }\n];\nclass Demo4 extends Component {\n\n  constructor(props){\n      super(props);\n      this.state = {\n        data: data4,\n        factoryValue: 0,\n        selectedRow: new Array(data4.length)//状态同步\n      }\n  }\n\n  render() {\n    return <Table \n    rowClassName={(record,index,indent)=>{\n      if (this.state.selectedRow[index]) {\n          return 'selected';\n      } else {\n          return '';\n      }\n    }}\n    onRowClick={(record,index,indent)=>{\n      let selectedRow = new Array(this.state.data.length);\n      selectedRow[index] = true;\n      this.setState({\n          factoryValue: record,\n          selectedRow: selectedRow\n      });\n    }}\n    \n    columns={columns4} data={data4} />;\n  }\n}\n\n\n", "desc": " 通过在data中配置children数据，来自动生成树形数据" }, { "example": _react2['default'].createElement(Demo5, null), "title": " 固定列", "code": "/**\n*\n* @title 固定列\n* @description 固定列到表格的某侧\n*\n*/\n\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\n\nconst columns5 = [\n  {\n    title: \"Full Name\",\n    width: 100,\n    dataIndex: \"name\",\n    key: \"name\",\n    fixed: \"left\"\n  },\n  { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\", fixed: \"left\" },\n  { title: \"Column 1\", dataIndex: \"address\", key: \"1\" },\n  { title: \"Column 2\", dataIndex: \"address\", key: \"2\" },\n  { title: \"Column 3\", dataIndex: \"address\", key: \"3\" },\n  { title: \"Column 4\", dataIndex: \"address\", key: \"4\" },\n  { title: \"Column 5\", dataIndex: \"address\", key: \"5\" },\n  { title: \"Column 6\", dataIndex: \"address\", key: \"6\" },\n  { title: \"Column 7\", dataIndex: \"address\", key: \"7\" },\n  { title: \"Column 8\", dataIndex: \"address\", key: \"8\" }\n];\n\nconst data5 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    address: \"New York Park\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  }\n];\n\nclass Demo5 extends Component {\n  render() {\n    return <Table columns={columns5} data={data5}scroll={{ x: \"130%\", y: 140 }}/>;\n  }\n}\n\n", "desc": " 固定列到表格的某侧" }, { "example": _react2['default'].createElement(Demo6, null), "title": " 固定表头", "code": "/**\n*\n* @title 固定表头\n* @description 方便一页内展示大量数据。需要指定 column 的 width 属性，否则列头和内容可能不对齐。(还可以设置scroll来支持横向或纵向滚动)\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\nimport dragColumn from \"tinper-bee/lib/dragColumn\";;;\nconst DragColumnTable = dragColumn(Table);\n\nconst columns6 = [\n  {\n    title: \"Full Name\",\n    width: 100,\n    dataIndex: \"name\",\n    key: \"name\"\n  },\n  { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\"},\n  { title: \"Address\", dataIndex: \"address\", key: \"1\" }\n];\n\nconst data6 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    address: \"New York Park\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },{\n    key: \"11\",\n    name: \"John Brown\",\n    age: 32,\n    address: \"New York Park\"\n  },\n  {\n    key: \"12\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"13\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"14\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  }\n];\n\nclass Demo6 extends Component {\n  render() {\n    return <DragColumnTable columns={columns6} data={data6} scroll={{y: 150 }} dragborder={true}  />;\n  }\n}\n\n", "desc": " 方便一页内展示大量数据。需要指定 column 的 width 属性，否则列头和内容可能不对齐。(还可以设置scroll来支持横向或纵向滚动)" }, { "example": _react2['default'].createElement(Demo7, null), "title": " 主子表", "code": "/**\n *\n * @title 主子表\n * @description 主表点击子表联动\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\n\nconst columns7 = [\n  { title: \"班级\", dataIndex: \"a\", key: \"a\" },\n  { title: \"人数\", dataIndex: \"b\", key: \"b\" },\n  { title: \"班主任\", dataIndex: \"c\", key: \"c\" },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst data7 = [\n  { a: \"02级一班\", b: \"2\", c: \"欧阳锋\", d: \"大侠\", key: \"1\" },\n  { a: \"03级二班\", b: \"3\", c: \"归海一刀\", d: \"大侠\", key: \"2\" },\n  { a: \"05级三班\", b: \"1\", c: \"一拳超人\", d: \"愣头青\", key: \"3\" }\n];\n\nconst columns7_1 = [\n  { title: \"姓名\", dataIndex: \"a\", key: \"a\" },\n  { title: \"班级\", dataIndex: \"b\", key: \"b\" },\n  { title: \"系别\", dataIndex: \"c\", key: \"c\" }\n];\n\nclass Demo7 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      children_data: []\n    };\n  }\n\n  rowclick = (record, index) => {\n    if (record.a === \"02级一班\") {\n      this.setState({\n        children_data: [\n          { a: \"郭靖\", b: \"02级一班\", c: \"文学系\", key: \"1\" },\n          { a: \"黄蓉\", b: \"02级一班\", c: \"文学系\", key: \"2\" }\n        ]\n      });\n    } else if (record.a === \"03级二班\") {\n      this.setState({\n        children_data: [\n          { a: \"杨过\", b: \"03级二班\", c: \"外语系\", key: \"1\" },\n          { a: \"小龙女\", b: \"03级二班\", c: \"外语系\", key: \"2\" },\n          { a: \"傻姑\", b: \"03级二班\", c: \"外语系\", key: \"3\" }\n        ]\n      });\n    } else if (record.a === \"05级三班\") {\n      this.setState({\n        children_data: [{ a: \"金圣叹\", b: \"05级三班\", c: \"美术系\", key: \"1\" }]\n      });\n    }\n  };\n\n  render() {\n    return (\n      <div>\n        <Table\n          columns={columns7}\n          data={data7}\n          onRowClick={this.rowclick}\n          title={currentData => <div>标题: 我是主表</div>}\n        />\n        <Table\n          style={{ marginTop: 40 }}\n          columns={columns7_1}\n          data={this.state.children_data}\n          title={currentData => <div>标题: 我是子表</div>}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 主表点击子表联动" }, { "example": _react2['default'].createElement(Demo8, null), "title": " 表格+分页", "code": "/**\n *\n * @title 表格+分页\n * @description 点击分页联动表格\n */\n\nimport React, { Component } from \"react\";\n\nimport { Table, Pagination } from 'tinper-bee';\n\nconst columns8 = [\n  { title: \"姓名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst pageData = {\n  1: [\n    { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"2\" },\n    { a: \"令狐冲\", b: \"男\", c: 41, d: \"大侠\", key: \"1\" },\n    { a: \"郭靖\", b: \"男\", c: 25, d: \"大侠\", key: \"3\" }\n  ],\n  2: [\n    { a: \"芙蓉姐姐\", b: \"女\", c: 23, d: \"大侠\", key: \"1\" },\n    { a: \"芙蓉妹妹\", b: \"女\", c: 23, d: \"内行\", key: \"2\" }\n  ]\n};\n\nclass Demo8 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: pageData[1],\n      activePage: 1\n    };\n  }\n\n  handleSelect(eventKey) {\n    this.setState({\n      data: pageData[eventKey],\n      activePage: eventKey\n    });\n  }\n\n  render() {\n    return (\n      <div>\n        <Table columns={columns8} data={this.state.data} />\n        <Pagination\n          first\n          last\n          prev\n          next\n          maxButtons={5}\n          boundaryLinks\n          activePage={this.state.activePage}\n          onSelect={this.handleSelect.bind(this)}\n          onDataNumSelect={this.dataNumSelect}\n          showJump={true}\n          total={100}\n          dataNum={2}\n        />\n      </div>\n    );\n  }\n}\n\n", "desc": " 点击分页联动表格" }, { "example": _react2['default'].createElement(Demo9, null), "title": " 表格+搜索", "code": "/**\n *\n * @title 表格+搜索\n * @description 搜索刷新表格数据\n *\n *\n * import {Table} from 'tinper-bee';\n */\n\nimport React, { Component } from \"react\";\n\nimport { Table, FormControl, InputGroup, Icon } from 'tinper-bee';\n\nclass Search extends Component {\n  state = {\n    searchValue: \"\",\n    empty: false\n  };\n\n  /**\n     * 搜索\n     */\n  handleSearch = () => {\n    let { onSearch } = this.props;\n    this.setState({\n      empty: true\n    });\n    onSearch && onSearch(this.state.searchValue);\n  };\n\n  /**\n     * 捕获回车\n     * @param e\n     */\n  handleKeyDown = e => {\n    if (e.keyCode === 13) {\n      this.handleSearch();\n    }\n  };\n\n  /**\n     * 输入框改变\n     * @param e\n     */\n  handleChange = (e) => {\n    this.setState({\n      searchValue: e\n    });\n  };\n\n  /**\n     * 清空输入框\n     */\n  emptySearch = () => {\n    let { onEmpty } = this.props;\n    this.setState({\n      searchValue: \"\",\n      empty: false\n    });\n    onEmpty && onEmpty();\n  };\n\n  render() {\n    return (\n      <InputGroup simple className=\"search-component\">\n        <FormControl\n          onChange={this.handleChange}\n          value={this.state.searchValue}\n          onKeyDown={this.handleKeyDown}\n          placeholder=\"请输入用户名\"\n          type=\"text\"\n        />\n        {this.state.empty ? (\n          <Icon\n            type=\"uf-close-c\"\n            onClick={this.emptySearch}\n            className=\"empty-search\"\n          />\n        ) : null}\n\n        <InputGroup.Button onClick={this.handleSearch} shape=\"border\">\n          <Icon type=\"uf-search\" />\n        </InputGroup.Button>\n      </InputGroup>\n    );\n  }\n}\n\nconst columns9 = [\n  {\n    title: \"姓名\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst userData = [\n  { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"大侠\", key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"大侠\", key: \"3\" }\n];\n\nclass Demo9 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: userData\n    };\n  }\n\n  handleSearch = value => {\n    if (value === \"\") {\n      return this.setState({\n        data: userData\n      });\n    }\n    let regExp = new RegExp(value, \"ig\");\n    let data = userData.filter(item => regExp.test(item.a));\n    this.setState({\n      data\n    });\n  };\n\n  handleEmpty = () => {\n    this.setState({\n      data: userData\n    });\n  };\n\n  render() {\n    return (\n      <div>\n        <div className=\"clearfix\">\n          <Search onSearch={this.handleSearch} onEmpty={this.handleEmpty} />\n        </div>\n        <Table columns={columns9} data={this.state.data} />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 搜索刷新表格数据" }];
+	var Demo1 = __webpack_require__(84);var Demo10 = __webpack_require__(508);var Demo11 = __webpack_require__(509);var Demo12 = __webpack_require__(511);var Demo13 = __webpack_require__(518);var Demo14 = __webpack_require__(520);var Demo15 = __webpack_require__(529);var Demo16 = __webpack_require__(530);var Demo17 = __webpack_require__(531);var Demo18 = __webpack_require__(532);var Demo19 = __webpack_require__(533);var Demo2 = __webpack_require__(534);var Demo20 = __webpack_require__(539);var Demo21 = __webpack_require__(540);var Demo22 = __webpack_require__(545);var Demo23 = __webpack_require__(548);var Demo24 = __webpack_require__(549);var Demo25 = __webpack_require__(550);var Demo26 = __webpack_require__(551);var Demo27 = __webpack_require__(552);var Demo28 = __webpack_require__(554);var Demo29 = __webpack_require__(555);var Demo3 = __webpack_require__(578);var Demo4 = __webpack_require__(579);var Demo5 = __webpack_require__(580);var Demo6 = __webpack_require__(581);var Demo7 = __webpack_require__(582);var Demo8 = __webpack_require__(583);var Demo9 = __webpack_require__(588);var DemoArray = [{ "example": _react2['default'].createElement(Demo1, null), "title": " 简单表格、文字过长，两种tip", "code": "/**\n*\n* @title 简单表格、文字过长，两种tip\n* 【Tooltip】\n* @description\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Tooltip, Button } from 'tinper-bee';\n\nconst columns = [\n  {\n    title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 80, className: \"rowClassName\",\n    render: (text, record, index) => {\n      return (\n        <Tooltip inverse overlay={text}>\n          <span tootip={text} style={{\n            display: \"inline-block\",\n            width: \"60px\",\n            textOverflow: \"ellipsis\",\n            overflow: \"hidden\",\n            whiteSpace: \"nowrap\",\n            verticalAlign: \"middle\",\n          }}>{text}</span>\n        </Tooltip>\n      );\n    }\n  },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: '10%' },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    render(text, record, index) {\n      return (\n        <div style={{ position: 'relative' }} title={text} >\n          <a\n            href=\"javascript:;\"\n            tooltip={text}\n            onClick={() => {\n              alert('这是第' + index + '列，内容为:' + text);\n            }}\n          >\n            一些操作\n              </a>\n        </div>\n      );\n    }\n  }\n];\n\nconst data = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过叔叔的女儿黄蓉\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\nclass Demo1 extends Component {\n\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: data,\n      selectedRowIndex: 0\n    }\n  }\n\n  render() {\n    return (\n   \n        <Table\n          columns={columns}\n          data={data}\n          parentNodeId='parent'\n          height={43}\n          headerHeight={42}\n          onRowClick={(record, index, indent) => {\n            this.setState({\n              selectedRowIndex: index\n            });\n          }}\n        />\n\n     \n    );\n  }\n}\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo10, null), "title": " 无数据时显示", "code": "/**\n*\n* @title 无数据时显示\n* @description 无数据时显示效果展示（可自定义）\n *\n* import {Table} from 'tinper-bee';\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\nconst columns10 = [\n    {\n      title: \"Name\",\n      dataIndex: \"name\",\n      key: \"name\",\n      width: \"40%\"\n    },\n    {\n      title: \"Age\",\n      dataIndex: \"age\",\n      key: \"age\",\n      width: \"30%\"\n    },\n    {\n      title: \"Address\",\n      dataIndex: \"address\",\n      key: \"address\"\n    }\n  ];\n  \n  const data10 = [\n    \n  ];\n\n  const emptyFunc = () => <span>这里没有数据！</span>\n  \n  class Demo10 extends Component {\n    render() {\n      return <Table columns={columns10} data={data10} emptyText={emptyFunc} />;\n    }\n  }\n\n", "desc": " 无数据时显示效果展示（可自定义）" }, { "example": _react2['default'].createElement(Demo11, null), "title": " 列排序", "code": "/**\n*\n* @title 列排序\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee';\nimport sort from \"tinper-bee/lib/sort.js\";;\nlet ComplexTable = sort(Table, Icon);\nconst columns11 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst data11 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\n];\n\nconst defaultProps11 = {\n  prefixCls: \"bee-table\"\n};\nclass Demo11 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      sortOrder: \"\",\n      data: data11\n    };\n  }\n  render() {\n\n    return <ComplexTable columns={columns11} data={this.state.data} />;\n  }\n}\nDemo11.defaultProps = defaultProps11;\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo12, null), "title": " 全选功能", "code": "/**\n*\n* @title 全选功能\n* @description 点击表格左列按钮即可选中，并且在选中的回调函数中能获取到选中的数据（未使用封装好的全选功能）\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Checkbox } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/multiSelect.js\";;\n\nconst columns12 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst data12 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\",_checked:true },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" ,_checked:true},\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" ,_checked:true}\n];\n//拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常\nlet MultiSelectTable  = multiSelect(Table, Checkbox);\n\nclass Demo12 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: data12\n    };\n  }\n  getSelectedDataFunc = data => {\n    console.log(data);\n  };\n  \n  render() {\n    let multiObj = {\n      type: \"checkbox\"\n    };\n    return (\n      <MultiSelectTable \n        columns={columns12} \n        data={data12} \n        multiSelect={multiObj}\n        getSelectedDataFunc={this.getSelectedDataFunc}/>\n    );\n  }\n}\n\n", "desc": " 点击表格左列按钮即可选中，并且在选中的回调函数中能获取到选中的数据（未使用封装好的全选功能）" }, { "example": _react2['default'].createElement(Demo13, null), "title": " 多列排序、全选功能、合计", "code": "/**\n *\n * @title 多列排序、全选功能、合计\n * @description 多列排序、全选功能、合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）新增回调函数(sorterClick)\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table, Icon, Button, Checkbox } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/multiSelect.js\";;\nimport sort from \"tinper-bee/lib/sort.js\";;\nimport sum from \"tinper-bee/lib/sum.js\";;\n\nconst columns13 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    className:'dfasd',\n    width: 200\n  },\n  {\n    title: \"功力指数\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c,\n    sorterClick:(data,type)=>{//排序的回调函数\n      //type value is up or down\n      console.log(\"data\",data);\n    }\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c,\n    sorterClick:(data,type)=>{//排序的回调函数\n      //type value is up or down\n      console.log(\"data\",data);\n    }\n  },\n  {\n    title: \"成绩\",\n    dataIndex: \"e\",\n    key: \"e\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c,\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width: 200\n  }\n];\n\nconst data13 = [\n  { a: \"杨过\", b: 675, c: 30, d: \"内行\",e:100, key: \"2\" },\n  { a: \"令狐冲\", b: 43, c: 41, d: \"大侠\",e:90, key: \"1\" },\n  { a: \"令狐冲1\", b: 43, c: 81, d: \"大侠\", e:120,key: \"4\" },\n  { a: \"令狐冲2\", b: 43, c: 81, d: \"大侠\", e:130,key: \"5\" },\n  { a: \"郭靖\", b: 153, c: 25, d: \"大侠\",e:90, key: \"3\" }\n];\n\n//拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常\nlet ComplexTable = multiSelect(sum(sort(Table, Icon)), Checkbox);\n\nclass Demo13 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data13: data13,\n      selectedRow: this.selectedRow,\n      selectDisabled: this.selectDisabled\n    };\n  }\n  getSelectedDataFunc = data => {\n    console.log(data);\n  };\n  selectDisabled = (record, index) => {\n    // console.log(record);\n    if (index === 1) {\n      return true;\n    }\n    return false;\n  };\n  selectedRow = (record, index) => {\n    // console.log(record);\n    if (index === 0) {\n      return true;\n    }\n    return false;\n  };\n  onClick = () => {\n    this.setState({\n      selectedRow: function() {}\n    });\n  };\n\n  render() {\n    let multiObj = {\n      type: \"checkbox\"\n    };\n    let sortObj = {\n      mode:'multiple'\n    }\n   \n    return (\n      <div>\n        <Button className=\"editable-add-btn\" onClick={this.onClick}>\n          change selectedRow\n        </Button>\n        <ComplexTable\n          selectDisabled={this.state.selectDisabled}\n          selectedRow={this.state.selectedRow}\n          columns={columns13}\n          data={this.state.data13}\n          multiSelect={multiObj}\n          sort={sortObj}\n          getSelectedDataFunc={this.getSelectedDataFunc}\n        />\n      </div>\n    );\n  }\n}\n\n", "desc": " 多列排序、全选功能、合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）新增回调函数(sorterClick)" }, { "example": _react2['default'].createElement(Demo14, null), "title": " 编辑态表格", "code": "/**\n*\n* @title 编辑态表格\n* @description 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）\n*\n*/\n\nimport React from \"react\";\nimport { Table, Select, Datepicker, Checkbox, Input, Icon, Form, Button, Tooltip, Animate } from 'tinper-bee';\nimport renderInput from \"tinper-bee/lib/InputRender.js\";;\nimport renderDate from \"tinper-bee/lib/DateRender.js\";;\nimport renderSelect from \"tinper-bee/lib/SelectRender.js\";;\n\nconst InputRender = renderInput(Form, Input, Icon);\nconst DateRender = renderDate(Datepicker, Icon);\nconst SelectRender = renderSelect(Select, Icon);\n\nconst format = \"YYYY-MM-DD\";\nconst format2 = \"YYYY-MM\";\nconst format3 = \"YYYY-MM-DD HH:mm:ss\";\n\nconst dateInputPlaceholder = \"选择日期\";\nconst dateInputPlaceholder2 = \"选择年月\";\nconst dataSource = [\n  {\n    key: \"boyuzhou\",\n    value: \"jack\"\n  },\n  {\n    key: \"renhualiu\",\n    value: \"lucy\"\n  },\n  {\n    key: \"yuzhao\",\n    value: \"yiminghe\"\n  }\n];\nclass Demo14 extends React.Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      dataSource: [\n        {\n          key: \"0\",\n          name: \"沉鱼\",\n          number: \"10\",\n          age: \"y\",\n          address: \"jack\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"1\",\n          name: \"落雁\",\n          number: \"100\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"2\",\n          name: \"闭月\",\n          number: \"1000\",\n          age: \"n\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"3\",\n          name: \"羞花\",\n          number: \"9999\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        }\n      ],\n      count: 4\n    };\n    this.columns = [\n      {\n        title: \"普通输入\",\n        dataIndex: \"name\",\n        key: \"name\",\n        width: \"150px\",\n        render: (text, record, index) => (\n          <InputRender\n            name=\"name\"\n            placeholder=\"请输入姓名\"\n            value={text}\n            isclickTrigger={true}\n            check={this.check}\n            onChange={this.onInputChange(index, \"name\")}\n            isRequire={true}\n            method=\"blur\"\n            errorMessage={\n              <Tooltip overlay={\"错误提示\"}>\n                <Icon type=\"uf-exc-c\" className=\"\" />\n              </Tooltip>\n            }\n          />\n        )\n      },\n      {\n        title: \"货币输入\",\n        dataIndex: \"number\",\n        key: \"number\",\n        width: \"150px\",\n        render: (text, record, index) => (\n          <InputRender\n            format=\"Currency\"\n            name=\"number\"\n            placeholder=\"请输入货币\"\n            value={text}\n            isclickTrigger={true}\n            check={this.check}\n            onChange={this.onInputChange(index, \"number\")}\n            isRequire={true}\n            method=\"blur\"\n            errorMessage={\n              <Tooltip overlay={\"错误提示\"}>\n                <Icon type=\"uf-exc-c\" className=\"\" />\n              </Tooltip>\n            }\n            reg={/^[0-9]+$/}\n          />\n        )\n      },\n      {\n        title: \"复选\",\n        dataIndex: \"age\",\n        key: \"age\",\n        width: \"100px\",\n        render: (text, record, index) => (\n          <Checkbox\n            checked={record.age}\n            onChange={this.onCheckChange(index, \"age\")}\n          />\n        )\n      },\n      {\n        title: \"下拉框\",\n        dataIndex: \"address\",\n        key: \"address\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <SelectRender\n              dataSource={dataSource}\n              isclickTrigger={true}\n              value={text}\n              onChange={this.onSelectChange(index, \"address\")}\n            >\n              <Option value=\"jack\">boyuzhou</Option>\n              <Option value=\"lucy\">renhualiu</Option>\n              <Option value=\"disabled\" disabled>\n                Disabled\n              </Option>\n              <Option value=\"yiminghe\">yuzhao</Option>\n            </SelectRender>\n          );\n        }\n      },\n      {\n        title: \"年月日\",\n        dataIndex: \"datepicker\",\n        key: \"datepicker\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <DateRender\n              value={text}\n              isclickTrigger={true}\n              format={format}\n              onSelect={this.onDateSelect}\n              onChange={this.onDateChange}\n              placeholder={dateInputPlaceholder}\n            />\n          );\n        }\n      },\n      {\n        title: \"年月\",\n        dataIndex: \"MonthPicker\",\n        key: \"MonthPicker\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <DateRender\n              value={text}\n              type=\"MonthPicker\"\n              isclickTrigger={true}\n              format={format2}\n              onSelect={this.onSelect}\n              onChange={this.onChange}\n              placeholder={dateInputPlaceholder2}\n            />\n          );\n        }\n      }\n    ];\n  }\n  check = (flag, obj) => {\n    console.log(flag);\n    console.log(obj);\n  };\n\n  onInputChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onCheckChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onSelectChange = (index, key) => {\n    return value => {\n      console.log(`selected ${value}`);\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onDateChange = d => {\n    console.log(d);\n  };\n  onDateSelect = d => {\n    console.log(d);\n  };\n  onDelete = index => {\n    return () => {\n      const dataSource = [...this.state.dataSource];\n      dataSource.splice(index, 1);\n      this.setState({ dataSource });\n    };\n  };\n  handleAdd = () => {\n    const { count, dataSource } = this.state;\n    const newData = {\n      key: count,\n      name: `凤姐 ${count}`,\n      age: 32,\n      address: \"jack\",\n      datepicker: \"2017-06-12\",\n      MonthPicker: \"2017-02\"\n    };\n    this.setState({\n      dataSource: [...dataSource, newData],\n      count: count + 1\n    });\n  };\n\n  getBodyWrapper = body => {\n    return (\n      <Animate\n        transitionName=\"move\"\n        component=\"tbody\"\n        className={body.props.className}\n      >\n        {body.props.children}\n      </Animate>\n    );\n  };\n  getData = () => {\n    console.log(this.state.dataSource);\n  };\n  render() {\n    const { dataSource } = this.state;\n    const columns = this.columns;\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.handleAdd}\n        >\n          添加一行\n        </Button>\n        <Button\n          style={{marginLeft:\"5px\"}}\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.getData}\n        >\n          获取数据\n        </Button>\n        <Table\n          data={dataSource}\n          columns={columns}\n          getBodyWrapper={this.getBodyWrapper}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）" }, { "example": _react2['default'].createElement(Demo15, null), "title": " 表格行/列合并", "code": "/**\n*\n* @title 表格行/列合并\n* @description 表头只支持列合并，使用 column 里的 colSpan 进行设置。表格支持行/列合并，使用 render 里的单元格属性 colSpan 或者 rowSpan 设值为 0 时，设置的表格不会渲染。\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\n\nconst renderContent = (value, row, index) => {\n  const obj = {\n    children: value,\n    props: {},\n  };\n  if (index === 4) {\n    obj.props.colSpan = 0;\n  }\n  return obj;\n};\n\nconst columns = [{\n  title: 'Name',\n  key: \"name\",\n  dataIndex: 'name',\n  render: (text, row, index) => {\n    if (index < 4) {\n      return <a href=\"#\">{text}</a>;\n    }\n    return {\n      children: <a href=\"#\">{text}</a>,\n      props: {\n        colSpan: 5,\n      },\n    };\n  },\n}, {\n  title: 'Age',\n  key: \"Age\",\n  dataIndex: 'age',\n  render: renderContent,\n}, {\n  title: 'Home phone',\n  colSpan: 2,\n  key: \"tel\",\n  dataIndex: 'tel',\n  render: (value, row, index) => {\n    const obj = {\n      children: value,\n      props: {},\n    };\n    if (index === 2) {\n      obj.props.rowSpan = 2;\n    }\n    if (index === 3) {\n      obj.props.rowSpan = 0;\n    }\n    if (index === 4) {\n      obj.props.colSpan = 0;\n    }\n    return obj;\n  },\n}, {\n  title: 'Phone',\n  colSpan: 0,\n  key: \"phone\",\n  dataIndex: 'phone',\n  render: renderContent,\n}, {\n  title: 'Address',\n  key: \"address\",\n  dataIndex: 'address',\n  render: renderContent,\n}];\n\nconst data = [{\n  key: '1',\n  name: 'John Brown',\n  age: 32,\n  tel: '0571-22098909',\n  phone: 18889898989,\n  address: 'New York No. 1 Lake Park',\n}, {\n  key: '2',\n  name: 'Jim Green',\n  tel: '0571-22098333',\n  phone: 18889898888,\n  age: 42,\n  address: 'London No. 1 Lake Park',\n}, {\n  key: '3',\n  name: 'Joe Black',\n  age: 32,\n  tel: '0575-22098909',\n  phone: 18900010002,\n  address: 'Sidney No. 1 Lake Park',\n}, {\n  key: '4',\n  name: 'Jim Red',\n  age: 18,\n  tel: '0575-22098909',\n  phone: 18900010002,\n  address: 'London No. 2 Lake Park',\n}, {\n  key: '5',\n  name: 'Jake White',\n  age: 18,\n  tel: '0575-22098909',\n  phone: 18900010002,\n  address: 'Dublin No. 2 Lake Park',\n}];\n\nclass Demo15 extends Component {\n  render() {\n    return (\n       <Table columns={columns} data={data}/>\n    );\n  }\n}\n\n\n\n", "desc": " 表头只支持列合并，使用 column 里的 colSpan 进行设置。表格支持行/列合并，使用 render 里的单元格属性 colSpan 或者 rowSpan 设值为 0 时，设置的表格不会渲染。" }, { "example": _react2['default'].createElement(Demo16, null), "title": " 嵌套子表格", "code": "/**\n*\n* @title 嵌套子表格\n* @description 通过expandedRowRender参数来实现子表格\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\n\nconst columns16 = [\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\", \n    width:200,\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert(\"这是第\" + index + \"列，内容为:\" + text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  },\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 250 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  \n];\nconst columns17 = [\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width:200,\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert(\"这是第\" + index + \"列，内容为:\" + text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  },\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  \n];\n\nconst data16 = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\n\nclass Demo16 extends Component {\n  constructor(props){\n    super(props);\n    this.state={\n      data_obj:{}\n    }\n  }\n  expandedRowRender = (record, index, indent) => {\n    let height = 42 * (this.state.data_obj[record.key].length+ 2);\n    \n    return (\n      <Table\n        columns={columns17}\n        style={{height:height}}\n        data={this.state.data_obj[record.key]} \n\n      />\n    );\n  };\n  getData=(expanded, record)=>{\n    //当点击展开的时候才去请求数据\n    let new_obj = Object.assign({},this.state.data_obj);\n    if(expanded){\n      if(record.key==='1'){\n        new_obj[record.key] = [\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n          { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" }\n        ]\n        this.setState({\n          data_obj:new_obj\n        })\n      }else{\n        new_obj[record.key] = [\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" }\n        ]\n        this.setState({\n          data_obj:new_obj\n        })\n      }\n    }\n  }\n  haveExpandIcon=(record, index)=>{\n    //控制是否显示行展开icon，该参数只有在和expandedRowRender同时使用才生效\n    if(index == 0){\n      return true;\n    }\n    return false;\n  }\n  render() {\n    return (\n      <Table\n        columns={columns16}\n        data={data16}\n        onExpand={this.getData}\n        expandedRowRender={this.expandedRowRender}\n        scroll={{x:true}}\n        title={currentData => <div>标题: 这是一个标题</div>}\n        footer={currentData => <div>表尾: 我是小尾巴</div>}\n      />\n    );\n  }\n}\n\n\n", "desc": " 通过expandedRowRender参数来实现子表格" }, { "example": _react2['default'].createElement(Demo17, null), "title": " loading属性指定表格是否加载中", "code": "/**\n*\n* @title loading属性指定表格是否加载中\n* @description  loading可以传boolean或者obj对象，obj为bee-loading组件的参数类型\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Button } from 'tinper-bee';\n\nconst columns17 = [\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert('这是第'+index+'列，内容为:'+text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  }\n];\n\nconst data17 = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\nclass Demo17 extends Component {\n  constructor(props){\n    super(props);\n    this.state = {\n      loading : true\n    }\n  }\n  changeLoading = () => {\n    this.setState({\n      loading : !this.state.loading\n    })\n  }\n  render() {\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.changeLoading}\n        >\n          切换loading\n        </Button>\n        <Table\n          columns={columns17}\n          data={data17}\n          title={currentData => <div>标题: 这是一个标题</div>}\n          footer={currentData => <div>表尾: 我是小尾巴</div>}\n          // loading={this.state.loading}或者是boolean\n          loading={{show:this.state.loading,loadingType:\"line\"}}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": "  loading可以传boolean或者obj对象，obj为bee-loading组件的参数类型" }, { "example": _react2['default'].createElement(Demo18, null), "title": " 合并标题后的合计,且支持多字段统计", "code": "/**\n *\n * @title 合并标题后的合计,且支持多字段统计\n * @description 合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table, Button } from 'tinper-bee'; \nimport sum from \"tinper-bee/lib/sum.js\";;\n \nlet ComplexTable = sum(Table);\n\nconst columns = [\n  {\n    title: \"Name\",\n    dataIndex: \"name\",\n    key: \"name\",\n    width: 100,\n    fixed: \"left\"\n  },\n  {\n    title: \"Other\",\n    children: [\n      {\n        title: \"Age\",\n        dataIndex: \"age\",\n        key: \"age\",\n        width: 200,\n        sumCol: true,\n      },\n      {\n        title: \"Address\",\n        children: [\n          {\n            title: \"Street\",\n            dataIndex: \"street\",\n            key: \"street\",\n            width: 200\n          },\n          {\n            title: \"Block\",\n            children: [\n              {\n                title: \"Building\",\n                dataIndex: \"building\",\n                key: \"building\",\n                width: 100\n              },\n              {\n                title: \"Door No.\",\n                dataIndex: \"number\",\n                key: \"number\",\n                // width: 100,\n                sumCol: true,\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  // {\n  //   title: \"Company\",\n  //   children: [\n  //     {\n  //       title: \"Company Address\",\n  //       dataIndex: \"companyAddress\",\n  //       key: \"companyAddress\",\n  //       width: 100,\n  //     },\n  //     {\n  //       title: \"Company Name\",\n  //       dataIndex: \"companyName\",\n  //       key: \"companyName\",\n  //       width: 100,\n  //     }\n  //   ]\n  // },\n  {\n    title: \"Gender\",\n    dataIndex: \"gender\",\n    key: \"gender\",\n    width: 80,\n    fixed: \"right\"\n  }\n];\n\nfunction getData(){\n  const data = [];\n  for (let i = 0; i < 5; i++) {\n    data.push({\n      key: i,\n      name: \"John Brown\"+i,\n      age: i + Math.floor(Math.random()*10),\n      street: \"Lake Park\",\n      building: \"C\",\n      number: 20 *  Math.floor(Math.random()*10),\n      companyAddress: \"Lake Street 42\",\n      companyName: \"SoftLake Co\",\n      gender: \"M\"\n    });\n  }\n  return data;\n}\n\nclass Demo18 extends Component {\n  \n  constructor(props) {\n    super(props);\n    this.state = {\n      data: getData()\n    };\n  }\n\n  changeData = ()=>{\n    this.setState({\n      data: getData()\n    });\n  }\n\n  render() {\n    const {data} = this.state;\n    return (\n      <div>\n        <Button \n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.changeData}\n        >\n          动态设置数据源\n        </Button>\n\n         <ComplexTable \n          columns={columns}\n          data={data}\n          bordered\n          // scroll={{ x: \"130%\", y: 140 }}\n        />\n      </div>\n    );\n  }\n}\n\n", "desc": " 合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）" }, { "example": _react2['default'].createElement(Demo19, null), "title": " 编辑态表格", "code": "/**\n*\n* @title 编辑态表格\n* @description 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）\n*\n*/\n\nimport React from \"react\";\nimport { Table, Select, Form, Input, Icon, Tooltip, Animate, Button } from 'tinper-bee';\nimport renderInput from \"tinper-bee/lib/InputRender.js\";;\nimport renderSelect from \"tinper-bee/lib/SelectRender.js\";;\n\nconst InputRender = renderInput(Form, Input, Icon);\nconst SelectRender = renderSelect(Select, Icon);\n\nconst Option = Select.Option;\n\nconst dataSource = [\n  {\n    key: \"boyuzhou\",\n    value: \"jack\"\n  },\n  {\n    key: \"renhualiu\",\n    value: \"lucy\"\n  },\n  {\n    key: \"yuzhao\",\n    value: \"yiminghe\"\n  }\n];\nclass Demo19 extends React.Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      dataSource: [\n        {\n          key: \"0\",\n          name: \"沉鱼\",\n          number: \"10\",\n          age: \"y\",\n          address: \"jack\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"1\",\n          name: \"落雁\",\n          number: \"100\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"2\",\n          name: \"闭月\",\n          number: \"1000\",\n          age: \"n\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"3\",\n          name: \"羞花\",\n          number: \"9999\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        }\n      ],\n      count: 4\n    };\n    this.columns = [ \n      {\n        title: \"货币输入\",\n        dataIndex: \"number\",\n        key: \"number\",\n        width: \"150px\",\n        render: (text, record, index) => (\n          <InputRender\n            format=\"Currency\"\n            name=\"name\"\n            placeholder=\"请输入姓名\"\n            value={text}\n            isclickTrigger={true}\n            check={this.check}\n            onChange={this.onInputChange(index, \"name\")}\n            isRequire={true}\n            method=\"blur\"\n            errorMessage={\n              <Tooltip overlay={\"错误提示\"}>\n                <Icon type=\"uf-exc-c\" className=\"\" />\n              </Tooltip>\n            }\n            reg={/^[0-9]+$/}\n          />\n        )\n      },\n       \n      {\n        title:(<div>下拉框的div</div>),\n        dataIndex: \"address\",\n        key: \"address\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <SelectRender\n              dataSource={dataSource}\n              isclickTrigger={true}\n              value={text}\n              onChange={this.onSelectChange(index, \"address\")}\n              onFocus={this.handFocus}\n              onBlur={this.onBlur}\n              autofocus\n            >\n              <Option value=\"jack\">boyuzhou</Option>\n              <Option value=\"lucy\">renhualiu</Option>\n              <Option value=\"disabled\" disabled>\n                Disabled\n              </Option>\n              <Option value=\"yiminghe\">yuzhao</Option>\n            </SelectRender>\n          );\n        }\n      }\n    ];\n  }\n  check = (flag, obj) => {\n    console.log(flag);\n    console.log(obj);\n  };\n\n  handFocus = (value,e) => {\n    console.log(value+` 获取焦点事件`);\n  };\n  onBlur = (value,e) => {\n    console.log(value+` onBlur`);\n  };\n\n  onInputChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n\n  onSelectChange = (index, key) => {\n    return value => {\n      console.log(`selected ${value}`);\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n\n  handleAdd = () => {\n    const { count, dataSource } = this.state;\n    const newData = {\n      key: count,\n      name: `凤姐 ${count}`,\n      age: 32,\n      address: \"jack\",\n      datepicker: \"2017-06-12\",\n      MonthPicker: \"2017-02\"\n    };\n    this.setState({\n      dataSource: [...dataSource, newData],\n      count: count + 1\n    });\n  };\n\n  getBodyWrapper = body => {\n    return (\n      <Animate\n        transitionName=\"move\"\n        component=\"tbody\"\n        className={body.props.className}\n      >\n        {body.props.children}\n      </Animate>\n    );\n  };\n  getData = () => {\n    console.log(this.state.dataSource);\n  };\n  render() {\n    const { dataSource } = this.state;\n    const columns = this.columns;\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.handleAdd}\n        >\n          添加一行\n        </Button>\n        <Button\n          style={{marginLeft:\"5px\"}}\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.getData}\n        >\n          获取数据\n        </Button>\n        <Table\n          data={dataSource}\n          columns={columns}\n          getBodyWrapper={this.getBodyWrapper}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）" }, { "example": _react2['default'].createElement(Demo2, null), "title": " 增删改表格", "code": "/**\n*\n* @title 增删改表格\n* @description 这是带有增删改功能的表格（此编辑功能未使用render组件）\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Popconfirm, Input, Icon, Animate, Button } from 'tinper-bee';\n\nclass EditableCell extends React.Component {\n  state = {\n    value: this.props.value,\n    editable: false\n  };\n  handleChange = e => {\n    const value = e;\n    this.setState({ value });\n  };\n  check = () => {\n    this.setState({ editable: false });\n    if (this.props.onChange) {\n      this.props.onChange(this.state.value);\n    }\n  };\n  edit = () => {\n    this.setState({ editable: true });\n  };\n  handleKeydown = event => {\n    if (event.keyCode == 13) {\n      this.check();\n    }\n  };\n  render() {\n    const { value, editable } = this.state;\n    return (\n      <div className=\"editable-cell\">\n        {editable ? (\n          <div className=\"editable-cell-input-wrapper\">\n            <Input\n              value={value}\n              onChange={this.handleChange}\n              onKeyDown={this.handleKeydown}\n            />\n            <Icon\n              type=\"uf-correct\"\n              className=\"editable-cell-icon-check\"\n              onClick={this.check}\n            />\n          </div>\n        ) : (\n          <div className=\"editable-cell-text-wrapper\">\n            {value || \" \"}\n            <Icon\n              type=\"uf-pencil\"\n              className=\"editable-cell-icon\"\n              onClick={this.edit}\n            />\n          </div>\n        )}\n      </div>\n    );\n  }\n}\n\nclass Demo2 extends React.Component {\n  constructor(props) {\n    super(props);\n    this.columns = [\n      {\n        title: \"姓名\",\n        dataIndex: \"name\",\n        key: \"name\",\n        width: \"30%\",\n        render: (text, record, index) => (\n          <EditableCell\n            value={text}\n            onChange={this.onCellChange(index, \"name\")}\n          />\n        )\n      },\n      {\n        title: \"年龄\",\n        dataIndex: \"age\",\n        key: \"age\"\n      },\n      {\n        title: \"你懂的\",\n        dataIndex: \"address\",\n        key: \"address\"\n      },\n      {\n        title: \"操作\",\n        dataIndex: \"operation\",\n        key: \"operation\",\n        render: (text, record, index) => {\n          return this.state.dataSource.length > 1 ? (\n            <Popconfirm content=\"确认删除?\" id=\"aa\" onClose={this.onDelete(index)}>\n              <Icon type=\"uf-del\" />\n            </Popconfirm>\n          ) : null;\n        }\n      }\n    ];\n\n    this.state = {\n      dataSource: [\n        {\n          key: \"0\",\n          name: \"沉鱼\",\n          age: \"18\",\n          address: \"96, 77, 89\"\n        },\n        {\n          key: \"1\",\n          name: \"落雁\",\n          age: \"16\",\n          address: \"90, 70, 80\"\n        },\n        {\n          key: \"2\",\n          name: \"闭月\",\n          age: \"17\",\n          address: \"80, 60, 80\"\n        },\n        {\n          key: \"3\",\n          name: \"羞花\",\n          age: \"20\",\n          address: \"120, 60, 90\"\n        }\n      ],\n      count: 4\n    };\n  }\n  onCellChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onDelete = (index) => {\n    return () => {\n      const dataSource = [...this.state.dataSource];\n      dataSource.splice(index, 1);\n      this.setState({ dataSource });\n    }\n  };\n  handleAdd = () => {\n    const { count, dataSource } = this.state;\n    const newData = {\n      key: count,\n      name: `凤姐 ${count}`,\n      age: 32,\n      address: `100 100 100`\n    };\n    this.setState({\n      dataSource: [...dataSource, newData],\n      count: count + 1\n    });\n  };\n\n  getBodyWrapper = body => {\n    return (\n      <Animate\n        transitionName=\"move\"\n        component=\"tbody\"\n        className={body.props.className}\n      >\n        {body.props.children}\n      </Animate>\n    );\n  };\n  render() {\n    const { dataSource } = this.state;\n    const columns = this.columns;\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.handleAdd}\n        >\n          添加\n        </Button>\n        <Table\n          data={dataSource}\n          columns={columns}\n          getBodyWrapper={this.getBodyWrapper}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 这是带有增删改功能的表格（此编辑功能未使用render组件）" }, { "example": _react2['default'].createElement(Demo20, null), "title": " 简单表格选中行的背景色、表头表尾", "code": "/**\n*\n* @title 简单表格选中行的背景色、表头表尾\n* @description\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Tooltip, Button } from 'tinper-bee';\n\nconst columns = [\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width:80 , className:\"rowClassName\"},\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n];\n\nconst data = [\n  { a: \"令狐冲\", b: \"男\", c: 41, key: \"1\" },\n  { a: \"杨过叔叔的女儿黄蓉\", b: \"男\", c: 67, key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, key: \"3\" }\n];\n\nclass Demo26 extends Component {\n\n  constructor(props){\n      super(props);\n      this.state = {\n        data: data,\n        selectedRowIndex: 0\n      }\n  }\n\n  render() {\n    return (\n      <Table\n        columns={columns}\n        data={data}\n        rowClassName={(record,index,indent)=>{\n          if (this.state.selectedRowIndex == index) {\n              return 'selected';\n          } else {\n              return '';\n          }\n        }}\n        onRowClick={(record,index,indent)=>{\n          this.setState({ \n              selectedRowIndex: index\n          });\n        }}\n        title={currentData => <div>标题: 这是一个标题</div>}\n        footer={currentData => <div>表尾: 我是小尾巴</div>}\n      /> \n    );\n  }\n}\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo21, null), "title": " 根据列进行过滤", "code": "/**\n*\n* @title 根据列进行过滤\n* @description 点击表格右侧按钮，进行表格列的数据过滤。可以自定义设置显示某列，通过ifshow属性控制，默认为true都显示。afterFilter为过滤之后的回调函数\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Popover, Checkbox, Icon } from 'tinper-bee';\nimport filterColumn from \"tinper-bee/lib/filterColumn\";;\nimport sum from \"tinper-bee/lib/sum\";;\n\nconst data21 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行',e: \"操作\", key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠',e: \"操作\", key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠',e: \"操作\", key: \"3\" }\n];\n\nconst FilterColumnTable = filterColumn(Table, Popover, Icon);\n\nconst defaultProps21 = {\n  prefixCls: \"bee-table\"\n};\n\nclass Demo21 extends Component {\n  constructor(props) {\n    super(props);\n    this.state ={\n              columns21: [\n                {\n                  title: \"名字\",\n                  dataIndex: \"a\",\n                  key: \"a\"\n                  // width: 100\n                },\n                {\n                  title: \"性别\",\n                  dataIndex: \"b\",\n                  key: \"b\",\n                  // width: 100\n                },\n                {\n                  title: \"年龄\",\n                  dataIndex: \"c\",\n                  key: \"c\",\n                  ifshow:false,\n                  // width: 200,\n                  // sumCol: true,\n                  sorter: (a, b) => a.c - b.c\n                },\n                {\n                  title: \"武功级别\",\n                  dataIndex: \"d\",\n                  key: \"d\"\n                },\n                {\n                  title: \"操作\",\n                  dataIndex: \"e\",\n                  key: \"e\",\n                  render(text, record, index){\n                    return (\n                      <div  title={text} >\n                          <a href=\"#\"\n                              tooltip={text}\n                              onClick={() => {\n                                alert('这是第'+index+'列，内容为:'+text);\n                              }}\n                              // style={{\n                              //     position: 'absolute',\n                              //     top: 5,\n                              //     left: 0\n                              // }}\n                            >\n                              一些操作\n                            </a>\n                      </div>\n                    );\n                  }\n                }\n              ]};\n  }\n  afterFilter = (optData,columns)=>{\n    if(optData.key == 'b'){\n        if(optData.ifshow){\n          columns[2].ifshow = false;\n        }else{\n          columns[2].ifshow = true;\n        }\n        this.setState({\n          columns21 :columns,\n          showFilterPopover:true\n        });\n    }\n    \n  }\n \n  render() {\n    \n    return <FilterColumnTable columns={this.state.columns21} data={data21} afterFilter={this.afterFilter} showFilterPopover={this.state.showFilterPopover}/>;\n  }\n}\nDemo21.defaultProps = defaultProps21;\n\n\n", "desc": " 点击表格右侧按钮，进行表格列的数据过滤。可以自定义设置显示某列，通过ifshow属性控制，默认为true都显示。afterFilter为过滤之后的回调函数" }, { "example": _react2['default'].createElement(Demo22, null), "title": " 列的拖拽，交换表头的顺序", "code": "/**\n*\n* @title 列的拖拽，交换表头的顺序\n* @description 点击列的表头，进行左右拖拽\n*/\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee'; \nimport dragColumn from \"tinper-bee/lib/dragColumn\";;\n\n\nconst columns22 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 200\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width: 200,\n  }\n];\n\nconst data22 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\n];\n\nconst DragColumnTable = dragColumn(Table);\n\nconst defaultProps22 = {\n  prefixCls: \"bee-table\"\n};\n\nclass Demo22 extends Component {\n  constructor(props) {\n    super(props); \n  }\n \n  render() {\n    return <DragColumnTable columns={columns22} data={data22} bordered\n    \n    draggable={true} \n    />;\n  }\n}\nDemo22.defaultProps = defaultProps22;\n\n\n", "desc": " 点击列的表头，进行左右拖拽" }, { "example": _react2['default'].createElement(Demo23, null), "title": " 拖拽调整列的宽度", "code": "/**\n*\n* @title 拖拽调整列的宽度\n* @description 注：不支持tree结构的表头、合并表头的table【目前支持表头拖拽宽度、交互列一起使用】\n*/\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee'; \nimport dragColumn from \"tinper-bee/lib/dragColumn\";;\n\n\nconst columns23 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: '200'\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: '100'\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: '200',\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    fixed:'right',\n    width: 200,\n  }\n];\n\nconst data23 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\n];\n\nconst DragColumnTable = dragColumn(Table);\n\nconst defaultProps23 = {\n  prefixCls: \"bee-table\"\n};\n\nclass Demo23 extends Component {\n  constructor(props) {\n    super(props); \n  }\n\n  render() {\n    return <DragColumnTable columns={columns23} data={data23} bordered\n    dragborder={true} \n    draggable={true} \n    />;\n  }\n}\nDemo23.defaultProps = defaultProps23;\n\n\n", "desc": " 注：不支持tree结构的表头、合并表头的table【目前支持表头拖拽宽度、交互列一起使用】" }, { "example": _react2['default'].createElement(Demo24, null), "title": " 动态设置固、取消固定列", "code": "/**\n*\n* @title 动态设置固、取消固定列\n* @description 动态设置固、取消固定列\n* @description 动态固定列设置 一个table动态设置一个方向【fixed: \"left\"，fixed: \"right\"】。\n*\n*/\nimport React, { Component } from 'react';\nimport { Table, Dropdown, Menu, Icon } from 'tinper-bee';\n\n\nconst { Item } = Menu;\n// const columns24 = [\n//   {\n//     title: \"Full Name\",\n//     width: 100,\n//     dataIndex: \"name\",\n//     key: \"name\",\n//     fixed: \"left\",\n//   },\n//   { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\", fixed: \"left\" },\n//   { title: \"Column 1\", dataIndex: \"address\", key: \"1\"  },\n//   { title: \"Column 2\", dataIndex: \"address2\", key: \"2\" },\n//   { title: \"Column 3\", dataIndex: \"address\", key: \"3\" },\n//   { title: \"Column 4\", dataIndex: \"address\", key: \"4\" },\n//   { title: \"Column 24\", dataIndex: \"address\", key: \"24\" },\n//   { title: \"Column 6\", dataIndex: \"address\", key: \"6\" },\n//   { title: \"Column 7\", dataIndex: \"address\", key: \"7\" },\n//   { title: \"Column 8\", dataIndex: \"address\", key: \"8\" }\n// ];\n\n\nconst columns24 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100,\n    fixed: \"left\",\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100,\n    fixed: \"left\",\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 100, \n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width: 150 \n  },\n  {\n    title: \"对手\",\n    dataIndex: \"e\",\n    key: \"e\",\n    width: 100 \n  },\n  {\n    title: \"帮派\",\n    dataIndex: \"f\",\n    key: \"f\",\n    width: 100 \n  },\n  {\n    title: \"武功类型\",\n    dataIndex: \"g\",\n    key: \"g\",\n    width: 100 \n  },\n  {\n    title: \"师傅\",\n    dataIndex: \"k\",\n    key: \"k\",\n    // width: 100 \n  },\n  {\n    title: \"攻击系数\",\n    dataIndex: \"h\",\n    key: \"h\",\n    width: 100 \n  }\n];\n\n\nconst data24 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行',e:'黄荣',f:'古墓派',g:'剑术',k:'小龙女',h:'0.5', key: \"1\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'剑客',e:'自己',f:'无',g:'剑术',k:'无',h:'0.5', key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠',e:'黄荣',f:'朝廷',g:'内容',k:'外侵势力',h:'0.6', key: \"3\" }\n]; \n \nclass Demo24 extends Component {\n\n  constructor(props) {\n    super(props);\n    // let columns = [];\n    // Object.assign(columns,columns24);\n    // columns.forEach(da=>da.onHeadCellClick=this.onHeadCellClick);\n    this.state = {\n      columns:columns24\n    }\n  }\n\n  \n    onSelect = ({key,item})=>{ \n      console.log(`${key} selected`); //获取key\n      let currentObject = item.props.data; //获取选中对象的数据\n      let {columns} = this.state;\n      let fixedCols = [];\n      let nonColums = [];\n      columns.find(da=>{\n        if(da.key == key){\n          da.fixed?delete da.fixed:da.fixed = 'left';\n        }\n        da.fixed?fixedCols.push(da):nonColums.push(da);\n      });\n    \n      columns = [...fixedCols,...nonColums]\n\n      this.setState({\n        columns\n      });\n    }\n  //表头增加下拉菜单\n  renderColumnsDropdown(columns) {\n    const icon ='uf-arrow-down';\n    \n    return columns.map((originColumn,index) => {\n      let column = Object.assign({}, originColumn);\n      let menuInfo = [], title='锁定';\n      if(originColumn.fixed){\n        title = '解锁'\n      }\n      menuInfo.push({\n        info:title,\n        key:originColumn.key,\n        index:index\n      });\n      const menu = (\n        <Menu onSelect={this.onSelect} >{\n            menuInfo.map(da=>{ return <Item key={da.key} data={da} >{da.info}</Item> })\n            }\n        </Menu>)\n      column.title = (\n        <span className='title-con drop-menu'>\n          {column.title}\n          <Dropdown\n            trigger={['click']} \n            overlay={menu}\n            animation=\"slide-up\"\n          >\n           <Icon type={icon}/>\n          </Dropdown> \n          \n        </span>\n      );\n      return column;\n    });\n    \n  }\n\n  render() {\n    let {columns} = this.state;\n     columns = this.renderColumnsDropdown(columns);\n    return <div className=\"demo24\">\n            <Table columns={columns} data={data24} scroll={{ x: \"110%\", y: 240 }}/>\n          </div>;\n  }\n}\n\n", "desc": " 动态设置固、取消固定列", "scss_code": "th{\n    .drop-menu{\n        .uf{\n            font-size: 12px;\n            visibility: hidden;\n            margin-left: 15px;\n        }\n        \n    \n    }\n    &:hover{\n        .uf{\n                visibility: visible;\n        }\n    }\n\n}\n\n" }, { "example": _react2['default'].createElement(Demo25, null), "title": " 根据列进行过滤、拖拽交换列综合使用案例", "code": "/**\n* @title 根据列进行过滤、拖拽交换列综合使用案例\n* @description 新增属性【checkMinSize 当前表格显示最少列数 】 1. 当所有列都设置了width属性后，需要给table增加checkMinSize属性 2. 所有列不设置width。\n*/\n\n/**注：\n *  在使用过滤列的时候，如果每一列都设置了width属性，勾选的时候回出现重复列问题。当表格的宽度小于合计宽度的时候，就会出现此问题。 \n *  必须有个别列不设置width属性，即可避免此问题。\n */\nimport React, { Component } from 'react';\nimport { Table, Popover, Checkbox, Icon } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/multiSelect\";;\nimport filterColumn from \"tinper-bee/lib/filterColumn\";;\nimport dragColumn from \"tinper-bee/lib/dragColumn\";;\n\nimport sum from \"tinper-bee/lib/sum\";;\n\n //Cloumns1\nfunction getCloumns(){\n  const column = [\n      {\n          title: \"序号\",\n          dataIndex: \"index\",\n          key: \"index\",\n          width: 100, \n      },\n      {\n          title: \"订单编号\",\n          dataIndex: \"orderCode\",\n          key: \"orderCode\",\n          width: 100, \n      },\n      {\n          title: \"供应商名称\",\n          dataIndex: \"supplierName\",\n          key: \"supplierName\",\n          width: 100\n      },\n      {\n          title: \"类型\",\n          dataIndex: \"type_name\",\n          key: \"type_name\",\n          width: 100\n      },\n      {\n          title: \"采购组织\",\n          dataIndex: \"purchasing\",\n          key: \"purchasing\",\n          width: 100\n      },\n      {\n          title: \"采购组\",\n          dataIndex: \"purchasingGroup\",\n          key: \"purchasingGroup\",\n           width: 300\n      },\n      {\n          title: \"凭证日期\",\n          dataIndex: \"voucherDate\",\n          key: \"voucherDate\",\n          width: 100,\n          \n      },\n      {\n          title: \"审批状态\",\n          dataIndex: \"approvalState_name\",\n          key: \"approvalState_name\",\n          width: 100\n      },\n      {\n          title: \"确认状态\",\n          dataIndex: \"confirmState_name\",\n          key: \"confirmState_name\",\n           width: 100\n      }, \n      {\n          title: \"关闭状态\",\n          dataIndex: \"closeState_name\",\n          key: \"closeState_name\",\n          width: 100\n      },\n      {\n          title: \"操作\",\n          dataIndex: \"d\",\n          key: \"d\",\n          width:100,\n          fixed: \"right\",\n          render(text, record, index) {\n              return (\n                  <div className='operation-btn'>\n                    <a href=\"#\"\n                      tooltip={text}\n                      onClick={() => {\n                        alert('这是第'+index+'列，内容为:'+text);\n                      }}\n                    >\n                      一些操作\n                    </a>\n                  </div>\n              )\n          }\n      }\n  ];\n  return column;\n}\n\nconst dataList = [ \n  { \n      index: 1, \n      orderCode:\"2343\", \n      supplierName: \"xxx\",\n      type_name: \"123\",\n      purchasing:'内行', \n      purchasingGroup:\"323\",\n      voucherDate:\"kkkk\",\n      approvalState_name:\"vvvv\",\n      confirmState_name:\"aaaa\",\n      closeState_name:\"vnnnnn\",\n      d:\"操作\",\n      key: \"1\"\n  }, \n  { \n    index: 2, \n    _checked:true,\n    orderCode:\"222\", \n    supplierName: \"22xxx\",\n    type_name: \"1223\",\n    purchasing:'内行2', \n    purchasingGroup:\"3223\",\n    voucherDate:\"222kk\",\n    approvalState_name:\"22vvvv\",\n    confirmState_name:\"2aaaa\",\n    closeState_name:\"2vnnnnn\",\n    d:\"2操作\",\n    key: \"2\"\n  },\n  { \n    index: 3, \n    orderCode:\"222\", \n    supplierName: \"22xxx\",\n    _disabled:true,\n    type_name: \"1223\",\n    purchasing:'内行2', \n    purchasingGroup:\"3223\",\n    voucherDate:\"222kk\",\n    approvalState_name:\"22vvvv\",\n    confirmState_name:\"2aaaa\",\n    closeState_name:\"2vnnnnn\",\n    d:\"3操作\",\n    key: \"3\"\n  },\n  { \n    index: 4, \n    orderCode:\"222\", \n    supplierName: \"22xxx\",\n    type_name: \"1223\",\n    purchasing:'内行2', \n    purchasingGroup:\"3223\",\n    voucherDate:\"222kk\",\n    approvalState_name:\"22vvvv\",\n    confirmState_name:\"2aaaa\",\n    closeState_name:\"2vnnnnn\",\n    d:\"4操作\",\n    key: \"4\"\n  },\n]\n\nconst DragColumnTable = filterColumn(dragColumn(multiSelect(Table, Checkbox)),Popover);\n\nconst defaultProps25 = {\n  prefixCls: \"bee-table\"\n};\n\nclass Demo25 extends Component {\n  constructor(props) {\n    super(props);\n  }\n\n  getSelectedDataFunc=(data)=>{\n      console.log(\"data\",data);\n  }\n \n  getCloumnsScroll=(columns)=>{\n    let sum = 0;\n    columns.forEach((da)=>{\n        sum += da.width;\n    })\n    console.log(\"sum\",sum);\n    return (sum);\n  }\n\n  selectedRow=(record, index)=>{\n\n  }\n\n  render() {\n    let columns = getCloumns();\n    \n    return <div className=\"demo25\">\n            <DragColumnTable \n                columns={columns}\n                data={dataList} \n                getSelectedDataFunc={this.getSelectedDataFunc}\n                bordered\n                checkMinSize={7}\n                draggable={true}\n                multiSelect={{type: \"checkbox\"}}\n                scroll={{x:\"130%\", y: 100}}\n                selectedRow={this.selectedRow}\n                // scroll={{x:this.getCloumnsScroll(columns), y: 150}}\n                />\n            </div>\n  }\n}\nDemo25.defaultProps = defaultProps25;\n\n\n", "desc": " 新增属性【checkMinSize 当前表格显示最少列数 】 1. 当所有列都设置了width属性后，需要给table增加checkMinSize属性 2. 所有列不设置width。" }, { "example": _react2['default'].createElement(Demo26, null), "title": " 按条件和值过滤", "code": "/**\n*\n* @title 按条件和值过滤\n* @description 可以根据输入项目以及判断条件对表格内的数据进行过滤\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\nconst columns26 = [\n  { title: \"姓名\", width: 180, dataIndex: \"name\", key: \"name\", filterType: \"text\", filterDropdown: \"show\" },\n  { title: \"年龄\", width: 150, dataIndex: \"age\", key: \"age\", filterType: \"dropdown\", filterDropdown: \"show\" },\n  { title: \"日期\", width: 200, dataIndex: \"date\", key: \"date\", filterType: \"date\", filterDropdown: \"show\", format: \"YYYY-MM-DD\" },\n  { title: \"居住地址\", width: 150, dataIndex: \"address\", key: \"address\", filterType: \"dropdown\", filterDropdown: \"show\" },\n  { title: \"备注\", dataIndex: \"mark\", key: \"mark\" }\n];\n\nconst data26 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-19\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  }, {\n    key: \"5\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"6\",\n    name: \"Jim Green\",\n    age: 48,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"7\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"8\",\n    name: \"Jim Green\",\n    age: 38,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  }\n];\n\nclass Demo26 extends Component {\n  handlerFilterChange = (key, val, condition) => {\n    console.log('参数：key=', key, ' value=', val, 'condition=', condition);\n  }\n\n  handlerFilterClear = (key) => {\n    console.log('清除条件', key);\n  }\n  render() {\n    return <Table\n      onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()\n      onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()\n      filterDelay={500}//输入文本多少ms触发回调函数，默认300ms\n      filterable={true}//是否开启过滤数据功能\n      bordered\n      columns={columns26}\n      data={data26} />;\n  }\n}\n\n", "desc": " 可以根据输入项目以及判断条件对表格内的数据进行过滤" }, { "example": _react2['default'].createElement(Demo27, null), "title": " 组合过滤和其他功能使用", "code": "/**\n*\n* @title 组合过滤和其他功能使用\n* @description 在过滤数据行的基础上增加列拖拽、动态菜单显示、下拉条件动态传入自定义等\n*\n*/\n\n/**\n * @description \n */\n\nimport React, { Component } from 'react';\nimport { Table, Dropdown, Menu, Icon, Checkbox } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/MultiSelect\";;\nimport sort from \"tinper-bee/lib/sort\";;\n\n\nconst { Item } = Menu;\nconst SubMenu = Menu.SubMenu;\nconst MenuItemGroup = Menu.ItemGroup;\n\n\nconst dataList = [\n  { \"key\": \"1\", value: \"库存明细\", id: \"a\" },\n  { \"key\": \"2\", value: \"订单明细\", id: \"v\" },\n  { \"key\": \"3\", value: \"发货明细\", id: \"c\" }\n]\n\nconst data27 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-19\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  }, {\n    key: \"5\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"6\",\n    name: \"Jim Green\",\n    age: 48,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"7\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"8\",\n    name: \"Jim Green\",\n    age: 38,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  }\n];\n\n\nconst MultiSelectTable = multiSelect(Table, Checkbox);\nconst ComplexTable = sort(MultiSelectTable, Icon);\nclass Demo27 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      dropdownvalue: []\n    }\n  }\n  handlerFilterChange = (key, val, condition) => {\n    console.log('参数：key=', key, ' value=', val, 'condition=', condition);\n  }\n\n  handlerFilterClear = (key) => {\n    console.log('清除条件', key);\n  }\n  getSelectedDataFunc = data => {\n    console.log(data);\n  }\n  onClick = (item) => {\n    console.log(item);\n  }\n\n  render() {\n    const menu1 = (\n      <Menu onClick={this.onClick} style={{ width: 240 }} mode=\"vertical\" >\n        <SubMenu key=\"sub1\" title={<span><span>组织 1</span></span>}>\n          <MenuItemGroup title=\"Item 1\">\n            <Menu.Item key=\"1\">选项 1</Menu.Item>\n            <Menu.Item key=\"2\">选项 2</Menu.Item>\n          </MenuItemGroup>\n          <MenuItemGroup title=\"Iteom 2\">\n            <Menu.Item key=\"3\">选项 3</Menu.Item>\n            <Menu.Item key=\"4\">选项 4</Menu.Item>\n          </MenuItemGroup>\n        </SubMenu>\n      </Menu>)\n    let multiObj = {\n      type: \"checkbox\"\n    };\n    let columns27 = [\n      {\n        title: \"\", width: 40, dataIndex: \"key\", key: \"key\", render: (text, record, index) => {\n          return <Dropdown\n            trigger={['click']}\n            overlay={menu1}\n            animation=\"slide-up\"\n          >\n            <Icon style={{ \"visibility\": \"hidden\" }} type=\"uf-eye\" />\n          </Dropdown>\n        }\n      },\n      {\n        title: \"姓名\",\n        width: 180,\n        dataIndex: \"name\",\n        key: \"name\",\n        filterType: \"text\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"string\"//字符条件\n      },\n      {\n        title: \"年龄\",\n        width: 180,\n        dataIndex: \"age\",\n        key: \"age\",\n        filterType: \"number\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"number\"//字符条件\n      },\n      {\n        title: \"日期\",\n        width: 190,\n        dataIndex: \"date\",\n        key: \"date\",\n        filterType: \"date\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"string\"//字符条件\n      },\n      {\n        title: \"时间范围\",\n        width: 290,\n        dataIndex: \"mark\",\n        key: \"mark\",\n        filterType: \"daterange\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"number\"//字符条件\n      },\n      {\n        title: \"地址\",\n        width: 100,\n        dataIndex: \"address\",\n        key: \"address\",\n        filterType: \"dropdown\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"number\"//字符条件\n      }\n    ];\n    return <ComplexTable\n      onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()\n      onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()\n      filterDelay={500}//输入文本多少ms触发回调函数，默认500ms\n      filterable={true}//是否开启过滤数据功能\n      getSelectedDataFunc={this.getSelectedDataFunc}\n      bordered\n      multiSelect={multiObj}\n      columns={columns27}\n      data={data27} />;\n  }\n}\n\n", "desc": " 在过滤数据行的基础上增加列拖拽、动态菜单显示、下拉条件动态传入自定义等" }, { "example": _react2['default'].createElement(Demo28, null), "title": " 列排序,后端排序", "code": "/**\n*\n* @title 列排序,后端排序\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee';\nimport sort from \"tinper-bee/lib/sort.js\";;\nlet ComplexTable = sort(Table, Icon);\nconst columns11 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  },\n  {\n    title: \"分数\",\n    dataIndex: \"e\",\n    key: \"e\",\n    sorter: (a, b) => a.c - b.c\n  },\n];\n\nconst data11 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', e:139,key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', e:109, key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', e:159, key: \"3\" }\n];\n\nconst defaultProps = {\n  prefixCls: \"bee-table\"\n};\nclass Demo28 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      sortOrder: \"\",\n      data: data11\n    };\n  }\n  /**\n   * 后端获取数据\n   */\n  sortFun = (sortParam)=>{\n    console.info(sortParam);\n    //将参数传递给后端排序\n  }\n  render() {\n    let sortObj = {\n      mode:'multiple',\n      backSource:true,\n      sortFun:this.sortFun\n    }\n    return <ComplexTable columns={columns11} data={this.state.data} sort={sortObj}/>;\n  }\n}\nDemo28.defaultProps = defaultProps;\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo29, null), "title": " 从弹出框内显示过滤行并且设置可选下拉条件", "code": "/**\n*\n* @title 从弹出框内显示过滤行并且设置可选下拉条件\n* @description 通过Modal组件来展示表格的过滤相关能力，并且通过filterDropdownIncludeKeys设置可选条件\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Button, Modal } from 'tinper-bee';\n\n\nconst columns29 = [\n  {\n    title: \"姓名\",\n    width: 180,\n    dataIndex: \"name\",\n    key: \"name\",\n    filterType: \"text\",\n    filterDropdown: \"show\",\n    filterDropdownIncludeKeys: ['LIKE', 'EQ']\n  },\n  {\n    title: \"年龄\",\n    width: 170,\n    dataIndex: \"age\",\n    key: \"age\",\n    filterType: \"number\",\n    filterDropdown: \"show\",\n    filterDropdownType: \"number\",\n    filterDropdownIncludeKeys: ['EQ'],\n    filterInputNumberOptions: {\n      max: 200,\n      min: 0,\n      step: 1,\n      precision: 0\n    }\n  },\n  {\n    title: \"日期\",\n    width: 200,\n    dataIndex: \"date\",\n    key: \"date\",\n    filterType: \"date\",\n    filterDropdown: \"show\",\n    format: \"YYYY-MM-DD\"\n  }\n];\n\nconst data29 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-19\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  }, {\n    key: \"5\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"6\",\n    name: \"Jim Green\",\n    age: 48,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"7\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"8\",\n    name: \"Jim Green\",\n    age: 38,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  }\n];\n\nclass Demo29 extends Component {\n  constructor() {\n    super();\n    this.state = {\n      show: false\n    }\n    this.close = this.close.bind(this);\n    this.open = this.open.bind(this);\n  }\n  handlerFilterChange = (key, val, condition) => {\n    console.log('参数：key=', key, ' value=', val, 'condition=', condition);\n  }\n\n  handlerFilterClear = (key) => {\n    console.log('清除条件', key);\n  }\n  close() {\n    this.setState({\n      show: false\n    });\n  }\n  open() {\n    this.setState({\n      show: true\n    });\n  }\n  render() {\n    return (<div><Modal\n      show={this.state.show}\n      onHide={this.close}\n      autoFocus={false}\n      enforceFocus={false}\n    >\n      <Modal.Header closeButton>\n        <Modal.Title>过滤行</Modal.Title>\n      </Modal.Header>\n      <Modal.Body>\n        <Table\n          onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()\n          onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()\n          filterDelay={500}//输入文本多少ms触发回调函数，默认300ms\n          filterable={true}//是否开启过滤数据功能\n          bordered\n          columns={columns29}\n          data={data29} />\n      </Modal.Body>\n    </Modal>\n      <Button colors=\"primary\" onClick={this.open}>显示表格</Button>\n    </div>)\n  }\n}\n\n", "desc": " 通过Modal组件来展示表格的过滤相关能力，并且通过filterDropdownIncludeKeys设置可选条件" }, { "example": _react2['default'].createElement(Demo3, null), "title": " 表头分组并自定义表头高度", "code": "/**\n *\n * @title 表头分组并自定义表头高度\n * @description columns[n] 可以内嵌 children，以渲染分组表头。\n * 自定义表头高度需要传headerHeight，注：修改th的padding top和bottom置为0，否则会有影响\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table, Button } from 'tinper-bee';\n\nconst { ColumnGroup, Column } = Table;\n\nconst columns = [\n  {\n    title: \"Name\",\n    dataIndex: \"name\",\n    key: \"name\",\n    width: 100,\n    fixed: \"left\"\n  },\n  {\n    title: \"Other\",\n    width:600,\n    children: [\n      {\n        title: \"Age\",\n        dataIndex: \"age\",\n        key: \"age\",\n        width: 200\n      },\n      {\n        title: \"Address\",\n        children: [\n          {\n            title: \"Street\",\n            dataIndex: \"street\",\n            key: \"street\",\n            width: 200\n          },\n          {\n            title: \"Block\",\n            children: [\n              {\n                title: \"Building\",\n                dataIndex: \"building\",\n                key: \"building\",\n                width: 100\n              },\n              {\n                title: \"Door No.\",\n                dataIndex: \"number\",\n                key: \"number\",\n                width: 100\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  {\n    title: \"Company\",\n    width:400,\n    children: [\n      {\n        title: \"Company Address\",\n        dataIndex: \"companyAddress\",\n        key: \"companyAddress\",\n        width:200,\n      },\n      {\n        title: \"Company Name\",\n        dataIndex: \"companyName\",\n        key: \"companyName\",\n        width:200,\n      }\n    ]\n  },\n  {\n    title: \"Gender\",\n    dataIndex: \"gender\",\n    key: \"gender\",\n    width: 60,\n    fixed: \"right\"\n  }\n];\n\nconst data = [];\nfor (let i = 0; i < 20; i++) {\n  data.push({\n    key: i,\n    name: \"John Brown\",\n    age: i + 1,\n    street: \"Lake Park\",\n    building: \"C\",\n    number: 2035,\n    companyAddress: \"Lake Street 42\",\n    companyName: \"SoftLake Co\",\n    gender: \"M\"\n  });\n}\n\nclass Demo3 extends Component {\n  render() {\n    return (\n      <Table\n        className={'demo3'}\n        columns={columns}\n        data={data}\n        headerHeight={40} //自定义表头高度\n        bordered\n        scroll={{ y: 240 }}\n      />\n    );\n  }\n}\n\n\n", "desc": " columns[n] 可以内嵌 children，以渲染分组表头。", "scss_code": ".demo3{\n    .u-table-thead th {\n        padding-top: 0px;\n        padding-bottom: 0px;\n    }\n}" }, { "example": _react2['default'].createElement(Demo4, null), "title": " 树形数据展示", "code": "/**\n*\n* @title 树形数据展示\n* @description 通过在data中配置children数据，来自动生成树形数据\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\nconst columns4 = [\n  {\n    title: \"Name\",\n    dataIndex: \"name\",\n    key: \"name\",\n    width: \"40%\"\n  },\n  {\n    title: \"Age\",\n    dataIndex: \"age\",\n    key: \"age\",\n    width: \"30%\"\n  },\n  {\n    title: \"Address\",\n    dataIndex: \"address\",\n    key: \"address\"\n  }\n];\n\nconst data4 = [\n  {\n    key: 1,\n    name: \"John Brown sr.\",\n    age: 60,\n    address: \"New York No. 1 Lake Park\",\n    children: [\n      {\n        key: 11,\n        name: \"John Brown\",\n        age: 42,\n        address: \"New York No. 2 Lake Park\"\n      },\n      {\n        key: 12,\n        name: \"John Brown jr.\",\n        age: 30,\n        address: \"New York No. 3 Lake Park\",\n        children: [\n          {\n            key: 121,\n            name: \"Jimmy Brown\",\n            age: 16,\n            address: \"New York No. 3 Lake Park\"\n          }\n        ]\n      },\n      {\n        key: 13,\n        name: \"Jim Green sr.\",\n        age: 72,\n        address: \"London No. 1 Lake Park\",\n        children: [\n          {\n            key: 131,\n            name: \"Jim Green\",\n            age: 42,\n            address: \"London No. 2 Lake Park\",\n            children: [\n              {\n                key: 1311,\n                name: \"Jim Green jr.\",\n                age: 25,\n                address: \"London No. 3 Lake Park\"\n              },\n              {\n                key: 1312,\n                name: \"Jimmy Green sr.\",\n                age: 18,\n                address: \"London No. 4 Lake Park\"\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  {\n    key: 2,\n    name: \"Joe Black\",\n    age: 32,\n    address: \"Sidney No. 1 Lake Park\"\n  }\n];\nclass Demo4 extends Component {\n\n  constructor(props){\n      super(props);\n      this.state = {\n        data: data4,\n        factoryValue: 0,\n        selectedRow: new Array(data4.length)//状态同步\n      }\n  }\n\n  render() {\n    return <Table \n    rowClassName={(record,index,indent)=>{\n      if (this.state.selectedRow[index]) {\n          return 'selected';\n      } else {\n          return '';\n      }\n    }}\n    onRowClick={(record,index,indent)=>{\n      let selectedRow = new Array(this.state.data.length);\n      selectedRow[index] = true;\n      this.setState({\n          factoryValue: record,\n          selectedRow: selectedRow\n      });\n    }}\n    \n    columns={columns4} data={data4} />;\n  }\n}\n\n\n", "desc": " 通过在data中配置children数据，来自动生成树形数据" }, { "example": _react2['default'].createElement(Demo5, null), "title": " 固定列", "code": "/**\n*\n* @title 固定列\n* @description 固定列到表格的某侧\n*\n*/\n\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\n\nconst columns5 = [\n  {\n    title: \"Full Name\",\n    width: 100,\n    dataIndex: \"name\",\n    key: \"name\",\n    fixed: \"left\"\n  },\n  { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\", fixed: \"left\" },\n  { title: \"Column 1\", dataIndex: \"c1\", key: \"1\" },\n  { title: \"Column 2\", dataIndex: \"c2\", key: \"2\" },\n  { title: \"Column 3\", dataIndex: \"c3\", key: \"3\" },\n  { title: \"Column 4\", dataIndex: \"c4\", key: \"4\" },\n  { title: \"Column 5\", dataIndex: \"c5\", key: \"5\" },\n  { title: \"Column 6\", dataIndex: \"c6\", key: \"6\" },\n  { title: \"Column 7\", dataIndex: \"c7\", key: \"7\" },\n  { title: \"Column 8\", dataIndex: \"c8\", key: \"8\" }\n];\n\nconst data5 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    address: \"New York Park\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  }\n];\n\nclass Demo5 extends Component {\n  render() {\n    return <Table columns={columns5} data={data5}scroll={{ x: \"130%\", y: 140 }}/>;\n  }\n}\n\n", "desc": " 固定列到表格的某侧" }, { "example": _react2['default'].createElement(Demo6, null), "title": " 固定表头", "code": "/**\n*\n* @title 固定表头\n* @description 方便一页内展示大量数据。需要指定 column 的 width 属性，否则列头和内容可能不对齐。(还可以设置scroll来支持横向或纵向滚动)\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\nimport dragColumn from \"tinper-bee/lib/dragColumn\";;;\nconst DragColumnTable = dragColumn(Table);\n\nconst columns6 = [\n  {\n    title: \"Full Name\",\n    width: 100,\n    dataIndex: \"name\",\n    key: \"name\"\n  },\n  { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\"},\n  { title: \"Address\", dataIndex: \"address\", key: \"1\" }\n];\n\nconst data6 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    address: \"New York Park\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },{\n    key: \"11\",\n    name: \"John Brown\",\n    age: 32,\n    address: \"New York Park\"\n  },\n  {\n    key: \"12\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"13\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"14\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  }\n];\n\nclass Demo6 extends Component {\n  render() {\n    return <DragColumnTable columns={columns6} data={data6} scroll={{y: 150 }} dragborder={true}  />;\n  }\n}\n\n", "desc": " 方便一页内展示大量数据。需要指定 column 的 width 属性，否则列头和内容可能不对齐。(还可以设置scroll来支持横向或纵向滚动)" }, { "example": _react2['default'].createElement(Demo7, null), "title": " 主子表", "code": "/**\n *\n * @title 主子表\n * @description 主表点击子表联动\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\n\nconst columns7 = [\n  { title: \"班级\", dataIndex: \"a\", key: \"a\" },\n  { title: \"人数\", dataIndex: \"b\", key: \"b\" },\n  { title: \"班主任\", dataIndex: \"c\", key: \"c\" },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst data7 = [\n  { a: \"02级一班\", b: \"2\", c: \"欧阳锋\", d: \"大侠\", key: \"1\" },\n  { a: \"03级二班\", b: \"3\", c: \"归海一刀\", d: \"大侠\", key: \"2\" },\n  { a: \"05级三班\", b: \"1\", c: \"一拳超人\", d: \"愣头青\", key: \"3\" }\n];\n\nconst columns7_1 = [\n  { title: \"姓名\", dataIndex: \"a\", key: \"a\" },\n  { title: \"班级\", dataIndex: \"b\", key: \"b\" },\n  { title: \"系别\", dataIndex: \"c\", key: \"c\" }\n];\n\nclass Demo7 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      children_data: []\n    };\n  }\n\n  rowclick = (record, index) => {\n    if (record.a === \"02级一班\") {\n      this.setState({\n        children_data: [\n          { a: \"郭靖\", b: \"02级一班\", c: \"文学系\", key: \"1\" },\n          { a: \"黄蓉\", b: \"02级一班\", c: \"文学系\", key: \"2\" }\n        ]\n      });\n    } else if (record.a === \"03级二班\") {\n      this.setState({\n        children_data: [\n          { a: \"杨过\", b: \"03级二班\", c: \"外语系\", key: \"1\" },\n          { a: \"小龙女\", b: \"03级二班\", c: \"外语系\", key: \"2\" },\n          { a: \"傻姑\", b: \"03级二班\", c: \"外语系\", key: \"3\" }\n        ]\n      });\n    } else if (record.a === \"05级三班\") {\n      this.setState({\n        children_data: [{ a: \"金圣叹\", b: \"05级三班\", c: \"美术系\", key: \"1\" }]\n      });\n    }\n  };\n\n  render() {\n    return (\n      <div>\n        <Table\n          columns={columns7}\n          data={data7}\n          onRowClick={this.rowclick}\n          title={currentData => <div>标题: 我是主表</div>}\n        />\n        <Table\n          style={{ marginTop: 40 }}\n          columns={columns7_1}\n          data={this.state.children_data}\n          title={currentData => <div>标题: 我是子表</div>}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 主表点击子表联动" }, { "example": _react2['default'].createElement(Demo8, null), "title": " 表格+分页", "code": "/**\n *\n * @title 表格+分页\n * @description 点击分页联动表格\n */\n\nimport React, { Component } from \"react\";\n\nimport { Table, Pagination } from 'tinper-bee';\n\nconst columns8 = [\n  { title: \"姓名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst pageData = {\n  1: [\n    { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"2\" },\n    { a: \"令狐冲\", b: \"男\", c: 41, d: \"大侠\", key: \"1\" },\n    { a: \"郭靖\", b: \"男\", c: 25, d: \"大侠\", key: \"3\" }\n  ],\n  2: [\n    { a: \"芙蓉姐姐\", b: \"女\", c: 23, d: \"大侠\", key: \"1\" },\n    { a: \"芙蓉妹妹\", b: \"女\", c: 23, d: \"内行\", key: \"2\" }\n  ]\n};\n\nclass Demo8 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: pageData[1],\n      activePage: 1\n    };\n  }\n\n  handleSelect(eventKey) {\n    this.setState({\n      data: pageData[eventKey],\n      activePage: eventKey\n    });\n  }\n\n  render() {\n    return (\n      <div>\n        <Table columns={columns8} data={this.state.data} />\n        <Pagination\n          first\n          last\n          prev\n          next\n          maxButtons={5}\n          boundaryLinks\n          activePage={this.state.activePage}\n          onSelect={this.handleSelect.bind(this)}\n          onDataNumSelect={this.dataNumSelect}\n          showJump={true}\n          total={100}\n          dataNum={2}\n        />\n      </div>\n    );\n  }\n}\n\n", "desc": " 点击分页联动表格" }, { "example": _react2['default'].createElement(Demo9, null), "title": " 表格+搜索", "code": "/**\n *\n * @title 表格+搜索\n * @description 搜索刷新表格数据\n *\n *\n * import {Table} from 'tinper-bee';\n */\n\nimport React, { Component } from \"react\";\n\nimport { Table, FormControl, InputGroup, Icon } from 'tinper-bee';\n\nclass Search extends Component {\n  state = {\n    searchValue: \"\",\n    empty: false\n  };\n\n  /**\n     * 搜索\n     */\n  handleSearch = () => {\n    let { onSearch } = this.props;\n    this.setState({\n      empty: true\n    });\n    onSearch && onSearch(this.state.searchValue);\n  };\n\n  /**\n     * 捕获回车\n     * @param e\n     */\n  handleKeyDown = e => {\n    if (e.keyCode === 13) {\n      this.handleSearch();\n    }\n  };\n\n  /**\n     * 输入框改变\n     * @param e\n     */\n  handleChange = (e) => {\n    this.setState({\n      searchValue: e\n    });\n  };\n\n  /**\n     * 清空输入框\n     */\n  emptySearch = () => {\n    let { onEmpty } = this.props;\n    this.setState({\n      searchValue: \"\",\n      empty: false\n    });\n    onEmpty && onEmpty();\n  };\n\n  render() {\n    return (\n      <InputGroup simple className=\"search-component\">\n        <FormControl\n          onChange={this.handleChange}\n          value={this.state.searchValue}\n          onKeyDown={this.handleKeyDown}\n          placeholder=\"请输入用户名\"\n          type=\"text\"\n        />\n        {this.state.empty ? (\n          <Icon\n            type=\"uf-close-c\"\n            onClick={this.emptySearch}\n            className=\"empty-search\"\n          />\n        ) : null}\n\n        <InputGroup.Button onClick={this.handleSearch} shape=\"border\">\n          <Icon type=\"uf-search\" />\n        </InputGroup.Button>\n      </InputGroup>\n    );\n  }\n}\n\nconst columns9 = [\n  {\n    title: \"姓名\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst userData = [\n  { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"大侠\", key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"大侠\", key: \"3\" }\n];\n\nclass Demo9 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: userData\n    };\n  }\n\n  handleSearch = value => {\n    if (value === \"\") {\n      return this.setState({\n        data: userData\n      });\n    }\n    let regExp = new RegExp(value, \"ig\");\n    let data = userData.filter(item => regExp.test(item.a));\n    this.setState({\n      data\n    });\n  };\n\n  handleEmpty = () => {\n    this.setState({\n      data: userData\n    });\n  };\n\n  render() {\n    return (\n      <div>\n        <div className=\"clearfix\">\n          <Search onSearch={this.handleSearch} onEmpty={this.handleEmpty} />\n        </div>\n        <Table columns={columns9} data={this.state.data} />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 搜索刷新表格数据" }];
 	
 	var Demo = function (_Component) {
 	    _inherits(Demo, _Component);
@@ -6164,7 +6164,7 @@
 	    });
 	}
 	
-	function notice(content, duration, type, onClose, position, style, keyboard, onEscapeKeyUp) {
+	function notice(content, duration, type, onClose, position, style, keyboard, onEscapeKeyUp, showIcon) {
 	    var iconType = {
 	        info: 'uf uf-i-c-2',
 	        success: 'uf uf-correct',
@@ -6190,11 +6190,11 @@
 	            content: _react2["default"].createElement(
 	                'div',
 	                null,
-	                _react2["default"].createElement(
+	                showIcon ? _react2["default"].createElement(
 	                    'div',
 	                    { className: clsPrefix + '-notice-description-icon' },
 	                    _react2["default"].createElement('i', { className: (0, _classnames2["default"])(iconType) })
-	                ),
+	                ) : null,
 	                _react2["default"].createElement(
 	                    'div',
 	                    { className: clsPrefix + '-notice-description-content' },
@@ -6222,7 +6222,8 @@
 	        var onClose = obj.onClose || noop;
 	        var position = obj.position || "top";
 	        var style = obj.style || {};
-	        return notice(content, duration, color, onClose, position, style, obj.keyboard, obj.onEscapeKeyUp);
+	        var showIcon = obj.showIcon || false;
+	        return notice(content, duration, color, onClose, position, style, obj.keyboard, obj.onEscapeKeyUp, showIcon);
 	    },
 	    config: function config(options) {
 	        if (options.top !== undefined) {
@@ -7945,7 +7946,7 @@
 	
 	var _beeTooltip2 = _interopRequireDefault(_beeTooltip);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -8303,7 +8304,7 @@
 	
 	var _Overlay2 = _interopRequireDefault(_Overlay);
 	
-	var _createChainedFunction = __webpack_require__(105);
+	var _createChainedFunction = __webpack_require__(108);
 	
 	var _createChainedFunction2 = _interopRequireDefault(_createChainedFunction);
 	
@@ -8948,7 +8949,7 @@
 	
 	var _tinperBeeCore = __webpack_require__(27);
 	
-	var _Fade = __webpack_require__(103);
+	var _Fade = __webpack_require__(106);
 	
 	var _Fade2 = _interopRequireDefault(_Fade);
 	
@@ -9104,7 +9105,7 @@
 	
 	var _Position2 = _interopRequireDefault(_Position);
 	
-	var _RootCloseWrapper = __webpack_require__(102);
+	var _RootCloseWrapper = __webpack_require__(105);
 	
 	var _RootCloseWrapper2 = _interopRequireDefault(_RootCloseWrapper);
 	
@@ -9358,7 +9359,11 @@
 	
 	var _tinperBeeCore = __webpack_require__(27);
 	
-	var _calculatePosition = __webpack_require__(94);
+	var _requestAnimationFrame = __webpack_require__(94);
+	
+	var _requestAnimationFrame2 = _interopRequireDefault(_requestAnimationFrame);
+	
+	var _calculatePosition = __webpack_require__(95);
 	
 	var _calculatePosition2 = _interopRequireDefault(_calculatePosition);
 	
@@ -9369,6 +9374,14 @@
 	var _ownerDocument = __webpack_require__(74);
 	
 	var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
+	
+	var _ownerWindow = __webpack_require__(103);
+	
+	var _ownerWindow2 = _interopRequireDefault(_ownerWindow);
+	
+	var _addEventListener = __webpack_require__(76);
+	
+	var _addEventListener2 = _interopRequireDefault(_addEventListener);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -9437,10 +9450,19 @@
 	        _this.getTarget = _this.getTarget.bind(_this);
 	        _this.maybeUpdatePosition = _this.maybeUpdatePosition.bind(_this);
 	        _this.updatePosition = _this.updatePosition.bind(_this);
+	        _this.onWindowResize = _this.onWindowResize.bind(_this);
 	        return _this;
 	    }
 	
 	    Position.prototype.componentDidMount = function componentDidMount() {
+	        var _this2 = this;
+	
+	        this._isMounted = true;
+	
+	        this._windowResizeListener = (0, _addEventListener2["default"])((0, _ownerWindow2["default"])(this), 'resize', function () {
+	            return _this2.onWindowResize();
+	        });
+	
 	        this.updatePosition(this.getTarget());
 	    };
 	
@@ -9453,6 +9475,14 @@
 	            this.needsFlush = false;
 	
 	            this.maybeUpdatePosition();
+	        }
+	    };
+	
+	    Position.prototype.componentWillUnmount = function componentWillUnmount() {
+	        this._isMounted = false;
+	
+	        if (this._windowResizeListener) {
+	            this._windowResizeListener.remove();
 	        }
 	    };
 	
@@ -9482,11 +9512,22 @@
 	        this.updatePosition(target);
 	    };
 	
+	    Position.prototype.onWindowResize = function onWindowResize() {
+	        var _this3 = this;
+	
+	        (0, _requestAnimationFrame2["default"])(function () {
+	            return _this3.updatePosition(_this3.getTarget());
+	        });
+	    };
+	
 	    /**
 	     * 更新位置
 	     */
 	
 	    Position.prototype.updatePosition = function updatePosition(target) {
+	        if (!this._isMounted) {
+	            return;
+	        }
 	        this.lastTarget = target;
 	
 	        if (!target) {
@@ -9552,6 +9593,65 @@
 /* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
+	"use strict";
+	
+	var _interopRequireDefault = __webpack_require__(14);
+	
+	exports.__esModule = true;
+	exports.default = void 0;
+	
+	var _inDOM = _interopRequireDefault(__webpack_require__(15));
+	
+	var vendors = ['', 'webkit', 'moz', 'o', 'ms'];
+	var cancel = 'clearTimeout';
+	var raf = fallback;
+	var compatRaf;
+	
+	var getKey = function getKey(vendor, k) {
+	  return vendor + (!vendor ? k : k[0].toUpperCase() + k.substr(1)) + 'AnimationFrame';
+	};
+	
+	if (_inDOM.default) {
+	  vendors.some(function (vendor) {
+	    var rafKey = getKey(vendor, 'request');
+	
+	    if (rafKey in window) {
+	      cancel = getKey(vendor, 'cancel');
+	      return raf = function raf(cb) {
+	        return window[rafKey](cb);
+	      };
+	    }
+	  });
+	}
+	/* https://github.com/component/raf */
+	
+	
+	var prev = new Date().getTime();
+	
+	function fallback(fn) {
+	  var curr = new Date().getTime(),
+	      ms = Math.max(0, 16 - (curr - prev)),
+	      req = setTimeout(fn, ms);
+	  prev = curr;
+	  return req;
+	}
+	
+	compatRaf = function compatRaf(cb) {
+	  return raf(cb);
+	};
+	
+	compatRaf.cancel = function (id) {
+	  window[cancel] && typeof window[cancel] === 'function' && window[cancel](id);
+	};
+	
+	var _default = compatRaf;
+	exports.default = _default;
+	module.exports = exports["default"];
+
+/***/ }),
+/* 95 */
+/***/ (function(module, exports, __webpack_require__) {
+
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -9559,15 +9659,15 @@
 	});
 	exports["default"] = calculatePosition;
 	
-	var _offset = __webpack_require__(95);
+	var _offset = __webpack_require__(96);
 	
 	var _offset2 = _interopRequireDefault(_offset);
 	
-	var _position = __webpack_require__(97);
+	var _position = __webpack_require__(98);
 	
 	var _position2 = _interopRequireDefault(_position);
 	
-	var _scrollTop = __webpack_require__(100);
+	var _scrollTop = __webpack_require__(101);
 	
 	var _scrollTop2 = _interopRequireDefault(_scrollTop);
 	
@@ -9725,7 +9825,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 95 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9737,7 +9837,7 @@
 	
 	var _contains = _interopRequireDefault(__webpack_require__(88));
 	
-	var _isWindow = _interopRequireDefault(__webpack_require__(96));
+	var _isWindow = _interopRequireDefault(__webpack_require__(97));
 	
 	var _ownerDocument = _interopRequireDefault(__webpack_require__(75));
 	
@@ -9768,7 +9868,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 96 */
+/* 97 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -9783,7 +9883,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 97 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9793,15 +9893,15 @@
 	exports.__esModule = true;
 	exports.default = position;
 	
-	var _extends2 = _interopRequireDefault(__webpack_require__(98));
+	var _extends2 = _interopRequireDefault(__webpack_require__(99));
 	
-	var _offset = _interopRequireDefault(__webpack_require__(95));
+	var _offset = _interopRequireDefault(__webpack_require__(96));
 	
-	var _offsetParent = _interopRequireDefault(__webpack_require__(99));
+	var _offsetParent = _interopRequireDefault(__webpack_require__(100));
 	
-	var _scrollTop = _interopRequireDefault(__webpack_require__(100));
+	var _scrollTop = _interopRequireDefault(__webpack_require__(101));
 	
-	var _scrollLeft = _interopRequireDefault(__webpack_require__(101));
+	var _scrollLeft = _interopRequireDefault(__webpack_require__(102));
 	
 	var _style = _interopRequireDefault(__webpack_require__(18));
 	
@@ -9837,7 +9937,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 98 */
+/* 99 */
 /***/ (function(module, exports) {
 
 	function _extends() {
@@ -9861,7 +9961,7 @@
 	module.exports = _extends;
 
 /***/ }),
-/* 99 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9893,27 +9993,6 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 100 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var _interopRequireDefault = __webpack_require__(14);
-	
-	exports.__esModule = true;
-	exports.default = scrollTop;
-	
-	var _isWindow = _interopRequireDefault(__webpack_require__(96));
-	
-	function scrollTop(node, val) {
-	  var win = (0, _isWindow.default)(node);
-	  if (val === undefined) return win ? 'pageYOffset' in win ? win.pageYOffset : win.document.documentElement.scrollTop : node.scrollTop;
-	  if (win) win.scrollTo('pageXOffset' in win ? win.pageXOffset : win.document.documentElement.scrollLeft, val);else node.scrollTop = val;
-	}
-	
-	module.exports = exports["default"];
-
-/***/ }),
 /* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9924,7 +10003,28 @@
 	exports.__esModule = true;
 	exports.default = scrollTop;
 	
-	var _isWindow = _interopRequireDefault(__webpack_require__(96));
+	var _isWindow = _interopRequireDefault(__webpack_require__(97));
+	
+	function scrollTop(node, val) {
+	  var win = (0, _isWindow.default)(node);
+	  if (val === undefined) return win ? 'pageYOffset' in win ? win.pageYOffset : win.document.documentElement.scrollTop : node.scrollTop;
+	  if (win) win.scrollTo('pageXOffset' in win ? win.pageXOffset : win.document.documentElement.scrollLeft, val);else node.scrollTop = val;
+	}
+	
+	module.exports = exports["default"];
+
+/***/ }),
+/* 102 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _interopRequireDefault = __webpack_require__(14);
+	
+	exports.__esModule = true;
+	exports.default = scrollTop;
+	
+	var _isWindow = _interopRequireDefault(__webpack_require__(97));
 	
 	function scrollTop(node, val) {
 	  var win = (0, _isWindow.default)(node);
@@ -9935,7 +10035,53 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 102 */
+/* 103 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	exports["default"] = function (componentOrElement) {
+	  return (0, _ownerWindow2["default"])(_reactDom2["default"].findDOMNode(componentOrElement));
+	};
+	
+	var _reactDom = __webpack_require__(12);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _ownerWindow = __webpack_require__(104);
+	
+	var _ownerWindow2 = _interopRequireDefault(_ownerWindow);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	module.exports = exports['default'];
+
+/***/ }),
+/* 104 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _interopRequireDefault = __webpack_require__(14);
+	
+	exports.__esModule = true;
+	exports.default = ownerWindow;
+	
+	var _ownerDocument = _interopRequireDefault(__webpack_require__(75));
+	
+	function ownerWindow(node) {
+	  var doc = (0, _ownerDocument.default)(node);
+	  return doc && doc.defaultView || doc.parentWindow;
+	}
+	
+	module.exports = exports["default"];
+
+/***/ }),
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10097,7 +10243,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 103 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10120,7 +10266,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Transition = __webpack_require__(104);
+	var _Transition = __webpack_require__(107);
 	
 	var _Transition2 = _interopRequireDefault(_Transition);
 	
@@ -10218,7 +10364,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 104 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10567,7 +10713,7 @@
 	exports["default"] = Transition;
 
 /***/ }),
-/* 105 */
+/* 108 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -10615,14 +10761,14 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 106 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Table = __webpack_require__(107);
-	var Column = __webpack_require__(499);
-	var ColumnGroup = __webpack_require__(500);
+	var Table = __webpack_require__(110);
+	var Column = __webpack_require__(503);
+	var ColumnGroup = __webpack_require__(504);
 	
 	Table.Column = Column;
 	Table.ColumnGroup = ColumnGroup;
@@ -10630,7 +10776,7 @@
 	module.exports = Table;
 
 /***/ }),
-/* 107 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10653,17 +10799,17 @@
 	
 	var _componentClasses2 = _interopRequireDefault(_componentClasses);
 	
-	var _TableRow = __webpack_require__(108);
+	var _TableRow = __webpack_require__(111);
 	
 	var _TableRow2 = _interopRequireDefault(_TableRow);
 	
-	var _TableHeader = __webpack_require__(113);
+	var _TableHeader = __webpack_require__(116);
 	
 	var _TableHeader2 = _interopRequireDefault(_TableHeader);
 	
-	var _utils = __webpack_require__(115);
+	var _utils = __webpack_require__(118);
 	
-	var _shallowequal = __webpack_require__(112);
+	var _shallowequal = __webpack_require__(115);
 	
 	var _shallowequal2 = _interopRequireDefault(_shallowequal);
 	
@@ -10671,15 +10817,15 @@
 	
 	var _addEventListener2 = _interopRequireDefault(_addEventListener);
 	
-	var _ColumnManager = __webpack_require__(498);
+	var _ColumnManager = __webpack_require__(502);
 	
 	var _ColumnManager2 = _interopRequireDefault(_ColumnManager);
 	
-	var _createStore = __webpack_require__(501);
+	var _createStore = __webpack_require__(505);
 	
 	var _createStore2 = _interopRequireDefault(_createStore);
 	
-	var _beeLoading = __webpack_require__(502);
+	var _beeLoading = __webpack_require__(506);
 	
 	var _beeLoading2 = _interopRequireDefault(_beeLoading);
 	
@@ -11812,7 +11958,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 108 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11829,11 +11975,11 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _TableCell = __webpack_require__(109);
+	var _TableCell = __webpack_require__(112);
 	
 	var _TableCell2 = _interopRequireDefault(_TableCell);
 	
-	var _ExpandIcon = __webpack_require__(111);
+	var _ExpandIcon = __webpack_require__(114);
 	
 	var _ExpandIcon2 = _interopRequireDefault(_ExpandIcon);
 	
@@ -12078,7 +12224,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 109 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12095,7 +12241,7 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _objectPath = __webpack_require__(110);
+	var _objectPath = __webpack_require__(113);
 	
 	var _objectPath2 = _interopRequireDefault(_objectPath);
 	
@@ -12218,7 +12364,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 110 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (root, factory){
@@ -12516,7 +12662,7 @@
 
 
 /***/ }),
-/* 111 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12533,7 +12679,7 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _shallowequal = __webpack_require__(112);
+	var _shallowequal = __webpack_require__(115);
 	
 	var _shallowequal2 = _interopRequireDefault(_shallowequal);
 	
@@ -12604,7 +12750,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 112 */
+/* 115 */
 /***/ (function(module, exports) {
 
 	//
@@ -12656,7 +12802,7 @@
 
 
 /***/ }),
-/* 113 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12679,15 +12825,15 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _shallowequal = __webpack_require__(112);
+	var _shallowequal = __webpack_require__(115);
 	
 	var _shallowequal2 = _interopRequireDefault(_shallowequal);
 	
-	var _throttleDebounce = __webpack_require__(114);
+	var _throttleDebounce = __webpack_require__(117);
 	
-	var _utils = __webpack_require__(115);
+	var _utils = __webpack_require__(118);
 	
-	var _FilterType = __webpack_require__(129);
+	var _FilterType = __webpack_require__(132);
 	
 	var _FilterType2 = _interopRequireDefault(_FilterType);
 	
@@ -13318,7 +13464,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 114 */
+/* 117 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -13454,7 +13600,7 @@
 
 
 /***/ }),
-/* 115 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13480,7 +13626,7 @@
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
-	var _parseInt = __webpack_require__(116);
+	var _parseInt = __webpack_require__(119);
 	
 	var _parseInt2 = _interopRequireDefault(_parseInt);
 	
@@ -13736,11 +13882,11 @@
 	};
 
 /***/ }),
-/* 116 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var root = __webpack_require__(117),
-	    toString = __webpack_require__(119);
+	var root = __webpack_require__(120),
+	    toString = __webpack_require__(122);
 	
 	/** Used to match leading and trailing whitespace. */
 	var reTrimStart = /^\s+/;
@@ -13785,10 +13931,10 @@
 
 
 /***/ }),
-/* 117 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var freeGlobal = __webpack_require__(118);
+	var freeGlobal = __webpack_require__(121);
 	
 	/** Detect free variable `self`. */
 	var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -13800,7 +13946,7 @@
 
 
 /***/ }),
-/* 118 */
+/* 121 */
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
@@ -13811,10 +13957,10 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 119 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var baseToString = __webpack_require__(120);
+	var baseToString = __webpack_require__(123);
 	
 	/**
 	 * Converts `value` to a string. An empty string is returned for `null`
@@ -13845,13 +13991,13 @@
 
 
 /***/ }),
-/* 120 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var Symbol = __webpack_require__(121),
-	    arrayMap = __webpack_require__(122),
-	    isArray = __webpack_require__(123),
-	    isSymbol = __webpack_require__(124);
+	var Symbol = __webpack_require__(124),
+	    arrayMap = __webpack_require__(125),
+	    isArray = __webpack_require__(126),
+	    isSymbol = __webpack_require__(127);
 	
 	/** Used as references for various `Number` constants. */
 	var INFINITY = 1 / 0;
@@ -13888,10 +14034,10 @@
 
 
 /***/ }),
-/* 121 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var root = __webpack_require__(117);
+	var root = __webpack_require__(120);
 	
 	/** Built-in value references. */
 	var Symbol = root.Symbol;
@@ -13900,7 +14046,7 @@
 
 
 /***/ }),
-/* 122 */
+/* 125 */
 /***/ (function(module, exports) {
 
 	/**
@@ -13927,7 +14073,7 @@
 
 
 /***/ }),
-/* 123 */
+/* 126 */
 /***/ (function(module, exports) {
 
 	/**
@@ -13959,11 +14105,11 @@
 
 
 /***/ }),
-/* 124 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var baseGetTag = __webpack_require__(125),
-	    isObjectLike = __webpack_require__(128);
+	var baseGetTag = __webpack_require__(128),
+	    isObjectLike = __webpack_require__(131);
 	
 	/** `Object#toString` result references. */
 	var symbolTag = '[object Symbol]';
@@ -13994,12 +14140,12 @@
 
 
 /***/ }),
-/* 125 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var Symbol = __webpack_require__(121),
-	    getRawTag = __webpack_require__(126),
-	    objectToString = __webpack_require__(127);
+	var Symbol = __webpack_require__(124),
+	    getRawTag = __webpack_require__(129),
+	    objectToString = __webpack_require__(130);
 	
 	/** `Object#toString` result references. */
 	var nullTag = '[object Null]',
@@ -14028,10 +14174,10 @@
 
 
 /***/ }),
-/* 126 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var Symbol = __webpack_require__(121);
+	var Symbol = __webpack_require__(124);
 	
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -14080,7 +14226,7 @@
 
 
 /***/ }),
-/* 127 */
+/* 130 */
 /***/ (function(module, exports) {
 
 	/** Used for built-in method references. */
@@ -14108,7 +14254,7 @@
 
 
 /***/ }),
-/* 128 */
+/* 131 */
 /***/ (function(module, exports) {
 
 	/**
@@ -14143,7 +14289,7 @@
 
 
 /***/ }),
-/* 129 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14162,27 +14308,27 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _zh_CN = __webpack_require__(130);
+	var _zh_CN = __webpack_require__(133);
 	
 	var _zh_CN2 = _interopRequireDefault(_zh_CN);
 	
-	var _beeFormControl = __webpack_require__(131);
+	var _beeFormControl = __webpack_require__(134);
 	
 	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 	
-	var _beeSelect = __webpack_require__(135);
+	var _beeSelect = __webpack_require__(138);
 	
 	var _beeSelect2 = _interopRequireDefault(_beeSelect);
 	
-	var _beeInputNumber = __webpack_require__(285);
+	var _beeInputNumber = __webpack_require__(288);
 	
 	var _beeInputNumber2 = _interopRequireDefault(_beeInputNumber);
 	
-	var _beeDatepicker = __webpack_require__(292);
+	var _beeDatepicker = __webpack_require__(295);
 	
 	var _beeDatepicker2 = _interopRequireDefault(_beeDatepicker);
 	
-	var _FilterDropDown = __webpack_require__(471);
+	var _FilterDropDown = __webpack_require__(475);
 	
 	var _FilterDropDown2 = _interopRequireDefault(_FilterDropDown);
 	
@@ -14566,7 +14712,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 130 */
+/* 133 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -14603,7 +14749,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 131 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14612,7 +14758,7 @@
 	  value: true
 	});
 	
-	var _FormControl = __webpack_require__(132);
+	var _FormControl = __webpack_require__(135);
 	
 	var _FormControl2 = _interopRequireDefault(_FormControl);
 	
@@ -14622,7 +14768,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 132 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14641,7 +14787,7 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _beeIcon = __webpack_require__(133);
+	var _beeIcon = __webpack_require__(136);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
@@ -14739,6 +14885,14 @@
 	            }
 	        };
 	
+	        _this.handleSearch = function (e) {
+	            var _this$props2 = _this.props,
+	                onSearch = _this$props2.onSearch,
+	                value = _this$props2.value;
+	
+	            if (onSearch) onSearch(value);
+	        };
+	
 	        _this.handleBlur = function (e) {
 	            var value = _this.state.value;
 	            var onBlur = _this.props.onBlur;
@@ -14762,19 +14916,19 @@
 	        };
 	
 	        _this.renderInput = function () {
-	            var _this$props2 = _this.props,
-	                Component = _this$props2.componentClass,
-	                type = _this$props2.type,
-	                className = _this$props2.className,
-	                size = _this$props2.size,
-	                clsPrefix = _this$props2.clsPrefix,
-	                value = _this$props2.value,
-	                onChange = _this$props2.onChange,
-	                onSearch = _this$props2.onSearch,
-	                onBlur = _this$props2.onBlur,
-	                showClose = _this$props2.showClose,
-	                focusSelect = _this$props2.focusSelect,
-	                others = _objectWithoutProperties(_this$props2, ['componentClass', 'type', 'className', 'size', 'clsPrefix', 'value', 'onChange', 'onSearch', 'onBlur', 'showClose', 'focusSelect']);
+	            var _this$props3 = _this.props,
+	                Component = _this$props3.componentClass,
+	                type = _this$props3.type,
+	                className = _this$props3.className,
+	                size = _this$props3.size,
+	                clsPrefix = _this$props3.clsPrefix,
+	                value = _this$props3.value,
+	                onChange = _this$props3.onChange,
+	                onSearch = _this$props3.onSearch,
+	                onBlur = _this$props3.onBlur,
+	                showClose = _this$props3.showClose,
+	                focusSelect = _this$props3.focusSelect,
+	                others = _objectWithoutProperties(_this$props3, ['componentClass', 'type', 'className', 'size', 'clsPrefix', 'value', 'onChange', 'onSearch', 'onBlur', 'showClose', 'focusSelect']);
 	            // input[type="file"] 不应该有类名 .form-control.
 	
 	
@@ -14821,17 +14975,17 @@
 	        };
 	
 	        _this.renderSearch = function () {
-	            var _this$props3 = _this.props,
-	                Component = _this$props3.componentClass,
-	                type = _this$props3.type,
-	                className = _this$props3.className,
-	                size = _this$props3.size,
-	                clsPrefix = _this$props3.clsPrefix,
-	                value = _this$props3.value,
-	                onChange = _this$props3.onChange,
-	                onSearch = _this$props3.onSearch,
-	                onBlur = _this$props3.onBlur,
-	                others = _objectWithoutProperties(_this$props3, ['componentClass', 'type', 'className', 'size', 'clsPrefix', 'value', 'onChange', 'onSearch', 'onBlur']);
+	            var _this$props4 = _this.props,
+	                Component = _this$props4.componentClass,
+	                type = _this$props4.type,
+	                className = _this$props4.className,
+	                size = _this$props4.size,
+	                clsPrefix = _this$props4.clsPrefix,
+	                value = _this$props4.value,
+	                onChange = _this$props4.onChange,
+	                onSearch = _this$props4.onSearch,
+	                onBlur = _this$props4.onBlur,
+	                others = _objectWithoutProperties(_this$props4, ['componentClass', 'type', 'className', 'size', 'clsPrefix', 'value', 'onChange', 'onSearch', 'onBlur']);
 	            // input[type="file"] 不应该有类名 .form-control.
 	
 	
@@ -14860,7 +15014,7 @@
 	                    _react2["default"].createElement(
 	                        'div',
 	                        { className: clsPrefix + '-suffix' },
-	                        _this.state.showSearch || others.disabled ? _react2["default"].createElement(_beeIcon2["default"], { type: 'uf-search' }) : _react2["default"].createElement(_beeIcon2["default"], { onClick: _this.clearValue, type: 'uf-close-c' })
+	                        _react2["default"].createElement(_beeIcon2["default"], { type: 'uf-search', onClick: _this.handleSearch })
 	                    )
 	                );
 	            }
@@ -14900,7 +15054,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 133 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14909,7 +15063,7 @@
 	  value: true
 	});
 	
-	var _Icon = __webpack_require__(134);
+	var _Icon = __webpack_require__(137);
 	
 	var _Icon2 = _interopRequireDefault(_Icon);
 	
@@ -14919,7 +15073,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 134 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14998,7 +15152,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 135 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15008,17 +15162,17 @@
 	});
 	exports.SelectPropTypes = exports.OptGroup = exports.Option = undefined;
 	
-	var _Select = __webpack_require__(136);
+	var _Select = __webpack_require__(139);
 	
 	var _Select2 = _interopRequireDefault(_Select);
 	
-	var _Option = __webpack_require__(277);
+	var _Option = __webpack_require__(280);
 	
 	var _Option2 = _interopRequireDefault(_Option);
 	
-	var _PropTypes = __webpack_require__(283);
+	var _PropTypes = __webpack_require__(286);
 	
-	var _OptGroup = __webpack_require__(284);
+	var _OptGroup = __webpack_require__(287);
 	
 	var _OptGroup2 = _interopRequireDefault(_OptGroup);
 	
@@ -15032,7 +15186,7 @@
 	exports["default"] = _Select2["default"];
 
 /***/ }),
-/* 136 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -15051,15 +15205,15 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _RcSelect = __webpack_require__(137);
+	var _RcSelect = __webpack_require__(140);
 	
 	var _RcSelect2 = _interopRequireDefault(_RcSelect);
 	
-	var _Option = __webpack_require__(277);
+	var _Option = __webpack_require__(280);
 	
 	var _Option2 = _interopRequireDefault(_Option);
 	
-	var _OptGroup = __webpack_require__(284);
+	var _OptGroup = __webpack_require__(287);
 	
 	var _OptGroup2 = _interopRequireDefault(_OptGroup);
 	
@@ -15208,7 +15362,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 137 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15227,11 +15381,11 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _reactLifecyclesCompat = __webpack_require__(138);
+	var _reactLifecyclesCompat = __webpack_require__(141);
 	
 	var _tinperBeeCore = __webpack_require__(27);
 	
-	var _toArray = __webpack_require__(139);
+	var _toArray = __webpack_require__(142);
 	
 	var _toArray2 = _interopRequireDefault(_toArray);
 	
@@ -15247,23 +15401,23 @@
 	
 	var _componentClasses2 = _interopRequireDefault(_componentClasses);
 	
-	var _rcMenu = __webpack_require__(140);
+	var _rcMenu = __webpack_require__(143);
 	
 	var _warning = __webpack_require__(32);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
-	var _Option = __webpack_require__(277);
+	var _Option = __webpack_require__(280);
 	
 	var _Option2 = _interopRequireDefault(_Option);
 	
-	var _util = __webpack_require__(278);
+	var _util = __webpack_require__(281);
 	
-	var _SelectTrigger = __webpack_require__(279);
+	var _SelectTrigger = __webpack_require__(282);
 	
 	var _SelectTrigger2 = _interopRequireDefault(_SelectTrigger);
 	
-	var _PropTypes = __webpack_require__(283);
+	var _PropTypes = __webpack_require__(286);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -16705,7 +16859,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 138 */
+/* 141 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -16873,7 +17027,7 @@
 
 
 /***/ }),
-/* 139 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -16899,7 +17053,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 140 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -16907,23 +17061,23 @@
 	exports.__esModule = true;
 	exports.Divider = exports.ItemGroup = exports.MenuItemGroup = exports.MenuItem = exports.Item = exports.SubMenu = undefined;
 	
-	var _Menu = __webpack_require__(141);
+	var _Menu = __webpack_require__(144);
 	
 	var _Menu2 = _interopRequireDefault(_Menu);
 	
-	var _SubMenu = __webpack_require__(240);
+	var _SubMenu = __webpack_require__(243);
 	
 	var _SubMenu2 = _interopRequireDefault(_SubMenu);
 	
-	var _MenuItem = __webpack_require__(271);
+	var _MenuItem = __webpack_require__(274);
 	
 	var _MenuItem2 = _interopRequireDefault(_MenuItem);
 	
-	var _MenuItemGroup = __webpack_require__(275);
+	var _MenuItemGroup = __webpack_require__(278);
 	
 	var _MenuItemGroup2 = _interopRequireDefault(_MenuItemGroup);
 	
-	var _Divider = __webpack_require__(276);
+	var _Divider = __webpack_require__(279);
 	
 	var _Divider2 = _interopRequireDefault(_Divider);
 	
@@ -16938,30 +17092,30 @@
 	exports['default'] = _Menu2['default'];
 
 /***/ }),
-/* 141 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _extends2 = __webpack_require__(142);
+	var _extends2 = __webpack_require__(145);
 	
 	var _extends3 = _interopRequireDefault(_extends2);
 	
-	var _objectWithoutProperties2 = __webpack_require__(181);
+	var _objectWithoutProperties2 = __webpack_require__(184);
 	
 	var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 	
-	var _classCallCheck2 = __webpack_require__(182);
+	var _classCallCheck2 = __webpack_require__(185);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _possibleConstructorReturn2 = __webpack_require__(183);
+	var _possibleConstructorReturn2 = __webpack_require__(186);
 	
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 	
-	var _inherits2 = __webpack_require__(217);
+	var _inherits2 = __webpack_require__(220);
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
@@ -16973,13 +17127,13 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _miniStore = __webpack_require__(225);
+	var _miniStore = __webpack_require__(228);
 	
-	var _SubPopupMenu = __webpack_require__(234);
+	var _SubPopupMenu = __webpack_require__(237);
 	
 	var _SubPopupMenu2 = _interopRequireDefault(_SubPopupMenu);
 	
-	var _util = __webpack_require__(237);
+	var _util = __webpack_require__(240);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -17224,14 +17378,14 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 142 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	exports.__esModule = true;
 	
-	var _assign = __webpack_require__(143);
+	var _assign = __webpack_require__(146);
 	
 	var _assign2 = _interopRequireDefault(_assign);
 	
@@ -17252,38 +17406,38 @@
 	};
 
 /***/ }),
-/* 143 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	module.exports = { "default": __webpack_require__(144), __esModule: true };
-
-/***/ }),
-/* 144 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	__webpack_require__(145);
-	module.exports = __webpack_require__(148).Object.assign;
-
-
-/***/ }),
-/* 145 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	// 19.1.3.1 Object.assign(target, source)
-	var $export = __webpack_require__(146);
-	
-	$export($export.S + $export.F, 'Object', { assign: __webpack_require__(162) });
-
-
-/***/ }),
 /* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var global = __webpack_require__(147);
-	var core = __webpack_require__(148);
-	var ctx = __webpack_require__(149);
-	var hide = __webpack_require__(151);
-	var has = __webpack_require__(161);
+	module.exports = { "default": __webpack_require__(147), __esModule: true };
+
+/***/ }),
+/* 147 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	__webpack_require__(148);
+	module.exports = __webpack_require__(151).Object.assign;
+
+
+/***/ }),
+/* 148 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// 19.1.3.1 Object.assign(target, source)
+	var $export = __webpack_require__(149);
+	
+	$export($export.S + $export.F, 'Object', { assign: __webpack_require__(165) });
+
+
+/***/ }),
+/* 149 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var global = __webpack_require__(150);
+	var core = __webpack_require__(151);
+	var ctx = __webpack_require__(152);
+	var hide = __webpack_require__(154);
+	var has = __webpack_require__(164);
 	var PROTOTYPE = 'prototype';
 	
 	var $export = function (type, name, source) {
@@ -17344,7 +17498,7 @@
 
 
 /***/ }),
-/* 147 */
+/* 150 */
 /***/ (function(module, exports) {
 
 	// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
@@ -17356,19 +17510,19 @@
 
 
 /***/ }),
-/* 148 */
+/* 151 */
 /***/ (function(module, exports) {
 
-	var core = module.exports = { version: '2.5.7' };
+	var core = module.exports = { version: '2.6.0' };
 	if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 
 /***/ }),
-/* 149 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// optional / simple context binding
-	var aFunction = __webpack_require__(150);
+	var aFunction = __webpack_require__(153);
 	module.exports = function (fn, that, length) {
 	  aFunction(fn);
 	  if (that === undefined) return fn;
@@ -17390,7 +17544,7 @@
 
 
 /***/ }),
-/* 150 */
+/* 153 */
 /***/ (function(module, exports) {
 
 	module.exports = function (it) {
@@ -17400,12 +17554,12 @@
 
 
 /***/ }),
-/* 151 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var dP = __webpack_require__(152);
-	var createDesc = __webpack_require__(160);
-	module.exports = __webpack_require__(156) ? function (object, key, value) {
+	var dP = __webpack_require__(155);
+	var createDesc = __webpack_require__(163);
+	module.exports = __webpack_require__(159) ? function (object, key, value) {
 	  return dP.f(object, key, createDesc(1, value));
 	} : function (object, key, value) {
 	  object[key] = value;
@@ -17414,15 +17568,15 @@
 
 
 /***/ }),
-/* 152 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var anObject = __webpack_require__(153);
-	var IE8_DOM_DEFINE = __webpack_require__(155);
-	var toPrimitive = __webpack_require__(159);
+	var anObject = __webpack_require__(156);
+	var IE8_DOM_DEFINE = __webpack_require__(158);
+	var toPrimitive = __webpack_require__(162);
 	var dP = Object.defineProperty;
 	
-	exports.f = __webpack_require__(156) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+	exports.f = __webpack_require__(159) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
 	  anObject(O);
 	  P = toPrimitive(P, true);
 	  anObject(Attributes);
@@ -17436,10 +17590,10 @@
 
 
 /***/ }),
-/* 153 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var isObject = __webpack_require__(154);
+	var isObject = __webpack_require__(157);
 	module.exports = function (it) {
 	  if (!isObject(it)) throw TypeError(it + ' is not an object!');
 	  return it;
@@ -17447,7 +17601,7 @@
 
 
 /***/ }),
-/* 154 */
+/* 157 */
 /***/ (function(module, exports) {
 
 	module.exports = function (it) {
@@ -17456,26 +17610,26 @@
 
 
 /***/ }),
-/* 155 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = !__webpack_require__(156) && !__webpack_require__(157)(function () {
-	  return Object.defineProperty(__webpack_require__(158)('div'), 'a', { get: function () { return 7; } }).a != 7;
+	module.exports = !__webpack_require__(159) && !__webpack_require__(160)(function () {
+	  return Object.defineProperty(__webpack_require__(161)('div'), 'a', { get: function () { return 7; } }).a != 7;
 	});
 
 
 /***/ }),
-/* 156 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// Thank's IE8 for his funny defineProperty
-	module.exports = !__webpack_require__(157)(function () {
+	module.exports = !__webpack_require__(160)(function () {
 	  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
 	});
 
 
 /***/ }),
-/* 157 */
+/* 160 */
 /***/ (function(module, exports) {
 
 	module.exports = function (exec) {
@@ -17488,11 +17642,11 @@
 
 
 /***/ }),
-/* 158 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var isObject = __webpack_require__(154);
-	var document = __webpack_require__(147).document;
+	var isObject = __webpack_require__(157);
+	var document = __webpack_require__(150).document;
 	// typeof document.createElement is 'object' in old IE
 	var is = isObject(document) && isObject(document.createElement);
 	module.exports = function (it) {
@@ -17501,11 +17655,11 @@
 
 
 /***/ }),
-/* 159 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// 7.1.1 ToPrimitive(input [, PreferredType])
-	var isObject = __webpack_require__(154);
+	var isObject = __webpack_require__(157);
 	// instead of the ES6 spec version, we didn't implement @@toPrimitive case
 	// and the second argument - flag - preferred type is a string
 	module.exports = function (it, S) {
@@ -17519,7 +17673,7 @@
 
 
 /***/ }),
-/* 160 */
+/* 163 */
 /***/ (function(module, exports) {
 
 	module.exports = function (bitmap, value) {
@@ -17533,7 +17687,7 @@
 
 
 /***/ }),
-/* 161 */
+/* 164 */
 /***/ (function(module, exports) {
 
 	var hasOwnProperty = {}.hasOwnProperty;
@@ -17543,20 +17697,20 @@
 
 
 /***/ }),
-/* 162 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// 19.1.2.1 Object.assign(target, source, ...)
-	var getKeys = __webpack_require__(163);
-	var gOPS = __webpack_require__(178);
-	var pIE = __webpack_require__(179);
-	var toObject = __webpack_require__(180);
-	var IObject = __webpack_require__(166);
+	var getKeys = __webpack_require__(166);
+	var gOPS = __webpack_require__(181);
+	var pIE = __webpack_require__(182);
+	var toObject = __webpack_require__(183);
+	var IObject = __webpack_require__(169);
 	var $assign = Object.assign;
 	
 	// should work with symbols and should have deterministic property order (V8 bug)
-	module.exports = !$assign || __webpack_require__(157)(function () {
+	module.exports = !$assign || __webpack_require__(160)(function () {
 	  var A = {};
 	  var B = {};
 	  // eslint-disable-next-line no-undef
@@ -17583,12 +17737,12 @@
 
 
 /***/ }),
-/* 163 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// 19.1.2.14 / 15.2.3.14 Object.keys(O)
-	var $keys = __webpack_require__(164);
-	var enumBugKeys = __webpack_require__(177);
+	var $keys = __webpack_require__(167);
+	var enumBugKeys = __webpack_require__(180);
 	
 	module.exports = Object.keys || function keys(O) {
 	  return $keys(O, enumBugKeys);
@@ -17596,13 +17750,13 @@
 
 
 /***/ }),
-/* 164 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var has = __webpack_require__(161);
-	var toIObject = __webpack_require__(165);
-	var arrayIndexOf = __webpack_require__(169)(false);
-	var IE_PROTO = __webpack_require__(173)('IE_PROTO');
+	var has = __webpack_require__(164);
+	var toIObject = __webpack_require__(168);
+	var arrayIndexOf = __webpack_require__(172)(false);
+	var IE_PROTO = __webpack_require__(176)('IE_PROTO');
 	
 	module.exports = function (object, names) {
 	  var O = toIObject(object);
@@ -17619,23 +17773,23 @@
 
 
 /***/ }),
-/* 165 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// to indexed object, toObject with fallback for non-array-like ES3 strings
-	var IObject = __webpack_require__(166);
-	var defined = __webpack_require__(168);
+	var IObject = __webpack_require__(169);
+	var defined = __webpack_require__(171);
 	module.exports = function (it) {
 	  return IObject(defined(it));
 	};
 
 
 /***/ }),
-/* 166 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// fallback for non-array-like ES3 and non-enumerable old V8 strings
-	var cof = __webpack_require__(167);
+	var cof = __webpack_require__(170);
 	// eslint-disable-next-line no-prototype-builtins
 	module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 	  return cof(it) == 'String' ? it.split('') : Object(it);
@@ -17643,7 +17797,7 @@
 
 
 /***/ }),
-/* 167 */
+/* 170 */
 /***/ (function(module, exports) {
 
 	var toString = {}.toString;
@@ -17654,7 +17808,7 @@
 
 
 /***/ }),
-/* 168 */
+/* 171 */
 /***/ (function(module, exports) {
 
 	// 7.2.1 RequireObjectCoercible(argument)
@@ -17665,14 +17819,14 @@
 
 
 /***/ }),
-/* 169 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// false -> Array#indexOf
 	// true  -> Array#includes
-	var toIObject = __webpack_require__(165);
-	var toLength = __webpack_require__(170);
-	var toAbsoluteIndex = __webpack_require__(172);
+	var toIObject = __webpack_require__(168);
+	var toLength = __webpack_require__(173);
+	var toAbsoluteIndex = __webpack_require__(175);
 	module.exports = function (IS_INCLUDES) {
 	  return function ($this, el, fromIndex) {
 	    var O = toIObject($this);
@@ -17694,11 +17848,11 @@
 
 
 /***/ }),
-/* 170 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// 7.1.15 ToLength
-	var toInteger = __webpack_require__(171);
+	var toInteger = __webpack_require__(174);
 	var min = Math.min;
 	module.exports = function (it) {
 	  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
@@ -17706,7 +17860,7 @@
 
 
 /***/ }),
-/* 171 */
+/* 174 */
 /***/ (function(module, exports) {
 
 	// 7.1.4 ToInteger
@@ -17718,10 +17872,10 @@
 
 
 /***/ }),
-/* 172 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var toInteger = __webpack_require__(171);
+	var toInteger = __webpack_require__(174);
 	var max = Math.max;
 	var min = Math.min;
 	module.exports = function (index, length) {
@@ -17731,22 +17885,22 @@
 
 
 /***/ }),
-/* 173 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var shared = __webpack_require__(174)('keys');
-	var uid = __webpack_require__(176);
+	var shared = __webpack_require__(177)('keys');
+	var uid = __webpack_require__(179);
 	module.exports = function (key) {
 	  return shared[key] || (shared[key] = uid(key));
 	};
 
 
 /***/ }),
-/* 174 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var core = __webpack_require__(148);
-	var global = __webpack_require__(147);
+	var core = __webpack_require__(151);
+	var global = __webpack_require__(150);
 	var SHARED = '__core-js_shared__';
 	var store = global[SHARED] || (global[SHARED] = {});
 	
@@ -17754,20 +17908,20 @@
 	  return store[key] || (store[key] = value !== undefined ? value : {});
 	})('versions', []).push({
 	  version: core.version,
-	  mode: __webpack_require__(175) ? 'pure' : 'global',
+	  mode: __webpack_require__(178) ? 'pure' : 'global',
 	  copyright: '© 2018 Denis Pushkarev (zloirock.ru)'
 	});
 
 
 /***/ }),
-/* 175 */
+/* 178 */
 /***/ (function(module, exports) {
 
 	module.exports = true;
 
 
 /***/ }),
-/* 176 */
+/* 179 */
 /***/ (function(module, exports) {
 
 	var id = 0;
@@ -17778,7 +17932,7 @@
 
 
 /***/ }),
-/* 177 */
+/* 180 */
 /***/ (function(module, exports) {
 
 	// IE 8- don't enum bug keys
@@ -17788,32 +17942,32 @@
 
 
 /***/ }),
-/* 178 */
+/* 181 */
 /***/ (function(module, exports) {
 
 	exports.f = Object.getOwnPropertySymbols;
 
 
 /***/ }),
-/* 179 */
+/* 182 */
 /***/ (function(module, exports) {
 
 	exports.f = {}.propertyIsEnumerable;
 
 
 /***/ }),
-/* 180 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// 7.1.13 ToObject(argument)
-	var defined = __webpack_require__(168);
+	var defined = __webpack_require__(171);
 	module.exports = function (it) {
 	  return Object(defined(it));
 	};
 
 
 /***/ }),
-/* 181 */
+/* 184 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -17833,7 +17987,7 @@
 	};
 
 /***/ }),
-/* 182 */
+/* 185 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -17847,14 +18001,14 @@
 	};
 
 /***/ }),
-/* 183 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	exports.__esModule = true;
 	
-	var _typeof2 = __webpack_require__(184);
+	var _typeof2 = __webpack_require__(187);
 	
 	var _typeof3 = _interopRequireDefault(_typeof2);
 	
@@ -17869,18 +18023,18 @@
 	};
 
 /***/ }),
-/* 184 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	exports.__esModule = true;
 	
-	var _iterator = __webpack_require__(185);
+	var _iterator = __webpack_require__(188);
 	
 	var _iterator2 = _interopRequireDefault(_iterator);
 	
-	var _symbol = __webpack_require__(204);
+	var _symbol = __webpack_require__(207);
 	
 	var _symbol2 = _interopRequireDefault(_symbol);
 	
@@ -17895,29 +18049,29 @@
 	};
 
 /***/ }),
-/* 185 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(186), __esModule: true };
+	module.exports = { "default": __webpack_require__(189), __esModule: true };
 
 /***/ }),
-/* 186 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	__webpack_require__(187);
-	__webpack_require__(199);
-	module.exports = __webpack_require__(203).f('iterator');
+	__webpack_require__(190);
+	__webpack_require__(202);
+	module.exports = __webpack_require__(206).f('iterator');
 
 
 /***/ }),
-/* 187 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $at = __webpack_require__(188)(true);
+	var $at = __webpack_require__(191)(true);
 	
 	// 21.1.3.27 String.prototype[@@iterator]()
-	__webpack_require__(189)(String, 'String', function (iterated) {
+	__webpack_require__(192)(String, 'String', function (iterated) {
 	  this._t = String(iterated); // target
 	  this._i = 0;                // next index
 	// 21.1.5.2.1 %StringIteratorPrototype%.next()
@@ -17933,11 +18087,11 @@
 
 
 /***/ }),
-/* 188 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var toInteger = __webpack_require__(171);
-	var defined = __webpack_require__(168);
+	var toInteger = __webpack_require__(174);
+	var defined = __webpack_require__(171);
 	// true  -> String#at
 	// false -> String#codePointAt
 	module.exports = function (TO_STRING) {
@@ -17956,19 +18110,19 @@
 
 
 /***/ }),
-/* 189 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var LIBRARY = __webpack_require__(175);
-	var $export = __webpack_require__(146);
-	var redefine = __webpack_require__(190);
-	var hide = __webpack_require__(151);
-	var Iterators = __webpack_require__(191);
-	var $iterCreate = __webpack_require__(192);
-	var setToStringTag = __webpack_require__(196);
-	var getPrototypeOf = __webpack_require__(198);
-	var ITERATOR = __webpack_require__(197)('iterator');
+	var LIBRARY = __webpack_require__(178);
+	var $export = __webpack_require__(149);
+	var redefine = __webpack_require__(193);
+	var hide = __webpack_require__(154);
+	var Iterators = __webpack_require__(194);
+	var $iterCreate = __webpack_require__(195);
+	var setToStringTag = __webpack_require__(199);
+	var getPrototypeOf = __webpack_require__(201);
+	var ITERATOR = __webpack_require__(200)('iterator');
 	var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 	var FF_ITERATOR = '@@iterator';
 	var KEYS = 'keys';
@@ -18031,31 +18185,31 @@
 
 
 /***/ }),
-/* 190 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(151);
+	module.exports = __webpack_require__(154);
 
 
 /***/ }),
-/* 191 */
+/* 194 */
 /***/ (function(module, exports) {
 
 	module.exports = {};
 
 
 /***/ }),
-/* 192 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var create = __webpack_require__(193);
-	var descriptor = __webpack_require__(160);
-	var setToStringTag = __webpack_require__(196);
+	var create = __webpack_require__(196);
+	var descriptor = __webpack_require__(163);
+	var setToStringTag = __webpack_require__(199);
 	var IteratorPrototype = {};
 	
 	// 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-	__webpack_require__(151)(IteratorPrototype, __webpack_require__(197)('iterator'), function () { return this; });
+	__webpack_require__(154)(IteratorPrototype, __webpack_require__(200)('iterator'), function () { return this; });
 	
 	module.exports = function (Constructor, NAME, next) {
 	  Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
@@ -18064,27 +18218,27 @@
 
 
 /***/ }),
-/* 193 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-	var anObject = __webpack_require__(153);
-	var dPs = __webpack_require__(194);
-	var enumBugKeys = __webpack_require__(177);
-	var IE_PROTO = __webpack_require__(173)('IE_PROTO');
+	var anObject = __webpack_require__(156);
+	var dPs = __webpack_require__(197);
+	var enumBugKeys = __webpack_require__(180);
+	var IE_PROTO = __webpack_require__(176)('IE_PROTO');
 	var Empty = function () { /* empty */ };
 	var PROTOTYPE = 'prototype';
 	
 	// Create object with fake `null` prototype: use iframe Object with cleared prototype
 	var createDict = function () {
 	  // Thrash, waste and sodomy: IE GC bug
-	  var iframe = __webpack_require__(158)('iframe');
+	  var iframe = __webpack_require__(161)('iframe');
 	  var i = enumBugKeys.length;
 	  var lt = '<';
 	  var gt = '>';
 	  var iframeDocument;
 	  iframe.style.display = 'none';
-	  __webpack_require__(195).appendChild(iframe);
+	  __webpack_require__(198).appendChild(iframe);
 	  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
 	  // createDict = iframe.contentWindow.Object;
 	  // html.removeChild(iframe);
@@ -18111,14 +18265,14 @@
 
 
 /***/ }),
-/* 194 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var dP = __webpack_require__(152);
-	var anObject = __webpack_require__(153);
-	var getKeys = __webpack_require__(163);
+	var dP = __webpack_require__(155);
+	var anObject = __webpack_require__(156);
+	var getKeys = __webpack_require__(166);
 	
-	module.exports = __webpack_require__(156) ? Object.defineProperties : function defineProperties(O, Properties) {
+	module.exports = __webpack_require__(159) ? Object.defineProperties : function defineProperties(O, Properties) {
 	  anObject(O);
 	  var keys = getKeys(Properties);
 	  var length = keys.length;
@@ -18130,20 +18284,20 @@
 
 
 /***/ }),
-/* 195 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var document = __webpack_require__(147).document;
+	var document = __webpack_require__(150).document;
 	module.exports = document && document.documentElement;
 
 
 /***/ }),
-/* 196 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var def = __webpack_require__(152).f;
-	var has = __webpack_require__(161);
-	var TAG = __webpack_require__(197)('toStringTag');
+	var def = __webpack_require__(155).f;
+	var has = __webpack_require__(164);
+	var TAG = __webpack_require__(200)('toStringTag');
 	
 	module.exports = function (it, tag, stat) {
 	  if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
@@ -18151,12 +18305,12 @@
 
 
 /***/ }),
-/* 197 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var store = __webpack_require__(174)('wks');
-	var uid = __webpack_require__(176);
-	var Symbol = __webpack_require__(147).Symbol;
+	var store = __webpack_require__(177)('wks');
+	var uid = __webpack_require__(179);
+	var Symbol = __webpack_require__(150).Symbol;
 	var USE_SYMBOL = typeof Symbol == 'function';
 	
 	var $exports = module.exports = function (name) {
@@ -18168,13 +18322,13 @@
 
 
 /***/ }),
-/* 198 */
+/* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-	var has = __webpack_require__(161);
-	var toObject = __webpack_require__(180);
-	var IE_PROTO = __webpack_require__(173)('IE_PROTO');
+	var has = __webpack_require__(164);
+	var toObject = __webpack_require__(183);
+	var IE_PROTO = __webpack_require__(176)('IE_PROTO');
 	var ObjectProto = Object.prototype;
 	
 	module.exports = Object.getPrototypeOf || function (O) {
@@ -18187,14 +18341,14 @@
 
 
 /***/ }),
-/* 199 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	__webpack_require__(200);
-	var global = __webpack_require__(147);
-	var hide = __webpack_require__(151);
-	var Iterators = __webpack_require__(191);
-	var TO_STRING_TAG = __webpack_require__(197)('toStringTag');
+	__webpack_require__(203);
+	var global = __webpack_require__(150);
+	var hide = __webpack_require__(154);
+	var Iterators = __webpack_require__(194);
+	var TO_STRING_TAG = __webpack_require__(200)('toStringTag');
 	
 	var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
 	  'DOMTokenList,DataTransferItemList,FileList,HTMLAllCollection,HTMLCollection,HTMLFormElement,HTMLSelectElement,' +
@@ -18212,20 +18366,20 @@
 
 
 /***/ }),
-/* 200 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var addToUnscopables = __webpack_require__(201);
-	var step = __webpack_require__(202);
-	var Iterators = __webpack_require__(191);
-	var toIObject = __webpack_require__(165);
+	var addToUnscopables = __webpack_require__(204);
+	var step = __webpack_require__(205);
+	var Iterators = __webpack_require__(194);
+	var toIObject = __webpack_require__(168);
 	
 	// 22.1.3.4 Array.prototype.entries()
 	// 22.1.3.13 Array.prototype.keys()
 	// 22.1.3.29 Array.prototype.values()
 	// 22.1.3.30 Array.prototype[@@iterator]()
-	module.exports = __webpack_require__(189)(Array, 'Array', function (iterated, kind) {
+	module.exports = __webpack_require__(192)(Array, 'Array', function (iterated, kind) {
 	  this._t = toIObject(iterated); // target
 	  this._i = 0;                   // next index
 	  this._k = kind;                // kind
@@ -18252,14 +18406,14 @@
 
 
 /***/ }),
-/* 201 */
+/* 204 */
 /***/ (function(module, exports) {
 
 	module.exports = function () { /* empty */ };
 
 
 /***/ }),
-/* 202 */
+/* 205 */
 /***/ (function(module, exports) {
 
 	module.exports = function (done, value) {
@@ -18268,60 +18422,60 @@
 
 
 /***/ }),
-/* 203 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	exports.f = __webpack_require__(197);
-
-
-/***/ }),
-/* 204 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	module.exports = { "default": __webpack_require__(205), __esModule: true };
-
-/***/ }),
-/* 205 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	__webpack_require__(206);
-	__webpack_require__(214);
-	__webpack_require__(215);
-	__webpack_require__(216);
-	module.exports = __webpack_require__(148).Symbol;
-
-
-/***/ }),
 /* 206 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	exports.f = __webpack_require__(200);
+
+
+/***/ }),
+/* 207 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(208), __esModule: true };
+
+/***/ }),
+/* 208 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	__webpack_require__(209);
+	__webpack_require__(217);
+	__webpack_require__(218);
+	__webpack_require__(219);
+	module.exports = __webpack_require__(151).Symbol;
+
+
+/***/ }),
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// ECMAScript 6 symbols shim
-	var global = __webpack_require__(147);
-	var has = __webpack_require__(161);
-	var DESCRIPTORS = __webpack_require__(156);
-	var $export = __webpack_require__(146);
-	var redefine = __webpack_require__(190);
-	var META = __webpack_require__(207).KEY;
-	var $fails = __webpack_require__(157);
-	var shared = __webpack_require__(174);
-	var setToStringTag = __webpack_require__(196);
-	var uid = __webpack_require__(176);
-	var wks = __webpack_require__(197);
-	var wksExt = __webpack_require__(203);
-	var wksDefine = __webpack_require__(208);
-	var enumKeys = __webpack_require__(209);
-	var isArray = __webpack_require__(210);
-	var anObject = __webpack_require__(153);
-	var isObject = __webpack_require__(154);
-	var toIObject = __webpack_require__(165);
-	var toPrimitive = __webpack_require__(159);
-	var createDesc = __webpack_require__(160);
-	var _create = __webpack_require__(193);
-	var gOPNExt = __webpack_require__(211);
-	var $GOPD = __webpack_require__(213);
-	var $DP = __webpack_require__(152);
-	var $keys = __webpack_require__(163);
+	var global = __webpack_require__(150);
+	var has = __webpack_require__(164);
+	var DESCRIPTORS = __webpack_require__(159);
+	var $export = __webpack_require__(149);
+	var redefine = __webpack_require__(193);
+	var META = __webpack_require__(210).KEY;
+	var $fails = __webpack_require__(160);
+	var shared = __webpack_require__(177);
+	var setToStringTag = __webpack_require__(199);
+	var uid = __webpack_require__(179);
+	var wks = __webpack_require__(200);
+	var wksExt = __webpack_require__(206);
+	var wksDefine = __webpack_require__(211);
+	var enumKeys = __webpack_require__(212);
+	var isArray = __webpack_require__(213);
+	var anObject = __webpack_require__(156);
+	var isObject = __webpack_require__(157);
+	var toIObject = __webpack_require__(168);
+	var toPrimitive = __webpack_require__(162);
+	var createDesc = __webpack_require__(163);
+	var _create = __webpack_require__(196);
+	var gOPNExt = __webpack_require__(214);
+	var $GOPD = __webpack_require__(216);
+	var $DP = __webpack_require__(155);
+	var $keys = __webpack_require__(166);
 	var gOPD = $GOPD.f;
 	var dP = $DP.f;
 	var gOPN = gOPNExt.f;
@@ -18444,11 +18598,11 @@
 	
 	  $GOPD.f = $getOwnPropertyDescriptor;
 	  $DP.f = $defineProperty;
-	  __webpack_require__(212).f = gOPNExt.f = $getOwnPropertyNames;
-	  __webpack_require__(179).f = $propertyIsEnumerable;
-	  __webpack_require__(178).f = $getOwnPropertySymbols;
+	  __webpack_require__(215).f = gOPNExt.f = $getOwnPropertyNames;
+	  __webpack_require__(182).f = $propertyIsEnumerable;
+	  __webpack_require__(181).f = $getOwnPropertySymbols;
 	
-	  if (DESCRIPTORS && !__webpack_require__(175)) {
+	  if (DESCRIPTORS && !__webpack_require__(178)) {
 	    redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
 	  }
 	
@@ -18522,7 +18676,7 @@
 	});
 	
 	// 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
-	$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(151)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
+	$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(154)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
 	// 19.4.3.5 Symbol.prototype[@@toStringTag]
 	setToStringTag($Symbol, 'Symbol');
 	// 20.2.1.9 Math[@@toStringTag]
@@ -18532,18 +18686,18 @@
 
 
 /***/ }),
-/* 207 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var META = __webpack_require__(176)('meta');
-	var isObject = __webpack_require__(154);
-	var has = __webpack_require__(161);
-	var setDesc = __webpack_require__(152).f;
+	var META = __webpack_require__(179)('meta');
+	var isObject = __webpack_require__(157);
+	var has = __webpack_require__(164);
+	var setDesc = __webpack_require__(155).f;
 	var id = 0;
 	var isExtensible = Object.isExtensible || function () {
 	  return true;
 	};
-	var FREEZE = !__webpack_require__(157)(function () {
+	var FREEZE = !__webpack_require__(160)(function () {
 	  return isExtensible(Object.preventExtensions({}));
 	});
 	var setMeta = function (it) {
@@ -18591,14 +18745,14 @@
 
 
 /***/ }),
-/* 208 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var global = __webpack_require__(147);
-	var core = __webpack_require__(148);
-	var LIBRARY = __webpack_require__(175);
-	var wksExt = __webpack_require__(203);
-	var defineProperty = __webpack_require__(152).f;
+	var global = __webpack_require__(150);
+	var core = __webpack_require__(151);
+	var LIBRARY = __webpack_require__(178);
+	var wksExt = __webpack_require__(206);
+	var defineProperty = __webpack_require__(155).f;
 	module.exports = function (name) {
 	  var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
 	  if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
@@ -18606,13 +18760,13 @@
 
 
 /***/ }),
-/* 209 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// all enumerable object keys, includes symbols
-	var getKeys = __webpack_require__(163);
-	var gOPS = __webpack_require__(178);
-	var pIE = __webpack_require__(179);
+	var getKeys = __webpack_require__(166);
+	var gOPS = __webpack_require__(181);
+	var pIE = __webpack_require__(182);
 	module.exports = function (it) {
 	  var result = getKeys(it);
 	  var getSymbols = gOPS.f;
@@ -18627,23 +18781,23 @@
 
 
 /***/ }),
-/* 210 */
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// 7.2.2 IsArray(argument)
-	var cof = __webpack_require__(167);
+	var cof = __webpack_require__(170);
 	module.exports = Array.isArray || function isArray(arg) {
 	  return cof(arg) == 'Array';
 	};
 
 
 /***/ }),
-/* 211 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
-	var toIObject = __webpack_require__(165);
-	var gOPN = __webpack_require__(212).f;
+	var toIObject = __webpack_require__(168);
+	var gOPN = __webpack_require__(215).f;
 	var toString = {}.toString;
 	
 	var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
@@ -18663,12 +18817,12 @@
 
 
 /***/ }),
-/* 212 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
-	var $keys = __webpack_require__(164);
-	var hiddenKeys = __webpack_require__(177).concat('length', 'prototype');
+	var $keys = __webpack_require__(167);
+	var hiddenKeys = __webpack_require__(180).concat('length', 'prototype');
 	
 	exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 	  return $keys(O, hiddenKeys);
@@ -18676,18 +18830,18 @@
 
 
 /***/ }),
-/* 213 */
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var pIE = __webpack_require__(179);
-	var createDesc = __webpack_require__(160);
-	var toIObject = __webpack_require__(165);
-	var toPrimitive = __webpack_require__(159);
-	var has = __webpack_require__(161);
-	var IE8_DOM_DEFINE = __webpack_require__(155);
+	var pIE = __webpack_require__(182);
+	var createDesc = __webpack_require__(163);
+	var toIObject = __webpack_require__(168);
+	var toPrimitive = __webpack_require__(162);
+	var has = __webpack_require__(164);
+	var IE8_DOM_DEFINE = __webpack_require__(158);
 	var gOPD = Object.getOwnPropertyDescriptor;
 	
-	exports.f = __webpack_require__(156) ? gOPD : function getOwnPropertyDescriptor(O, P) {
+	exports.f = __webpack_require__(159) ? gOPD : function getOwnPropertyDescriptor(O, P) {
 	  O = toIObject(O);
 	  P = toPrimitive(P, true);
 	  if (IE8_DOM_DEFINE) try {
@@ -18698,42 +18852,42 @@
 
 
 /***/ }),
-/* 214 */
+/* 217 */
 /***/ (function(module, exports) {
 
 
 
 /***/ }),
-/* 215 */
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	__webpack_require__(208)('asyncIterator');
+	__webpack_require__(211)('asyncIterator');
 
 
 /***/ }),
-/* 216 */
+/* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	__webpack_require__(208)('observable');
+	__webpack_require__(211)('observable');
 
 
 /***/ }),
-/* 217 */
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	exports.__esModule = true;
 	
-	var _setPrototypeOf = __webpack_require__(218);
+	var _setPrototypeOf = __webpack_require__(221);
 	
 	var _setPrototypeOf2 = _interopRequireDefault(_setPrototypeOf);
 	
-	var _create = __webpack_require__(222);
+	var _create = __webpack_require__(225);
 	
 	var _create2 = _interopRequireDefault(_create);
 	
-	var _typeof2 = __webpack_require__(184);
+	var _typeof2 = __webpack_require__(187);
 	
 	var _typeof3 = _interopRequireDefault(_typeof2);
 	
@@ -18756,36 +18910,36 @@
 	};
 
 /***/ }),
-/* 218 */
+/* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(219), __esModule: true };
+	module.exports = { "default": __webpack_require__(222), __esModule: true };
 
 /***/ }),
-/* 219 */
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	__webpack_require__(220);
-	module.exports = __webpack_require__(148).Object.setPrototypeOf;
+	__webpack_require__(223);
+	module.exports = __webpack_require__(151).Object.setPrototypeOf;
 
 
 /***/ }),
-/* 220 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// 19.1.3.19 Object.setPrototypeOf(O, proto)
-	var $export = __webpack_require__(146);
-	$export($export.S, 'Object', { setPrototypeOf: __webpack_require__(221).set });
+	var $export = __webpack_require__(149);
+	$export($export.S, 'Object', { setPrototypeOf: __webpack_require__(224).set });
 
 
 /***/ }),
-/* 221 */
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// Works with __proto__ only. Old v8 can't work with null proto objects.
 	/* eslint-disable no-proto */
-	var isObject = __webpack_require__(154);
-	var anObject = __webpack_require__(153);
+	var isObject = __webpack_require__(157);
+	var anObject = __webpack_require__(156);
 	var check = function (O, proto) {
 	  anObject(O);
 	  if (!isObject(proto) && proto !== null) throw TypeError(proto + ": can't set as prototype!");
@@ -18794,7 +18948,7 @@
 	  set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
 	    function (test, buggy, set) {
 	      try {
-	        set = __webpack_require__(149)(Function.call, __webpack_require__(213).f(Object.prototype, '__proto__').set, 2);
+	        set = __webpack_require__(152)(Function.call, __webpack_require__(216).f(Object.prototype, '__proto__').set, 2);
 	        set(test, []);
 	        buggy = !(test instanceof Array);
 	      } catch (e) { buggy = true; }
@@ -18810,33 +18964,33 @@
 
 
 /***/ }),
-/* 222 */
+/* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(223), __esModule: true };
+	module.exports = { "default": __webpack_require__(226), __esModule: true };
 
 /***/ }),
-/* 223 */
+/* 226 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	__webpack_require__(224);
-	var $Object = __webpack_require__(148).Object;
+	__webpack_require__(227);
+	var $Object = __webpack_require__(151).Object;
 	module.exports = function create(P, D) {
 	  return $Object.create(P, D);
 	};
 
 
 /***/ }),
-/* 224 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var $export = __webpack_require__(146);
+	var $export = __webpack_require__(149);
 	// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-	$export($export.S, 'Object', { create: __webpack_require__(193) });
+	$export($export.S, 'Object', { create: __webpack_require__(196) });
 
 
 /***/ }),
-/* 225 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18846,15 +19000,15 @@
 	});
 	exports.create = exports.connect = exports.Provider = undefined;
 	
-	var _Provider2 = __webpack_require__(226);
+	var _Provider2 = __webpack_require__(229);
 	
 	var _Provider3 = _interopRequireDefault(_Provider2);
 	
-	var _connect2 = __webpack_require__(228);
+	var _connect2 = __webpack_require__(231);
 	
 	var _connect3 = _interopRequireDefault(_connect2);
 	
-	var _create2 = __webpack_require__(233);
+	var _create2 = __webpack_require__(236);
 	
 	var _create3 = _interopRequireDefault(_create2);
 	
@@ -18865,7 +19019,7 @@
 	exports.create = _create3.default;
 
 /***/ }),
-/* 226 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18880,7 +19034,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _PropTypes = __webpack_require__(227);
+	var _PropTypes = __webpack_require__(230);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -18925,7 +19079,7 @@
 	exports.default = Provider;
 
 /***/ }),
-/* 227 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18948,7 +19102,7 @@
 	});
 
 /***/ }),
-/* 228 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18967,17 +19121,17 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _shallowequal = __webpack_require__(112);
+	var _shallowequal = __webpack_require__(115);
 	
 	var _shallowequal2 = _interopRequireDefault(_shallowequal);
 	
-	var _hoistNonReactStatics = __webpack_require__(229);
+	var _hoistNonReactStatics = __webpack_require__(232);
 	
 	var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 	
-	var _reactLifecyclesCompat = __webpack_require__(138);
+	var _reactLifecyclesCompat = __webpack_require__(141);
 	
-	var _PropTypes = __webpack_require__(227);
+	var _PropTypes = __webpack_require__(230);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -19116,7 +19270,7 @@
 	}
 
 /***/ }),
-/* 229 */
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19125,7 +19279,7 @@
 	 * Copyright 2015, Yahoo! Inc.
 	 * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
 	 */
-	var ReactIs = __webpack_require__(230);
+	var ReactIs = __webpack_require__(233);
 	var REACT_STATICS = {
 	    childContextTypes: true,
 	    contextType: true,
@@ -19152,7 +19306,10 @@
 	
 	var FORWARD_REF_STATICS = {
 	    '$$typeof': true,
-	    render: true
+	    render: true,
+	    defaultProps: true,
+	    displayName: true,
+	    propTypes: true
 	};
 	
 	var TYPE_STATICS = {};
@@ -19206,21 +19363,21 @@
 
 
 /***/ }),
-/* 230 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
 	if (process.env.NODE_ENV === 'production') {
-	  module.exports = __webpack_require__(231);
+	  module.exports = __webpack_require__(234);
 	} else {
-	  module.exports = __webpack_require__(232);
+	  module.exports = __webpack_require__(235);
 	}
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33)))
 
 /***/ }),
-/* 231 */
+/* 234 */
 /***/ (function(module, exports) {
 
 	/** @license React v16.6.1
@@ -19240,7 +19397,7 @@
 
 
 /***/ }),
-/* 232 */
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/** @license React v16.6.1
@@ -19454,7 +19611,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33)))
 
 /***/ }),
-/* 233 */
+/* 236 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -19498,7 +19655,7 @@
 	}
 
 /***/ }),
-/* 234 */
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19506,23 +19663,23 @@
 	exports.__esModule = true;
 	exports.SubPopupMenu = undefined;
 	
-	var _objectWithoutProperties2 = __webpack_require__(181);
+	var _objectWithoutProperties2 = __webpack_require__(184);
 	
 	var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 	
-	var _classCallCheck2 = __webpack_require__(182);
+	var _classCallCheck2 = __webpack_require__(185);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _possibleConstructorReturn2 = __webpack_require__(183);
+	var _possibleConstructorReturn2 = __webpack_require__(186);
 	
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 	
-	var _inherits2 = __webpack_require__(217);
+	var _inherits2 = __webpack_require__(220);
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
-	var _extends4 = __webpack_require__(142);
+	var _extends4 = __webpack_require__(145);
 	
 	var _extends5 = _interopRequireDefault(_extends4);
 	
@@ -19537,13 +19694,13 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _miniStore = __webpack_require__(225);
+	var _miniStore = __webpack_require__(228);
 	
-	var _KeyCode = __webpack_require__(235);
+	var _KeyCode = __webpack_require__(238);
 	
 	var _KeyCode2 = _interopRequireDefault(_KeyCode);
 	
-	var _createChainedFunction = __webpack_require__(236);
+	var _createChainedFunction = __webpack_require__(239);
 	
 	var _createChainedFunction2 = _interopRequireDefault(_createChainedFunction);
 	
@@ -19551,9 +19708,9 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _util = __webpack_require__(237);
+	var _util = __webpack_require__(240);
 	
-	var _DOMWrap = __webpack_require__(238);
+	var _DOMWrap = __webpack_require__(241);
 	
 	var _DOMWrap2 = _interopRequireDefault(_DOMWrap);
 	
@@ -19947,7 +20104,7 @@
 	exports['default'] = connected;
 
 /***/ }),
-/* 235 */
+/* 238 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -20476,7 +20633,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 236 */
+/* 239 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -20510,7 +20667,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 237 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20591,30 +20748,30 @@
 	};
 
 /***/ }),
-/* 238 */
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _extends2 = __webpack_require__(142);
+	var _extends2 = __webpack_require__(145);
 	
 	var _extends3 = _interopRequireDefault(_extends2);
 	
-	var _objectWithoutProperties2 = __webpack_require__(181);
+	var _objectWithoutProperties2 = __webpack_require__(184);
 	
 	var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 	
-	var _classCallCheck2 = __webpack_require__(182);
+	var _classCallCheck2 = __webpack_require__(185);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _possibleConstructorReturn2 = __webpack_require__(183);
+	var _possibleConstructorReturn2 = __webpack_require__(186);
 	
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 	
-	var _inherits2 = __webpack_require__(217);
+	var _inherits2 = __webpack_require__(220);
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
@@ -20630,15 +20787,15 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _resizeObserverPolyfill = __webpack_require__(239);
+	var _resizeObserverPolyfill = __webpack_require__(242);
 	
 	var _resizeObserverPolyfill2 = _interopRequireDefault(_resizeObserverPolyfill);
 	
-	var _SubMenu = __webpack_require__(240);
+	var _SubMenu = __webpack_require__(243);
 	
 	var _SubMenu2 = _interopRequireDefault(_SubMenu);
 	
-	var _util = __webpack_require__(237);
+	var _util = __webpack_require__(240);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -20648,7 +20805,7 @@
 	
 	// Fix ssr
 	if (canUseDOM) {
-	  __webpack_require__(270);
+	  __webpack_require__(273);
 	}
 	
 	var DOMWrap = function (_React$Component) {
@@ -20966,1046 +21123,950 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 239 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {(function (global, factory) {
-		 true ? module.exports = factory() :
-		typeof define === 'function' && define.amd ? define(factory) :
-		(global.ResizeObserver = factory());
+	     true ? module.exports = factory() :
+	    typeof define === 'function' && define.amd ? define(factory) :
+	    (global.ResizeObserver = factory());
 	}(this, (function () { 'use strict';
 	
-	/**
-	 * A collection of shims that provide minimal functionality of the ES6 collections.
-	 *
-	 * These implementations are not meant to be used outside of the ResizeObserver
-	 * modules as they cover only a limited range of use cases.
-	 */
-	/* eslint-disable require-jsdoc, valid-jsdoc */
-	var MapShim = (function () {
-	    if (typeof Map !== 'undefined') {
-	        return Map;
-	    }
+	    /**
+	     * A collection of shims that provide minimal functionality of the ES6 collections.
+	     *
+	     * These implementations are not meant to be used outside of the ResizeObserver
+	     * modules as they cover only a limited range of use cases.
+	     */
+	    /* eslint-disable require-jsdoc, valid-jsdoc */
+	    var MapShim = (function () {
+	        if (typeof Map !== 'undefined') {
+	            return Map;
+	        }
+	        /**
+	         * Returns index in provided array that matches the specified key.
+	         *
+	         * @param {Array<Array>} arr
+	         * @param {*} key
+	         * @returns {number}
+	         */
+	        function getIndex(arr, key) {
+	            var result = -1;
+	            arr.some(function (entry, index) {
+	                if (entry[0] === key) {
+	                    result = index;
+	                    return true;
+	                }
+	                return false;
+	            });
+	            return result;
+	        }
+	        return /** @class */ (function () {
+	            function class_1() {
+	                this.__entries__ = [];
+	            }
+	            Object.defineProperty(class_1.prototype, "size", {
+	                /**
+	                 * @returns {boolean}
+	                 */
+	                get: function () {
+	                    return this.__entries__.length;
+	                },
+	                enumerable: true,
+	                configurable: true
+	            });
+	            /**
+	             * @param {*} key
+	             * @returns {*}
+	             */
+	            class_1.prototype.get = function (key) {
+	                var index = getIndex(this.__entries__, key);
+	                var entry = this.__entries__[index];
+	                return entry && entry[1];
+	            };
+	            /**
+	             * @param {*} key
+	             * @param {*} value
+	             * @returns {void}
+	             */
+	            class_1.prototype.set = function (key, value) {
+	                var index = getIndex(this.__entries__, key);
+	                if (~index) {
+	                    this.__entries__[index][1] = value;
+	                }
+	                else {
+	                    this.__entries__.push([key, value]);
+	                }
+	            };
+	            /**
+	             * @param {*} key
+	             * @returns {void}
+	             */
+	            class_1.prototype.delete = function (key) {
+	                var entries = this.__entries__;
+	                var index = getIndex(entries, key);
+	                if (~index) {
+	                    entries.splice(index, 1);
+	                }
+	            };
+	            /**
+	             * @param {*} key
+	             * @returns {void}
+	             */
+	            class_1.prototype.has = function (key) {
+	                return !!~getIndex(this.__entries__, key);
+	            };
+	            /**
+	             * @returns {void}
+	             */
+	            class_1.prototype.clear = function () {
+	                this.__entries__.splice(0);
+	            };
+	            /**
+	             * @param {Function} callback
+	             * @param {*} [ctx=null]
+	             * @returns {void}
+	             */
+	            class_1.prototype.forEach = function (callback, ctx) {
+	                if (ctx === void 0) { ctx = null; }
+	                for (var _i = 0, _a = this.__entries__; _i < _a.length; _i++) {
+	                    var entry = _a[_i];
+	                    callback.call(ctx, entry[1], entry[0]);
+	                }
+	            };
+	            return class_1;
+	        }());
+	    })();
 	
 	    /**
-	     * Returns index in provided array that matches the specified key.
-	     *
-	     * @param {Array<Array>} arr
-	     * @param {*} key
-	     * @returns {number}
+	     * Detects whether window and document objects are available in current environment.
 	     */
-	    function getIndex(arr, key) {
-	        var result = -1;
+	    var isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined' && window.document === document;
 	
-	        arr.some(function (entry, index) {
-	            if (entry[0] === key) {
-	                result = index;
-	
-	                return true;
-	            }
-	
-	            return false;
-	        });
-	
-	        return result;
-	    }
-	
-	    return (function () {
-	        function anonymous() {
-	            this.__entries__ = [];
+	    // Returns global object of a current environment.
+	    var global$1 = (function () {
+	        if (typeof global !== 'undefined' && global.Math === Math) {
+	            return global;
 	        }
+	        if (typeof self !== 'undefined' && self.Math === Math) {
+	            return self;
+	        }
+	        if (typeof window !== 'undefined' && window.Math === Math) {
+	            return window;
+	        }
+	        // eslint-disable-next-line no-new-func
+	        return Function('return this')();
+	    })();
 	
-	        var prototypeAccessors = { size: { configurable: true } };
+	    /**
+	     * A shim for the requestAnimationFrame which falls back to the setTimeout if
+	     * first one is not supported.
+	     *
+	     * @returns {number} Requests' identifier.
+	     */
+	    var requestAnimationFrame$1 = (function () {
+	        if (typeof requestAnimationFrame === 'function') {
+	            // It's required to use a bounded function because IE sometimes throws
+	            // an "Invalid calling object" error if rAF is invoked without the global
+	            // object on the left hand side.
+	            return requestAnimationFrame.bind(global$1);
+	        }
+	        return function (callback) { return setTimeout(function () { return callback(Date.now()); }, 1000 / 60); };
+	    })();
 	
+	    // Defines minimum timeout before adding a trailing call.
+	    var trailingTimeout = 2;
+	    /**
+	     * Creates a wrapper function which ensures that provided callback will be
+	     * invoked only once during the specified delay period.
+	     *
+	     * @param {Function} callback - Function to be invoked after the delay period.
+	     * @param {number} delay - Delay after which to invoke callback.
+	     * @returns {Function}
+	     */
+	    function throttle (callback, delay) {
+	        var leadingCall = false, trailingCall = false, lastCallTime = 0;
 	        /**
-	         * @returns {boolean}
-	         */
-	        prototypeAccessors.size.get = function () {
-	            return this.__entries__.length;
-	        };
-	
-	        /**
-	         * @param {*} key
-	         * @returns {*}
-	         */
-	        anonymous.prototype.get = function (key) {
-	            var index = getIndex(this.__entries__, key);
-	            var entry = this.__entries__[index];
-	
-	            return entry && entry[1];
-	        };
-	
-	        /**
-	         * @param {*} key
-	         * @param {*} value
+	         * Invokes the original callback function and schedules new invocation if
+	         * the "proxy" was called during current request.
+	         *
 	         * @returns {void}
 	         */
-	        anonymous.prototype.set = function (key, value) {
-	            var index = getIndex(this.__entries__, key);
+	        function resolvePending() {
+	            if (leadingCall) {
+	                leadingCall = false;
+	                callback();
+	            }
+	            if (trailingCall) {
+	                proxy();
+	            }
+	        }
+	        /**
+	         * Callback invoked after the specified delay. It will further postpone
+	         * invocation of the original function delegating it to the
+	         * requestAnimationFrame.
+	         *
+	         * @returns {void}
+	         */
+	        function timeoutCallback() {
+	            requestAnimationFrame$1(resolvePending);
+	        }
+	        /**
+	         * Schedules invocation of the original function.
+	         *
+	         * @returns {void}
+	         */
+	        function proxy() {
+	            var timeStamp = Date.now();
+	            if (leadingCall) {
+	                // Reject immediately following calls.
+	                if (timeStamp - lastCallTime < trailingTimeout) {
+	                    return;
+	                }
+	                // Schedule new call to be in invoked when the pending one is resolved.
+	                // This is important for "transitions" which never actually start
+	                // immediately so there is a chance that we might miss one if change
+	                // happens amids the pending invocation.
+	                trailingCall = true;
+	            }
+	            else {
+	                leadingCall = true;
+	                trailingCall = false;
+	                setTimeout(timeoutCallback, delay);
+	            }
+	            lastCallTime = timeStamp;
+	        }
+	        return proxy;
+	    }
 	
+	    // Minimum delay before invoking the update of observers.
+	    var REFRESH_DELAY = 20;
+	    // A list of substrings of CSS properties used to find transition events that
+	    // might affect dimensions of observed elements.
+	    var transitionKeys = ['top', 'right', 'bottom', 'left', 'width', 'height', 'size', 'weight'];
+	    // Check if MutationObserver is available.
+	    var mutationObserverSupported = typeof MutationObserver !== 'undefined';
+	    /**
+	     * Singleton controller class which handles updates of ResizeObserver instances.
+	     */
+	    var ResizeObserverController = /** @class */ (function () {
+	        /**
+	         * Creates a new instance of ResizeObserverController.
+	         *
+	         * @private
+	         */
+	        function ResizeObserverController() {
+	            /**
+	             * Indicates whether DOM listeners have been added.
+	             *
+	             * @private {boolean}
+	             */
+	            this.connected_ = false;
+	            /**
+	             * Tells that controller has subscribed for Mutation Events.
+	             *
+	             * @private {boolean}
+	             */
+	            this.mutationEventsAdded_ = false;
+	            /**
+	             * Keeps reference to the instance of MutationObserver.
+	             *
+	             * @private {MutationObserver}
+	             */
+	            this.mutationsObserver_ = null;
+	            /**
+	             * A list of connected observers.
+	             *
+	             * @private {Array<ResizeObserverSPI>}
+	             */
+	            this.observers_ = [];
+	            this.onTransitionEnd_ = this.onTransitionEnd_.bind(this);
+	            this.refresh = throttle(this.refresh.bind(this), REFRESH_DELAY);
+	        }
+	        /**
+	         * Adds observer to observers list.
+	         *
+	         * @param {ResizeObserverSPI} observer - Observer to be added.
+	         * @returns {void}
+	         */
+	        ResizeObserverController.prototype.addObserver = function (observer) {
+	            if (!~this.observers_.indexOf(observer)) {
+	                this.observers_.push(observer);
+	            }
+	            // Add listeners if they haven't been added yet.
+	            if (!this.connected_) {
+	                this.connect_();
+	            }
+	        };
+	        /**
+	         * Removes observer from observers list.
+	         *
+	         * @param {ResizeObserverSPI} observer - Observer to be removed.
+	         * @returns {void}
+	         */
+	        ResizeObserverController.prototype.removeObserver = function (observer) {
+	            var observers = this.observers_;
+	            var index = observers.indexOf(observer);
+	            // Remove observer if it's present in registry.
 	            if (~index) {
-	                this.__entries__[index][1] = value;
-	            } else {
-	                this.__entries__.push([key, value]);
+	                observers.splice(index, 1);
+	            }
+	            // Remove listeners if controller has no connected observers.
+	            if (!observers.length && this.connected_) {
+	                this.disconnect_();
 	            }
 	        };
-	
 	        /**
-	         * @param {*} key
+	         * Invokes the update of observers. It will continue running updates insofar
+	         * it detects changes.
+	         *
 	         * @returns {void}
 	         */
-	        anonymous.prototype.delete = function (key) {
-	            var entries = this.__entries__;
-	            var index = getIndex(entries, key);
-	
-	            if (~index) {
-	                entries.splice(index, 1);
+	        ResizeObserverController.prototype.refresh = function () {
+	            var changesDetected = this.updateObservers_();
+	            // Continue running updates if changes have been detected as there might
+	            // be future ones caused by CSS transitions.
+	            if (changesDetected) {
+	                this.refresh();
 	            }
 	        };
-	
 	        /**
-	         * @param {*} key
+	         * Updates every observer from observers list and notifies them of queued
+	         * entries.
+	         *
+	         * @private
+	         * @returns {boolean} Returns "true" if any observer has detected changes in
+	         *      dimensions of it's elements.
+	         */
+	        ResizeObserverController.prototype.updateObservers_ = function () {
+	            // Collect observers that have active observations.
+	            var activeObservers = this.observers_.filter(function (observer) {
+	                return observer.gatherActive(), observer.hasActive();
+	            });
+	            // Deliver notifications in a separate cycle in order to avoid any
+	            // collisions between observers, e.g. when multiple instances of
+	            // ResizeObserver are tracking the same element and the callback of one
+	            // of them changes content dimensions of the observed target. Sometimes
+	            // this may result in notifications being blocked for the rest of observers.
+	            activeObservers.forEach(function (observer) { return observer.broadcastActive(); });
+	            return activeObservers.length > 0;
+	        };
+	        /**
+	         * Initializes DOM listeners.
+	         *
+	         * @private
 	         * @returns {void}
 	         */
-	        anonymous.prototype.has = function (key) {
-	            return !!~getIndex(this.__entries__, key);
-	        };
-	
-	        /**
-	         * @returns {void}
-	         */
-	        anonymous.prototype.clear = function () {
-	            this.__entries__.splice(0);
-	        };
-	
-	        /**
-	         * @param {Function} callback
-	         * @param {*} [ctx=null]
-	         * @returns {void}
-	         */
-	        anonymous.prototype.forEach = function (callback, ctx) {
-	            var this$1 = this;
-	            if ( ctx === void 0 ) ctx = null;
-	
-	            for (var i = 0, list = this$1.__entries__; i < list.length; i += 1) {
-	                var entry = list[i];
-	
-	                callback.call(ctx, entry[1], entry[0]);
-	            }
-	        };
-	
-	        Object.defineProperties( anonymous.prototype, prototypeAccessors );
-	
-	        return anonymous;
-	    }());
-	})();
-	
-	/**
-	 * Detects whether window and document objects are available in current environment.
-	 */
-	var isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined' && window.document === document;
-	
-	// Returns global object of a current environment.
-	var global$1 = (function () {
-	    if (typeof global !== 'undefined' && global.Math === Math) {
-	        return global;
-	    }
-	
-	    if (typeof self !== 'undefined' && self.Math === Math) {
-	        return self;
-	    }
-	
-	    if (typeof window !== 'undefined' && window.Math === Math) {
-	        return window;
-	    }
-	
-	    // eslint-disable-next-line no-new-func
-	    return Function('return this')();
-	})();
-	
-	/**
-	 * A shim for the requestAnimationFrame which falls back to the setTimeout if
-	 * first one is not supported.
-	 *
-	 * @returns {number} Requests' identifier.
-	 */
-	var requestAnimationFrame$1 = (function () {
-	    if (typeof requestAnimationFrame === 'function') {
-	        // It's required to use a bounded function because IE sometimes throws
-	        // an "Invalid calling object" error if rAF is invoked without the global
-	        // object on the left hand side.
-	        return requestAnimationFrame.bind(global$1);
-	    }
-	
-	    return function (callback) { return setTimeout(function () { return callback(Date.now()); }, 1000 / 60); };
-	})();
-	
-	// Defines minimum timeout before adding a trailing call.
-	var trailingTimeout = 2;
-	
-	/**
-	 * Creates a wrapper function which ensures that provided callback will be
-	 * invoked only once during the specified delay period.
-	 *
-	 * @param {Function} callback - Function to be invoked after the delay period.
-	 * @param {number} delay - Delay after which to invoke callback.
-	 * @returns {Function}
-	 */
-	var throttle = function (callback, delay) {
-	    var leadingCall = false,
-	        trailingCall = false,
-	        lastCallTime = 0;
-	
-	    /**
-	     * Invokes the original callback function and schedules new invocation if
-	     * the "proxy" was called during current request.
-	     *
-	     * @returns {void}
-	     */
-	    function resolvePending() {
-	        if (leadingCall) {
-	            leadingCall = false;
-	
-	            callback();
-	        }
-	
-	        if (trailingCall) {
-	            proxy();
-	        }
-	    }
-	
-	    /**
-	     * Callback invoked after the specified delay. It will further postpone
-	     * invocation of the original function delegating it to the
-	     * requestAnimationFrame.
-	     *
-	     * @returns {void}
-	     */
-	    function timeoutCallback() {
-	        requestAnimationFrame$1(resolvePending);
-	    }
-	
-	    /**
-	     * Schedules invocation of the original function.
-	     *
-	     * @returns {void}
-	     */
-	    function proxy() {
-	        var timeStamp = Date.now();
-	
-	        if (leadingCall) {
-	            // Reject immediately following calls.
-	            if (timeStamp - lastCallTime < trailingTimeout) {
+	        ResizeObserverController.prototype.connect_ = function () {
+	            // Do nothing if running in a non-browser environment or if listeners
+	            // have been already added.
+	            if (!isBrowser || this.connected_) {
 	                return;
 	            }
+	            // Subscription to the "Transitionend" event is used as a workaround for
+	            // delayed transitions. This way it's possible to capture at least the
+	            // final state of an element.
+	            document.addEventListener('transitionend', this.onTransitionEnd_);
+	            window.addEventListener('resize', this.refresh);
+	            if (mutationObserverSupported) {
+	                this.mutationsObserver_ = new MutationObserver(this.refresh);
+	                this.mutationsObserver_.observe(document, {
+	                    attributes: true,
+	                    childList: true,
+	                    characterData: true,
+	                    subtree: true
+	                });
+	            }
+	            else {
+	                document.addEventListener('DOMSubtreeModified', this.refresh);
+	                this.mutationEventsAdded_ = true;
+	            }
+	            this.connected_ = true;
+	        };
+	        /**
+	         * Removes DOM listeners.
+	         *
+	         * @private
+	         * @returns {void}
+	         */
+	        ResizeObserverController.prototype.disconnect_ = function () {
+	            // Do nothing if running in a non-browser environment or if listeners
+	            // have been already removed.
+	            if (!isBrowser || !this.connected_) {
+	                return;
+	            }
+	            document.removeEventListener('transitionend', this.onTransitionEnd_);
+	            window.removeEventListener('resize', this.refresh);
+	            if (this.mutationsObserver_) {
+	                this.mutationsObserver_.disconnect();
+	            }
+	            if (this.mutationEventsAdded_) {
+	                document.removeEventListener('DOMSubtreeModified', this.refresh);
+	            }
+	            this.mutationsObserver_ = null;
+	            this.mutationEventsAdded_ = false;
+	            this.connected_ = false;
+	        };
+	        /**
+	         * "Transitionend" event handler.
+	         *
+	         * @private
+	         * @param {TransitionEvent} event
+	         * @returns {void}
+	         */
+	        ResizeObserverController.prototype.onTransitionEnd_ = function (_a) {
+	            var _b = _a.propertyName, propertyName = _b === void 0 ? '' : _b;
+	            // Detect whether transition may affect dimensions of an element.
+	            var isReflowProperty = transitionKeys.some(function (key) {
+	                return !!~propertyName.indexOf(key);
+	            });
+	            if (isReflowProperty) {
+	                this.refresh();
+	            }
+	        };
+	        /**
+	         * Returns instance of the ResizeObserverController.
+	         *
+	         * @returns {ResizeObserverController}
+	         */
+	        ResizeObserverController.getInstance = function () {
+	            if (!this.instance_) {
+	                this.instance_ = new ResizeObserverController();
+	            }
+	            return this.instance_;
+	        };
+	        /**
+	         * Holds reference to the controller's instance.
+	         *
+	         * @private {ResizeObserverController}
+	         */
+	        ResizeObserverController.instance_ = null;
+	        return ResizeObserverController;
+	    }());
 	
-	            // Schedule new call to be in invoked when the pending one is resolved.
-	            // This is important for "transitions" which never actually start
-	            // immediately so there is a chance that we might miss one if change
-	            // happens amids the pending invocation.
-	            trailingCall = true;
-	        } else {
-	            leadingCall = true;
-	            trailingCall = false;
-	
-	            setTimeout(timeoutCallback, delay);
+	    /**
+	     * Defines non-writable/enumerable properties of the provided target object.
+	     *
+	     * @param {Object} target - Object for which to define properties.
+	     * @param {Object} props - Properties to be defined.
+	     * @returns {Object} Target object.
+	     */
+	    var defineConfigurable = (function (target, props) {
+	        for (var _i = 0, _a = Object.keys(props); _i < _a.length; _i++) {
+	            var key = _a[_i];
+	            Object.defineProperty(target, key, {
+	                value: props[key],
+	                enumerable: false,
+	                writable: false,
+	                configurable: true
+	            });
 	        }
-	
-	        lastCallTime = timeStamp;
-	    }
-	
-	    return proxy;
-	};
-	
-	// Minimum delay before invoking the update of observers.
-	var REFRESH_DELAY = 20;
-	
-	// A list of substrings of CSS properties used to find transition events that
-	// might affect dimensions of observed elements.
-	var transitionKeys = ['top', 'right', 'bottom', 'left', 'width', 'height', 'size', 'weight'];
-	
-	// Check if MutationObserver is available.
-	var mutationObserverSupported = typeof MutationObserver !== 'undefined';
-	
-	/**
-	 * Singleton controller class which handles updates of ResizeObserver instances.
-	 */
-	var ResizeObserverController = function() {
-	    this.connected_ = false;
-	    this.mutationEventsAdded_ = false;
-	    this.mutationsObserver_ = null;
-	    this.observers_ = [];
-	
-	    this.onTransitionEnd_ = this.onTransitionEnd_.bind(this);
-	    this.refresh = throttle(this.refresh.bind(this), REFRESH_DELAY);
-	};
-	
-	/**
-	 * Adds observer to observers list.
-	 *
-	 * @param {ResizeObserverSPI} observer - Observer to be added.
-	 * @returns {void}
-	 */
-	
-	
-	/**
-	 * Holds reference to the controller's instance.
-	 *
-	 * @private {ResizeObserverController}
-	 */
-	
-	
-	/**
-	 * Keeps reference to the instance of MutationObserver.
-	 *
-	 * @private {MutationObserver}
-	 */
-	
-	/**
-	 * Indicates whether DOM listeners have been added.
-	 *
-	 * @private {boolean}
-	 */
-	ResizeObserverController.prototype.addObserver = function (observer) {
-	    if (!~this.observers_.indexOf(observer)) {
-	        this.observers_.push(observer);
-	    }
-	
-	    // Add listeners if they haven't been added yet.
-	    if (!this.connected_) {
-	        this.connect_();
-	    }
-	};
-	
-	/**
-	 * Removes observer from observers list.
-	 *
-	 * @param {ResizeObserverSPI} observer - Observer to be removed.
-	 * @returns {void}
-	 */
-	ResizeObserverController.prototype.removeObserver = function (observer) {
-	    var observers = this.observers_;
-	    var index = observers.indexOf(observer);
-	
-	    // Remove observer if it's present in registry.
-	    if (~index) {
-	        observers.splice(index, 1);
-	    }
-	
-	    // Remove listeners if controller has no connected observers.
-	    if (!observers.length && this.connected_) {
-	        this.disconnect_();
-	    }
-	};
-	
-	/**
-	 * Invokes the update of observers. It will continue running updates insofar
-	 * it detects changes.
-	 *
-	 * @returns {void}
-	 */
-	ResizeObserverController.prototype.refresh = function () {
-	    var changesDetected = this.updateObservers_();
-	
-	    // Continue running updates if changes have been detected as there might
-	    // be future ones caused by CSS transitions.
-	    if (changesDetected) {
-	        this.refresh();
-	    }
-	};
-	
-	/**
-	 * Updates every observer from observers list and notifies them of queued
-	 * entries.
-	 *
-	 * @private
-	 * @returns {boolean} Returns "true" if any observer has detected changes in
-	 *  dimensions of it's elements.
-	 */
-	ResizeObserverController.prototype.updateObservers_ = function () {
-	    // Collect observers that have active observations.
-	    var activeObservers = this.observers_.filter(function (observer) {
-	        return observer.gatherActive(), observer.hasActive();
+	        return target;
 	    });
 	
-	    // Deliver notifications in a separate cycle in order to avoid any
-	    // collisions between observers, e.g. when multiple instances of
-	    // ResizeObserver are tracking the same element and the callback of one
-	    // of them changes content dimensions of the observed target. Sometimes
-	    // this may result in notifications being blocked for the rest of observers.
-	    activeObservers.forEach(function (observer) { return observer.broadcastActive(); });
-	
-	    return activeObservers.length > 0;
-	};
-	
-	/**
-	 * Initializes DOM listeners.
-	 *
-	 * @private
-	 * @returns {void}
-	 */
-	ResizeObserverController.prototype.connect_ = function () {
-	    // Do nothing if running in a non-browser environment or if listeners
-	    // have been already added.
-	    if (!isBrowser || this.connected_) {
-	        return;
-	    }
-	
-	    // Subscription to the "Transitionend" event is used as a workaround for
-	    // delayed transitions. This way it's possible to capture at least the
-	    // final state of an element.
-	    document.addEventListener('transitionend', this.onTransitionEnd_);
-	
-	    window.addEventListener('resize', this.refresh);
-	
-	    if (mutationObserverSupported) {
-	        this.mutationsObserver_ = new MutationObserver(this.refresh);
-	
-	        this.mutationsObserver_.observe(document, {
-	            attributes: true,
-	            childList: true,
-	            characterData: true,
-	            subtree: true
-	        });
-	    } else {
-	        document.addEventListener('DOMSubtreeModified', this.refresh);
-	
-	        this.mutationEventsAdded_ = true;
-	    }
-	
-	    this.connected_ = true;
-	};
-	
-	/**
-	 * Removes DOM listeners.
-	 *
-	 * @private
-	 * @returns {void}
-	 */
-	ResizeObserverController.prototype.disconnect_ = function () {
-	    // Do nothing if running in a non-browser environment or if listeners
-	    // have been already removed.
-	    if (!isBrowser || !this.connected_) {
-	        return;
-	    }
-	
-	    document.removeEventListener('transitionend', this.onTransitionEnd_);
-	    window.removeEventListener('resize', this.refresh);
-	
-	    if (this.mutationsObserver_) {
-	        this.mutationsObserver_.disconnect();
-	    }
-	
-	    if (this.mutationEventsAdded_) {
-	        document.removeEventListener('DOMSubtreeModified', this.refresh);
-	    }
-	
-	    this.mutationsObserver_ = null;
-	    this.mutationEventsAdded_ = false;
-	    this.connected_ = false;
-	};
-	
-	/**
-	 * "Transitionend" event handler.
-	 *
-	 * @private
-	 * @param {TransitionEvent} event
-	 * @returns {void}
-	 */
-	ResizeObserverController.prototype.onTransitionEnd_ = function (ref) {
-	        var propertyName = ref.propertyName; if ( propertyName === void 0 ) propertyName = '';
-	
-	    // Detect whether transition may affect dimensions of an element.
-	    var isReflowProperty = transitionKeys.some(function (key) {
-	        return !!~propertyName.indexOf(key);
+	    /**
+	     * Returns the global object associated with provided element.
+	     *
+	     * @param {Object} target
+	     * @returns {Object}
+	     */
+	    var getWindowOf = (function (target) {
+	        // Assume that the element is an instance of Node, which means that it
+	        // has the "ownerDocument" property from which we can retrieve a
+	        // corresponding global object.
+	        var ownerGlobal = target && target.ownerDocument && target.ownerDocument.defaultView;
+	        // Return the local global object if it's not possible extract one from
+	        // provided element.
+	        return ownerGlobal || global$1;
 	    });
 	
-	    if (isReflowProperty) {
-	        this.refresh();
+	    // Placeholder of an empty content rectangle.
+	    var emptyRect = createRectInit(0, 0, 0, 0);
+	    /**
+	     * Converts provided string to a number.
+	     *
+	     * @param {number|string} value
+	     * @returns {number}
+	     */
+	    function toFloat(value) {
+	        return parseFloat(value) || 0;
 	    }
-	};
-	
-	/**
-	 * Returns instance of the ResizeObserverController.
-	 *
-	 * @returns {ResizeObserverController}
-	 */
-	ResizeObserverController.getInstance = function () {
-	    if (!this.instance_) {
-	        this.instance_ = new ResizeObserverController();
+	    /**
+	     * Extracts borders size from provided styles.
+	     *
+	     * @param {CSSStyleDeclaration} styles
+	     * @param {...string} positions - Borders positions (top, right, ...)
+	     * @returns {number}
+	     */
+	    function getBordersSize(styles) {
+	        var positions = [];
+	        for (var _i = 1; _i < arguments.length; _i++) {
+	            positions[_i - 1] = arguments[_i];
+	        }
+	        return positions.reduce(function (size, position) {
+	            var value = styles['border-' + position + '-width'];
+	            return size + toFloat(value);
+	        }, 0);
 	    }
-	
-	    return this.instance_;
-	};
-	
-	ResizeObserverController.instance_ = null;
-	
-	/**
-	 * Defines non-writable/enumerable properties of the provided target object.
-	 *
-	 * @param {Object} target - Object for which to define properties.
-	 * @param {Object} props - Properties to be defined.
-	 * @returns {Object} Target object.
-	 */
-	var defineConfigurable = (function (target, props) {
-	    for (var i = 0, list = Object.keys(props); i < list.length; i += 1) {
-	        var key = list[i];
-	
-	        Object.defineProperty(target, key, {
-	            value: props[key],
-	            enumerable: false,
-	            writable: false,
-	            configurable: true
-	        });
+	    /**
+	     * Extracts paddings sizes from provided styles.
+	     *
+	     * @param {CSSStyleDeclaration} styles
+	     * @returns {Object} Paddings box.
+	     */
+	    function getPaddings(styles) {
+	        var positions = ['top', 'right', 'bottom', 'left'];
+	        var paddings = {};
+	        for (var _i = 0, positions_1 = positions; _i < positions_1.length; _i++) {
+	            var position = positions_1[_i];
+	            var value = styles['padding-' + position];
+	            paddings[position] = toFloat(value);
+	        }
+	        return paddings;
 	    }
-	
-	    return target;
-	});
-	
-	/**
-	 * Returns the global object associated with provided element.
-	 *
-	 * @param {Object} target
-	 * @returns {Object}
-	 */
-	var getWindowOf = (function (target) {
-	    // Assume that the element is an instance of Node, which means that it
-	    // has the "ownerDocument" property from which we can retrieve a
-	    // corresponding global object.
-	    var ownerGlobal = target && target.ownerDocument && target.ownerDocument.defaultView;
-	
-	    // Return the local global object if it's not possible extract one from
-	    // provided element.
-	    return ownerGlobal || global$1;
-	});
-	
-	// Placeholder of an empty content rectangle.
-	var emptyRect = createRectInit(0, 0, 0, 0);
-	
-	/**
-	 * Converts provided string to a number.
-	 *
-	 * @param {number|string} value
-	 * @returns {number}
-	 */
-	function toFloat(value) {
-	    return parseFloat(value) || 0;
-	}
-	
-	/**
-	 * Extracts borders size from provided styles.
-	 *
-	 * @param {CSSStyleDeclaration} styles
-	 * @param {...string} positions - Borders positions (top, right, ...)
-	 * @returns {number}
-	 */
-	function getBordersSize(styles) {
-	    var positions = [], len = arguments.length - 1;
-	    while ( len-- > 0 ) positions[ len ] = arguments[ len + 1 ];
-	
-	    return positions.reduce(function (size, position) {
-	        var value = styles['border-' + position + '-width'];
-	
-	        return size + toFloat(value);
-	    }, 0);
-	}
-	
-	/**
-	 * Extracts paddings sizes from provided styles.
-	 *
-	 * @param {CSSStyleDeclaration} styles
-	 * @returns {Object} Paddings box.
-	 */
-	function getPaddings(styles) {
-	    var positions = ['top', 'right', 'bottom', 'left'];
-	    var paddings = {};
-	
-	    for (var i = 0, list = positions; i < list.length; i += 1) {
-	        var position = list[i];
-	
-	        var value = styles['padding-' + position];
-	
-	        paddings[position] = toFloat(value);
+	    /**
+	     * Calculates content rectangle of provided SVG element.
+	     *
+	     * @param {SVGGraphicsElement} target - Element content rectangle of which needs
+	     *      to be calculated.
+	     * @returns {DOMRectInit}
+	     */
+	    function getSVGContentRect(target) {
+	        var bbox = target.getBBox();
+	        return createRectInit(0, 0, bbox.width, bbox.height);
 	    }
-	
-	    return paddings;
-	}
-	
-	/**
-	 * Calculates content rectangle of provided SVG element.
-	 *
-	 * @param {SVGGraphicsElement} target - Element content rectangle of which needs
-	 *      to be calculated.
-	 * @returns {DOMRectInit}
-	 */
-	function getSVGContentRect(target) {
-	    var bbox = target.getBBox();
-	
-	    return createRectInit(0, 0, bbox.width, bbox.height);
-	}
-	
-	/**
-	 * Calculates content rectangle of provided HTMLElement.
-	 *
-	 * @param {HTMLElement} target - Element for which to calculate the content rectangle.
-	 * @returns {DOMRectInit}
-	 */
-	function getHTMLElementContentRect(target) {
-	    // Client width & height properties can't be
-	    // used exclusively as they provide rounded values.
-	    var clientWidth = target.clientWidth;
-	    var clientHeight = target.clientHeight;
-	
-	    // By this condition we can catch all non-replaced inline, hidden and
-	    // detached elements. Though elements with width & height properties less
-	    // than 0.5 will be discarded as well.
-	    //
-	    // Without it we would need to implement separate methods for each of
-	    // those cases and it's not possible to perform a precise and performance
-	    // effective test for hidden elements. E.g. even jQuery's ':visible' filter
-	    // gives wrong results for elements with width & height less than 0.5.
-	    if (!clientWidth && !clientHeight) {
-	        return emptyRect;
-	    }
-	
-	    var styles = getWindowOf(target).getComputedStyle(target);
-	    var paddings = getPaddings(styles);
-	    var horizPad = paddings.left + paddings.right;
-	    var vertPad = paddings.top + paddings.bottom;
-	
-	    // Computed styles of width & height are being used because they are the
-	    // only dimensions available to JS that contain non-rounded values. It could
-	    // be possible to utilize the getBoundingClientRect if only it's data wasn't
-	    // affected by CSS transformations let alone paddings, borders and scroll bars.
-	    var width = toFloat(styles.width),
-	        height = toFloat(styles.height);
-	
-	    // Width & height include paddings and borders when the 'border-box' box
-	    // model is applied (except for IE).
-	    if (styles.boxSizing === 'border-box') {
-	        // Following conditions are required to handle Internet Explorer which
-	        // doesn't include paddings and borders to computed CSS dimensions.
+	    /**
+	     * Calculates content rectangle of provided HTMLElement.
+	     *
+	     * @param {HTMLElement} target - Element for which to calculate the content rectangle.
+	     * @returns {DOMRectInit}
+	     */
+	    function getHTMLElementContentRect(target) {
+	        // Client width & height properties can't be
+	        // used exclusively as they provide rounded values.
+	        var clientWidth = target.clientWidth, clientHeight = target.clientHeight;
+	        // By this condition we can catch all non-replaced inline, hidden and
+	        // detached elements. Though elements with width & height properties less
+	        // than 0.5 will be discarded as well.
 	        //
-	        // We can say that if CSS dimensions + paddings are equal to the "client"
-	        // properties then it's either IE, and thus we don't need to subtract
-	        // anything, or an element merely doesn't have paddings/borders styles.
-	        if (Math.round(width + horizPad) !== clientWidth) {
-	            width -= getBordersSize(styles, 'left', 'right') + horizPad;
+	        // Without it we would need to implement separate methods for each of
+	        // those cases and it's not possible to perform a precise and performance
+	        // effective test for hidden elements. E.g. even jQuery's ':visible' filter
+	        // gives wrong results for elements with width & height less than 0.5.
+	        if (!clientWidth && !clientHeight) {
+	            return emptyRect;
 	        }
-	
-	        if (Math.round(height + vertPad) !== clientHeight) {
-	            height -= getBordersSize(styles, 'top', 'bottom') + vertPad;
+	        var styles = getWindowOf(target).getComputedStyle(target);
+	        var paddings = getPaddings(styles);
+	        var horizPad = paddings.left + paddings.right;
+	        var vertPad = paddings.top + paddings.bottom;
+	        // Computed styles of width & height are being used because they are the
+	        // only dimensions available to JS that contain non-rounded values. It could
+	        // be possible to utilize the getBoundingClientRect if only it's data wasn't
+	        // affected by CSS transformations let alone paddings, borders and scroll bars.
+	        var width = toFloat(styles.width), height = toFloat(styles.height);
+	        // Width & height include paddings and borders when the 'border-box' box
+	        // model is applied (except for IE).
+	        if (styles.boxSizing === 'border-box') {
+	            // Following conditions are required to handle Internet Explorer which
+	            // doesn't include paddings and borders to computed CSS dimensions.
+	            //
+	            // We can say that if CSS dimensions + paddings are equal to the "client"
+	            // properties then it's either IE, and thus we don't need to subtract
+	            // anything, or an element merely doesn't have paddings/borders styles.
+	            if (Math.round(width + horizPad) !== clientWidth) {
+	                width -= getBordersSize(styles, 'left', 'right') + horizPad;
+	            }
+	            if (Math.round(height + vertPad) !== clientHeight) {
+	                height -= getBordersSize(styles, 'top', 'bottom') + vertPad;
+	            }
 	        }
-	    }
-	
-	    // Following steps can't be applied to the document's root element as its
-	    // client[Width/Height] properties represent viewport area of the window.
-	    // Besides, it's as well not necessary as the <html> itself neither has
-	    // rendered scroll bars nor it can be clipped.
-	    if (!isDocumentElement(target)) {
-	        // In some browsers (only in Firefox, actually) CSS width & height
-	        // include scroll bars size which can be removed at this step as scroll
-	        // bars are the only difference between rounded dimensions + paddings
-	        // and "client" properties, though that is not always true in Chrome.
-	        var vertScrollbar = Math.round(width + horizPad) - clientWidth;
-	        var horizScrollbar = Math.round(height + vertPad) - clientHeight;
-	
-	        // Chrome has a rather weird rounding of "client" properties.
-	        // E.g. for an element with content width of 314.2px it sometimes gives
-	        // the client width of 315px and for the width of 314.7px it may give
-	        // 314px. And it doesn't happen all the time. So just ignore this delta
-	        // as a non-relevant.
-	        if (Math.abs(vertScrollbar) !== 1) {
-	            width -= vertScrollbar;
+	        // Following steps can't be applied to the document's root element as its
+	        // client[Width/Height] properties represent viewport area of the window.
+	        // Besides, it's as well not necessary as the <html> itself neither has
+	        // rendered scroll bars nor it can be clipped.
+	        if (!isDocumentElement(target)) {
+	            // In some browsers (only in Firefox, actually) CSS width & height
+	            // include scroll bars size which can be removed at this step as scroll
+	            // bars are the only difference between rounded dimensions + paddings
+	            // and "client" properties, though that is not always true in Chrome.
+	            var vertScrollbar = Math.round(width + horizPad) - clientWidth;
+	            var horizScrollbar = Math.round(height + vertPad) - clientHeight;
+	            // Chrome has a rather weird rounding of "client" properties.
+	            // E.g. for an element with content width of 314.2px it sometimes gives
+	            // the client width of 315px and for the width of 314.7px it may give
+	            // 314px. And it doesn't happen all the time. So just ignore this delta
+	            // as a non-relevant.
+	            if (Math.abs(vertScrollbar) !== 1) {
+	                width -= vertScrollbar;
+	            }
+	            if (Math.abs(horizScrollbar) !== 1) {
+	                height -= horizScrollbar;
+	            }
 	        }
-	
-	        if (Math.abs(horizScrollbar) !== 1) {
-	            height -= horizScrollbar;
+	        return createRectInit(paddings.left, paddings.top, width, height);
+	    }
+	    /**
+	     * Checks whether provided element is an instance of the SVGGraphicsElement.
+	     *
+	     * @param {Element} target - Element to be checked.
+	     * @returns {boolean}
+	     */
+	    var isSVGGraphicsElement = (function () {
+	        // Some browsers, namely IE and Edge, don't have the SVGGraphicsElement
+	        // interface.
+	        if (typeof SVGGraphicsElement !== 'undefined') {
+	            return function (target) { return target instanceof getWindowOf(target).SVGGraphicsElement; };
 	        }
+	        // If it's so, then check that element is at least an instance of the
+	        // SVGElement and that it has the "getBBox" method.
+	        // eslint-disable-next-line no-extra-parens
+	        return function (target) { return (target instanceof getWindowOf(target).SVGElement &&
+	            typeof target.getBBox === 'function'); };
+	    })();
+	    /**
+	     * Checks whether provided element is a document element (<html>).
+	     *
+	     * @param {Element} target - Element to be checked.
+	     * @returns {boolean}
+	     */
+	    function isDocumentElement(target) {
+	        return target === getWindowOf(target).document.documentElement;
+	    }
+	    /**
+	     * Calculates an appropriate content rectangle for provided html or svg element.
+	     *
+	     * @param {Element} target - Element content rectangle of which needs to be calculated.
+	     * @returns {DOMRectInit}
+	     */
+	    function getContentRect(target) {
+	        if (!isBrowser) {
+	            return emptyRect;
+	        }
+	        if (isSVGGraphicsElement(target)) {
+	            return getSVGContentRect(target);
+	        }
+	        return getHTMLElementContentRect(target);
+	    }
+	    /**
+	     * Creates rectangle with an interface of the DOMRectReadOnly.
+	     * Spec: https://drafts.fxtf.org/geometry/#domrectreadonly
+	     *
+	     * @param {DOMRectInit} rectInit - Object with rectangle's x/y coordinates and dimensions.
+	     * @returns {DOMRectReadOnly}
+	     */
+	    function createReadOnlyRect(_a) {
+	        var x = _a.x, y = _a.y, width = _a.width, height = _a.height;
+	        // If DOMRectReadOnly is available use it as a prototype for the rectangle.
+	        var Constr = typeof DOMRectReadOnly !== 'undefined' ? DOMRectReadOnly : Object;
+	        var rect = Object.create(Constr.prototype);
+	        // Rectangle's properties are not writable and non-enumerable.
+	        defineConfigurable(rect, {
+	            x: x, y: y, width: width, height: height,
+	            top: y,
+	            right: x + width,
+	            bottom: height + y,
+	            left: x
+	        });
+	        return rect;
+	    }
+	    /**
+	     * Creates DOMRectInit object based on the provided dimensions and the x/y coordinates.
+	     * Spec: https://drafts.fxtf.org/geometry/#dictdef-domrectinit
+	     *
+	     * @param {number} x - X coordinate.
+	     * @param {number} y - Y coordinate.
+	     * @param {number} width - Rectangle's width.
+	     * @param {number} height - Rectangle's height.
+	     * @returns {DOMRectInit}
+	     */
+	    function createRectInit(x, y, width, height) {
+	        return { x: x, y: y, width: width, height: height };
 	    }
 	
-	    return createRectInit(paddings.left, paddings.top, width, height);
-	}
+	    /**
+	     * Class that is responsible for computations of the content rectangle of
+	     * provided DOM element and for keeping track of it's changes.
+	     */
+	    var ResizeObservation = /** @class */ (function () {
+	        /**
+	         * Creates an instance of ResizeObservation.
+	         *
+	         * @param {Element} target - Element to be observed.
+	         */
+	        function ResizeObservation(target) {
+	            /**
+	             * Broadcasted width of content rectangle.
+	             *
+	             * @type {number}
+	             */
+	            this.broadcastWidth = 0;
+	            /**
+	             * Broadcasted height of content rectangle.
+	             *
+	             * @type {number}
+	             */
+	            this.broadcastHeight = 0;
+	            /**
+	             * Reference to the last observed content rectangle.
+	             *
+	             * @private {DOMRectInit}
+	             */
+	            this.contentRect_ = createRectInit(0, 0, 0, 0);
+	            this.target = target;
+	        }
+	        /**
+	         * Updates content rectangle and tells whether it's width or height properties
+	         * have changed since the last broadcast.
+	         *
+	         * @returns {boolean}
+	         */
+	        ResizeObservation.prototype.isActive = function () {
+	            var rect = getContentRect(this.target);
+	            this.contentRect_ = rect;
+	            return (rect.width !== this.broadcastWidth ||
+	                rect.height !== this.broadcastHeight);
+	        };
+	        /**
+	         * Updates 'broadcastWidth' and 'broadcastHeight' properties with a data
+	         * from the corresponding properties of the last observed content rectangle.
+	         *
+	         * @returns {DOMRectInit} Last observed content rectangle.
+	         */
+	        ResizeObservation.prototype.broadcastRect = function () {
+	            var rect = this.contentRect_;
+	            this.broadcastWidth = rect.width;
+	            this.broadcastHeight = rect.height;
+	            return rect;
+	        };
+	        return ResizeObservation;
+	    }());
 	
-	/**
-	 * Checks whether provided element is an instance of the SVGGraphicsElement.
-	 *
-	 * @param {Element} target - Element to be checked.
-	 * @returns {boolean}
-	 */
-	var isSVGGraphicsElement = (function () {
-	    // Some browsers, namely IE and Edge, don't have the SVGGraphicsElement
-	    // interface.
-	    if (typeof SVGGraphicsElement !== 'undefined') {
-	        return function (target) { return target instanceof getWindowOf(target).SVGGraphicsElement; };
-	    }
+	    var ResizeObserverEntry = /** @class */ (function () {
+	        /**
+	         * Creates an instance of ResizeObserverEntry.
+	         *
+	         * @param {Element} target - Element that is being observed.
+	         * @param {DOMRectInit} rectInit - Data of the element's content rectangle.
+	         */
+	        function ResizeObserverEntry(target, rectInit) {
+	            var contentRect = createReadOnlyRect(rectInit);
+	            // According to the specification following properties are not writable
+	            // and are also not enumerable in the native implementation.
+	            //
+	            // Property accessors are not being used as they'd require to define a
+	            // private WeakMap storage which may cause memory leaks in browsers that
+	            // don't support this type of collections.
+	            defineConfigurable(this, { target: target, contentRect: contentRect });
+	        }
+	        return ResizeObserverEntry;
+	    }());
 	
-	    // If it's so, then check that element is at least an instance of the
-	    // SVGElement and that it has the "getBBox" method.
-	    // eslint-disable-next-line no-extra-parens
-	    return function (target) { return target instanceof getWindowOf(target).SVGElement && typeof target.getBBox === 'function'; };
-	})();
+	    var ResizeObserverSPI = /** @class */ (function () {
+	        /**
+	         * Creates a new instance of ResizeObserver.
+	         *
+	         * @param {ResizeObserverCallback} callback - Callback function that is invoked
+	         *      when one of the observed elements changes it's content dimensions.
+	         * @param {ResizeObserverController} controller - Controller instance which
+	         *      is responsible for the updates of observer.
+	         * @param {ResizeObserver} callbackCtx - Reference to the public
+	         *      ResizeObserver instance which will be passed to callback function.
+	         */
+	        function ResizeObserverSPI(callback, controller, callbackCtx) {
+	            /**
+	             * Collection of resize observations that have detected changes in dimensions
+	             * of elements.
+	             *
+	             * @private {Array<ResizeObservation>}
+	             */
+	            this.activeObservations_ = [];
+	            /**
+	             * Registry of the ResizeObservation instances.
+	             *
+	             * @private {Map<Element, ResizeObservation>}
+	             */
+	            this.observations_ = new MapShim();
+	            if (typeof callback !== 'function') {
+	                throw new TypeError('The callback provided as parameter 1 is not a function.');
+	            }
+	            this.callback_ = callback;
+	            this.controller_ = controller;
+	            this.callbackCtx_ = callbackCtx;
+	        }
+	        /**
+	         * Starts observing provided element.
+	         *
+	         * @param {Element} target - Element to be observed.
+	         * @returns {void}
+	         */
+	        ResizeObserverSPI.prototype.observe = function (target) {
+	            if (!arguments.length) {
+	                throw new TypeError('1 argument required, but only 0 present.');
+	            }
+	            // Do nothing if current environment doesn't have the Element interface.
+	            if (typeof Element === 'undefined' || !(Element instanceof Object)) {
+	                return;
+	            }
+	            if (!(target instanceof getWindowOf(target).Element)) {
+	                throw new TypeError('parameter 1 is not of type "Element".');
+	            }
+	            var observations = this.observations_;
+	            // Do nothing if element is already being observed.
+	            if (observations.has(target)) {
+	                return;
+	            }
+	            observations.set(target, new ResizeObservation(target));
+	            this.controller_.addObserver(this);
+	            // Force the update of observations.
+	            this.controller_.refresh();
+	        };
+	        /**
+	         * Stops observing provided element.
+	         *
+	         * @param {Element} target - Element to stop observing.
+	         * @returns {void}
+	         */
+	        ResizeObserverSPI.prototype.unobserve = function (target) {
+	            if (!arguments.length) {
+	                throw new TypeError('1 argument required, but only 0 present.');
+	            }
+	            // Do nothing if current environment doesn't have the Element interface.
+	            if (typeof Element === 'undefined' || !(Element instanceof Object)) {
+	                return;
+	            }
+	            if (!(target instanceof getWindowOf(target).Element)) {
+	                throw new TypeError('parameter 1 is not of type "Element".');
+	            }
+	            var observations = this.observations_;
+	            // Do nothing if element is not being observed.
+	            if (!observations.has(target)) {
+	                return;
+	            }
+	            observations.delete(target);
+	            if (!observations.size) {
+	                this.controller_.removeObserver(this);
+	            }
+	        };
+	        /**
+	         * Stops observing all elements.
+	         *
+	         * @returns {void}
+	         */
+	        ResizeObserverSPI.prototype.disconnect = function () {
+	            this.clearActive();
+	            this.observations_.clear();
+	            this.controller_.removeObserver(this);
+	        };
+	        /**
+	         * Collects observation instances the associated element of which has changed
+	         * it's content rectangle.
+	         *
+	         * @returns {void}
+	         */
+	        ResizeObserverSPI.prototype.gatherActive = function () {
+	            var _this = this;
+	            this.clearActive();
+	            this.observations_.forEach(function (observation) {
+	                if (observation.isActive()) {
+	                    _this.activeObservations_.push(observation);
+	                }
+	            });
+	        };
+	        /**
+	         * Invokes initial callback function with a list of ResizeObserverEntry
+	         * instances collected from active resize observations.
+	         *
+	         * @returns {void}
+	         */
+	        ResizeObserverSPI.prototype.broadcastActive = function () {
+	            // Do nothing if observer doesn't have active observations.
+	            if (!this.hasActive()) {
+	                return;
+	            }
+	            var ctx = this.callbackCtx_;
+	            // Create ResizeObserverEntry instance for every active observation.
+	            var entries = this.activeObservations_.map(function (observation) {
+	                return new ResizeObserverEntry(observation.target, observation.broadcastRect());
+	            });
+	            this.callback_.call(ctx, entries, ctx);
+	            this.clearActive();
+	        };
+	        /**
+	         * Clears the collection of active observations.
+	         *
+	         * @returns {void}
+	         */
+	        ResizeObserverSPI.prototype.clearActive = function () {
+	            this.activeObservations_.splice(0);
+	        };
+	        /**
+	         * Tells whether observer has active observations.
+	         *
+	         * @returns {boolean}
+	         */
+	        ResizeObserverSPI.prototype.hasActive = function () {
+	            return this.activeObservations_.length > 0;
+	        };
+	        return ResizeObserverSPI;
+	    }());
 	
-	/**
-	 * Checks whether provided element is a document element (<html>).
-	 *
-	 * @param {Element} target - Element to be checked.
-	 * @returns {boolean}
-	 */
-	function isDocumentElement(target) {
-	    return target === getWindowOf(target).document.documentElement;
-	}
-	
-	/**
-	 * Calculates an appropriate content rectangle for provided html or svg element.
-	 *
-	 * @param {Element} target - Element content rectangle of which needs to be calculated.
-	 * @returns {DOMRectInit}
-	 */
-	function getContentRect(target) {
-	    if (!isBrowser) {
-	        return emptyRect;
-	    }
-	
-	    if (isSVGGraphicsElement(target)) {
-	        return getSVGContentRect(target);
-	    }
-	
-	    return getHTMLElementContentRect(target);
-	}
-	
-	/**
-	 * Creates rectangle with an interface of the DOMRectReadOnly.
-	 * Spec: https://drafts.fxtf.org/geometry/#domrectreadonly
-	 *
-	 * @param {DOMRectInit} rectInit - Object with rectangle's x/y coordinates and dimensions.
-	 * @returns {DOMRectReadOnly}
-	 */
-	function createReadOnlyRect(ref) {
-	    var x = ref.x;
-	    var y = ref.y;
-	    var width = ref.width;
-	    var height = ref.height;
-	
-	    // If DOMRectReadOnly is available use it as a prototype for the rectangle.
-	    var Constr = typeof DOMRectReadOnly !== 'undefined' ? DOMRectReadOnly : Object;
-	    var rect = Object.create(Constr.prototype);
-	
-	    // Rectangle's properties are not writable and non-enumerable.
-	    defineConfigurable(rect, {
-	        x: x, y: y, width: width, height: height,
-	        top: y,
-	        right: x + width,
-	        bottom: height + y,
-	        left: x
+	    // Registry of internal observers. If WeakMap is not available use current shim
+	    // for the Map collection as it has all required methods and because WeakMap
+	    // can't be fully polyfilled anyway.
+	    var observers = typeof WeakMap !== 'undefined' ? new WeakMap() : new MapShim();
+	    /**
+	     * ResizeObserver API. Encapsulates the ResizeObserver SPI implementation
+	     * exposing only those methods and properties that are defined in the spec.
+	     */
+	    var ResizeObserver = /** @class */ (function () {
+	        /**
+	         * Creates a new instance of ResizeObserver.
+	         *
+	         * @param {ResizeObserverCallback} callback - Callback that is invoked when
+	         *      dimensions of the observed elements change.
+	         */
+	        function ResizeObserver(callback) {
+	            if (!(this instanceof ResizeObserver)) {
+	                throw new TypeError('Cannot call a class as a function.');
+	            }
+	            if (!arguments.length) {
+	                throw new TypeError('1 argument required, but only 0 present.');
+	            }
+	            var controller = ResizeObserverController.getInstance();
+	            var observer = new ResizeObserverSPI(callback, controller, this);
+	            observers.set(this, observer);
+	        }
+	        return ResizeObserver;
+	    }());
+	    // Expose public methods of ResizeObserver.
+	    [
+	        'observe',
+	        'unobserve',
+	        'disconnect'
+	    ].forEach(function (method) {
+	        ResizeObserver.prototype[method] = function () {
+	            var _a;
+	            return (_a = observers.get(this))[method].apply(_a, arguments);
+	        };
 	    });
 	
-	    return rect;
-	}
-	
-	/**
-	 * Creates DOMRectInit object based on the provided dimensions and the x/y coordinates.
-	 * Spec: https://drafts.fxtf.org/geometry/#dictdef-domrectinit
-	 *
-	 * @param {number} x - X coordinate.
-	 * @param {number} y - Y coordinate.
-	 * @param {number} width - Rectangle's width.
-	 * @param {number} height - Rectangle's height.
-	 * @returns {DOMRectInit}
-	 */
-	function createRectInit(x, y, width, height) {
-	    return { x: x, y: y, width: width, height: height };
-	}
-	
-	/**
-	 * Class that is responsible for computations of the content rectangle of
-	 * provided DOM element and for keeping track of it's changes.
-	 */
-	var ResizeObservation = function(target) {
-	    this.broadcastWidth = 0;
-	    this.broadcastHeight = 0;
-	    this.contentRect_ = createRectInit(0, 0, 0, 0);
-	
-	    this.target = target;
-	};
-	
-	/**
-	 * Updates content rectangle and tells whether it's width or height properties
-	 * have changed since the last broadcast.
-	 *
-	 * @returns {boolean}
-	 */
-	
-	
-	/**
-	 * Reference to the last observed content rectangle.
-	 *
-	 * @private {DOMRectInit}
-	 */
-	
-	
-	/**
-	 * Broadcasted width of content rectangle.
-	 *
-	 * @type {number}
-	 */
-	ResizeObservation.prototype.isActive = function () {
-	    var rect = getContentRect(this.target);
-	
-	    this.contentRect_ = rect;
-	
-	    return rect.width !== this.broadcastWidth || rect.height !== this.broadcastHeight;
-	};
-	
-	/**
-	 * Updates 'broadcastWidth' and 'broadcastHeight' properties with a data
-	 * from the corresponding properties of the last observed content rectangle.
-	 *
-	 * @returns {DOMRectInit} Last observed content rectangle.
-	 */
-	ResizeObservation.prototype.broadcastRect = function () {
-	    var rect = this.contentRect_;
-	
-	    this.broadcastWidth = rect.width;
-	    this.broadcastHeight = rect.height;
-	
-	    return rect;
-	};
-	
-	var ResizeObserverEntry = function(target, rectInit) {
-	    var contentRect = createReadOnlyRect(rectInit);
-	
-	    // According to the specification following properties are not writable
-	    // and are also not enumerable in the native implementation.
-	    //
-	    // Property accessors are not being used as they'd require to define a
-	    // private WeakMap storage which may cause memory leaks in browsers that
-	    // don't support this type of collections.
-	    defineConfigurable(this, { target: target, contentRect: contentRect });
-	};
-	
-	var ResizeObserverSPI = function(callback, controller, callbackCtx) {
-	    this.activeObservations_ = [];
-	    this.observations_ = new MapShim();
-	
-	    if (typeof callback !== 'function') {
-	        throw new TypeError('The callback provided as parameter 1 is not a function.');
-	    }
-	
-	    this.callback_ = callback;
-	    this.controller_ = controller;
-	    this.callbackCtx_ = callbackCtx;
-	};
-	
-	/**
-	 * Starts observing provided element.
-	 *
-	 * @param {Element} target - Element to be observed.
-	 * @returns {void}
-	 */
-	
-	
-	/**
-	 * Registry of the ResizeObservation instances.
-	 *
-	 * @private {Map<Element, ResizeObservation>}
-	 */
-	
-	
-	/**
-	 * Public ResizeObserver instance which will be passed to the callback
-	 * function and used as a value of it's "this" binding.
-	 *
-	 * @private {ResizeObserver}
-	 */
-	
-	/**
-	 * Collection of resize observations that have detected changes in dimensions
-	 * of elements.
-	 *
-	 * @private {Array<ResizeObservation>}
-	 */
-	ResizeObserverSPI.prototype.observe = function (target) {
-	    if (!arguments.length) {
-	        throw new TypeError('1 argument required, but only 0 present.');
-	    }
-	
-	    // Do nothing if current environment doesn't have the Element interface.
-	    if (typeof Element === 'undefined' || !(Element instanceof Object)) {
-	        return;
-	    }
-	
-	    if (!(target instanceof getWindowOf(target).Element)) {
-	        throw new TypeError('parameter 1 is not of type "Element".');
-	    }
-	
-	    var observations = this.observations_;
-	
-	    // Do nothing if element is already being observed.
-	    if (observations.has(target)) {
-	        return;
-	    }
-	
-	    observations.set(target, new ResizeObservation(target));
-	
-	    this.controller_.addObserver(this);
-	
-	    // Force the update of observations.
-	    this.controller_.refresh();
-	};
-	
-	/**
-	 * Stops observing provided element.
-	 *
-	 * @param {Element} target - Element to stop observing.
-	 * @returns {void}
-	 */
-	ResizeObserverSPI.prototype.unobserve = function (target) {
-	    if (!arguments.length) {
-	        throw new TypeError('1 argument required, but only 0 present.');
-	    }
-	
-	    // Do nothing if current environment doesn't have the Element interface.
-	    if (typeof Element === 'undefined' || !(Element instanceof Object)) {
-	        return;
-	    }
-	
-	    if (!(target instanceof getWindowOf(target).Element)) {
-	        throw new TypeError('parameter 1 is not of type "Element".');
-	    }
-	
-	    var observations = this.observations_;
-	
-	    // Do nothing if element is not being observed.
-	    if (!observations.has(target)) {
-	        return;
-	    }
-	
-	    observations.delete(target);
-	
-	    if (!observations.size) {
-	        this.controller_.removeObserver(this);
-	    }
-	};
-	
-	/**
-	 * Stops observing all elements.
-	 *
-	 * @returns {void}
-	 */
-	ResizeObserverSPI.prototype.disconnect = function () {
-	    this.clearActive();
-	    this.observations_.clear();
-	    this.controller_.removeObserver(this);
-	};
-	
-	/**
-	 * Collects observation instances the associated element of which has changed
-	 * it's content rectangle.
-	 *
-	 * @returns {void}
-	 */
-	ResizeObserverSPI.prototype.gatherActive = function () {
-	        var this$1 = this;
-	
-	    this.clearActive();
-	
-	    this.observations_.forEach(function (observation) {
-	        if (observation.isActive()) {
-	            this$1.activeObservations_.push(observation);
+	    var index = (function () {
+	        // Export existing implementation if available.
+	        if (typeof global$1.ResizeObserver !== 'undefined') {
+	            return global$1.ResizeObserver;
 	        }
-	    });
-	};
+	        return ResizeObserver;
+	    })();
 	
-	/**
-	 * Invokes initial callback function with a list of ResizeObserverEntry
-	 * instances collected from active resize observations.
-	 *
-	 * @returns {void}
-	 */
-	ResizeObserverSPI.prototype.broadcastActive = function () {
-	    // Do nothing if observer doesn't have active observations.
-	    if (!this.hasActive()) {
-	        return;
-	    }
-	
-	    var ctx = this.callbackCtx_;
-	
-	    // Create ResizeObserverEntry instance for every active observation.
-	    var entries = this.activeObservations_.map(function (observation) {
-	        return new ResizeObserverEntry(observation.target, observation.broadcastRect());
-	    });
-	
-	    this.callback_.call(ctx, entries, ctx);
-	    this.clearActive();
-	};
-	
-	/**
-	 * Clears the collection of active observations.
-	 *
-	 * @returns {void}
-	 */
-	ResizeObserverSPI.prototype.clearActive = function () {
-	    this.activeObservations_.splice(0);
-	};
-	
-	/**
-	 * Tells whether observer has active observations.
-	 *
-	 * @returns {boolean}
-	 */
-	ResizeObserverSPI.prototype.hasActive = function () {
-	    return this.activeObservations_.length > 0;
-	};
-	
-	// Registry of internal observers. If WeakMap is not available use current shim
-	// for the Map collection as it has all required methods and because WeakMap
-	// can't be fully polyfilled anyway.
-	var observers = typeof WeakMap !== 'undefined' ? new WeakMap() : new MapShim();
-	
-	/**
-	 * ResizeObserver API. Encapsulates the ResizeObserver SPI implementation
-	 * exposing only those methods and properties that are defined in the spec.
-	 */
-	var ResizeObserver = function(callback) {
-	    if (!(this instanceof ResizeObserver)) {
-	        throw new TypeError('Cannot call a class as a function.');
-	    }
-	    if (!arguments.length) {
-	        throw new TypeError('1 argument required, but only 0 present.');
-	    }
-	
-	    var controller = ResizeObserverController.getInstance();
-	    var observer = new ResizeObserverSPI(callback, controller, this);
-	
-	    observers.set(this, observer);
-	};
-	
-	// Expose public methods of ResizeObserver.
-	['observe', 'unobserve', 'disconnect'].forEach(function (method) {
-	    ResizeObserver.prototype[method] = function () {
-	        return (ref = observers.get(this))[method].apply(ref, arguments);
-	        var ref;
-	    };
-	});
-	
-	var index = (function () {
-	    // Export existing implementation if available.
-	    if (typeof global$1.ResizeObserver !== 'undefined') {
-	        return global$1.ResizeObserver;
-	    }
-	
-	    return ResizeObserver;
-	})();
-	
-	return index;
+	    return index;
 	
 	})));
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 240 */
+/* 243 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22013,19 +22074,19 @@
 	exports.__esModule = true;
 	exports.SubMenu = undefined;
 	
-	var _classCallCheck2 = __webpack_require__(182);
+	var _classCallCheck2 = __webpack_require__(185);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _possibleConstructorReturn2 = __webpack_require__(183);
+	var _possibleConstructorReturn2 = __webpack_require__(186);
 	
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 	
-	var _inherits2 = __webpack_require__(217);
+	var _inherits2 = __webpack_require__(220);
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
-	var _extends3 = __webpack_require__(142);
+	var _extends3 = __webpack_require__(145);
 	
 	var _extends4 = _interopRequireDefault(_extends3);
 	
@@ -22041,11 +22102,11 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _rcTrigger = __webpack_require__(241);
+	var _rcTrigger = __webpack_require__(244);
 	
 	var _rcTrigger2 = _interopRequireDefault(_rcTrigger);
 	
-	var _KeyCode = __webpack_require__(235);
+	var _KeyCode = __webpack_require__(238);
 	
 	var _KeyCode2 = _interopRequireDefault(_KeyCode);
 	
@@ -22053,21 +22114,21 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _miniStore = __webpack_require__(225);
+	var _miniStore = __webpack_require__(228);
 	
-	var _SubPopupMenu = __webpack_require__(234);
+	var _SubPopupMenu = __webpack_require__(237);
 	
 	var _SubPopupMenu2 = _interopRequireDefault(_SubPopupMenu);
 	
-	var _placements = __webpack_require__(269);
+	var _placements = __webpack_require__(272);
 	
 	var _placements2 = _interopRequireDefault(_placements);
 	
-	var _rcAnimate = __webpack_require__(258);
+	var _rcAnimate = __webpack_require__(261);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
-	var _util = __webpack_require__(237);
+	var _util = __webpack_require__(240);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -22653,7 +22714,7 @@
 	exports['default'] = connected;
 
 /***/ }),
-/* 241 */
+/* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22662,7 +22723,7 @@
 	  value: true
 	});
 	
-	var _extends2 = __webpack_require__(142);
+	var _extends2 = __webpack_require__(145);
 	
 	var _extends3 = _interopRequireDefault(_extends2);
 	
@@ -22676,25 +22737,25 @@
 	
 	var _reactDom = __webpack_require__(12);
 	
-	var _createReactClass = __webpack_require__(242);
+	var _createReactClass = __webpack_require__(245);
 	
 	var _createReactClass2 = _interopRequireDefault(_createReactClass);
 	
-	var _contains = __webpack_require__(248);
+	var _contains = __webpack_require__(251);
 	
 	var _contains2 = _interopRequireDefault(_contains);
 	
-	var _addEventListener = __webpack_require__(249);
+	var _addEventListener = __webpack_require__(252);
 	
 	var _addEventListener2 = _interopRequireDefault(_addEventListener);
 	
-	var _Popup = __webpack_require__(250);
+	var _Popup = __webpack_require__(253);
 	
 	var _Popup2 = _interopRequireDefault(_Popup);
 	
-	var _utils = __webpack_require__(267);
+	var _utils = __webpack_require__(270);
 	
-	var _getContainerRenderMixin = __webpack_require__(268);
+	var _getContainerRenderMixin = __webpack_require__(271);
 	
 	var _getContainerRenderMixin2 = _interopRequireDefault(_getContainerRenderMixin);
 	
@@ -23166,7 +23227,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 242 */
+/* 245 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -23180,7 +23241,7 @@
 	'use strict';
 	
 	var React = __webpack_require__(4);
-	var factory = __webpack_require__(243);
+	var factory = __webpack_require__(246);
 	
 	if (typeof React === 'undefined') {
 	  throw Error(
@@ -23200,7 +23261,7 @@
 
 
 /***/ }),
-/* 243 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -23215,11 +23276,11 @@
 	
 	var _assign = __webpack_require__(44);
 	
-	var emptyObject = __webpack_require__(244);
-	var _invariant = __webpack_require__(245);
+	var emptyObject = __webpack_require__(247);
+	var _invariant = __webpack_require__(248);
 	
 	if (process.env.NODE_ENV !== 'production') {
-	  var warning = __webpack_require__(246);
+	  var warning = __webpack_require__(249);
 	}
 	
 	var MIXINS_KEY = 'mixins';
@@ -24133,7 +24194,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33)))
 
 /***/ }),
-/* 244 */
+/* 247 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -24156,7 +24217,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33)))
 
 /***/ }),
-/* 245 */
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -24215,7 +24276,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33)))
 
 /***/ }),
-/* 246 */
+/* 249 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -24228,7 +24289,7 @@
 	
 	'use strict';
 	
-	var emptyFunction = __webpack_require__(247);
+	var emptyFunction = __webpack_require__(250);
 	
 	/**
 	 * Similar to invariant but only logs a warning if the condition is not met.
@@ -24283,7 +24344,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33)))
 
 /***/ }),
-/* 247 */
+/* 250 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -24324,7 +24385,7 @@
 	module.exports = emptyFunction;
 
 /***/ }),
-/* 248 */
+/* 251 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -24347,7 +24408,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 249 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24377,7 +24438,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 250 */
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24386,23 +24447,23 @@
 	  value: true
 	});
 	
-	var _extends2 = __webpack_require__(142);
+	var _extends2 = __webpack_require__(145);
 	
 	var _extends3 = _interopRequireDefault(_extends2);
 	
-	var _classCallCheck2 = __webpack_require__(182);
+	var _classCallCheck2 = __webpack_require__(185);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _createClass2 = __webpack_require__(251);
+	var _createClass2 = __webpack_require__(254);
 	
 	var _createClass3 = _interopRequireDefault(_createClass2);
 	
-	var _possibleConstructorReturn2 = __webpack_require__(183);
+	var _possibleConstructorReturn2 = __webpack_require__(186);
 	
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 	
-	var _inherits2 = __webpack_require__(217);
+	var _inherits2 = __webpack_require__(220);
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
@@ -24418,23 +24479,23 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcAlign = __webpack_require__(255);
+	var _rcAlign = __webpack_require__(258);
 	
 	var _rcAlign2 = _interopRequireDefault(_rcAlign);
 	
-	var _rcAnimate = __webpack_require__(258);
+	var _rcAnimate = __webpack_require__(261);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
-	var _PopupInner = __webpack_require__(265);
+	var _PopupInner = __webpack_require__(268);
 	
 	var _PopupInner2 = _interopRequireDefault(_PopupInner);
 	
-	var _LazyRenderBox = __webpack_require__(266);
+	var _LazyRenderBox = __webpack_require__(269);
 	
 	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
 	
-	var _utils = __webpack_require__(267);
+	var _utils = __webpack_require__(270);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -24667,14 +24728,14 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 251 */
+/* 254 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	exports.__esModule = true;
 	
-	var _defineProperty = __webpack_require__(252);
+	var _defineProperty = __webpack_require__(255);
 	
 	var _defineProperty2 = _interopRequireDefault(_defineProperty);
 	
@@ -24699,40 +24760,40 @@
 	}();
 
 /***/ }),
-/* 252 */
+/* 255 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(253), __esModule: true };
+	module.exports = { "default": __webpack_require__(256), __esModule: true };
 
 /***/ }),
-/* 253 */
+/* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	__webpack_require__(254);
-	var $Object = __webpack_require__(148).Object;
+	__webpack_require__(257);
+	var $Object = __webpack_require__(151).Object;
 	module.exports = function defineProperty(it, key, desc) {
 	  return $Object.defineProperty(it, key, desc);
 	};
 
 
 /***/ }),
-/* 254 */
+/* 257 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var $export = __webpack_require__(146);
+	var $export = __webpack_require__(149);
 	// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-	$export($export.S + $export.F * !__webpack_require__(156), 'Object', { defineProperty: __webpack_require__(152).f });
+	$export($export.S + $export.F * !__webpack_require__(159), 'Object', { defineProperty: __webpack_require__(155).f });
 
 
 /***/ }),
-/* 255 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _Align = __webpack_require__(256);
+	var _Align = __webpack_require__(259);
 	
 	var _Align2 = _interopRequireDefault(_Align);
 	
@@ -24743,22 +24804,22 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 256 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _classCallCheck2 = __webpack_require__(182);
+	var _classCallCheck2 = __webpack_require__(185);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _possibleConstructorReturn2 = __webpack_require__(183);
+	var _possibleConstructorReturn2 = __webpack_require__(186);
 	
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 	
-	var _inherits2 = __webpack_require__(217);
+	var _inherits2 = __webpack_require__(220);
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
@@ -24776,11 +24837,11 @@
 	
 	var _domAlign = __webpack_require__(51);
 	
-	var _addEventListener = __webpack_require__(249);
+	var _addEventListener = __webpack_require__(252);
 	
 	var _addEventListener2 = _interopRequireDefault(_addEventListener);
 	
-	var _util = __webpack_require__(257);
+	var _util = __webpack_require__(260);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -24958,7 +25019,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 257 */
+/* 260 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -25007,7 +25068,7 @@
 	}
 
 /***/ }),
-/* 258 */
+/* 261 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25016,27 +25077,27 @@
 	  value: true
 	});
 	
-	var _extends2 = __webpack_require__(142);
+	var _extends2 = __webpack_require__(145);
 	
 	var _extends3 = _interopRequireDefault(_extends2);
 	
-	var _defineProperty2 = __webpack_require__(259);
+	var _defineProperty2 = __webpack_require__(262);
 	
 	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 	
-	var _classCallCheck2 = __webpack_require__(182);
+	var _classCallCheck2 = __webpack_require__(185);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _createClass2 = __webpack_require__(251);
+	var _createClass2 = __webpack_require__(254);
 	
 	var _createClass3 = _interopRequireDefault(_createClass2);
 	
-	var _possibleConstructorReturn2 = __webpack_require__(183);
+	var _possibleConstructorReturn2 = __webpack_require__(186);
 	
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 	
-	var _inherits2 = __webpack_require__(217);
+	var _inherits2 = __webpack_require__(220);
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
@@ -25048,13 +25109,13 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _ChildrenUtils = __webpack_require__(260);
+	var _ChildrenUtils = __webpack_require__(263);
 	
-	var _AnimateChild = __webpack_require__(261);
+	var _AnimateChild = __webpack_require__(264);
 	
 	var _AnimateChild2 = _interopRequireDefault(_AnimateChild);
 	
-	var _animate = __webpack_require__(264);
+	var _animate = __webpack_require__(267);
 	
 	var _animate2 = _interopRequireDefault(_animate);
 	
@@ -25401,14 +25462,14 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 259 */
+/* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	exports.__esModule = true;
 	
-	var _defineProperty = __webpack_require__(252);
+	var _defineProperty = __webpack_require__(255);
 	
 	var _defineProperty2 = _interopRequireDefault(_defineProperty);
 	
@@ -25430,7 +25491,7 @@
 	};
 
 /***/ }),
-/* 260 */
+/* 263 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25552,7 +25613,7 @@
 	}
 
 /***/ }),
-/* 261 */
+/* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25561,19 +25622,19 @@
 	  value: true
 	});
 	
-	var _classCallCheck2 = __webpack_require__(182);
+	var _classCallCheck2 = __webpack_require__(185);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _createClass2 = __webpack_require__(251);
+	var _createClass2 = __webpack_require__(254);
 	
 	var _createClass3 = _interopRequireDefault(_createClass2);
 	
-	var _possibleConstructorReturn2 = __webpack_require__(183);
+	var _possibleConstructorReturn2 = __webpack_require__(186);
 	
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 	
-	var _inherits2 = __webpack_require__(217);
+	var _inherits2 = __webpack_require__(220);
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
@@ -25589,11 +25650,11 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _cssAnimation = __webpack_require__(262);
+	var _cssAnimation = __webpack_require__(265);
 	
 	var _cssAnimation2 = _interopRequireDefault(_cssAnimation);
 	
-	var _animate = __webpack_require__(264);
+	var _animate = __webpack_require__(267);
 	
 	var _animate2 = _interopRequireDefault(_animate);
 	
@@ -25701,7 +25762,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 262 */
+/* 265 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25711,11 +25772,11 @@
 	});
 	exports.isCssAnimationSupported = undefined;
 	
-	var _typeof2 = __webpack_require__(184);
+	var _typeof2 = __webpack_require__(187);
 	
 	var _typeof3 = _interopRequireDefault(_typeof2);
 	
-	var _Event = __webpack_require__(263);
+	var _Event = __webpack_require__(266);
 	
 	var _Event2 = _interopRequireDefault(_Event);
 	
@@ -25897,7 +25958,7 @@
 	exports['default'] = cssAnimation;
 
 /***/ }),
-/* 263 */
+/* 266 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -26037,7 +26098,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 264 */
+/* 267 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -26069,7 +26130,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 265 */
+/* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26078,19 +26139,19 @@
 	  value: true
 	});
 	
-	var _classCallCheck2 = __webpack_require__(182);
+	var _classCallCheck2 = __webpack_require__(185);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _createClass2 = __webpack_require__(251);
+	var _createClass2 = __webpack_require__(254);
 	
 	var _createClass3 = _interopRequireDefault(_createClass2);
 	
-	var _possibleConstructorReturn2 = __webpack_require__(183);
+	var _possibleConstructorReturn2 = __webpack_require__(186);
 	
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 	
-	var _inherits2 = __webpack_require__(217);
+	var _inherits2 = __webpack_require__(220);
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
@@ -26102,7 +26163,7 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _LazyRenderBox = __webpack_require__(266);
+	var _LazyRenderBox = __webpack_require__(269);
 	
 	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
 	
@@ -26155,7 +26216,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 266 */
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26164,23 +26225,23 @@
 	  value: true
 	});
 	
-	var _objectWithoutProperties2 = __webpack_require__(181);
+	var _objectWithoutProperties2 = __webpack_require__(184);
 	
 	var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 	
-	var _classCallCheck2 = __webpack_require__(182);
+	var _classCallCheck2 = __webpack_require__(185);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _createClass2 = __webpack_require__(251);
+	var _createClass2 = __webpack_require__(254);
 	
 	var _createClass3 = _interopRequireDefault(_createClass2);
 	
-	var _possibleConstructorReturn2 = __webpack_require__(183);
+	var _possibleConstructorReturn2 = __webpack_require__(186);
 	
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 	
-	var _inherits2 = __webpack_require__(217);
+	var _inherits2 = __webpack_require__(220);
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
@@ -26239,7 +26300,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 267 */
+/* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26248,7 +26309,7 @@
 	  value: true
 	});
 	
-	var _extends2 = __webpack_require__(142);
+	var _extends2 = __webpack_require__(145);
 	
 	var _extends3 = _interopRequireDefault(_extends2);
 	
@@ -26284,7 +26345,7 @@
 	}
 
 /***/ }),
-/* 268 */
+/* 271 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26293,7 +26354,7 @@
 	  value: true
 	});
 	
-	var _extends2 = __webpack_require__(142);
+	var _extends2 = __webpack_require__(145);
 	
 	var _extends3 = _interopRequireDefault(_extends2);
 	
@@ -26392,7 +26453,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 269 */
+/* 272 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -26429,7 +26490,7 @@
 	exports['default'] = placements;
 
 /***/ }),
-/* 270 */
+/* 273 */
 /***/ (function(module, exports) {
 
 	// mutationobserver-shim v0.3.2 (github.com/megawac/MutationObserver.js)
@@ -26445,7 +26506,7 @@
 
 
 /***/ }),
-/* 271 */
+/* 274 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26453,19 +26514,19 @@
 	exports.__esModule = true;
 	exports.MenuItem = undefined;
 	
-	var _extends2 = __webpack_require__(142);
+	var _extends2 = __webpack_require__(145);
 	
 	var _extends3 = _interopRequireDefault(_extends2);
 	
-	var _classCallCheck2 = __webpack_require__(182);
+	var _classCallCheck2 = __webpack_require__(185);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _possibleConstructorReturn2 = __webpack_require__(183);
+	var _possibleConstructorReturn2 = __webpack_require__(186);
 	
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 	
-	var _inherits2 = __webpack_require__(217);
+	var _inherits2 = __webpack_require__(220);
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
@@ -26481,7 +26542,7 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _KeyCode = __webpack_require__(235);
+	var _KeyCode = __webpack_require__(238);
 	
 	var _KeyCode2 = _interopRequireDefault(_KeyCode);
 	
@@ -26489,13 +26550,13 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _domScrollIntoView = __webpack_require__(272);
+	var _domScrollIntoView = __webpack_require__(275);
 	
 	var _domScrollIntoView2 = _interopRequireDefault(_domScrollIntoView);
 	
-	var _miniStore = __webpack_require__(225);
+	var _miniStore = __webpack_require__(228);
 	
-	var _util = __webpack_require__(237);
+	var _util = __webpack_require__(240);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -26725,20 +26786,20 @@
 	exports['default'] = connected;
 
 /***/ }),
-/* 272 */
+/* 275 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(273);
+	module.exports = __webpack_require__(276);
 
 /***/ }),
-/* 273 */
+/* 276 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var util = __webpack_require__(274);
+	var util = __webpack_require__(277);
 	
 	function scrollIntoView(elem, container, config) {
 	  config = config || {};
@@ -26867,7 +26928,7 @@
 	module.exports = scrollIntoView;
 
 /***/ }),
-/* 274 */
+/* 277 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -27311,30 +27372,30 @@
 	}, domUtils);
 
 /***/ }),
-/* 275 */
+/* 278 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _extends2 = __webpack_require__(142);
+	var _extends2 = __webpack_require__(145);
 	
 	var _extends3 = _interopRequireDefault(_extends2);
 	
-	var _objectWithoutProperties2 = __webpack_require__(181);
+	var _objectWithoutProperties2 = __webpack_require__(184);
 	
 	var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 	
-	var _classCallCheck2 = __webpack_require__(182);
+	var _classCallCheck2 = __webpack_require__(185);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _possibleConstructorReturn2 = __webpack_require__(183);
+	var _possibleConstructorReturn2 = __webpack_require__(186);
 	
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 	
-	var _inherits2 = __webpack_require__(217);
+	var _inherits2 = __webpack_require__(220);
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
@@ -27346,7 +27407,7 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _util = __webpack_require__(237);
+	var _util = __webpack_require__(240);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -27429,22 +27490,22 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 276 */
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _classCallCheck2 = __webpack_require__(182);
+	var _classCallCheck2 = __webpack_require__(185);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _possibleConstructorReturn2 = __webpack_require__(183);
+	var _possibleConstructorReturn2 = __webpack_require__(186);
 	
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 	
-	var _inherits2 = __webpack_require__(217);
+	var _inherits2 = __webpack_require__(220);
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
@@ -27496,7 +27557,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 277 */
+/* 280 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27543,7 +27604,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 278 */
+/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27758,7 +27819,7 @@
 	}
 
 /***/ }),
-/* 279 */
+/* 282 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27769,7 +27830,7 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _rcTrigger = __webpack_require__(241);
+	var _rcTrigger = __webpack_require__(244);
 	
 	var _rcTrigger2 = _interopRequireDefault(_rcTrigger);
 	
@@ -27789,9 +27850,9 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _util = __webpack_require__(278);
+	var _util = __webpack_require__(281);
 	
-	var _DropdownMenu = __webpack_require__(280);
+	var _DropdownMenu = __webpack_require__(283);
 	
 	var _DropdownMenu2 = _interopRequireDefault(_DropdownMenu);
 	
@@ -28008,7 +28069,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 280 */
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28029,23 +28090,23 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _toArray = __webpack_require__(139);
+	var _toArray = __webpack_require__(142);
 	
 	var _toArray2 = _interopRequireDefault(_toArray);
 	
-	var _rcMenu = __webpack_require__(140);
+	var _rcMenu = __webpack_require__(143);
 	
 	var _rcMenu2 = _interopRequireDefault(_rcMenu);
 	
-	var _domScrollIntoView = __webpack_require__(272);
+	var _domScrollIntoView = __webpack_require__(275);
 	
 	var _domScrollIntoView2 = _interopRequireDefault(_domScrollIntoView);
 	
-	var _raf = __webpack_require__(281);
+	var _raf = __webpack_require__(284);
 	
 	var _raf2 = _interopRequireDefault(_raf);
 	
-	var _util = __webpack_require__(278);
+	var _util = __webpack_require__(281);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -28251,10 +28312,10 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 281 */
+/* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {var now = __webpack_require__(282)
+	/* WEBPACK VAR INJECTION */(function(global) {var now = __webpack_require__(285)
 	  , root = typeof window === 'undefined' ? global : window
 	  , vendors = ['moz', 'webkit']
 	  , suffix = 'AnimationFrame'
@@ -28333,7 +28394,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 282 */
+/* 285 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {// Generated by CoffeeScript 1.12.2
@@ -28376,7 +28437,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33)))
 
 /***/ }),
-/* 283 */
+/* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28461,7 +28522,7 @@
 	};
 
 /***/ }),
-/* 284 */
+/* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28501,7 +28562,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 285 */
+/* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28510,7 +28571,7 @@
 	  value: true
 	});
 	
-	var _InputNumber = __webpack_require__(286);
+	var _InputNumber = __webpack_require__(289);
 	
 	var _InputNumber2 = _interopRequireDefault(_InputNumber);
 	
@@ -28520,7 +28581,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 286 */
+/* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28539,11 +28600,11 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _beeInputGroup = __webpack_require__(287);
+	var _beeInputGroup = __webpack_require__(290);
 	
 	var _beeInputGroup2 = _interopRequireDefault(_beeInputGroup);
 	
-	var _beeFormControl = __webpack_require__(131);
+	var _beeFormControl = __webpack_require__(134);
 	
 	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 	
@@ -28726,7 +28787,8 @@
 	                min = _this$props5.min,
 	                max = _this$props5.max,
 	                step = _this$props5.step,
-	                onChange = _this$props5.onChange;
+	                onChange = _this$props5.onChange,
+	                toNumber = _this$props5.toNumber;
 	
 	
 	            if (typeof min === "undefined") {
@@ -28749,7 +28811,7 @@
 	            _this.setState({
 	                value: value
 	            });
-	            onChange && onChange(Number(value));
+	            toNumber ? onChange && onChange(Number(value)) : onChange && onChange(value);
 	            _this.detailDisable(value);
 	        };
 	
@@ -28758,7 +28820,8 @@
 	                max = _this$props6.max,
 	                min = _this$props6.min,
 	                step = _this$props6.step,
-	                onChange = _this$props6.onChange;
+	                onChange = _this$props6.onChange,
+	                toNumber = _this$props6.toNumber;
 	
 	            if (typeof max === "undefined") {
 	                value = _this.detail(value, step, 'add');
@@ -28778,7 +28841,7 @@
 	            _this.setState({
 	                value: value
 	            });
-	            onChange && onChange(Number(value));
+	            toNumber ? onChange && onChange(Number(value)) : onChange && onChange(value);
 	            _this.detailDisable(value);
 	        };
 	
@@ -29022,15 +29085,15 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 287 */
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(288);
+	module.exports = __webpack_require__(291);
 
 /***/ }),
-/* 288 */
+/* 291 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29049,11 +29112,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _beeInputGroupAddon = __webpack_require__(289);
+	var _beeInputGroupAddon = __webpack_require__(292);
 	
 	var _beeInputGroupAddon2 = _interopRequireDefault(_beeInputGroupAddon);
 	
-	var _InputGroupButton = __webpack_require__(291);
+	var _InputGroupButton = __webpack_require__(294);
 	
 	var _InputGroupButton2 = _interopRequireDefault(_InputGroupButton);
 	
@@ -29110,7 +29173,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 289 */
+/* 292 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29119,7 +29182,7 @@
 	  value: true
 	});
 	
-	var _InputGroupAddon = __webpack_require__(290);
+	var _InputGroupAddon = __webpack_require__(293);
 	
 	var _InputGroupAddon2 = _interopRequireDefault(_InputGroupAddon);
 	
@@ -29129,7 +29192,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 290 */
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29193,7 +29256,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 291 */
+/* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29256,7 +29319,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 292 */
+/* 295 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29269,23 +29332,23 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _DatePicker = __webpack_require__(293);
+	var _DatePicker = __webpack_require__(296);
 	
 	var _DatePicker2 = _interopRequireDefault(_DatePicker);
 	
-	var _MonthPicker = __webpack_require__(447);
+	var _MonthPicker = __webpack_require__(451);
 	
 	var _MonthPicker2 = _interopRequireDefault(_MonthPicker);
 	
-	var _RangePicker = __webpack_require__(449);
+	var _RangePicker = __webpack_require__(453);
 	
 	var _RangePicker2 = _interopRequireDefault(_RangePicker);
 	
-	var _WeekPicker = __webpack_require__(469);
+	var _WeekPicker = __webpack_require__(473);
 	
 	var _WeekPicker2 = _interopRequireDefault(_WeekPicker);
 	
-	var _YearPicker = __webpack_require__(470);
+	var _YearPicker = __webpack_require__(474);
 	
 	var _YearPicker2 = _interopRequireDefault(_YearPicker);
 	
@@ -29300,7 +29363,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 293 */
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29311,7 +29374,7 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _rcCalendar = __webpack_require__(294);
+	var _rcCalendar = __webpack_require__(297);
 	
 	var _rcCalendar2 = _interopRequireDefault(_rcCalendar);
 	
@@ -29321,27 +29384,27 @@
 	
 	var _tinperBeeCore = __webpack_require__(27);
 	
-	var _Picker = __webpack_require__(441);
+	var _Picker = __webpack_require__(445);
 	
 	var _Picker2 = _interopRequireDefault(_Picker);
 	
-	var _beeFormControl = __webpack_require__(131);
+	var _beeFormControl = __webpack_require__(134);
 	
 	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 	
-	var _Panel = __webpack_require__(443);
+	var _Panel = __webpack_require__(447);
 	
 	var _Panel2 = _interopRequireDefault(_Panel);
 	
-	var _moment = __webpack_require__(299);
+	var _moment = __webpack_require__(302);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
-	var _beeIcon = __webpack_require__(133);
+	var _beeIcon = __webpack_require__(136);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _beeInputGroup = __webpack_require__(287);
+	var _beeInputGroup = __webpack_require__(290);
 	
 	var _beeInputGroup2 = _interopRequireDefault(_beeInputGroup);
 	
@@ -29537,7 +29600,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 294 */
+/* 297 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29546,7 +29609,7 @@
 	  value: true
 	});
 	
-	var _Calendar = __webpack_require__(295);
+	var _Calendar = __webpack_require__(298);
 	
 	var _Calendar2 = _interopRequireDefault(_Calendar);
 	
@@ -29556,7 +29619,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 295 */
+/* 298 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29565,7 +29628,7 @@
 	  value: true
 	});
 	
-	var _extends2 = __webpack_require__(142);
+	var _extends2 = __webpack_require__(145);
 	
 	var _extends3 = _interopRequireDefault(_extends2);
 	
@@ -29577,7 +29640,7 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _createReactClass = __webpack_require__(242);
+	var _createReactClass = __webpack_require__(245);
 	
 	var _createReactClass2 = _interopRequireDefault(_createReactClass);
 	
@@ -29585,35 +29648,35 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _KeyCode = __webpack_require__(235);
+	var _KeyCode = __webpack_require__(238);
 	
 	var _KeyCode2 = _interopRequireDefault(_KeyCode);
 	
-	var _DateTable = __webpack_require__(296);
+	var _DateTable = __webpack_require__(299);
 	
 	var _DateTable2 = _interopRequireDefault(_DateTable);
 	
-	var _CalendarHeader = __webpack_require__(427);
+	var _CalendarHeader = __webpack_require__(431);
 	
 	var _CalendarHeader2 = _interopRequireDefault(_CalendarHeader);
 	
-	var _CalendarFooter = __webpack_require__(433);
+	var _CalendarFooter = __webpack_require__(437);
 	
 	var _CalendarFooter2 = _interopRequireDefault(_CalendarFooter);
 	
-	var _CalendarMixin = __webpack_require__(437);
+	var _CalendarMixin = __webpack_require__(441);
 	
 	var _CalendarMixin2 = _interopRequireDefault(_CalendarMixin);
 	
-	var _CommonMixin = __webpack_require__(438);
+	var _CommonMixin = __webpack_require__(442);
 	
 	var _CommonMixin2 = _interopRequireDefault(_CommonMixin);
 	
-	var _DateInput = __webpack_require__(440);
+	var _DateInput = __webpack_require__(444);
 	
 	var _DateInput2 = _interopRequireDefault(_DateInput);
 	
-	var _util = __webpack_require__(426);
+	var _util = __webpack_require__(430);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -29922,7 +29985,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 296 */
+/* 299 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29931,19 +29994,19 @@
 	  value: true
 	});
 	
-	var _classCallCheck2 = __webpack_require__(182);
+	var _classCallCheck2 = __webpack_require__(185);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _createClass2 = __webpack_require__(251);
+	var _createClass2 = __webpack_require__(254);
 	
 	var _createClass3 = _interopRequireDefault(_createClass2);
 	
-	var _possibleConstructorReturn2 = __webpack_require__(183);
+	var _possibleConstructorReturn2 = __webpack_require__(186);
 	
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 	
-	var _inherits2 = __webpack_require__(217);
+	var _inherits2 = __webpack_require__(220);
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
@@ -29951,11 +30014,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _DateTHead = __webpack_require__(297);
+	var _DateTHead = __webpack_require__(300);
 	
 	var _DateTHead2 = _interopRequireDefault(_DateTHead);
 	
-	var _DateTBody = __webpack_require__(425);
+	var _DateTBody = __webpack_require__(429);
 	
 	var _DateTBody2 = _interopRequireDefault(_DateTBody);
 	
@@ -29989,7 +30052,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 297 */
+/* 300 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29998,19 +30061,19 @@
 	  value: true
 	});
 	
-	var _classCallCheck2 = __webpack_require__(182);
+	var _classCallCheck2 = __webpack_require__(185);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _createClass2 = __webpack_require__(251);
+	var _createClass2 = __webpack_require__(254);
 	
 	var _createClass3 = _interopRequireDefault(_createClass2);
 	
-	var _possibleConstructorReturn2 = __webpack_require__(183);
+	var _possibleConstructorReturn2 = __webpack_require__(186);
 	
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 	
-	var _inherits2 = __webpack_require__(217);
+	var _inherits2 = __webpack_require__(220);
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
@@ -30018,11 +30081,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _DateConstants = __webpack_require__(298);
+	var _DateConstants = __webpack_require__(301);
 	
 	var _DateConstants2 = _interopRequireDefault(_DateConstants);
 	
-	var _moment = __webpack_require__(299);
+	var _moment = __webpack_require__(302);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
@@ -30104,7 +30167,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 298 */
+/* 301 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -30119,7 +30182,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 299 */
+/* 302 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var require;/* WEBPACK VAR INJECTION */(function(module) {//! moment.js
@@ -31383,7 +31446,7 @@
 	
 	    var defaultLocaleWeek = {
 	        dow : 0, // Sunday is the first day of the week.
-	        doy : 6  // The week that contains Jan 1st is the first week of the year.
+	        doy : 6  // The week that contains Jan 6th is the first week of the year.
 	    };
 	
 	    function localeFirstDayOfWeek () {
@@ -31957,7 +32020,7 @@
 	            try {
 	                oldLocale = globalLocale._abbr;
 	                var aliasedRequire = require;
-	                __webpack_require__(301)("./" + name);
+	                __webpack_require__(304)("./" + name);
 	                getSetGlobalLocale(oldLocale);
 	            } catch (e) {}
 	        }
@@ -32259,13 +32322,13 @@
 	                    weekdayOverflow = true;
 	                }
 	            } else if (w.e != null) {
-	                // local weekday -- counting starts from begining of week
+	                // local weekday -- counting starts from beginning of week
 	                weekday = w.e + dow;
 	                if (w.e < 0 || w.e > 6) {
 	                    weekdayOverflow = true;
 	                }
 	            } else {
-	                // default to begining of week
+	                // default to beginning of week
 	                weekday = dow;
 	            }
 	        }
@@ -32859,7 +32922,7 @@
 	            years = normalizedInput.year || 0,
 	            quarters = normalizedInput.quarter || 0,
 	            months = normalizedInput.month || 0,
-	            weeks = normalizedInput.week || 0,
+	            weeks = normalizedInput.week || normalizedInput.isoWeek || 0,
 	            days = normalizedInput.day || 0,
 	            hours = normalizedInput.hour || 0,
 	            minutes = normalizedInput.minute || 0,
@@ -33163,7 +33226,7 @@
 	                ms : toInt(absRound(match[MILLISECOND] * 1000)) * sign // the millisecond decimal point is included in the match
 	            };
 	        } else if (!!(match = isoRegex.exec(input))) {
-	            sign = (match[1] === '-') ? -1 : (match[1] === '+') ? 1 : 1;
+	            sign = (match[1] === '-') ? -1 : 1;
 	            duration = {
 	                y : parseIso(match[2], sign),
 	                M : parseIso(match[3], sign),
@@ -33314,7 +33377,7 @@
 	        if (!(this.isValid() && localInput.isValid())) {
 	            return false;
 	        }
-	        units = normalizeUnits(!isUndefined(units) ? units : 'millisecond');
+	        units = normalizeUnits(units) || 'millisecond';
 	        if (units === 'millisecond') {
 	            return this.valueOf() > localInput.valueOf();
 	        } else {
@@ -33327,7 +33390,7 @@
 	        if (!(this.isValid() && localInput.isValid())) {
 	            return false;
 	        }
-	        units = normalizeUnits(!isUndefined(units) ? units : 'millisecond');
+	        units = normalizeUnits(units) || 'millisecond';
 	        if (units === 'millisecond') {
 	            return this.valueOf() < localInput.valueOf();
 	        } else {
@@ -33336,9 +33399,14 @@
 	    }
 	
 	    function isBetween (from, to, units, inclusivity) {
+	        var localFrom = isMoment(from) ? from : createLocal(from),
+	            localTo = isMoment(to) ? to : createLocal(to);
+	        if (!(this.isValid() && localFrom.isValid() && localTo.isValid())) {
+	            return false;
+	        }
 	        inclusivity = inclusivity || '()';
-	        return (inclusivity[0] === '(' ? this.isAfter(from, units) : !this.isBefore(from, units)) &&
-	            (inclusivity[1] === ')' ? this.isBefore(to, units) : !this.isAfter(to, units));
+	        return (inclusivity[0] === '(' ? this.isAfter(localFrom, units) : !this.isBefore(localFrom, units)) &&
+	            (inclusivity[1] === ')' ? this.isBefore(localTo, units) : !this.isAfter(localTo, units));
 	    }
 	
 	    function isSame (input, units) {
@@ -33347,7 +33415,7 @@
 	        if (!(this.isValid() && localInput.isValid())) {
 	            return false;
 	        }
-	        units = normalizeUnits(units || 'millisecond');
+	        units = normalizeUnits(units) || 'millisecond';
 	        if (units === 'millisecond') {
 	            return this.valueOf() === localInput.valueOf();
 	        } else {
@@ -33357,11 +33425,11 @@
 	    }
 	
 	    function isSameOrAfter (input, units) {
-	        return this.isSame(input, units) || this.isAfter(input,units);
+	        return this.isSame(input, units) || this.isAfter(input, units);
 	    }
 	
 	    function isSameOrBefore (input, units) {
-	        return this.isSame(input, units) || this.isBefore(input,units);
+	        return this.isSame(input, units) || this.isBefore(input, units);
 	    }
 	
 	    function diff (input, units, asFloat) {
@@ -34580,7 +34648,7 @@
 	    // Side effect imports
 	
 	
-	    hooks.version = '2.22.2';
+	    hooks.version = '2.23.0';
 	
 	    setHookCallback(createLocal);
 	
@@ -34621,7 +34689,7 @@
 	        TIME: 'HH:mm',                                  // <input type="time" />
 	        TIME_SECONDS: 'HH:mm:ss',                       // <input type="time" step="1" />
 	        TIME_MS: 'HH:mm:ss.SSS',                        // <input type="time" step="0.001" />
-	        WEEK: 'YYYY-[W]WW',                             // <input type="week" />
+	        WEEK: 'GGGG-[W]WW',                             // <input type="week" />
 	        MONTH: 'YYYY-MM'                                // <input type="month" />
 	    };
 	
@@ -34629,10 +34697,10 @@
 	
 	})));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(300)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(303)(module)))
 
 /***/ }),
-/* 300 */
+/* 303 */
 /***/ (function(module, exports) {
 
 	module.exports = function(module) {
@@ -34648,256 +34716,258 @@
 
 
 /***/ }),
-/* 301 */
+/* 304 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./af": 302,
-		"./af.js": 302,
-		"./ar": 303,
-		"./ar-dz": 304,
-		"./ar-dz.js": 304,
-		"./ar-kw": 305,
-		"./ar-kw.js": 305,
-		"./ar-ly": 306,
-		"./ar-ly.js": 306,
-		"./ar-ma": 307,
-		"./ar-ma.js": 307,
-		"./ar-sa": 308,
-		"./ar-sa.js": 308,
-		"./ar-tn": 309,
-		"./ar-tn.js": 309,
-		"./ar.js": 303,
-		"./az": 310,
-		"./az.js": 310,
-		"./be": 311,
-		"./be.js": 311,
-		"./bg": 312,
-		"./bg.js": 312,
-		"./bm": 313,
-		"./bm.js": 313,
-		"./bn": 314,
-		"./bn.js": 314,
-		"./bo": 315,
-		"./bo.js": 315,
-		"./br": 316,
-		"./br.js": 316,
-		"./bs": 317,
-		"./bs.js": 317,
-		"./ca": 318,
-		"./ca.js": 318,
-		"./cs": 319,
-		"./cs.js": 319,
-		"./cv": 320,
-		"./cv.js": 320,
-		"./cy": 321,
-		"./cy.js": 321,
-		"./da": 322,
-		"./da.js": 322,
-		"./de": 323,
-		"./de-at": 324,
-		"./de-at.js": 324,
-		"./de-ch": 325,
-		"./de-ch.js": 325,
-		"./de.js": 323,
-		"./dv": 326,
-		"./dv.js": 326,
-		"./el": 327,
-		"./el.js": 327,
-		"./en-au": 328,
-		"./en-au.js": 328,
-		"./en-ca": 329,
-		"./en-ca.js": 329,
-		"./en-gb": 330,
-		"./en-gb.js": 330,
-		"./en-ie": 331,
-		"./en-ie.js": 331,
-		"./en-il": 332,
-		"./en-il.js": 332,
-		"./en-nz": 333,
-		"./en-nz.js": 333,
-		"./eo": 334,
-		"./eo.js": 334,
-		"./es": 335,
-		"./es-do": 336,
-		"./es-do.js": 336,
-		"./es-us": 337,
-		"./es-us.js": 337,
-		"./es.js": 335,
-		"./et": 338,
-		"./et.js": 338,
-		"./eu": 339,
-		"./eu.js": 339,
-		"./fa": 340,
-		"./fa.js": 340,
-		"./fi": 341,
-		"./fi.js": 341,
-		"./fo": 342,
-		"./fo.js": 342,
-		"./fr": 343,
-		"./fr-ca": 344,
-		"./fr-ca.js": 344,
-		"./fr-ch": 345,
-		"./fr-ch.js": 345,
-		"./fr.js": 343,
-		"./fy": 346,
-		"./fy.js": 346,
-		"./gd": 347,
-		"./gd.js": 347,
-		"./gl": 348,
-		"./gl.js": 348,
-		"./gom-latn": 349,
-		"./gom-latn.js": 349,
-		"./gu": 350,
-		"./gu.js": 350,
-		"./he": 351,
-		"./he.js": 351,
-		"./hi": 352,
-		"./hi.js": 352,
-		"./hr": 353,
-		"./hr.js": 353,
-		"./hu": 354,
-		"./hu.js": 354,
-		"./hy-am": 355,
-		"./hy-am.js": 355,
-		"./id": 356,
-		"./id.js": 356,
-		"./is": 357,
-		"./is.js": 357,
-		"./it": 358,
-		"./it.js": 358,
-		"./ja": 359,
-		"./ja.js": 359,
-		"./jv": 360,
-		"./jv.js": 360,
-		"./ka": 361,
-		"./ka.js": 361,
-		"./kk": 362,
-		"./kk.js": 362,
-		"./km": 363,
-		"./km.js": 363,
-		"./kn": 364,
-		"./kn.js": 364,
-		"./ko": 365,
-		"./ko.js": 365,
-		"./ky": 366,
-		"./ky.js": 366,
-		"./lb": 367,
-		"./lb.js": 367,
-		"./lo": 368,
-		"./lo.js": 368,
-		"./lt": 369,
-		"./lt.js": 369,
-		"./lv": 370,
-		"./lv.js": 370,
-		"./me": 371,
-		"./me.js": 371,
-		"./mi": 372,
-		"./mi.js": 372,
-		"./mk": 373,
-		"./mk.js": 373,
-		"./ml": 374,
-		"./ml.js": 374,
-		"./mn": 375,
-		"./mn.js": 375,
-		"./mr": 376,
-		"./mr.js": 376,
-		"./ms": 377,
-		"./ms-my": 378,
-		"./ms-my.js": 378,
-		"./ms.js": 377,
-		"./mt": 379,
-		"./mt.js": 379,
-		"./my": 380,
-		"./my.js": 380,
-		"./nb": 381,
-		"./nb.js": 381,
-		"./ne": 382,
-		"./ne.js": 382,
-		"./nl": 383,
-		"./nl-be": 384,
-		"./nl-be.js": 384,
-		"./nl.js": 383,
-		"./nn": 385,
-		"./nn.js": 385,
-		"./pa-in": 386,
-		"./pa-in.js": 386,
-		"./pl": 387,
-		"./pl.js": 387,
-		"./pt": 388,
-		"./pt-br": 389,
-		"./pt-br.js": 389,
-		"./pt.js": 388,
-		"./ro": 390,
-		"./ro.js": 390,
-		"./ru": 391,
-		"./ru.js": 391,
-		"./sd": 392,
-		"./sd.js": 392,
-		"./se": 393,
-		"./se.js": 393,
-		"./si": 394,
-		"./si.js": 394,
-		"./sk": 395,
-		"./sk.js": 395,
-		"./sl": 396,
-		"./sl.js": 396,
-		"./sq": 397,
-		"./sq.js": 397,
-		"./sr": 398,
-		"./sr-cyrl": 399,
-		"./sr-cyrl.js": 399,
-		"./sr.js": 398,
-		"./ss": 400,
-		"./ss.js": 400,
-		"./sv": 401,
-		"./sv.js": 401,
-		"./sw": 402,
-		"./sw.js": 402,
-		"./ta": 403,
-		"./ta.js": 403,
-		"./te": 404,
-		"./te.js": 404,
-		"./tet": 405,
-		"./tet.js": 405,
-		"./tg": 406,
-		"./tg.js": 406,
-		"./th": 407,
-		"./th.js": 407,
-		"./tl-ph": 408,
-		"./tl-ph.js": 408,
-		"./tlh": 409,
-		"./tlh.js": 409,
-		"./tr": 410,
-		"./tr.js": 410,
-		"./tzl": 411,
-		"./tzl.js": 411,
-		"./tzm": 412,
-		"./tzm-latn": 413,
-		"./tzm-latn.js": 413,
-		"./tzm.js": 412,
-		"./ug-cn": 414,
-		"./ug-cn.js": 414,
-		"./uk": 415,
-		"./uk.js": 415,
-		"./ur": 416,
-		"./ur.js": 416,
-		"./uz": 417,
-		"./uz-latn": 418,
-		"./uz-latn.js": 418,
-		"./uz.js": 417,
-		"./vi": 419,
-		"./vi.js": 419,
-		"./x-pseudo": 420,
-		"./x-pseudo.js": 420,
-		"./yo": 421,
-		"./yo.js": 421,
-		"./zh-cn": 422,
-		"./zh-cn.js": 422,
-		"./zh-hk": 423,
-		"./zh-hk.js": 423,
-		"./zh-tw": 424,
-		"./zh-tw.js": 424
+		"./af": 305,
+		"./af.js": 305,
+		"./ar": 306,
+		"./ar-dz": 307,
+		"./ar-dz.js": 307,
+		"./ar-kw": 308,
+		"./ar-kw.js": 308,
+		"./ar-ly": 309,
+		"./ar-ly.js": 309,
+		"./ar-ma": 310,
+		"./ar-ma.js": 310,
+		"./ar-sa": 311,
+		"./ar-sa.js": 311,
+		"./ar-tn": 312,
+		"./ar-tn.js": 312,
+		"./ar.js": 306,
+		"./az": 313,
+		"./az.js": 313,
+		"./be": 314,
+		"./be.js": 314,
+		"./bg": 315,
+		"./bg.js": 315,
+		"./bm": 316,
+		"./bm.js": 316,
+		"./bn": 317,
+		"./bn.js": 317,
+		"./bo": 318,
+		"./bo.js": 318,
+		"./br": 319,
+		"./br.js": 319,
+		"./bs": 320,
+		"./bs.js": 320,
+		"./ca": 321,
+		"./ca.js": 321,
+		"./cs": 322,
+		"./cs.js": 322,
+		"./cv": 323,
+		"./cv.js": 323,
+		"./cy": 324,
+		"./cy.js": 324,
+		"./da": 325,
+		"./da.js": 325,
+		"./de": 326,
+		"./de-at": 327,
+		"./de-at.js": 327,
+		"./de-ch": 328,
+		"./de-ch.js": 328,
+		"./de.js": 326,
+		"./dv": 329,
+		"./dv.js": 329,
+		"./el": 330,
+		"./el.js": 330,
+		"./en-au": 331,
+		"./en-au.js": 331,
+		"./en-ca": 332,
+		"./en-ca.js": 332,
+		"./en-gb": 333,
+		"./en-gb.js": 333,
+		"./en-ie": 334,
+		"./en-ie.js": 334,
+		"./en-il": 335,
+		"./en-il.js": 335,
+		"./en-nz": 336,
+		"./en-nz.js": 336,
+		"./eo": 337,
+		"./eo.js": 337,
+		"./es": 338,
+		"./es-do": 339,
+		"./es-do.js": 339,
+		"./es-us": 340,
+		"./es-us.js": 340,
+		"./es.js": 338,
+		"./et": 341,
+		"./et.js": 341,
+		"./eu": 342,
+		"./eu.js": 342,
+		"./fa": 343,
+		"./fa.js": 343,
+		"./fi": 344,
+		"./fi.js": 344,
+		"./fo": 345,
+		"./fo.js": 345,
+		"./fr": 346,
+		"./fr-ca": 347,
+		"./fr-ca.js": 347,
+		"./fr-ch": 348,
+		"./fr-ch.js": 348,
+		"./fr.js": 346,
+		"./fy": 349,
+		"./fy.js": 349,
+		"./gd": 350,
+		"./gd.js": 350,
+		"./gl": 351,
+		"./gl.js": 351,
+		"./gom-latn": 352,
+		"./gom-latn.js": 352,
+		"./gu": 353,
+		"./gu.js": 353,
+		"./he": 354,
+		"./he.js": 354,
+		"./hi": 355,
+		"./hi.js": 355,
+		"./hr": 356,
+		"./hr.js": 356,
+		"./hu": 357,
+		"./hu.js": 357,
+		"./hy-am": 358,
+		"./hy-am.js": 358,
+		"./id": 359,
+		"./id.js": 359,
+		"./is": 360,
+		"./is.js": 360,
+		"./it": 361,
+		"./it.js": 361,
+		"./ja": 362,
+		"./ja.js": 362,
+		"./jv": 363,
+		"./jv.js": 363,
+		"./ka": 364,
+		"./ka.js": 364,
+		"./kk": 365,
+		"./kk.js": 365,
+		"./km": 366,
+		"./km.js": 366,
+		"./kn": 367,
+		"./kn.js": 367,
+		"./ko": 368,
+		"./ko.js": 368,
+		"./ku": 369,
+		"./ku.js": 369,
+		"./ky": 370,
+		"./ky.js": 370,
+		"./lb": 371,
+		"./lb.js": 371,
+		"./lo": 372,
+		"./lo.js": 372,
+		"./lt": 373,
+		"./lt.js": 373,
+		"./lv": 374,
+		"./lv.js": 374,
+		"./me": 375,
+		"./me.js": 375,
+		"./mi": 376,
+		"./mi.js": 376,
+		"./mk": 377,
+		"./mk.js": 377,
+		"./ml": 378,
+		"./ml.js": 378,
+		"./mn": 379,
+		"./mn.js": 379,
+		"./mr": 380,
+		"./mr.js": 380,
+		"./ms": 381,
+		"./ms-my": 382,
+		"./ms-my.js": 382,
+		"./ms.js": 381,
+		"./mt": 383,
+		"./mt.js": 383,
+		"./my": 384,
+		"./my.js": 384,
+		"./nb": 385,
+		"./nb.js": 385,
+		"./ne": 386,
+		"./ne.js": 386,
+		"./nl": 387,
+		"./nl-be": 388,
+		"./nl-be.js": 388,
+		"./nl.js": 387,
+		"./nn": 389,
+		"./nn.js": 389,
+		"./pa-in": 390,
+		"./pa-in.js": 390,
+		"./pl": 391,
+		"./pl.js": 391,
+		"./pt": 392,
+		"./pt-br": 393,
+		"./pt-br.js": 393,
+		"./pt.js": 392,
+		"./ro": 394,
+		"./ro.js": 394,
+		"./ru": 395,
+		"./ru.js": 395,
+		"./sd": 396,
+		"./sd.js": 396,
+		"./se": 397,
+		"./se.js": 397,
+		"./si": 398,
+		"./si.js": 398,
+		"./sk": 399,
+		"./sk.js": 399,
+		"./sl": 400,
+		"./sl.js": 400,
+		"./sq": 401,
+		"./sq.js": 401,
+		"./sr": 402,
+		"./sr-cyrl": 403,
+		"./sr-cyrl.js": 403,
+		"./sr.js": 402,
+		"./ss": 404,
+		"./ss.js": 404,
+		"./sv": 405,
+		"./sv.js": 405,
+		"./sw": 406,
+		"./sw.js": 406,
+		"./ta": 407,
+		"./ta.js": 407,
+		"./te": 408,
+		"./te.js": 408,
+		"./tet": 409,
+		"./tet.js": 409,
+		"./tg": 410,
+		"./tg.js": 410,
+		"./th": 411,
+		"./th.js": 411,
+		"./tl-ph": 412,
+		"./tl-ph.js": 412,
+		"./tlh": 413,
+		"./tlh.js": 413,
+		"./tr": 414,
+		"./tr.js": 414,
+		"./tzl": 415,
+		"./tzl.js": 415,
+		"./tzm": 416,
+		"./tzm-latn": 417,
+		"./tzm-latn.js": 417,
+		"./tzm.js": 416,
+		"./ug-cn": 418,
+		"./ug-cn.js": 418,
+		"./uk": 419,
+		"./uk.js": 419,
+		"./ur": 420,
+		"./ur.js": 420,
+		"./uz": 421,
+		"./uz-latn": 422,
+		"./uz-latn.js": 422,
+		"./uz.js": 421,
+		"./vi": 423,
+		"./vi.js": 423,
+		"./x-pseudo": 424,
+		"./x-pseudo.js": 424,
+		"./yo": 425,
+		"./yo.js": 425,
+		"./zh-cn": 426,
+		"./zh-cn.js": 426,
+		"./zh-hk": 427,
+		"./zh-hk.js": 427,
+		"./zh-tw": 428,
+		"./zh-tw.js": 428
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -34910,17 +34980,17 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 301;
+	webpackContext.id = 304;
 
 
 /***/ }),
-/* 302 */
+/* 305 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -34991,13 +35061,13 @@
 
 
 /***/ }),
-/* 303 */
+/* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -35120,7 +35190,7 @@
 	        },
 	        week : {
 	            dow : 6, // Saturday is the first day of the week.
-	            doy : 12  // The week that contains Jan 1st is the first week of the year.
+	            doy : 12  // The week that contains Jan 12th is the first week of the year.
 	        }
 	    });
 	
@@ -35130,13 +35200,13 @@
 
 
 /***/ }),
-/* 304 */
+/* 307 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -35183,7 +35253,7 @@
 	        },
 	        week : {
 	            dow : 0, // Sunday is the first day of the week.
-	            doy : 4  // The week that contains Jan 1st is the first week of the year.
+	            doy : 4  // The week that contains Jan 4th is the first week of the year.
 	        }
 	    });
 	
@@ -35193,13 +35263,13 @@
 
 
 /***/ }),
-/* 305 */
+/* 308 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -35246,7 +35316,7 @@
 	        },
 	        week : {
 	            dow : 0, // Sunday is the first day of the week.
-	            doy : 12  // The week that contains Jan 1st is the first week of the year.
+	            doy : 12  // The week that contains Jan 12th is the first week of the year.
 	        }
 	    });
 	
@@ -35256,13 +35326,13 @@
 
 
 /***/ }),
-/* 306 */
+/* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -35372,7 +35442,7 @@
 	        },
 	        week : {
 	            dow : 6, // Saturday is the first day of the week.
-	            doy : 12  // The week that contains Jan 1st is the first week of the year.
+	            doy : 12  // The week that contains Jan 12th is the first week of the year.
 	        }
 	    });
 	
@@ -35382,13 +35452,13 @@
 
 
 /***/ }),
-/* 307 */
+/* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -35435,7 +35505,7 @@
 	        },
 	        week : {
 	            dow : 6, // Saturday is the first day of the week.
-	            doy : 12  // The week that contains Jan 1st is the first week of the year.
+	            doy : 12  // The week that contains Jan 12th is the first week of the year.
 	        }
 	    });
 	
@@ -35445,13 +35515,13 @@
 
 
 /***/ }),
-/* 308 */
+/* 311 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -35543,7 +35613,7 @@
 	        },
 	        week : {
 	            dow : 0, // Sunday is the first day of the week.
-	            doy : 6  // The week that contains Jan 1st is the first week of the year.
+	            doy : 6  // The week that contains Jan 6th is the first week of the year.
 	        }
 	    });
 	
@@ -35553,13 +35623,13 @@
 
 
 /***/ }),
-/* 309 */
+/* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -35616,13 +35686,13 @@
 
 
 /***/ }),
-/* 310 */
+/* 313 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -35715,7 +35785,7 @@
 	        },
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -35725,13 +35795,13 @@
 
 
 /***/ }),
-/* 311 */
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -35851,7 +35921,7 @@
 	        },
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -35861,13 +35931,13 @@
 
 
 /***/ }),
-/* 312 */
+/* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -35945,7 +36015,7 @@
 	        },
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -35955,13 +36025,13 @@
 
 
 /***/ }),
-/* 313 */
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -36017,13 +36087,13 @@
 
 
 /***/ }),
-/* 314 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -36130,7 +36200,7 @@
 	        },
 	        week : {
 	            dow : 0, // Sunday is the first day of the week.
-	            doy : 6  // The week that contains Jan 1st is the first week of the year.
+	            doy : 6  // The week that contains Jan 6th is the first week of the year.
 	        }
 	    });
 	
@@ -36140,13 +36210,13 @@
 
 
 /***/ }),
-/* 315 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -36253,7 +36323,7 @@
 	        },
 	        week : {
 	            dow : 0, // Sunday is the first day of the week.
-	            doy : 6  // The week that contains Jan 1st is the first week of the year.
+	            doy : 6  // The week that contains Jan 6th is the first week of the year.
 	        }
 	    });
 	
@@ -36263,13 +36333,13 @@
 
 
 /***/ }),
-/* 316 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -36375,13 +36445,13 @@
 
 
 /***/ }),
-/* 317 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -36520,7 +36590,7 @@
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -36530,13 +36600,13 @@
 
 
 /***/ }),
-/* 318 */
+/* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -36622,13 +36692,13 @@
 
 
 /***/ }),
-/* 319 */
+/* 322 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -36805,13 +36875,13 @@
 
 
 /***/ }),
-/* 320 */
+/* 323 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -36862,7 +36932,7 @@
 	        ordinal : '%d-мӗш',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -36872,13 +36942,13 @@
 
 
 /***/ }),
-/* 321 */
+/* 324 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -36956,13 +37026,13 @@
 
 
 /***/ }),
-/* 322 */
+/* 325 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -37020,13 +37090,13 @@
 
 
 /***/ }),
-/* 323 */
+/* 326 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -37100,13 +37170,13 @@
 
 
 /***/ }),
-/* 324 */
+/* 327 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -37180,13 +37250,13 @@
 
 
 /***/ }),
-/* 325 */
+/* 328 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -37260,13 +37330,13 @@
 
 
 /***/ }),
-/* 326 */
+/* 329 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -37353,7 +37423,7 @@
 	        },
 	        week : {
 	            dow : 7,  // Sunday is the first day of the week.
-	            doy : 12  // The week that contains Jan 1st is the first week of the year.
+	            doy : 12  // The week that contains Jan 12th is the first week of the year.
 	        }
 	    });
 	
@@ -37363,13 +37433,13 @@
 
 
 /***/ }),
-/* 327 */
+/* 330 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -37467,13 +37537,13 @@
 
 
 /***/ }),
-/* 328 */
+/* 331 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -37538,13 +37608,13 @@
 
 
 /***/ }),
-/* 329 */
+/* 332 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -37605,13 +37675,13 @@
 
 
 /***/ }),
-/* 330 */
+/* 333 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -37676,13 +37746,13 @@
 
 
 /***/ }),
-/* 331 */
+/* 334 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -37747,13 +37817,13 @@
 
 
 /***/ }),
-/* 332 */
+/* 335 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -37813,13 +37883,13 @@
 
 
 /***/ }),
-/* 333 */
+/* 336 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -37884,13 +37954,13 @@
 
 
 /***/ }),
-/* 334 */
+/* 337 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -37949,7 +38019,7 @@
 	        ordinal : '%da',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -37959,13 +38029,13 @@
 
 
 /***/ }),
-/* 335 */
+/* 338 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -38055,13 +38125,13 @@
 
 
 /***/ }),
-/* 336 */
+/* 339 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -38151,13 +38221,13 @@
 
 
 /***/ }),
-/* 337 */
+/* 340 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -38228,7 +38298,7 @@
 	        ordinal : '%dº',
 	        week : {
 	            dow : 0, // Sunday is the first day of the week.
-	            doy : 6  // The week that contains Jan 1st is the first week of the year.
+	            doy : 6  // The week that contains Jan 6th is the first week of the year.
 	        }
 	    });
 	
@@ -38238,13 +38308,13 @@
 
 
 /***/ }),
-/* 338 */
+/* 341 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -38322,13 +38392,13 @@
 
 
 /***/ }),
-/* 339 */
+/* 342 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -38382,7 +38452,7 @@
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -38392,13 +38462,13 @@
 
 
 /***/ }),
-/* 340 */
+/* 343 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -38492,7 +38562,7 @@
 	        ordinal : '%dم',
 	        week : {
 	            dow : 6, // Saturday is the first day of the week.
-	            doy : 12 // The week that contains Jan 1st is the first week of the year.
+	            doy : 12 // The week that contains Jan 12th is the first week of the year.
 	        }
 	    });
 	
@@ -38502,13 +38572,13 @@
 
 
 /***/ }),
-/* 341 */
+/* 344 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -38615,13 +38685,13 @@
 
 
 /***/ }),
-/* 342 */
+/* 345 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -38679,13 +38749,13 @@
 
 
 /***/ }),
-/* 343 */
+/* 346 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -38766,13 +38836,13 @@
 
 
 /***/ }),
-/* 344 */
+/* 347 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -38844,13 +38914,13 @@
 
 
 /***/ }),
-/* 345 */
+/* 348 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -38926,13 +38996,13 @@
 
 
 /***/ }),
-/* 346 */
+/* 349 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -39005,13 +39075,13 @@
 
 
 /***/ }),
-/* 347 */
+/* 350 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -39085,13 +39155,13 @@
 
 
 /***/ }),
-/* 348 */
+/* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -39166,13 +39236,13 @@
 
 
 /***/ }),
-/* 349 */
+/* 352 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -39293,13 +39363,13 @@
 
 
 /***/ }),
-/* 350 */
+/* 353 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -39411,7 +39481,7 @@
 	        },
 	        week: {
 	            dow: 0, // Sunday is the first day of the week.
-	            doy: 6 // The week that contains Jan 1st is the first week of the year.
+	            doy: 6 // The week that contains Jan 6th is the first week of the year.
 	        }
 	    });
 	
@@ -39421,13 +39491,13 @@
 
 
 /***/ }),
-/* 351 */
+/* 354 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -39522,13 +39592,13 @@
 
 
 /***/ }),
-/* 352 */
+/* 355 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -39640,7 +39710,7 @@
 	        },
 	        week : {
 	            dow : 0, // Sunday is the first day of the week.
-	            doy : 6  // The week that contains Jan 1st is the first week of the year.
+	            doy : 6  // The week that contains Jan 6th is the first week of the year.
 	        }
 	    });
 	
@@ -39650,13 +39720,13 @@
 
 
 /***/ }),
-/* 353 */
+/* 356 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -39798,7 +39868,7 @@
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -39808,13 +39878,13 @@
 
 
 /***/ }),
-/* 354 */
+/* 357 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -39922,13 +39992,13 @@
 
 
 /***/ }),
-/* 355 */
+/* 358 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40011,7 +40081,7 @@
 	        },
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -40021,13 +40091,13 @@
 
 
 /***/ }),
-/* 356 */
+/* 359 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40097,7 +40167,7 @@
 	        },
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -40107,13 +40177,13 @@
 
 
 /***/ }),
-/* 357 */
+/* 360 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40243,13 +40313,13 @@
 
 
 /***/ }),
-/* 358 */
+/* 361 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40316,13 +40386,13 @@
 
 
 /***/ }),
-/* 359 */
+/* 362 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40412,13 +40482,13 @@
 
 
 /***/ }),
-/* 360 */
+/* 363 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40488,7 +40558,7 @@
 	        },
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -40498,13 +40568,13 @@
 
 
 /***/ }),
-/* 361 */
+/* 364 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40591,13 +40661,13 @@
 
 
 /***/ }),
-/* 362 */
+/* 365 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40672,7 +40742,7 @@
 	        },
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -40682,13 +40752,13 @@
 
 
 /***/ }),
-/* 363 */
+/* 366 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40796,13 +40866,13 @@
 
 
 /***/ }),
-/* 364 */
+/* 367 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40916,7 +40986,7 @@
 	        },
 	        week : {
 	            dow : 0, // Sunday is the first day of the week.
-	            doy : 6  // The week that contains Jan 1st is the first week of the year.
+	            doy : 6  // The week that contains Jan 6th is the first week of the year.
 	        }
 	    });
 	
@@ -40926,13 +40996,13 @@
 
 
 /***/ }),
-/* 365 */
+/* 368 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41011,13 +41081,136 @@
 
 
 /***/ }),
-/* 366 */
+/* 369 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
+	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
+	   factory(global.moment)
+	}(this, (function (moment) { 'use strict';
+	
+	
+	    var symbolMap = {
+	        '1': '١',
+	        '2': '٢',
+	        '3': '٣',
+	        '4': '٤',
+	        '5': '٥',
+	        '6': '٦',
+	        '7': '٧',
+	        '8': '٨',
+	        '9': '٩',
+	        '0': '٠'
+	    }, numberMap = {
+	        '١': '1',
+	        '٢': '2',
+	        '٣': '3',
+	        '٤': '4',
+	        '٥': '5',
+	        '٦': '6',
+	        '٧': '7',
+	        '٨': '8',
+	        '٩': '9',
+	        '٠': '0'
+	    },
+	    months = [
+	        'کانونی دووەم',
+	        'شوبات',
+	        'ئازار',
+	        'نیسان',
+	        'ئایار',
+	        'حوزەیران',
+	        'تەمموز',
+	        'ئاب',
+	        'ئەیلوول',
+	        'تشرینی یەكەم',
+	        'تشرینی دووەم',
+	        'كانونی یەکەم'
+	    ];
+	
+	
+	    var ku = moment.defineLocale('ku', {
+	        months : months,
+	        monthsShort : months,
+	        weekdays : 'یه‌كشه‌ممه‌_دووشه‌ممه‌_سێشه‌ممه‌_چوارشه‌ممه‌_پێنجشه‌ممه‌_هه‌ینی_شه‌ممه‌'.split('_'),
+	        weekdaysShort : 'یه‌كشه‌م_دووشه‌م_سێشه‌م_چوارشه‌م_پێنجشه‌م_هه‌ینی_شه‌ممه‌'.split('_'),
+	        weekdaysMin : 'ی_د_س_چ_پ_ه_ش'.split('_'),
+	        weekdaysParseExact : true,
+	        longDateFormat : {
+	            LT : 'HH:mm',
+	            LTS : 'HH:mm:ss',
+	            L : 'DD/MM/YYYY',
+	            LL : 'D MMMM YYYY',
+	            LLL : 'D MMMM YYYY HH:mm',
+	            LLLL : 'dddd, D MMMM YYYY HH:mm'
+	        },
+	        meridiemParse: /ئێواره‌|به‌یانی/,
+	        isPM: function (input) {
+	            return /ئێواره‌/.test(input);
+	        },
+	        meridiem : function (hour, minute, isLower) {
+	            if (hour < 12) {
+	                return 'به‌یانی';
+	            } else {
+	                return 'ئێواره‌';
+	            }
+	        },
+	        calendar : {
+	            sameDay : '[ئه‌مرۆ كاتژمێر] LT',
+	            nextDay : '[به‌یانی كاتژمێر] LT',
+	            nextWeek : 'dddd [كاتژمێر] LT',
+	            lastDay : '[دوێنێ كاتژمێر] LT',
+	            lastWeek : 'dddd [كاتژمێر] LT',
+	            sameElse : 'L'
+	        },
+	        relativeTime : {
+	            future : 'له‌ %s',
+	            past : '%s',
+	            s : 'چه‌ند چركه‌یه‌ك',
+	            ss : 'چركه‌ %d',
+	            m : 'یه‌ك خوله‌ك',
+	            mm : '%d خوله‌ك',
+	            h : 'یه‌ك كاتژمێر',
+	            hh : '%d كاتژمێر',
+	            d : 'یه‌ك ڕۆژ',
+	            dd : '%d ڕۆژ',
+	            M : 'یه‌ك مانگ',
+	            MM : '%d مانگ',
+	            y : 'یه‌ك ساڵ',
+	            yy : '%d ساڵ'
+	        },
+	        preparse: function (string) {
+	            return string.replace(/[١٢٣٤٥٦٧٨٩٠]/g, function (match) {
+	                return numberMap[match];
+	            }).replace(/،/g, ',');
+	        },
+	        postformat: function (string) {
+	            return string.replace(/\d/g, function (match) {
+	                return symbolMap[match];
+	            }).replace(/,/g, '،');
+	        },
+	        week : {
+	            dow : 6, // Saturday is the first day of the week.
+	            doy : 12 // The week that contains Jan 12th is the first week of the year.
+	        }
+	    });
+	
+	    return ku;
+	
+	})));
+
+
+/***/ }),
+/* 370 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	//! moment.js locale configuration
+	
+	;(function (global, factory) {
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41064,8 +41257,8 @@
 	            sameDay : '[Бүгүн саат] LT',
 	            nextDay : '[Эртең саат] LT',
 	            nextWeek : 'dddd [саат] LT',
-	            lastDay : '[Кече саат] LT',
-	            lastWeek : '[Өткен аптанын] dddd [күнү] [саат] LT',
+	            lastDay : '[Кечээ саат] LT',
+	            lastWeek : '[Өткөн аптанын] dddd [күнү] [саат] LT',
 	            sameElse : 'L'
 	        },
 	        relativeTime : {
@@ -41092,7 +41285,7 @@
 	        },
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -41102,13 +41295,13 @@
 
 
 /***/ }),
-/* 367 */
+/* 371 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41242,13 +41435,13 @@
 
 
 /***/ }),
-/* 368 */
+/* 372 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41316,13 +41509,13 @@
 
 
 /***/ }),
-/* 369 */
+/* 373 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41438,13 +41631,13 @@
 
 
 /***/ }),
-/* 370 */
+/* 374 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41539,13 +41732,13 @@
 
 
 /***/ }),
-/* 371 */
+/* 375 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41645,7 +41838,7 @@
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -41655,13 +41848,13 @@
 
 
 /***/ }),
-/* 372 */
+/* 376 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41723,13 +41916,13 @@
 
 
 /***/ }),
-/* 373 */
+/* 377 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41807,7 +42000,7 @@
 	        },
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -41817,13 +42010,13 @@
 
 
 /***/ }),
-/* 374 */
+/* 378 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41902,13 +42095,13 @@
 
 
 /***/ }),
-/* 375 */
+/* 379 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42010,13 +42203,13 @@
 
 
 /***/ }),
-/* 376 */
+/* 380 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42164,7 +42357,7 @@
 	        },
 	        week : {
 	            dow : 0, // Sunday is the first day of the week.
-	            doy : 6  // The week that contains Jan 1st is the first week of the year.
+	            doy : 6  // The week that contains Jan 6th is the first week of the year.
 	        }
 	    });
 	
@@ -42174,13 +42367,13 @@
 
 
 /***/ }),
-/* 377 */
+/* 381 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42250,7 +42443,7 @@
 	        },
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -42260,13 +42453,13 @@
 
 
 /***/ }),
-/* 378 */
+/* 382 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42336,7 +42529,7 @@
 	        },
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -42346,13 +42539,13 @@
 
 
 /***/ }),
-/* 379 */
+/* 383 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42410,13 +42603,13 @@
 
 
 /***/ }),
-/* 380 */
+/* 384 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42497,7 +42690,7 @@
 	        },
 	        week: {
 	            dow: 1, // Monday is the first day of the week.
-	            doy: 4 // The week that contains Jan 1st is the first week of the year.
+	            doy: 4 // The week that contains Jan 4th is the first week of the year.
 	        }
 	    });
 	
@@ -42507,13 +42700,13 @@
 
 
 /***/ }),
-/* 381 */
+/* 385 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42573,13 +42766,13 @@
 
 
 /***/ }),
-/* 382 */
+/* 386 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42690,7 +42883,7 @@
 	        },
 	        week : {
 	            dow : 0, // Sunday is the first day of the week.
-	            doy : 6  // The week that contains Jan 1st is the first week of the year.
+	            doy : 6  // The week that contains Jan 6th is the first week of the year.
 	        }
 	    });
 	
@@ -42700,13 +42893,13 @@
 
 
 /***/ }),
-/* 383 */
+/* 387 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42716,7 +42909,7 @@
 	        monthsShortWithoutDots = 'jan_feb_mrt_apr_mei_jun_jul_aug_sep_okt_nov_dec'.split('_');
 	
 	    var monthsParse = [/^jan/i, /^feb/i, /^maart|mrt.?$/i, /^apr/i, /^mei$/i, /^jun[i.]?$/i, /^jul[i.]?$/i, /^aug/i, /^sep/i, /^okt/i, /^nov/i, /^dec/i];
-	    var monthsRegex = /^(januari|februari|maart|april|mei|april|ju[nl]i|augustus|september|oktober|november|december|jan\.?|feb\.?|mrt\.?|apr\.?|ju[nl]\.?|aug\.?|sep\.?|okt\.?|nov\.?|dec\.?)/i;
+	    var monthsRegex = /^(januari|februari|maart|april|mei|ju[nl]i|augustus|september|oktober|november|december|jan\.?|feb\.?|mrt\.?|apr\.?|ju[nl]\.?|aug\.?|sep\.?|okt\.?|nov\.?|dec\.?)/i;
 	
 	    var nl = moment.defineLocale('nl', {
 	        months : 'januari_februari_maart_april_mei_juni_juli_augustus_september_oktober_november_december'.split('_'),
@@ -42732,7 +42925,7 @@
 	
 	        monthsRegex: monthsRegex,
 	        monthsShortRegex: monthsRegex,
-	        monthsStrictRegex: /^(januari|februari|maart|mei|ju[nl]i|april|augustus|september|oktober|november|december)/i,
+	        monthsStrictRegex: /^(januari|februari|maart|april|mei|ju[nl]i|augustus|september|oktober|november|december)/i,
 	        monthsShortStrictRegex: /^(jan\.?|feb\.?|mrt\.?|apr\.?|mei|ju[nl]\.?|aug\.?|sep\.?|okt\.?|nov\.?|dec\.?)/i,
 	
 	        monthsParse : monthsParse,
@@ -42791,13 +42984,13 @@
 
 
 /***/ }),
-/* 384 */
+/* 388 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42807,7 +43000,7 @@
 	        monthsShortWithoutDots = 'jan_feb_mrt_apr_mei_jun_jul_aug_sep_okt_nov_dec'.split('_');
 	
 	    var monthsParse = [/^jan/i, /^feb/i, /^maart|mrt.?$/i, /^apr/i, /^mei$/i, /^jun[i.]?$/i, /^jul[i.]?$/i, /^aug/i, /^sep/i, /^okt/i, /^nov/i, /^dec/i];
-	    var monthsRegex = /^(januari|februari|maart|april|mei|april|ju[nl]i|augustus|september|oktober|november|december|jan\.?|feb\.?|mrt\.?|apr\.?|ju[nl]\.?|aug\.?|sep\.?|okt\.?|nov\.?|dec\.?)/i;
+	    var monthsRegex = /^(januari|februari|maart|april|mei|ju[nl]i|augustus|september|oktober|november|december|jan\.?|feb\.?|mrt\.?|apr\.?|ju[nl]\.?|aug\.?|sep\.?|okt\.?|nov\.?|dec\.?)/i;
 	
 	    var nlBe = moment.defineLocale('nl-be', {
 	        months : 'januari_februari_maart_april_mei_juni_juli_augustus_september_oktober_november_december'.split('_'),
@@ -42823,7 +43016,7 @@
 	
 	        monthsRegex: monthsRegex,
 	        monthsShortRegex: monthsRegex,
-	        monthsStrictRegex: /^(januari|februari|maart|mei|ju[nl]i|april|augustus|september|oktober|november|december)/i,
+	        monthsStrictRegex: /^(januari|februari|maart|april|mei|ju[nl]i|augustus|september|oktober|november|december)/i,
 	        monthsShortStrictRegex: /^(jan\.?|feb\.?|mrt\.?|apr\.?|mei|ju[nl]\.?|aug\.?|sep\.?|okt\.?|nov\.?|dec\.?)/i,
 	
 	        monthsParse : monthsParse,
@@ -42882,13 +43075,13 @@
 
 
 /***/ }),
-/* 385 */
+/* 389 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42946,13 +43139,13 @@
 
 
 /***/ }),
-/* 386 */
+/* 390 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42984,7 +43177,7 @@
 	    };
 	
 	    var paIn = moment.defineLocale('pa-in', {
-	        // There are months name as per Nanakshahi Calender but they are not used as rigidly in modern Punjabi.
+	        // There are months name as per Nanakshahi Calendar but they are not used as rigidly in modern Punjabi.
 	        months : 'ਜਨਵਰੀ_ਫ਼ਰਵਰੀ_ਮਾਰਚ_ਅਪ੍ਰੈਲ_ਮਈ_ਜੂਨ_ਜੁਲਾਈ_ਅਗਸਤ_ਸਤੰਬਰ_ਅਕਤੂਬਰ_ਨਵੰਬਰ_ਦਸੰਬਰ'.split('_'),
 	        monthsShort : 'ਜਨਵਰੀ_ਫ਼ਰਵਰੀ_ਮਾਰਚ_ਅਪ੍ਰੈਲ_ਮਈ_ਜੂਨ_ਜੁਲਾਈ_ਅਗਸਤ_ਸਤੰਬਰ_ਅਕਤੂਬਰ_ਨਵੰਬਰ_ਦਸੰਬਰ'.split('_'),
 	        weekdays : 'ਐਤਵਾਰ_ਸੋਮਵਾਰ_ਮੰਗਲਵਾਰ_ਬੁਧਵਾਰ_ਵੀਰਵਾਰ_ਸ਼ੁੱਕਰਵਾਰ_ਸ਼ਨੀਚਰਵਾਰ'.split('_'),
@@ -43064,7 +43257,7 @@
 	        },
 	        week : {
 	            dow : 0, // Sunday is the first day of the week.
-	            doy : 6  // The week that contains Jan 1st is the first week of the year.
+	            doy : 6  // The week that contains Jan 6th is the first week of the year.
 	        }
 	    });
 	
@@ -43074,13 +43267,13 @@
 
 
 /***/ }),
-/* 387 */
+/* 391 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43204,13 +43397,13 @@
 
 
 /***/ }),
-/* 388 */
+/* 392 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43273,13 +43466,13 @@
 
 
 /***/ }),
-/* 389 */
+/* 393 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43338,13 +43531,13 @@
 
 
 /***/ }),
-/* 390 */
+/* 394 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43407,7 +43600,7 @@
 	        },
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -43417,13 +43610,13 @@
 
 
 /***/ }),
-/* 391 */
+/* 395 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43603,13 +43796,13 @@
 
 
 /***/ }),
-/* 392 */
+/* 396 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43705,13 +43898,13 @@
 
 
 /***/ }),
-/* 393 */
+/* 397 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43769,13 +43962,13 @@
 
 
 /***/ }),
-/* 394 */
+/* 398 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43844,13 +44037,13 @@
 
 
 /***/ }),
-/* 395 */
+/* 399 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44004,13 +44197,13 @@
 
 
 /***/ }),
-/* 396 */
+/* 400 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44029,7 +44222,7 @@
 	                } else if (number < 5) {
 	                    result += withoutSuffix || isFuture ? 'sekunde' : 'sekundah';
 	                } else {
-	                    result += withoutSuffix || isFuture ? 'sekund' : 'sekund';
+	                    result += 'sekund';
 	                }
 	                return result;
 	            case 'm':
@@ -44171,7 +44364,7 @@
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -44181,13 +44374,13 @@
 
 
 /***/ }),
-/* 397 */
+/* 401 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44253,13 +44446,13 @@
 
 
 /***/ }),
-/* 398 */
+/* 402 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44358,7 +44551,7 @@
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -44368,13 +44561,13 @@
 
 
 /***/ }),
-/* 399 */
+/* 403 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44473,7 +44666,7 @@
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -44483,13 +44676,13 @@
 
 
 /***/ }),
-/* 400 */
+/* 404 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44575,13 +44768,13 @@
 
 
 /***/ }),
-/* 401 */
+/* 405 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44648,13 +44841,13 @@
 
 
 /***/ }),
-/* 402 */
+/* 406 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44701,7 +44894,7 @@
 	        },
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -44711,13 +44904,13 @@
 
 
 /***/ }),
-/* 403 */
+/* 407 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44834,7 +45027,7 @@
 	        },
 	        week : {
 	            dow : 0, // Sunday is the first day of the week.
-	            doy : 6  // The week that contains Jan 1st is the first week of the year.
+	            doy : 6  // The week that contains Jan 6th is the first week of the year.
 	        }
 	    });
 	
@@ -44844,13 +45037,13 @@
 
 
 /***/ }),
-/* 404 */
+/* 408 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44927,7 +45120,7 @@
 	        },
 	        week : {
 	            dow : 0, // Sunday is the first day of the week.
-	            doy : 6  // The week that contains Jan 1st is the first week of the year.
+	            doy : 6  // The week that contains Jan 6th is the first week of the year.
 	        }
 	    });
 	
@@ -44937,13 +45130,13 @@
 
 
 /***/ }),
-/* 405 */
+/* 409 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45008,13 +45201,13 @@
 
 
 /***/ }),
-/* 406 */
+/* 410 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45128,13 +45321,13 @@
 
 
 /***/ }),
-/* 407 */
+/* 411 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45199,13 +45392,13 @@
 
 
 /***/ }),
-/* 408 */
+/* 412 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45265,13 +45458,13 @@
 
 
 /***/ }),
-/* 409 */
+/* 413 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45391,12 +45584,12 @@
 
 
 /***/ }),
-/* 410 */
+/* 414 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45479,7 +45672,7 @@
 	        },
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -45489,13 +45682,13 @@
 
 
 /***/ }),
-/* 411 */
+/* 415 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45584,13 +45777,13 @@
 
 
 /***/ }),
-/* 412 */
+/* 416 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45636,7 +45829,7 @@
 	        },
 	        week : {
 	            dow : 6, // Saturday is the first day of the week.
-	            doy : 12  // The week that contains Jan 1st is the first week of the year.
+	            doy : 12  // The week that contains Jan 12th is the first week of the year.
 	        }
 	    });
 	
@@ -45646,13 +45839,13 @@
 
 
 /***/ }),
-/* 413 */
+/* 417 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45698,7 +45891,7 @@
 	        },
 	        week : {
 	            dow : 6, // Saturday is the first day of the week.
-	            doy : 12  // The week that contains Jan 1st is the first week of the year.
+	            doy : 12  // The week that contains Jan 12th is the first week of the year.
 	        }
 	    });
 	
@@ -45708,13 +45901,13 @@
 
 
 /***/ }),
-/* 414 */
+/* 418 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js language configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45831,13 +46024,13 @@
 
 
 /***/ }),
-/* 415 */
+/* 419 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45976,7 +46169,7 @@
 	        },
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -45986,13 +46179,13 @@
 
 
 /***/ }),
-/* 416 */
+/* 420 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46088,13 +46281,13 @@
 
 
 /***/ }),
-/* 417 */
+/* 421 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46150,13 +46343,13 @@
 
 
 /***/ }),
-/* 418 */
+/* 422 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46202,7 +46395,7 @@
 	        },
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	            doy : 7  // The week that contains Jan 7th is the first week of the year.
 	        }
 	    });
 	
@@ -46212,13 +46405,13 @@
 
 
 /***/ }),
-/* 419 */
+/* 423 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46295,13 +46488,13 @@
 
 
 /***/ }),
-/* 420 */
+/* 424 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46367,13 +46560,13 @@
 
 
 /***/ }),
-/* 421 */
+/* 425 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46431,13 +46624,13 @@
 
 
 /***/ }),
-/* 422 */
+/* 426 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46545,13 +46738,13 @@
 
 
 /***/ }),
-/* 423 */
+/* 427 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46652,13 +46845,13 @@
 
 
 /***/ }),
-/* 424 */
+/* 428 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(299)) :
+	    true ? factory(__webpack_require__(302)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46759,7 +46952,7 @@
 
 
 /***/ }),
-/* 425 */
+/* 429 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46768,7 +46961,7 @@
 	  value: true
 	});
 	
-	var _defineProperty2 = __webpack_require__(259);
+	var _defineProperty2 = __webpack_require__(262);
 	
 	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 	
@@ -46776,7 +46969,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _createReactClass = __webpack_require__(242);
+	var _createReactClass = __webpack_require__(245);
 	
 	var _createReactClass2 = _interopRequireDefault(_createReactClass);
 	
@@ -46788,11 +46981,11 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _DateConstants = __webpack_require__(298);
+	var _DateConstants = __webpack_require__(301);
 	
 	var _DateConstants2 = _interopRequireDefault(_DateConstants);
 	
-	var _util = __webpack_require__(426);
+	var _util = __webpack_require__(430);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -47041,7 +47234,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 426 */
+/* 430 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47050,7 +47243,7 @@
 	  value: true
 	});
 	
-	var _extends2 = __webpack_require__(142);
+	var _extends2 = __webpack_require__(145);
 	
 	var _extends3 = _interopRequireDefault(_extends2);
 	
@@ -47064,7 +47257,7 @@
 	exports.isTimeValid = isTimeValid;
 	exports.isAllowedDate = isAllowedDate;
 	
-	var _moment = __webpack_require__(299);
+	var _moment = __webpack_require__(302);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
@@ -47158,7 +47351,7 @@
 	}
 
 /***/ }),
-/* 427 */
+/* 431 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47171,7 +47364,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _createReactClass = __webpack_require__(242);
+	var _createReactClass = __webpack_require__(245);
 	
 	var _createReactClass2 = _interopRequireDefault(_createReactClass);
 	
@@ -47179,15 +47372,15 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _MonthPanel = __webpack_require__(428);
+	var _MonthPanel = __webpack_require__(432);
 	
 	var _MonthPanel2 = _interopRequireDefault(_MonthPanel);
 	
-	var _YearPanel = __webpack_require__(429);
+	var _YearPanel = __webpack_require__(433);
 	
 	var _YearPanel2 = _interopRequireDefault(_YearPanel);
 	
-	var _mapSelf = __webpack_require__(432);
+	var _mapSelf = __webpack_require__(436);
 	
 	var _mapSelf2 = _interopRequireDefault(_mapSelf);
 	
@@ -47402,7 +47595,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 428 */
+/* 432 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47415,7 +47608,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _createReactClass = __webpack_require__(242);
+	var _createReactClass = __webpack_require__(245);
 	
 	var _createReactClass2 = _interopRequireDefault(_createReactClass);
 	
@@ -47423,11 +47616,11 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _YearPanel = __webpack_require__(429);
+	var _YearPanel = __webpack_require__(433);
 	
 	var _YearPanel2 = _interopRequireDefault(_YearPanel);
 	
-	var _MonthTable = __webpack_require__(431);
+	var _MonthTable = __webpack_require__(435);
 	
 	var _MonthTable2 = _interopRequireDefault(_MonthTable);
 	
@@ -47580,7 +47773,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 429 */
+/* 433 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47589,23 +47782,23 @@
 	  value: true
 	});
 	
-	var _defineProperty2 = __webpack_require__(259);
+	var _defineProperty2 = __webpack_require__(262);
 	
 	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 	
-	var _classCallCheck2 = __webpack_require__(182);
+	var _classCallCheck2 = __webpack_require__(185);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _createClass2 = __webpack_require__(251);
+	var _createClass2 = __webpack_require__(254);
 	
 	var _createClass3 = _interopRequireDefault(_createClass2);
 	
-	var _possibleConstructorReturn2 = __webpack_require__(183);
+	var _possibleConstructorReturn2 = __webpack_require__(186);
 	
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 	
-	var _inherits2 = __webpack_require__(217);
+	var _inherits2 = __webpack_require__(220);
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
@@ -47621,7 +47814,7 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _DecadePanel = __webpack_require__(430);
+	var _DecadePanel = __webpack_require__(434);
 	
 	var _DecadePanel2 = _interopRequireDefault(_DecadePanel);
 	
@@ -47845,7 +48038,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 430 */
+/* 434 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47854,23 +48047,23 @@
 	  value: true
 	});
 	
-	var _defineProperty2 = __webpack_require__(259);
+	var _defineProperty2 = __webpack_require__(262);
 	
 	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 	
-	var _classCallCheck2 = __webpack_require__(182);
+	var _classCallCheck2 = __webpack_require__(185);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _createClass2 = __webpack_require__(251);
+	var _createClass2 = __webpack_require__(254);
 	
 	var _createClass3 = _interopRequireDefault(_createClass2);
 	
-	var _possibleConstructorReturn2 = __webpack_require__(183);
+	var _possibleConstructorReturn2 = __webpack_require__(186);
 	
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 	
-	var _inherits2 = __webpack_require__(217);
+	var _inherits2 = __webpack_require__(220);
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
@@ -48058,7 +48251,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 431 */
+/* 435 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48067,23 +48260,23 @@
 	  value: true
 	});
 	
-	var _defineProperty2 = __webpack_require__(259);
+	var _defineProperty2 = __webpack_require__(262);
 	
 	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 	
-	var _classCallCheck2 = __webpack_require__(182);
+	var _classCallCheck2 = __webpack_require__(185);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _createClass2 = __webpack_require__(251);
+	var _createClass2 = __webpack_require__(254);
 	
 	var _createClass3 = _interopRequireDefault(_createClass2);
 	
-	var _possibleConstructorReturn2 = __webpack_require__(183);
+	var _possibleConstructorReturn2 = __webpack_require__(186);
 	
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 	
-	var _inherits2 = __webpack_require__(217);
+	var _inherits2 = __webpack_require__(220);
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
@@ -48099,7 +48292,7 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _index = __webpack_require__(426);
+	var _index = __webpack_require__(430);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -48259,7 +48452,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 432 */
+/* 436 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48286,7 +48479,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 433 */
+/* 437 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48295,11 +48488,11 @@
 	  value: true
 	});
 	
-	var _defineProperty2 = __webpack_require__(259);
+	var _defineProperty2 = __webpack_require__(262);
 	
 	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 	
-	var _extends2 = __webpack_require__(142);
+	var _extends2 = __webpack_require__(145);
 	
 	var _extends3 = _interopRequireDefault(_extends2);
 	
@@ -48311,7 +48504,7 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _createReactClass = __webpack_require__(242);
+	var _createReactClass = __webpack_require__(245);
 	
 	var _createReactClass2 = _interopRequireDefault(_createReactClass);
 	
@@ -48319,7 +48512,7 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _mapSelf = __webpack_require__(432);
+	var _mapSelf = __webpack_require__(436);
 	
 	var _mapSelf2 = _interopRequireDefault(_mapSelf);
 	
@@ -48327,15 +48520,15 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _TodayButton = __webpack_require__(434);
+	var _TodayButton = __webpack_require__(438);
 	
 	var _TodayButton2 = _interopRequireDefault(_TodayButton);
 	
-	var _OkButton = __webpack_require__(435);
+	var _OkButton = __webpack_require__(439);
 	
 	var _OkButton2 = _interopRequireDefault(_OkButton);
 	
-	var _TimePickerButton = __webpack_require__(436);
+	var _TimePickerButton = __webpack_require__(440);
 	
 	var _TimePickerButton2 = _interopRequireDefault(_TimePickerButton);
 	
@@ -48413,7 +48606,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 434 */
+/* 438 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48427,7 +48620,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _util = __webpack_require__(426);
+	var _util = __webpack_require__(430);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -48459,7 +48652,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 435 */
+/* 439 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -48498,7 +48691,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 436 */
+/* 440 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48507,7 +48700,7 @@
 	  value: true
 	});
 	
-	var _defineProperty2 = __webpack_require__(259);
+	var _defineProperty2 = __webpack_require__(262);
 	
 	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 	
@@ -48551,7 +48744,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 437 */
+/* 441 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48560,7 +48753,7 @@
 	  value: true
 	});
 	
-	var _defineProperty2 = __webpack_require__(259);
+	var _defineProperty2 = __webpack_require__(262);
 	
 	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 	
@@ -48576,11 +48769,11 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _moment = __webpack_require__(299);
+	var _moment = __webpack_require__(302);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
-	var _index = __webpack_require__(426);
+	var _index = __webpack_require__(430);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -48694,7 +48887,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 438 */
+/* 442 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48707,7 +48900,7 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _en_US = __webpack_require__(439);
+	var _en_US = __webpack_require__(443);
 	
 	var _en_US2 = _interopRequireDefault(_en_US);
 	
@@ -48772,7 +48965,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 439 */
+/* 443 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -48810,7 +49003,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 440 */
+/* 444 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48827,7 +49020,7 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _createReactClass = __webpack_require__(242);
+	var _createReactClass = __webpack_require__(245);
 	
 	var _createReactClass2 = _interopRequireDefault(_createReactClass);
 	
@@ -48835,7 +49028,7 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _moment = __webpack_require__(299);
+	var _moment = __webpack_require__(302);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
@@ -48969,7 +49162,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 441 */
+/* 445 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48986,7 +49179,7 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _createReactClass = __webpack_require__(242);
+	var _createReactClass = __webpack_require__(245);
 	
 	var _createReactClass2 = _interopRequireDefault(_createReactClass);
 	
@@ -48994,19 +49187,19 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _createChainedFunction = __webpack_require__(236);
+	var _createChainedFunction = __webpack_require__(239);
 	
 	var _createChainedFunction2 = _interopRequireDefault(_createChainedFunction);
 	
-	var _KeyCode = __webpack_require__(235);
+	var _KeyCode = __webpack_require__(238);
 	
 	var _KeyCode2 = _interopRequireDefault(_KeyCode);
 	
-	var _placements = __webpack_require__(442);
+	var _placements = __webpack_require__(446);
 	
 	var _placements2 = _interopRequireDefault(_placements);
 	
-	var _rcTrigger = __webpack_require__(241);
+	var _rcTrigger = __webpack_require__(244);
 	
 	var _rcTrigger2 = _interopRequireDefault(_rcTrigger);
 	
@@ -49211,7 +49404,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 442 */
+/* 446 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -49257,7 +49450,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 443 */
+/* 447 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49266,23 +49459,23 @@
 	  value: true
 	});
 	
-	var _defineProperty2 = __webpack_require__(259);
+	var _defineProperty2 = __webpack_require__(262);
 	
 	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 	
-	var _classCallCheck2 = __webpack_require__(182);
+	var _classCallCheck2 = __webpack_require__(185);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _createClass2 = __webpack_require__(251);
+	var _createClass2 = __webpack_require__(254);
 	
 	var _createClass3 = _interopRequireDefault(_createClass2);
 	
-	var _possibleConstructorReturn2 = __webpack_require__(183);
+	var _possibleConstructorReturn2 = __webpack_require__(186);
 	
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 	
-	var _inherits2 = __webpack_require__(217);
+	var _inherits2 = __webpack_require__(220);
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
@@ -49294,15 +49487,15 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _Header = __webpack_require__(444);
+	var _Header = __webpack_require__(448);
 	
 	var _Header2 = _interopRequireDefault(_Header);
 	
-	var _Combobox = __webpack_require__(445);
+	var _Combobox = __webpack_require__(449);
 	
 	var _Combobox2 = _interopRequireDefault(_Combobox);
 	
-	var _moment = __webpack_require__(299);
+	var _moment = __webpack_require__(302);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
@@ -49535,7 +49728,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 444 */
+/* 448 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49544,19 +49737,19 @@
 	  value: true
 	});
 	
-	var _classCallCheck2 = __webpack_require__(182);
+	var _classCallCheck2 = __webpack_require__(185);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _createClass2 = __webpack_require__(251);
+	var _createClass2 = __webpack_require__(254);
 	
 	var _createClass3 = _interopRequireDefault(_createClass2);
 	
-	var _possibleConstructorReturn2 = __webpack_require__(183);
+	var _possibleConstructorReturn2 = __webpack_require__(186);
 	
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 	
-	var _inherits2 = __webpack_require__(217);
+	var _inherits2 = __webpack_require__(220);
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
@@ -49568,7 +49761,7 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _moment = __webpack_require__(299);
+	var _moment = __webpack_require__(302);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
@@ -49811,7 +50004,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 445 */
+/* 449 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49820,19 +50013,19 @@
 	  value: true
 	});
 	
-	var _classCallCheck2 = __webpack_require__(182);
+	var _classCallCheck2 = __webpack_require__(185);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _createClass2 = __webpack_require__(251);
+	var _createClass2 = __webpack_require__(254);
 	
 	var _createClass3 = _interopRequireDefault(_createClass2);
 	
-	var _possibleConstructorReturn2 = __webpack_require__(183);
+	var _possibleConstructorReturn2 = __webpack_require__(186);
 	
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 	
-	var _inherits2 = __webpack_require__(217);
+	var _inherits2 = __webpack_require__(220);
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
@@ -49844,7 +50037,7 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _Select = __webpack_require__(446);
+	var _Select = __webpack_require__(450);
 	
 	var _Select2 = _interopRequireDefault(_Select);
 	
@@ -50088,7 +50281,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 446 */
+/* 450 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50097,23 +50290,23 @@
 	  value: true
 	});
 	
-	var _defineProperty2 = __webpack_require__(259);
+	var _defineProperty2 = __webpack_require__(262);
 	
 	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 	
-	var _classCallCheck2 = __webpack_require__(182);
+	var _classCallCheck2 = __webpack_require__(185);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _createClass2 = __webpack_require__(251);
+	var _createClass2 = __webpack_require__(254);
 	
 	var _createClass3 = _interopRequireDefault(_createClass2);
 	
-	var _possibleConstructorReturn2 = __webpack_require__(183);
+	var _possibleConstructorReturn2 = __webpack_require__(186);
 	
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 	
-	var _inherits2 = __webpack_require__(217);
+	var _inherits2 = __webpack_require__(220);
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
@@ -50290,7 +50483,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 447 */
+/* 451 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -50299,7 +50492,7 @@
 	  value: true
 	});
 	
-	var _MonthCalendar = __webpack_require__(448);
+	var _MonthCalendar = __webpack_require__(452);
 	
 	var _MonthCalendar2 = _interopRequireDefault(_MonthCalendar);
 	
@@ -50307,19 +50500,19 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Picker = __webpack_require__(441);
+	var _Picker = __webpack_require__(445);
 	
 	var _Picker2 = _interopRequireDefault(_Picker);
 	
-	var _beeFormControl = __webpack_require__(131);
+	var _beeFormControl = __webpack_require__(134);
 	
 	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 	
-	var _beeIcon = __webpack_require__(133);
+	var _beeIcon = __webpack_require__(136);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _beeInputGroup = __webpack_require__(287);
+	var _beeInputGroup = __webpack_require__(290);
 	
 	var _beeInputGroup2 = _interopRequireDefault(_beeInputGroup);
 	
@@ -50426,7 +50619,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 448 */
+/* 452 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50439,7 +50632,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _createReactClass = __webpack_require__(242);
+	var _createReactClass = __webpack_require__(245);
 	
 	var _createReactClass2 = _interopRequireDefault(_createReactClass);
 	
@@ -50447,19 +50640,19 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _KeyCode = __webpack_require__(235);
+	var _KeyCode = __webpack_require__(238);
 	
 	var _KeyCode2 = _interopRequireDefault(_KeyCode);
 	
-	var _MonthPanel = __webpack_require__(428);
+	var _MonthPanel = __webpack_require__(432);
 	
 	var _MonthPanel2 = _interopRequireDefault(_MonthPanel);
 	
-	var _CalendarMixin = __webpack_require__(437);
+	var _CalendarMixin = __webpack_require__(441);
 	
 	var _CalendarMixin2 = _interopRequireDefault(_CalendarMixin);
 	
-	var _CommonMixin = __webpack_require__(438);
+	var _CommonMixin = __webpack_require__(442);
 	
 	var _CommonMixin2 = _interopRequireDefault(_CommonMixin);
 	
@@ -50544,7 +50737,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 449 */
+/* 453 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -50557,39 +50750,39 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _RangeCalendar = __webpack_require__(450);
+	var _RangeCalendar = __webpack_require__(454);
 	
 	var _RangeCalendar2 = _interopRequireDefault(_RangeCalendar);
 	
-	var _beeFormControl = __webpack_require__(131);
+	var _beeFormControl = __webpack_require__(134);
 	
 	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 	
-	var _Picker = __webpack_require__(441);
+	var _Picker = __webpack_require__(445);
 	
 	var _Picker2 = _interopRequireDefault(_Picker);
 	
-	var _beeInputGroup = __webpack_require__(287);
+	var _beeInputGroup = __webpack_require__(290);
 	
 	var _beeInputGroup2 = _interopRequireDefault(_beeInputGroup);
 	
-	var _beeIcon = __webpack_require__(133);
+	var _beeIcon = __webpack_require__(136);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _zh_CN = __webpack_require__(130);
+	var _zh_CN = __webpack_require__(133);
 	
 	var _zh_CN2 = _interopRequireDefault(_zh_CN);
 	
-	var _en_US = __webpack_require__(439);
+	var _en_US = __webpack_require__(443);
 	
 	var _en_US2 = _interopRequireDefault(_en_US);
 	
-	var _moment = __webpack_require__(299);
+	var _moment = __webpack_require__(302);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
-	__webpack_require__(422);
+	__webpack_require__(426);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -50752,7 +50945,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 450 */
+/* 454 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50761,19 +50954,19 @@
 	  value: true
 	});
 	
-	var _extends2 = __webpack_require__(142);
+	var _extends2 = __webpack_require__(145);
 	
 	var _extends3 = _interopRequireDefault(_extends2);
 	
-	var _defineProperty2 = __webpack_require__(259);
+	var _defineProperty2 = __webpack_require__(262);
 	
 	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 	
-	var _toConsumableArray2 = __webpack_require__(451);
+	var _toConsumableArray2 = __webpack_require__(455);
 	
 	var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 	
-	var _slicedToArray2 = __webpack_require__(461);
+	var _slicedToArray2 = __webpack_require__(465);
 	
 	var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
 	
@@ -50781,7 +50974,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _createReactClass = __webpack_require__(242);
+	var _createReactClass = __webpack_require__(245);
 	
 	var _createReactClass2 = _interopRequireDefault(_createReactClass);
 	
@@ -50789,7 +50982,7 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _moment = __webpack_require__(299);
+	var _moment = __webpack_require__(302);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
@@ -50797,27 +50990,27 @@
 	
 	var _classnames3 = _interopRequireDefault(_classnames2);
 	
-	var _CalendarPart = __webpack_require__(468);
+	var _CalendarPart = __webpack_require__(472);
 	
 	var _CalendarPart2 = _interopRequireDefault(_CalendarPart);
 	
-	var _TodayButton = __webpack_require__(434);
+	var _TodayButton = __webpack_require__(438);
 	
 	var _TodayButton2 = _interopRequireDefault(_TodayButton);
 	
-	var _OkButton = __webpack_require__(435);
+	var _OkButton = __webpack_require__(439);
 	
 	var _OkButton2 = _interopRequireDefault(_OkButton);
 	
-	var _TimePickerButton = __webpack_require__(436);
+	var _TimePickerButton = __webpack_require__(440);
 	
 	var _TimePickerButton2 = _interopRequireDefault(_TimePickerButton);
 	
-	var _CommonMixin = __webpack_require__(438);
+	var _CommonMixin = __webpack_require__(442);
 	
 	var _CommonMixin2 = _interopRequireDefault(_CommonMixin);
 	
-	var _util = __webpack_require__(426);
+	var _util = __webpack_require__(430);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -51377,14 +51570,14 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 451 */
+/* 455 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	exports.__esModule = true;
 	
-	var _from = __webpack_require__(452);
+	var _from = __webpack_require__(456);
 	
 	var _from2 = _interopRequireDefault(_from);
 	
@@ -51403,35 +51596,35 @@
 	};
 
 /***/ }),
-/* 452 */
+/* 456 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(453), __esModule: true };
+	module.exports = { "default": __webpack_require__(457), __esModule: true };
 
 /***/ }),
-/* 453 */
+/* 457 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	__webpack_require__(187);
-	__webpack_require__(454);
-	module.exports = __webpack_require__(148).Array.from;
+	__webpack_require__(190);
+	__webpack_require__(458);
+	module.exports = __webpack_require__(151).Array.from;
 
 
 /***/ }),
-/* 454 */
+/* 458 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var ctx = __webpack_require__(149);
-	var $export = __webpack_require__(146);
-	var toObject = __webpack_require__(180);
-	var call = __webpack_require__(455);
-	var isArrayIter = __webpack_require__(456);
-	var toLength = __webpack_require__(170);
-	var createProperty = __webpack_require__(457);
-	var getIterFn = __webpack_require__(458);
+	var ctx = __webpack_require__(152);
+	var $export = __webpack_require__(149);
+	var toObject = __webpack_require__(183);
+	var call = __webpack_require__(459);
+	var isArrayIter = __webpack_require__(460);
+	var toLength = __webpack_require__(173);
+	var createProperty = __webpack_require__(461);
+	var getIterFn = __webpack_require__(462);
 	
-	$export($export.S + $export.F * !__webpack_require__(460)(function (iter) { Array.from(iter); }), 'Array', {
+	$export($export.S + $export.F * !__webpack_require__(464)(function (iter) { Array.from(iter); }), 'Array', {
 	  // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
 	  from: function from(arrayLike /* , mapfn = undefined, thisArg = undefined */) {
 	    var O = toObject(arrayLike);
@@ -51461,11 +51654,11 @@
 
 
 /***/ }),
-/* 455 */
+/* 459 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// call something on iterator step with safe closing on error
-	var anObject = __webpack_require__(153);
+	var anObject = __webpack_require__(156);
 	module.exports = function (iterator, fn, value, entries) {
 	  try {
 	    return entries ? fn(anObject(value)[0], value[1]) : fn(value);
@@ -51479,12 +51672,12 @@
 
 
 /***/ }),
-/* 456 */
+/* 460 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// check on default Array iterator
-	var Iterators = __webpack_require__(191);
-	var ITERATOR = __webpack_require__(197)('iterator');
+	var Iterators = __webpack_require__(194);
+	var ITERATOR = __webpack_require__(200)('iterator');
 	var ArrayProto = Array.prototype;
 	
 	module.exports = function (it) {
@@ -51493,12 +51686,12 @@
 
 
 /***/ }),
-/* 457 */
+/* 461 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $defineProperty = __webpack_require__(152);
-	var createDesc = __webpack_require__(160);
+	var $defineProperty = __webpack_require__(155);
+	var createDesc = __webpack_require__(163);
 	
 	module.exports = function (object, index, value) {
 	  if (index in object) $defineProperty.f(object, index, createDesc(0, value));
@@ -51507,13 +51700,13 @@
 
 
 /***/ }),
-/* 458 */
+/* 462 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var classof = __webpack_require__(459);
-	var ITERATOR = __webpack_require__(197)('iterator');
-	var Iterators = __webpack_require__(191);
-	module.exports = __webpack_require__(148).getIteratorMethod = function (it) {
+	var classof = __webpack_require__(463);
+	var ITERATOR = __webpack_require__(200)('iterator');
+	var Iterators = __webpack_require__(194);
+	module.exports = __webpack_require__(151).getIteratorMethod = function (it) {
 	  if (it != undefined) return it[ITERATOR]
 	    || it['@@iterator']
 	    || Iterators[classof(it)];
@@ -51521,12 +51714,12 @@
 
 
 /***/ }),
-/* 459 */
+/* 463 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// getting tag from 19.1.3.6 Object.prototype.toString()
-	var cof = __webpack_require__(167);
-	var TAG = __webpack_require__(197)('toStringTag');
+	var cof = __webpack_require__(170);
+	var TAG = __webpack_require__(200)('toStringTag');
 	// ES3 wrong here
 	var ARG = cof(function () { return arguments; }()) == 'Arguments';
 	
@@ -51550,10 +51743,10 @@
 
 
 /***/ }),
-/* 460 */
+/* 464 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var ITERATOR = __webpack_require__(197)('iterator');
+	var ITERATOR = __webpack_require__(200)('iterator');
 	var SAFE_CLOSING = false;
 	
 	try {
@@ -51578,18 +51771,18 @@
 
 
 /***/ }),
-/* 461 */
+/* 465 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	exports.__esModule = true;
 	
-	var _isIterable2 = __webpack_require__(462);
+	var _isIterable2 = __webpack_require__(466);
 	
 	var _isIterable3 = _interopRequireDefault(_isIterable2);
 	
-	var _getIterator2 = __webpack_require__(465);
+	var _getIterator2 = __webpack_require__(469);
 	
 	var _getIterator3 = _interopRequireDefault(_getIterator2);
 	
@@ -51634,28 +51827,28 @@
 	}();
 
 /***/ }),
-/* 462 */
+/* 466 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(463), __esModule: true };
+	module.exports = { "default": __webpack_require__(467), __esModule: true };
 
 /***/ }),
-/* 463 */
+/* 467 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	__webpack_require__(199);
-	__webpack_require__(187);
-	module.exports = __webpack_require__(464);
+	__webpack_require__(202);
+	__webpack_require__(190);
+	module.exports = __webpack_require__(468);
 
 
 /***/ }),
-/* 464 */
+/* 468 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var classof = __webpack_require__(459);
-	var ITERATOR = __webpack_require__(197)('iterator');
-	var Iterators = __webpack_require__(191);
-	module.exports = __webpack_require__(148).isIterable = function (it) {
+	var classof = __webpack_require__(463);
+	var ITERATOR = __webpack_require__(200)('iterator');
+	var Iterators = __webpack_require__(194);
+	module.exports = __webpack_require__(151).isIterable = function (it) {
 	  var O = Object(it);
 	  return O[ITERATOR] !== undefined
 	    || '@@iterator' in O
@@ -51665,27 +51858,27 @@
 
 
 /***/ }),
-/* 465 */
+/* 469 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(466), __esModule: true };
+	module.exports = { "default": __webpack_require__(470), __esModule: true };
 
 /***/ }),
-/* 466 */
+/* 470 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	__webpack_require__(199);
-	__webpack_require__(187);
-	module.exports = __webpack_require__(467);
+	__webpack_require__(202);
+	__webpack_require__(190);
+	module.exports = __webpack_require__(471);
 
 
 /***/ }),
-/* 467 */
+/* 471 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var anObject = __webpack_require__(153);
-	var get = __webpack_require__(458);
-	module.exports = __webpack_require__(148).getIterator = function (it) {
+	var anObject = __webpack_require__(156);
+	var get = __webpack_require__(462);
+	module.exports = __webpack_require__(151).getIterator = function (it) {
 	  var iterFn = get(it);
 	  if (typeof iterFn != 'function') throw TypeError(it + ' is not iterable!');
 	  return anObject(iterFn.call(it));
@@ -51693,7 +51886,7 @@
 
 
 /***/ }),
-/* 468 */
+/* 472 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51702,7 +51895,7 @@
 	  value: true
 	});
 	
-	var _extends2 = __webpack_require__(142);
+	var _extends2 = __webpack_require__(145);
 	
 	var _extends3 = _interopRequireDefault(_extends2);
 	
@@ -51710,7 +51903,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _createReactClass = __webpack_require__(242);
+	var _createReactClass = __webpack_require__(245);
 	
 	var _createReactClass2 = _interopRequireDefault(_createReactClass);
 	
@@ -51718,19 +51911,19 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _CalendarHeader = __webpack_require__(427);
+	var _CalendarHeader = __webpack_require__(431);
 	
 	var _CalendarHeader2 = _interopRequireDefault(_CalendarHeader);
 	
-	var _DateTable = __webpack_require__(296);
+	var _DateTable = __webpack_require__(299);
 	
 	var _DateTable2 = _interopRequireDefault(_DateTable);
 	
-	var _DateInput = __webpack_require__(440);
+	var _DateInput = __webpack_require__(444);
 	
 	var _DateInput2 = _interopRequireDefault(_DateInput);
 	
-	var _index = __webpack_require__(426);
+	var _index = __webpack_require__(430);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -51850,7 +52043,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 469 */
+/* 473 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -51861,7 +52054,7 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _rcCalendar = __webpack_require__(294);
+	var _rcCalendar = __webpack_require__(297);
 	
 	var _rcCalendar2 = _interopRequireDefault(_rcCalendar);
 	
@@ -51869,39 +52062,39 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Picker = __webpack_require__(441);
+	var _Picker = __webpack_require__(445);
 	
 	var _Picker2 = _interopRequireDefault(_Picker);
 	
-	var _beeFormControl = __webpack_require__(131);
+	var _beeFormControl = __webpack_require__(134);
 	
 	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 	
-	var _zh_CN = __webpack_require__(130);
+	var _zh_CN = __webpack_require__(133);
 	
 	var _zh_CN2 = _interopRequireDefault(_zh_CN);
 	
-	var _en_US = __webpack_require__(439);
+	var _en_US = __webpack_require__(443);
 	
 	var _en_US2 = _interopRequireDefault(_en_US);
 	
-	var _beeIcon = __webpack_require__(133);
+	var _beeIcon = __webpack_require__(136);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _beeInputGroup = __webpack_require__(287);
+	var _beeInputGroup = __webpack_require__(290);
 	
 	var _beeInputGroup2 = _interopRequireDefault(_beeInputGroup);
 	
-	var _moment = __webpack_require__(299);
+	var _moment = __webpack_require__(302);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
-	__webpack_require__(422);
+	__webpack_require__(426);
 	
-	__webpack_require__(330);
+	__webpack_require__(333);
 	
-	var _YearPicker = __webpack_require__(470);
+	var _YearPicker = __webpack_require__(474);
 	
 	var _YearPicker2 = _interopRequireDefault(_YearPicker);
 	
@@ -52101,7 +52294,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 470 */
+/* 474 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -52112,7 +52305,7 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _YearPanel = __webpack_require__(429);
+	var _YearPanel = __webpack_require__(433);
 	
 	var _YearPanel2 = _interopRequireDefault(_YearPanel);
 	
@@ -52120,23 +52313,23 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Picker = __webpack_require__(441);
+	var _Picker = __webpack_require__(445);
 	
 	var _Picker2 = _interopRequireDefault(_Picker);
 	
-	var _beeFormControl = __webpack_require__(131);
+	var _beeFormControl = __webpack_require__(134);
 	
 	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 	
-	var _beeInputGroup = __webpack_require__(287);
+	var _beeInputGroup = __webpack_require__(290);
 	
 	var _beeInputGroup2 = _interopRequireDefault(_beeInputGroup);
 	
-	var _beeIcon = __webpack_require__(133);
+	var _beeIcon = __webpack_require__(136);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _moment = __webpack_require__(299);
+	var _moment = __webpack_require__(302);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
@@ -52273,7 +52466,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 471 */
+/* 475 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52290,11 +52483,11 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _beeDropdown = __webpack_require__(472);
+	var _beeDropdown = __webpack_require__(476);
 	
 	var _beeDropdown2 = _interopRequireDefault(_beeDropdown);
 	
-	var _beeMenus = __webpack_require__(481);
+	var _beeMenus = __webpack_require__(485);
 	
 	var _beeMenus2 = _interopRequireDefault(_beeMenus);
 	
@@ -52302,15 +52495,15 @@
 	
 	var _beeButton2 = _interopRequireDefault(_beeButton);
 	
-	var _beeIcon = __webpack_require__(133);
+	var _beeIcon = __webpack_require__(136);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _i18n = __webpack_require__(496);
+	var _i18n = __webpack_require__(500);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
-	var _tool = __webpack_require__(497);
+	var _tool = __webpack_require__(501);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -52596,7 +52789,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 472 */
+/* 476 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52605,7 +52798,7 @@
 	  value: true
 	});
 	
-	var _Dropdown = __webpack_require__(473);
+	var _Dropdown = __webpack_require__(477);
 	
 	var _Dropdown2 = _interopRequireDefault(_Dropdown);
 	
@@ -52615,7 +52808,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 473 */
+/* 477 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52634,11 +52827,11 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _trigger = __webpack_require__(474);
+	var _trigger = __webpack_require__(478);
 	
 	var _trigger2 = _interopRequireDefault(_trigger);
 	
-	var _placement = __webpack_require__(480);
+	var _placement = __webpack_require__(484);
 	
 	var _placement2 = _interopRequireDefault(_placement);
 	
@@ -52829,15 +53022,15 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 474 */
+/* 478 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(475);
+	module.exports = __webpack_require__(479);
 
 /***/ }),
-/* 475 */
+/* 479 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52866,11 +53059,11 @@
 	
 	var _tinperBeeCore = __webpack_require__(27);
 	
-	var _Popup = __webpack_require__(476);
+	var _Popup = __webpack_require__(480);
 	
 	var _Popup2 = _interopRequireDefault(_Popup);
 	
-	var _utils = __webpack_require__(479);
+	var _utils = __webpack_require__(483);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -53064,6 +53257,7 @@
 	        if (!this.clickOutsideHandler) {
 	          this.clickOutsideHandler = (0, _tinperBeeCore.addEventListener)(document, 'mousedown', this.onDocumentClick);
 	          this.touchOutsideHandler = (0, _tinperBeeCore.addEventListener)(document, 'touchstart', this.onDocumentClick);
+	          this.mouseWheelOutsideHandler = (0, _tinperBeeCore.addEventListener)(document, 'mousewheel', this.onDocumentClick);
 	        }
 	        return;
 	      }
@@ -53071,8 +53265,10 @@
 	    if (this.clickOutsideHandler) {
 	      this.clickOutsideHandler.remove();
 	      this.touchOutsideHandler.remove();
+	      this.mouseWheelOutsideHandler.remove();
 	      this.clickOutsideHandler = null;
 	      this.touchOutsideHandler = null;
+	      this.mouseWheelOutsideHandler = null;
 	    }
 	  };
 	
@@ -53081,8 +53277,10 @@
 	    if (this.clickOutsideHandler) {
 	      this.clickOutsideHandler.remove();
 	      this.touchOutsideHandler.remove();
+	      this.mouseWheelOutsideHandler.remove();
 	      this.clickOutsideHandler = null;
 	      this.touchOutsideHandler = null;
+	      this.mouseWheelOutsideHandler = null;
 	    }
 	    if (this._container) {
 	      _reactDom2["default"].unmountComponentAtNode(this._container);
@@ -53415,7 +53613,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 476 */
+/* 480 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53446,11 +53644,11 @@
 	
 	var _beeAnimate2 = _interopRequireDefault(_beeAnimate);
 	
-	var _PopupInner = __webpack_require__(477);
+	var _PopupInner = __webpack_require__(481);
 	
 	var _PopupInner2 = _interopRequireDefault(_PopupInner);
 	
-	var _LazyRenderBox = __webpack_require__(478);
+	var _LazyRenderBox = __webpack_require__(482);
 	
 	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
 	
@@ -53690,7 +53888,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 477 */
+/* 481 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53707,7 +53905,7 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _LazyRenderBox = __webpack_require__(478);
+	var _LazyRenderBox = __webpack_require__(482);
 	
 	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
 	
@@ -53771,7 +53969,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 478 */
+/* 482 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53846,7 +54044,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 479 */
+/* 483 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -53881,7 +54079,7 @@
 	}
 
 /***/ }),
-/* 480 */
+/* 484 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -53938,7 +54136,7 @@
 	exports["default"] = placements;
 
 /***/ }),
-/* 481 */
+/* 485 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53947,7 +54145,7 @@
 	  value: true
 	});
 	
-	var _VerticalMenu = __webpack_require__(482);
+	var _VerticalMenu = __webpack_require__(486);
 	
 	var _VerticalMenu2 = _interopRequireDefault(_VerticalMenu);
 	
@@ -53957,7 +54155,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 482 */
+/* 486 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53972,15 +54170,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _ExportMenu = __webpack_require__(483);
+	var _ExportMenu = __webpack_require__(487);
 	
 	var _ExportMenu2 = _interopRequireDefault(_ExportMenu);
 	
-	var _openAnimation = __webpack_require__(494);
+	var _openAnimation = __webpack_require__(498);
 	
 	var _openAnimation2 = _interopRequireDefault(_openAnimation);
 	
-	var _warning = __webpack_require__(495);
+	var _warning = __webpack_require__(499);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
@@ -54113,7 +54311,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 483 */
+/* 487 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54123,31 +54321,31 @@
 	});
 	exports.MenuToggle = exports.SideContainer = exports.Divider = exports.ItemGroup = exports.MenuItemGroup = exports.MenuItem = exports.Item = exports.SubMenu = undefined;
 	
-	var _Menu = __webpack_require__(484);
+	var _Menu = __webpack_require__(488);
 	
 	var _Menu2 = _interopRequireDefault(_Menu);
 	
-	var _SubMenu = __webpack_require__(487);
+	var _SubMenu = __webpack_require__(491);
 	
 	var _SubMenu2 = _interopRequireDefault(_SubMenu);
 	
-	var _MenuItem = __webpack_require__(489);
+	var _MenuItem = __webpack_require__(493);
 	
 	var _MenuItem2 = _interopRequireDefault(_MenuItem);
 	
-	var _MenuItemGroup = __webpack_require__(490);
+	var _MenuItemGroup = __webpack_require__(494);
 	
 	var _MenuItemGroup2 = _interopRequireDefault(_MenuItemGroup);
 	
-	var _Divider = __webpack_require__(491);
+	var _Divider = __webpack_require__(495);
 	
 	var _Divider2 = _interopRequireDefault(_Divider);
 	
-	var _SideContainer = __webpack_require__(492);
+	var _SideContainer = __webpack_require__(496);
 	
 	var _SideContainer2 = _interopRequireDefault(_SideContainer);
 	
-	var _MenuToggle = __webpack_require__(493);
+	var _MenuToggle = __webpack_require__(497);
 	
 	var _MenuToggle2 = _interopRequireDefault(_MenuToggle);
 	
@@ -54164,7 +54362,7 @@
 	exports["default"] = _Menu2["default"];
 
 /***/ }),
-/* 484 */
+/* 488 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54183,9 +54381,9 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _util = __webpack_require__(485);
+	var _util = __webpack_require__(489);
 	
-	var _domScrollIntoView = __webpack_require__(272);
+	var _domScrollIntoView = __webpack_require__(275);
 	
 	var _domScrollIntoView2 = _interopRequireDefault(_domScrollIntoView);
 	
@@ -54193,7 +54391,7 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _DOMWrap = __webpack_require__(486);
+	var _DOMWrap = __webpack_require__(490);
 	
 	var _DOMWrap2 = _interopRequireDefault(_DOMWrap);
 	
@@ -54756,7 +54954,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 485 */
+/* 489 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54820,7 +55018,7 @@
 	}
 
 /***/ }),
-/* 486 */
+/* 490 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54892,7 +55090,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 487 */
+/* 491 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54903,7 +55101,7 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _SubPopupMenu = __webpack_require__(488);
+	var _SubPopupMenu = __webpack_require__(492);
 	
 	var _SubPopupMenu2 = _interopRequireDefault(_SubPopupMenu);
 	
@@ -54923,7 +55121,7 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _util = __webpack_require__(485);
+	var _util = __webpack_require__(489);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -55431,7 +55629,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 488 */
+/* 492 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55464,9 +55662,9 @@
 	
 	var _createChainedFunction2 = _interopRequireDefault(_createChainedFunction);
 	
-	var _util = __webpack_require__(485);
+	var _util = __webpack_require__(489);
 	
-	var _DOMWrap = __webpack_require__(486);
+	var _DOMWrap = __webpack_require__(490);
 	
 	var _DOMWrap2 = _interopRequireDefault(_DOMWrap);
 	
@@ -55804,7 +56002,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 489 */
+/* 493 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55831,7 +56029,7 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _util = __webpack_require__(485);
+	var _util = __webpack_require__(489);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -56067,7 +56265,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 490 */
+/* 494 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56164,7 +56362,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 491 */
+/* 495 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56224,7 +56422,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 492 */
+/* 496 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56298,7 +56496,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 493 */
+/* 497 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56456,7 +56654,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 494 */
+/* 498 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56504,7 +56702,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 495 */
+/* 499 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56531,7 +56729,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 496 */
+/* 500 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -56584,7 +56782,7 @@
 	};
 
 /***/ }),
-/* 497 */
+/* 501 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -56627,7 +56825,7 @@
 	}
 
 /***/ }),
-/* 498 */
+/* 502 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56642,11 +56840,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Column = __webpack_require__(499);
+	var _Column = __webpack_require__(503);
 	
 	var _Column2 = _interopRequireDefault(_Column);
 	
-	var _ColumnGroup = __webpack_require__(500);
+	var _ColumnGroup = __webpack_require__(504);
 	
 	var _ColumnGroup2 = _interopRequireDefault(_ColumnGroup);
 	
@@ -56933,7 +57131,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 499 */
+/* 503 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56993,7 +57191,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 500 */
+/* 504 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57037,7 +57235,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 501 */
+/* 505 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -57082,7 +57280,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 502 */
+/* 506 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57091,7 +57289,7 @@
 	  value: true
 	});
 	
-	var _Loading = __webpack_require__(503);
+	var _Loading = __webpack_require__(507);
 	
 	var _Loading2 = _interopRequireDefault(_Loading);
 	
@@ -57101,7 +57299,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 503 */
+/* 507 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -57297,7 +57495,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 504 */
+/* 508 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57310,7 +57508,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -57376,7 +57574,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 505 */
+/* 509 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57389,15 +57587,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _beeIcon = __webpack_require__(133);
+	var _beeIcon = __webpack_require__(136);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _sort = __webpack_require__(506);
+	var _sort = __webpack_require__(510);
 	
 	var _sort2 = _interopRequireDefault(_sort);
 	
@@ -57475,7 +57673,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 506 */
+/* 510 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57792,7 +57990,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 507 */
+/* 511 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57805,15 +58003,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _multiSelect = __webpack_require__(508);
+	var _multiSelect = __webpack_require__(512);
 	
 	var _multiSelect2 = _interopRequireDefault(_multiSelect);
 	
-	var _beeCheckbox = __webpack_require__(509);
+	var _beeCheckbox = __webpack_require__(513);
 	
 	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
 	
@@ -57896,7 +58094,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 508 */
+/* 512 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57913,11 +58111,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _beeCheckbox = __webpack_require__(509);
+	var _beeCheckbox = __webpack_require__(513);
 	
 	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
 	
-	var _util = __webpack_require__(513);
+	var _util = __webpack_require__(517);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -58148,7 +58346,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 509 */
+/* 513 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58157,11 +58355,11 @@
 	  value: true
 	});
 	
-	var _Checkbox = __webpack_require__(510);
+	var _Checkbox = __webpack_require__(514);
 	
 	var _Checkbox2 = _interopRequireDefault(_Checkbox);
 	
-	var _CheckboxGroup = __webpack_require__(511);
+	var _CheckboxGroup = __webpack_require__(515);
 	
 	var _CheckboxGroup2 = _interopRequireDefault(_CheckboxGroup);
 	
@@ -58172,7 +58370,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 510 */
+/* 514 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58360,7 +58558,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 511 */
+/* 515 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58381,11 +58579,11 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _Checkbox = __webpack_require__(510);
+	var _Checkbox = __webpack_require__(514);
 	
 	var _Checkbox2 = _interopRequireDefault(_Checkbox);
 	
-	var _lodash = __webpack_require__(512);
+	var _lodash = __webpack_require__(516);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
@@ -58479,7 +58677,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 512 */
+/* 516 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, module) {/**
@@ -60331,10 +60529,10 @@
 	
 	module.exports = isEqual;
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(300)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(303)(module)))
 
 /***/ }),
-/* 513 */
+/* 517 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -60418,7 +60616,7 @@
 	}
 
 /***/ }),
-/* 514 */
+/* 518 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -60431,11 +60629,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _beeCheckbox = __webpack_require__(509);
+	var _beeCheckbox = __webpack_require__(513);
 	
 	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
 	
@@ -60443,19 +60641,19 @@
 	
 	var _beeButton2 = _interopRequireDefault(_beeButton);
 	
-	var _beeIcon = __webpack_require__(133);
+	var _beeIcon = __webpack_require__(136);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _multiSelect = __webpack_require__(508);
+	var _multiSelect = __webpack_require__(512);
 	
 	var _multiSelect2 = _interopRequireDefault(_multiSelect);
 	
-	var _sort = __webpack_require__(506);
+	var _sort = __webpack_require__(510);
 	
 	var _sort2 = _interopRequireDefault(_sort);
 	
-	var _sum = __webpack_require__(515);
+	var _sum = __webpack_require__(519);
 	
 	var _sum2 = _interopRequireDefault(_sum);
 	
@@ -60606,7 +60804,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 515 */
+/* 519 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -60817,7 +61015,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 516 */
+/* 520 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -60830,7 +61028,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -60846,39 +61044,39 @@
 	
 	var _beeButton2 = _interopRequireDefault(_beeButton);
 	
-	var _beeForm = __webpack_require__(517);
+	var _beeForm = __webpack_require__(521);
 	
 	var _beeForm2 = _interopRequireDefault(_beeForm);
 	
-	var _beeIcon = __webpack_require__(133);
+	var _beeIcon = __webpack_require__(136);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _beeFormControl = __webpack_require__(131);
+	var _beeFormControl = __webpack_require__(134);
 	
 	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 	
-	var _beeCheckbox = __webpack_require__(509);
+	var _beeCheckbox = __webpack_require__(513);
 	
 	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
 	
-	var _beeDatepicker = __webpack_require__(292);
+	var _beeDatepicker = __webpack_require__(295);
 	
 	var _beeDatepicker2 = _interopRequireDefault(_beeDatepicker);
 	
-	var _beeSelect = __webpack_require__(135);
+	var _beeSelect = __webpack_require__(138);
 	
 	var _beeSelect2 = _interopRequireDefault(_beeSelect);
 	
-	var _InputRender = __webpack_require__(522);
+	var _InputRender = __webpack_require__(526);
 	
 	var _InputRender2 = _interopRequireDefault(_InputRender);
 	
-	var _DateRender = __webpack_require__(523);
+	var _DateRender = __webpack_require__(527);
 	
 	var _DateRender2 = _interopRequireDefault(_DateRender);
 	
-	var _SelectRender = __webpack_require__(524);
+	var _SelectRender = __webpack_require__(528);
 	
 	var _SelectRender2 = _interopRequireDefault(_SelectRender);
 	
@@ -61214,7 +61412,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 517 */
+/* 521 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61223,11 +61421,11 @@
 	  value: true
 	});
 	
-	var _Form = __webpack_require__(518);
+	var _Form = __webpack_require__(522);
 	
 	var _Form2 = _interopRequireDefault(_Form);
 	
-	var _FormItem = __webpack_require__(521);
+	var _FormItem = __webpack_require__(525);
 	
 	var _FormItem2 = _interopRequireDefault(_FormItem);
 	
@@ -61238,7 +61436,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 518 */
+/* 522 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61261,7 +61459,7 @@
 	
 	var _beeLayout = __webpack_require__(1);
 	
-	var _beeLabel = __webpack_require__(519);
+	var _beeLabel = __webpack_require__(523);
 	
 	var _beeLabel2 = _interopRequireDefault(_beeLabel);
 	
@@ -61540,7 +61738,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 519 */
+/* 523 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61549,7 +61747,7 @@
 	  value: true
 	});
 	
-	var _Label = __webpack_require__(520);
+	var _Label = __webpack_require__(524);
 	
 	var _Label2 = _interopRequireDefault(_Label);
 	
@@ -61559,7 +61757,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 520 */
+/* 524 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61638,7 +61836,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 521 */
+/* 525 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61663,15 +61861,15 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _beeInputGroup = __webpack_require__(287);
+	var _beeInputGroup = __webpack_require__(290);
 	
 	var _beeInputGroup2 = _interopRequireDefault(_beeInputGroup);
 	
-	var _beeLabel = __webpack_require__(519);
+	var _beeLabel = __webpack_require__(523);
 	
 	var _beeLabel2 = _interopRequireDefault(_beeLabel);
 	
-	var _lodash = __webpack_require__(512);
+	var _lodash = __webpack_require__(516);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
@@ -62095,7 +62293,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 522 */
+/* 526 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -62294,7 +62492,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 523 */
+/* 527 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -62311,7 +62509,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _moment = __webpack_require__(299);
+	var _moment = __webpack_require__(302);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
@@ -62453,7 +62651,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 524 */
+/* 528 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -62628,7 +62826,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 525 */
+/* 529 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -62641,7 +62839,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -62790,7 +62988,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 526 */
+/* 530 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -62805,7 +63003,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -62945,7 +63143,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 527 */
+/* 531 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -62958,7 +63156,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -63064,7 +63262,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 528 */
+/* 532 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -63081,11 +63279,11 @@
 	
 	var _beeButton2 = _interopRequireDefault(_beeButton);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _sum = __webpack_require__(515);
+	var _sum = __webpack_require__(519);
 	
 	var _sum2 = _interopRequireDefault(_sum);
 	
@@ -63238,7 +63436,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 529 */
+/* 533 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -63255,7 +63453,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -63267,27 +63465,27 @@
 	
 	var _beeTooltip2 = _interopRequireDefault(_beeTooltip);
 	
-	var _beeIcon = __webpack_require__(133);
+	var _beeIcon = __webpack_require__(136);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _beeFormControl = __webpack_require__(131);
+	var _beeFormControl = __webpack_require__(134);
 	
 	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 	
-	var _beeForm = __webpack_require__(517);
+	var _beeForm = __webpack_require__(521);
 	
 	var _beeForm2 = _interopRequireDefault(_beeForm);
 	
-	var _beeSelect = __webpack_require__(135);
+	var _beeSelect = __webpack_require__(138);
 	
 	var _beeSelect2 = _interopRequireDefault(_beeSelect);
 	
-	var _InputRender = __webpack_require__(522);
+	var _InputRender = __webpack_require__(526);
 	
 	var _InputRender2 = _interopRequireDefault(_InputRender);
 	
-	var _SelectRender = __webpack_require__(524);
+	var _SelectRender = __webpack_require__(528);
 	
 	var _SelectRender2 = _interopRequireDefault(_SelectRender);
 	
@@ -63545,7 +63743,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 530 */
+/* 534 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -63562,7 +63760,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -63570,15 +63768,15 @@
 	
 	var _beeAnimate2 = _interopRequireDefault(_beeAnimate);
 	
-	var _beeIcon = __webpack_require__(133);
+	var _beeIcon = __webpack_require__(136);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _beeFormControl = __webpack_require__(131);
+	var _beeFormControl = __webpack_require__(134);
 	
 	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 	
-	var _beePopconfirm = __webpack_require__(531);
+	var _beePopconfirm = __webpack_require__(535);
 	
 	var _beePopconfirm2 = _interopRequireDefault(_beePopconfirm);
 	
@@ -63811,7 +64009,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 531 */
+/* 535 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63820,7 +64018,7 @@
 	  value: true
 	});
 	
-	var _Popconfirm = __webpack_require__(532);
+	var _Popconfirm = __webpack_require__(536);
 	
 	var _Popconfirm2 = _interopRequireDefault(_Popconfirm);
 	
@@ -63830,7 +64028,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 532 */
+/* 536 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63871,7 +64069,7 @@
 	
 	var _Portal2 = _interopRequireDefault(_Portal);
 	
-	var _Confirm = __webpack_require__(533);
+	var _Confirm = __webpack_require__(537);
 	
 	var _Confirm2 = _interopRequireDefault(_Confirm);
 	
@@ -64079,7 +64277,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 533 */
+/* 537 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -64098,7 +64296,7 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _i18n = __webpack_require__(534);
+	var _i18n = __webpack_require__(538);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
@@ -64110,7 +64308,7 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _tool = __webpack_require__(497);
+	var _tool = __webpack_require__(501);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -64307,7 +64505,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 534 */
+/* 538 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -64324,7 +64522,7 @@
 	};
 
 /***/ }),
-/* 535 */
+/* 539 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -64345,7 +64543,7 @@
 	
 	var _beeTooltip2 = _interopRequireDefault(_beeTooltip);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -64424,7 +64622,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 536 */
+/* 540 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -64437,27 +64635,27 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _filterColumn = __webpack_require__(537);
+	var _filterColumn = __webpack_require__(541);
 	
 	var _filterColumn2 = _interopRequireDefault(_filterColumn);
 	
-	var _sum = __webpack_require__(515);
+	var _sum = __webpack_require__(519);
 	
 	var _sum2 = _interopRequireDefault(_sum);
 	
-	var _beeIcon = __webpack_require__(133);
+	var _beeIcon = __webpack_require__(136);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _beeCheckbox = __webpack_require__(509);
+	var _beeCheckbox = __webpack_require__(513);
 	
 	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
 	
-	var _beePopover = __webpack_require__(538);
+	var _beePopover = __webpack_require__(542);
 	
 	var _beePopover2 = _interopRequireDefault(_beePopover);
 	
@@ -64574,7 +64772,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 537 */
+/* 541 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -64591,21 +64789,21 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _beeCheckbox = __webpack_require__(509);
+	var _beeCheckbox = __webpack_require__(513);
 	
 	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
 	
-	var _beeIcon = __webpack_require__(133);
+	var _beeIcon = __webpack_require__(136);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _util = __webpack_require__(513);
+	var _util = __webpack_require__(517);
 	
-	var _i18n = __webpack_require__(496);
+	var _i18n = __webpack_require__(500);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
-	var _tool = __webpack_require__(497);
+	var _tool = __webpack_require__(501);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -64847,7 +65045,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 538 */
+/* 542 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -64856,7 +65054,7 @@
 	  value: true
 	});
 	
-	var _Popover = __webpack_require__(539);
+	var _Popover = __webpack_require__(543);
 	
 	var _Popover2 = _interopRequireDefault(_Popover);
 	
@@ -64866,7 +65064,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 539 */
+/* 543 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -64907,7 +65105,7 @@
 	
 	var _Portal2 = _interopRequireDefault(_Portal);
 	
-	var _Content = __webpack_require__(540);
+	var _Content = __webpack_require__(544);
 	
 	var _Content2 = _interopRequireDefault(_Content);
 	
@@ -65261,7 +65459,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 540 */
+/* 544 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -65439,7 +65637,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 541 */
+/* 545 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -65452,15 +65650,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _dragColumn = __webpack_require__(542);
+	var _dragColumn = __webpack_require__(546);
 	
 	var _dragColumn2 = _interopRequireDefault(_dragColumn);
 	
-	var _beeIcon = __webpack_require__(133);
+	var _beeIcon = __webpack_require__(136);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
@@ -65538,7 +65736,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 542 */
+/* 546 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -65557,7 +65755,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _util = __webpack_require__(513);
+	var _util = __webpack_require__(517);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -65571,7 +65769,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 	
-	var cloneDeep = __webpack_require__(543);
+	var cloneDeep = __webpack_require__(547);
 	/**
 	 * 参数: 列拖拽
 	 * @param {*} Table
@@ -65707,7 +65905,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 543 */
+/* 547 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, module) {/**
@@ -67459,10 +67657,10 @@
 	
 	module.exports = cloneDeep;
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(300)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(303)(module)))
 
 /***/ }),
-/* 544 */
+/* 548 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67475,15 +67673,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _dragColumn = __webpack_require__(542);
+	var _dragColumn = __webpack_require__(546);
 	
 	var _dragColumn2 = _interopRequireDefault(_dragColumn);
 	
-	var _beeIcon = __webpack_require__(133);
+	var _beeIcon = __webpack_require__(136);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
@@ -67562,7 +67760,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 545 */
+/* 549 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67577,19 +67775,19 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _beeIcon = __webpack_require__(133);
+	var _beeIcon = __webpack_require__(136);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _beeMenus = __webpack_require__(481);
+	var _beeMenus = __webpack_require__(485);
 	
 	var _beeMenus2 = _interopRequireDefault(_beeMenus);
 	
-	var _beeDropdown = __webpack_require__(472);
+	var _beeDropdown = __webpack_require__(476);
 	
 	var _beeDropdown2 = _interopRequireDefault(_beeDropdown);
 	
@@ -67788,7 +67986,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 546 */
+/* 550 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67801,35 +67999,35 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _multiSelect = __webpack_require__(508);
+	var _multiSelect = __webpack_require__(512);
 	
 	var _multiSelect2 = _interopRequireDefault(_multiSelect);
 	
-	var _filterColumn = __webpack_require__(537);
+	var _filterColumn = __webpack_require__(541);
 	
 	var _filterColumn2 = _interopRequireDefault(_filterColumn);
 	
-	var _dragColumn = __webpack_require__(542);
+	var _dragColumn = __webpack_require__(546);
 	
 	var _dragColumn2 = _interopRequireDefault(_dragColumn);
 	
-	var _sum = __webpack_require__(515);
+	var _sum = __webpack_require__(519);
 	
 	var _sum2 = _interopRequireDefault(_sum);
 	
-	var _beeIcon = __webpack_require__(133);
+	var _beeIcon = __webpack_require__(136);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _beeCheckbox = __webpack_require__(509);
+	var _beeCheckbox = __webpack_require__(513);
 	
 	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
 	
-	var _beePopover = __webpack_require__(538);
+	var _beePopover = __webpack_require__(542);
 	
 	var _beePopover2 = _interopRequireDefault(_beePopover);
 	
@@ -68049,7 +68247,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 547 */
+/* 551 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68062,7 +68260,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -68178,7 +68376,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 548 */
+/* 552 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68191,31 +68389,31 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _MultiSelect = __webpack_require__(549);
+	var _MultiSelect = __webpack_require__(553);
 	
 	var _MultiSelect2 = _interopRequireDefault(_MultiSelect);
 	
-	var _sort = __webpack_require__(506);
+	var _sort = __webpack_require__(510);
 	
 	var _sort2 = _interopRequireDefault(_sort);
 	
-	var _beeCheckbox = __webpack_require__(509);
+	var _beeCheckbox = __webpack_require__(513);
 	
 	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
 	
-	var _beeIcon = __webpack_require__(133);
+	var _beeIcon = __webpack_require__(136);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _beeMenus = __webpack_require__(481);
+	var _beeMenus = __webpack_require__(485);
 	
 	var _beeMenus2 = _interopRequireDefault(_beeMenus);
 	
-	var _beeDropdown = __webpack_require__(472);
+	var _beeDropdown = __webpack_require__(476);
 	
 	var _beeDropdown2 = _interopRequireDefault(_beeDropdown);
 	
@@ -68456,7 +68654,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 549 */
+/* 553 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68473,11 +68671,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _beeCheckbox = __webpack_require__(509);
+	var _beeCheckbox = __webpack_require__(513);
 	
 	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
 	
-	var _util = __webpack_require__(513);
+	var _util = __webpack_require__(517);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -68708,7 +68906,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 550 */
+/* 554 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68721,15 +68919,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _beeIcon = __webpack_require__(133);
+	var _beeIcon = __webpack_require__(136);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _sort = __webpack_require__(506);
+	var _sort = __webpack_require__(510);
 	
 	var _sort2 = _interopRequireDefault(_sort);
 	
@@ -68827,7 +69025,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 551 */
+/* 555 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68840,11 +69038,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _beeModal = __webpack_require__(552);
+	var _beeModal = __webpack_require__(556);
 	
 	var _beeModal2 = _interopRequireDefault(_beeModal);
 	
@@ -69043,7 +69241,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 552 */
+/* 556 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -69052,7 +69250,7 @@
 	  value: true
 	});
 	
-	var _Modal = __webpack_require__(553);
+	var _Modal = __webpack_require__(557);
 	
 	var _Modal2 = _interopRequireDefault(_Modal);
 	
@@ -69062,7 +69260,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 553 */
+/* 557 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -69079,7 +69277,7 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _events = __webpack_require__(554);
+	var _events = __webpack_require__(558);
 	
 	var _events2 = _interopRequireDefault(_events);
 	
@@ -69091,7 +69289,7 @@
 	
 	var _inDOM2 = _interopRequireDefault(_inDOM);
 	
-	var _scrollbarSize = __webpack_require__(558);
+	var _scrollbarSize = __webpack_require__(562);
 	
 	var _scrollbarSize2 = _interopRequireDefault(_scrollbarSize);
 	
@@ -69103,11 +69301,11 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _Modal = __webpack_require__(559);
+	var _Modal = __webpack_require__(563);
 	
 	var _Modal2 = _interopRequireDefault(_Modal);
 	
-	var _isOverflowing = __webpack_require__(565);
+	var _isOverflowing = __webpack_require__(569);
 	
 	var _isOverflowing2 = _interopRequireDefault(_isOverflowing);
 	
@@ -69115,23 +69313,23 @@
 	
 	var _beeTransition = __webpack_require__(10);
 	
-	var _ModalBody = __webpack_require__(569);
+	var _ModalBody = __webpack_require__(573);
 	
 	var _ModalBody2 = _interopRequireDefault(_ModalBody);
 	
-	var _ModalDialog = __webpack_require__(570);
+	var _ModalDialog = __webpack_require__(574);
 	
 	var _ModalDialog2 = _interopRequireDefault(_ModalDialog);
 	
-	var _ModalFooter = __webpack_require__(571);
+	var _ModalFooter = __webpack_require__(575);
 	
 	var _ModalFooter2 = _interopRequireDefault(_ModalFooter);
 	
-	var _ModalHeader = __webpack_require__(572);
+	var _ModalHeader = __webpack_require__(576);
 	
 	var _ModalHeader2 = _interopRequireDefault(_ModalHeader);
 	
-	var _ModalTitle = __webpack_require__(573);
+	var _ModalTitle = __webpack_require__(577);
 	
 	var _ModalTitle2 = _interopRequireDefault(_ModalTitle);
 	
@@ -69160,6 +69358,10 @@
 	   */
 	  backdrop: _propTypes2["default"].oneOf(['static', true, false]),
 	
+	  /**
+	   * 点击遮罩层是否允许关闭
+	   */
+	  backdropClosable: _propTypes2["default"].bool,
 	  /**
 	   * esc触发关闭
 	   */
@@ -69223,6 +69425,7 @@
 	});
 	
 	var defaultProps = _extends({}, _Modal2["default"].defaultProps, {
+	  backdropClosable: true,
 	  animation: true,
 	  dialogComponentClass: _ModalDialog2["default"],
 	  clsPrefix: 'u-modal'
@@ -69314,6 +69517,7 @@
 	
 	    var _props = this.props,
 	        backdrop = _props.backdrop,
+	        backdropClosable = _props.backdropClosable,
 	        animation = _props.animation,
 	        show = _props.show,
 	        Dialog = _props.dialogComponentClass,
@@ -69326,7 +69530,7 @@
 	        children = _props.children,
 	        onEntering = _props.onEntering,
 	        onExited = _props.onExited,
-	        props = _objectWithoutProperties(_props, ['backdrop', 'animation', 'show', 'dialogComponentClass', 'className', 'clsPrefix', 'style', 'size', 'width', 'children', 'onEntering', 'onExited']);
+	        props = _objectWithoutProperties(_props, ['backdrop', 'backdropClosable', 'animation', 'show', 'dialogComponentClass', 'className', 'clsPrefix', 'style', 'size', 'width', 'children', 'onEntering', 'onExited']);
 	
 	    var _splitComponent = (0, _tinperBeeCore.splitComponent)(props, _Modal2["default"]),
 	        _splitComponent2 = _slicedToArray(_splitComponent, 2),
@@ -69364,7 +69568,7 @@
 	        _extends({}, dialogProps, {
 	          style: styleRes,
 	          className: (0, _classnames2["default"])(className, inClassName),
-	          onClick: backdrop === true ? this.handleDialogClick : null,
+	          onClick: backdrop === true && !!backdropClosable ? this.handleDialogClick : null,
 	          size: size
 	        }),
 	        children
@@ -69393,7 +69597,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 554 */
+/* 558 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -69411,11 +69615,11 @@
 	
 	exports.off = _off.default;
 	
-	var _filter = _interopRequireDefault(__webpack_require__(555));
+	var _filter = _interopRequireDefault(__webpack_require__(559));
 	
 	exports.filter = _filter.default;
 	
-	var _listen = _interopRequireDefault(__webpack_require__(557));
+	var _listen = _interopRequireDefault(__webpack_require__(561));
 	
 	exports.listen = _listen.default;
 	var _default = {
@@ -69427,7 +69631,7 @@
 	exports.default = _default;
 
 /***/ }),
-/* 555 */
+/* 559 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -69439,7 +69643,7 @@
 	
 	var _contains = _interopRequireDefault(__webpack_require__(88));
 	
-	var _querySelectorAll = _interopRequireDefault(__webpack_require__(556));
+	var _querySelectorAll = _interopRequireDefault(__webpack_require__(560));
 	
 	function filterEvents(selector, handler) {
 	  return function filterHandler(e) {
@@ -69455,7 +69659,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 556 */
+/* 560 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -69491,7 +69695,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 557 */
+/* 561 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -69523,7 +69727,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 558 */
+/* 562 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -69558,7 +69762,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 559 */
+/* 563 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -69588,7 +69792,7 @@
 	
 	var _Portal2 = _interopRequireDefault(_Portal);
 	
-	var _ModalManager = __webpack_require__(560);
+	var _ModalManager = __webpack_require__(564);
 	
 	var _ModalManager2 = _interopRequireDefault(_ModalManager);
 	
@@ -69600,7 +69804,7 @@
 	
 	var _addEventListener2 = _interopRequireDefault(_addEventListener);
 	
-	var _addFocusListener = __webpack_require__(567);
+	var _addFocusListener = __webpack_require__(571);
 	
 	var _addFocusListener2 = _interopRequireDefault(_addFocusListener);
 	
@@ -69608,7 +69812,7 @@
 	
 	var _inDOM2 = _interopRequireDefault(_inDOM);
 	
-	var _activeElement = __webpack_require__(568);
+	var _activeElement = __webpack_require__(572);
 	
 	var _activeElement2 = _interopRequireDefault(_activeElement);
 	
@@ -70102,7 +70306,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 560 */
+/* 564 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -70115,19 +70319,19 @@
 	
 	var _style2 = _interopRequireDefault(_style);
 	
-	var _class = __webpack_require__(561);
+	var _class = __webpack_require__(565);
 	
 	var _class2 = _interopRequireDefault(_class);
 	
-	var _scrollbarSize = __webpack_require__(558);
+	var _scrollbarSize = __webpack_require__(562);
 	
 	var _scrollbarSize2 = _interopRequireDefault(_scrollbarSize);
 	
-	var _isOverflowing = __webpack_require__(565);
+	var _isOverflowing = __webpack_require__(569);
 	
 	var _isOverflowing2 = _interopRequireDefault(_isOverflowing);
 	
-	var _manageAriaHidden = __webpack_require__(566);
+	var _manageAriaHidden = __webpack_require__(570);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -70283,7 +70487,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 561 */
+/* 565 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -70293,15 +70497,15 @@
 	exports.__esModule = true;
 	exports.default = void 0;
 	
-	var _addClass = _interopRequireDefault(__webpack_require__(562));
+	var _addClass = _interopRequireDefault(__webpack_require__(566));
 	
 	exports.addClass = _addClass.default;
 	
-	var _removeClass = _interopRequireDefault(__webpack_require__(564));
+	var _removeClass = _interopRequireDefault(__webpack_require__(568));
 	
 	exports.removeClass = _removeClass.default;
 	
-	var _hasClass = _interopRequireDefault(__webpack_require__(563));
+	var _hasClass = _interopRequireDefault(__webpack_require__(567));
 	
 	exports.hasClass = _hasClass.default;
 	var _default = {
@@ -70312,7 +70516,7 @@
 	exports.default = _default;
 
 /***/ }),
-/* 562 */
+/* 566 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -70322,7 +70526,7 @@
 	exports.__esModule = true;
 	exports.default = addClass;
 	
-	var _hasClass = _interopRequireDefault(__webpack_require__(563));
+	var _hasClass = _interopRequireDefault(__webpack_require__(567));
 	
 	function addClass(element, className) {
 	  if (element.classList) element.classList.add(className);else if (!(0, _hasClass.default)(element, className)) if (typeof element.className === 'string') element.className = element.className + ' ' + className;else element.setAttribute('class', (element.className && element.className.baseVal || '') + ' ' + className);
@@ -70331,7 +70535,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 563 */
+/* 567 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -70346,7 +70550,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 564 */
+/* 568 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -70360,7 +70564,7 @@
 	};
 
 /***/ }),
-/* 565 */
+/* 569 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -70370,7 +70574,7 @@
 	});
 	exports["default"] = isOverflowing;
 	
-	var _isWindow = __webpack_require__(96);
+	var _isWindow = __webpack_require__(97);
 	
 	var _isWindow2 = _interopRequireDefault(_isWindow);
 	
@@ -70406,7 +70610,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 566 */
+/* 570 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -70460,7 +70664,7 @@
 	}
 
 /***/ }),
-/* 567 */
+/* 571 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -70496,7 +70700,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 568 */
+/* 572 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -70523,7 +70727,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 569 */
+/* 573 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -70599,7 +70803,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 570 */
+/* 574 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -70713,7 +70917,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 571 */
+/* 575 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -70789,7 +70993,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 572 */
+/* 576 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -70909,7 +71113,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 573 */
+/* 577 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -70985,7 +71189,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 574 */
+/* 578 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -71002,7 +71206,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -71126,7 +71330,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 575 */
+/* 579 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -71139,7 +71343,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -71271,7 +71475,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 576 */
+/* 580 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -71284,7 +71488,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -71309,7 +71513,7 @@
 	  dataIndex: "name",
 	  key: "name",
 	  fixed: "left"
-	}, { title: "Age", width: 100, dataIndex: "age", key: "age", fixed: "left" }, { title: "Column 1", dataIndex: "address", key: "1" }, { title: "Column 2", dataIndex: "address", key: "2" }, { title: "Column 3", dataIndex: "address", key: "3" }, { title: "Column 4", dataIndex: "address", key: "4" }, { title: "Column 5", dataIndex: "address", key: "5" }, { title: "Column 6", dataIndex: "address", key: "6" }, { title: "Column 7", dataIndex: "address", key: "7" }, { title: "Column 8", dataIndex: "address", key: "8" }];
+	}, { title: "Age", width: 100, dataIndex: "age", key: "age", fixed: "left" }, { title: "Column 1", dataIndex: "c1", key: "1" }, { title: "Column 2", dataIndex: "c2", key: "2" }, { title: "Column 3", dataIndex: "c3", key: "3" }, { title: "Column 4", dataIndex: "c4", key: "4" }, { title: "Column 5", dataIndex: "c5", key: "5" }, { title: "Column 6", dataIndex: "c6", key: "6" }, { title: "Column 7", dataIndex: "c7", key: "7" }, { title: "Column 8", dataIndex: "c8", key: "8" }];
 	
 	var data5 = [{
 	  key: "1",
@@ -71353,7 +71557,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 577 */
+/* 581 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -71366,11 +71570,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _dragColumn = __webpack_require__(542);
+	var _dragColumn = __webpack_require__(546);
 	
 	var _dragColumn2 = _interopRequireDefault(_dragColumn);
 	
@@ -71461,7 +71665,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 578 */
+/* 582 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -71474,7 +71678,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -71571,7 +71775,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 579 */
+/* 583 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -71584,11 +71788,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _beePagination = __webpack_require__(580);
+	var _beePagination = __webpack_require__(584);
 	
 	var _beePagination2 = _interopRequireDefault(_beePagination);
 	
@@ -71668,7 +71872,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 580 */
+/* 584 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -71677,7 +71881,7 @@
 	  value: true
 	});
 	
-	var _Pagination = __webpack_require__(581);
+	var _Pagination = __webpack_require__(585);
 	
 	var _Pagination2 = _interopRequireDefault(_Pagination);
 	
@@ -71687,7 +71891,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 581 */
+/* 585 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -71706,7 +71910,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _PaginationButton = __webpack_require__(582);
+	var _PaginationButton = __webpack_require__(586);
 	
 	var _PaginationButton2 = _interopRequireDefault(_PaginationButton);
 	
@@ -71714,7 +71918,7 @@
 	
 	var _beeButton2 = _interopRequireDefault(_beeButton);
 	
-	var _beeSelect = __webpack_require__(135);
+	var _beeSelect = __webpack_require__(138);
 	
 	var _beeSelect2 = _interopRequireDefault(_beeSelect);
 	
@@ -71722,11 +71926,11 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _i18n = __webpack_require__(583);
+	var _i18n = __webpack_require__(587);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
-	var _tool = __webpack_require__(497);
+	var _tool = __webpack_require__(501);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -71817,7 +72021,11 @@
 	    /** 
 	     *  pagiantion不可点
 	     */
-	    disabled: _propTypes2["default"].bool
+	    disabled: _propTypes2["default"].bool,
+	    /**
+	     *  确认按钮的样式集合
+	     */
+	    btnType: _propTypes2["default"].object
 	};
 	
 	var defaultProps = {
@@ -71836,7 +72044,8 @@
 	    dataNum: 1,
 	    showJump: false,
 	    locale: {},
-	    disabled: false
+	    disabled: false,
+	    btnType: { shape: 'border' }
 	};
 	
 	var Pagination = function (_React$Component) {
@@ -71853,12 +72062,14 @@
 	
 	        _this.setPageJump = function (e) {
 	            var value = e.target.value;
-	            if (isNaN(Number(value)) || value > _this.state.items || value <= 0) {
+	            // 20181129跳转内容可以清空
+	            if (value !== '' && (isNaN(Number(value)) || value > _this.state.items || value <= 0)) {
 	                return false;
+	            } else {
+	                _this.setState({
+	                    jumpPageState: value
+	                });
 	            }
-	            _this.setState({
-	                jumpPageState: value
-	            });
 	        };
 	
 	        _this.handleEnsurePageJump = function () {
@@ -71878,16 +72089,17 @@
 	        };
 	
 	        _this.dataNumSelect = function (value) {
-	            console.log(value);
+	            // console.log(value);
 	            var _this$props = _this.props,
 	                onDataNumSelect = _this$props.onDataNumSelect,
 	                total = _this$props.total;
 	
 	            var dataNumValue = _this.props.dataNumSelect[value];
-	            console.log("dataNumValue", dataNumValue);
+	            // console.log("dataNumValue", dataNumValue);
 	            if (total) {
 	                _this.setState({
-	                    items: Math.ceil(total / dataNumValue)
+	                    // 20181210因为dataNumSelect的某项不是数字或者数字字符串
+	                    items: Number.isNaN(parseInt(dataNumValue)) ? 1 : Math.ceil(total / dataNumValue)
 	                });
 	            }
 	            _this.setState({
@@ -71916,7 +72128,8 @@
 	        if (nextProps.dataNum && this.props.dataNum !== nextProps.dataNum) {
 	            this.setState({
 	                dataNum: nextProps.dataNum,
-	                items: Math.ceil(nextProps.total / nextProps.dataNumSelect[nextProps.dataNum])
+	                // 20181210因为dataNumSelect的某项不是数字或者数字字符串
+	                items: Number.isNaN(parseInt(nextProps.dataNumSelect[nextProps.dataNum])) ? 1 : Math.ceil(nextProps.total / nextProps.dataNumSelect[nextProps.dataNum])
 	            });
 	        }
 	        if (nextProps.items && this.props.items !== nextProps.items) {
@@ -72072,7 +72285,8 @@
 	            showJump = _props.showJump,
 	            total = _props.total,
 	            disabled = _props.disabled,
-	            others = _objectWithoutProperties(_props, ["items", "maxButtons", "boundaryLinks", "ellipsis", "first", "last", "prev", "next", "onSelect", "buttonComponentClass", "noBorder", "className", "clsPrefix", "size", "gap", "onDataNumSelect", "dataNumSelect", "dataNum", "activePage", "showJump", "total", "disabled"]);
+	            btnType = _props.btnType,
+	            others = _objectWithoutProperties(_props, ["items", "maxButtons", "boundaryLinks", "ellipsis", "first", "last", "prev", "next", "onSelect", "buttonComponentClass", "noBorder", "className", "clsPrefix", "size", "gap", "onDataNumSelect", "dataNumSelect", "dataNum", "activePage", "showJump", "total", "disabled", "btnType"]);
 	
 	        var activePageState = this.state.activePage;
 	        var jumpPageState = this.state.jumpPageState;
@@ -72101,16 +72315,18 @@
 	
 	        return _react2["default"].createElement(
 	            "div",
-	            { className: wrapperClass },
+	            { className: (0, _classnames3["default"])(wrapperClass, className) },
 	            disabled && _react2["default"].createElement("div", { className: clsPrefix + "-disabled-mask" }),
 	            _react2["default"].createElement(
 	                "ul",
-	                _extends({}, others, { className: (0, _classnames3["default"])(className, classNames) }),
+	                _extends({}, others, { className: classNames }),
 	                first && _react2["default"].createElement(
 	                    _PaginationButton2["default"],
 	                    _extends({}, buttonProps, {
 	                        eventKey: 1,
-	                        disabled: activePageState === 1
+	                        disabled: activePageState === 1,
+	                        iconBtn: true
+	
 	                    }),
 	                    _react2["default"].createElement(
 	                        "span",
@@ -72122,7 +72338,9 @@
 	                    _PaginationButton2["default"],
 	                    _extends({}, buttonProps, {
 	                        eventKey: activePageState - 1,
-	                        disabled: activePageState === 1
+	                        disabled: activePageState === 1,
+	                        iconBtn: true
+	
 	                    }),
 	                    _react2["default"].createElement(
 	                        "span",
@@ -72135,7 +72353,9 @@
 	                    _PaginationButton2["default"],
 	                    _extends({}, buttonProps, {
 	                        eventKey: activePageState + 1,
-	                        disabled: activePageState >= this.state.items }),
+	                        disabled: activePageState >= this.state.items,
+	                        iconBtn: true
+	                    }),
 	                    _react2["default"].createElement(
 	                        "span",
 	                        { "aria-label": "Next" },
@@ -72146,7 +72366,9 @@
 	                    _PaginationButton2["default"],
 	                    _extends({}, buttonProps, {
 	                        eventKey: this.state.items,
-	                        disabled: activePageState >= this.state.items }),
+	                        disabled: activePageState >= this.state.items,
+	                        iconBtn: true
+	                    }),
 	                    _react2["default"].createElement(
 	                        "span",
 	                        { "aria-label": "Last" },
@@ -72168,7 +72390,11 @@
 	            showJump ? _react2["default"].createElement(
 	                "div",
 	                { className: "data_per_select" },
-	                local['show'],
+	                _react2["default"].createElement(
+	                    "span",
+	                    null,
+	                    local['show']
+	                ),
 	                _react2["default"].createElement(
 	                    _beeSelect2["default"]
 	                    // className="data_select"
@@ -72183,26 +72409,43 @@
 	                        );
 	                    })
 	                ),
-	                local['items']
+	                _react2["default"].createElement(
+	                    "span",
+	                    null,
+	                    local['items']
+	                )
 	            ) : null,
 	            showJump ? _react2["default"].createElement(
 	                "div",
 	                { className: "page_jump" },
-	                local['goto'],
+	                _react2["default"].createElement(
+	                    "span",
+	                    null,
+	                    local['goto']
+	                ),
 	                _react2["default"].createElement("input", {
 	                    className: "page_jump_value",
 	                    value: jumpPageState,
 	                    onKeyDown: this.onKeyup,
 	                    onChange: this.setPageJump
 	                }),
-	                local['page'],
+	                _react2["default"].createElement(
+	                    "span",
+	                    null,
+	                    local['page']
+	                ),
 	                _react2["default"].createElement(
 	                    _beeButton2["default"],
-	                    {
+	                    _extends({
 	                        className: "page_jump_btn",
-	                        onClick: this.handleEnsurePageJump,
-	                        shape: "border" },
-	                    local['ok']
+	                        onClick: this.handleEnsurePageJump
+	                        // shape="border"
+	                    }, btnType),
+	                    _react2["default"].createElement(
+	                        "span",
+	                        null,
+	                        local['ok']
+	                    )
 	                )
 	            ) : null
 	        );
@@ -72220,7 +72463,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 582 */
+/* 586 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -72307,14 +72550,14 @@
 	        eventKey = _props2.eventKey,
 	        className = _props2.className,
 	        style = _props2.style,
-	        props = _objectWithoutProperties(_props2, ['componentClass', 'active', 'disabled', 'onClick', 'eventKey', 'className', 'style']);
+	        iconBtn = _props2.iconBtn,
+	        props = _objectWithoutProperties(_props2, ['componentClass', 'active', 'disabled', 'onClick', 'eventKey', 'className', 'style', 'iconBtn']);
 	
 	    delete props.onSelect;
-	
 	    return _react2["default"].createElement(
 	      'li',
 	      {
-	        className: (0, _classnames2["default"])(className, { active: active, disabled: disabled }),
+	        className: (0, _classnames2["default"])(className, { active: active, disabled: disabled, iconBtn: iconBtn }),
 	        style: style
 	      },
 	      _react2["default"].createElement(Component, _extends({}, props, {
@@ -72334,7 +72577,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 583 */
+/* 587 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -72364,7 +72607,7 @@
 	};
 
 /***/ }),
-/* 584 */
+/* 588 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -72377,19 +72620,19 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(106);
+	var _src = __webpack_require__(109);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _beeIcon = __webpack_require__(133);
+	var _beeIcon = __webpack_require__(136);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _beeInputGroup = __webpack_require__(287);
+	var _beeInputGroup = __webpack_require__(290);
 	
 	var _beeInputGroup2 = _interopRequireDefault(_beeInputGroup);
 	
-	var _beeFormControl = __webpack_require__(131);
+	var _beeFormControl = __webpack_require__(134);
 	
 	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 	

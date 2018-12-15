@@ -6680,6 +6680,10 @@ input.u-button[type="submit"] {
       clear: both;
       display: table;
       content: ''; }
+    .u-pagination-list > li.iconBtn > a {
+      padding: 0 11px;
+      font-size: 22px;
+      line-height: 1.57142857; }
     .u-pagination-list > li > a, .u-pagination-list > li > span {
       display: inline-block;
       text-decoration: none;
@@ -6767,9 +6771,15 @@ input.u-button[type="submit"] {
     margin: 5px;
     float: left;
     min-width: 120px; }
+    .u-pagination .data_per_select > span {
+      display: inline-block;
+      line-height: 36px;
+      float: left; }
     .u-pagination .data_per_select .u-select {
       width: 50px;
-      margin: 0 6px; }
+      margin: 0 6px;
+      height: 36px;
+      float: left; }
       .u-pagination .data_per_select .u-select .u-select-selection {
         height: 36px; }
         .u-pagination .data_per_select .u-select .u-select-selection .u-select-selection-rendered {
@@ -6789,20 +6799,26 @@ input.u-button[type="submit"] {
   .u-pagination .page_jump {
     float: left;
     margin: 5px; }
+    .u-pagination .page_jump > span {
+      display: inline-block;
+      line-height: 36px;
+      float: left; }
   .u-pagination .page_jump_value {
     outline: none;
     -webkit-appearance: none;
     background: #fff;
     border-radius: 4px;
-    line-height: 32px;
     width: 50px;
-    margin: 0 6px;
     text-align: center;
     border: 1px solid #d7d7d7; }
-  .u-pagination .page_jump_btn {
-    margin-top: -3px;
-    margin-left: 10px;
-    border-color: #d7d7d7; }
+  .u-pagination .page_jump_btn,
+  .u-pagination .page_jump_value {
+    margin: 0 6px;
+    padding: 0;
+    height: 36px;
+    line-height: 34px;
+    box-sizing: border-box;
+    float: left; }
   .u-pagination-total {
     float: left;
     height: 36px;

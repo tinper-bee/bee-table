@@ -91,8 +91,8 @@
   "enzyme": "^2.9.1",
   "es5-shim": "~4.1.10",
   "jest": "^22.0.4",
-  "react": "^15.5.0",
+  "react": "^16.6.3",
   "react-addons-test-utils": "^15.5.0",
-  "react-dom": "^15.5.0"
+  "react-dom": "^16.6.3"
  }
 }
