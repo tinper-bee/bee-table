@@ -47,6 +47,9 @@ $checkbox-height:16px;
     &[colspan] {
       text-align: center;
     }
+    ::last-child{
+      overflow: hidden;
+    }
   }
 
   td {

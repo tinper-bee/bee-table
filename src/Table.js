@@ -494,7 +494,7 @@ class Table extends Component {
       if (expandedRowRender && typeof props.haveExpandIcon == 'function') {
         isHiddenExpandIcon = props.haveExpandIcon(record, i);
       }
-      const className = rowClassName(record, i, indent);
+      let className = rowClassName(record, i, indent);
 
       const onHoverProps = {};
       if (this.columnManager.isAnyColumnsFixed()) {
@@ -523,6 +523,11 @@ class Table extends Component {
         leafColumns = this.columnManager.leafColumns();
       }
 
+
+      //合计代码如果是最后一行并且有合计功能时，最后一行为合计列
+      if(i == data.length -1 && props.showSum){
+        className = className + ' sumrow';
+      }
 
       rst.push(
         <TableRow

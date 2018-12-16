@@ -125,13 +125,17 @@ class TableRow extends Component{
       expandIconColumnIndex, expandIconAsCell, expanded, expandRowByClick,
       expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed
     } = this.props;
-
+    let showSum = false;
     let { className } = this.props;
 
     if (this.state.hovered) {
       className += ` ${clsPrefix}-hover`;
     }
-
+    
+    //判断是否为合计行
+    if(className.indexOf('sumrow')>-1){
+      showSum = true;
+    }
     const cells = [];
 
     const expandIcon = (
@@ -147,7 +151,7 @@ class TableRow extends Component{
     );
 
     for (let i = 0; i < columns.length; i++) {
-      if (expandIconAsCell && i === 0) {
+      if (expandIconAsCell && i === 0 && !showSum ) {
         cells.push(
           <td
             className={`${clsPrefix}-expand-icon-cell`}
@@ -157,7 +161,7 @@ class TableRow extends Component{
           </td>
         );
       }
-      const isColumnHaveExpandIcon = (expandIconAsCell || expandRowByClick)
+      const isColumnHaveExpandIcon = (expandIconAsCell || expandRowByClick || showSum)
         ? false : (i === expandIconColumnIndex);
       cells.push(
         <TableCell
@@ -169,6 +173,7 @@ class TableRow extends Component{
           column={columns[i]}
           key={columns[i].key}
           fixed= {fixed}
+          showSum={showSum}
           expandIcon={(isColumnHaveExpandIcon) ? expandIcon : null}
         />
       );

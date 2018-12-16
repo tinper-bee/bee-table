@@ -11197,6 +11197,11 @@
 	        leafColumns = this.columnManager.leafColumns();
 	      }
 	
+	      //合计代码如果是最后一行并且有合计功能时，最后一行为合计列
+	      if (i == data.length - 1 && props.showSum) {
+	        className = className + ' sumrow';
+	      }
+	
 	      rst.push(_react2['default'].createElement(_TableRow2['default'], _extends({
 	        indent: indent,
 	        indentSize: props.indentSize,
@@ -11923,6 +11928,8 @@
 	        indentSize = _props7.indentSize,
 	        isHiddenExpandIcon = _props7.isHiddenExpandIcon,
 	        fixed = _props7.fixed;
+	
+	    var showSum = false;
 	    var className = this.props.className;
 	
 	
@@ -11930,6 +11937,10 @@
 	      className += ' ' + clsPrefix + '-hover';
 	    }
 	
+	    //判断是否为合计行
+	    if (className.indexOf('sumrow') > -1) {
+	      showSum = true;
+	    }
 	    var cells = [];
 	
 	    var expandIcon = _react2['default'].createElement(_ExpandIcon2['default'], {
@@ -11943,7 +11954,7 @@
 	    });
 	
 	    for (var i = 0; i < columns.length; i++) {
-	      if (expandIconAsCell && i === 0) {
+	      if (expandIconAsCell && i === 0 && !showSum) {
 	        cells.push(_react2['default'].createElement(
 	          'td',
 	          {
@@ -11953,7 +11964,7 @@
 	          expandIcon
 	        ));
 	      }
-	      var isColumnHaveExpandIcon = expandIconAsCell || expandRowByClick ? false : i === expandIconColumnIndex;
+	      var isColumnHaveExpandIcon = expandIconAsCell || expandRowByClick || showSum ? false : i === expandIconColumnIndex;
 	      cells.push(_react2['default'].createElement(_TableCell2['default'], {
 	        clsPrefix: clsPrefix,
 	        record: record,
@@ -11963,6 +11974,7 @@
 	        column: columns[i],
 	        key: columns[i].key,
 	        fixed: fixed,
+	        showSum: showSum,
 	        expandIcon: isColumnHaveExpandIcon ? expandIcon : null
 	      }));
 	    }
@@ -12074,7 +12086,8 @@
 	        index = _props2.index,
 	        expandIcon = _props2.expandIcon,
 	        column = _props2.column,
-	        fixed = _props2.fixed;
+	        fixed = _props2.fixed,
+	        showSum = _props2.showSum;
 	    var dataIndex = column.dataIndex,
 	        render = column.render;
 	    var _column$className = column.className,
@@ -12086,7 +12099,7 @@
 	    var colSpan = void 0;
 	    var rowSpan = void 0;
 	
-	    if (render) {
+	    if (render && !showSum) {
 	      text = render(text, record, index);
 	      if (this.isInvalidRenderCellText(text)) {
 	        tdProps = text.props || {};
@@ -54355,13 +54368,6 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 	
-	//创建新列存放  “合计”  字段
-	var columns2 = {
-	  title: "合计",
-	  key: "showSum",
-	  dataIndex: "showSum"
-	};
-	
 	function sum(Table) {
 	  return function (_React$Component) {
 	    _inherits(SumTable, _React$Component);
@@ -54372,98 +54378,6 @@
 	
 	      //array , tree
 	      var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
-	
-	      _this.currentFooter = function () {
-	        var data_2 = _this.props.data;
-	        var columns_sum = _this.props.columns.concat();
-	        var sumCol_index = void 0,
-	            sumColIndexArr = [];
-	        //用一个对象存储合计数据，这里合计对象的属性对应每列字段
-	        for (var i = 0; i < columns_sum.length; i++) {
-	          if (columns_sum[i].sumCol) {
-	            sumColIndexArr.push(columns_sum[i].dataIndex);
-	          }
-	        }
-	        var obj = {};
-	        sumColIndexArr.forEach(function (sumCol_index) {
-	
-	          obj[sumCol_index] = 0;
-	          if (Array.isArray(data_2)) {
-	            for (var _i = 0; _i < data_2.length; _i++) {
-	              if (typeof data_2[_i][sumCol_index] == "number" || !isNaN(data_2[_i][sumCol_index])) {
-	                obj[sumCol_index] -= -data_2[_i][sumCol_index];
-	              } else {
-	                obj[sumCol_index] = "";
-	              }
-	            }
-	          }
-	          obj.key = sumCol_index + "sumData";
-	        });
-	        obj.showSum = "合计";
-	        obj = [obj];
-	        //将设置的和用户传入的合并属性
-	        columns_sum[0] = _extends({}, columns_sum[0], columns2);
-	        //除去列为特殊渲染的，避免像a标签这种html代码写入到合计中
-	        columns_sum.map(function (item, index) {
-	          if (typeof item.render == "function" && !item.sumCol) {
-	            item.render = "";
-	          }
-	          return item;
-	        });
-	        return _react2["default"].createElement(Table, _extends({}, _this.props, { loading: false, footerScroll: true, showHeader: false, columns: columns_sum, data: obj, originWidth: true }));
-	      };
-	
-	      _this.currentTreeFooter = function () {
-	        var _this$props = _this.props,
-	            columns = _this$props.columns,
-	            data = _this$props.data;
-	
-	        var _columns = [];
-	        _this.getNodeItem(columns, _columns);
-	        var _countObj = {};
-	        var _iteratorNormalCompletion = true;
-	        var _didIteratorError = false;
-	        var _iteratorError = undefined;
-	
-	        try {
-	          var _loop = function _loop() {
-	            var column = _step.value;
-	
-	            if (typeof column.render == "function" && !column.sumCol) {
-	              column.render = "";
-	            }
-	            if (column.sumCol) {
-	              var count = 0;
-	              data.forEach(function (da, i) {
-	                var _num = da[column.key];
-	                count += _num;
-	              });
-	              _countObj[column.key] = count;
-	            }
-	          };
-	
-	          for (var _iterator = _columns[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	            _loop();
-	          }
-	        } catch (err) {
-	          _didIteratorError = true;
-	          _iteratorError = err;
-	        } finally {
-	          try {
-	            if (!_iteratorNormalCompletion && _iterator["return"]) {
-	              _iterator["return"]();
-	            }
-	          } finally {
-	            if (_didIteratorError) {
-	              throw _iteratorError;
-	            }
-	          }
-	        }
-	
-	        var _sumArray = [_extends({ key: "sumData", showSum: "合计" }, _countObj)];
-	        columns[0] = _extends({}, columns[0], columns2);
-	        return _react2["default"].createElement(Table, _extends({}, _this.props, { bordered: false, loading: false, footerScroll: true, showHeader: false, columns: columns, data: _sumArray, originWidth: true }));
-	      };
 	
 	      _this.getNodeItem = function (array, newArray) {
 	        array.forEach(function (da, i) {
@@ -54488,34 +54402,53 @@
 	        return type;
 	      };
 	
-	      _this.setFooterRender = function () {
-	        var columns = _this.props.columns;
+	      _this.addSumData = function () {
+	        var _this$props = _this.props,
+	            _this$props$data = _this$props.data,
+	            data = _this$props$data === undefined ? [] : _this$props$data,
+	            _this$props$columns = _this$props.columns,
+	            columns = _this$props$columns === undefined ? [] : _this$props$columns;
 	
+	        var sumdata = {},
+	            newColumns = [],
+	            newData = [];
 	        if (!Array.isArray(columns)) {
-	          console.log("data type is error !");return;
+	          console.log("columns type is error !");return;
 	        }
 	        var type = _this.getTableType();
-	        if (type == "tree") {
-	          return _this.currentTreeFooter();
+	        if (type == 'tree') {
+	          _this.getNodeItem(columns, newColumns);
 	        } else {
-	          return _this.currentFooter();
+	          newColumns = columns;
 	        }
+	        //返回一个新的数据
+	        newData = data.slice();
+	        newColumns.forEach(function (column, index) {
+	          sumdata[column.dataIndex] = "";
+	          if (column.sumCol) {
+	            var count = 0;
+	            data.forEach(function (da, i) {
+	
+	              var _num = parseInt(da[column.key]);
+	              //排查字段值为NAN情况
+	              if (_num === _num) {
+	                count += _num;
+	              }
+	            });
+	            sumdata[column.dataIndex] = count;
+	          }
+	          if (index == 0) {
+	            sumdata[column.dataIndex] = "合计 " + sumdata[column.dataIndex];
+	          }
+	        });
+	
+	        newData.push(sumdata);
+	        return newData;
 	      };
 	
 	      _this.tableType = "array";
 	      return _this;
 	    }
-	
-	    SumTable.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-	      var columns = this.props.columns;
-	
-	      if (columns != nextProps.columns) {
-	        this.setFooterRender();
-	      }
-	    };
-	
-	    //合计数字列,并将计算所得数据存储到一个obj对象中
-	
 	
 	    /**
 	     * 获取当前的表格类型。
@@ -54525,11 +54458,9 @@
 	
 	    SumTable.prototype.render = function render() {
 	      return _react2["default"].createElement(Table, _extends({}, this.props, {
-	        footerScroll: true,
 	        columns: this.props.columns,
-	        data: this.props.data,
-	        footer: this.setFooterRender
-	        // originWidth={true}
+	        showSum: true,
+	        data: this.addSumData()
 	      }));
 	    };
 	

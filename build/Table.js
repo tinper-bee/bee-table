@@ -629,6 +629,11 @@ var Table = function (_Component) {
         leafColumns = this.columnManager.leafColumns();
       }
 
+      //合计代码如果是最后一行并且有合计功能时，最后一行为合计列
+      if (i == data.length - 1 && props.showSum) {
+        className = className + ' sumrow';
+      }
+
       rst.push(_react2["default"].createElement(_TableRow2["default"], _extends({
         indent: indent,
         indentSize: props.indentSize,
@@ -914,10 +919,15 @@ var Table = function (_Component) {
         )
       );
     }
-
+    var leftFixedWidth = this.columnManager.getLeftColumnsWidth();
+    var rightFixedWidth = this.columnManager.getRightColumnsWidth();
+    var parStyle = {};
+    if (!fixed) {
+      parStyle = { 'marginLeft': leftFixedWidth, 'marginRight': rightFixedWidth };
+    }
     return _react2["default"].createElement(
-      'span',
-      null,
+      'div',
+      { style: parStyle },
       headTable,
       BodyTable
     );
@@ -1124,7 +1134,7 @@ var Table = function (_Component) {
         { className: clsPrefix + '-content' },
         _react2["default"].createElement(
           'div',
-          { className: isTableScroll ? clsPrefix + '-scroll' : '', style: { 'marginLeft': leftFixedWidth } },
+          { className: isTableScroll ? clsPrefix + '-scroll' : '' },
           this.getTable({ columns: this.columnManager.groupedColumns() }),
           this.getEmptyText(),
           this.getFooter()

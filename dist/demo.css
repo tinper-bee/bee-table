@@ -8438,6 +8438,8 @@ ul {
     transition: background 0.3s ease; }
     .u-table th[colspan] {
       text-align: center; }
+    .u-table th ::last-child {
+      overflow: hidden; }
   .u-table td {
     border-bottom: 1px solid #e9e9e9; }
   .u-table tr {
