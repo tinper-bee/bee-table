@@ -610,11 +610,13 @@
       top: 0px;
       left: 3px; }
 
-.u-filter-dropdown-menu-wrap .u-dropdown-menu li.u-dropdown-menu-item {
-  line-height: 32px;
-  height: 32px;
-  padding: 0px 16px 0 16px;
-  cursor: pointer; }
+.u-filter-dropdown-menu-wrap {
+  z-index: 1800; }
+  .u-filter-dropdown-menu-wrap .u-dropdown-menu li.u-dropdown-menu-item {
+    line-height: 32px;
+    height: 32px;
+    padding: 0px 16px 0 16px;
+    cursor: pointer; }
 
 .u-checkbox {
   height: 16px;

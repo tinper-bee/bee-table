@@ -27,24 +27,21 @@ class FilterDropDown extends Component {
      * @param {*} s 选中的selectRecord
      */
     onSelectDropdown = (item) => {
-        let { onSelectDropdown, dataText, filterDropdownType } = this.props;
+        let { onSelectDropdown, filterDropdownType } = this.props;
         if (onSelectDropdown) {
-            if (dataText != "") {
-                if (filterDropdownType == 'string') {
-                    this.setState({
-                        selectValue: [item.key]
-                    }, () => {
-                        onSelectDropdown(item);
-                    });
-                }
-                if (filterDropdownType == 'number') {
-                    this.setState({
-                        selectNumberValue: [item.key]
-                    }, () => {
-                        onSelectDropdown(item);
-                    });
-                }
-
+            if (filterDropdownType == 'string') {
+                this.setState({
+                    selectValue: [item.key]
+                }, () => {
+                    onSelectDropdown(item);
+                });
+            }
+            if (filterDropdownType == 'number') {
+                this.setState({
+                    selectNumberValue: [item.key]
+                }, () => {
+                    onSelectDropdown(item);
+                });
             }
         }
     }
@@ -57,8 +54,8 @@ class FilterDropDown extends Component {
         let { onClickClear } = this.props;
         if (onClickClear) {
             this.setState({
-                selectValue: [],
-                selectNumberValue: []
+                // selectValue: [],
+                // selectNumberValue: []
             }, () => {
                 onClickClear();
             });
@@ -72,35 +69,80 @@ class FilterDropDown extends Component {
      */
     getMenu = () => {
         let { selectValue, selectNumberValue } = this.state;
-        let { filterDropdownType } = this.props;
+        let { filterDropdownType, filterDropdownIncludeKeys } = this.props;
         let locale = getComponentLocale(this.props, this.context, 'Table', () => i18n);
-        switch (filterDropdownType) {
-            case 'string':
-                return <Menu
-                    onSelect={this.onSelectDropdown}
-                    selectedKeys={selectValue}
-                >
-                    <Item key="LIKE">{locale['include']}</Item>
-                    <Item key="ULIKE">{locale['exclusive']}</Item>
-                    <Item key="EQ">{locale['equal']}</Item>
-                    <Item key="UEQ">{locale['unequal']}</Item>
-                    <Item key="START">{locale['begin']}</Item>
-                    <Item key="END">{locale['end']}</Item>
-                </Menu>
-            case 'number':
-                return <Menu
-                    onSelect={this.onSelectDropdown}
-                    selectedKeys={selectNumberValue}
-                >
-                    <Item key="GT">{locale['greater_than']}</Item>
-                    <Item key="GTEQ">{locale['great_than_equal_to']}</Item>
-                    <Item key="LT">{locale['less_than']}</Item>
-                    <Item key="LTEQ">{locale['less_than_equal_to']}</Item>
-                    <Item key="EQ">{locale['be_equal_to']}</Item>
-                    <Item key="UEQ">{locale['not_equal_to']}</Item>
-                </Menu>
-            default:
-                return <div></div>;
+        let stringEnum = {
+            LIKE: 'include',
+            ULIKE: 'exclusive',
+            EQ: 'equal',
+            UEQ: 'unequal',
+            START: 'begin',
+            END: 'end'
+        };
+        let numberEnum = {
+            GT: 'greater_than',
+            GTEQ: 'great_than_equal_to',
+            LT: 'less_than',
+            LTEQ: 'less_than_equal_to',
+            EQ: 'be_equal_to',
+            UEQ: 'not_equal_to'
+        };
+        if (filterDropdownIncludeKeys != undefined) {
+            switch (filterDropdownType) {
+                case 'string':
+                    return <Menu
+                        onSelect={this.onSelectDropdown}
+                        selectedKeys={selectValue}
+                    >
+                        {
+                            filterDropdownIncludeKeys.map(item => {
+                                return <Item key={item}>{locale[stringEnum[item]]}</Item>
+                            })
+                        }
+                    </Menu>
+                case 'number':
+                    return <Menu
+                        onSelect={this.onSelectDropdown}
+                        selectedKeys={selectNumberValue}
+                    >
+                        {
+                            filterDropdownIncludeKeys.map(item => {
+                                return <Item key={item}>{locale[numberEnum[item]]}</Item>
+                            })
+                        }
+                    </Menu>
+                default:
+                    return <div></div>;
+            }
+        } else {
+            switch (filterDropdownType) {
+                case 'string':
+                    return <Menu
+                        onSelect={this.onSelectDropdown}
+                        selectedKeys={selectValue}
+                    >
+                        <Item key="LIKE">{locale['include']}</Item>
+                        <Item key="ULIKE">{locale['exclusive']}</Item>
+                        <Item key="EQ">{locale['equal']}</Item>
+                        <Item key="UEQ">{locale['unequal']}</Item>
+                        <Item key="RLIKE">{locale['begin']}</Item>
+                        <Item key="LLIKE">{locale['end']}</Item>
+                    </Menu>
+                case 'number':
+                    return <Menu
+                        onSelect={this.onSelectDropdown}
+                        selectedKeys={selectNumberValue}
+                    >
+                        <Item key="GT">{locale['greater_than']}</Item>
+                        <Item key="GTEQ">{locale['great_than_equal_to']}</Item>
+                        <Item key="LT">{locale['less_than']}</Item>
+                        <Item key="LTEQ">{locale['less_than_equal_to']}</Item>
+                        <Item key="EQ">{locale['be_equal_to']}</Item>
+                        <Item key="UEQ">{locale['not_equal_to']}</Item>
+                    </Menu>
+                default:
+                    return <div></div>;
+            }
         }
     }
     render() {

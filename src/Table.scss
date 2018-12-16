@@ -687,6 +687,7 @@ $checkbox-height:16px;
 }
 
 .u-filter-dropdown-menu-wrap {
+    z-index: 1800;
     .u-dropdown-menu {
         li.u-dropdown-menu-item {
             line-height: 32px;

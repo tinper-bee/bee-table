@@ -400,6 +400,7 @@ class TableHeader extends Component {
             onFilterClear={this.handlerFilterClear}//清除回调
             filterDropdown={rows[1][index]["filterdropdown"]}//是否显示下拉条件
             filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
+            filterDropdownIncludeKeys={rows[1][index]["filterdropdownincludekeys"]}//下拉条件按照指定的keys去显示
           />
         );
       //数值输入
@@ -415,6 +416,8 @@ class TableHeader extends Component {
             onFilterClear={this.handlerFilterClear}//清除回调
             filterDropdown={rows[1][index]["filterdropdown"]}
             filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
+            filterDropdownIncludeKeys={rows[1][index]["filterdropdownincludekeys"]}//下拉条件按照指定的keys去显示
+            filterInputNumberOptions={rows[1][index]["filterinputnumberoptions"]}//设置数值框内的详细属性
           />
         );
       //下拉框选择
@@ -442,12 +445,14 @@ class TableHeader extends Component {
             rendertype={type}
             className={`${clsPrefix} filter-dropdown`}
             data={selectDataSource}
+            notFoundContent={"Loading"}//没有数据显示的默认字
             dataIndex={dataIndex}//字段
             onFilterChange={this.handlerFilterChange}//输入框回调
             onFilterClear={this.handlerFilterClear}//清除回调
             filterDropdown={rows[1][index]["filterdropdown"]}
             onFocus={rows[1][index]["filterdropdownfocus"]}
             filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
+            filterDropdownIncludeKeys={rows[1][index]["filterdropdownincludekeys"]}//下拉条件按照指定的keys去显示
           />
         );
       //日期
@@ -464,6 +469,7 @@ class TableHeader extends Component {
             onFilterClear={this.handlerFilterClear}//清除回调
             filterDropdown={rows[1][index]["filterdropdown"]}
             filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
+            filterDropdownIncludeKeys={rows[1][index]["filterdropdownincludekeys"]}//下拉条件按照指定的keys去显示
           />
         );
       //日期范围
@@ -480,6 +486,7 @@ class TableHeader extends Component {
             onFilterClear={this.handlerFilterClear}//清除回调
             filterDropdown={rows[1][index]["filterdropdown"]}
             filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
+            filterDropdownIncludeKeys={rows[1][index]["filterdropdownincludekeys"]}//下拉条件按照指定的keys去显示
           />
         );
       default:

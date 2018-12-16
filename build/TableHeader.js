@@ -229,6 +229,7 @@ var TableHeader = function (_Component) {
             , onFilterClear: _this.handlerFilterClear //清除回调
             , filterDropdown: rows[1][index]["filterdropdown"] //是否显示下拉条件
             , filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
+            , filterDropdownIncludeKeys: rows[1][index]["filterdropdownincludekeys"] //下拉条件按照指定的keys去显示
           });
         //数值输入
         case "number":
@@ -242,6 +243,8 @@ var TableHeader = function (_Component) {
             , onFilterClear: _this.handlerFilterClear //清除回调
             , filterDropdown: rows[1][index]["filterdropdown"],
             filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
+            , filterDropdownIncludeKeys: rows[1][index]["filterdropdownincludekeys"] //下拉条件按照指定的keys去显示
+            , filterInputNumberOptions: rows[1][index]["filterinputnumberoptions"] //设置数值框内的详细属性
           });
         //下拉框选择
         case "dropdown":
@@ -269,12 +272,14 @@ var TableHeader = function (_Component) {
             rendertype: type,
             className: clsPrefix + " filter-dropdown",
             data: selectDataSource,
-            dataIndex: dataIndex //字段
+            notFoundContent: "Loading" //没有数据显示的默认字
+            , dataIndex: dataIndex //字段
             , onFilterChange: _this.handlerFilterChange //输入框回调
             , onFilterClear: _this.handlerFilterClear //清除回调
             , filterDropdown: rows[1][index]["filterdropdown"],
             onFocus: rows[1][index]["filterdropdownfocus"],
             filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
+            , filterDropdownIncludeKeys: rows[1][index]["filterdropdownincludekeys"] //下拉条件按照指定的keys去显示
           });
         //日期
         case "date":
@@ -289,6 +294,7 @@ var TableHeader = function (_Component) {
             , onFilterClear: _this.handlerFilterClear //清除回调
             , filterDropdown: rows[1][index]["filterdropdown"],
             filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
+            , filterDropdownIncludeKeys: rows[1][index]["filterdropdownincludekeys"] //下拉条件按照指定的keys去显示
           });
         //日期范围
         case "daterange":
@@ -303,6 +309,7 @@ var TableHeader = function (_Component) {
             , onFilterClear: _this.handlerFilterClear //清除回调
             , filterDropdown: rows[1][index]["filterdropdown"],
             filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
+            , filterDropdownIncludeKeys: rows[1][index]["filterdropdownincludekeys"] //下拉条件按照指定的keys去显示
           });
         default:
           //不匹配类型默认文本输入

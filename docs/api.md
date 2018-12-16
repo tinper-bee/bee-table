@@ -54,6 +54,9 @@ import 'bee-table/build/Table.css';
 | onFilterClear       | 清除过滤条件的回调函数，回调参数为清空的字段 | function | (field) => ()
 | headerScroll       | 表头下是否显示滚动条 | bool| false
 | sort       | 排序的属性 | object| {  mode:'single'//单列排序,  backSource:false //默认是前端排序，值为true为后端排序 } mode:multiple-多列排序
+| syncHover       | 是否同步Hover状态到左侧Checkbox，关闭此功能有助于提升性能 | bool| true
+
+
 *注意: data参数中的key值必需，否则会导致部分功能出现问题！建议使用唯一的值，如id*
 
 
@@ -80,6 +83,8 @@ import 'bee-table/build/Table.css';
 | filterDropdownData | 下拉条件自定义数据，filterDropdownAuto=manual生效，传入格式：[{ key : "自定义", value : "自定义" }] | array | [] |
 | filterDropdownFocus | 触发点击下拉条件的回调，一般用于异步点击请求数据使用 | function | () => () |
 | filterDropdownType | 下拉条件类型，分为 string 和 number 条件类型 | string | string
+| filterDropdownIncludeKeys | 能够设置指定的下拉条件项，通过设置keys 其中string条件可设置:LIKE,ULIKE,EQ,UEQ,START,END.number条件可设置:GT,GTEQ,LT,LTEQ,EQ,UEQ | array | [] 不设置此属性为显示所有
+| filterInputNumberOptions | 数值框接收的props，具体属性参考bee-input-number | object | null
 
 {% include "mixin.md"%}
 
