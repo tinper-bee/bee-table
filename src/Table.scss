@@ -47,6 +47,9 @@ $checkbox-height:16px;
     &[colspan] {
       text-align: center;
     }
+    ::last-child{
+      overflow: hidden;
+    }
   }
 
   td {
@@ -695,6 +698,7 @@ $checkbox-height:16px;
 }
 
 .u-filter-dropdown-menu-wrap {
+    z-index: 1800;
     .u-dropdown-menu {
         li.u-dropdown-menu-item {
             line-height: 32px;

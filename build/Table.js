@@ -92,7 +92,13 @@ var propTypes = {
   getBodyWrapper: _propTypes2["default"].func,
   children: _propTypes2["default"].node,
   draggable: _propTypes2["default"].bool,
-  minColumnWidth: _propTypes2["default"].number
+  minColumnWidth: _propTypes2["default"].number,
+  filterable: _propTypes2["default"].bool,
+  filterDelay: _propTypes2["default"].number,
+  onFilterChange: _propTypes2["default"].func,
+  onFilterClear: _propTypes2["default"].func,
+  syncHover: _propTypes2["default"].bool
+
 };
 
 var defaultProps = {
@@ -132,7 +138,8 @@ var defaultProps = {
   },
   columns: [],
   minColumnWidth: 80,
-  locale: {}
+  locale: {},
+  syncHover: true
 };
 
 var Table = function (_Component) {
@@ -501,7 +508,9 @@ var Table = function (_Component) {
           filterdropdownauto: column.filterDropdownAuto, //是否自定义数据
           filterdropdowndata: column.filterDropdownData, //自定义数据格式
           filterdropdownfocus: column.filterDropdownFocus, //焦点触发函数回调
-          filterdropdowntype: column.filterDropdownType //下拉的类型分为 String,Number 默认是String
+          filterdropdowntype: column.filterDropdownType, //下拉的类型分为 String,Number 默认是String
+          filterdropdownincludekeys: column.filterDropdownIncludeKeys, //下拉条件按照指定的keys去显示
+          filterinputnumberoptions: column.filterInputNumberOptions //设置数值框内的详细属性
         });
       }
     });
@@ -627,6 +636,11 @@ var Table = function (_Component) {
         leafColumns = this.columnManager.rightLeafColumns();
       } else {
         leafColumns = this.columnManager.leafColumns();
+      }
+
+      //合计代码如果是最后一行并且有合计功能时，最后一行为合计列
+      if (i == data.length - 1 && props.showSum) {
+        className = className + ' sumrow';
       }
 
       rst.push(_react2["default"].createElement(_TableRow2["default"], _extends({
@@ -1086,9 +1100,14 @@ var Table = function (_Component) {
   };
 
   Table.prototype.handleRowHover = function handleRowHover(isHover, key) {
-    this.store.setState({
-      currentHoverKey: isHover ? key : null
-    });
+    //增加新的API，设置是否同步Hover状态，提高性能，避免无关的渲染
+    var syncHover = this.props.syncHover;
+
+    if (syncHover) {
+      this.store.setState({
+        currentHoverKey: isHover ? key : null
+      });
+    }
   };
 
   Table.prototype.render = function render() {

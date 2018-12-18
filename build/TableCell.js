@@ -72,7 +72,8 @@ var TableCell = function (_Component) {
         index = _props2.index,
         expandIcon = _props2.expandIcon,
         column = _props2.column,
-        fixed = _props2.fixed;
+        fixed = _props2.fixed,
+        showSum = _props2.showSum;
     var dataIndex = column.dataIndex,
         render = column.render;
     var _column$className = column.className,
@@ -84,7 +85,7 @@ var TableCell = function (_Component) {
     var colSpan = void 0;
     var rowSpan = void 0;
 
-    if (render) {
+    if (render && !showSum) {
       text = render(text, record, index);
       if (this.isInvalidRenderCellText(text)) {
         tdProps = text.props || {};

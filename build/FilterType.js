@@ -68,13 +68,15 @@ var FilterType = function (_Component) {
                 onFilterClear = _this$props.onFilterClear,
                 dataIndex = _this$props.dataIndex;
 
-            _this.setState({
-                value: "", //清空值
-                condition: _this.props.filterDropdownType == 'string' ? 'LIKE' : 'EQ' //切回默认查询条件
-            }, function () {
-                //调用清除方法参数为当前字段的field
-                onFilterClear && onFilterClear(dataIndex);
-            });
+            if (_this.state.value !== "") {
+                _this.setState({
+                    value: "", //清空值
+                    condition: _this.props.filterDropdownType == 'string' ? 'LIKE' : 'EQ' //切回默认查询条件
+                }, function () {
+                    //调用清除方法参数为当前字段的field
+                    onFilterClear && onFilterClear(dataIndex);
+                });
+            }
         };
 
         _this.changeText = function (val) {
@@ -89,7 +91,7 @@ var FilterType = function (_Component) {
                 dataIndex = _this$props2.dataIndex;
 
             if (e.keyCode == 13) {
-                onFilterChange(dataIndex, e.target.value, _this.state.condition);
+                e.target.value !== "" && onFilterChange(dataIndex, e.target.value, _this.state.condition);
             }
         };
 
@@ -107,7 +109,7 @@ var FilterType = function (_Component) {
             _this.setState({
                 condition: item.key
             }, function () {
-                onFilterChange && onFilterChange(dataIndex, _this.state.value, _this.state.condition);
+                _this.state.value !== "" && onFilterChange && onFilterChange(dataIndex, _this.state.value, _this.state.condition);
             });
         };
 
@@ -183,6 +185,8 @@ var FilterType = function (_Component) {
 
         _this.renderControl = function (rendertype) {
             var _this$props7 = _this.props,
+                filterInputNumberOptions = _this$props7.filterInputNumberOptions,
+                filterDropdownIncludeKeys = _this$props7.filterDropdownIncludeKeys,
                 dataIndex = _this$props7.dataIndex,
                 filterDropdown = _this$props7.filterDropdown,
                 filterDropdownType = _this$props7.filterDropdownType,
@@ -213,19 +217,20 @@ var FilterType = function (_Component) {
                             onClickClear: _this.clearFilter,
                             isShowClear: _this.state.value,
                             isShowCondition: filterDropdown,
-                            filterDropdownType: filterDropdownType
+                            filterDropdownType: filterDropdownType,
+                            filterDropdownIncludeKeys: filterDropdownIncludeKeys
                         })
                     );
                 case 'number':
                     return _react2["default"].createElement(
                         'div',
                         { className: clsPrefix + ' filter-wrap' },
-                        _react2["default"].createElement(_beeInputNumber2["default"], {
+                        _react2["default"].createElement(_beeInputNumber2["default"], _extends({}, filterInputNumberOptions, {
                             className: className,
                             value: _this.state.value,
                             onChange: _this.changeNumber,
                             iconStyle: 'one'
-                        }),
+                        })),
                         _react2["default"].createElement(_FilterDropDown2["default"], {
                             locale: locale,
                             dataIndex: dataIndex,
@@ -234,7 +239,8 @@ var FilterType = function (_Component) {
                             onClickClear: _this.clearFilter,
                             isShowClear: _this.state.value != 0,
                             isShowCondition: filterDropdown,
-                            filterDropdownType: filterDropdownType
+                            filterDropdownType: filterDropdownType,
+                            filterDropdownIncludeKeys: filterDropdownIncludeKeys
                         })
                     );
                 case 'dropdown':
@@ -253,7 +259,8 @@ var FilterType = function (_Component) {
                             onClickClear: _this.clearFilter,
                             isShowCondition: filterDropdown,
                             isShowClear: _this.state.value,
-                            filterDropdownType: filterDropdownType
+                            filterDropdownType: filterDropdownType,
+                            filterDropdownIncludeKeys: filterDropdownIncludeKeys
                         })
                     );
                 case 'date':
@@ -275,7 +282,8 @@ var FilterType = function (_Component) {
                             onClickClear: _this.clearFilter,
                             isShowCondition: filterDropdown,
                             isShowClear: _this.state.value,
-                            filterDropdownType: filterDropdownType
+                            filterDropdownType: filterDropdownType,
+                            filterDropdownIncludeKeys: filterDropdownIncludeKeys
                         })
                     );
                 case 'daterange':
@@ -300,7 +308,8 @@ var FilterType = function (_Component) {
                             onSelectDropdown: _this.onSelectDropdown,
                             onClickClear: _this.clearFilter,
                             isShowCondition: filterDropdown,
-                            isShowClear: _this.state.value
+                            isShowClear: _this.state.value,
+                            filterDropdownIncludeKeys: filterDropdownIncludeKeys
                         })
                     );
                 case 'bool':
@@ -312,7 +321,8 @@ var FilterType = function (_Component) {
                             onChange: onChange
                         }),
                         _react2["default"].createElement(_FilterDropDown2["default"], { locale: locale,
-                            onSelectDropdown: onSelectDropdown
+                            onSelectDropdown: onSelectDropdown,
+                            filterDropdownIncludeKeys: filterDropdownIncludeKeys
                         })
                     );
                 default:

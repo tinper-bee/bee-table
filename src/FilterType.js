@@ -33,13 +33,15 @@ class FilterType extends Component {
      */
     clearFilter = () => {
         let { onFilterClear, dataIndex } = this.props;
-        this.setState({
-            value: "",//清空值
-            condition: this.props.filterDropdownType == 'string' ? 'LIKE' : 'EQ'//切回默认查询条件
-        }, () => {
-            //调用清除方法参数为当前字段的field
-            onFilterClear && onFilterClear(dataIndex);
-        });
+        if (this.state.value !== "") {
+            this.setState({
+                value: "",//清空值
+                condition: this.props.filterDropdownType == 'string' ? 'LIKE' : 'EQ'//切回默认查询条件
+            }, () => {
+                //调用清除方法参数为当前字段的field
+                onFilterClear && onFilterClear(dataIndex);
+            });
+        }
     }
 
     /**
@@ -59,7 +61,7 @@ class FilterType extends Component {
     changeTextCall = (e) => {
         let { onFilterChange, dataIndex } = this.props;
         if (e.keyCode == 13) {
-            onFilterChange(dataIndex, e.target.value, this.state.condition);
+            e.target.value !== "" && onFilterChange(dataIndex, e.target.value, this.state.condition);
         }
     }
     /**
@@ -82,7 +84,7 @@ class FilterType extends Component {
         this.setState({
             condition: item.key
         }, () => {
-            onFilterChange && onFilterChange(dataIndex, this.state.value, this.state.condition);
+            this.state.value !== "" && onFilterChange && onFilterChange(dataIndex, this.state.value, this.state.condition);
         });
     }
 
@@ -157,7 +159,7 @@ class FilterType extends Component {
      * @returns
      */
     renderControl = (rendertype) => {
-        let { dataIndex, filterDropdown, filterDropdownType, format, className, onChange, onSelectDropdown, clsPrefix, locale } = this.props;
+        let { filterInputNumberOptions, filterDropdownIncludeKeys, dataIndex, filterDropdown, filterDropdownType, format, className, onChange, onSelectDropdown, clsPrefix, locale } = this.props;
         switch (rendertype) {
             case 'text':
                 return <div className={`${clsPrefix} filter-wrap`}>
@@ -177,12 +179,14 @@ class FilterType extends Component {
                         isShowClear={this.state.value}
                         isShowCondition={filterDropdown}
                         filterDropdownType={filterDropdownType}
+                        filterDropdownIncludeKeys={filterDropdownIncludeKeys}
                     >
                     </FilterDropDown>
                 </div>
             case 'number':
                 return <div className={`${clsPrefix} filter-wrap`}>
                     <InputNumber
+                        {...filterInputNumberOptions}
                         className={className}
                         value={this.state.value}
                         onChange={this.changeNumber}
@@ -197,6 +201,7 @@ class FilterType extends Component {
                         isShowClear={this.state.value != 0}
                         isShowCondition={filterDropdown}
                         filterDropdownType={filterDropdownType}
+                        filterDropdownIncludeKeys={filterDropdownIncludeKeys}
                     >
                     </FilterDropDown>
                 </div>
@@ -215,6 +220,7 @@ class FilterType extends Component {
                         isShowCondition={filterDropdown}
                         isShowClear={this.state.value}
                         filterDropdownType={filterDropdownType}
+                        filterDropdownIncludeKeys={filterDropdownIncludeKeys}
                     >
                     </FilterDropDown></div>
             case 'date':
@@ -235,6 +241,7 @@ class FilterType extends Component {
                         isShowCondition={filterDropdown}
                         isShowClear={this.state.value}
                         filterDropdownType={filterDropdownType}
+                        filterDropdownIncludeKeys={filterDropdownIncludeKeys}
                     >
                     </FilterDropDown>
                 </div>
@@ -259,6 +266,7 @@ class FilterType extends Component {
                         onClickClear={this.clearFilter}
                         isShowCondition={filterDropdown}
                         isShowClear={this.state.value}
+                        filterDropdownIncludeKeys={filterDropdownIncludeKeys}
                     >
                     </FilterDropDown>
                 </div>
@@ -270,6 +278,7 @@ class FilterType extends Component {
                     />
                     <FilterDropDown locale={locale}
                         onSelectDropdown={onSelectDropdown}
+                        filterDropdownIncludeKeys={filterDropdownIncludeKeys}
                     >
                     </FilterDropDown>
                 </div>

@@ -30,7 +30,7 @@ class TableCell extends Component{
   }
   render() {
     const { record, indentSize, clsPrefix, indent,
-            index, expandIcon, column ,fixed} = this.props;
+            index, expandIcon, column ,fixed,showSum} = this.props;
     const { dataIndex, render } = column;
     let {className = ''} = column;
 
@@ -39,7 +39,7 @@ class TableCell extends Component{
     let colSpan;
     let rowSpan;
 
-    if (render) {
+    if (render && !showSum) {
       text = render(text, record, index);
       if (this.isInvalidRenderCellText(text)) {
         tdProps = text.props || {};

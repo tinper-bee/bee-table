@@ -6,6 +6,7 @@
 @import url(../node_modules/bee-message/build/Message.css);
 @import url(../node_modules/bee-dropdown/build/Dropdown.css);
 @import url(../node_modules/bee-input-number/build/InputNumber.css);
+@import url(../node_modules/bee-modal/build/Modal.css);
 .red {
   color: rgb(244,67,54) !important; }
 
@@ -8438,6 +8439,8 @@ ul {
     transition: background 0.3s ease; }
     .u-table th[colspan] {
       text-align: center; }
+    .u-table th ::last-child {
+      overflow: hidden; }
   .u-table td {
     border-bottom: 1px solid #e9e9e9; }
   .u-table tr {
@@ -8878,11 +8881,13 @@ ul {
       top: 0px;
       left: 3px; }
 
-.u-filter-dropdown-menu-wrap .u-dropdown-menu li.u-dropdown-menu-item {
-  line-height: 32px;
-  height: 32px;
-  padding: 0px 16px 0 16px;
-  cursor: pointer; }
+.u-filter-dropdown-menu-wrap {
+  z-index: 1800; }
+  .u-filter-dropdown-menu-wrap .u-dropdown-menu li.u-dropdown-menu-item {
+    line-height: 32px;
+    height: 32px;
+    padding: 0px 16px 0 16px;
+    cursor: pointer; }
 
 .u-checkbox {
   height: 16px;
@@ -10318,5 +10323,17 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   height: 100%; }
   .demo25 .u-table-filter-column-filter-icon {
     right: 15px; }
+
+th .drop-menu .uf {
+  font-size: 12px;
+  visibility: hidden;
+  margin-left: 15px; }
+
+th:hover .uf {
+  visibility: visible; }
+
+.demo3 .u-table-thead th {
+  padding-top: 0px;
+  padding-bottom: 0px; }
 
 /*# sourceMappingURL=demo.css.map */

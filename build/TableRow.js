@@ -187,6 +187,8 @@ var TableRow = function (_Component) {
         indentSize = _props7.indentSize,
         isHiddenExpandIcon = _props7.isHiddenExpandIcon,
         fixed = _props7.fixed;
+
+    var showSum = false;
     var className = this.props.className;
 
 
@@ -194,6 +196,10 @@ var TableRow = function (_Component) {
       className += ' ' + clsPrefix + '-hover';
     }
 
+    //判断是否为合计行
+    if (className.indexOf('sumrow') > -1) {
+      showSum = true;
+    }
     var cells = [];
 
     var expandIcon = _react2["default"].createElement(_ExpandIcon2["default"], {
@@ -207,7 +213,7 @@ var TableRow = function (_Component) {
     });
 
     for (var i = 0; i < columns.length; i++) {
-      if (expandIconAsCell && i === 0) {
+      if (expandIconAsCell && i === 0 && !showSum) {
         cells.push(_react2["default"].createElement(
           'td',
           {
@@ -217,7 +223,7 @@ var TableRow = function (_Component) {
           expandIcon
         ));
       }
-      var isColumnHaveExpandIcon = expandIconAsCell || expandRowByClick ? false : i === expandIconColumnIndex;
+      var isColumnHaveExpandIcon = expandIconAsCell || expandRowByClick || showSum ? false : i === expandIconColumnIndex;
       cells.push(_react2["default"].createElement(_TableCell2["default"], {
         clsPrefix: clsPrefix,
         record: record,
@@ -227,6 +233,7 @@ var TableRow = function (_Component) {
         column: columns[i],
         key: columns[i].key,
         fixed: fixed,
+        showSum: showSum,
         expandIcon: isColumnHaveExpandIcon ? expandIcon : null
       }));
     }
