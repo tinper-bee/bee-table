@@ -499,6 +499,7 @@ class Table extends Component {
       )
     }
     const lazyCurrentIndex =  props.lazyLoad && props.lazyLoad.currentIndex ?props.lazyLoad.currentIndex :0;
+    let expandedContentHeight = 0;
     for (let i = 0; i < data.length; i++) {
       const record = data[i];
       const key = this.getRowKey(record, i);
@@ -507,6 +508,7 @@ class Table extends Component {
       let expandedRowContent;
       if (expandedRowRender && isRowExpanded) {
         expandedRowContent = expandedRowRender(record, i, indent);
+        expandedContentHeight = parseInt(expandedRowContent.props.style?expandedRowContent.props.style.height:0);
       }
       //只有当使用expandedRowRender参数的时候才去识别isHiddenExpandIcon（隐藏行展开的icon）
       if (expandedRowRender && typeof props.haveExpandIcon == 'function') {
@@ -576,6 +578,7 @@ class Table extends Component {
           store={this.store}
           fixed={fixed}
           lazyCurrentIndex={lazyCurrentIndex}
+          expandedContentHeight={expandedContentHeight}
         />
       );
       this.treeRowIndex++;

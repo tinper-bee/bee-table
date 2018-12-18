@@ -37,7 +37,7 @@ const columns = [
       );
     }
   },
-  { id: "123", title: "性别", dataIndex: "b", key: "b", width: 200},
+  { id: "123", title: "性别", dataIndex: "b", key: "b", width: 60},
   { title: "年龄", dataIndex: "c", key: "c", width: 200 },
   {
     title: "操作",
@@ -63,7 +63,11 @@ const columns = [
 ];
 
 const data = [ ...new Array(10000) ].map((e, i) => {
-    return { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };
+    const rs = { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };
+    if(i%3==0){
+        rs.b = '我的性别lalallalalal我的性别lalallalalal我的性别lalallalalal：女';
+    }
+    return rs;
    })
 
 

@@ -58,11 +58,10 @@ const innerColumns = [
   
 ];
 
-const data16 = [
-  { a: "令狐冲", b: "男", c: 41, d: "操作", key: "1" },
-  { a: "杨过", b: "男", c: 67, d: "操作", key: "2" },
-  { a: "郭靖", b: "男", c: 25, d: "操作", key: "3" }
-];
+const data16 = [ ...new Array(10000) ].map((e, i) => {
+    return { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };
+   })
+
 
 
 class Demo31 extends Component {
@@ -98,7 +97,8 @@ class Demo31 extends Component {
         })
       }else{
         new_obj[record.key] = [
-          { a: "令狐冲", b: "男", c: 41, d: "操作", key: "1" }
+          { a: "令狐冲", b: "男", c: 41, d: "操作", key: "1" },
+          { a: "菲菲", b: "nv", c: 67, d: "操作", key: "2" }
         ]
         this.setState({
           data_obj:new_obj

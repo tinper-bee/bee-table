@@ -78,9 +78,9 @@ class TableRow extends Component{
 
 
   setRowHeight() {
-    const { setRowHeight } = this.props
+    const { setRowHeight , expandedContentHeight} = this.props
     if (!setRowHeight || !this.element) return
-    setRowHeight(this.element.clientHeight + this.expandHeight, this.props.index)
+    setRowHeight(this.element.clientHeight + expandedContentHeight, this.props.index)
   }
 
   onRowClick(event) {
