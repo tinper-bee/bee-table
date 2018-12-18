@@ -19,9 +19,12 @@ export default function bigData(Table) {
         scrollTop: 0
       };
       const rowHeight = this.props.height?this.props.height:defaultHeight
+      //默认显示25条，rowsInView根据定高算的。在非固定高下，这个只是一个大概的值。
       this.rowsInView = this.props.scroll.y?Math.ceil(this.props.scroll.y/rowHeight):25 ;
       this.cachedRowHeight = [];
       this.lastScrollTop = 0;
+
+      this.setRowHeight = this.setRowHeight.bind(this);
     }
     /**
      *获取数据区高度
@@ -43,16 +46,16 @@ export default function bigData(Table) {
       return sumHeight;
     }
 
-    getIndex(scrollTop = this.state.scrollTop) {
-        const { data } = this.props
-        const {rowsInView} = this;
-        const max = data.length
-        const mcf = scrollTop > 0.5 ? Math.ceil : Math.floor
-        let index = mcf((scrollTop * max) - (rowsInView * scrollTop))
-        if (index > max - rowsInView) index = max - rowsInView
-        if (index < 0) index = 0
-        return index
-    }
+    // getIndex(scrollTop = this.state.scrollTop) {
+    //     const { data } = this.props
+    //     const {rowsInView} = this;
+    //     const max = data.length
+    //     const mcf = scrollTop > 0.5 ? Math.ceil : Math.floor
+    //     let index = mcf((scrollTop * max) - (rowsInView * scrollTop))
+    //     if (index > max - rowsInView) index = max - rowsInView
+    //     if (index < 0) index = 0
+    //     return index
+    // }
 
 
     // getLastRowHeight = (index) =>{
@@ -91,20 +94,12 @@ export default function bigData(Table) {
         if(currentIndex !== index){
             this.setState({ currentIndex: index ,scrollTop:scrollTop})
         }
-        // this.lastScrollTop = scrollTop;
-        //scrollTop/rowHeight如果小于0.5按当前值，如果大于0.5为下一个，currentIndex 值
+       
     }
     
     setRowHeight(height, index) {
-        const oldHeight = this.cachedRowHeight[index]
         this.cachedRowHeight[index] = height
-        const rowHeight = this.props.height?this.props.height:defaultHeight;
-        let { currentIndex ,scrollTop} = this.state
-        if (currentIndex === index && !oldHeight) {
-            scrollTop += height - rowHeight;
-        }
-        this.setState({scrollTop});
-      }
+    }
     render() {
       const { data } = this.props;
       const { currentIndex,scrollTop } = this.state;

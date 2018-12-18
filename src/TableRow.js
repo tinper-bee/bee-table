@@ -68,6 +68,12 @@ class TableRow extends Component{
     this.setRowHeight()
   }
 
+
+  componentDidUpdate(prevProps) {
+    if (this.props.index !== prevProps.index) {
+      this.setRowHeight()
+    }
+  }
   componentWillUnmount() {
     const { record, onDestroy, index } = this.props;
     onDestroy(record, index);
@@ -78,9 +84,9 @@ class TableRow extends Component{
 
 
   setRowHeight() {
-    const { setRowHeight , expandedContentHeight} = this.props
-    if (!setRowHeight || !this.element) return
-    setRowHeight(this.element.clientHeight + expandedContentHeight, this.props.index)
+    const { setRowHeight , expandedContentHeight,lazyCurrentIndex=0,fixed} = this.props
+    if (!setRowHeight || !this.element || fixed) return
+    setRowHeight(this.element.clientHeight + expandedContentHeight, this.props.index+lazyCurrentIndex)
   }
 
   onRowClick(event) {

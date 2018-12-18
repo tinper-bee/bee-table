@@ -579,6 +579,7 @@ class Table extends Component {
           fixed={fixed}
           lazyCurrentIndex={lazyCurrentIndex}
           expandedContentHeight={expandedContentHeight}
+          setRowHeight={props.setRowHeight}
         />
       );
       this.treeRowIndex++;

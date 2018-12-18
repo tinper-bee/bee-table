@@ -17,7 +17,7 @@ $checkbox-height:16px;
 .u-table {
   font-size: $font-size-base;
   color: $text-color;
-  transition: opacity 0.3s ease;
+  // transition: opacity 0.3s ease;
   position: relative;
   line-height: $line-height;
   overflow: hidden;
@@ -43,7 +43,7 @@ $checkbox-height:16px;
   th {
     // background: $table-head-background-color;
     font-weight: bold;
-    transition: background 0.3s ease;
+    // transition: background 0.3s ease;
     &[colspan] {
       text-align: center;
     }

@@ -68,7 +68,16 @@ class Demo31 extends Component {
   constructor(props){
     super(props);
     this.state={
-      data_obj:{}
+      data_obj:{
+        0:[
+          { a: "令狐冲", b: "男", c: 41, d: "操作", key: "1" },
+          { a: "杨过", b: "男", c: 67, d: "操作", key: "2" }
+        ],
+        1: [
+          { a: "令狐冲", b: "男", c: 41, d: "操作", key: "1" },
+          { a: "菲菲", b: "nv", c: 67, d: "操作", key: "2" }
+        ],
+      }
     }
   }
   expandedRowRender = (record, index, indent) => {
@@ -121,6 +130,7 @@ class Demo31 extends Component {
         onExpand={this.getData}
         expandedRowRender={this.expandedRowRender}
         scroll={{y:350}}
+        defaultExpandedRowKeys={[0,1]}
         title={currentData => <div>标题: 这是一个标题</div>}
         footer={currentData => <div>表尾: 我是小尾巴</div>}
       />

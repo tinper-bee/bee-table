@@ -8417,7 +8417,6 @@ ul {
 .u-table {
   font-size: 12px;
   color: #666;
-  transition: opacity 0.3s ease;
   position: relative;
   line-height: 1.5;
   overflow: hidden; }
@@ -8435,8 +8434,7 @@ ul {
     border-collapse: collapse;
     text-align: left; }
   .u-table th {
-    font-weight: bold;
-    transition: background 0.3s ease; }
+    font-weight: bold; }
     .u-table th[colspan] {
       text-align: center; }
     .u-table th ::last-child {
