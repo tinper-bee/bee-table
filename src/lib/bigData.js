@@ -74,16 +74,22 @@ export default function bigData(Table) {
         const {data,height} = this.props;
         const rowHeight = height?height:defaultHeight;
         const {rowsInView} = this;
-        const {currentIndex} = this.state;
+        const {currentIndex = 0} = this.state;
+        // let index = currentIndex;
         let index = 0;
-        let temp = scrollTop;
+        // let temp = scrollTop - this.lastScrollTop;
+        let temp = scrollTop ;
+        // let lastScrollTop = scrollTop;
+        
         while (temp > 0) {
           temp -= this.cachedRowHeight[index] || rowHeight
           if(temp > 0){
             index += 1
           }
         }
-  
+        //记录上一次滚动的位置，作为缓存用
+        // this.lastScrollTop = lastScrollTop + temp;
+
         // offset last row
         // index -= 1
         console.log(index);
