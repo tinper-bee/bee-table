@@ -38,7 +38,7 @@ class TableCell extends Component{
     let tdProps;
     let colSpan;
     let rowSpan;
-
+    
     if (render && !showSum) {
       text = render(text, record, index);
       if (this.isInvalidRenderCellText(text)) {

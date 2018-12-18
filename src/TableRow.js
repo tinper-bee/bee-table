@@ -51,7 +51,7 @@ class TableRow extends Component{
      this.onRowDoubleClick = this.onRowDoubleClick.bind(this);
      this.onMouseEnter = this.onMouseEnter.bind(this);
      this.onMouseLeave = this.onMouseLeave.bind(this);
-
+     this.expandHeight = 0;
  }
 
 
@@ -64,6 +64,8 @@ class TableRow extends Component{
         this.setState({ hovered: false });
       }
     });
+
+    this.setRowHeight()
   }
 
   componentWillUnmount() {
@@ -72,6 +74,13 @@ class TableRow extends Component{
     if (this.unsubscribe) {
       this.unsubscribe();
     }
+  }
+
+
+  setRowHeight() {
+    const { setRowHeight } = this.props
+    if (!setRowHeight || !this.element) return
+    setRowHeight(this.element.clientHeight + this.expandHeight, this.props.index)
   }
 
   onRowClick(event) {
@@ -118,12 +127,16 @@ class TableRow extends Component{
         window.clearTimeout(this._timeout);  
     }
   }
+
+  bindElement = (el)=> {
+    this.element = el
+  }
  
   render() {
     const {
       clsPrefix, columns, record, height, visible, index,
       expandIconColumnIndex, expandIconAsCell, expanded, expandRowByClick,
-      expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed
+      expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed,lazyCurrentIndex=0
     } = this.props;
     let showSum = false;
     let { className } = this.props;
@@ -169,7 +182,7 @@ class TableRow extends Component{
           record={record}
           indentSize={indentSize}
           indent={indent}
-          index={index}
+          index={index+lazyCurrentIndex}
           column={columns[i]}
           key={columns[i].key}
           fixed= {fixed}
@@ -182,7 +195,7 @@ class TableRow extends Component{
     if (!visible) {
       style.display = 'none';
     }
-
+ 
     return (
       <tr
         onClick={this.onRowClick}
@@ -191,6 +204,7 @@ class TableRow extends Component{
         onMouseLeave={this.onMouseLeave}
         className={`${clsPrefix} ${className} ${clsPrefix}-level-${indent}`}
         style={style}
+        ref={this.bindElement}
       >
         {cells}
       </tr>

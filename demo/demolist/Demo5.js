@@ -21,14 +21,9 @@ const columns5 = [
     fixed: "left"
   },
   { title: "Age", width: 100, dataIndex: "age", key: "age", fixed: "left" },
-  { title: "Column 1", dataIndex: "c1", key: "1" },
-  { title: "Column 2", dataIndex: "c2", key: "2" },
-  { title: "Column 3", dataIndex: "c3", key: "3" },
-  { title: "Column 4", dataIndex: "c4", key: "4" },
-  { title: "Column 5", dataIndex: "c5", key: "5" },
-  { title: "Column 6", dataIndex: "c6", key: "6" },
-  { title: "Column 7", dataIndex: "c7", key: "7" },
-  { title: "Column 8", dataIndex: "c8", key: "8" }
+  { title: "Column 1", dataIndex: "key", key: "1" },
+  { title: "Column 2", dataIndex: "address", key: "2" },
+
 ];
 
 const data5 = [

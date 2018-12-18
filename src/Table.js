@@ -173,9 +173,13 @@ class Table extends Component {
       if(nextProps.columns.length !== this.props.columns.length && this.refs && this.refs.bodyTable){
          this.scrollTop = this.refs.bodyTable.scrollTop;
      }
-
     } else if (nextProps.children !== this.props.children) {
       this.columnManager.reset(null, nextProps.children);
+    }
+    //适配lazyload
+    if(nextProps.scrollTop){
+      this.refs.bodyTable.scrollTop = nextProps.scrollTop;
+      this.scrollTop = nextProps.scrollTop;
     }
     if (!nextProps.originWidth) {
       this.computeTableWidth();
@@ -489,7 +493,12 @@ class Table extends Component {
 
     const expandIconAsCell = fixed !== 'right' ? props.expandIconAsCell : false;
     const expandIconColumnIndex = fixed !== 'right' ? props.expandIconColumnIndex : -1;
-
+    if(props.lazyLoad && props.lazyLoad.preHeight){
+      rst.push(
+        <TableRow height={props.lazyLoad.preHeight} columns={[]} className='' store={this.store} visible = {true}/>
+      )
+    }
+    const lazyCurrentIndex =  props.lazyLoad && props.lazyLoad.currentIndex ?props.lazyLoad.currentIndex :0;
     for (let i = 0; i < data.length; i++) {
       const record = data[i];
       const key = this.getRowKey(record, i);
@@ -515,13 +524,11 @@ class Table extends Component {
         fixedIndex = this.treeRowIndex;
       }
 
-      if (props.fixedHeight) {
-        height = props.fixedHeight
-      } else {
-        height = (fixed && fixedColumnsBodyRowsHeight[fixedIndex]) ? fixedColumnsBodyRowsHeight[fixedIndex] : null;
+      if (props.height) {
+        height = props.height
+      } else if(fixed) {
+        height = fixedColumnsBodyRowsHeight[fixedIndex];
       }
-
-
 
       let leafColumns;
       if (fixed === 'left') {
@@ -537,6 +544,7 @@ class Table extends Component {
       if(i == data.length -1 && props.showSum){
         className = className + ' sumrow';
       }
+
 
       rst.push(
         <TableRow
@@ -567,6 +575,7 @@ class Table extends Component {
           ref={rowRef}
           store={this.store}
           fixed={fixed}
+          lazyCurrentIndex={lazyCurrentIndex}
         />
       );
       this.treeRowIndex++;
@@ -578,11 +587,17 @@ class Table extends Component {
         ));
       }
       if (childrenColumn) {
-        this.treeType = true;//证明是tree表形式
+        this.treeType = true;//证明是tree表形式visible = {true}
         rst = rst.concat(this.getRowsByData(
           childrenColumn, subVisible, indent + 1, columns, fixed
         ));
       }
+    }
+
+    if(props.lazyLoad && props.lazyLoad.sufHeight){
+      rst.push(
+        <TableRow height={props.lazyLoad.sufHeight} columns={[]} className='' store={this.store} visible = {true}/>
+      )
     }
     return rst;
   }
@@ -924,7 +939,7 @@ class Table extends Component {
 
   handleBodyScroll(e) {
 
-    const { scroll = {},clsPrefix } = this.props;
+    const { scroll = {},clsPrefix,handleScroll } = this.props;
     const { headTable, bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this.refs;
     // Prevent scrollTop setter trigger onScroll event
     // http://stackoverflow.com/q/1386696
@@ -952,9 +967,9 @@ class Table extends Component {
         .remove(new RegExp(`^${clsPrefix}-scroll-position-.+$`))
         .add(`${clsPrefix}-scroll-position-${position}`);
       }
-    
     }
-    if (scroll.y) {
+    console.log('lastScrollTop--'+this.lastScrollTop+'--eventScrollTop--'+ e.target.scrollTop);
+    if (scroll.y && this.lastScrollTop != e.target.scrollTop) {
       if (fixedColumnsBodyLeft && e.target !== fixedColumnsBodyLeft) {
         fixedColumnsBodyLeft.scrollTop = e.target.scrollTop;
       }
@@ -964,9 +979,20 @@ class Table extends Component {
       if (bodyTable && e.target !== bodyTable) {
         bodyTable.scrollTop = e.target.scrollTop;
       }
+      this.lastScrollTop = e.target.scrollTop;
+      console.log('handleBodyScroll---scrollTop--'+e.target.scrollTop);
+      if(handleScroll){
+        const scrollTop = e.target.scrollTop
+        debounce(
+          handleScroll(scrollTop)
+        ,200);
+        
+      }
     }
+    
     // Remember last scrollLeft for scroll direction detecting.
     this.lastScrollLeft = e.target.scrollLeft;
+   
   }
 
   handleRowHover(isHover, key) {
@@ -995,7 +1021,10 @@ class Table extends Component {
       className += ` ${clsPrefix}-bordered`;
     }
     className += ` ${clsPrefix}-scroll-position-${this.state.scrollPosition}`;
-
+    //如果传入height说明是固定高度
+    if(props.height){
+      className += ' fixed-height';
+    }
     const isTableScroll = this.columnManager.isAnyColumnsFixed() ||
       props.scroll.x ||
       props.scroll.y;
@@ -1005,8 +1034,7 @@ class Table extends Component {
         show: loading,
       };
     }
-    const leftFixedWidth = this.columnManager.getLeftColumnsWidth();
-    const rightFixedWidth = this.columnManager.getRightColumnsWidth();
+
     return (
       <div className={className} style={props.style} ref={el => this.contentTable = el}>
         {this.getTitle()}

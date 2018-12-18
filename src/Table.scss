@@ -57,7 +57,7 @@ $checkbox-height:16px;
   }
 
   tr {
-    transition: all 0.3s ease;
+    // transition: all 0.3s ease;
     &:hover {
       background: $table-hover-color;
       td {
@@ -108,6 +108,10 @@ $checkbox-height:16px;
   &-header {
     overflow: hidden;
     background: $table-head-background-color;
+  }
+
+  &.fixed-height td {
+    padding: 0px 8px;
   }
 
   &-fixed-header &-body {
@@ -273,6 +277,7 @@ $checkbox-height:16px;
       color: transparent;
       pointer-events: none;
     }
+ 
   }
   
   // &-scroll-position-left &-fixed-left {
@@ -706,3 +711,4 @@ $checkbox-height:16px;
 .u-checkbox .u-checkbox-label:after,.u-checkbox .u-checkbox-label::before  {
 
 }
+
