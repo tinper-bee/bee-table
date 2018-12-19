@@ -549,7 +549,7 @@ class TableHeader extends Component {
               let canDotDrag = "";
               //主表格下、固定列或者是过滤行中含有固定列时添加该属性
               if (!fixed && (da.fixed || (filterable && index == rows.length - 1 && rows[0][columIndex].fixed)) ) {
-                fixedStyle = `${clsPrefix}-row-fixed-columns-in-body`;
+                fixedStyle = ` ${clsPrefix}-row-fixed-columns-in-body`;
               }
            
               if (lastShowIndex == columIndex) {

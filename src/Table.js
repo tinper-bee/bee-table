@@ -628,7 +628,7 @@ class Table extends Component {
         width = width + contentWidthDiff;
       }
       if (!fixed && c.fixed) {
-        fixedClass = `${this.props.clsPrefix}-row-fixed-columns-in-body`;
+        fixedClass = ` ${this.props.clsPrefix}-row-fixed-columns-in-body`;
       }
       return <col key={c.key} style={{ width: width, minWidth: c.width }} className={fixedClass}/>;
     }));
