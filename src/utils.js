@@ -249,6 +249,30 @@ export const EventUtil = {
   }
 }
 
+/*
+ * 处理精度
+ */
+export function DicimalFormater(value,precision) {
+  var value = value + '',
+      precision = precision?precision:0;
+  for (var i = 0; i < value.length; i++) {
+      if ("-0123456789.".indexOf(value.charAt(i)) == -1)
+          return "";
+  }
+  return checkDicimalInvalid(value, precision);
+};
+export function checkDicimalInvalid(value, precision) {
+  if (value == null || isNaN(value))
+      return "";
+  // 浮点数总位数不能超过10位
+  var digit = parseFloat(value);
+  var result = (digit * Math.pow(10, precision) / Math.pow(10, precision))
+      .toFixed(precision);
+  if (result == "NaN")
+      return "";
+  return result;
+};
+
 export const Event = {
   addHandler,
   removeHandler,
