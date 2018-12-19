@@ -87,7 +87,7 @@ function sum(Table) {
 
               var _num = parseFloat(da[column.key]);
               //排查字段值为NAN情况
-              if (_num) {
+              if (_num == _num) {
                 count += _num;
               }
             });
