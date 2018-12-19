@@ -12625,10 +12625,6 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _shallowequal = __webpack_require__(110);
-	
-	var _shallowequal2 = _interopRequireDefault(_shallowequal);
-	
 	var _throttleDebounce = __webpack_require__(112);
 	
 	var _utils = __webpack_require__(113);
@@ -12734,7 +12730,6 @@
 	    };
 	
 	    _this.onLineMouseUp = function (event) {
-	
 	      _this.clearDragBorder(event);
 	    };
 	
@@ -12780,7 +12775,7 @@
 	      event.dataTransfer.effectAllowed = "move";
 	      event.dataTransfer.setData("Text", currentKey);
 	      _this.currentObj = _this.props.rows[0][currentIndex];
-	      event.dataTransfer.setDragImage(event.target, 0, 0);
+	      // event.dataTransfer.setDragImage(event.target, 0, 0);
 	    };
 	
 	    _this.onDragOver = function (e) {
@@ -12931,13 +12926,17 @@
 	    };
 	    _this.minWidth = 80; //确定最小宽度就是80
 	    _this.table = null;
+	    _this._thead = null; //当前对象
 	    return _this;
 	  }
 	
 	  /**
-	   * 动态绑定th line 事件
-	   * type 为false 为增加事件
-	   * eventSource 为false 给 th 内部的div增加事件
+	   *
+	   * 动态绑定th line 事件方法
+	   * @param {*} events
+	   * @param {*} type  type 为false 为增加事件
+	   * @param {*} eventSource 为false 给 th 内部的div增加事件
+	   * @memberof TableHeader
 	   */
 	  TableHeader.prototype.thEventListen = function thEventListen(events, type, eventSource) {
 	    var _table = this.table,
@@ -12969,6 +12968,14 @@
 	    }
 	  };
 	
+	  /**
+	   * 当前对象上绑定全局事件，用于拖拽区域以外时的事件处理
+	   * @param {*} events
+	   * @param {*} type
+	   * @memberof TableHeader
+	   */
+	
+	
 	  TableHeader.prototype.bodyEventListen = function bodyEventListen(events, type) {
 	    for (var i = 0; i < events.length; i++) {
 	      var _event = events[i];
@@ -12985,13 +12992,15 @@
 	    this.initEvent();
 	  };
 	
-	  TableHeader.prototype.componentDidMount = function componentDidMount() {
-	    this.initTable();
-	    this.initEvent();
-	  };
+	  // componentDidMount(){
+	  // this.initTable();
+	  // this.initEvent();
+	  // } 
 	
 	  /**
-	   * 拖拽列宽的事件处理
+	   * 初始化拖拽列宽的事件处理
+	   * @returns
+	   * @memberof TableHeader
 	   */
 	
 	
@@ -13009,7 +13018,8 @@
 	  };
 	
 	  /**
-	   * 移除拖拽宽度的事件
+	   * 移除当前全局事件对象
+	   * @memberof TableHeader
 	   */
 	
 	
@@ -13022,13 +13032,15 @@
 	
 	  /**
 	   * 获取table的属性存放在this.table 中。(公用方法)
+	   * @returns
+	   * @memberof TableHeader
 	   */
 	
 	
 	  TableHeader.prototype.initTable = function initTable() {
 	    if (!this.props.dragborder && !this.props.draggable) return;
-	    var el = _reactDom2["default"].findDOMNode(this);
-	    var tableDome = el.parentNode;
+	    // let el = ReactDOM.findDOMNode(this);
+	    var tableDome = this._thead.parentNode;
 	    var table = {};
 	    if (tableDome && tableDome.nodeName && tableDome.nodeName.toUpperCase() == "TABLE") {
 	      table.table = tableDome;
@@ -13052,11 +13064,30 @@
 	    }
 	  };
 	
-	  //---拖拽列宽代码逻辑----start-----
+	  /**
+	   * 调整列宽的move事件
+	   * @memberof TableHeader
+	   */
+	
+	
+	  /**
+	   * 调整列宽的down事件
+	   * @memberof TableHeader
+	   */
+	
+	
+	  /**
+	   * 调整列宽的up事件
+	   * @memberof TableHeader
+	   */
+	
+	
+	  /**
+	   * 调整列宽到区域以外的up事件
+	   */
 	
 	
 	  TableHeader.prototype.clearDragBorder = function clearDragBorder() {
-	    // if (!this.props.dragborder || !this.props.draggable) return;
 	    if (!this.drag || !this.drag.option) return;
 	    var rows = this.props.rows;
 	
@@ -13073,15 +13104,30 @@
 	  //---拖拽列宽代码逻辑----start-----
 	
 	  /**
-	   * 拖拽交换列的事件处理
+	   * 调整交换列down事件
+	   * @memberof TableHeader
+	   */
+	
+	  /**
+	   * 调整交换列up事件
+	   * @memberof TableHeader
+	   */
+	
+	
+	  /**
+	   * 添加换列的事件监听
 	   */
 	  TableHeader.prototype.addDragAbleEvent = function addDragAbleEvent() {
 	    var events = [{ key: 'dragstart', fun: this.onDragStart }, //用户开始拖动元素时触发
 	    { key: 'dragover', fun: this.onDragOver }, //当某被拖动的对象在另一对象容器范围内拖动时触发此事件
 	    { key: 'drop', fun: this.onDrop }];
 	    this.thEventListen(events, '', true);
-	    // this.bodyEventListen([{key:'mouseup',fun:this.bodyonDragMouseMove}]);
 	  };
+	
+	  /**
+	   * 删除换列的事件监听
+	   */
+	
 	
 	  TableHeader.prototype.removeDragAbleEvent = function removeDragAbleEvent() {
 	    var events = [{ key: 'dragstart', fun: this.onDragStart }, { key: 'dragover', fun: this.onDragOver }, { key: 'drop', fun: this.onDrop }, { key: 'dragenter', fun: this.onDragEnter }];
@@ -13089,15 +13135,9 @@
 	  };
 	
 	  /**
-	   * 当被鼠标拖动的对象进入其容器范围内时触发此事件。【目标事件】
-	   * @memberof TableHeader
+	   * 开始调整交换列的事件
 	   */
-	  // onDragEnter = (e) => { 
-	  //   if (!this.props.draggable) return;
-	  //   if(this.drag.option === 'border'){return;}
-	  //   let data = this.getCurrentEventData(e);
-	  //   if (!this.currentObj || this.currentObj.key == data.key) return;
-	  // }; 
+	
 	
 	  /**
 	   * 在一个拖动过程中，释放鼠标键时触发此事件。【目标事件】
@@ -13105,6 +13145,12 @@
 	   */
 	
 	
+	  /**
+	   * 获取当前th上的对象数据
+	   * @param {*} e
+	   * @returns
+	   * @memberof TableHeader
+	   */
 	  TableHeader.prototype.getCurrentEventData = function getCurrentEventData(e) {
 	    var event = _utils.Event.getEvent(e);
 	    var th = this.getThDome(event.target);
@@ -13125,9 +13171,9 @@
 	  };
 	
 	  /**
-	   *根据拖拽，获取当前的Th属性
+	   * 根据当前鼠标点击的节点，进行递归遍历，最终找到th
 	   * @param {*} element
-	   * @returns
+	   * @returns  <th />对象
 	   * @memberof TableHeader
 	   */
 	
@@ -13166,28 +13212,21 @@
 	    var _props = this.props,
 	        clsPrefix = _props.clsPrefix,
 	        rowStyle = _props.rowStyle,
-	        onDragStart = _props.onDragStart,
-	        onDragOver = _props.onDragOver,
-	        onDrop = _props.onDrop,
 	        draggable = _props.draggable,
 	        dragborder = _props.dragborder,
 	        rows = _props.rows,
 	        filterable = _props.filterable,
-	        onFilterRowsChange = _props.onFilterRowsChange,
-	        onMouseDown = _props.onMouseDown,
-	        onMouseMove = _props.onMouseMove,
-	        onMouseUp = _props.onMouseUp,
-	        onMouseOut = _props.onMouseOut,
-	        contentWidthDiff = _props.contentWidthDiff,
 	        fixed = _props.fixed,
-	        lastShowIndex = _props.lastShowIndex,
-	        contentTable = _props.contentTable;
+	        lastShowIndex = _props.lastShowIndex;
+	
 	
 	    var attr = dragborder ? { id: "u-table-drag-thead-" + this.theadKey } : {};
 	
 	    return _react2["default"].createElement(
 	      "thead",
-	      _extends({ className: clsPrefix + "-thead" }, attr, { "data-theader-fixed": "scroll" }),
+	      _extends({ className: clsPrefix + "-thead" }, attr, { "data-theader-fixed": "scroll", ref: function ref(_thead) {
+	          return _this2._thead = _thead;
+	        } }),
 	      rows.map(function (row, index) {
 	        return _react2["default"].createElement(
 	          "tr",
@@ -13260,7 +13299,6 @@
 	
 	
 	TableHeader.propTypes = propTypes;
-	
 	exports["default"] = TableHeader;
 	module.exports = exports["default"];
 
@@ -13603,17 +13641,18 @@
 	}
 	
 	function addHandler(element, type, handler) {
-	
+	  var event = null;
 	  if (element.addEventListener) {
 	    //检测是否为DOM2级方法
-	    element.addEventListener(type, handler, false);
+	    event = element.addEventListener(type, handler, false);
 	  } else if (element.attachEvent) {
 	    //检测是否为IE级方法
-	    element.attachEvent("on" + type, handler);
+	    event = element.attachEvent("on" + type, handler);
 	  } else {
 	    //检测是否为DOM0级方法
-	    element["on" + type] = handler;
+	    event = element["on" + type] = handler;
 	  }
+	  return event;
 	}
 	
 	function removeHandler(element, type, handler) {

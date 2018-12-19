@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import PropTypes from "prop-types";
-import shallowequal from "shallowequal";
-import { throttle, debounce } from "throttle-debounce";
-import { tryParseInt, ObjectAssign ,Event,EventUtil} from "./utils";
+import { debounce } from "throttle-debounce";
+import { Event,EventUtil} from "./utils";
 import FilterType from "./FilterType";
 
 const propTypes = {
@@ -22,16 +21,20 @@ class TableHeader extends Component {
     };
     this.minWidth = 80;//确定最小宽度就是80
     this.table = null;
+    this._thead = null;//当前对象
   }
 
   static defaultProps = {
     contentWidthDiff: 0
   };
- 
+
   /**
-   * 动态绑定th line 事件
-   * type 为false 为增加事件
-   * eventSource 为false 给 th 内部的div增加事件
+   *
+   * 动态绑定th line 事件方法
+   * @param {*} events
+   * @param {*} type  type 为false 为增加事件
+   * @param {*} eventSource 为false 给 th 内部的div增加事件
+   * @memberof TableHeader
    */
   thEventListen(events,type,eventSource){
     let {ths,cols} = this.table;
@@ -54,7 +57,6 @@ class TableHeader extends Component {
             EventUtil.removeHandler(_dataSource,_event.key,_event.fun);
           }else{
             EventUtil.addHandler(_dataSource,_event.key,_event.fun);
-
           }
         }
       }
@@ -62,6 +64,12 @@ class TableHeader extends Component {
   }
 
  
+  /**
+   * 当前对象上绑定全局事件，用于拖拽区域以外时的事件处理
+   * @param {*} events
+   * @param {*} type
+   * @memberof TableHeader
+   */
   bodyEventListen(events,type){
     for (let i = 0; i < events.length; i++) {
       const _event = events[i];
@@ -78,13 +86,15 @@ class TableHeader extends Component {
     this.initEvent();
   }
 
-  componentDidMount(){
-    this.initTable();
-    this.initEvent();
-  } 
+  // componentDidMount(){
+    // this.initTable();
+    // this.initEvent();
+  // } 
   
   /**
-   * 拖拽列宽的事件处理
+   * 初始化拖拽列宽的事件处理
+   * @returns
+   * @memberof TableHeader
    */
   initEvent(){
     let  events = [
@@ -103,7 +113,8 @@ class TableHeader extends Component {
   }
 
   /**
-   * 移除拖拽宽度的事件
+   * 移除当前全局事件对象
+   * @memberof TableHeader
    */
   removeDragBorderEvent(){
     let  events = [
@@ -117,11 +128,13 @@ class TableHeader extends Component {
 
   /**
    * 获取table的属性存放在this.table 中。(公用方法)
+   * @returns
+   * @memberof TableHeader
    */
   initTable(){
     if(!this.props.dragborder && !this.props.draggable)return;
-    let el = ReactDOM.findDOMNode(this);
-    let tableDome = el.parentNode;
+    // let el = ReactDOM.findDOMNode(this);
+    let tableDome = this._thead.parentNode;
     let table = {};
     if(tableDome && tableDome.nodeName && tableDome.nodeName.toUpperCase() == "TABLE"){
       table.table = tableDome;
@@ -144,8 +157,11 @@ class TableHeader extends Component {
       }
     }
   }
-
-  //---拖拽列宽代码逻辑----start-----
+  
+  /**
+   * 调整列宽的move事件
+   * @memberof TableHeader
+   */
   onLineMouseMove = (e) => {
       const { clsPrefix ,dragborder,contentDomWidth,scrollbarWidth,contentTable,headerScroll} = this.props;
       Event.stopPropagation(e); 
@@ -194,6 +210,10 @@ class TableHeader extends Component {
       }
   };
 
+  /**
+   * 调整列宽的down事件
+   * @memberof TableHeader
+   */
   onLineMouseDown = (e) => {
     Event.stopPropagation(e); 
     let event = Event.getEvent(e);
@@ -209,16 +229,22 @@ class TableHeader extends Component {
     this.drag.minWidth = currentObj.style.minWidth != ""?parseInt(currentObj.style.minWidth):defaultWidth;
   };
 
+  /**
+   * 调整列宽的up事件
+   * @memberof TableHeader
+   */
   onLineMouseUp = (event) => {
- 
     this.clearDragBorder(event);
   };
+
+  /**
+   * 调整列宽到区域以外的up事件
+   */
   bodyonLineMouseMove = (event) => {
     this.clearDragBorder(event);
   };
 
   clearDragBorder(){
-    // if (!this.props.dragborder || !this.props.draggable) return;
     if(!this.drag || !this.drag.option)return;
     let {rows} = this.props;
     let data = {rows:rows[0],cols:this.table.cols,currIndex:this.drag.currIndex};
@@ -233,6 +259,10 @@ class TableHeader extends Component {
 
   //---拖拽列宽代码逻辑----start-----
  
+  /**
+   * 调整交换列down事件
+   * @memberof TableHeader
+   */
   dragAbleMouseDown = (e) => {
     // Event.stopPropagation(e); 
     let event = Event.getEvent(e);
@@ -247,7 +277,10 @@ class TableHeader extends Component {
     this.removeDragBorderEvent();//清理掉拖拽列宽的事件
     this.addDragAbleEvent(); //添加拖拽交换列的事件
   }
-
+  /**
+   * 调整交换列up事件
+   * @memberof TableHeader
+   */
   dragAbleMouseUp = (e) => {
     this.currentDome.setAttribute('draggable',false);//添加交换列效果
     this.removeDragAbleEvent();
@@ -256,20 +289,22 @@ class TableHeader extends Component {
     this.thEventListen([{key:'mousedown',fun:this.dragAbleMouseDown}],'remove',true);//表示把事件添加到th元素上
     this.initEvent();
   }
+
   /**
-   * 拖拽交换列的事件处理
+   * 添加换列的事件监听
    */
   addDragAbleEvent (){
     let  events = [
       {key:'dragstart',fun:this.onDragStart},//用户开始拖动元素时触发
       {key:'dragover', fun:this.onDragOver},//当某被拖动的对象在另一对象容器范围内拖动时触发此事件
       {key:'drop', fun:this.onDrop},        //在一个拖动过程中，释放鼠标键时触发此事件 
-      // {key:'dragenter', fun:this.onDragEnter}  //当被鼠标拖动的对象进入其容器范围内时触发此事件
     ];
     this.thEventListen(events,'',true);
-    // this.bodyEventListen([{key:'mouseup',fun:this.bodyonDragMouseMove}]);
   }
   
+  /**
+   * 删除换列的事件监听
+   */
   removeDragAbleEvent(){
     let  events = [
       {key:'dragstart',fun:this.onDragStart},
@@ -280,6 +315,9 @@ class TableHeader extends Component {
     this.thEventListen(events,'remove',true);
   }
 
+  /**
+   * 开始调整交换列的事件
+   */
   onDragStart = (e) => {
     let event = Event.getEvent(e);
     if (!this.props.draggable) return;
@@ -292,23 +330,12 @@ class TableHeader extends Component {
     event.dataTransfer.effectAllowed = "move";
     event.dataTransfer.setData("Text", currentKey);
     this.currentObj = this.props.rows[0][currentIndex];
-    event.dataTransfer.setDragImage(event.target, 0, 0);
+    // event.dataTransfer.setDragImage(event.target, 0, 0);
   };
 
   onDragOver = (e) => {
     event.preventDefault();
   };
-
-  /**
-   * 当被鼠标拖动的对象进入其容器范围内时触发此事件。【目标事件】
-   * @memberof TableHeader
-   */
-  // onDragEnter = (e) => { 
-  //   if (!this.props.draggable) return;
-  //   if(this.drag.option === 'border'){return;}
-  //   let data = this.getCurrentEventData(e);
-  //   if (!this.currentObj || this.currentObj.key == data.key) return;
-  // }; 
 
   /**
    * 在一个拖动过程中，释放鼠标键时触发此事件。【目标事件】
@@ -325,6 +352,12 @@ class TableHeader extends Component {
     this.props.onDrop(event,{dragSource:this.currentObj,dragTarg:data});
   };
 
+  /**
+   * 获取当前th上的对象数据
+   * @param {*} e
+   * @returns
+   * @memberof TableHeader
+   */
   getCurrentEventData(e){
     let event = Event.getEvent(e);
     let th = this.getThDome(event.target)
@@ -343,9 +376,9 @@ class TableHeader extends Component {
   }
 
   /**
-   *根据拖拽，获取当前的Th属性
+   * 根据当前鼠标点击的节点，进行递归遍历，最终找到th
    * @param {*} element
-   * @returns
+   * @returns  <th />对象
    * @memberof TableHeader
    */
   getThDome(element){
@@ -497,30 +530,14 @@ class TableHeader extends Component {
 
 
   render() { 
-    const {
-      clsPrefix,
-      rowStyle,
-      onDragStart,
-      onDragOver,
-      onDrop,
-      draggable,
-      dragborder,
-      rows,
-      filterable,
-      onFilterRowsChange,
-      onMouseDown,
-      onMouseMove,
-      onMouseUp,
-      onMouseOut,
-      contentWidthDiff,
-      fixed,
-      lastShowIndex,
-      contentTable
+    const { clsPrefix, rowStyle,draggable,
+        dragborder, rows,filterable,fixed,lastShowIndex,
     } = this.props;
+
     let attr = dragborder ? { id: `u-table-drag-thead-${this.theadKey}` } : {};
 
     return (
-      <thead className={`${clsPrefix}-thead`} {...attr} data-theader-fixed='scroll' >
+      <thead className={`${clsPrefix}-thead`} {...attr} data-theader-fixed='scroll' ref={_thead=>this._thead = _thead} >
         {rows.map((row, index) => (
           <tr key={index} style={rowStyle} className={(filterable && index == rows.length - 1)?'filterable':''}>
             {row.map((da, columIndex, arr) => {
@@ -585,5 +602,4 @@ class TableHeader extends Component {
 }
 
 TableHeader.propTypes = propTypes;
-
 export default TableHeader;

@@ -330,7 +330,16 @@
     .u-table-thead .filter-wrap .filter-btns {
       min-width: 58px; }
   .u-table-thead th {
-    background: #f7f7f7; }
+    background: #f7f7f7;
+    background-clip: padding-box;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    /*
+        Introduced in IE 10. 
+      */
+    -ms-user-select: none;
+    user-select: none; }
     .u-table-thead th .bee-table-column-sorter {
       position: relative;
       margin-left: 4px;

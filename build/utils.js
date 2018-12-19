@@ -197,17 +197,18 @@ function getColChildrenLength(columns, chilrenLen) {
 }
 
 function addHandler(element, type, handler) {
-
+  var event = null;
   if (element.addEventListener) {
     //检测是否为DOM2级方法
-    element.addEventListener(type, handler, false);
+    event = element.addEventListener(type, handler, false);
   } else if (element.attachEvent) {
     //检测是否为IE级方法
-    element.attachEvent("on" + type, handler);
+    event = element.attachEvent("on" + type, handler);
   } else {
     //检测是否为DOM0级方法
-    element["on" + type] = handler;
+    event = element["on" + type] = handler;
   }
+  return event;
 }
 
 function removeHandler(element, type, handler) {
