@@ -1,29 +1,30 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 
 
 const defaultHeight = 40;
+const rowDiff = 3;//行差值
+
 export default function bigData(Table) {
   return class BigData extends Component {
     
     static  defaultProps = {
-        data: undefined,
-        // height: 40, //默认行高
+        data: []
     };
-
     constructor(props) {
       super(props);
       this.state = {
-        currentIndex: 0,
         scrollLeft: 0,
         scrollTop: 0
       };
       const rowHeight = this.props.height?this.props.height:defaultHeight
       //默认显示25条，rowsInView根据定高算的。在非固定高下，这个只是一个大概的值。
-      this.rowsInView = this.props.scroll.y?Math.ceil(this.props.scroll.y/rowHeight):25 ;
-      this.cachedRowHeight = [];
+      this.rowsInView =  this.props.scroll.y?Math.ceil(this.props.scroll.y/rowHeight):25 ;
+      this.currentIndex = 0;
+      this.loadCount = 30;//一次加载多少数据
+      this.cachedRowHeight = [];//缓存每行的高度
       this.lastScrollTop = 0;
-
+      this.startIndex = this.currentIndex;//数据开始位置
+      this.endIndex = this.currentIndex + this.loadCount//数据结束位置 
       this.setRowHeight = this.setRowHeight.bind(this);
     }
     /**
@@ -46,59 +47,67 @@ export default function bigData(Table) {
       return sumHeight;
     }
 
-    // getIndex(scrollTop = this.state.scrollTop) {
-    //     const { data } = this.props
-    //     const {rowsInView} = this;
-    //     const max = data.length
-    //     const mcf = scrollTop > 0.5 ? Math.ceil : Math.floor
-    //     let index = mcf((scrollTop * max) - (rowsInView * scrollTop))
-    //     if (index > max - rowsInView) index = max - rowsInView
-    //     if (index < 0) index = 0
-    //     return index
-    // }
-
-
-    // getLastRowHeight = (index) =>{
-    //     const { height, data } = this.props
-    //     const {rowsInView} = this;
-    //     if (index + rowsInView >= data.length) return 0
-
-    //     let lastRowHeight = 0
-    //     if (index >= 1 && index < data.length / 2) {
-    //     lastRowHeight = this.cachedRowHeight[index - 1] || height
-    //     }
-    //     return lastRowHeight
-    // }
-    handleScroll = (scrollTop)=> {
-        console.log('scrollTop----'+scrollTop)
-        const {data,height} = this.props;
-        const rowHeight = height?height:defaultHeight;
-        const {rowsInView} = this;
-        const {currentIndex = 0} = this.state;
-        // let index = currentIndex;
-        let index = 0;
-        // let temp = scrollTop - this.lastScrollTop;
-        let temp = scrollTop ;
-        // let lastScrollTop = scrollTop;
+    handleScroll = (nextScrollTop)=> {
+        const _this = this;
         
+        const {data,height,scroll={}} = _this.props;
+        const rowHeight = height?height:defaultHeight;
+        const {currentIndex = 0 ,loadCount,scrollTop} = _this;
+        let {endIndex,startIndex} = _this;
+        const {needRender} = _this.state;
+        let index = 0;//记录下次当前位置
+        let temp = nextScrollTop ;
+        const viewHeight = parseInt(scroll.y);
+        const isOrder = nextScrollTop > scrollTop?true:false;//true为向下滚动、false为向上滚动
+        //根据scrollTop计算下次当前索引的位置
         while (temp > 0) {
           temp -= this.cachedRowHeight[index] || rowHeight
           if(temp > 0){
             index += 1
           }
         }
-        //记录上一次滚动的位置，作为缓存用
-        // this.lastScrollTop = lastScrollTop + temp;
-
-        // offset last row
-        // index -= 1
-        console.log(index);
-  
-        if (data.length - rowsInView < index) index = data.length - rowsInView
+       
+        // if (data.length - loadCount < index) index = data.length - loadCount
         if (index < 0) index = 0
         
+        //如果之前的索引和下一次的不一样则重置索引和滚动的位置
         if(currentIndex !== index){
-            this.setState({ currentIndex: index ,scrollTop:scrollTop})
+            _this.currentIndex = index;
+            _this.scrollTop = nextScrollTop;
+            let rowsInView = 0 ; //可视区域显示多少行
+            let rowsHeight = 0; //可视区域内容高度
+
+            //如果可视区域中需要展示的数据已经在缓存中则不重现render。
+            if(viewHeight){
+               //有时滚动过快时this.cachedRowHeight[rowsInView + index]为undifined
+                while(rowsHeight < viewHeight && this.cachedRowHeight[rowsInView + index] ){
+                    rowsHeight += this.cachedRowHeight[rowsInView + index];
+                    rowsInView++;
+                } 
+                // 如果rowsInView 小于 缓存的数据则重新render 
+                // 向下滚动 下临界值超出缓存的endIndex则重新渲染
+                if(rowsInView+index > endIndex - rowDiff && isOrder){
+                
+                    this.startIndex = index;
+                    endIndex = this.startIndex  + loadCount
+                    if(endIndex > data.length){
+                        endIndex = data.length 
+                    }
+                    this.endIndex = endIndex;
+                    this.setState({needRender: !needRender });
+                }
+                // 向上滚动，当前的index是否已经加载（currentIndex），若干上临界值小于startIndex则重新渲染
+                if(!isOrder && index < startIndex + rowDiff){
+                    startIndex = index - this.loadCount/2;
+                    if(startIndex<0){
+                        startIndex = 0;
+                    }
+                    this.startIndex = startIndex;
+                    this.endIndex = this.startIndex  + loadCount
+                    this.setState({needRender: !needRender });
+                }
+            }
+            console.log('**index**'+index,"**startIndex**"+this.startIndex,"**endIndex**"+this.endIndex);
         }
        
     }
@@ -108,18 +117,17 @@ export default function bigData(Table) {
     }
     render() {
       const { data } = this.props;
-      const { currentIndex,scrollTop } = this.state;
-      const {rowsInView} = this;
+      const { scrollTop } = this;
+      const {endIndex,startIndex} = this;
       const lazyLoad = {
-        preHeight: this.getSumHeight(0, currentIndex),
-        sufHeight: this.getSumHeight(currentIndex + rowsInView , data.length),
-        currentIndex:currentIndex
+        preHeight: this.getSumHeight(0, startIndex),
+        sufHeight: this.getSumHeight(endIndex , data.length),
+        startIndex:startIndex
       };
-
       return (
         <Table
           {...this.props}
-          data={data.slice(currentIndex, currentIndex + rowsInView)}
+          data={data.slice(startIndex, endIndex)}
           lazyLoad={lazyLoad}
           handleScroll={this.handleScroll}
           scrollTop={scrollTop}

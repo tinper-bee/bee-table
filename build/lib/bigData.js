@@ -36,23 +36,26 @@ function bigData(Table) {
     function BigData(props) {
       _classCallCheck(this, BigData);
 
-      var _this = _possibleConstructorReturn(this, _Component.call(this, props));
+      var _this2 = _possibleConstructorReturn(this, _Component.call(this, props));
 
-      _initialiseProps.call(_this);
+      _initialiseProps.call(_this2);
 
-      _this.state = {
-        currentIndex: 0,
+      _this2.state = {
+
         scrollLeft: 0,
         scrollTop: 0
       };
-      var rowHeight = _this.props.height ? _this.props.height : defaultHeight;
+      var rowHeight = _this2.props.height ? _this2.props.height : defaultHeight;
       //默认显示25条，rowsInView根据定高算的。在非固定高下，这个只是一个大概的值。
-      _this.rowsInView = _this.props.scroll.y ? Math.ceil(_this.props.scroll.y / rowHeight) : 25;
-      _this.cachedRowHeight = [];
-      _this.lastScrollTop = 0;
-
-      _this.setRowHeight = _this.setRowHeight.bind(_this);
-      return _this;
+      _this2.rowsInView = _this2.props.scroll.y ? Math.ceil(_this2.props.scroll.y / rowHeight) : 25;
+      _this2.currentIndex = 0;
+      _this2.loadCount = 30; //一次加载多少数据
+      _this2.cachedRowHeight = [];
+      _this2.lastScrollTop = 0;
+      _this2.startIndex = _this2.currentIndex;
+      _this2.endIndex = _this2.currentIndex + _this2.loadCount;
+      _this2.setRowHeight = _this2.setRowHeight.bind(_this2);
+      return _this2;
     }
     /**
      *获取数据区高度
@@ -108,19 +111,20 @@ function bigData(Table) {
 
     BigData.prototype.render = function render() {
       var data = this.props.data;
-      var _state = this.state,
-          currentIndex = _state.currentIndex,
-          scrollTop = _state.scrollTop;
-      var rowsInView = this.rowsInView;
+      var currentIndex = this.currentIndex,
+          scrollTop = this.scrollTop;
+      var rowsInView = this.rowsInView,
+          loadCount = this.loadCount,
+          endIndex = this.endIndex,
+          startIndex = this.startIndex;
 
       var lazyLoad = {
-        preHeight: this.getSumHeight(0, currentIndex),
-        sufHeight: this.getSumHeight(currentIndex + rowsInView, data.length),
-        currentIndex: currentIndex
+        preHeight: this.getSumHeight(0, startIndex),
+        sufHeight: this.getSumHeight(endIndex, data.length),
+        startIndex: startIndex
       };
-
       return _react2["default"].createElement(Table, _extends({}, this.props, {
-        data: data.slice(currentIndex, currentIndex + rowsInView),
+        data: data.slice(startIndex, endIndex),
         lazyLoad: lazyLoad,
         handleScroll: this.handleScroll,
         scrollTop: scrollTop,
@@ -134,43 +138,82 @@ function bigData(Table) {
     data: undefined
     // height: 40, //默认行高
   }, _initialiseProps = function _initialiseProps() {
-    var _this2 = this;
+    var _this3 = this;
 
-    this.handleScroll = function (scrollTop) {
-      console.log('scrollTop----' + scrollTop);
-      var _props = _this2.props,
+    this.handleScroll = function (nextScrollTop) {
+      var _this = _this3;
+      //将currentIndex放在this上，如果可视区域中需要展示的数据已经存在则不重现render。
+      var _props = _this3.props,
           data = _props.data,
-          height = _props.height;
+          height = _props.height,
+          _props$scroll = _props.scroll,
+          scroll = _props$scroll === undefined ? {} : _props$scroll;
 
       var rowHeight = height ? height : defaultHeight;
-      var rowsInView = _this2.rowsInView;
-      var _state$currentIndex = _this2.state.currentIndex,
-          currentIndex = _state$currentIndex === undefined ? 0 : _state$currentIndex;
-      // let index = currentIndex;
+
+      var _this$currentIndex = _this.currentIndex,
+          currentIndex = _this$currentIndex === undefined ? 0 : _this$currentIndex,
+          loadCount = _this.loadCount,
+          scrollTop = _this.scrollTop;
+      var endIndex = _this.endIndex,
+          startIndex = _this.startIndex;
+      var needRender = _this.state.needRender;
+
 
       var index = 0;
-      // let temp = scrollTop - this.lastScrollTop;
-      var temp = scrollTop;
-      // let lastScrollTop = scrollTop;
+
+      var temp = nextScrollTop;
+      var viewHeight = parseInt(scroll.y);
+      var isOrder = nextScrollTop > scrollTop ? true : false;
 
       while (temp > 0) {
-        temp -= _this2.cachedRowHeight[index] || rowHeight;
+        temp -= _this3.cachedRowHeight[index] || rowHeight;
         if (temp > 0) {
           index += 1;
         }
       }
-      //记录上一次滚动的位置，作为缓存用
-      // this.lastScrollTop = lastScrollTop + temp;
 
-      // offset last row
-      // index -= 1
-      console.log(index);
-
-      if (data.length - rowsInView < index) index = data.length - rowsInView;
+      if (data.length - loadCount < index) index = data.length - loadCount;
       if (index < 0) index = 0;
 
       if (currentIndex !== index) {
-        _this2.setState({ currentIndex: index, scrollTop: scrollTop });
+        _this.currentIndex = index;
+        _this.scrollTop = nextScrollTop;
+        var rowsInView = 0;
+        var rowsHeight = 0;
+
+        //计算下一屏显示的数据条数
+        if (viewHeight) {
+          //有时滚动过快时this.cachedRowHeight[rowsInView + index]为undifined
+          while (rowsHeight < viewHeight && _this3.cachedRowHeight[rowsInView + index]) {
+            rowsHeight += _this3.cachedRowHeight[rowsInView + index];
+            rowsInView++;
+          }
+          // 如果rowsInView 小于 缓存的数据则重新render 
+          // 向下滚动
+          if (rowsInView + index > endIndex - 3 && isOrder) {
+
+            _this3.startIndex = index;
+            endIndex = _this3.startIndex + loadCount;
+            if (endIndex > data.length - 1) {
+              endIndex = data.length - 1;
+            }
+            _this3.endIndex = endIndex;
+            _this3.setState({ needRender: !needRender });
+          }
+          // 向上滚动，当前的index是否已经加载（currentIndex）
+          if (!isOrder && index < startIndex + 3) {
+            startIndex = index - 15;
+            if (startIndex < 0) {
+              startIndex = 0;
+            }
+            _this3.startIndex = startIndex;
+            _this3.endIndex = _this3.startIndex + loadCount;
+            _this3.setState({ needRender: !needRender });
+          }
+        }
+        console.log('**index**' + index, "**startIndex**" + _this3.startIndex, "**endIndex**" + _this3.endIndex);
+        // this.setState({ scrollTop:scrollTop})
       }
     };
   }, _temp;

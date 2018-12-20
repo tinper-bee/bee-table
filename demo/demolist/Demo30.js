@@ -65,7 +65,7 @@ const columns = [
 const data = [ ...new Array(10000) ].map((e, i) => {
     const rs = { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };
     if(i%3==0){
-        rs.b = '我的性别你猜猜不定高度测试测试ing：女';
+        rs.b = '女';
     }
     return rs;
    })
@@ -89,6 +89,7 @@ class Demo1 extends Component {
           parentNodeId='parent'
           headerHeight={42}
           scroll={{y:400}}
+          height={43}
           onRowClick={(record, index, indent) => {
             this.setState({
               selectedRowIndex: index

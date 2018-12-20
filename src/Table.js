@@ -498,7 +498,7 @@ class Table extends Component {
         <TableRow height={props.lazyLoad.preHeight} columns={[]} className='' store={this.store} visible = {true}/>
       )
     }
-    const lazyCurrentIndex =  props.lazyLoad && props.lazyLoad.currentIndex ?props.lazyLoad.currentIndex :0;
+    const lazyCurrentIndex =  props.lazyLoad && props.lazyLoad.startIndex ?props.lazyLoad.startIndex :0;
     let expandedContentHeight = 0;
     for (let i = 0; i < data.length; i++) {
       const record = data[i];
@@ -984,7 +984,6 @@ class Table extends Component {
         bodyTable.scrollTop = e.target.scrollTop;
       }
       this.lastScrollTop = e.target.scrollTop;
-      console.log('handleBodyScroll---scrollTop--'+e.target.scrollTop);
       if(handleScroll){
         const scrollTop = e.target.scrollTop
         debounce(

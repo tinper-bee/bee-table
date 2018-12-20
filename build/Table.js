@@ -605,7 +605,7 @@ var Table = function (_Component) {
     if (props.lazyLoad && props.lazyLoad.preHeight) {
       rst.push(_react2["default"].createElement(_TableRow2["default"], { height: props.lazyLoad.preHeight, columns: [], className: '', store: this.store, visible: true }));
     }
-    var lazyCurrentIndex = props.lazyLoad && props.lazyLoad.currentIndex ? props.lazyLoad.currentIndex : 0;
+    var lazyCurrentIndex = props.lazyLoad && props.lazyLoad.startIndex ? props.lazyLoad.startIndex : 0;
     var expandedContentHeight = 0;
     for (var i = 0; i < data.length; i++) {
       var record = data[i];
@@ -1114,7 +1114,6 @@ var Table = function (_Component) {
         bodyTable.scrollTop = e.target.scrollTop;
       }
       this.lastScrollTop = e.target.scrollTop;
-      console.log('handleBodyScroll---scrollTop--' + e.target.scrollTop);
       if (handleScroll) {
         var scrollTop = e.target.scrollTop;
         (0, _utils.debounce)(handleScroll(scrollTop), 200);
