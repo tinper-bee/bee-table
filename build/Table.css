@@ -156,7 +156,6 @@
 .u-table {
   font-size: 12px;
   color: #666;
-  transition: opacity 0.3s ease;
   position: relative;
   line-height: 1.5;
   overflow: hidden; }
@@ -174,20 +173,17 @@
     border-collapse: collapse;
     text-align: left; }
   .u-table th {
-    font-weight: bold;
-    transition: background 0.3s ease; }
+    font-weight: bold; }
     .u-table th[colspan] {
       text-align: center; }
     .u-table th ::last-child {
       overflow: hidden; }
   .u-table td {
     border-bottom: 1px solid #e9e9e9; }
-  .u-table tr {
-    transition: all 0.3s ease; }
-    .u-table tr:hover {
-      background: rgb(227,242,253); }
-      .u-table tr:hover td .uf-eye {
-        visibility: visible !important; }
+  .u-table tr:hover {
+    background: rgb(227,242,253); }
+    .u-table tr:hover td .uf-eye {
+      visibility: visible !important; }
   .u-table tr.tr-row-hover {
     background: rgb(227,242,253); }
   .u-table th,
@@ -214,6 +210,8 @@
   .u-table-header {
     overflow: hidden;
     background: #f7f7f7; }
+  .u-table.fixed-height td {
+    padding: 0px 8px; }
   .u-table-fixed-header .u-table-body {
     background: #fff;
     position: relative; }
