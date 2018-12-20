@@ -87,9 +87,8 @@ class Demo1 extends Component {
           columns={columns}
           data={data}
           parentNodeId='parent'
-          headerHeight={42}
           scroll={{y:400}}
-          height={43}
+          height={40}
           onRowClick={(record, index, indent) => {
             this.setState({
               selectedRowIndex: index

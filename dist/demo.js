@@ -76,7 +76,7 @@
 	
 	var CARETUP = _react2['default'].createElement('i', { className: 'uf uf-arrow-up' });
 	
-	var Demo30 = __webpack_require__(79);var DemoArray = [{ "example": _react2['default'].createElement(Demo30, null), "title": " 大数据加载", "code": "/**\n*\n* @title 大数据加载\n* 【Tooltip】\n* @description\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Tooltip } from 'tinper-bee';\nimport BigData from \"tinper-bee/lib/bigData\";;\nconst BigDataTable = BigData(Table);\nconst columns = [\n    {\n        title:'序号',\n        dataIndex:'index',\n        width:'50',\n        render:(text,record,index)=>{\n            return index\n        },\n        fixed:'left'\n    },\n    {\n    title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 580, className: \"rowClassName\",\n    render: (text, record, index) => {\n      return (\n        <Tooltip inverse overlay={text}>\n          <span tootip={text} style={{\n            display: \"inline-block\",\n            width: \"80px\",\n            textOverflow: \"ellipsis\",\n            overflow: \"hidden\",\n            whiteSpace: \"nowrap\",\n            verticalAlign: \"middle\",\n          }}>{text}</span>\n        </Tooltip>\n      );\n    }\n  },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 80},\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    fixed:'right',\n    render(text, record, index) {\n      return (\n        <div style={{ position: 'relative' }} title={text} >\n          <a\n            href=\"javascript:;\"\n            tooltip={text}\n            onClick={() => {\n              alert('这是第' + index + '列，内容为:' + text);\n            }}\n          >\n            一些操作\n              </a>\n        </div>\n      );\n    }\n  }\n];\n\nconst data = [ ...new Array(10000) ].map((e, i) => {\n    const rs = { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };\n    if(i%3==0){\n        rs.b = '女';\n    }\n    return rs;\n   })\n\n\nclass Demo1 extends Component {\n\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: data,\n      selectedRowIndex: 0\n    }\n  }\n\n  render() {\n    return (\n        <BigDataTable\n          columns={columns}\n          data={data}\n          parentNodeId='parent'\n          headerHeight={42}\n          scroll={{y:400}}\n          height={43}\n          onRowClick={(record, index, indent) => {\n            this.setState({\n              selectedRowIndex: index\n            });\n          }}\n        />\n\n     \n    );\n  }\n}\n\n\n", "desc": "" }];
+	var Demo30 = __webpack_require__(79);var DemoArray = [{ "example": _react2['default'].createElement(Demo30, null), "title": " 大数据加载", "code": "/**\n*\n* @title 大数据加载\n* 【Tooltip】\n* @description\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Tooltip } from 'tinper-bee';\nimport BigData from \"tinper-bee/lib/bigData\";;\nconst BigDataTable = BigData(Table);\nconst columns = [\n    {\n        title:'序号',\n        dataIndex:'index',\n        width:'50',\n        render:(text,record,index)=>{\n            return index\n        },\n        fixed:'left'\n    },\n    {\n    title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 580, className: \"rowClassName\",\n    render: (text, record, index) => {\n      return (\n        <Tooltip inverse overlay={text}>\n          <span tootip={text} style={{\n            display: \"inline-block\",\n            width: \"80px\",\n            textOverflow: \"ellipsis\",\n            overflow: \"hidden\",\n            whiteSpace: \"nowrap\",\n            verticalAlign: \"middle\",\n          }}>{text}</span>\n        </Tooltip>\n      );\n    }\n  },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 80},\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    fixed:'right',\n    render(text, record, index) {\n      return (\n        <div style={{ position: 'relative' }} title={text} >\n          <a\n            href=\"javascript:;\"\n            tooltip={text}\n            onClick={() => {\n              alert('这是第' + index + '列，内容为:' + text);\n            }}\n          >\n            一些操作\n              </a>\n        </div>\n      );\n    }\n  }\n];\n\nconst data = [ ...new Array(10000) ].map((e, i) => {\n    const rs = { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };\n    if(i%3==0){\n        rs.b = '女';\n    }\n    return rs;\n   })\n\n\nclass Demo1 extends Component {\n\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: data,\n      selectedRowIndex: 0\n    }\n  }\n\n  render() {\n    return (\n        <BigDataTable\n          columns={columns}\n          data={data}\n          parentNodeId='parent'\n          scroll={{y:400}}\n          height={40}\n          onRowClick={(record, index, indent) => {\n            this.setState({\n              selectedRowIndex: index\n            });\n          }}\n        />\n\n     \n    );\n  }\n}\n\n\n", "desc": "" }];
 	
 	var Demo = function (_Component) {
 	    _inherits(Demo, _Component);
@@ -7932,9 +7932,8 @@
 	      columns: columns,
 	      data: data,
 	      parentNodeId: "parent",
-	      headerHeight: 42,
 	      scroll: { y: 400 },
-	      height: 43,
+	      height: 40,
 	      onRowClick: function onRowClick(record, index, indent) {
 	        _this2.setState({
 	          selectedRowIndex: index
@@ -53230,7 +53229,7 @@
 /* 481 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -53238,13 +53237,17 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	exports["default"] = bigData;
+	exports['default'] = bigData;
 	
 	var _react = __webpack_require__(4);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	var _propTypes = __webpack_require__(5);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
 	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
 	
@@ -53278,9 +53281,10 @@
 	      //默认显示25条，rowsInView根据定高算的。在非固定高下，这个只是一个大概的值。
 	      _this2.rowsInView = _this2.props.scroll.y ? Math.ceil(_this2.props.scroll.y / rowHeight) : 25;
 	      _this2.currentIndex = 0;
-	      _this2.loadCount = 30; //一次加载多少数据
+	      _this2.loadCount = props.loadCount ? props.loadCount : 30; //一次加载多少数据
 	      _this2.cachedRowHeight = []; //缓存每行的高度
 	      _this2.lastScrollTop = 0;
+	      _this2.currentScrollTop = 0;
 	      _this2.startIndex = _this2.currentIndex; //数据开始位置
 	      _this2.endIndex = _this2.currentIndex + _this2.loadCount; //数据结束位置 
 	      _this2.setRowHeight = _this2.setRowHeight.bind(_this2);
@@ -53324,7 +53328,7 @@
 	        sufHeight: this.getSumHeight(endIndex, data.length),
 	        startIndex: startIndex
 	      };
-	      return _react2["default"].createElement(Table, _extends({}, this.props, {
+	      return _react2['default'].createElement(Table, _extends({}, this.props, {
 	        data: data.slice(startIndex, endIndex),
 	        lazyLoad: lazyLoad,
 	        handleScroll: this.handleScroll,
@@ -53337,6 +53341,8 @@
 	    return BigData;
 	  }(_react.Component), _class.defaultProps = {
 	    data: []
+	  }, _class.propTypes = {
+	    loadCount: _propTypes2['default'].number
 	  }, _initialiseProps = function _initialiseProps() {
 	    var _this3 = this;
 	
@@ -53353,26 +53359,40 @@
 	      var _this$currentIndex = _this.currentIndex,
 	          currentIndex = _this$currentIndex === undefined ? 0 : _this$currentIndex,
 	          loadCount = _this.loadCount,
-	          scrollTop = _this.scrollTop;
+	          scrollTop = _this.scrollTop,
+	          currentScrollTop = _this.currentScrollTop;
 	      var endIndex = _this.endIndex,
 	          startIndex = _this.startIndex;
 	      var needRender = _this.state.needRender;
 	
-	      var index = 0; //记录下次当前位置
-	      var temp = nextScrollTop;
+	
+	      var index = currentIndex; //记录下次当前位置
+	      var temp = currentIndex ? nextScrollTop - currentScrollTop : nextScrollTop;
 	      var viewHeight = parseInt(scroll.y);
-	      var isOrder = nextScrollTop > scrollTop ? true : false; //true为向下滚动、false为向上滚动
+	      var isOrder = temp > 0 ? true : false; //true为向下滚动、false为向上滚动
+	
 	      //根据scrollTop计算下次当前索引的位置
-	      while (temp > 0) {
-	        temp -= _this3.cachedRowHeight[index] || rowHeight;
-	        if (temp > 0) {
-	          index += 1;
+	      if (isOrder) {
+	        while (temp > 0) {
+	          temp -= _this3.cachedRowHeight[index] || rowHeight;
+	          if (temp > 0) {
+	            index += 1;
+	            //保存当前index对应的scrollTop
+	            _this3.currentScrollTop += _this3.cachedRowHeight[index] || rowHeight;
+	          }
+	        }
+	      } else {
+	        while (temp < 0) {
+	          temp += _this3.cachedRowHeight[index] || rowHeight;
+	          if (temp < 0) {
+	            index -= 1;
+	            _this3.currentScrollTop -= _this3.cachedRowHeight[index] || rowHeight;
+	          }
 	        }
 	      }
 	
-	      // if (data.length - loadCount < index) index = data.length - loadCount
 	      if (index < 0) index = 0;
-	
+	      console.log('currentIndex****' + index);
 	      //如果之前的索引和下一次的不一样则重置索引和滚动的位置
 	      if (currentIndex !== index) {
 	        _this.currentIndex = index;
@@ -53415,7 +53435,7 @@
 	    };
 	  }, _temp;
 	}
-	module.exports = exports["default"];
+	module.exports = exports['default'];
 
 /***/ })
 /******/ ]);

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import PropTypes from 'prop-types';
 
 const defaultHeight = 40;
 const rowDiff = 3;//行差值
@@ -10,6 +10,9 @@ export default function bigData(Table) {
     static  defaultProps = {
         data: []
     };
+    static propTypes = {
+        loadCount: PropTypes.number,
+    }
     constructor(props) {
       super(props);
       this.state = {
@@ -20,9 +23,10 @@ export default function bigData(Table) {
       //默认显示25条，rowsInView根据定高算的。在非固定高下，这个只是一个大概的值。
       this.rowsInView =  this.props.scroll.y?Math.ceil(this.props.scroll.y/rowHeight):25 ;
       this.currentIndex = 0;
-      this.loadCount = 30;//一次加载多少数据
+      this.loadCount = props.loadCount?props.loadCount:30;//一次加载多少数据
       this.cachedRowHeight = [];//缓存每行的高度
       this.lastScrollTop = 0;
+      this.currentScrollTop = 0;
       this.startIndex = this.currentIndex;//数据开始位置
       this.endIndex = this.currentIndex + this.loadCount//数据结束位置 
       this.setRowHeight = this.setRowHeight.bind(this);
@@ -46,30 +50,48 @@ export default function bigData(Table) {
       }
       return sumHeight;
     }
-
-    handleScroll = (nextScrollTop)=> {
+/**
+ *@description  根据返回的scrollTop计算当前的索引。此处做了两次缓存一个是根据上一次的currentIndex计算当前currentIndex。另一个是根据当前内容区的数据是否在缓存中如果在则不重新render页面
+ *@param 最新一次滚动的scrollTop
+ */
+handleScroll = (nextScrollTop)=> {
         const _this = this;
         
         const {data,height,scroll={}} = _this.props;
         const rowHeight = height?height:defaultHeight;
-        const {currentIndex = 0 ,loadCount,scrollTop} = _this;
+        const {currentIndex = 0 ,loadCount,scrollTop,currentScrollTop} = _this;
         let {endIndex,startIndex} = _this;
         const {needRender} = _this.state;
-        let index = 0;//记录下次当前位置
-        let temp = nextScrollTop ;
+
+        let index = currentIndex;//记录下次当前位置
+        let temp = currentIndex ?nextScrollTop - currentScrollTop:nextScrollTop;
         const viewHeight = parseInt(scroll.y);
-        const isOrder = nextScrollTop > scrollTop?true:false;//true为向下滚动、false为向上滚动
+        const isOrder = temp > 0 ?true:false;//true为向下滚动、false为向上滚动
+        
         //根据scrollTop计算下次当前索引的位置
-        while (temp > 0) {
-          temp -= this.cachedRowHeight[index] || rowHeight
-          if(temp > 0){
-            index += 1
-          }
+        if(isOrder){
+            while (temp > 0) {
+                temp -= this.cachedRowHeight[index] || rowHeight
+                if(temp > 0){
+                  index += 1
+                  //保存当前index对应的scrollTop
+                this.currentScrollTop += this.cachedRowHeight[index]|| rowHeight;
+                }
+              }
+        }else{
+            while(temp < 0){
+                temp += this.cachedRowHeight[index] || rowHeight
+                if(temp < 0){
+                  index -= 1
+                  this.currentScrollTop -= this.cachedRowHeight[index]|| rowHeight;
+                }
+            }
+              
         }
        
-        // if (data.length - loadCount < index) index = data.length - loadCount
+       
         if (index < 0) index = 0
-        
+        console.log('currentIndex****'+index);
         //如果之前的索引和下一次的不一样则重置索引和滚动的位置
         if(currentIndex !== index){
             _this.currentIndex = index;
