@@ -66,7 +66,7 @@ class TableCell extends Component{
     }
     //不是固定表格并且当前列是固定，则隐藏当前列
     if(column.fixed && !fixed){
-      className = className+`${clsPrefix}-fixed-columns-in-body`;
+      className = className+` ${clsPrefix}-fixed-columns-in-body`;
     }
     return (
       <td
