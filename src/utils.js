@@ -174,14 +174,15 @@ export function getColChildrenLength(columns,chilrenLen){
 
 
  function addHandler(element,type,handler){
-
+  let event = null;
   if(element.addEventListener){//检测是否为DOM2级方法
-      element.addEventListener(type, handler, false);
+    event = element.addEventListener(type, handler, false);
   }else if (element.attachEvent){//检测是否为IE级方法
-      element.attachEvent("on" + type, handler);
+    event = element.attachEvent("on" + type, handler);
   } else {//检测是否为DOM0级方法
-      element["on" + type] = handler;
+    event = element["on" + type] = handler;
   }
+  return event;
 }
 
  function removeHandler(element, type, handler){
@@ -248,6 +249,30 @@ export const EventUtil = {
       }
   }
 }
+
+/*
+ * 处理精度
+ */
+export function DicimalFormater(value,precision) {
+  var value = value + '',
+      precision = precision?precision:0;
+  for (var i = 0; i < value.length; i++) {
+      if ("-0123456789.".indexOf(value.charAt(i)) == -1)
+          return "";
+  }
+  return checkDicimalInvalid(value, precision);
+};
+export function checkDicimalInvalid(value, precision) {
+  if (value == null || isNaN(value))
+      return "";
+  // 浮点数总位数不能超过10位
+  var digit = parseFloat(value);
+  var result = (digit * Math.pow(10, precision) / Math.pow(10, precision))
+      .toFixed(precision);
+  if (result == "NaN")
+      return "";
+  return result;
+};
 
 export const Event = {
   addHandler,

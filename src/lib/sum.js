@@ -1,5 +1,6 @@
 import React from "react";
 
+import {DicimalFormater} from "../utils";
 export default function sum(Table) {
   return class SumTable extends React.Component {
     //无状态
@@ -56,14 +57,14 @@ export default function sum(Table) {
           let count = 0;
           data.forEach((da,i)=>{
             
-            let _num = parseInt(da[column.key]);
+            let _num = parseFloat(da[column.key]);
             //排查字段值为NAN情况
-            if(_num === _num){
+            if(_num == _num){
               count += _num;
             }
             
           })
-          sumdata[column.dataIndex] = count;
+          sumdata[column.dataIndex] = DicimalFormater(count,2);
         }
         if(index == 0){
           sumdata[column.dataIndex] = "合计 "+sumdata[column.dataIndex];
