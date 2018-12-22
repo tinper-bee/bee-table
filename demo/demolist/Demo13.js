@@ -64,9 +64,13 @@ const columns13 = [
 ];
 
 const data13 = [
-  { a: "令狐冲", b: 43, c: 41, d: "大侠",e:90.52, key: "1" },
-
+  { a: "杨过", b: 675, c: 30, d: "内行",e:100, key: "2" },
+  { a: "令狐冲", b: 43, c: 41, d: "大侠",e:90, key: "1" },
+  { a: "令狐冲1", b: 43, c: 81, d: "大侠", e:120,key: "4" },
+  { a: "令狐冲2", b: 43, c: 81, d: "大侠", e:130,key: "5" },
+  { a: "郭靖", b: 153, c: 25, d: "大侠",e:90, key: "3" }
 ];
+
 
 //拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常
 let ComplexTable = multiSelect(sum(sort(Table, Icon)), Checkbox);
@@ -123,7 +127,6 @@ class Demo13 extends Component {
           data={this.state.data13}
           multiSelect={multiObj}
           sort={sortObj}
-          scroll={{x:'100%',y:100}}
           getSelectedDataFunc={this.getSelectedDataFunc}
         />
       </div>
