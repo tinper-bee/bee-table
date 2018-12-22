@@ -87,7 +87,7 @@ class Demo1 extends Component {
           columns={columns}
           data={data}
           parentNodeId='parent'
-          scroll={{y:400}}
+          scroll={{y:300}}
           height={40}
           onRowClick={(record, index, indent) => {
             this.setState({

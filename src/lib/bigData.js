@@ -87,7 +87,6 @@ handleScroll = (nextScrollTop)=> {
                   this.currentScrollTop -= this.cachedRowHeight[index]|| rowHeight;
                 }
             }
-              
         }
        
        
