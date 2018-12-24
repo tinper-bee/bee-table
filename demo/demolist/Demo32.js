@@ -14,9 +14,8 @@ import Table from "../../src";
 import BigData from "../../src/lib/bigData";
 import multiSelect from '../../src/lib/MultiSelect';
 import filterColumn from '../../src/lib/filterColumn';
-import sort from '../../src/lib/sort';
 
-let  ComplexTable = filterColumn(BigData(multiSelect(Table, Checkbox)), Popover, Icon);
+let  ComplexTable = filterColumn(multiSelect(BigData(Table), Checkbox), Popover, Icon);
 
 const columns = [
     {
@@ -88,6 +87,9 @@ class Demo32 extends Component {
       selectedRowIndex: 0
     }
   }
+  getSelectedDataFunc = data => {
+    console.log(data);
+  };
 
   render() {
     return (
@@ -102,9 +104,8 @@ class Demo32 extends Component {
               selectedRowIndex: index
             });
           }}
-        />
+          getSelectedDataFunc={this.getSelectedDataFunc}/>
 
-     
     );
   }
 }

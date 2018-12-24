@@ -760,12 +760,12 @@ class Table extends Component {
         if (scroll.x === true) {
           tableStyle.tableLayout = 'fixed';
         } else {
-          tableStyle.width = this.contentWidth - this.columnManager.getLeftColumnsWidth() - this.columnManager.getRightColumnsWidth();
+          tableStyle.width = this.contentWidth - this.columnManager.getLeftColumnsWidth(this.contentWidth) - this.columnManager.getRightColumnsWidth(this.contentWidth);
         }
       }
       // 自动出现滚动条
       if ( !fixed && this.contentDomWidth < this.contentWidth) {
-        tableStyle.width = this.contentWidth - this.columnManager.getLeftColumnsWidth() - this.columnManager.getRightColumnsWidth();
+        tableStyle.width = this.contentWidth - this.columnManager.getLeftColumnsWidth(this.contentWidth) - this.columnManager.getRightColumnsWidth(this.contentWidth);
       }
       const tableBody = hasBody ? getBodyWrapper(
         <tbody className={`${clsPrefix}-tbody`}>
@@ -840,8 +840,8 @@ class Table extends Component {
         </div>
       );
     }
-    const leftFixedWidth = this.columnManager.getLeftColumnsWidth();
-    const rightFixedWidth = this.columnManager.getRightColumnsWidth();
+    const leftFixedWidth = this.columnManager.getLeftColumnsWidth(this.contentWidth);
+    const rightFixedWidth = this.columnManager.getRightColumnsWidth(this.contentWidth);
     let parStyle = {}
     if(!fixed){
       parStyle = {'marginLeft':leftFixedWidth,'marginRight':rightFixedWidth}

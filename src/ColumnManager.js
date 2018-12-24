@@ -177,24 +177,32 @@ export default class ColumnManager {
     return res;
   }
 
-  getLeftColumnsWidth() {
+  getLeftColumnsWidth(contentWidth=1) {
     return this._cache('leftColumnsWidth', () => {
        let leftColumnsWidth =0;
        this.groupedColumns().forEach(column =>{
         if (column.fixed === 'left' || column.fixed === true){
-          leftColumnsWidth += column.width;
+          let width = column.width;
+          if(typeof(width) == 'string' && width.includes('%') ){
+            width = contentWidth *  parseInt(col.width) /100;
+          }
+          leftColumnsWidth += parseInt(width)
         }
        });
        return leftColumnsWidth;
     });
   }
 
-  getRightColumnsWidth() {
+  getRightColumnsWidth(contentWidth=1) {
     return this._cache('rightColumnsWidth', () => {
       let rightColumnsWidth =0;
       this.groupedColumns().forEach(column =>{
        if (column.fixed === 'right'){
-        rightColumnsWidth += column.width;
+        let width = column.width;
+        if(typeof(width) == 'string' && width.includes('%') ){
+          width = contentWidth *  parseInt(col.width) /100;
+        }
+        rightColumnsWidth += parseInt(width)
        }
       });
       return rightColumnsWidth;
