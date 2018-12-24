@@ -62,7 +62,9 @@ var defaultProps = {
 
   expandIconColumnIndex: 0,
   expandRowByClick: false,
-  onHover: function onHover() {}
+  onHover: function onHover() {},
+
+  className: ''
 };
 
 var TableRow = function (_Component) {

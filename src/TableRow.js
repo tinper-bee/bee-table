@@ -38,6 +38,7 @@ const defaultProps = {
     expandIconColumnIndex: 0,
     expandRowByClick: false,
     onHover() {},
+    className:''
 };
 
 class TableRow extends Component{
@@ -212,7 +213,7 @@ class TableRow extends Component{
         style={style}
         ref={this.bindElement}
       >
-        {cells}
+        {cells.length>0?cells:<td></td>}
       </tr>
     );
   }

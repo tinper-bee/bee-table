@@ -235,11 +235,17 @@ var ColumnManager = function () {
   ColumnManager.prototype.getLeftColumnsWidth = function getLeftColumnsWidth() {
     var _this13 = this;
 
+    var contentWidth = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+
     return this._cache('leftColumnsWidth', function () {
       var leftColumnsWidth = 0;
       _this13.groupedColumns().forEach(function (column) {
         if (column.fixed === 'left' || column.fixed === true) {
-          leftColumnsWidth += column.width;
+          var width = column.width;
+          if (typeof width == 'string' && width.includes('%')) {
+            width = contentWidth * parseInt(col.width) / 100;
+          }
+          leftColumnsWidth += parseInt(width);
         }
       });
       return leftColumnsWidth;
@@ -249,11 +255,17 @@ var ColumnManager = function () {
   ColumnManager.prototype.getRightColumnsWidth = function getRightColumnsWidth() {
     var _this14 = this;
 
+    var contentWidth = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+
     return this._cache('rightColumnsWidth', function () {
       var rightColumnsWidth = 0;
       _this14.groupedColumns().forEach(function (column) {
         if (column.fixed === 'right') {
-          rightColumnsWidth += column.width;
+          var width = column.width;
+          if (typeof width == 'string' && width.includes('%')) {
+            width = contentWidth * parseInt(col.width) / 100;
+          }
+          rightColumnsWidth += parseInt(width);
         }
       });
       return rightColumnsWidth;

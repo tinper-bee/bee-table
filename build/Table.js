@@ -864,12 +864,12 @@ var Table = function (_Component) {
         if (scroll.x === true) {
           tableStyle.tableLayout = 'fixed';
         } else {
-          tableStyle.width = _this4.contentWidth - _this4.columnManager.getLeftColumnsWidth() - _this4.columnManager.getRightColumnsWidth();
+          tableStyle.width = _this4.contentWidth - _this4.columnManager.getLeftColumnsWidth(_this4.contentWidth) - _this4.columnManager.getRightColumnsWidth(_this4.contentWidth);
         }
       }
       // 自动出现滚动条
       if (!fixed && _this4.contentDomWidth < _this4.contentWidth) {
-        tableStyle.width = _this4.contentWidth - _this4.columnManager.getLeftColumnsWidth() - _this4.columnManager.getRightColumnsWidth();
+        tableStyle.width = _this4.contentWidth - _this4.columnManager.getLeftColumnsWidth(_this4.contentWidth) - _this4.columnManager.getRightColumnsWidth(_this4.contentWidth);
       }
       var tableBody = hasBody ? getBodyWrapper(_react2["default"].createElement(
         'tbody',
@@ -945,8 +945,8 @@ var Table = function (_Component) {
         )
       );
     }
-    var leftFixedWidth = this.columnManager.getLeftColumnsWidth();
-    var rightFixedWidth = this.columnManager.getRightColumnsWidth();
+    var leftFixedWidth = this.columnManager.getLeftColumnsWidth(this.contentWidth);
+    var rightFixedWidth = this.columnManager.getRightColumnsWidth(this.contentWidth);
     var parStyle = {};
     if (!fixed) {
       parStyle = { 'marginLeft': leftFixedWidth, 'marginRight': rightFixedWidth };

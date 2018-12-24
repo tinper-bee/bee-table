@@ -99,6 +99,7 @@ class Demo32 extends Component {
           parentNodeId='parent'
           scroll={{y:300}}
           height={40}
+          bordered
           onRowClick={(record, index, indent) => {
             this.setState({
               selectedRowIndex: index
