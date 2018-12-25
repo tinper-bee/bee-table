@@ -9,6 +9,7 @@ import addEventListener from 'tinper-bee-core/lib/addEventListener';
 import ColumnManager from './ColumnManager';
 import createStore from './createStore';
 import Loading from 'bee-loading';
+import { Event,EventUtil} from "./utils";
 
 const propTypes = {
   data: PropTypes.array,
@@ -134,6 +135,14 @@ class Table extends Component {
     this.handleRowHover = this.handleRowHover.bind(this);
     this.computeTableWidth = this.computeTableWidth.bind(this);
   }
+
+  componentWillMount() {
+    EventUtil.addHandler(document,'keydown',this.onKeyDown);
+  }
+
+  componentWillUnmount() {
+    EventUtil.removeHandler(document,'keydown',this.onKeyDown);
+  }   
 
   componentDidMount() {
     setTimeout(this.resetScrollY, 300);
@@ -977,7 +986,24 @@ class Table extends Component {
         currentHoverKey: isHover ? key : null,
       });
     }
+  }
 
+  onKeyDown=(e)=>{
+    let event = Event.getEvent(e);
+    // event.preventDefault?event.preventDefault():event.returnValue = false;
+    if (event.keyCode === 9){//tab
+      this.props.onKeyTab&&this.props.onKeyTab();
+    }else if(event.keyCode === 38){//up
+      this.props.onKeyUp&&this.props.onKeyUp();
+    }else if(event.keyCode === 40){//down
+      this.props.onKeyDown&&this.props.onKeyDown();
+    }
+    this.props.onTabkeKeyDown&&this.props.onTabkeKeyDown();
+    // else if(event.altKey && event.keyCode === 38){
+    //   this.props.onKeyMove&&this.props.onKeyMove('up');
+    // }else if(event.altKey && event.keyCode === 40){
+    //   this.props.onKeyMove&&this.props.onKeyMove('down');
+    // }
   }
 
   render() {
@@ -1008,7 +1034,7 @@ class Table extends Component {
     const leftFixedWidth = this.columnManager.getLeftColumnsWidth();
     const rightFixedWidth = this.columnManager.getRightColumnsWidth();
     return (
-      <div className={className} style={props.style} ref={el => this.contentTable = el}>
+      <div className={className} style={props.style} ref={el => this.contentTable = el} tabIndex="0" >
         {this.getTitle()}
         <div className={`${clsPrefix}-content`}>
          
