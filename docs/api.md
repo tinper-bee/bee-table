@@ -55,9 +55,15 @@ import 'bee-table/build/Table.css';
 | headerScroll       | 表头下是否显示滚动条 | bool| false
 | sort       | 排序的属性 | object| {  mode:'single'//单列排序,  backSource:false //默认是前端排序，值为true为后端排序 } mode:multiple-多列排序
 | syncHover       | 是否同步Hover状态到左侧Checkbox，关闭此功能有助于提升性能 | bool| true
+| onKeyTab       | tab快捷键，可以处理默认选中第一条数据 | function| -
+| onKeyUp       | up快捷键，可以处理table的上一条数据 | function| -
+| onKeyDown       | up快捷键，可以处理table的下一条数据 | function| -
+| onTabkeKeyDown       | 触发table的快捷键 | function| -
 
+> 快捷键部分参考示例 (快捷键在table中的简单使用应用)
 
 *注意: data参数中的key值必需，否则会导致部分功能出现问题！建议使用唯一的值，如id*
+
 
 
 ### Column
