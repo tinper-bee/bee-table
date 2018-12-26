@@ -732,7 +732,7 @@ var Table = function (_Component) {
         width = width + contentWidthDiff;
       }
       if (!fixed && c.fixed) {
-        fixedClass = _this3.props.clsPrefix + '-row-fixed-columns-in-body';
+        fixedClass = ' ' + _this3.props.clsPrefix + '-row-fixed-columns-in-body';
       }
       return _react2["default"].createElement('col', { key: c.key, style: { width: width, minWidth: c.width }, className: fixedClass });
     }));
