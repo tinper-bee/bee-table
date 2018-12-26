@@ -691,7 +691,7 @@ var Table = function (_Component) {
         record: record,
         expandIconAsCell: expandIconAsCell,
         onDestroy: this.onRowDestroy,
-        index: fixedIndex,
+        index: fixedIndex + lazyCurrentIndex,
         visible: visible,
         expandRowByClick: expandRowByClick,
         onExpand: this.onExpanded,

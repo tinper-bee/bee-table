@@ -148,7 +148,7 @@ var TableRow = function (_Component) {
         fixed = _props3.fixed;
 
     if (!setRowHeight || !this.element || fixed) return;
-    setRowHeight(this.element.clientHeight + expandedContentHeight, this.props.index + lazyCurrentIndex);
+    setRowHeight(this.element.clientHeight + expandedContentHeight, this.props.index);
   };
 
   TableRow.prototype.onRowClick = function onRowClick(event) {
@@ -258,7 +258,7 @@ var TableRow = function (_Component) {
         record: record,
         indentSize: indentSize,
         indent: indent,
-        index: index + lazyCurrentIndex,
+        index: index,
         column: columns[i],
         key: columns[i].key,
         fixed: fixed,
