@@ -508,13 +508,14 @@ class Table extends Component {
       )
     }
     const lazyCurrentIndex =  props.lazyLoad && props.lazyLoad.startIndex ?props.lazyLoad.startIndex :0;
-    let expandedContentHeight = 0;
+    
     for (let i = 0; i < data.length; i++) {
       const record = data[i];
       const key = this.getRowKey(record, i);
       const childrenColumn = record[childrenColumnName];
       const isRowExpanded = this.isRowExpanded(record, i);
       let expandedRowContent;
+      let expandedContentHeight = 0;
       if (expandedRowRender && isRowExpanded) {
         expandedRowContent = expandedRowRender(record, i, indent);
         expandedContentHeight = parseInt(expandedRowContent.props.style && expandedRowContent.props.style.height?expandedRowContent.props.style.height:0);

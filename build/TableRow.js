@@ -141,7 +141,8 @@ var TableRow = function (_Component) {
   TableRow.prototype.setRowHeight = function setRowHeight() {
     var _props3 = this.props,
         setRowHeight = _props3.setRowHeight,
-        expandedContentHeight = _props3.expandedContentHeight,
+        _props3$expandedConte = _props3.expandedContentHeight,
+        expandedContentHeight = _props3$expandedConte === undefined ? 0 : _props3$expandedConte,
         _props3$lazyCurrentIn = _props3.lazyCurrentIndex,
         lazyCurrentIndex = _props3$lazyCurrentIn === undefined ? 0 : _props3$lazyCurrentIn,
         fixed = _props3.fixed;

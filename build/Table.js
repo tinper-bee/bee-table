@@ -635,16 +635,17 @@ var Table = function (_Component) {
       rst.push(_react2["default"].createElement(_TableRow2["default"], { height: props.lazyLoad.preHeight, columns: [], className: '', store: this.store, visible: true }));
     }
     var lazyCurrentIndex = props.lazyLoad && props.lazyLoad.startIndex ? props.lazyLoad.startIndex : 0;
-    var expandedContentHeight = 0;
+
     for (var i = 0; i < data.length; i++) {
       var record = data[i];
       var key = this.getRowKey(record, i);
       var childrenColumn = record[childrenColumnName];
       var isRowExpanded = this.isRowExpanded(record, i);
       var expandedRowContent = void 0;
+      var expandedContentHeight = 0;
       if (expandedRowRender && isRowExpanded) {
         expandedRowContent = expandedRowRender(record, i, indent);
-        expandedContentHeight = parseInt(expandedRowContent.props.style ? expandedRowContent.props.style.height : 0);
+        expandedContentHeight = parseInt(expandedRowContent.props.style && expandedRowContent.props.style.height ? expandedRowContent.props.style.height : 0);
       }
       //只有当使用expandedRowRender参数的时候才去识别isHiddenExpandIcon（隐藏行展开的icon）
       if (expandedRowRender && typeof props.haveExpandIcon == 'function') {
@@ -1144,8 +1145,7 @@ var Table = function (_Component) {
       }
       this.lastScrollTop = e.target.scrollTop;
       if (handleScroll) {
-        var scrollTop = e.target.scrollTop;
-        (0, _utils.debounce)(handleScroll(scrollTop), 200);
+        (0, _utils.debounce)(handleScroll(this.lastScrollTop), 500);
       }
     }
 
