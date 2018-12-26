@@ -508,7 +508,7 @@ class Table extends Component {
       let expandedRowContent;
       if (expandedRowRender && isRowExpanded) {
         expandedRowContent = expandedRowRender(record, i, indent);
-        expandedContentHeight = parseInt(expandedRowContent.props.style?expandedRowContent.props.style.height:0);
+        expandedContentHeight = parseInt(expandedRowContent.props.style && expandedRowContent.props.style.height?expandedRowContent.props.style.height:0);
       }
       //只有当使用expandedRowRender参数的时候才去识别isHiddenExpandIcon（隐藏行展开的icon）
       if (expandedRowRender && typeof props.haveExpandIcon == 'function') {
@@ -985,10 +985,9 @@ class Table extends Component {
       }
       this.lastScrollTop = e.target.scrollTop;
       if(handleScroll){
-        const scrollTop = e.target.scrollTop
         debounce(
-          handleScroll(scrollTop)
-        ,200);
+          handleScroll(this.lastScrollTop)
+        ,500);
         
       }
     }

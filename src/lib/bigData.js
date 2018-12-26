@@ -58,7 +58,7 @@ export default function bigData(Table) {
  */
 handleScroll = (nextScrollTop)=> {
         const _this = this;
-        const {data,height,scroll={}} = _this.props;
+        const {data,height,scroll={},loadBuffer} = _this.props;
         const rowHeight = height?height:defaultHeight;
         const {currentIndex = 0 ,loadCount,scrollTop,currentScrollTop} = _this;
         let {endIndex,startIndex} = _this;
@@ -117,7 +117,7 @@ handleScroll = (nextScrollTop)=> {
                 // 向下滚动 下临界值超出缓存的endIndex则重新渲染
                 if(rowsInView+index > endIndex - rowDiff && isOrder){
                 
-                    this.startIndex = index;
+                    this.startIndex = index - loadBuffer;
                     endIndex = this.startIndex  + loadCount
                     if(endIndex > data.length){
                         endIndex = data.length 
@@ -127,7 +127,7 @@ handleScroll = (nextScrollTop)=> {
                 }
                 // 向上滚动，当前的index是否已经加载（currentIndex），若干上临界值小于startIndex则重新渲染
                 if(!isOrder && index < startIndex + rowDiff){
-                    startIndex = index - parseInt(this.loadCount/2);//有时会是小数问题，所以parseInt转换下
+                    startIndex = index - loadBuffer;
                     if(startIndex<0){
                         startIndex = 0;
                     }

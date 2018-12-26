@@ -124,12 +124,12 @@ function bigData(Table) {
 
     this.handleScroll = function (nextScrollTop) {
       var _this = _this3;
-
       var _this$props = _this.props,
           data = _this$props.data,
           height = _this$props.height,
           _this$props$scroll = _this$props.scroll,
-          scroll = _this$props$scroll === undefined ? {} : _this$props$scroll;
+          scroll = _this$props$scroll === undefined ? {} : _this$props$scroll,
+          loadBuffer = _this$props.loadBuffer;
 
       var rowHeight = height ? height : defaultHeight;
       var _this$currentIndex = _this.currentIndex,
@@ -195,7 +195,7 @@ function bigData(Table) {
           // 向下滚动 下临界值超出缓存的endIndex则重新渲染
           if (rowsInView + index > endIndex - rowDiff && isOrder) {
 
-            _this3.startIndex = index;
+            _this3.startIndex = index - loadBuffer;
             endIndex = _this3.startIndex + loadCount;
             if (endIndex > data.length) {
               endIndex = data.length;
@@ -205,7 +205,7 @@ function bigData(Table) {
           }
           // 向上滚动，当前的index是否已经加载（currentIndex），若干上临界值小于startIndex则重新渲染
           if (!isOrder && index < startIndex + rowDiff) {
-            startIndex = index - parseInt(_this3.loadCount / 2); //有时会是小数问题，所以parseInt转换下
+            startIndex = index - loadBuffer;
             if (startIndex < 0) {
               startIndex = 0;
             }

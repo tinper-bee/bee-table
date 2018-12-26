@@ -85,8 +85,9 @@ class Demo31 extends Component {
     
     return (
       <Table
+        
         columns={innerColumns}
-        style={{height:height}}
+        // style={{height:height}}
         data={this.state.data_obj[record.key]} 
 
       />
@@ -130,7 +131,7 @@ class Demo31 extends Component {
         onExpand={this.getData}
         expandedRowRender={this.expandedRowRender}
         scroll={{y:350}}
-        defaultExpandedRowKeys={[0,1]}
+        // defaultExpandedRowKeys={[0,1]}
         title={currentData => <div>标题: 这是一个标题</div>}
         footer={currentData => <div>表尾: 我是小尾巴</div>}
       />
