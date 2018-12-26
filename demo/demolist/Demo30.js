@@ -90,9 +90,7 @@ class Demo30 extends Component {
           scroll={{y:300}}
           height={40}
           onRowClick={(record, index, indent) => {
-            this.setState({
-              selectedRowIndex: index
-            });
+            console.log('currentIndex--'+index);
           }}
         />
 

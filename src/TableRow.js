@@ -87,7 +87,7 @@ class TableRow extends Component{
   setRowHeight() {
     const { setRowHeight , expandedContentHeight=0,lazyCurrentIndex=0,fixed} = this.props
     if (!setRowHeight || !this.element || fixed) return
-    setRowHeight(this.element.clientHeight + expandedContentHeight, this.props.index+lazyCurrentIndex)
+    setRowHeight(this.element.clientHeight + expandedContentHeight, this.props.index)
   }
 
   onRowClick(event) {
@@ -189,7 +189,7 @@ class TableRow extends Component{
           record={record}
           indentSize={indentSize}
           indent={indent}
-          index={index+lazyCurrentIndex}
+          index={index}
           column={columns[i]}
           key={columns[i].key}
           fixed= {fixed}
