@@ -48,7 +48,8 @@ function bigData(Table) {
       };
       var rowHeight = _this2.props.height ? _this2.props.height : defaultHeight;
       //默认显示25条，rowsInView根据定高算的。在非固定高下，这个只是一个大概的值。
-      _this2.rowsInView = _this2.props.scroll.y ? Math.ceil(_this2.props.scroll.y / rowHeight) : 20;
+      var scrollY = _this2.props.scroll.y ? parseInt(_this2.props.scroll.y) : 0;
+      _this2.rowsInView = scrollY ? Math.ceil(scrollY / rowHeight) : 20;
       _this2.currentIndex = 0;
       _this2.loadCount = props.loadBuffer ? _this2.rowsInView + props.loadBuffer * 2 : 26; //一次加载多少数据
       _this2.cachedRowHeight = []; //缓存每行的高度
@@ -140,32 +141,40 @@ function bigData(Table) {
           startIndex = _this.startIndex;
       var needRender = _this.state.needRender;
 
-
-      var index = currentIndex; //记录下次当前位置
-      var temp = currentIndex ? nextScrollTop - currentScrollTop : nextScrollTop;
       var viewHeight = parseInt(scroll.y);
-      var isOrder = temp > 0 ? true : false; //true为向下滚动、false为向上滚动
+      // let index = currentIndex;//记录下次当前位置
+      // let temp = currentIndex ?nextScrollTop - currentScrollTop:nextScrollTop;
 
-      //根据scrollTop计算下次当前索引的位置
-      if (isOrder) {
-        while (temp > 0) {
-          temp -= _this3.cachedRowHeight[index] || rowHeight;
-          if (temp > 0) {
-            index += 1;
-            //保存当前index对应的scrollTop
-            _this3.currentScrollTop += _this3.cachedRowHeight[index] || rowHeight;
-          }
-        }
-      } else {
-        while (temp < 0) {
-          temp += _this3.cachedRowHeight[index] || rowHeight;
-          if (temp < 0) {
-            index -= 1;
-            _this3.currentScrollTop -= _this3.cachedRowHeight[index] || rowHeight;
-          }
+      // const isOrder = temp > 0 ?true:false;//true为向下滚动、false为向上滚动
+
+      // //根据scrollTop计算下次当前索引的位置
+      // if(isOrder){
+      //     while (temp > 0) {
+      //         temp -= this.cachedRowHeight[index] || rowHeight
+      //         if(temp > 0){
+      //           index += 1
+      //           //保存当前index对应的scrollTop
+      //         this.currentScrollTop += this.cachedRowHeight[index]|| rowHeight;
+      //         }
+      //       }
+      // }else{
+      //     while(temp < 0){
+      //         temp += this.cachedRowHeight[index] || rowHeight
+      //         if(temp < 0){
+      //           index -= 1
+      //           this.currentScrollTop -= this.cachedRowHeight[index]|| rowHeight;
+      //         }
+      //     }
+      // }
+      var index = 0;
+      var temp = nextScrollTop;
+      while (temp > 0) {
+        temp -= _this3.cachedRowHeight[index] || rowHeight;
+        if (temp > 0) {
+          index += 1;
         }
       }
-
+      var isOrder = index - currentIndex > 0 ? true : false;
       if (index < 0) index = 0;
       console.log('currentIndex****' + index);
       //如果之前的索引和下一次的不一样则重置索引和滚动的位置
@@ -196,7 +205,7 @@ function bigData(Table) {
           }
           // 向上滚动，当前的index是否已经加载（currentIndex），若干上临界值小于startIndex则重新渲染
           if (!isOrder && index < startIndex + rowDiff) {
-            startIndex = index - _this3.loadCount / 2;
+            startIndex = index - parseInt(_this3.loadCount / 2); //有时会是小数问题，所以parseInt转换下
             if (startIndex < 0) {
               startIndex = 0;
             }

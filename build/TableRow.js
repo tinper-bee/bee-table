@@ -281,7 +281,7 @@ var TableRow = function (_Component) {
         style: style,
         ref: this.bindElement
       },
-      cells
+      cells.length > 0 ? cells : _react2["default"].createElement('td', null)
     );
   };
 
