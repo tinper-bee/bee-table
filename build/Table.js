@@ -168,6 +168,27 @@ var Table = function (_Component) {
       );
     };
 
+    _this.onKeyDown = function (e) {
+      var event = _utils.Event.getEvent(e);
+      // event.preventDefault?event.preventDefault():event.returnValue = false;
+      if (event.keyCode === 9) {
+        //tab
+        _this.props.onKeyTab && _this.props.onKeyTab();
+      } else if (event.keyCode === 38) {
+        //up
+        _this.props.onKeyUp && _this.props.onKeyUp();
+      } else if (event.keyCode === 40) {
+        //down
+        _this.props.onKeyDown && _this.props.onKeyDown();
+      }
+      _this.props.onTabkeKeyDown && _this.props.onTabkeKeyDown();
+      // else if(event.altKey && event.keyCode === 38){
+      //   this.props.onKeyMove&&this.props.onKeyMove('up');
+      // }else if(event.altKey && event.keyCode === 40){
+      //   this.props.onKeyMove&&this.props.onKeyMove('down');
+      // }
+    };
+
     var expandedRowKeys = [];
     var rows = [].concat(_toConsumableArray(props.data));
     _this.columnManager = new _ColumnManager2["default"](props.columns, props.children, props.originWidth);
@@ -219,6 +240,14 @@ var Table = function (_Component) {
     _this.computeTableWidth = _this.computeTableWidth.bind(_this);
     return _this;
   }
+
+  Table.prototype.componentWillMount = function componentWillMount() {
+    _utils.EventUtil.addHandler(document, 'keydown', this.onKeyDown);
+  };
+
+  Table.prototype.componentWillUnmount = function componentWillUnmount() {
+    _utils.EventUtil.removeHandler(document, 'keydown', this.onKeyDown);
+  };
 
   Table.prototype.componentDidMount = function componentDidMount() {
     setTimeout(this.resetScrollY, 300);
@@ -1141,7 +1170,7 @@ var Table = function (_Component) {
       'div',
       { className: className, style: props.style, ref: function ref(el) {
           return _this6.contentTable = el;
-        } },
+        }, tabIndex: '0' },
       this.getTitle(),
       _react2["default"].createElement(
         'div',
