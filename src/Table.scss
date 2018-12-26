@@ -476,6 +476,12 @@ $checkbox-height:16px;
     pointer-events: none;
   }
 }
+.u-table:focus{
+  outline: none;
+  // border-color: #9ecaed;
+  // box-shadow: 0 0 10px #9ecaed;
+  box-shadow: 0 0 0;
+}
 
 .u-table.bordered {
   table {

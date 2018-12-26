@@ -70,6 +70,7 @@ const data13 = [
   { a: "郭靖", b: 153, c: 25, d: "大侠",e:90, key: "3" }
 ];
 
+
 //拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常
 let ComplexTable = multiSelect(sum(sort(Table, Icon)), Checkbox);
 

@@ -8708,6 +8708,10 @@ ul {
     display: none;
     pointer-events: none; }
 
+.u-table:focus {
+  outline: none;
+  box-shadow: 0 0 0; }
+
 .u-table.bordered table {
   border-collapse: collapse; }
 
