@@ -58,7 +58,8 @@ import 'bee-table/build/Table.css';
 | onKeyTab       | tab快捷键，可以处理默认选中第一条数据 | function| -
 | onKeyUp       | up快捷键，可以处理table的上一条数据 | function| -
 | onKeyDown       | up快捷键，可以处理table的下一条数据 | function| -
-| onTabkeKeyDown       | 触发table的快捷键 | function| -
+| onTableKeyDown       | 触发table的快捷键 | function| -
+| tabIndex       | 设置焦点顺序 | number | 0
 | loadBuffer       | 使用BigData高阶组件实现大数据加载时，上下加载的缓存 | number| 5
 
 > 快捷键部分参考示例 (快捷键在table中的简单使用应用)

@@ -49,7 +49,7 @@ const propTypes = {
   onFilterChange: PropTypes.func,
   onFilterClear: PropTypes.func,
   syncHover: PropTypes.bool,
-
+  tabIndex:PropTypes.string,
 };
 
 const defaultProps = {
@@ -79,7 +79,8 @@ const defaultProps = {
   columns:[],
   minColumnWidth: 80,
   locale:{},
-  syncHover: true
+  syncHover: true,
+  tabIndex:'0'
 };
 
 class Table extends Component {
@@ -1027,7 +1028,7 @@ class Table extends Component {
     }else if(event.keyCode === 40){//down
       this.props.onKeyDown&&this.props.onKeyDown();
     }
-    this.props.onTabkeKeyDown&&this.props.onTabkeKeyDown();
+    this.props.onTableKeyDown&&this.props.onTableKeyDown();
     // else if(event.altKey && event.keyCode === 38){
     //   this.props.onKeyMove&&this.props.onKeyMove('up');
     // }else if(event.altKey && event.keyCode === 40){
@@ -1065,7 +1066,7 @@ class Table extends Component {
     }
 
     return (
-      <div className={className} style={props.style} ref={el => this.contentTable = el} tabIndex="0" >
+      <div className={className} style={props.style} ref={el => this.contentTable = el} tabIndex={props.tabIndex?props.tabIndex:'0'} >
         {this.getTitle()}
         <div className={`${clsPrefix}-content`}>
          

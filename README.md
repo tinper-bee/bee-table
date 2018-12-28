@@ -109,7 +109,14 @@ class Demo extends Component {
 | onFilterClear       | 清除过滤条件的回调函数，回调参数为清空的字段 | function | (field) => ()
 | headerScroll       | 表头下是否显示滚动条 | bool| false
 | syncHover       | 是否同步Hover状态到左侧Checkbox，关闭此功能有助于提升性能 | bool| true
+| onKeyTab       | tab快捷键，可以处理默认选中第一条数据 | function| -
+| onKeyUp       | up快捷键，可以处理table的上一条数据 | function| -
+| onKeyDown       | up快捷键，可以处理table的下一条数据 | function| -
+| onTableKeyDown       | 触发table的快捷键 | function| -
+| tabIndex       | 设置焦点顺序 | number | 0
+| loadBuffer       | 使用BigData高阶组件实现大数据加载时，上下加载的缓存 | number| 5
 
+> 快捷键部分参考示例 (快捷键在table中的简单使用应用)
 
 *注意: data参数中的key值必需，否则会导致部分功能出现问题！建议使用唯一的值，如id*
 
