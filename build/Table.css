@@ -259,7 +259,8 @@
     line-height: 16px;
     border: 1px solid #e9e9e9;
     user-select: none;
-    background: #fff; }
+    background: #fff;
+    margin-right: 10px; }
   .u-table-row-spaced, .u-table-expanded-row-spaced {
     visibility: hidden; }
   .u-table-row-spaced:after, .u-table-expanded-row-spaced:after {
