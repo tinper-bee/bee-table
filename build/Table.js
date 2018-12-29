@@ -246,10 +246,6 @@ var Table = function (_Component) {
     _utils.EventUtil.addHandler(document, 'keydown', this.onKeyDown);
   };
 
-  Table.prototype.componentWillUnmount = function componentWillUnmount() {
-    _utils.EventUtil.removeHandler(document, 'keydown', this.onKeyDown);
-  };
-
   Table.prototype.componentDidMount = function componentDidMount() {
     setTimeout(this.resetScrollY, 300);
     //含有纵向滚动条
@@ -315,6 +311,7 @@ var Table = function (_Component) {
   };
 
   Table.prototype.componentWillUnmount = function componentWillUnmount() {
+    _utils.EventUtil.removeHandler(document, 'keydown', this.onKeyDown);
     if (this.resizeEvent) {
       this.resizeEvent.remove();
     }
@@ -1198,7 +1195,7 @@ var Table = function (_Component) {
       'div',
       { className: className, style: props.style, ref: function ref(el) {
           return _this6.contentTable = el;
-        }, tabIndex: props.tabIndex ? props.tabIndex : '0' },
+        }, onKeyDown: this.onKeyDown, tabIndex: props.tabIndex ? props.tabIndex : '0' },
       this.getTitle(),
       _react2["default"].createElement(
         'div',
