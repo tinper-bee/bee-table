@@ -1,10 +1,15 @@
-<a name="1.6.20"></a>
-## [1.6.20](https://github.com/tinper-bee/bee-table/compare/v1.6.19...v1.6.20) (2018-12-26)
+<a name="1.6.22"></a>
+## [1.6.22](https://github.com/tinper-bee/bee-table/compare/v1.6.21...v1.6.22) (2018-12-29)
+
+
+### Bug Fixes
+
+* **keydown:** keydown ([5de9829](https://github.com/tinper-bee/bee-table/commit/5de9829))
 
 
 
-<a name="1.6.19"></a>
-## [1.6.19](https://github.com/tinper-bee/bee-table/compare/v1.6.18...v1.6.19) (2018-12-26)
+<a name="1.6.21"></a>
+## [1.6.21](https://github.com/tinper-bee/bee-table/compare/v1.6.18...v1.6.21) (2018-12-28)
 
 
 
@@ -184,7 +189,7 @@
 
 
 <a name="1.5.1"></a>
-## [1.5.1](https://github.com/tinper-bee/bee-table/compare/v1.5.0...v1.5.1) (2018-11-19)
+## [1.5.1](https://github.com/tinper-bee/bee-table/compare/v1.5.0...v1.5.1) (2018-11-18)
 
 
 
@@ -469,7 +474,12 @@
 
 
 <a name="1.2.9"></a>
-## [1.2.9](https://github.com/tinper-bee/bee-table/compare/v1.2.7...v1.2.9) (2018-07-16)
+## [1.2.9](https://github.com/tinper-bee/bee-table/compare/v1.2.8...v1.2.9) (2018-07-16)
+
+
+
+<a name="1.2.8"></a>
+## [1.2.8](https://github.com/tinper-bee/bee-table/compare/v1.2.7...v1.2.8) (2018-07-06)
 
 
 
