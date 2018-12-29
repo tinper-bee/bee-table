@@ -12,10 +12,11 @@ import Checkbox from 'bee-checkbox';
 
 const columns = [
   {
-    title: "-",
+    title: "",
     dataIndex: "d",
     fixed: "left",
     key: "d",
+    width:80,
     render(text, record, index) {
       return (
         <div style={{ position: 'relative' }} title={text} >
