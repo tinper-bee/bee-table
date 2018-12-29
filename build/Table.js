@@ -1195,7 +1195,7 @@ var Table = function (_Component) {
       'div',
       { className: className, style: props.style, ref: function ref(el) {
           return _this6.contentTable = el;
-        }, onKeyDown: this.onKeyDown, tabIndex: props.tabIndex ? props.tabIndex : '0' },
+        }, tabIndex: props.tabIndex ? props.tabIndex : '0' },
       this.getTitle(),
       _react2["default"].createElement(
         'div',
