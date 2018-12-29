@@ -141,10 +141,6 @@ class Table extends Component {
     EventUtil.addHandler(document,'keydown',this.onKeyDown);
   }
 
-  componentWillUnmount() {
-    EventUtil.removeHandler(document,'keydown',this.onKeyDown);
-  }   
-
   componentDidMount() {
     setTimeout(this.resetScrollY, 300);
     //含有纵向滚动条
@@ -216,6 +212,7 @@ class Table extends Component {
   }
 
   componentWillUnmount() {
+    EventUtil.removeHandler(document,'keydown',this.onKeyDown);
     if (this.resizeEvent) {
       this.resizeEvent.remove();
     }
@@ -1066,7 +1063,7 @@ class Table extends Component {
     }
 
     return (
-      <div className={className} style={props.style} ref={el => this.contentTable = el} tabIndex={props.tabIndex?props.tabIndex:'0'} >
+      <div className={className} style={props.style} ref={el => this.contentTable = el} onKeyDown={this.onKeyDown} tabIndex={props.tabIndex?props.tabIndex:'0'} >
         {this.getTitle()}
         <div className={`${clsPrefix}-content`}>
          
