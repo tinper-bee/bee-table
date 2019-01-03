@@ -55,11 +55,6 @@ import 'bee-table/build/Table.css';
 | headerScroll       | 表头下是否显示滚动条 | bool| false
 | sort       | 排序的属性 | object| {  mode:'single'//单列排序,  backSource:false //默认是前端排序，值为true为后端排序 } mode:multiple-多列排序
 | syncHover       | 是否同步Hover状态到左侧Checkbox，关闭此功能有助于提升性能 | bool| true
-| onKeyTab       | tab快捷键，可以处理默认选中第一条数据 | function| -
-| onKeyUp       | up快捷键，可以处理table的上一条数据 | function| -
-| onKeyDown       | up快捷键，可以处理table的下一条数据 | function| -
-| onTableKeyDown       | 触发table的快捷键 | function| -
-| tabIndex       | 设置焦点顺序 | number | 0
 | loadBuffer       | 使用BigData高阶组件实现大数据加载时，上下加载的缓存 | number| 5
 
 > 快捷键部分参考示例 (快捷键在table中的简单使用应用)
@@ -93,6 +88,17 @@ import 'bee-table/build/Table.css';
 | filterDropdownType | 下拉条件类型，分为 string 和 number 条件类型 | string | string
 | filterDropdownIncludeKeys | 能够设置指定的下拉条件项，通过设置keys 其中string条件可设置:LIKE,ULIKE,EQ,UEQ,START,END.number条件可设置:GT,GTEQ,LT,LTEQ,EQ,UEQ | array | [] 不设置此属性为显示所有
 | filterInputNumberOptions | 数值框接收的props，具体属性参考bee-input-number | object | null
+
+
+## 快捷键API
+
+| 快捷键  | 快捷键说明 | 类型 | 默认值 | 
+| --- | :--- | --- |--- |
+| onKeyTab       | tab快捷键，可以处理默认选中第一条数据 | function| -
+| onKeyUp       |  ↑(上箭) 快捷键，可以处理table的上一条数据 | function| -
+| onKeyDown       | ↓(下箭)快捷键，可以处理table的下一条数据 | function| -
+| onTableKeyDown       | 触发table的所有快捷键 | function| -
+| tabIndex       | 设置焦点顺序 | number | 0
 
 {% include "mixin.md"%}
 
