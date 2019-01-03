@@ -146,6 +146,15 @@ class Demo extends Component {
 | filterDropdownIncludeKeys | 能够设置指定的下拉条件项，通过设置keys 其中string条件可设置:LIKE,ULIKE,EQ,UEQ,START,END.number条件可设置:GT,GTEQ,LT,LTEQ,EQ,UEQ | array | [] 不设置此属性为显示所有
 | filterInputNumberOptions | 数值框接收的props，具体属性参考bee-input-number | object | null
 
+## 快捷键API
+
+| 快捷键  | 快捷键说明 | 类型 | 默认值 | 
+| --- | :--- | --- |--- |
+| onKeyTab       | tab快捷键，可以处理默认选中第一条数据 | function| -
+| onKeyUp       |  ↑(上箭) 快捷键，可以处理table的上一条数据 | function| -
+| onKeyDown       | ↓(下箭)快捷键，可以处理table的下一条数据 | function| -
+| onTableKeyDown       | 触发table的所有快捷键 | function| -
+| tabIndex       | 设置焦点顺序 | number | 0
 
 
 ## 如何引用
