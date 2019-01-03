@@ -79,7 +79,9 @@ const defaultProps = {
   columns:[],
   minColumnWidth: 80,
   locale:{},
-  syncHover: true
+  syncHover: true,
+  setRowHeight:()=>{},
+  setRowParentIndex:()=>{}
 };
 
 class Table extends Component {
@@ -192,6 +194,7 @@ class Table extends Component {
     }
     if (!nextProps.originWidth) {
       this.computeTableWidth();
+      this.firstDid = true;//避免重复update
     }
 
   }
@@ -202,8 +205,9 @@ class Table extends Component {
       this.syncFixedTableRowHeight();
     }
     //适应模态框中表格、以及父容器宽度变化的情况
-    if (typeof (this.props.scroll.x) !== 'number' && this.contentTable.getBoundingClientRect().width !== this.contentDomWidth) {
+    if (typeof (this.props.scroll.x) !== 'number' && this.contentTable.getBoundingClientRect().width !== this.contentDomWidth && this.firstDid) {
       this.computeTableWidth();
+      this.firstDid = false;//避免重复update
     }
     if(this.scrollTop){
       this.refs.fixedColumnsBodyLeft && ( this.refs.fixedColumnsBodyLeft.scrollTop = this.scrollTop);
@@ -483,8 +487,19 @@ class Table extends Component {
       />
     );
   }
-
-  getRowsByData(data, visible, indent, columns, fixed) {
+  /**
+   *
+   *
+   * @param {*} data
+   * @param {*} visible
+   * @param {*} indent 层级
+   * @param {*} columns
+   * @param {*} fixed
+   * @param {number} [rootIndex=-1] 祖级节点
+   * @returns
+   * @memberof Table
+   */
+  getRowsByData(data, visible, indent, columns, fixed,rootIndex=-1) {
     const props = this.props;
     const childrenColumnName = props.childrenColumnName;
     const expandedRowRender = props.expandedRowRender;
@@ -502,13 +517,13 @@ class Table extends Component {
 
     const expandIconAsCell = fixed !== 'right' ? props.expandIconAsCell : false;
     const expandIconColumnIndex = fixed !== 'right' ? props.expandIconColumnIndex : -1;
-    if(props.lazyLoad && props.lazyLoad.preHeight){
+    if(props.lazyLoad && props.lazyLoad.preHeight && indent == 0){
       rst.push(
         <TableRow height={props.lazyLoad.preHeight} columns={[]} className='' store={this.store} visible = {true}/>
       )
     }
     const lazyCurrentIndex =  props.lazyLoad && props.lazyLoad.startIndex ?props.lazyLoad.startIndex :0;
-    
+    const lazyParentIndex = props.lazyLoad && props.lazyLoad.startParentIndex ?props.lazyLoad.startParentIndex :0;
     for (let i = 0; i < data.length; i++) {
       const record = data[i];
       const key = this.getRowKey(record, i);
@@ -518,7 +533,7 @@ class Table extends Component {
       let expandedContentHeight = 0;
       if (expandedRowRender && isRowExpanded) {
         expandedRowContent = expandedRowRender(record, i, indent);
-        expandedContentHeight = parseInt(expandedRowContent.props.style && expandedRowContent.props.style.height?expandedRowContent.props.style.height:0);
+        expandedContentHeight = parseInt(expandedRowContent.props && expandedRowContent.props.style && expandedRowContent.props.style.height?expandedRowContent.props.style.height:0);
       }
       //只有当使用expandedRowRender参数的时候才去识别isHiddenExpandIcon（隐藏行展开的icon）
       if (expandedRowRender && typeof props.haveExpandIcon == 'function') {
@@ -530,6 +545,7 @@ class Table extends Component {
       if (this.columnManager.isAnyColumnsFixed()) {
         onHoverProps.onHover = this.handleRowHover;
       }
+      //fixedIndex一般是跟index是一个值的，只有是树结构时，会讲子节点的值也累计上
       let fixedIndex = i;
       //判断是否是tree结构
       if (this.treeType) {
@@ -556,8 +572,14 @@ class Table extends Component {
       if(i == data.length -1 && props.showSum){
         className = className + ' sumrow';
       }
-
-
+      
+      let paramRootIndex = rootIndex;
+      //小于0说明为第一层节点，她的子孙节点要保存自己的根节点
+      if(paramRootIndex<0){
+        paramRootIndex = i+lazyParentIndex;
+      }
+      
+      // console.log('rootIndex',rootIndex,'index',fixedIndex,'fixedIndex',fixedIndex,'paramRootIndex',paramRootIndex,'key',record.key);
       rst.push(
         <TableRow
           indent={indent}
@@ -567,7 +589,7 @@ class Table extends Component {
           record={record}
           expandIconAsCell={expandIconAsCell}
           onDestroy={this.onRowDestroy}
-          index={fixedIndex+lazyCurrentIndex}
+          index={i+lazyParentIndex}
           visible={visible}
           expandRowByClick={expandRowByClick}
           onExpand={this.onExpanded}
@@ -590,6 +612,11 @@ class Table extends Component {
           lazyCurrentIndex={lazyCurrentIndex}
           expandedContentHeight={expandedContentHeight}
           setRowHeight={props.setRowHeight}
+          setRowParentIndex={props.setRowParentIndex}
+          treeType={childrenColumn||this.treeType?true:false}
+          fixedIndex={fixedIndex+lazyCurrentIndex}
+          rootIndex = {rootIndex}
+
         />
       );
       this.treeRowIndex++;
@@ -603,12 +630,12 @@ class Table extends Component {
       if (childrenColumn) {
         this.treeType = true;//证明是tree表形式visible = {true}
         rst = rst.concat(this.getRowsByData(
-          childrenColumn, subVisible, indent + 1, columns, fixed
+          childrenColumn, subVisible, indent + 1, columns, fixed,paramRootIndex
         ));
       }
     }
 
-    if(props.lazyLoad && props.lazyLoad.sufHeight){
+    if(props.lazyLoad && props.lazyLoad.sufHeight && indent == 0){
       rst.push(
         <TableRow height={props.lazyLoad.sufHeight} columns={[]} className='' store={this.store} visible = {true}/>
       )
@@ -996,9 +1023,8 @@ class Table extends Component {
       this.lastScrollTop = e.target.scrollTop;
       if(handleScroll){
         debounce(
-          handleScroll(this.lastScrollTop)
-        ,500);
-        
+        handleScroll(this.lastScrollTop,this.treeType),
+        300)
       }
     }
     
