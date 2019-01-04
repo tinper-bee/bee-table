@@ -69,7 +69,6 @@ export default function bigData(Table) {
         });
       }
      
-      // console.log("***data********++++++++++++",this.cachedRowParentIndex);
     }
 
     getRowKey(record, index) {
@@ -126,10 +125,22 @@ export default function bigData(Table) {
 
     getSumHeight(start, end) {
       const { height } = this.props;
-      const rowHeight = height ? height : defaultHeight;
-      let sumHeight = 0;
+      let rowHeight = height ? height : defaultHeight;
+      let sumHeight = 0,currentKey,currentRowHeight=rowHeight;
+
       for (let i = start; i < end; i++) {
-        sumHeight += this.cachedRowHeight[i] || rowHeight;
+        if(this.cachedRowHeight[i] == undefined){
+          if(this.treeType){
+            currentKey = this.keys[i];
+            currentRowHeight = 0;
+            if(this.firstLevelKey.indexOf(currentKey)>=0 || this.expandChildRowKeys.indexOf(currentKey)>=0){
+              currentRowHeight = rowHeight;
+            }
+          }
+          sumHeight += currentRowHeight;
+        }else{
+          sumHeight += this.cachedRowHeight[i]
+        }
       }
       return sumHeight;
     }
@@ -185,7 +196,6 @@ export default function bigData(Table) {
       let temp = nextScrollTop;
       let currentKey;
       while (temp >0) {
-        //   console.log('获取index-----',this.cachedRowHeight[index]);
         let currentRowHeight = this.cachedRowHeight[index];
         if(currentRowHeight === undefined){
           if(this.treeType){
@@ -204,10 +214,9 @@ export default function bigData(Table) {
           index += 1;
         }
       }
-      // console.log('while循环获取index次数-----',index);
+      console.log('currentIndex****',index);
       const isOrder = index - currentIndex > 0 ? true : false;
       if (index < 0) index = 0;
-      console.log("currentIndex****" + index);
       //如果之前的索引和下一次的不一样则重置索引和滚动的位置
       if (currentIndex !== index) {
         _this.currentIndex = index;
@@ -220,7 +229,6 @@ export default function bigData(Table) {
           //有时滚动过快时this.cachedRowHeight[rowsInView + index]为undifined
           
           while (rowsHeight < viewHeight && tempIndex<this.cachedRowHeight.length) {
-            //   console.log("rowsHeight < viewHeight",tempIndex,rowsHeight,viewHeight,this.cachedRowHeight);
             if(this.cachedRowHeight[tempIndex]){
                 rowsHeight += this.cachedRowHeight[tempIndex];
                 if(treeType && _this.cachedRowParentIndex[tempIndex] !== tempIndex ||!treeType){
@@ -231,7 +239,6 @@ export default function bigData(Table) {
             tempIndex++;
             
           }
-          // console.log("rowsHeight < viewHeight循环次数",tempIndex-index);
           if(treeType){
             const treeIndex = index
             index = _this.cachedRowParentIndex[treeIndex];
@@ -349,21 +356,30 @@ export default function bigData(Table) {
       }
     }
     render() {
+      
       const { data } = this.props;
       const { scrollTop } = this;
       const { endIndex, startIndex } = this;
       const lazyLoad = {
-        preHeight: this.getSumHeight(0, startIndex),
-        sufHeight: this.getSumHeight(endIndex, data.length),
         startIndex: startIndex,
         startParentIndex:startIndex,//为树状节点做准备
       };
       if(this.treeType){
         const preSubCounts = this.cachedRowParentIndex.findIndex(item=>{ return item==startIndex })
+        const sufSubCounts = this.cachedRowParentIndex.findIndex(item=>{ return item==endIndex })
+        lazyLoad.preHeight = this.getSumHeight(0,preSubCounts>-1?preSubCounts:0);
+        lazyLoad.sufHeight = this.getSumHeight(sufSubCounts+1>0?sufSubCounts+1:this.cachedRowParentIndex.length,this.cachedRowParentIndex.length);
+      
         if(preSubCounts>0){
           lazyLoad.startIndex = preSubCounts;
         }
+        
+      }else{
+        lazyLoad.preHeight = this.getSumHeight(0, startIndex)
+        lazyLoad.sufHeight = this.getSumHeight(endIndex, data.length)
+
       }
+      console.log('*******ScrollTop*****'+scrollTop);
       return (
         <Table
           {...this.props}

@@ -49,7 +49,7 @@ const propTypes = {
   onFilterChange: PropTypes.func,
   onFilterClear: PropTypes.func,
   syncHover: PropTypes.bool,
-
+  tabIndex:PropTypes.string,
 };
 
 const defaultProps = {
@@ -81,7 +81,8 @@ const defaultProps = {
   locale:{},
   syncHover: true,
   setRowHeight:()=>{},
-  setRowParentIndex:()=>{}
+  setRowParentIndex:()=>{},
+  tabIndex:'0'
 };
 
 class Table extends Component {
@@ -142,10 +143,6 @@ class Table extends Component {
     EventUtil.addHandler(document,'keydown',this.onKeyDown);
   }
 
-  componentWillUnmount() {
-    EventUtil.removeHandler(document,'keydown',this.onKeyDown);
-  }   
-
   componentDidMount() {
     setTimeout(this.resetScrollY, 300);
     //含有纵向滚动条
@@ -197,6 +194,8 @@ class Table extends Component {
       this.firstDid = true;//避免重复update
     }
 
+    console.log('this.scrollTop**********',this.scrollTop);
+
   }
 
   componentDidUpdate() {
@@ -219,6 +218,7 @@ class Table extends Component {
   }
 
   componentWillUnmount() {
+    EventUtil.removeHandler(document,'keydown',this.onKeyDown);
     if (this.resizeEvent) {
       this.resizeEvent.remove();
     }
@@ -578,8 +578,10 @@ class Table extends Component {
       if(paramRootIndex<0){
         paramRootIndex = i+lazyParentIndex;
       }
-      
-      // console.log('rootIndex',rootIndex,'index',fixedIndex,'fixedIndex',fixedIndex,'paramRootIndex',paramRootIndex,'key',record.key);
+      let index = i;
+      if(rootIndex ==-1){
+        index = i+lazyParentIndex
+      }
       rst.push(
         <TableRow
           indent={indent}
@@ -589,7 +591,7 @@ class Table extends Component {
           record={record}
           expandIconAsCell={expandIconAsCell}
           onDestroy={this.onRowDestroy}
-          index={i+lazyParentIndex}
+          index={index}
           visible={visible}
           expandRowByClick={expandRowByClick}
           onExpand={this.onExpanded}
@@ -609,7 +611,6 @@ class Table extends Component {
           ref={rowRef}
           store={this.store}
           fixed={fixed}
-          lazyCurrentIndex={lazyCurrentIndex}
           expandedContentHeight={expandedContentHeight}
           setRowHeight={props.setRowHeight}
           setRowParentIndex={props.setRowParentIndex}
@@ -1030,7 +1031,6 @@ class Table extends Component {
     
     // Remember last scrollLeft for scroll direction detecting.
     this.lastScrollLeft = e.target.scrollLeft;
-   
   }
 
   handleRowHover(isHover, key) {
@@ -1053,7 +1053,7 @@ class Table extends Component {
     }else if(event.keyCode === 40){//down
       this.props.onKeyDown&&this.props.onKeyDown();
     }
-    this.props.onTabkeKeyDown&&this.props.onTabkeKeyDown();
+    this.props.onTableKeyDown&&this.props.onTableKeyDown();
     // else if(event.altKey && event.keyCode === 38){
     //   this.props.onKeyMove&&this.props.onKeyMove('up');
     // }else if(event.altKey && event.keyCode === 40){
@@ -1091,7 +1091,7 @@ class Table extends Component {
     }
 
     return (
-      <div className={className} style={props.style} ref={el => this.contentTable = el} tabIndex="0" >
+      <div className={className} style={props.style} ref={el => this.contentTable = el} tabIndex={props.tabIndex?props.tabIndex:'0'} >
         {this.getTitle()}
         <div className={`${clsPrefix}-content`}>
          

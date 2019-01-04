@@ -185,6 +185,7 @@ $checkbox-height:16px;
       border: 1px solid $table-border-color;
       user-select: none;
       background: #fff;
+      margin-right: 10px;
     }
     &-spaced {
       visibility: hidden;
@@ -725,7 +726,5 @@ $checkbox-height:16px;
   height: $checkbox-height;
   line-height:  $checkbox-height;
 }
-.u-checkbox .u-checkbox-label:after,.u-checkbox .u-checkbox-label::before  {
 
-}
 

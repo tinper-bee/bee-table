@@ -79,9 +79,10 @@ class TableRow extends Component{
   componentDidUpdate(prevProps) {
     if(this.props.treeType){
       this.setRowParentIndex();
-      if(this.props.fixedIndex!== prevProps.fixedIndex){
-        this.setRowHeight()
-      }
+      this.setRowHeight()
+      // if(this.props.fixedIndex!== prevProps.fixedIndex){
+      //   this.setRowHeight()
+      // }
     }else if(this.props.index !== prevProps.index){
       this.setRowHeight()
     }
@@ -97,7 +98,7 @@ class TableRow extends Component{
 
 
   setRowHeight() {
-    const { setRowHeight , expandedContentHeight=0,lazyCurrentIndex=0,fixed,fixedIndex} = this.props
+    const { setRowHeight , expandedContentHeight=0,fixed,fixedIndex} = this.props
     if (!setRowHeight || !this.element || fixed) return
     setRowHeight(this.element.clientHeight + expandedContentHeight, fixedIndex)
   }
@@ -161,7 +162,7 @@ class TableRow extends Component{
     const {
       clsPrefix, columns, record, height, visible, index,
       expandIconColumnIndex, expandIconAsCell, expanded, expandRowByClick,
-      expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed,lazyCurrentIndex=0
+      expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed,
     } = this.props;
     let showSum = false;
     let { className } = this.props;

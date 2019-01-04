@@ -97,8 +97,8 @@ var propTypes = {
   filterDelay: _propTypes2["default"].number,
   onFilterChange: _propTypes2["default"].func,
   onFilterClear: _propTypes2["default"].func,
-  syncHover: _propTypes2["default"].bool
-
+  syncHover: _propTypes2["default"].bool,
+  tabIndex: _propTypes2["default"].string
 };
 
 var defaultProps = {
@@ -139,7 +139,8 @@ var defaultProps = {
   columns: [],
   minColumnWidth: 80,
   locale: {},
-  syncHover: true
+  syncHover: true,
+  tabIndex: '0'
 };
 
 var Table = function (_Component) {
@@ -181,7 +182,7 @@ var Table = function (_Component) {
         //down
         _this.props.onKeyDown && _this.props.onKeyDown();
       }
-      _this.props.onTabkeKeyDown && _this.props.onTabkeKeyDown();
+      _this.props.onTableKeyDown && _this.props.onTableKeyDown();
       // else if(event.altKey && event.keyCode === 38){
       //   this.props.onKeyMove&&this.props.onKeyMove('up');
       // }else if(event.altKey && event.keyCode === 40){
@@ -243,10 +244,6 @@ var Table = function (_Component) {
 
   Table.prototype.componentWillMount = function componentWillMount() {
     _utils.EventUtil.addHandler(document, 'keydown', this.onKeyDown);
-  };
-
-  Table.prototype.componentWillUnmount = function componentWillUnmount() {
-    _utils.EventUtil.removeHandler(document, 'keydown', this.onKeyDown);
   };
 
   Table.prototype.componentDidMount = function componentDidMount() {
@@ -314,6 +311,7 @@ var Table = function (_Component) {
   };
 
   Table.prototype.componentWillUnmount = function componentWillUnmount() {
+    _utils.EventUtil.removeHandler(document, 'keydown', this.onKeyDown);
     if (this.resizeEvent) {
       this.resizeEvent.remove();
     }
@@ -1197,7 +1195,7 @@ var Table = function (_Component) {
       'div',
       { className: className, style: props.style, ref: function ref(el) {
           return _this6.contentTable = el;
-        }, tabIndex: '0' },
+        }, tabIndex: props.tabIndex ? props.tabIndex : '0' },
       this.getTitle(),
       _react2["default"].createElement(
         'div',
