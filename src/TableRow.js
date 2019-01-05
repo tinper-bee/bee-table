@@ -38,7 +38,8 @@ const defaultProps = {
     expandIconColumnIndex: 0,
     expandRowByClick: false,
     onHover() {},
-    className:''
+    className:'',
+    setRowParentIndex:()=>{}
 };
 
 class TableRow extends Component{
@@ -57,7 +58,7 @@ class TableRow extends Component{
 
 
   componentDidMount() {
-    const { store, hoverKey } = this.props;
+    const { store, hoverKey,treeType } = this.props;
     this.unsubscribe = store.subscribe(() => {
       if (store.getState().currentHoverKey === hoverKey) {
         this.setState({ hovered: true });
@@ -67,13 +68,25 @@ class TableRow extends Component{
     });
 
     this.setRowHeight()
+    if(treeType){
+      this.setRowParentIndex();
+    }
+  
+    
   }
 
 
   componentDidUpdate(prevProps) {
-    if (this.props.index !== prevProps.index) {
+    if(this.props.treeType){
+      this.setRowParentIndex();
+      this.setRowHeight()
+      // if(this.props.fixedIndex!== prevProps.fixedIndex){
+      //   this.setRowHeight()
+      // }
+    }else if(this.props.index !== prevProps.index){
       this.setRowHeight()
     }
+  
   }
   componentWillUnmount() {
     const { record, onDestroy, index } = this.props;
@@ -85,11 +98,17 @@ class TableRow extends Component{
 
 
   setRowHeight() {
-    const { setRowHeight , expandedContentHeight=0,lazyCurrentIndex=0,fixed} = this.props
+    const { setRowHeight , expandedContentHeight=0,fixed,fixedIndex} = this.props
     if (!setRowHeight || !this.element || fixed) return
-    setRowHeight(this.element.clientHeight + expandedContentHeight, this.props.index)
+    setRowHeight(this.element.clientHeight + expandedContentHeight, fixedIndex)
   }
+  setRowParentIndex(){
+    const {index,setRowParentIndex,fixedIndex,rootIndex} = this.props;
+    // console.log('rootIndex',rootIndex<0?index:rootIndex,'index',fixedIndex);
+    setRowParentIndex(rootIndex<0?index:rootIndex,fixedIndex);
 
+  }
+  
   onRowClick(event) {
     const {
       record,
@@ -143,7 +162,7 @@ class TableRow extends Component{
     const {
       clsPrefix, columns, record, height, visible, index,
       expandIconColumnIndex, expandIconAsCell, expanded, expandRowByClick,
-      expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed,lazyCurrentIndex=0
+      expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed,
     } = this.props;
     let showSum = false;
     let { className } = this.props;

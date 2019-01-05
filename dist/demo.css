@@ -8691,8 +8691,7 @@ ul {
       zoom: 1;
       line-height: 4px;
       height: 4px;
-      color: #999;
-      transition: all 0.3s; }
+      color: #999; }
     .u-table-thead th:hover .bee-table-column-sorter {
       display: inline-block; }
   .u-table-thead .th-drag {

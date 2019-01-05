@@ -204,11 +204,11 @@ class Demo25 extends Component {
                 columns={columns}
                 data={dataList} 
                 getSelectedDataFunc={this.getSelectedDataFunc}
-                bordered
+                
                 checkMinSize={7}
                 draggable={true}
                 multiSelect={{type: "checkbox"}}
-                scroll={{x:"130%", y: 100}}
+                scroll={{x:true, y: 100}}
                 selectedRow={this.selectedRow}
                 // scroll={{x:this.getCloumnsScroll(columns), y: 150}}
                 />
