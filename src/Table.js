@@ -194,7 +194,7 @@ class Table extends Component {
       this.firstDid = true;//避免重复update
     }
 
-    console.log('this.scrollTop**********',this.scrollTop);
+    // console.log('this.scrollTop**********',this.scrollTop);
 
   }
 
@@ -1010,7 +1010,7 @@ class Table extends Component {
         .add(`${clsPrefix}-scroll-position-${position}`);
       }
     }
-    console.log('lastScrollTop--'+this.lastScrollTop+'--eventScrollTop--'+ e.target.scrollTop);
+    // console.log('lastScrollTop--'+this.lastScrollTop+'--eventScrollTop--'+ e.target.scrollTop);
     if (scroll.y && this.lastScrollTop != e.target.scrollTop) {
       if (fixedColumnsBodyLeft && e.target !== fixedColumnsBodyLeft) {
         fixedColumnsBodyLeft.scrollTop = e.target.scrollTop;

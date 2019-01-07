@@ -81,13 +81,13 @@ class Demo31 extends Component {
     }
   }
   expandedRowRender = (record, index, indent) => {
-    let height = 42 * (this.state.data_obj[record.key].length+ 2);
-    
+    let height = 42 * (this.state.data_obj[0].length+ 2);
+    const data = record.key%2?this.state.data_obj[0]:this.state.data_obj[0]
     return (
       <Table
         
         columns={innerColumns}
-        // style={{height:height}}
+        style={{height:height}}
         data={this.state.data_obj[record.key]} 
 
       />

@@ -89,8 +89,9 @@ export default function bigData(Table) {
     checkIsTreeType(){
       const {data} = this.props;
       let rs = false;
+      const len = data.length>30?30: data.length;
       //取前三十个看看是否有children属性，有则为树形结构
-      for(let i = 0 ;i<30;i++){
+      for(let i = 0 ;i<len;i++){
         if(data[i].children){
           rs = true;
           break;
@@ -214,7 +215,7 @@ export default function bigData(Table) {
           index += 1;
         }
       }
-      console.log('currentIndex****',index);
+      // console.log('currentIndex****',index);
       const isOrder = index - currentIndex > 0 ? true : false;
       if (index < 0) index = 0;
       //如果之前的索引和下一次的不一样则重置索引和滚动的位置
@@ -243,13 +244,13 @@ export default function bigData(Table) {
             const treeIndex = index
             index = _this.cachedRowParentIndex[treeIndex];
             if(index === undefined){
-              console.log('index is undefined********'+treeIndex);
+              // console.log('index is undefined********'+treeIndex);
               index = this.getParentIndex(treeIndex);
-              console.log("getParentIndex****"+index);
+              // console.log("getParentIndex****"+index);
             }
 
           }
-          console.log('parentIndex*********',index);
+          // console.log('parentIndex*********',index);
           // 如果rowsInView 小于 缓存的数据则重新render
           // 向下滚动 下临界值超出缓存的endIndex则重新渲染
           if (rowsInView + index > endIndex - rowDiff && isOrder) {
@@ -275,12 +276,12 @@ export default function bigData(Table) {
                 this.endIndex = endIndex;
                 this.setState({ needRender: !needRender });
             }
-            console.log(
-              "===================",
-              "**index**" + index,
-              " **startIndex**" + this.startIndex,
-              "**endIndex**" + this.endIndex
-            );
+            // console.log(
+            //   "===================",
+            //   "**index**" + index,
+            //   " **startIndex**" + this.startIndex,
+            //   "**endIndex**" + this.endIndex
+            // );
           }
           // 向上滚动，当前的index是否已经加载（currentIndex），若干上临界值小于startIndex则重新渲染
           if (!isOrder && index < startIndex + rowDiff) {
@@ -293,11 +294,11 @@ export default function bigData(Table) {
                 this.endIndex = this.startIndex + loadCount;
                 this.setState({ needRender: !needRender });
             }
-            console.log(
-              "**index**" + index,
-              "**startIndex**" + this.startIndex,
-              "**endIndex**" + this.endIndex
-            );
+            // console.log(
+            //   "**index**" + index,
+            //   "**startIndex**" + this.startIndex,
+            //   "**endIndex**" + this.endIndex
+            // );
           }
         }
       
@@ -379,7 +380,7 @@ export default function bigData(Table) {
         lazyLoad.sufHeight = this.getSumHeight(endIndex, data.length)
 
       }
-      console.log('*******ScrollTop*****'+scrollTop);
+      // console.log('*******ScrollTop*****'+scrollTop);
       return (
         <Table
           {...this.props}
