@@ -171,25 +171,23 @@ var Table = function (_Component) {
       );
     };
 
+    _this.onFocus = function (e) {
+      _this.props.onKeyTab && _this.props.onKeyTab();
+    };
+
     _this.onKeyDown = function (e) {
       var event = _utils.Event.getEvent(e);
       // event.preventDefault?event.preventDefault():event.returnValue = false;
-      if (event.keyCode === 9) {
-        //tab
-        _this.props.onKeyTab && _this.props.onKeyTab();
-      } else if (event.keyCode === 38) {
+      if (event.keyCode === 38) {
         //up
+        event.preventDefault && event.preventDefault();
         _this.props.onKeyUp && _this.props.onKeyUp();
       } else if (event.keyCode === 40) {
         //down
+        event.preventDefault && event.preventDefault();
         _this.props.onKeyDown && _this.props.onKeyDown();
       }
       _this.props.onTableKeyDown && _this.props.onTableKeyDown();
-      // else if(event.altKey && event.keyCode === 38){
-      //   this.props.onKeyMove&&this.props.onKeyMove('up');
-      // }else if(event.altKey && event.keyCode === 40){
-      //   this.props.onKeyMove&&this.props.onKeyMove('down');
-      // }
     };
 
     var expandedRowKeys = [];
@@ -244,11 +242,9 @@ var Table = function (_Component) {
     return _this;
   }
 
-  Table.prototype.componentWillMount = function componentWillMount() {
-    _utils.EventUtil.addHandler(document, 'keydown', this.onKeyDown);
-  };
-
   Table.prototype.componentDidMount = function componentDidMount() {
+    _utils.EventUtil.addHandler(this.contentTable, 'keydown', this.onKeyDown);
+    _utils.EventUtil.addHandler(this.contentTable, 'focus', this.onFocus);
     setTimeout(this.resetScrollY, 300);
     //含有纵向滚动条
     if (this.props.scroll.y) {
@@ -296,7 +292,11 @@ var Table = function (_Component) {
       this.firstDid = true; //避免重复update
     }
 
+<<<<<<< HEAD
     // console.log('this.scrollTop**********',this.scrollTop);
+=======
+    console.log('this.scrollTop**********', this.scrollTop);
+>>>>>>> d5f55ca081b922fb7a34cb4bddf74a797256d50b
   };
 
   Table.prototype.componentDidUpdate = function componentDidUpdate() {
@@ -317,7 +317,8 @@ var Table = function (_Component) {
   };
 
   Table.prototype.componentWillUnmount = function componentWillUnmount() {
-    _utils.EventUtil.removeHandler(document, 'keydown', this.onKeyDown);
+    _utils.EventUtil.removeHandler(this.contentTable, 'keydown', this.onKeyDown);
+    _utils.EventUtil.removeHandler(this.contentTable, 'focus', this.onFocus);
     if (this.resizeEvent) {
       this.resizeEvent.remove();
     }
@@ -1230,7 +1231,8 @@ var Table = function (_Component) {
       'div',
       { className: className, style: props.style, ref: function ref(el) {
           return _this6.contentTable = el;
-        }, tabIndex: props.tabIndex ? props.tabIndex : '0' },
+        },
+        tabIndex: props.tabIndex ? props.tabIndex : '0' },
       this.getTitle(),
       _react2["default"].createElement(
         'div',

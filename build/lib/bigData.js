@@ -115,9 +115,14 @@ function bigData(Table) {
       var data = this.props.data;
 
       var rs = false;
+<<<<<<< HEAD
       var len = data.length > 30 ? 30 : data.length;
       //取前三十个看看是否有children属性，有则为树形结构
       for (var i = 0; i < len; i++) {
+=======
+      //取前三十个看看是否有children属性，有则为树形结构
+      for (var i = 0; i < 30; i++) {
+>>>>>>> d5f55ca081b922fb7a34cb4bddf74a797256d50b
         if (data[i].children) {
           rs = true;
           break;
@@ -254,7 +259,11 @@ function bigData(Table) {
         lazyLoad.preHeight = this.getSumHeight(0, startIndex);
         lazyLoad.sufHeight = this.getSumHeight(endIndex, data.length);
       }
+<<<<<<< HEAD
       // console.log('*******ScrollTop*****'+scrollTop);
+=======
+      console.log('*******ScrollTop*****' + scrollTop);
+>>>>>>> d5f55ca081b922fb7a34cb4bddf74a797256d50b
       return _react2["default"].createElement(Table, _extends({}, this.props, {
         data: data.slice(startIndex, endIndex),
         lazyLoad: lazyLoad,

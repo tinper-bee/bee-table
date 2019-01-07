@@ -85,7 +85,8 @@ class Demo33 extends Component {
  
   render() {
     return (
-      <div><input />
+      <div>
+        <input />
       <Table
         columns={columns}
         data={data}
@@ -106,7 +107,9 @@ class Demo33 extends Component {
         onKeyDown={this.onKeyDown}
         onTableKeyDown={this.onTableKeyDown} 
         scroll={{ x: "110%", y: 140 }}
-      /> </div>
+      />
+      <input />
+      </div>
     );
   }
 }

@@ -139,11 +139,9 @@ class Table extends Component {
     this.computeTableWidth = this.computeTableWidth.bind(this);
   }
 
-  componentWillMount() {
-    EventUtil.addHandler(document,'keydown',this.onKeyDown);
-  }
-
   componentDidMount() {
+    EventUtil.addHandler(this.contentTable,'keydown',this.onKeyDown);
+    EventUtil.addHandler(this.contentTable,'focus',this.onFocus);
     setTimeout(this.resetScrollY, 300);
     //含有纵向滚动条
     if(this.props.scroll.y){
@@ -218,7 +216,8 @@ class Table extends Component {
   }
 
   componentWillUnmount() {
-    EventUtil.removeHandler(document,'keydown',this.onKeyDown);
+    EventUtil.removeHandler(this.contentTable,'keydown',this.onKeyDown);
+    EventUtil.removeHandler(this.contentTable,'focus',this.onFocus);
     if (this.resizeEvent) {
       this.resizeEvent.remove();
     }
@@ -1043,22 +1042,22 @@ class Table extends Component {
     }
   }
 
+  
+  onFocus=(e)=>{
+    this.props.onKeyTab&&this.props.onKeyTab();
+  }
+
   onKeyDown=(e)=>{
-    let event = Event.getEvent(e);
+    let event = Event.getEvent(e); 
     // event.preventDefault?event.preventDefault():event.returnValue = false;
-    if (event.keyCode === 9){//tab
-      this.props.onKeyTab&&this.props.onKeyTab();
-    }else if(event.keyCode === 38){//up
+    if(event.keyCode === 38){//up
+      event.preventDefault&&event.preventDefault();
       this.props.onKeyUp&&this.props.onKeyUp();
     }else if(event.keyCode === 40){//down
+      event.preventDefault&&event.preventDefault();
       this.props.onKeyDown&&this.props.onKeyDown();
     }
     this.props.onTableKeyDown&&this.props.onTableKeyDown();
-    // else if(event.altKey && event.keyCode === 38){
-    //   this.props.onKeyMove&&this.props.onKeyMove('up');
-    // }else if(event.altKey && event.keyCode === 40){
-    //   this.props.onKeyMove&&this.props.onKeyMove('down');
-    // }
   }
 
   render() {
@@ -1091,7 +1090,8 @@ class Table extends Component {
     }
 
     return (
-      <div className={className} style={props.style} ref={el => this.contentTable = el} tabIndex={props.tabIndex?props.tabIndex:'0'} >
+      <div className={className} style={props.style} ref={el => this.contentTable = el} 
+      tabIndex={props.tabIndex?props.tabIndex:'0'} >
         {this.getTitle()}
         <div className={`${clsPrefix}-content`}>
          
