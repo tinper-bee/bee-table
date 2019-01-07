@@ -115,14 +115,9 @@ function bigData(Table) {
       var data = this.props.data;
 
       var rs = false;
-<<<<<<< HEAD
       var len = data.length > 30 ? 30 : data.length;
       //取前三十个看看是否有children属性，有则为树形结构
       for (var i = 0; i < len; i++) {
-=======
-      //取前三十个看看是否有children属性，有则为树形结构
-      for (var i = 0; i < 30; i++) {
->>>>>>> d5f55ca081b922fb7a34cb4bddf74a797256d50b
         if (data[i].children) {
           rs = true;
           break;
@@ -259,11 +254,7 @@ function bigData(Table) {
         lazyLoad.preHeight = this.getSumHeight(0, startIndex);
         lazyLoad.sufHeight = this.getSumHeight(endIndex, data.length);
       }
-<<<<<<< HEAD
       // console.log('*******ScrollTop*****'+scrollTop);
-=======
-      console.log('*******ScrollTop*****' + scrollTop);
->>>>>>> d5f55ca081b922fb7a34cb4bddf74a797256d50b
       return _react2["default"].createElement(Table, _extends({}, this.props, {
         data: data.slice(startIndex, endIndex),
         lazyLoad: lazyLoad,
@@ -357,7 +348,7 @@ function bigData(Table) {
           index += 1;
         }
       }
-      console.log('currentIndex****', index);
+      // console.log('currentIndex****',index);
       var isOrder = index - currentIndex > 0 ? true : false;
       if (index < 0) index = 0;
       //如果之前的索引和下一次的不一样则重置索引和滚动的位置
@@ -384,12 +375,12 @@ function bigData(Table) {
             var treeIndex = index;
             index = _this.cachedRowParentIndex[treeIndex];
             if (index === undefined) {
-              console.log('index is undefined********' + treeIndex);
+              // console.log('index is undefined********'+treeIndex);
               index = _this5.getParentIndex(treeIndex);
-              console.log("getParentIndex****" + index);
+              // console.log("getParentIndex****"+index);
             }
           }
-          console.log('parentIndex*********', index);
+          // console.log('parentIndex*********',index);
           // 如果rowsInView 小于 缓存的数据则重新render
           // 向下滚动 下临界值超出缓存的endIndex则重新渲染
           if (rowsInView + index > endIndex - rowDiff && isOrder) {
@@ -415,7 +406,12 @@ function bigData(Table) {
               _this5.endIndex = endIndex;
               _this5.setState({ needRender: !needRender });
             }
-            console.log("===================", "**index**" + index, " **startIndex**" + _this5.startIndex, "**endIndex**" + _this5.endIndex);
+            // console.log(
+            //   "===================",
+            //   "**index**" + index,
+            //   " **startIndex**" + this.startIndex,
+            //   "**endIndex**" + this.endIndex
+            // );
           }
           // 向上滚动，当前的index是否已经加载（currentIndex），若干上临界值小于startIndex则重新渲染
           if (!isOrder && index < startIndex + rowDiff) {
@@ -428,7 +424,11 @@ function bigData(Table) {
               _this5.endIndex = _this5.startIndex + loadCount;
               _this5.setState({ needRender: !needRender });
             }
-            console.log("**index**" + index, "**startIndex**" + _this5.startIndex, "**endIndex**" + _this5.endIndex);
+            // console.log(
+            //   "**index**" + index,
+            //   "**startIndex**" + this.startIndex,
+            //   "**endIndex**" + this.endIndex
+            // );
           }
         }
       }

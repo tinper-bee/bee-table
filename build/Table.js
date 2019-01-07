@@ -292,11 +292,7 @@ var Table = function (_Component) {
       this.firstDid = true; //避免重复update
     }
 
-<<<<<<< HEAD
     // console.log('this.scrollTop**********',this.scrollTop);
-=======
-    console.log('this.scrollTop**********', this.scrollTop);
->>>>>>> d5f55ca081b922fb7a34cb4bddf74a797256d50b
   };
 
   Table.prototype.componentDidUpdate = function componentDidUpdate() {
@@ -1166,7 +1162,7 @@ var Table = function (_Component) {
         (0, _componentClasses2["default"])(this.contentTable).remove(new RegExp('^' + clsPrefix + '-scroll-position-.+$')).add(clsPrefix + '-scroll-position-' + position);
       }
     }
-    console.log('lastScrollTop--' + this.lastScrollTop + '--eventScrollTop--' + e.target.scrollTop);
+    // console.log('lastScrollTop--'+this.lastScrollTop+'--eventScrollTop--'+ e.target.scrollTop);
     if (scroll.y && this.lastScrollTop != e.target.scrollTop) {
       if (fixedColumnsBodyLeft && e.target !== fixedColumnsBodyLeft) {
         fixedColumnsBodyLeft.scrollTop = e.target.scrollTop;
