@@ -301,6 +301,7 @@ function bigData(Table) {
           startIndex = _this.startIndex;
       var needRender = _this.state.needRender;
 
+      _this.scrollTop = nextScrollTop;
       var viewHeight = parseInt(scroll.y);
       _this.treeType = treeType;
       // let index = currentIndex;//记录下次当前位置
@@ -354,7 +355,6 @@ function bigData(Table) {
       //如果之前的索引和下一次的不一样则重置索引和滚动的位置
       if (currentIndex !== index) {
         _this.currentIndex = index;
-        _this.scrollTop = nextScrollTop;
         var rowsInView = 0; //可视区域显示多少行
         var rowsHeight = 0; //可视区域内容高度
         var tempIndex = index;
