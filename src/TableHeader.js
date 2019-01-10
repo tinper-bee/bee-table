@@ -535,7 +535,6 @@ class TableHeader extends Component {
     } = this.props;
 
     let attr = dragborder ? { id: `u-table-drag-thead-${this.theadKey}` } : {};
-
     return (
       <thead className={`${clsPrefix}-thead`} {...attr} data-theader-fixed='scroll' ref={_thead=>this._thead = _thead} >
         {rows.map((row, index) => (
@@ -555,15 +554,23 @@ class TableHeader extends Component {
               if (lastShowIndex == columIndex) {
                 canDotDrag = "th-can-not-drag";
               }
+              const keyTemp = {};
+              //避免key为undefined
+              if(da.dataindex && da.key ===undefined ){
+                keyTemp.key = da.dataindex
+              } 
               if (filterable && index == rows.length - 1) {
                 da.children = this.filterRenderType(
                   da["filtertype"],
                   da.dataindex,
                   columIndex
                 );
+                if(da.key ===undefined ){
+                  keyTemp.key = da.dataindex+'-filterable'
+                }
+                
                 delete da.filterdropdownfocus;
               }
-
               let thDefaultObj = {};
               let thClassName = `${da.className}`?`${da.className}`:'';
                   if(draggable){
@@ -574,11 +581,7 @@ class TableHeader extends Component {
                   }
                   thClassName += ` ${fixedStyle}`;
                 if(!da.fixed){
-                  const keyTemp = {};
-                  //避免key为undefined
-                  if(da.dataindex){
-                    keyTemp.key = da.dataindex
-                  } 
+             
                   
                   return (<th {...da}  {...keyTemp} className={thClassName} data-th-fixed={da.fixed} 
                         data-line-key={da.key} data-line-index={columIndex} data-th-width={da.width} >

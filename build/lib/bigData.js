@@ -67,7 +67,9 @@ function bigData(Table) {
     }
 
     BigData.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-      if (nextProps.scroll.y !== this.props.scroll.y) {
+      var props = this.props;
+      if (nextProps.scroll.y !== props.scroll.y) {
+        var rowHeight = nextProps.height ? nextProps.height : defaultHeight;
         var scrollY = nextProps.scroll.y ? parseInt(nextProps.scroll.y) : 0;
         this.rowsInView = scrollY ? Math.ceil(scrollY / rowHeight) : 20;
         this.loadCount = props.loadBuffer ? this.rowsInView + props.loadBuffer * 2 : 26; //一次加载多少数据
@@ -256,7 +258,7 @@ function bigData(Table) {
       return _react2["default"].createElement(Table, _extends({}, this.props, {
         data: data.slice(startIndex, endIndex),
         lazyLoad: lazyLoad,
-        handleScroll: this.handleScroll,
+        handleScrollY: this.handleScrollY,
         scrollTop: scrollTop,
         setRowHeight: this.setRowHeight,
         setRowParentIndex: this.setRowParentIndex,
@@ -271,13 +273,15 @@ function bigData(Table) {
     data: [],
     loadBuffer: 5,
     rowKey: 'key',
-    onExpand: function onExpand() {}
+    onExpand: function onExpand() {},
+
+    scroll: {}
   }, _class.propTypes = {
     loadBuffer: _propTypes2["default"].number
   }, _initialiseProps = function _initialiseProps() {
     var _this5 = this;
 
-    this.handleScroll = function (nextScrollTop, treeType) {
+    this.handleScrollY = function (nextScrollTop, treeType) {
       //树表逻辑
       // 关键点是动态的获取startIndex和endIndex
       // 法子一：子节点也看成普通tr，最开始需要设置一共有多少行，哪行显示哪行不显示如何确定
@@ -449,7 +453,7 @@ function bigData(Table) {
         });
       }
 
-      _this5.props.onExpand(expandState, record);
+      _this.props.onExpand(expandState, record);
     };
   }, _temp;
 }

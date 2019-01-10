@@ -1078,7 +1078,7 @@ var Table = function (_Component) {
         headerHeight = _props7.headerHeight,
         columns = _props7.columns;
 
-    var headRows = this.refs.headTable ? this.refs.headTable.querySelectorAll('thead') : this.refs.bodyTable.querySelectorAll('thead');
+    var headRows = this.refs.headTable ? this.refs.headTable.querySelectorAll('thead tr') : this.refs.bodyTable.querySelectorAll('thead tr');
     var bodyRows = this.refs.bodyTable.querySelectorAll('.' + clsPrefix + '-row') || [];
     var fixedColumnsHeadRowsHeight = [].map.call(headRows, function (row) {
       var height = headerHeight;
@@ -1132,7 +1132,8 @@ var Table = function (_Component) {
         _props8$scroll = _props8.scroll,
         scroll = _props8$scroll === undefined ? {} : _props8$scroll,
         clsPrefix = _props8.clsPrefix,
-        handleScroll = _props8.handleScroll;
+        handleScrollY = _props8.handleScrollY,
+        handleScrollX = _props8.handleScrollX;
     var _refs = this.refs,
         headTable = _refs.headTable,
         bodyTable = _refs.bodyTable,
@@ -1161,6 +1162,9 @@ var Table = function (_Component) {
       if (position) {
         (0, _componentClasses2["default"])(this.contentTable).remove(new RegExp('^' + clsPrefix + '-scroll-position-.+$')).add(clsPrefix + '-scroll-position-' + position);
       }
+      if (handleScrollX) {
+        (0, _utils.debounce)(handleScrollX(e.target.scrollLeft, this.treeType), 300);
+      }
     }
     // console.log('lastScrollTop--'+this.lastScrollTop+'--eventScrollTop--'+ e.target.scrollTop);
     if (scroll.y && this.lastScrollTop != e.target.scrollTop) {
@@ -1174,8 +1178,8 @@ var Table = function (_Component) {
         bodyTable.scrollTop = e.target.scrollTop;
       }
       this.lastScrollTop = e.target.scrollTop;
-      if (handleScroll) {
-        (0, _utils.debounce)(handleScroll(this.lastScrollTop, this.treeType), 300);
+      if (handleScrollY) {
+        (0, _utils.debounce)(handleScrollY(this.lastScrollTop, this.treeType), 300);
       }
     }
 

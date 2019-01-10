@@ -10,6 +10,7 @@ export default function bigData(Table) {
       loadBuffer: 5,
       rowKey: 'key',
       onExpand() { },
+      scroll:{}
     };
     static propTypes = {
       loadBuffer: PropTypes.number
@@ -41,7 +42,9 @@ export default function bigData(Table) {
       this.setRowParentIndex = this.setRowParentIndex.bind(this);
     }
     componentWillReceiveProps(nextProps){
-        if(nextProps.scroll.y !== this.props.scroll.y){
+        const props = this.props; 
+        if(nextProps.scroll.y !== props.scroll.y){
+            const rowHeight = nextProps.height ? nextProps.height : defaultHeight;
             const scrollY = nextProps.scroll.y ? parseInt(nextProps.scroll.y) : 0;
             this.rowsInView = scrollY ? Math.ceil(scrollY / rowHeight) : 20;
             this.loadCount = props.loadBuffer
