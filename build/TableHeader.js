@@ -652,9 +652,15 @@ var TableHeader = function (_Component) {
             }
             thClassName += " " + fixedStyle;
             if (!da.fixed) {
+              var keyTemp = {};
+              //避免key为undefined
+              if (da.dataindex) {
+                keyTemp.key = da.dataindex;
+              }
+
               return _react2["default"].createElement(
                 "th",
-                _extends({}, da, { key: 'table-header-th-' + da.dataindex, className: thClassName, "data-th-fixed": da.fixed,
+                _extends({}, da, keyTemp, { className: thClassName, "data-th-fixed": da.fixed,
                   "data-line-key": da.key, "data-line-index": columIndex, "data-th-width": da.width }),
                 da.children,
                 dragborder ? _react2["default"].createElement(

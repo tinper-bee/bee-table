@@ -45,7 +45,7 @@ import 'bee-table/build/Table.css';
 | expandedRowRender      | 额外的展开行                                   | Function(record, index, indent):node | -               |
 | expandIconAsCell      | 展开按钮是否单独作为一个单元格                                   | bool                               | false               |
 | expandRowByClick       | 设置展开行是否通过点击行触发，此参数需要与上面参数搭配使用（默认是通过点击行前面的加号展开行 | bool                                   | false           |
-| footerScroll       | 表尾和body是否公用同一个横向滚动条。（ 如果footer中也是一个table组件，并且也具有滚动条，那么也需要加入footerScroll参数。 ） | bool                                   | false           |
+| footerScroll       | 表尾和body是否公用同一个横向滚动条。（ 如果footer中也是一个table组件，并且也具有滚动条，那么也需要加入footerScroll参数，内层表格的footerScroll设置成false。 ） | bool                                   | false           |
 | loading       | 表格是否加载中 | bool|object(详情可以参考上面示例)                                   | false           |
 | haveExpandIcon       | 控制是否显示行展开icon.**注：该参数只有在和expandedRowRender同时使用才生效** | Function(record, index):bool   | () =>false |
 | filterable       | 是否开启根据条件来过滤数据 | bool | false

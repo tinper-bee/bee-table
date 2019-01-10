@@ -574,16 +574,22 @@ class TableHeader extends Component {
                   }
                   thClassName += ` ${fixedStyle}`;
                 if(!da.fixed){
-                  return (<th {...da} key={'table-header-th-'+da.dataindex} className={thClassName} data-th-fixed={da.fixed} 
+                  const keyTemp = {};
+                  //避免key为undefined
+                  if(da.dataindex){
+                    keyTemp.key = da.dataindex
+                  } 
+                  
+                  return (<th {...da}  {...keyTemp} className={thClassName} data-th-fixed={da.fixed} 
                         data-line-key={da.key} data-line-index={columIndex} data-th-width={da.width} >
-                        {da.children}
-                        {
-                          dragborder ? <div ref={el => (this.gap = el)} data-line-key={da.key} 
-                          data-line-index={columIndex} data-th-width={da.width}
-                          data-type="online" className = {`${clsPrefix}-thead-th-drag-gap`}>
-                          <div id='th-online' className='online' data-line-key={da.key} data-line-index={columIndex} data-th-width={da.width} /></div>:""
-                        }
-                  </th>)
+                              {da.children}
+                              {
+                                dragborder ? <div ref={el => (this.gap = el)} data-line-key={da.key} 
+                                data-line-index={columIndex} data-th-width={da.width}
+                                data-type="online" className = {`${clsPrefix}-thead-th-drag-gap`}>
+                                <div id='th-online' className='online' data-line-key={da.key} data-line-index={columIndex} data-th-width={da.width} /></div>:""
+                              }
+                        </th>)
               }else{
                 thDefaultObj = {
                   ...da,

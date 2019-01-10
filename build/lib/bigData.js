@@ -16,8 +16,6 @@ var _propTypes = require("prop-types");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _utils = require("../utils");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
@@ -102,7 +100,7 @@ function bigData(Table) {
     BigData.prototype.getRowKey = function getRowKey(record, index) {
       var rowKey = this.props.rowKey;
       var key = typeof rowKey === 'function' ? rowKey(record, index) : record[rowKey];
-      (0, _utils.warningOnce)(key !== undefined, 'Each record in table should have a unique `key` prop,' + 'or set `rowKey` to an unique primary key.');
+
       return key;
     };
     /**
@@ -272,7 +270,8 @@ function bigData(Table) {
   }(_react.Component), _class.defaultProps = {
     data: [],
     loadBuffer: 5,
-    rowKey: 'key'
+    rowKey: 'key',
+    onExpand: function onExpand() {}
   }, _class.propTypes = {
     loadBuffer: _propTypes2["default"].number
   }, _initialiseProps = function _initialiseProps() {
@@ -449,6 +448,8 @@ function bigData(Table) {
           }), 1);
         });
       }
+
+      _this5.props.onExpand(expandState, record);
     };
   }, _temp;
 }

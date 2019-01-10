@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Checkbox from "bee-checkbox";
 import Icon from "bee-icon";
 import { ObjectAssign } from "./util";
-import i18n from "../i18n";
+import i18n from "./i18n";
 import { getComponentLocale } from "bee-locale/build/tool";
 
 function noop() {}

@@ -8,7 +8,7 @@ import Dropdown from 'bee-dropdown';
 import Menu from 'bee-menus';
 import Button from 'bee-button';
 import Icon from 'bee-icon';
-import i18n from './i18n';
+import i18n from './lib/i18n';
 import { getComponentLocale } from 'bee-locale/build/tool';
 const { Item } = Menu;
 

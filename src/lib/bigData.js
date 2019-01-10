@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { warningOnce } from '../utils';
 const defaultHeight = 40;
 const rowDiff = 3; //行差值
 let treeTypeIndex = 0;
@@ -10,6 +9,7 @@ export default function bigData(Table) {
       data: [],
       loadBuffer: 5,
       rowKey: 'key',
+      onExpand() { },
     };
     static propTypes = {
       loadBuffer: PropTypes.number
@@ -75,11 +75,7 @@ export default function bigData(Table) {
       const rowKey = this.props.rowKey;
       const key = (typeof rowKey === 'function') ?
         rowKey(record, index) : record[rowKey];
-      warningOnce(
-        key !== undefined,
-        'Each record in table should have a unique `key` prop,' +
-        'or set `rowKey` to an unique primary key.'
-      );
+    
       return key;
     }
     /**
@@ -151,7 +147,7 @@ export default function bigData(Table) {
      *@param 最新一次滚动的scrollTop
      *@param treeType是否是树状表
      */
-    handleScroll = (nextScrollTop, treeType) => {
+    handleScrollY = (nextScrollTop, treeType) => {
       //树表逻辑
       // 关键点是动态的获取startIndex和endIndex
       // 法子一：子节点也看成普通tr，最开始需要设置一共有多少行，哪行显示哪行不显示如何确定
@@ -355,6 +351,8 @@ export default function bigData(Table) {
         _this.expandChildRowKeys.splice(_this.expandChildRowKeys.findIndex(fitem => fitem.key === item.key), 1)
       })
       }
+
+      _this.props.onExpand(expandState, record);
     }
     render() {
       
@@ -386,7 +384,7 @@ export default function bigData(Table) {
           {...this.props}
           data={data.slice(startIndex, endIndex)}
           lazyLoad={lazyLoad}
-          handleScroll={this.handleScroll}
+          handleScrollY={this.handleScrollY}
           scrollTop={scrollTop}
           setRowHeight={this.setRowHeight}
           setRowParentIndex = {this.setRowParentIndex}
