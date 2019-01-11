@@ -1078,7 +1078,7 @@ var Table = function (_Component) {
         headerHeight = _props7.headerHeight,
         columns = _props7.columns;
 
-    var headRows = this.refs.headTable ? this.refs.headTable.querySelectorAll('thead tr') : this.refs.bodyTable.querySelectorAll('thead tr');
+    var headRows = this.refs.headTable ? this.refs.headTable.querySelectorAll('thead') : this.refs.bodyTable.querySelectorAll('thead');
     var bodyRows = this.refs.bodyTable.querySelectorAll('.' + clsPrefix + '-row') || [];
     var fixedColumnsHeadRowsHeight = [].map.call(headRows, function (row) {
       var height = headerHeight;

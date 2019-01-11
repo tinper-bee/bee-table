@@ -614,7 +614,6 @@ var TableHeader = function (_Component) {
 
 
     var attr = dragborder ? { id: "u-table-drag-thead-" + this.theadKey } : {};
-
     return _react2["default"].createElement(
       "thead",
       _extends({ className: clsPrefix + "-thead" }, attr, { "data-theader-fixed": "scroll", ref: function ref(_thead) {
@@ -637,11 +636,19 @@ var TableHeader = function (_Component) {
             if (lastShowIndex == columIndex) {
               canDotDrag = "th-can-not-drag";
             }
+            var keyTemp = {};
+            //避免key为undefined
+            if (da.dataindex && da.key === undefined) {
+              keyTemp.key = da.dataindex;
+            }
             if (filterable && index == rows.length - 1) {
               da.children = _this2.filterRenderType(da["filtertype"], da.dataindex, columIndex);
+              if (da.key === undefined) {
+                keyTemp.key = da.dataindex + '-filterable';
+              }
+
               delete da.filterdropdownfocus;
             }
-
             var thDefaultObj = {};
             var thClassName = "" + da.className ? "" + da.className : '';
             if (draggable) {
@@ -652,11 +659,6 @@ var TableHeader = function (_Component) {
             }
             thClassName += " " + fixedStyle;
             if (!da.fixed) {
-              var keyTemp = {};
-              //避免key为undefined
-              if (da.dataindex) {
-                keyTemp.key = da.dataindex;
-              }
 
               return _react2["default"].createElement(
                 "th",
