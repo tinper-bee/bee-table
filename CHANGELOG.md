@@ -1,3 +1,8 @@
+<a name="1.6.29"></a>
+## [1.6.29](https://github.com/tinper-bee/bee-table/compare/v1.6.28...v1.6.29) (2019-01-11)
+
+
+
 <a name="1.6.28"></a>
 ## [1.6.28](https://github.com/tinper-bee/bee-table/compare/v1.6.27...v1.6.28) (2019-01-09)
 
