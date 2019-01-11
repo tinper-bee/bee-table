@@ -1,5 +1,5 @@
 /**
-*
+* @description  column中增加sorter: (a, b) => a.c - b.c 这里的a,b代表前后两个数据，c代表比较当前对象的字段名称
 * @title 列排序
 *
 */
