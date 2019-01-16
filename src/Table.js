@@ -310,6 +310,8 @@ class Table extends Component {
       'or set `rowKey` to an unique primary key.'
     );
     return key;
+
+    
   }
 
   getExpandedRows() {

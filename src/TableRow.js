@@ -162,7 +162,7 @@ class TableRow extends Component{
     const {
       clsPrefix, columns, record, height, visible, index,
       expandIconColumnIndex, expandIconAsCell, expanded, expandRowByClick,
-      expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed,
+      expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed,hoverKey
     } = this.props;
     let showSum = false;
     let { className } = this.props;
@@ -221,8 +221,7 @@ class TableRow extends Component{
     if (!visible) {
       style.display = 'none';
     }
- 
-    return (
+    return ( 
       <tr
         onClick={this.onRowClick}
         onDoubleClick={this.onRowDoubleClick}
@@ -230,6 +229,7 @@ class TableRow extends Component{
         onMouseLeave={this.onMouseLeave}
         className={`${clsPrefix} ${className} ${clsPrefix}-level-${indent}`}
         style={style}
+        // key={hoverKey}
         ref={this.bindElement}
       >
         {cells.length>0?cells:<td></td>}

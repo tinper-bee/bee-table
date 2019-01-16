@@ -538,7 +538,7 @@ class TableHeader extends Component {
     return (
       <thead className={`${clsPrefix}-thead`} {...attr} data-theader-fixed='scroll' ref={_thead=>this._thead = _thead} >
         {rows.map((row, index) => (
-          <tr style={rowStyle} className={(filterable && index == rows.length - 1)?'filterable':''}>
+          <tr key={index} style={rowStyle} className={(filterable && index == rows.length - 1)?'filterable':''}>
             {row.map((da, columIndex, arr) => {
               let thHover = da.drgHover
                 ? ` ${clsPrefix}-thead th-drag-hover`
@@ -558,6 +558,7 @@ class TableHeader extends Component {
               //避免key为undefined
               // if(da.dataindex && da.key ===undefined ){
                 keyTemp.key = da.key || da.dataindex || index+'-'+columIndex
+                
               // } 
               if (filterable && index == rows.length - 1) {
                 da.children = this.filterRenderType(
@@ -582,7 +583,6 @@ class TableHeader extends Component {
                   thClassName += ` ${fixedStyle}`;
                 if(!da.fixed){
              
-                  // console.log(keyTemp.key);
                   return (<th {...da}  {...keyTemp} className={thClassName} data-th-fixed={da.fixed} 
                         data-line-key={da.key} data-line-index={columIndex} data-th-width={da.width} >
                               {da.children}
