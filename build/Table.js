@@ -1232,7 +1232,7 @@ var Table = function (_Component) {
       { className: className, style: props.style, ref: function ref(el) {
           return _this6.contentTable = el;
         },
-        tabIndex: props.tabIndex ? props.tabIndex : '0' },
+        tabIndex: props.focusable && (props.tabIndex ? props.tabIndex : '0') },
       this.getTitle(),
       _react2["default"].createElement(
         'div',

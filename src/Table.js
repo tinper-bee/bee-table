@@ -1096,7 +1096,7 @@ class Table extends Component {
 
     return (
       <div className={className} style={props.style} ref={el => this.contentTable = el} 
-      tabIndex={props.tabIndex?props.tabIndex:'0'} >
+      tabIndex={props.focusable && (props.tabIndex?props.tabIndex:'0')} >
         {this.getTitle()}
         <div className={`${clsPrefix}-content`}>
          

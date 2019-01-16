@@ -279,7 +279,7 @@ var TableRow = function (_Component) {
         indent: indent,
         index: index,
         column: columns[i],
-        key: columns[i].key,
+        key: columns[i].key || columns[i].dataIndex || i,
         fixed: fixed,
         showSum: showSum,
         expandIcon: isColumnHaveExpandIcon ? expandIcon : null

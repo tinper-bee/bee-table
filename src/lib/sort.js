@@ -24,141 +24,158 @@ export default function sort(Table, Icon) {
   return class SortTable extends Component {
     constructor(props) {
       super(props);
-      this.state = {
-        data: this.props.data,
-        columns:props.columns, 
-      };
+      let flatColumns = [];
+      this._toFlatColumn(props.columns,-1,flatColumns);
+      this.state = { data: this.props.data, columns: props.columns,flatColumns:flatColumns };
+      
     }
-    static defaultProps = {
-      sort: {
-              mode:'single',
-              backSource:false //默认是前端排序，值为true为后端排序
-            }
-   };
-    componentWillReceiveProps(nextProps){
-      if(nextProps.data !== this.props.data){
-        this.setState({ 
-          data: nextProps.data,
-          oldData: nextProps.data.concat(),
-        });
-      }
-      if(nextProps.columns !== this.props.columns){
+    static defaultProps = { sort: { mode: "single", backSource: false } }; //默认是前端排序，值为true为后端排序
+    componentWillReceiveProps(nextProps) {
+     
+      if (nextProps.data !== this.props.data) {
         this.setState({
-          columns: nextProps.columns, 
+          data: nextProps.data,
+          oldData: nextProps.data.concat()
         });
       }
+      if (nextProps.columns !== this.props.columns) {
+        let flatColumns = [];
+        this._toFlatColumn(nextProps.columns,-1,flatColumns);
+        this.setState({ columns: nextProps.columns ,flatColumns});
+       
+      }
     }
-    getOrderNum =()=>{
-      let orderNum=0 ;
-      this.state.columns.forEach((item,index)=>{
-        if(item.order=='ascend' || item.order=='descend'){
+    /**
+     *column扁平化处理，适应多表头避免递归操作
+     *
+     */
+    _toFlatColumn(columns,parentIndex = -1,flatColumns=[]) {
+      const _this = this;
+      let children = [];
+      // const flatColumns = _this.state;
+      columns.forEach((item,index)=>{
+        item.parentIndex = parentIndex;
+        children = item.children;
+        flatColumns.push(item);
+        if(children){
+          item.children = [];
+          _this._toFlatColumn(children,flatColumns.length - 1,flatColumns);
+        }
+      });
+    }
+    getOrderNum = () => {
+      let orderNum = 0;
+      //todo 1
+      this.state.flatColumns.forEach((item, index) => {
+        if (item.order == "ascend" || item.order == "descend") {
           orderNum++;
         }
-      })
-      return orderNum?orderNum:1;
-    }
-    
+      });
+      return orderNum ? orderNum : 1;
+    };
+
     /**
      * column 当前的排序的列
      * 当有的列不排序时，将该列的orderNum置为‘’，并动态的修改其他列的orderNum。
      */
-    changeOrderNum = (column)=>{
-      let {columns} = this.state;
-      columns.forEach((col)=>{
-        if(col.orderNum>column.orderNum){
+    changeOrderNum = column => {
+      let { flatColumns } = this.state;
+      //todo 2
+      flatColumns.forEach(col => {
+        if (col.orderNum > column.orderNum) {
           col.orderNum--;
         }
-        if(column.key == col.key){
-          col.orderNum = '';
+        if (column.key == col.key) {
+          col.orderNum = "";
         }
-      })
-     this.setState({columns});
-
-    }
+      });
+      this.setState({ flatColumns });
+    };
     /**
      * 获取排序字段
      */
-    getOrderCols = (columns)=>{
+    getOrderCols = columns => {
       let orderCols = [];
-      columns.forEach(item=>{
-        if(item.order=='ascend'||item.order=='descend'){
-          orderCols.push({order:item.order,
-            field:item.dataIndex,
-            orderNum:item.orderNum
+      //todo 3
+      columns.forEach(item => {
+        if (item.order == "ascend" || item.order == "descend") {
+          orderCols.push({
+            order: item.order,
+            field: item.dataIndex,
+            orderNum: item.orderNum
           });
         }
-      })
+      });
       return orderCols;
-    }
-   
-   /**
-    * pre：前一条数据
-    * after:后一条数据
-    * orderType:升序、降序
-    */
-    _sortBy=(pre,after,orderCols,orderColslen,currentIndex)=>{
+    };
+
+    /**
+     * pre：前一条数据
+     * after:后一条数据
+     * orderType:升序、降序
+     */
+    _sortBy = (pre, after, orderCols, orderColslen, currentIndex) => {
       const preKey = pre[orderCols[currentIndex].key];
       const afterKey = after[orderCols[currentIndex].key];
-      if(preKey == afterKey && currentIndex+1<=orderColslen){
-        return this._sortBy(pre,after,orderCols,orderColslen,currentIndex+1);
+      if (preKey == afterKey && currentIndex + 1 <= orderColslen) {
+        return this._sortBy(pre, after, orderCols, orderColslen, currentIndex + 1);
       }
-      if(orderCols[currentIndex].order=='ascend'){
-        return preKey  - afterKey
-      }else{
-        return afterKey - preKey
+      if (orderCols[currentIndex].order == "ascend") {
+        return preKey - afterKey;
+      } else {
+        return afterKey - preKey;
       }
-    }
+    };
     /**
      * 多列排序 先排order为1的，其他的基于已排序的数据排
      */
-    multiSort = (columns)=>{
-      let {data, oldData} = this.state;
+    multiSort = columns => {
+      let { data, oldData } = this.state;
       const self = this;
-      let orderCols = {},orderColslen=0;
-      columns.forEach(item=>{
-        if(item.orderNum){
+      let orderCols = {},
+        orderColslen = 0;
+      //todo 4
+      columns.forEach(item => {
+        if (item.orderNum) {
           orderColslen++;
           orderCols[item.orderNum] = item;
         }
-      })
-      if(orderColslen>0){
+      });
+      if (orderColslen > 0) {
         data = data.sort(function(a, b) {
-          return self._sortBy(a,b,orderCols,orderColslen,1);
+          return self._sortBy(a, b, orderCols, orderColslen, 1);
         });
-      }else{
+      } else {
         data = oldData.concat();
       }
       return data;
-
-    }
+    };
 
     toggleSortOrder = (order, column) => {
-      let { data, oldData ,columns} = this.state;
-      let {sort} = this.props;
+      let { data, oldData, flatColumns } = this.state;
+      let { sort } = this.props;
       let seleObj;
       if (!oldData) {
         oldData = data.concat();
       }
       //单列排序，清空其他列的排序
-      if(sort.mode == 'single'){
-        columns.forEach(da=>{
-          if(da.key == column.key){
+      if (sort.mode == "single") {
+        //todo 5
+        flatColumns.forEach(da => {
+          if (da.key == column.key) {
             seleObj = da;
-          }else{
-            if(da.order){
-              da.order = 'flatscend';
+          } else {
+            if (da.order) {
+              da.order = "flatscend";
             }
           }
-        })
+        });
         seleObj.order = order;
         //通过后端请求
-        if(sort.backSource && typeof sort.sortFun === "function"){
+        if (sort.backSource && typeof sort.sortFun === "function") {
           //获取排序的字段和方式
-          sort.sortFun([{
-            order:order,
-            field:seleObj.dataIndex
-          }]);
-        }else{
+          sort.sortFun([{ order: order, field: seleObj.dataIndex }]);
+        } else {
           if (order === "ascend") {
             data = data.sort(function(a, b) {
               return column.sorter(a, b);
@@ -171,83 +188,99 @@ export default function sort(Table, Icon) {
             data = oldData.concat();
           }
         }
-      }else{
-        seleObj = columns.find(da=>da.key == column.key);
+      } else {
+        seleObj = flatColumns.find(da => da.key == column.key);
         seleObj.order = order;
-        if(order === "flatscend"){
+        if (order === "flatscend") {
           this.changeOrderNum(column);
         }
-        if(!seleObj.orderNum && (order=='ascend'||order=='descend')){
+        if (!seleObj.orderNum && (order == "ascend" || order == "descend")) {
           seleObj.orderNum = this.getOrderNum();
         }
-        if(sort.backSource && typeof sort.sortFun === "function"){
-          sort.sortFun(this.getOrderCols(columns));
-        }else{
-          data = this.multiSort(columns);
+        if (sort.backSource && typeof sort.sortFun === "function") {
+          sort.sortFun(this.getOrderCols(flatColumns));
+        } else {
+          data = this.multiSort(flatColumns);
         }
-         
       }
-      this.setState({ 
-        data,
-        oldData,
-        columns
-      });
+      this.setState({ data, oldData, flatColumns });
     };
     //每个column上添加orderNum属性，不排序时为“”。
     //点击时orderNum有值则不重新赋值，如果没有值，则取当前column下的有oderNum的length值。并排序
     //点击置为“”时，动态的设置相关column的orderNum值。并排序
-    renderColumnsDropdown=(columns)=>{
-      const prefixCls = "bee-table";
-      const {mode} = this.props.sort;
-      return columns.map(originColumn => {
-        let iconTypeIndex = 0;
+    renderColumnsDropdown = columns => {
+      let tempColumns = [],rsColumns = [];
+      tempColumns = columns.map(originColumn => {
         let column = Object.assign({}, originColumn);
-        let sorterClass = 'flat';
-     
-        if(column.order === "ascend"){
-          iconTypeIndex = 1;
-          sorterClass = 'up'
-        }else if(column.order === "descend"){
-          iconTypeIndex = 2;
-          sorterClass = 'down'
-        }
-        
-        let sortButton;
-        if (column.sorter) {
-          //大于0说明不是升序就是降序，判断orderNum有没有值，没有值赋值
-          if(iconTypeIndex>0 && !column.orderNum && mode=='multiple'){
-            column.orderNum = this.getOrderNum();
-          }
-          sortButton = (
-            <div className={`${prefixCls}-column-sorter`}>
-              <span
-                className={`${prefixCls}-column-sorter-${sorterClass}`}
-                onClick={() =>{ 
-                  this.toggleSortOrder(IconType[iconTypeIndex==2?0:iconTypeIndex+1].order, column);
-
-                  if(column.sorterClick){
-                    column.sorterClick(column,IconType[iconTypeIndex].type);
-                  }
-                } }
-              >
-                <Icon type={IconType[iconTypeIndex].icon} />
-                <span >{column.orderNum}</span>
-              </span>
-              
-            </div>
-          );
-        }
-        column.title = (
-          <span>
-            {column.title}
-            {sortButton}
-          </span>
-        );
-        return column;
+        return this.sortColumn(column);
       });
+      rsColumns = this._flatToColumn(tempColumns);
+      return rsColumns;
+    };
+
+    sortColumn = column => {
+      const { mode } = this.props.sort;
+      const prefixCls = "bee-table";
+      let iconTypeIndex = 0;
+      let sorterClass = "flat";
+
+      if (column.order === "ascend") {
+        iconTypeIndex = 1;
+        sorterClass = "up";
+      } else if (column.order === "descend") {
+        iconTypeIndex = 2;
+        sorterClass = "down";
+      }
+
+      let sortButton;
+      if (column.sorter) {
+        //大于0说明不是升序就是降序，判断orderNum有没有值，没有值赋值
+        if (iconTypeIndex > 0 && !column.orderNum && mode == "multiple") {
+          column.orderNum = this.getOrderNum();
+        }
+        sortButton = <div className={`${prefixCls}-column-sorter`}>
+            <span className={`${prefixCls}-column-sorter-${sorterClass}`} onClick={() => {
+                this.toggleSortOrder(IconType[iconTypeIndex == 2 ? 0 : iconTypeIndex + 1].order, column);
+
+                if (column.sorterClick) {
+                  column.sorterClick(column, IconType[iconTypeIndex].type);
+                }
+              }}>
+              {/* <Icon type='{IconType[iconTypeIndex].icon}' /> */}
+              <i className={`uf ${IconType[iconTypeIndex].icon}`} />
+              <span>{column.orderNum}</span>
+            </span>
+          </div>;
+      }
+      column.title = <span>
+          {column.title}
+          {sortButton}
+        </span>;
+      return column;
+    };
+
+    _flatToColumn(flatColumns){
+      const colLen = flatColumns.length;
+      let parentIndex,rsColumns = [];
+      //每次渲染需要将父类的children置空，避免重复
+      flatColumns.forEach(item=>{
+        if(item.children){
+          item.children = [];
+        }
+      })
+      for(let i = colLen-1;i>=0;i--){
+        parentIndex = flatColumns[i].parentIndex;
+         if(parentIndex >= 0){
+          flatColumns[parentIndex].children.unshift(flatColumns[i]);
+         }
+      }
+      rsColumns = flatColumns.filter(item=>{
+        return item.parentIndex == -1
+      })
+      return rsColumns;
     }
     render() {
-      let columns = this.renderColumnsDropdown(this.state.columns.concat());
+      let columns = this.renderColumnsDropdown(this.state.flatColumns.concat());
       return <Table {...this.props} columns={columns} data={this.state.data} />;
     }
   };

@@ -485,6 +485,11 @@ $checkbox-height:16px;
     display:none;
     pointer-events: none;
   }
+  //固定列含有checkbox 样式复写
+  .u-checkbox {
+    height: $checkbox-height;
+    line-height:  $checkbox-height;
+  }
 }
 .u-table:focus{
   outline: none;
@@ -730,10 +735,6 @@ $checkbox-height:16px;
     }
 }
 
-//固定列含有checkbox 样式复写
-.u-checkbox {
-  height: $checkbox-height;
-  line-height:  $checkbox-height;
-}
+
 
 

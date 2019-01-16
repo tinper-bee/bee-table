@@ -556,9 +556,9 @@ class TableHeader extends Component {
               }
               const keyTemp = {};
               //避免key为undefined
-              if(da.dataindex && da.key ===undefined ){
-                keyTemp.key = da.dataindex
-              } 
+              // if(da.dataindex && da.key ===undefined ){
+                keyTemp.key = da.key || da.dataindex || index+'-'+columIndex
+              // } 
               if (filterable && index == rows.length - 1) {
                 da.children = this.filterRenderType(
                   da["filtertype"],
@@ -566,11 +566,11 @@ class TableHeader extends Component {
                   columIndex
                 );
                 if(da.key ===undefined ){
-                  keyTemp.key = da.dataindex+'-filterable'
+                  keyTemp.key = keyTemp.key + '-filterable'
                 }
-                
                 delete da.filterdropdownfocus;
               }
+
               let thDefaultObj = {};
               let thClassName = `${da.className}`?`${da.className}`:'';
                   if(draggable){
@@ -582,7 +582,7 @@ class TableHeader extends Component {
                   thClassName += ` ${fixedStyle}`;
                 if(!da.fixed){
              
-                  
+                  // console.log(keyTemp.key);
                   return (<th {...da}  {...keyTemp} className={thClassName} data-th-fixed={da.fixed} 
                         data-line-key={da.key} data-line-index={columIndex} data-th-width={da.width} >
                               {da.children}
@@ -597,10 +597,9 @@ class TableHeader extends Component {
                 thDefaultObj = {
                   ...da,
                   className:`${da.className} ${fixedStyle}`,
-                  key:columIndex
                 };
                 da.onClick ?thDefaultObj.onClick = (e)=>{da.onClick(da, e)}:"";
-                return (<th {...thDefaultObj} data-th-fixed={da.fixed} />)
+                return (<th {...thDefaultObj} {...keyTemp}  data-th-fixed={da.fixed} />)
               }
             })}
           </tr>

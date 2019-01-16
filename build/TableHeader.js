@@ -638,17 +638,17 @@ var TableHeader = function (_Component) {
             }
             var keyTemp = {};
             //避免key为undefined
-            if (da.dataindex && da.key === undefined) {
-              keyTemp.key = da.dataindex;
-            }
+            // if(da.dataindex && da.key ===undefined ){
+            keyTemp.key = da.key || da.dataindex || index + '-' + columIndex;
+            // } 
             if (filterable && index == rows.length - 1) {
               da.children = _this2.filterRenderType(da["filtertype"], da.dataindex, columIndex);
               if (da.key === undefined) {
-                keyTemp.key = da.dataindex + '-filterable';
+                keyTemp.key = keyTemp.key + '-filterable';
               }
-
               delete da.filterdropdownfocus;
             }
+
             var thDefaultObj = {};
             var thClassName = "" + da.className ? "" + da.className : '';
             if (draggable) {
@@ -660,6 +660,7 @@ var TableHeader = function (_Component) {
             thClassName += " " + fixedStyle;
             if (!da.fixed) {
 
+              console.log(keyTemp.key);
               return _react2["default"].createElement(
                 "th",
                 _extends({}, da, keyTemp, { className: thClassName, "data-th-fixed": da.fixed,
@@ -677,13 +678,12 @@ var TableHeader = function (_Component) {
               );
             } else {
               thDefaultObj = _extends({}, da, {
-                className: da.className + " " + fixedStyle,
-                key: columIndex
+                className: da.className + " " + fixedStyle
               });
               da.onClick ? thDefaultObj.onClick = function (e) {
                 da.onClick(da, e);
               } : "";
-              return _react2["default"].createElement("th", _extends({}, thDefaultObj, { "data-th-fixed": da.fixed }));
+              return _react2["default"].createElement("th", _extends({}, thDefaultObj, keyTemp, { "data-th-fixed": da.fixed }));
             }
           })
         );

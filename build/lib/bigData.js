@@ -77,31 +77,26 @@ function bigData(Table) {
         this.startIndex = this.currentIndex; //数据开始位置
         this.endIndex = this.currentIndex + this.loadCount; //数据结束位置
       }
-    };
-
-    BigData.prototype.componentDidMount = function componentDidMount() {
-      var _this3 = this;
-
-      var isTreeType = this.checkIsTreeType();
-      if (isTreeType) {
-        var data = this.props.data;
-
-        data.forEach(function (item, index) {
-          _this3.firstLevelKey[index] = _this3.getRowKey(item, index);
-          _this3.cachedRowParentIndex[treeTypeIndex] = index;
-          //保存所有的keys跟小标对应起来
-          _this3.keys[treeTypeIndex] = _this3.getRowKey(item, index);
-          treeTypeIndex++;
-          if (item.children) {
-            _this3.getData(item.children, index);
-          }
-        });
+      if (nextProps.data !== props.data) {
+        this.computeCachedRowParentIndex(nextProps.data);
       }
     };
 
+    BigData.prototype.componentDidMount = function componentDidMount() {
+      var data = this.props.data;
+
+      this.computeCachedRowParentIndex(data);
+    };
+
+    /**
+     *设置data中每个元素的parentIndex
+     *
+     */
+
+
     BigData.prototype.getRowKey = function getRowKey(record, index) {
       var rowKey = this.props.rowKey;
-      var key = typeof rowKey === 'function' ? rowKey(record, index) : record[rowKey];
+      var key = typeof rowKey === "function" ? rowKey(record, index) : record[rowKey];
 
       return key;
     };
@@ -127,14 +122,14 @@ function bigData(Table) {
     };
 
     BigData.prototype.getData = function getData(data, parentIndex) {
-      var _this4 = this;
+      var _this3 = this;
 
       data.forEach(function (subItem, subIndex) {
-        _this4.cachedRowParentIndex[treeTypeIndex] = parentIndex;
-        _this4.keys[treeTypeIndex] = _this4.getRowKey(subItem, subIndex);
+        _this3.cachedRowParentIndex[treeTypeIndex] = parentIndex;
+        _this3.keys[treeTypeIndex] = _this3.getRowKey(subItem, subIndex);
         treeTypeIndex++;
         if (subItem.children) {
-          _this4.getData(subItem.children, parentIndex);
+          _this3.getData(subItem.children, parentIndex);
         }
       });
     };
@@ -192,7 +187,7 @@ function bigData(Table) {
     };
 
     BigData.prototype.setRowParentIndex = function setRowParentIndex(parentIndex, index) {}
-    // this.cachedRowParentIndex[index] = parentIndex; 
+    // this.cachedRowParentIndex[index] = parentIndex;
 
     /**
      *
@@ -272,21 +267,37 @@ function bigData(Table) {
   }(_react.Component), _class.defaultProps = {
     data: [],
     loadBuffer: 5,
-    rowKey: 'key',
+    rowKey: "key",
     onExpand: function onExpand() {},
 
     scroll: {}
   }, _class.propTypes = {
     loadBuffer: _propTypes2["default"].number
   }, _initialiseProps = function _initialiseProps() {
-    var _this5 = this;
+    var _this4 = this;
+
+    this.computeCachedRowParentIndex = function (data) {
+      var isTreeType = _this4.checkIsTreeType();
+      if (isTreeType) {
+        data.forEach(function (item, index) {
+          _this4.firstLevelKey[index] = _this4.getRowKey(item, index);
+          _this4.cachedRowParentIndex[treeTypeIndex] = index;
+          //保存所有的keys跟小标对应起来
+          _this4.keys[treeTypeIndex] = _this4.getRowKey(item, index);
+          treeTypeIndex++;
+          if (item.children) {
+            _this4.getData(item.children, index);
+          }
+        });
+      }
+    };
 
     this.handleScrollY = function (nextScrollTop, treeType) {
       //树表逻辑
       // 关键点是动态的获取startIndex和endIndex
       // 法子一：子节点也看成普通tr，最开始需要设置一共有多少行，哪行显示哪行不显示如何确定
       // 动态取start = current+buffer对应的父节点、end = start+loadCount+row的height为0的行数 展开节点的下一个节点作为end值，
-      var _this = _this5;
+      var _this = _this4;
       var _this$props = _this.props,
           data = _this$props.data,
           height = _this$props.height,
@@ -335,12 +346,12 @@ function bigData(Table) {
       var temp = nextScrollTop;
       var currentKey = void 0;
       while (temp > 0) {
-        var currentRowHeight = _this5.cachedRowHeight[index];
+        var currentRowHeight = _this4.cachedRowHeight[index];
         if (currentRowHeight === undefined) {
-          if (_this5.treeType) {
-            currentKey = _this5.keys[index];
+          if (_this4.treeType) {
+            currentKey = _this4.keys[index];
             currentRowHeight = 0;
-            if (_this5.firstLevelKey.indexOf(currentKey) >= 0 || _this5.expandChildRowKeys.indexOf(currentKey) >= 0) {
+            if (_this4.firstLevelKey.indexOf(currentKey) >= 0 || _this4.expandChildRowKeys.indexOf(currentKey) >= 0) {
               currentRowHeight = rowHeight;
             }
           } else {
@@ -365,9 +376,9 @@ function bigData(Table) {
         if (viewHeight) {
           //有时滚动过快时this.cachedRowHeight[rowsInView + index]为undifined
 
-          while (rowsHeight < viewHeight && tempIndex < _this5.cachedRowHeight.length) {
-            if (_this5.cachedRowHeight[tempIndex]) {
-              rowsHeight += _this5.cachedRowHeight[tempIndex];
+          while (rowsHeight < viewHeight && tempIndex < _this4.cachedRowHeight.length) {
+            if (_this4.cachedRowHeight[tempIndex]) {
+              rowsHeight += _this4.cachedRowHeight[tempIndex];
               if (treeType && _this.cachedRowParentIndex[tempIndex] !== tempIndex || !treeType) {
                 rowsInView++;
               }
@@ -379,7 +390,7 @@ function bigData(Table) {
             index = _this.cachedRowParentIndex[treeIndex];
             if (index === undefined) {
               // console.log('index is undefined********'+treeIndex);
-              index = _this5.getParentIndex(treeIndex);
+              index = _this4.getParentIndex(treeIndex);
               // console.log("getParentIndex****"+index);
             }
           }
@@ -387,7 +398,6 @@ function bigData(Table) {
           // 如果rowsInView 小于 缓存的数据则重新render
           // 向下滚动 下临界值超出缓存的endIndex则重新渲染
           if (rowsInView + index > endIndex - rowDiff && isOrder) {
-
             startIndex = index - loadBuffer > 0 ? index - loadBuffer : 0;
             endIndex = startIndex + loadCount;
             //树状结构则根据当前的节点重新计算startIndex和endIndex
@@ -404,10 +414,10 @@ function bigData(Table) {
             if (endIndex > data.length) {
               endIndex = data.length;
             }
-            if (startIndex !== _this5.startIndex || endIndex !== _this5.endIndex) {
-              _this5.startIndex = startIndex;
-              _this5.endIndex = endIndex;
-              _this5.setState({ needRender: !needRender });
+            if (startIndex !== _this4.startIndex || endIndex !== _this4.endIndex) {
+              _this4.startIndex = startIndex;
+              _this4.endIndex = endIndex;
+              _this4.setState({ needRender: !needRender });
             }
             // console.log(
             //   "===================",
@@ -422,10 +432,10 @@ function bigData(Table) {
             if (startIndex < 0) {
               startIndex = 0;
             }
-            if (startIndex !== _this5.startIndex || endIndex !== _this5.endIndex) {
-              _this5.startIndex = startIndex;
-              _this5.endIndex = _this5.startIndex + loadCount;
-              _this5.setState({ needRender: !needRender });
+            if (startIndex !== _this4.startIndex || endIndex !== _this4.endIndex) {
+              _this4.startIndex = startIndex;
+              _this4.endIndex = _this4.startIndex + loadCount;
+              _this4.setState({ needRender: !needRender });
             }
             // console.log(
             //   "**index**" + index,
@@ -438,7 +448,7 @@ function bigData(Table) {
     };
 
     this.onExpand = function (expandState, record) {
-      var _this = _this5;
+      var _this = _this4;
       // 展开
       if (expandState) {
         record.children && record.children.forEach(function (item, index) {

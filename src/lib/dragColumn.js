@@ -55,17 +55,28 @@ export default function dragColumn(Table) {
     onDrop=(event,data)=>{
       let {dragSource,dragTarg} = data;
       let {columns} = this.state; 
-      let dragSourceColum =  columns.find((da,i)=>da.key == dragSource.key);
-      let dragTargColum = columns.find((da,i)=>da.key == dragTarg.key);
-      for (let index = 0; index < columns.length; index++) {
-        const da = columns[index];
-        if(da.key === dragSource.key){
-          columns[index] = dragTargColum; 
-        }
-        if(da.key === dragTarg.key){
-          columns[index] = dragSourceColum;
-        }
-      }
+      let sourceIndex = -1,targetIndex = -1;
+       
+      sourceIndex =  columns.findIndex((da,i)=>da.key == dragSource.key);
+      targetIndex = columns.findIndex((da,i)=>da.key == dragTarg.key);
+      // for (let index = 0; index < columns.length; index++) {
+      //   const da = columns[index];
+      //   if(da.key === dragSource.key){
+      //     columns[index] = dragTargColum; 
+      //   }
+      //   if(da.key === dragTarg.key){
+      //     columns[index] = dragSourceColum;
+      //   }
+      // }
+      // 向前移动
+     if(targetIndex < sourceIndex){
+      targetIndex = targetIndex + 1;
+     }
+      columns.splice(
+        targetIndex,
+        0,
+       columns.splice(sourceIndex, 1)[0]
+      );
       this.setState({
         columns:cloneDeep(columns)
       });
