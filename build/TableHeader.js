@@ -622,7 +622,7 @@ var TableHeader = function (_Component) {
       rows.map(function (row, index) {
         return _react2["default"].createElement(
           "tr",
-          { style: rowStyle, className: filterable && index == rows.length - 1 ? 'filterable' : '' },
+          { key: index, style: rowStyle, className: filterable && index == rows.length - 1 ? 'filterable' : '' },
           row.map(function (da, columIndex, arr) {
             var thHover = da.drgHover ? " " + clsPrefix + "-thead th-drag-hover" : "";
             delete da.drgHover;
@@ -640,6 +640,7 @@ var TableHeader = function (_Component) {
             //避免key为undefined
             // if(da.dataindex && da.key ===undefined ){
             keyTemp.key = da.key || da.dataindex || index + '-' + columIndex;
+
             // } 
             if (filterable && index == rows.length - 1) {
               da.children = _this2.filterRenderType(da["filtertype"], da.dataindex, columIndex);
@@ -660,7 +661,6 @@ var TableHeader = function (_Component) {
             thClassName += " " + fixedStyle;
             if (!da.fixed) {
 
-              console.log(keyTemp.key);
               return _react2["default"].createElement(
                 "th",
                 _extends({}, da, keyTemp, { className: thClassName, "data-th-fixed": da.fixed,

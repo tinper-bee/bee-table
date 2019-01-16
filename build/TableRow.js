@@ -234,7 +234,8 @@ var TableRow = function (_Component) {
         indent = _props9.indent,
         indentSize = _props9.indentSize,
         isHiddenExpandIcon = _props9.isHiddenExpandIcon,
-        fixed = _props9.fixed;
+        fixed = _props9.fixed,
+        hoverKey = _props9.hoverKey;
 
     var showSum = false;
     var className = this.props.className;
@@ -289,7 +290,6 @@ var TableRow = function (_Component) {
     if (!visible) {
       style.display = 'none';
     }
-
     return _react2["default"].createElement(
       'tr',
       {
@@ -298,8 +298,9 @@ var TableRow = function (_Component) {
         onMouseEnter: this.onMouseEnter,
         onMouseLeave: this.onMouseLeave,
         className: clsPrefix + ' ' + className + ' ' + clsPrefix + '-level-' + indent,
-        style: style,
-        ref: this.bindElement
+        style: style
+        // key={hoverKey}
+        , ref: this.bindElement
       },
       cells.length > 0 ? cells : _react2["default"].createElement('td', null)
     );
