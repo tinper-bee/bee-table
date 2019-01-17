@@ -636,6 +636,11 @@ var TableHeader = function (_Component) {
             if (lastShowIndex == columIndex) {
               canDotDrag = "th-can-not-drag";
             }
+            var thClassName = "" + da.className ? "" + da.className : '';
+            if (da.textAlign) {
+              thClassName += " text-" + da.textAlign;
+            }
+            delete da.textAlign;
             var keyTemp = {};
             //避免key为undefined
             // if(da.dataindex && da.key ===undefined ){
@@ -651,7 +656,7 @@ var TableHeader = function (_Component) {
             }
 
             var thDefaultObj = {};
-            var thClassName = "" + da.className ? "" + da.className : '';
+
             if (draggable) {
               thClassName += clsPrefix + "-thead th-drag " + thHover + " ";
             }
@@ -659,6 +664,7 @@ var TableHeader = function (_Component) {
               thClassName += clsPrefix + "-thead-th " + canDotDrag;
             }
             thClassName += " " + fixedStyle;
+
             if (!da.fixed) {
 
               return _react2["default"].createElement(
@@ -678,7 +684,7 @@ var TableHeader = function (_Component) {
               );
             } else {
               thDefaultObj = _extends({}, da, {
-                className: da.className + " " + fixedStyle
+                className: thClassName + " " + fixedStyle
               });
               da.onClick ? thDefaultObj.onClick = function (e) {
                 da.onClick(da, e);

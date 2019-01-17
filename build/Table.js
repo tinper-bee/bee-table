@@ -511,7 +511,8 @@ var Table = function (_Component) {
         drgHover: column.drgHover,
         fixed: column.fixed,
         width: width,
-        dataindex: column.dataIndex
+        dataindex: column.dataIndex,
+        textAlign: column.textAlign
       };
       if (column.onHeadCellClick) {
         cell.onClick = column.onHeadCellClick;
