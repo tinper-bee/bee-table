@@ -558,6 +558,7 @@ class TableHeader extends Component {
               if(da.textAlign){
                 thClassName += ` text-${da.textAlign}`;
               }
+              delete da.textAlign;
               const keyTemp = {};
               //避免key为undefined
               // if(da.dataindex && da.key ===undefined ){

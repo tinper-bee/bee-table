@@ -79,14 +79,8 @@ class TableRow extends Component{
   componentDidUpdate(prevProps) {
     if(this.props.treeType){
       this.setRowParentIndex();
-      this.setRowHeight()
-      // if(this.props.fixedIndex!== prevProps.fixedIndex){
-      //   this.setRowHeight()
-      // }
-    }else if(this.props.index !== prevProps.index){
-      this.setRowHeight()
     }
-  
+    this.setRowHeight()
   }
   componentWillUnmount() {
     const { record, onDestroy, index } = this.props;
