@@ -554,6 +554,10 @@ class TableHeader extends Component {
               if (lastShowIndex == columIndex) {
                 canDotDrag = "th-can-not-drag";
               }
+              let thClassName = `${da.className}`?`${da.className}`:'';
+              if(da.textAlign){
+                thClassName += ` text-${da.textAlign}`;
+              }
               const keyTemp = {};
               //避免key为undefined
               // if(da.dataindex && da.key ===undefined ){
@@ -573,7 +577,7 @@ class TableHeader extends Component {
               }
 
               let thDefaultObj = {};
-              let thClassName = `${da.className}`?`${da.className}`:'';
+              
                   if(draggable){
                     thClassName += `${clsPrefix}-thead th-drag ${thHover} `;
                   }
@@ -581,6 +585,7 @@ class TableHeader extends Component {
                     thClassName += `${clsPrefix}-thead-th ${canDotDrag}`;
                   }
                   thClassName += ` ${fixedStyle}`;
+                 
                 if(!da.fixed){
              
                   return (<th {...da}  {...keyTemp} className={thClassName} data-th-fixed={da.fixed} 
@@ -596,7 +601,7 @@ class TableHeader extends Component {
               }else{
                 thDefaultObj = {
                   ...da,
-                  className:`${da.className} ${fixedStyle}`,
+                  className:`${thClassName} ${fixedStyle}`,
                 };
                 da.onClick ?thDefaultObj.onClick = (e)=>{da.onClick(da, e)}:"";
                 return (<th {...thDefaultObj} {...keyTemp}  data-th-fixed={da.fixed} />)
