@@ -184,7 +184,7 @@ class Table extends Component {
     }
     //适配lazyload
     if(nextProps.scrollTop){
-      this.refs.bodyTable.scrollTop = nextProps.scrollTop;
+      // this.refs.bodyTable.scrollTop = nextProps.scrollTop;
       this.scrollTop = nextProps.scrollTop;
     }
     if (!nextProps.originWidth) {
@@ -209,6 +209,7 @@ class Table extends Component {
     if(this.scrollTop){
       this.refs.fixedColumnsBodyLeft && ( this.refs.fixedColumnsBodyLeft.scrollTop = this.scrollTop);
       this.refs.fixedColumnsBodyRight && ( this.refs.fixedColumnsBodyRight.scrollTop = this.scrollTop);
+      this.refs.bodyTable.scrollTop = this.scrollTop;
       this.scrollTop = 0;
     }
 

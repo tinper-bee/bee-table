@@ -10,7 +10,8 @@ export default function bigData(Table) {
       loadBuffer: 5,
       rowKey: "key",
       onExpand() {},
-      scroll: {}
+      scroll: {},
+      currentIndex:-1
     };
     static propTypes = {
       loadBuffer: PropTypes.number
@@ -43,19 +44,28 @@ export default function bigData(Table) {
     }
     componentWillReceiveProps(nextProps) {
       const props = this.props;
+      const {currentIndex ,data} = nextProps;
+      const _this = this,dataLen = data.length;
       if (nextProps.scroll.y !== props.scroll.y) {
         const rowHeight = nextProps.height ? nextProps.height : defaultHeight;
         const scrollY = nextProps.scroll.y ? parseInt(nextProps.scroll.y) : 0;
-        this.rowsInView = scrollY ? Math.ceil(scrollY / rowHeight) : 20;
-        this.loadCount = props.loadBuffer
-          ? this.rowsInView + props.loadBuffer * 2
+        _this.rowsInView = scrollY ? Math.ceil(scrollY / rowHeight) : 20;
+        _this.loadCount = props.loadBuffer
+          ? _this.rowsInView + props.loadBuffer * 2
           : 26; //一次加载多少数据
-        this.currentIndex = 0;
-        this.startIndex = this.currentIndex; //数据开始位置
-        this.endIndex = this.currentIndex + this.loadCount; //数据结束位置
+          _this.currentIndex = 0;
+          _this.startIndex = _this.currentIndex; //数据开始位置
+          _this.endIndex = _this.currentIndex + _this.loadCount; //数据结束位置
+          if(_this.endIndex > dataLen){
+            _this.endIndex = dataLen;
+          }
       }
       if (nextProps.data !== props.data) {
-        this.computeCachedRowParentIndex(nextProps.data);
+        _this.computeCachedRowParentIndex(nextProps.data);
+      }
+      //如果传currentIndex，会判断该条数据是否在可视区域，如果没有的话，则重新计算startIndex和endIndex
+      if(currentIndex!==-1 && currentIndex !== this.currentIndex){
+        _this.setStartAndEndIndex(currentIndex,dataLen);
       }
     }
 
@@ -83,6 +93,34 @@ export default function bigData(Table) {
         });
       }
     };
+
+    setStartAndEndIndex(currentIndex,dataLen){
+      const _this = this;
+      if(currentIndex > _this.endIndex){
+        _this.currentIndex = currentIndex;
+        _this.endIndex = _this.currentIndex; //数据开始位置
+        _this.startIndex = _this.currentIndex - _this.loadCount; //数据结束位置
+        if(_this.endIndex > dataLen){
+          _this.endIndex = dataLen;
+        }
+        if(_this.startIndex < 0){
+          _this.startIndex = 0;
+        }
+      }else if(currentIndex < _this.startIndex){
+        _this.currentIndex = currentIndex;
+        _this.startIndex = currentIndex;
+        _this.endIndex = currentIndex + _this.loadCount;
+        if(_this.endIndex > dataLen){
+          _this.endIndex = dataLen;
+        }
+        if(_this.startIndex < 0){
+          _this.startIndex = 0;
+        }
+
+      }
+      //重新设定scrollTop值
+      _this.scrollTop = _this.getSumHeight(0, _this.endIndex - _this.rowsInView +2);
+    }
 
     getRowKey(record, index) {
       const rowKey = this.props.rowKey;
