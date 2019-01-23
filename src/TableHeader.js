@@ -556,7 +556,7 @@ class TableHeader extends Component {
               }
               let thClassName = `${da.className}`?`${da.className}`:'';
               if(da.textAlign){
-                thClassName += ` text-${da.textAlign}`;
+                thClassName += ` text-${da.textAlign} `;
               }
               delete da.textAlign;
               const keyTemp = {};
