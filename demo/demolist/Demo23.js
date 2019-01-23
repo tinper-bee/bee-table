@@ -60,6 +60,10 @@ class Demo23 extends Component {
     return <DragColumnTable columns={columns23} data={data23} bordered
     dragborder={true} 
     draggable={true} 
+    
+    onDropBorder ={(e)=>{
+      console.log("调整列宽后触发事件");
+    }}
     />;
   }
 }
