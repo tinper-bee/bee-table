@@ -128,13 +128,8 @@ var TableRow = function (_Component) {
   TableRow.prototype.componentDidUpdate = function componentDidUpdate(prevProps) {
     if (this.props.treeType) {
       this.setRowParentIndex();
-      this.setRowHeight();
-      // if(this.props.fixedIndex!== prevProps.fixedIndex){
-      //   this.setRowHeight()
-      // }
-    } else if (this.props.index !== prevProps.index) {
-      this.setRowHeight();
     }
+    this.setRowHeight();
   };
 
   TableRow.prototype.componentWillUnmount = function componentWillUnmount() {
@@ -234,7 +229,8 @@ var TableRow = function (_Component) {
         indent = _props9.indent,
         indentSize = _props9.indentSize,
         isHiddenExpandIcon = _props9.isHiddenExpandIcon,
-        fixed = _props9.fixed;
+        fixed = _props9.fixed,
+        hoverKey = _props9.hoverKey;
 
     var showSum = false;
     var className = this.props.className;
@@ -279,7 +275,7 @@ var TableRow = function (_Component) {
         indent: indent,
         index: index,
         column: columns[i],
-        key: columns[i].key,
+        key: columns[i].key || columns[i].dataIndex || i,
         fixed: fixed,
         showSum: showSum,
         expandIcon: isColumnHaveExpandIcon ? expandIcon : null
@@ -289,7 +285,6 @@ var TableRow = function (_Component) {
     if (!visible) {
       style.display = 'none';
     }
-
     return _react2["default"].createElement(
       'tr',
       {
@@ -298,8 +293,9 @@ var TableRow = function (_Component) {
         onMouseEnter: this.onMouseEnter,
         onMouseLeave: this.onMouseLeave,
         className: clsPrefix + ' ' + className + ' ' + clsPrefix + '-level-' + indent,
-        style: style,
-        ref: this.bindElement
+        style: style
+        // key={hoverKey}
+        , ref: this.bindElement
       },
       cells.length > 0 ? cells : _react2["default"].createElement('td', null)
     );

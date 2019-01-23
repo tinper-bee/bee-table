@@ -184,7 +184,7 @@ class Table extends Component {
     }
     //适配lazyload
     if(nextProps.scrollTop){
-      this.refs.bodyTable.scrollTop = nextProps.scrollTop;
+      // this.refs.bodyTable.scrollTop = nextProps.scrollTop;
       this.scrollTop = nextProps.scrollTop;
     }
     if (!nextProps.originWidth) {
@@ -209,6 +209,7 @@ class Table extends Component {
     if(this.scrollTop){
       this.refs.fixedColumnsBodyLeft && ( this.refs.fixedColumnsBodyLeft.scrollTop = this.scrollTop);
       this.refs.fixedColumnsBodyRight && ( this.refs.fixedColumnsBodyRight.scrollTop = this.scrollTop);
+      this.refs.bodyTable.scrollTop = this.scrollTop;
       this.scrollTop = 0;
     }
 
@@ -310,6 +311,8 @@ class Table extends Component {
       'or set `rowKey` to an unique primary key.'
     );
     return key;
+
+    
   }
 
   getExpandedRows() {
@@ -392,7 +395,8 @@ class Table extends Component {
         drgHover: column.drgHover,
         fixed: column.fixed,
         width: width,
-        dataindex:column.dataIndex
+        dataindex:column.dataIndex,
+        textAlign:column.textAlign
       };
       if (column.onHeadCellClick) {
         cell.onClick = column.onHeadCellClick;
@@ -980,7 +984,7 @@ class Table extends Component {
 
   handleBodyScroll(e) {
 
-    const { scroll = {},clsPrefix,handleScroll } = this.props;
+    const { scroll = {},clsPrefix,handleScrollY, handleScrollX} = this.props;
     const { headTable, bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this.refs;
     // Prevent scrollTop setter trigger onScroll event
     // http://stackoverflow.com/q/1386696
@@ -1008,6 +1012,11 @@ class Table extends Component {
         .remove(new RegExp(`^${clsPrefix}-scroll-position-.+$`))
         .add(`${clsPrefix}-scroll-position-${position}`);
       }
+      if(handleScrollX){
+        debounce(
+          handleScrollX(e.target.scrollLeft,this.treeType),
+        300)
+      }
     }
     // console.log('lastScrollTop--'+this.lastScrollTop+'--eventScrollTop--'+ e.target.scrollTop);
     if (scroll.y && this.lastScrollTop != e.target.scrollTop) {
@@ -1021,9 +1030,9 @@ class Table extends Component {
         bodyTable.scrollTop = e.target.scrollTop;
       }
       this.lastScrollTop = e.target.scrollTop;
-      if(handleScroll){
+      if(handleScrollY){
         debounce(
-        handleScroll(this.lastScrollTop,this.treeType),
+          handleScrollY(this.lastScrollTop,this.treeType),
         300)
       }
     }
@@ -1091,7 +1100,7 @@ class Table extends Component {
 
     return (
       <div className={className} style={props.style} ref={el => this.contentTable = el} 
-      tabIndex={props.tabIndex?props.tabIndex:'0'} >
+      tabIndex={props.focusable && (props.tabIndex?props.tabIndex:'0')} >
         {this.getTitle()}
         <div className={`${clsPrefix}-content`}>
          

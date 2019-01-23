@@ -79,14 +79,8 @@ class TableRow extends Component{
   componentDidUpdate(prevProps) {
     if(this.props.treeType){
       this.setRowParentIndex();
-      this.setRowHeight()
-      // if(this.props.fixedIndex!== prevProps.fixedIndex){
-      //   this.setRowHeight()
-      // }
-    }else if(this.props.index !== prevProps.index){
-      this.setRowHeight()
     }
-  
+    this.setRowHeight()
   }
   componentWillUnmount() {
     const { record, onDestroy, index } = this.props;
@@ -162,7 +156,7 @@ class TableRow extends Component{
     const {
       clsPrefix, columns, record, height, visible, index,
       expandIconColumnIndex, expandIconAsCell, expanded, expandRowByClick,
-      expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed,
+      expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed,hoverKey
     } = this.props;
     let showSum = false;
     let { className } = this.props;
@@ -210,7 +204,7 @@ class TableRow extends Component{
           indent={indent}
           index={index}
           column={columns[i]}
-          key={columns[i].key}
+          key={columns[i].key || columns[i].dataIndex || i}
           fixed= {fixed}
           showSum={showSum}
           expandIcon={(isColumnHaveExpandIcon) ? expandIcon : null}
@@ -221,8 +215,7 @@ class TableRow extends Component{
     if (!visible) {
       style.display = 'none';
     }
- 
-    return (
+    return ( 
       <tr
         onClick={this.onRowClick}
         onDoubleClick={this.onRowDoubleClick}
@@ -230,6 +223,7 @@ class TableRow extends Component{
         onMouseLeave={this.onMouseLeave}
         className={`${clsPrefix} ${className} ${clsPrefix}-level-${indent}`}
         style={style}
+        // key={hoverKey}
         ref={this.bindElement}
       >
         {cells.length>0?cells:<td></td>}

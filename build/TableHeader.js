@@ -614,7 +614,6 @@ var TableHeader = function (_Component) {
 
 
     var attr = dragborder ? { id: "u-table-drag-thead-" + this.theadKey } : {};
-
     return _react2["default"].createElement(
       "thead",
       _extends({ className: clsPrefix + "-thead" }, attr, { "data-theader-fixed": "scroll", ref: function ref(_thead) {
@@ -623,7 +622,7 @@ var TableHeader = function (_Component) {
       rows.map(function (row, index) {
         return _react2["default"].createElement(
           "tr",
-          { style: rowStyle, className: filterable && index == rows.length - 1 ? 'filterable' : '' },
+          { key: index, style: rowStyle, className: filterable && index == rows.length - 1 ? 'filterable' : '' },
           row.map(function (da, columIndex, arr) {
             var thHover = da.drgHover ? " " + clsPrefix + "-thead th-drag-hover" : "";
             delete da.drgHover;
@@ -637,13 +636,27 @@ var TableHeader = function (_Component) {
             if (lastShowIndex == columIndex) {
               canDotDrag = "th-can-not-drag";
             }
+            var thClassName = "" + da.className ? "" + da.className : '';
+            if (da.textAlign) {
+              thClassName += " text-" + da.textAlign + " ";
+            }
+            delete da.textAlign;
+            var keyTemp = {};
+            //避免key为undefined
+            // if(da.dataindex && da.key ===undefined ){
+            keyTemp.key = da.key || da.dataindex || index + '-' + columIndex;
+
+            // } 
             if (filterable && index == rows.length - 1) {
               da.children = _this2.filterRenderType(da["filtertype"], da.dataindex, columIndex);
+              if (da.key === undefined) {
+                keyTemp.key = keyTemp.key + '-filterable';
+              }
               delete da.filterdropdownfocus;
             }
 
             var thDefaultObj = {};
-            var thClassName = "" + da.className ? "" + da.className : '';
+
             if (draggable) {
               thClassName += clsPrefix + "-thead th-drag " + thHover + " ";
             }
@@ -651,10 +664,12 @@ var TableHeader = function (_Component) {
               thClassName += clsPrefix + "-thead-th " + canDotDrag;
             }
             thClassName += " " + fixedStyle;
+
             if (!da.fixed) {
+
               return _react2["default"].createElement(
                 "th",
-                _extends({}, da, { key: 'table-header-th-' + da.dataindex, className: thClassName, "data-th-fixed": da.fixed,
+                _extends({}, da, keyTemp, { className: thClassName, "data-th-fixed": da.fixed,
                   "data-line-key": da.key, "data-line-index": columIndex, "data-th-width": da.width }),
                 da.children,
                 dragborder ? _react2["default"].createElement(
@@ -669,13 +684,12 @@ var TableHeader = function (_Component) {
               );
             } else {
               thDefaultObj = _extends({}, da, {
-                className: da.className + " " + fixedStyle,
-                key: columIndex
+                className: thClassName + " " + fixedStyle
               });
               da.onClick ? thDefaultObj.onClick = function (e) {
                 da.onClick(da, e);
               } : "";
-              return _react2["default"].createElement("th", _extends({}, thDefaultObj, { "data-th-fixed": da.fixed }));
+              return _react2["default"].createElement("th", _extends({}, thDefaultObj, keyTemp, { "data-th-fixed": da.fixed }));
             }
           })
         );

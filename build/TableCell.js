@@ -111,6 +111,9 @@ var TableCell = function (_Component) {
     if (column.fixed && !fixed) {
       className = className + (' ' + clsPrefix + '-fixed-columns-in-body');
     }
+    if (column.textAlign) {
+      className = className + (' text-' + column.textAlign);
+    }
     return _react2["default"].createElement(
       'td',
       {

@@ -45,7 +45,7 @@ import 'bee-table/build/Table.css';
 | expandedRowRender      | 额外的展开行                                   | Function(record, index, indent):node | -               |
 | expandIconAsCell      | 展开按钮是否单独作为一个单元格                                   | bool                               | false               |
 | expandRowByClick       | 设置展开行是否通过点击行触发，此参数需要与上面参数搭配使用（默认是通过点击行前面的加号展开行 | bool                                   | false           |
-| footerScroll       | 表尾和body是否公用同一个横向滚动条。（ 如果footer中也是一个table组件，并且也具有滚动条，那么也需要加入footerScroll参数。 ） | bool                                   | false           |
+| footerScroll       | 表尾和body是否公用同一个横向滚动条。（ 如果footer中也是一个table组件，并且也具有滚动条，那么也需要加入footerScroll参数，内层表格的footerScroll设置成false。 ） | bool                                   | false           |
 | loading       | 表格是否加载中 | bool|object(详情可以参考上面示例)                                   | false           |
 | haveExpandIcon       | 控制是否显示行展开icon.**注：该参数只有在和expandedRowRender同时使用才生效** | Function(record, index):bool   | () =>false |
 | filterable       | 是否开启根据条件来过滤数据 | bool | false
@@ -74,7 +74,7 @@ import 'bee-table/build/Table.css';
 |dataIndex|	显示数据记录的字段|String|-|
 |width|宽度的特定比例根据列的宽度计算|String/Number|-|
 |fixed|	当表水平滚动时，此列将被固定：true或'left'或'right'| true/'left'/'right'|-|
-|sorter|前端列排序方法，只要列上有此属性就说明这列可排序。**注：默认是前端排序**| function|-|
+|sorter|前端列排序方法，只要列上有此属性就说明这列可排序。**注：默认是前端排序,排序方法书写时注意有些字段可能是undefined的情况，需要转换成0**| function|-|
 |sorterClick|排序的回调函数|function|-|
 |render|cell的render函数有三个参数：这个单元格的文本，这行的记录，这行的索引，它返回一个对象：{children：value，props：{colSpan：1，rowSpan：1}} ==>'children'是这个单元格的文本，props是这个单元格的一些设置，可以设置单元格行/列合并|-|
 |onCellClick|单击列的单元格时调用|Function(row, event)|-|
@@ -88,12 +88,14 @@ import 'bee-table/build/Table.css';
 | filterDropdownType | 下拉条件类型，分为 string 和 number 条件类型 | string | string
 | filterDropdownIncludeKeys | 能够设置指定的下拉条件项，通过设置keys 其中string条件可设置:LIKE,ULIKE,EQ,UEQ,START,END.number条件可设置:GT,GTEQ,LT,LTEQ,EQ,UEQ | array | [] 不设置此属性为显示所有
 | filterInputNumberOptions | 数值框接收的props，具体属性参考bee-input-number | object | null
+| textAlign | 内容对齐方式，默认是左对齐（'left、right、center'） | string | 
 
 
 ## 快捷键API
 
 | 快捷键  | 快捷键说明 | 类型 | 默认值 | 
 | --- | :--- | --- |--- |
+| focusable       | 是否开启快捷键功能 | bool | -
 | onKeyTab       | tab快捷键，可以处理默认选中第一条数据 | function| -
 | onKeyUp       |  ↑(上箭) 快捷键，可以处理table的上一条数据 | function| -
 | onKeyDown       | ↓(下箭)快捷键，可以处理table的下一条数据 | function| -

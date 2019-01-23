@@ -8452,6 +8452,11 @@ ul {
     word-break: break-all; }
   .u-table tr th:last-child {
     overflow: hidden; }
+  .u-table tr.filterable th {
+    padding-top: 4px;
+    padding-bottom: 4px; }
+    .u-table tr.filterable th .filterContext {
+      height: 35px; }
   .u-table-row-hover {
     background: #e3f2fd; }
   .u-table-scroll {
@@ -8706,6 +8711,9 @@ ul {
   .u-table-row-fixed-columns-in-body {
     display: none;
     pointer-events: none; }
+  .u-table .u-checkbox {
+    height: 16px;
+    line-height: 16px; }
 
 .u-table:focus {
   outline: none;
@@ -8889,10 +8897,6 @@ ul {
     height: 32px;
     padding: 0px 16px 0 16px;
     cursor: pointer; }
-
-.u-checkbox {
-  height: 16px;
-  line-height: 16px; }
 
 /* FormGroup */
 /*  Navlayout  */

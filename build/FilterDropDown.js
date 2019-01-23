@@ -28,7 +28,7 @@ var _beeIcon = require('bee-icon');
 
 var _beeIcon2 = _interopRequireDefault(_beeIcon);
 
-var _i18n = require('./i18n');
+var _i18n = require('./lib/i18n');
 
 var _i18n2 = _interopRequireDefault(_i18n);
 

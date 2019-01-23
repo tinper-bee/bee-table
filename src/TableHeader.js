@@ -536,11 +536,10 @@ class TableHeader extends Component {
     } = this.props;
 
     let attr = dragborder ? { id: `u-table-drag-thead-${this.theadKey}` } : {};
-
     return (
       <thead className={`${clsPrefix}-thead`} {...attr} data-theader-fixed='scroll' ref={_thead=>this._thead = _thead} >
         {rows.map((row, index) => (
-          <tr style={rowStyle} className={(filterable && index == rows.length - 1)?'filterable':''}>
+          <tr key={index} style={rowStyle} className={(filterable && index == rows.length - 1)?'filterable':''}>
             {row.map((da, columIndex, arr) => {
               let thHover = da.drgHover
                 ? ` ${clsPrefix}-thead th-drag-hover`
@@ -556,17 +555,31 @@ class TableHeader extends Component {
               if (lastShowIndex == columIndex) {
                 canDotDrag = "th-can-not-drag";
               }
+              let thClassName = `${da.className}`?`${da.className}`:'';
+              if(da.textAlign){
+                thClassName += ` text-${da.textAlign} `;
+              }
+              delete da.textAlign;
+              const keyTemp = {};
+              //避免key为undefined
+              // if(da.dataindex && da.key ===undefined ){
+                keyTemp.key = da.key || da.dataindex || index+'-'+columIndex
+                
+              // } 
               if (filterable && index == rows.length - 1) {
                 da.children = this.filterRenderType(
                   da["filtertype"],
                   da.dataindex,
                   columIndex
                 );
+                if(da.key ===undefined ){
+                  keyTemp.key = keyTemp.key + '-filterable'
+                }
                 delete da.filterdropdownfocus;
               }
 
               let thDefaultObj = {};
-              let thClassName = `${da.className}`?`${da.className}`:'';
+              
                   if(draggable){
                     thClassName += `${clsPrefix}-thead th-drag ${thHover} `;
                   }
@@ -574,25 +587,26 @@ class TableHeader extends Component {
                     thClassName += `${clsPrefix}-thead-th ${canDotDrag}`;
                   }
                   thClassName += ` ${fixedStyle}`;
+                 
                 if(!da.fixed){
-                  return (<th {...da} key={'table-header-th-'+da.dataindex} className={thClassName} data-th-fixed={da.fixed} 
+             
+                  return (<th {...da}  {...keyTemp} className={thClassName} data-th-fixed={da.fixed} 
                         data-line-key={da.key} data-line-index={columIndex} data-th-width={da.width} >
-                        {da.children}
-                        {
-                          dragborder ? <div ref={el => (this.gap = el)} data-line-key={da.key} 
-                          data-line-index={columIndex} data-th-width={da.width}
-                          data-type="online" className = {`${clsPrefix}-thead-th-drag-gap`}>
-                          <div id='th-online' className='online' data-line-key={da.key} data-line-index={columIndex} data-th-width={da.width} /></div>:""
-                        }
-                  </th>)
+                              {da.children}
+                              {
+                                dragborder ? <div ref={el => (this.gap = el)} data-line-key={da.key} 
+                                data-line-index={columIndex} data-th-width={da.width}
+                                data-type="online" className = {`${clsPrefix}-thead-th-drag-gap`}>
+                                <div id='th-online' className='online' data-line-key={da.key} data-line-index={columIndex} data-th-width={da.width} /></div>:""
+                              }
+                        </th>)
               }else{
                 thDefaultObj = {
                   ...da,
-                  className:`${da.className} ${fixedStyle}`,
-                  key:columIndex
+                  className:`${thClassName} ${fixedStyle}`,
                 };
                 da.onClick ?thDefaultObj.onClick = (e)=>{da.onClick(da, e)}:"";
-                return (<th {...thDefaultObj} data-th-fixed={da.fixed} />)
+                return (<th {...thDefaultObj} {...keyTemp}  data-th-fixed={da.fixed} />)
               }
             })}
           </tr>

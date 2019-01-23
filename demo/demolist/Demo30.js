@@ -86,7 +86,6 @@ class Demo30 extends Component {
         <BigDataTable
           columns={columns}
           data={data}
-          parentNodeId='parent'
           scroll={{y:300}}
           height={40}
           onRowClick={(record, index, indent) => {

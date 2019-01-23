@@ -284,7 +284,7 @@ var Table = function (_Component) {
     }
     //适配lazyload
     if (nextProps.scrollTop) {
-      this.refs.bodyTable.scrollTop = nextProps.scrollTop;
+      // this.refs.bodyTable.scrollTop = nextProps.scrollTop;
       this.scrollTop = nextProps.scrollTop;
     }
     if (!nextProps.originWidth) {
@@ -308,6 +308,7 @@ var Table = function (_Component) {
     if (this.scrollTop) {
       this.refs.fixedColumnsBodyLeft && (this.refs.fixedColumnsBodyLeft.scrollTop = this.scrollTop);
       this.refs.fixedColumnsBodyRight && (this.refs.fixedColumnsBodyRight.scrollTop = this.scrollTop);
+      this.refs.bodyTable.scrollTop = this.scrollTop;
       this.scrollTop = 0;
     }
   };
@@ -511,7 +512,8 @@ var Table = function (_Component) {
         drgHover: column.drgHover,
         fixed: column.fixed,
         width: width,
-        dataindex: column.dataIndex
+        dataindex: column.dataIndex,
+        textAlign: column.textAlign
       };
       if (column.onHeadCellClick) {
         cell.onClick = column.onHeadCellClick;
@@ -1132,7 +1134,8 @@ var Table = function (_Component) {
         _props8$scroll = _props8.scroll,
         scroll = _props8$scroll === undefined ? {} : _props8$scroll,
         clsPrefix = _props8.clsPrefix,
-        handleScroll = _props8.handleScroll;
+        handleScrollY = _props8.handleScrollY,
+        handleScrollX = _props8.handleScrollX;
     var _refs = this.refs,
         headTable = _refs.headTable,
         bodyTable = _refs.bodyTable,
@@ -1161,6 +1164,9 @@ var Table = function (_Component) {
       if (position) {
         (0, _componentClasses2["default"])(this.contentTable).remove(new RegExp('^' + clsPrefix + '-scroll-position-.+$')).add(clsPrefix + '-scroll-position-' + position);
       }
+      if (handleScrollX) {
+        (0, _utils.debounce)(handleScrollX(e.target.scrollLeft, this.treeType), 300);
+      }
     }
     // console.log('lastScrollTop--'+this.lastScrollTop+'--eventScrollTop--'+ e.target.scrollTop);
     if (scroll.y && this.lastScrollTop != e.target.scrollTop) {
@@ -1174,8 +1180,8 @@ var Table = function (_Component) {
         bodyTable.scrollTop = e.target.scrollTop;
       }
       this.lastScrollTop = e.target.scrollTop;
-      if (handleScroll) {
-        (0, _utils.debounce)(handleScroll(this.lastScrollTop, this.treeType), 300);
+      if (handleScrollY) {
+        (0, _utils.debounce)(handleScrollY(this.lastScrollTop, this.treeType), 300);
       }
     }
 
@@ -1228,7 +1234,7 @@ var Table = function (_Component) {
       { className: className, style: props.style, ref: function ref(el) {
           return _this6.contentTable = el;
         },
-        tabIndex: props.tabIndex ? props.tabIndex : '0' },
+        tabIndex: props.focusable && (props.tabIndex ? props.tabIndex : '0') },
       this.getTitle(),
       _react2["default"].createElement(
         'div',

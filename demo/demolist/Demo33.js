@@ -107,6 +107,7 @@ class Demo33 extends Component {
         onKeyDown={this.onKeyDown}
         onTableKeyDown={this.onTableKeyDown} 
         scroll={{ x: "110%", y: 140 }}
+        focusable = {true}
       />
       <input />
       </div>
