@@ -638,7 +638,7 @@ var TableHeader = function (_Component) {
             }
             var thClassName = "" + da.className ? "" + da.className : '';
             if (da.textAlign) {
-              thClassName += " text-" + da.textAlign;
+              thClassName += " text-" + da.textAlign + " ";
             }
             delete da.textAlign;
             var keyTemp = {};
