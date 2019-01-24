@@ -432,7 +432,8 @@ var Table = function (_Component) {
         headerHeight = _props.headerHeight,
         afterDragColWidth = _props.afterDragColWidth,
         headerScroll = _props.headerScroll,
-        bordered = _props.bordered;
+        bordered = _props.bordered,
+        onDropBorder = _props.onDropBorder;
 
     var rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
@@ -446,7 +447,7 @@ var Table = function (_Component) {
 
     var trStyle = headerHeight && !fixed ? { height: headerHeight } : fixed ? this.getHeaderRowStyle(columns, rows) : null;
     var drop = draggable ? { onDragStart: onDragStart, onDragOver: onDragOver, onDrop: onDrop, onDragEnter: onDragEnter, draggable: draggable } : {};
-    var dragBorder = dragborder ? { onMouseDown: onMouseDown, onMouseMove: onMouseMove, onMouseUp: onMouseUp, dragborder: dragborder, onThMouseMove: onThMouseMove, dragborderKey: dragborderKey } : {};
+    var dragBorder = dragborder ? { onMouseDown: onMouseDown, onMouseMove: onMouseMove, onMouseUp: onMouseUp, dragborder: dragborder, onThMouseMove: onThMouseMove, dragborderKey: dragborderKey, onDropBorder: onDropBorder } : {};
     var contentWidthDiff = 0;
     //非固定表格,宽度不够时自动扩充
     if (!fixed) {
@@ -817,7 +818,7 @@ var Table = function (_Component) {
     }));
     return _react2["default"].createElement(
       'colgroup',
-      null,
+      { id: 'bee-table-colgroup' },
       cols
     );
   };
@@ -941,7 +942,7 @@ var Table = function (_Component) {
       var _drag_class = _this4.props.dragborder ? "table-drag-bordered" : "";
       return _react2["default"].createElement(
         'table',
-        { className: ' ' + tableClassName + '  table-bordered ' + _drag_class + ' ', style: tableStyle },
+        { id: 'bee-table-uid', className: ' ' + tableClassName + '  table-bordered ' + _drag_class + ' ', style: tableStyle },
         _this4.getColGroup(columns, fixed),
         hasHead ? _this4.getHeader(columns, fixed) : null,
         tableBody

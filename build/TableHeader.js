@@ -124,6 +124,7 @@ var TableHeader = function (_Component) {
 
     _this.onLineMouseUp = function (event) {
       _this.clearDragBorder(event);
+      _this.props.onDropBorder(event);
     };
 
     _this.bodyonLineMouseMove = function (event) {
