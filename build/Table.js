@@ -283,7 +283,7 @@ var Table = function (_Component) {
       this.columnManager.reset(null, nextProps.children);
     }
     //适配lazyload
-    if (nextProps.scrollTop) {
+    if (nextProps.scrollTop > -1) {
       // this.refs.bodyTable.scrollTop = nextProps.scrollTop;
       this.scrollTop = nextProps.scrollTop;
     }
@@ -305,11 +305,11 @@ var Table = function (_Component) {
       this.computeTableWidth();
       this.firstDid = false; //避免重复update
     }
-    if (this.scrollTop) {
+    if (this.scrollTop > -1) {
       this.refs.fixedColumnsBodyLeft && (this.refs.fixedColumnsBodyLeft.scrollTop = this.scrollTop);
       this.refs.fixedColumnsBodyRight && (this.refs.fixedColumnsBodyRight.scrollTop = this.scrollTop);
       this.refs.bodyTable.scrollTop = this.scrollTop;
-      this.scrollTop = 0;
+      this.scrollTop = -1;
     }
   };
 
