@@ -101,7 +101,9 @@ const SumTable = sum(Table);
 | ------ | ---------- | -------- | ---- |
 | dragborder | 拖拽调整列宽度 | boolean | false |
 | draggable | 拖拽交换列 | boolean | false |
-| onDrop | 拖拽释放回调函数 | function | () => {} |
+| onDrop | 拖拽释放回调函数(交换列) | function | () => {} |
+| onDropBorder | 拖拽释放回调函数(调整列宽) | function | (e) => {} |
+
 
 #### 使用
 

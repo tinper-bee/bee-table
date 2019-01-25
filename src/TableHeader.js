@@ -235,6 +235,7 @@ class TableHeader extends Component {
    */
   onLineMouseUp = (event) => {
     this.clearDragBorder(event);
+    this.props.onDropBorder(event)
   };
 
   /**

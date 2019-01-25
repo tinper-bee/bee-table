@@ -321,7 +321,7 @@ class Table extends Component {
 
   getHeader(columns, fixed) {
     const { filterDelay, onFilterChange, onFilterClear, filterable, showHeader, expandIconAsCell, clsPrefix, onDragStart, onDragEnter, onDragOver, onDrop, draggable,
-      onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey, minColumnWidth, headerHeight,afterDragColWidth,headerScroll ,bordered} = this.props;
+      onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey, minColumnWidth, headerHeight,afterDragColWidth,headerScroll ,bordered,onDropBorder} = this.props;
     const rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
       rows[0].unshift({
@@ -334,7 +334,7 @@ class Table extends Component {
 
     const trStyle = headerHeight&&!fixed ? { height: headerHeight } : (fixed ? this.getHeaderRowStyle(columns, rows) : null);
     let drop = draggable ? { onDragStart, onDragOver, onDrop, onDragEnter, draggable } : {};
-    let dragBorder = dragborder ? { onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey } : {};
+    let dragBorder = dragborder ? { onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey,onDropBorder } : {};
     let contentWidthDiff = 0;
     //非固定表格,宽度不够时自动扩充
     if (!fixed) {
@@ -692,7 +692,7 @@ class Table extends Component {
       }
       return <col key={c.key} style={{ width: width, minWidth: c.width }} className={fixedClass}/>;
     }));
-    return <colgroup>{cols}</colgroup>;
+    return <colgroup id="bee-table-colgroup">{cols}</colgroup>;
   }
 
   renderDragHideTable = () => {
@@ -815,7 +815,7 @@ class Table extends Component {
       ) : null;
       let _drag_class = this.props.dragborder ? "table-drag-bordered" : ""
       return (
-        <table className={` ${tableClassName}  table-bordered ${_drag_class} `} style={tableStyle}  >
+        <table id="bee-table-uid" className={` ${tableClassName}  table-bordered ${_drag_class} `} style={tableStyle}  >
           {/* {this.props.dragborder?null:this.getColGroup(columns, fixed)} */}
           {this.getColGroup(columns, fixed)}
           {hasHead ? this.getHeader(columns, fixed) : null}
