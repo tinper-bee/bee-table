@@ -310,14 +310,17 @@ function bigData(Table) {
     onExpand: function onExpand() {},
 
     scroll: {},
-    currentIndex: -1
+    currentIndex: -1,
+    isTree: false
   }, _class.propTypes = {
     loadBuffer: _propTypes2["default"].number
   }, _initialiseProps = function _initialiseProps() {
     var _this4 = this;
 
     this.computeCachedRowParentIndex = function (data) {
-      var isTreeType = _this4.checkIsTreeType();
+      var isTree = _this4.props.isTree;
+
+      var isTreeType = isTree ? true : _this4.checkIsTreeType();
       if (isTreeType) {
         data.forEach(function (item, index) {
           _this4.firstLevelKey[index] = _this4.getRowKey(item, index);
