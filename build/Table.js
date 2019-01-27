@@ -906,7 +906,8 @@ var Table = function (_Component) {
         } else {
           if (fixed) {
             if (this.domWidthDiff > 0) {
-              innerBodyStyle.overflowX = 'auto';
+              headStyle.overflow = 'hidden';
+              innerBodyStyle.overflowX = 'auto'; //兼容expand场景、子表格含有固定列的场景
             } else {
               bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
             }
