@@ -26,7 +26,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 
-var defaultHeight = 40;
+var defaultHeight = 30;
 var rowDiff = 3; //行差值
 var treeTypeIndex = 0;
 function bigData(Table) {
@@ -108,7 +108,7 @@ function bigData(Table) {
 
     BigData.prototype.setStartAndEndIndex = function setStartAndEndIndex(currentIndex, dataLen) {
       var _this = this;
-      if (currentIndex > _this.endIndex) {
+      if (currentIndex > _this.currentIndex + _this.props.rowsInView) {
         _this.currentIndex = currentIndex;
         _this.endIndex = _this.currentIndex; //数据开始位置
         _this.startIndex = _this.currentIndex - _this.loadCount; //数据结束位置
@@ -118,7 +118,9 @@ function bigData(Table) {
         if (_this.startIndex < 0) {
           _this.startIndex = 0;
         }
-      } else if (currentIndex < _this.startIndex) {
+        //重新设定scrollTop值
+        _this.scrollTop = _this.getSumHeight(0, _this.endIndex - _this.rowsInView + 2);
+      } else if (currentIndex < _this.currentIndex) {
         _this.currentIndex = currentIndex;
         _this.startIndex = currentIndex;
         _this.endIndex = currentIndex + _this.loadCount;
@@ -128,9 +130,9 @@ function bigData(Table) {
         if (_this.startIndex < 0) {
           _this.startIndex = 0;
         }
+        //重新设定scrollTop值
+        _this.scrollTop = _this.getSumHeight(0, _this.startIndex);
       }
-      //重新设定scrollTop值
-      _this.scrollTop = _this.getSumHeight(0, _this.endIndex - _this.rowsInView + 2);
     };
 
     BigData.prototype.getRowKey = function getRowKey(record, index) {
@@ -310,14 +312,17 @@ function bigData(Table) {
     onExpand: function onExpand() {},
 
     scroll: {},
-    currentIndex: -1
+    currentIndex: -1,
+    isTree: false
   }, _class.propTypes = {
     loadBuffer: _propTypes2["default"].number
   }, _initialiseProps = function _initialiseProps() {
     var _this4 = this;
 
     this.computeCachedRowParentIndex = function (data) {
-      var isTreeType = _this4.checkIsTreeType();
+      var isTree = _this4.props.isTree;
+
+      var isTreeType = isTree ? true : _this4.checkIsTreeType();
       if (isTreeType) {
         data.forEach(function (item, index) {
           _this4.firstLevelKey[index] = _this4.getRowKey(item, index);

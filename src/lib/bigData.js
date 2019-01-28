@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-const defaultHeight = 40;
+const defaultHeight = 30;
 const rowDiff = 3; //行差值
 let treeTypeIndex = 0;
 export default function bigData(Table) {
@@ -11,7 +11,8 @@ export default function bigData(Table) {
       rowKey: "key",
       onExpand() {},
       scroll: {},
-      currentIndex:-1
+      currentIndex:-1,
+      isTree:false
     };
     static propTypes = {
       loadBuffer: PropTypes.number
@@ -79,7 +80,8 @@ export default function bigData(Table) {
      *
      */
     computeCachedRowParentIndex = data => {
-      const isTreeType = this.checkIsTreeType();
+      const {isTree} = this.props;
+      const isTreeType = isTree?true:this.checkIsTreeType();
       if (isTreeType) {
         data.forEach((item, index) => {
           this.firstLevelKey[index] = this.getRowKey(item, index);
@@ -96,7 +98,7 @@ export default function bigData(Table) {
 
     setStartAndEndIndex(currentIndex,dataLen){
       const _this = this;
-      if(currentIndex > _this.endIndex){
+      if(currentIndex > _this.currentIndex + _this.props.rowsInView){
         _this.currentIndex = currentIndex;
         _this.endIndex = _this.currentIndex; //数据开始位置
         _this.startIndex = _this.currentIndex - _this.loadCount; //数据结束位置
@@ -106,7 +108,9 @@ export default function bigData(Table) {
         if(_this.startIndex < 0){
           _this.startIndex = 0;
         }
-      }else if(currentIndex < _this.startIndex){
+         //重新设定scrollTop值
+      _this.scrollTop = _this.getSumHeight(0, _this.endIndex - _this.rowsInView +2);
+      }else if(currentIndex < _this.currentIndex){
         _this.currentIndex = currentIndex;
         _this.startIndex = currentIndex;
         _this.endIndex = currentIndex + _this.loadCount;
@@ -116,10 +120,10 @@ export default function bigData(Table) {
         if(_this.startIndex < 0){
           _this.startIndex = 0;
         }
-
-      }
       //重新设定scrollTop值
-      _this.scrollTop = _this.getSumHeight(0, _this.endIndex - _this.rowsInView +2);
+      _this.scrollTop = _this.getSumHeight(0, _this.startIndex);
+      }
+     
     }
 
     getRowKey(record, index) {

@@ -183,7 +183,7 @@ class Table extends Component {
       this.columnManager.reset(null, nextProps.children);
     }
     //适配lazyload
-    if(nextProps.scrollTop){
+    if(nextProps.scrollTop > -1){
       // this.refs.bodyTable.scrollTop = nextProps.scrollTop;
       this.scrollTop = nextProps.scrollTop;
     }
@@ -206,11 +206,11 @@ class Table extends Component {
       this.computeTableWidth();
       this.firstDid = false;//避免重复update
     }
-    if(this.scrollTop){
+    if(this.scrollTop > -1){
       this.refs.fixedColumnsBodyLeft && ( this.refs.fixedColumnsBodyLeft.scrollTop = this.scrollTop);
       this.refs.fixedColumnsBodyRight && ( this.refs.fixedColumnsBodyRight.scrollTop = this.scrollTop);
       this.refs.bodyTable.scrollTop = this.scrollTop;
-      this.scrollTop = 0;
+      this.scrollTop = -1;
     }
 
 
@@ -781,7 +781,8 @@ class Table extends Component {
         }else{
           if(fixed){
             if(this.domWidthDiff > 0){
-              innerBodyStyle.overflowX = 'auto';
+              headStyle.overflow = 'hidden';
+              innerBodyStyle.overflowX = 'auto'; //兼容expand场景、子表格含有固定列的场景
             }else{
               bodyStyle.marginBottom = `-${scrollbarWidth}px`;
             }
