@@ -69,6 +69,7 @@ var TableHeader = function (_Component) {
       var currentCols = _this.table.cols[_this.drag.currIndex];
       var diff = event.x - _this.drag.oldLeft;
       var newWidth = _this.drag.oldWidth + diff;
+      _this.drag.newWidth = newWidth;
       // if(newWidth > this.drag.minWidth){
       if (newWidth > _this.minWidth) {
         currentCols.style.width = newWidth + 'px';
@@ -123,8 +124,9 @@ var TableHeader = function (_Component) {
     };
 
     _this.onLineMouseUp = function (event) {
+      var width = _this.drag.newWidth;
       _this.clearDragBorder(event);
-      _this.props.onDropBorder(event);
+      _this.props.onDropBorder(event, width);
     };
 
     _this.bodyonLineMouseMove = function (event) {
