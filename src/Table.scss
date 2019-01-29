@@ -411,7 +411,7 @@ $checkbox-height:16px;
         .online{
           height: 100%;
           width: 1px;
-          background:#e9e9e9;//兼容火狐浏览器，如果table设置border，
+          background:transparent;//兼容火狐浏览器，如果table设置border，
           margin: 0 auto;
         }
         .online-hover{
@@ -498,6 +498,11 @@ $checkbox-height:16px;
   box-shadow: 0 0 0;
 }
 
+  .u-table-bordered {
+    .u-table-drag-gap{
+      background:#e9e9e9;
+    }
+  }
 .u-table.bordered {
   table {
     border-collapse: collapse;
