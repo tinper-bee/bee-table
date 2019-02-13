@@ -61,8 +61,8 @@ class Demo23 extends Component {
     dragborder={true} 
     draggable={true} 
     
-    onDropBorder ={(e)=>{
-      console.log("调整列宽后触发事件",e.target);
+    onDropBorder ={(e,width)=>{
+      console.log(width+"--调整列宽后触发事件",e.target);
     }}
     />;
   }

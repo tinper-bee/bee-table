@@ -11,7 +11,7 @@ import multiSelect from "tinper-bee/lib/multiSelect.js";
 
 ### multiSelect 
 
-> 选中功能组件
+ 选中功能组件
 
 <font color="#ccc">
 
@@ -30,7 +30,7 @@ import multiSelect from "tinper-bee/lib/multiSelect.js";
 
 #### multiSelect 新增API
 
-> data 数据中新增参数
+data 数据中新增参数
 
 | 参数                  | 说明                         | 类型       | 默认值      |
 | ------------------- | -------------------------- | -------- | -------- |

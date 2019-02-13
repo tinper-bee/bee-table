@@ -174,6 +174,7 @@ class TableHeader extends Component {
       let currentCols = this.table.cols[this.drag.currIndex];
       let diff = (event.x - this.drag.oldLeft); 
       let newWidth = this.drag.oldWidth + diff;
+      this.drag.newWidth = newWidth;
       // if(newWidth > this.drag.minWidth){
       if(newWidth > this.minWidth){
         currentCols.style.width = newWidth +'px';
@@ -181,7 +182,7 @@ class TableHeader extends Component {
         if(this.fixedTable.cols){
             this.fixedTable.cols[this.drag.currIndex].style.width = newWidth + "px";
         }
-        
+
         //表头滚动条处理
         if(headerScroll){
             let oldTableWidth = parseInt(this.table.table.style.width ?this.table.table.style.width:this.table.table.scrollWidth);
@@ -234,8 +235,9 @@ class TableHeader extends Component {
    * @memberof TableHeader
    */
   onLineMouseUp = (event) => {
+    let width = this.drag.newWidth;
     this.clearDragBorder(event);
-    this.props.onDropBorder(event)
+    this.props.onDropBorder(event,width);
   };
 
   /**
