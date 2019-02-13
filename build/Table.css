@@ -401,7 +401,7 @@
       .u-table-thead-th-drag-gap .online {
         height: 100%;
         width: 1px;
-        background: #e9e9e9;
+        background: transparent;
         margin: 0 auto; }
       .u-table-thead-th-drag-gap .online-hover {
         background: #000000; }
@@ -455,6 +455,9 @@
 .u-table:focus {
   outline: none;
   box-shadow: 0 0 0; }
+
+.u-table-bordered .u-table-drag-gap {
+  background: #e9e9e9; }
 
 .u-table.bordered table {
   border-collapse: collapse; }

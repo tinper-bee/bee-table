@@ -98,7 +98,7 @@ export default function bigData(Table) {
 
     setStartAndEndIndex(currentIndex,dataLen){
       const _this = this;
-      if(currentIndex > _this.currentIndex + _this.props.rowsInView){
+      if(currentIndex > _this.currentIndex + _this.rowsInView){
         _this.currentIndex = currentIndex;
         _this.endIndex = _this.currentIndex; //数据开始位置
         _this.startIndex = _this.currentIndex - _this.loadCount; //数据结束位置
