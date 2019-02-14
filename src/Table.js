@@ -191,7 +191,10 @@ class Table extends Component {
       this.computeTableWidth();
       this.firstDid = true;//避免重复update
     }
-
+    if(nextProps.resetScroll){
+      this.resetScrollY();
+    }
+ 
     // console.log('this.scrollTop**********',this.scrollTop);
 
   }

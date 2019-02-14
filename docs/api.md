@@ -56,6 +56,7 @@ import 'bee-table/build/Table.css';
 | sort       | 排序的属性 | object| {  mode:'single'//单列排序,  backSource:false //默认是前端排序，值为true为后端排序 } mode:multiple-多列排序
 | syncHover       | 是否同步Hover状态到左侧Checkbox，关闭此功能有助于提升性能 | bool| true
 | loadBuffer       | 使用BigData高阶组件实现大数据加载时，上下加载的缓存 | number| 5
+| resetScroll       | 将表格横向滚动条位置还原 | bool| false
 
 > 快捷键部分参考示例 (快捷键在table中的简单使用应用)
 
