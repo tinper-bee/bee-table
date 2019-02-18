@@ -583,10 +583,10 @@ class TableHeader extends Component {
               let thDefaultObj = {};
               
                   if(draggable){
-                    thClassName += `${clsPrefix}-thead th-drag ${thHover} `;
+                    thClassName += ` ${clsPrefix}-thead th-drag ${thHover} `;
                   }
                   if(dragborder){
-                    thClassName += `${clsPrefix}-thead-th ${canDotDrag}`;
+                    thClassName += ` ${clsPrefix}-thead-th ${canDotDrag}`;
                   }
                   thClassName += ` ${fixedStyle}`;
                  

@@ -9,7 +9,7 @@ import addEventListener from 'tinper-bee-core/lib/addEventListener';
 import ColumnManager from './ColumnManager';
 import createStore from './createStore';
 import Loading from 'bee-loading';
-import { Event,EventUtil} from "./utils";
+import { Event,EventUtil,closest} from "./utils";
 
 const propTypes = {
   data: PropTypes.array,
@@ -28,6 +28,7 @@ const propTypes = {
   expandedRowClassName: PropTypes.func,
   childrenColumnName: PropTypes.string,
   onExpand: PropTypes.func,
+  onRowHover:PropTypes.func,
   onExpandedRowsChange: PropTypes.func,
   indentSize: PropTypes.number,
   onRowClick: PropTypes.func,
@@ -137,6 +138,7 @@ class Table extends Component {
     this.handleBodyScroll = this.handleBodyScroll.bind(this);
     this.handleRowHover = this.handleRowHover.bind(this);
     this.computeTableWidth = this.computeTableWidth.bind(this);
+    this.onBodyMouseLeave = this.onBodyMouseLeave.bind(this);
   }
 
   componentDidMount() {
@@ -548,9 +550,9 @@ class Table extends Component {
       let className = rowClassName(record, i, indent);
 
       const onHoverProps = {};
-      if (this.columnManager.isAnyColumnsFixed()) {
-        onHoverProps.onHover = this.handleRowHover;
-      }
+
+      onHoverProps.onHover = this.handleRowHover;
+      
       //fixedIndex一般是跟index是一个值的，只有是树结构时，会讲子节点的值也累计上
       let fixedIndex = i;
       //判断是否是tree结构
@@ -623,7 +625,7 @@ class Table extends Component {
           treeType={childrenColumn||this.treeType?true:false}
           fixedIndex={fixedIndex+lazyCurrentIndex}
           rootIndex = {rootIndex}
-
+          hoverContent={props.hoverContent}
         />
       );
       this.treeRowIndex++;
@@ -813,7 +815,7 @@ class Table extends Component {
         tableStyle.width = this.contentWidth - this.columnManager.getLeftColumnsWidth(this.contentWidth) - this.columnManager.getRightColumnsWidth(this.contentWidth);
       }
       const tableBody = hasBody ? getBodyWrapper(
-        <tbody className={`${clsPrefix}-tbody`}>
+        <tbody className={`${clsPrefix}-tbody`} onMouseLeave={this.onBodyMouseLeave}>
           {this.getRows(columns, fixed)}
         </tbody>
       ) : null;
@@ -852,6 +854,7 @@ class Table extends Component {
         onMouseOver={this.detectScrollTarget}
         onTouchStart={this.detectScrollTarget}
         onScroll={this.handleBodyScroll}
+        onMouseLeave={this.onBodyMouseLeave}
       >
         {this.renderDragHideTable()}
         {renderTable(!useFixedHeader)}
@@ -979,12 +982,22 @@ class Table extends Component {
   isRowExpanded(record, index) {
     return typeof this.findExpandedRow(record, index) !== 'undefined';
   }
+  onBodyMouseLeave(e){
+    this.hideHoverDom(e);
+  }
 
   detectScrollTarget(e) {
     if (this.scrollTarget !== e.currentTarget) {
       this.scrollTarget = e.currentTarget;
     }
   }
+
+  hideHoverDom(e){
+    if(this.hoverDom){
+      this.hoverDom.style.display = 'none';   
+    }
+  }
+  
 
   handleBodyScroll(e) {
 
@@ -1045,17 +1058,41 @@ class Table extends Component {
     this.lastScrollLeft = e.target.scrollLeft;
   }
 
-  handleRowHover(isHover, key) {
+  handleRowHover(isHover, key,event,currentIndex) {
     //增加新的API，设置是否同步Hover状态，提高性能，避免无关的渲染
-    let { syncHover } = this.props;
-    if(syncHover){
+    let { syncHover,onRowHover } = this.props;
+    // 固定列、或者含有hoverdom时情况下同步hover状态
+    if(this.columnManager.isAnyColumnsFixed() && syncHover ){
+      this.hoverKey = key;
       this.store.setState({
         currentHoverKey: isHover ? key : null,
       });
     }
+    if(this.hoverDom && isHover){
+      this.currentHoverKey = key;
+      const td = closest(event.target,'td');
+      if(td){
+        this.hoverDom.style.top = td.offsetTop+'px';
+        this.hoverDom.style.height = td.offsetHeight +'px';
+        this.hoverDom.style.lineHeight = td.offsetHeight +'px';
+        this.hoverDom.style.display = 'block';
+      }
+    }
+    onRowHover && onRowHover(currentIndex);
+
   }
 
-  
+  onRowHoverMouseEnter = () =>{
+
+    this.store.setState({
+      currentHoverKey: this.currentHoverKey,
+    });
+    this.hoverDom.style.display = 'block';
+      
+  }
+  onRowHoverMouseLeave = () =>{
+
+  }
   onFocus=(e)=>{
     this.props.onKeyTab&&this.props.onKeyTab();
   }
@@ -1126,6 +1163,8 @@ class Table extends Component {
         <Loading
           container={this}
           {...loading} />
+        { props.hoverContent && <div className="u-row-hover"
+                                     onMouseEnter={this.onRowHoverMouseEnter} onMouseLeave={this.onRowHoverMouseLeave} ref={el=> this.hoverDom = el }>{props.hoverContent}</div>}
       </div>
     );
   }

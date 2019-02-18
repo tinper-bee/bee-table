@@ -127,14 +127,17 @@ class TableRow extends Component{
     onRowDoubleClick(record, index, event);
   }
 
-  onMouseEnter() {
-    const { onHover, hoverKey } = this.props;
-    onHover(true, hoverKey);
+  onMouseEnter(e) {
+    const { onHover, hoverKey,fixedIndex } = this.props;
+    this.setState({ hovered: true });
+    onHover(true, hoverKey,e,fixedIndex);
   }
 
-  onMouseLeave() {
-    const { onHover, hoverKey } = this.props;
-    onHover(false, hoverKey);
+  onMouseLeave(e) {
+
+    const { onHover, hoverKey ,fixedIndex} = this.props;
+    this.setState({ hovered: false });
+    onHover(false, hoverKey,e,fixedIndex);
   }
 
   set =(fn)=> {
@@ -156,7 +159,7 @@ class TableRow extends Component{
     const {
       clsPrefix, columns, record, height, visible, index,
       expandIconColumnIndex, expandIconAsCell, expanded, expandRowByClick,
-      expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed,hoverKey
+      expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed
     } = this.props;
     let showSum = false;
     let { className } = this.props;
@@ -164,7 +167,7 @@ class TableRow extends Component{
     if (this.state.hovered) {
       className += ` ${clsPrefix}-hover`;
     }
-    
+    // console.log('className--'+className,index);
     //判断是否为合计行
     if(className.indexOf('sumrow')>-1){
       showSum = true;
@@ -227,6 +230,7 @@ class TableRow extends Component{
         ref={this.bindElement}
       >
         {cells.length>0?cells:<td></td>}
+        <div className="u-row-hover2" >{}</div>
       </tr>
     );
   }

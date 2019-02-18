@@ -69,7 +69,22 @@ export function warningOnce(condition, format, args) {
     warned[format] = true;
   }
 }
-
+ export function getOffset (Node, offset ) {
+	if(!offset) {
+		offset = {};
+		offset.top = 0;
+		offset.left = 0;
+	}
+	if(Node == document.body) {
+		return offset;
+	}
+	offset.top += Node.offsetTop;
+	offset.left += Node.offsetLeft;
+	if(Node.offsetParent)
+		return getOffset(Node.offsetParent, offset);
+	else
+		return offset;
+};
 
 
 
