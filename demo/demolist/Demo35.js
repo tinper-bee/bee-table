@@ -68,14 +68,22 @@ class Demo35 extends Component {
     }
   }
 
- clickFun=()=>{
+  delFun=()=>{
   //  console.log('click'+this.currentIndex);
+  let {data} = this.state;
+  data.splice(this.currentIndex,1);
+  this.setState({
+    data
+  });
  }
- onRowHover=(index)=>{
+ onRowHover=(index,record)=>{
   this.currentIndex = index;
+  this.currentRecord = record;
  }
+  getHoverContent=()=>{
+    return <div className="opt-btns"><button  onClick={this.delFun}>删除</button> </div>
+  }
   render() {
-    let hoverContent = <div className="opt-btns"><button  onClick={this.clickFun}>删除</button> </div>
     return (
         
         <Table
@@ -84,7 +92,7 @@ class Demo35 extends Component {
           parentNodeId='parent'
           height={43}
           headerHeight={42}
-          hoverContent={hoverContent}
+          hoverContent={this.getHoverContent}
           onRowHover={this.onRowHover}
           onRowClick={(record, index, indent) => {
             this.setState({

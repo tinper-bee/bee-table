@@ -230,7 +230,6 @@ class TableRow extends Component{
         ref={this.bindElement}
       >
         {cells.length>0?cells:<td></td>}
-        <div className="u-row-hover2" >{}</div>
       </tr>
     );
   }

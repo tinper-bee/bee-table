@@ -77,6 +77,7 @@ var propTypes = {
   expandedRowClassName: _propTypes2["default"].func,
   childrenColumnName: _propTypes2["default"].string,
   onExpand: _propTypes2["default"].func,
+  onRowHover: _propTypes2["default"].func,
   onExpandedRowsChange: _propTypes2["default"].func,
   indentSize: _propTypes2["default"].number,
   onRowClick: _propTypes2["default"].func,
@@ -171,6 +172,16 @@ var Table = function (_Component) {
       );
     };
 
+    _this.onRowHoverMouseEnter = function () {
+
+      _this.store.setState({
+        currentHoverKey: _this.currentHoverKey
+      });
+      _this.hoverDom.style.display = 'block';
+    };
+
+    _this.onRowHoverMouseLeave = function () {};
+
     _this.onFocus = function (e) {
       _this.props.onKeyTab && _this.props.onKeyTab();
     };
@@ -239,6 +250,7 @@ var Table = function (_Component) {
     _this.handleBodyScroll = _this.handleBodyScroll.bind(_this);
     _this.handleRowHover = _this.handleRowHover.bind(_this);
     _this.computeTableWidth = _this.computeTableWidth.bind(_this);
+    _this.onBodyMouseLeave = _this.onBodyMouseLeave.bind(_this);
     return _this;
   }
 
@@ -676,9 +688,9 @@ var Table = function (_Component) {
       var className = rowClassName(record, i, indent);
 
       var onHoverProps = {};
-      if (this.columnManager.isAnyColumnsFixed()) {
-        onHoverProps.onHover = this.handleRowHover;
-      }
+
+      onHoverProps.onHover = this.handleRowHover;
+
       //fixedIndex一般是跟index是一个值的，只有是树结构时，会讲子节点的值也累计上
       var fixedIndex = i;
       //判断是否是tree结构
@@ -748,8 +760,8 @@ var Table = function (_Component) {
         setRowParentIndex: props.setRowParentIndex,
         treeType: childrenColumn || this.treeType ? true : false,
         fixedIndex: fixedIndex + lazyCurrentIndex,
-        rootIndex: rootIndex
-
+        rootIndex: rootIndex,
+        hoverContent: props.hoverContent
       })));
       this.treeRowIndex++;
       var subVisible = visible && isRowExpanded;
@@ -940,7 +952,7 @@ var Table = function (_Component) {
       }
       var tableBody = hasBody ? getBodyWrapper(_react2["default"].createElement(
         'tbody',
-        { className: clsPrefix + '-tbody' },
+        { className: clsPrefix + '-tbody', onMouseLeave: _this4.onBodyMouseLeave },
         _this4.getRows(columns, fixed)
       )) : null;
       var _drag_class = _this4.props.dragborder ? "table-drag-bordered" : "";
@@ -977,7 +989,8 @@ var Table = function (_Component) {
         ref: 'bodyTable',
         onMouseOver: this.detectScrollTarget,
         onTouchStart: this.detectScrollTarget,
-        onScroll: this.handleBodyScroll
+        onScroll: this.handleBodyScroll,
+        onMouseLeave: this.onBodyMouseLeave
       },
       this.renderDragHideTable(),
       renderTable(!useFixedHeader)
@@ -1128,9 +1141,19 @@ var Table = function (_Component) {
     return typeof this.findExpandedRow(record, index) !== 'undefined';
   };
 
+  Table.prototype.onBodyMouseLeave = function onBodyMouseLeave(e) {
+    this.hideHoverDom(e);
+  };
+
   Table.prototype.detectScrollTarget = function detectScrollTarget(e) {
     if (this.scrollTarget !== e.currentTarget) {
       this.scrollTarget = e.currentTarget;
+    }
+  };
+
+  Table.prototype.hideHoverDom = function hideHoverDom(e) {
+    if (this.hoverDom) {
+      this.hoverDom.style.display = 'none';
     }
   };
 
@@ -1194,15 +1217,30 @@ var Table = function (_Component) {
     this.lastScrollLeft = e.target.scrollLeft;
   };
 
-  Table.prototype.handleRowHover = function handleRowHover(isHover, key) {
+  Table.prototype.handleRowHover = function handleRowHover(isHover, key, event, currentIndex) {
     //增加新的API，设置是否同步Hover状态，提高性能，避免无关的渲染
-    var syncHover = this.props.syncHover;
+    var _props9 = this.props,
+        syncHover = _props9.syncHover,
+        onRowHover = _props9.onRowHover;
+    // 固定列、或者含有hoverdom时情况下同步hover状态
 
-    if (syncHover) {
+    if (this.columnManager.isAnyColumnsFixed() && syncHover) {
+      this.hoverKey = key;
       this.store.setState({
         currentHoverKey: isHover ? key : null
       });
     }
+    if (this.hoverDom && isHover) {
+      this.currentHoverKey = key;
+      var td = (0, _utils.closest)(event.target, 'td');
+      if (td) {
+        this.hoverDom.style.top = td.offsetTop + 'px';
+        this.hoverDom.style.height = td.offsetHeight + 'px';
+        this.hoverDom.style.lineHeight = td.offsetHeight + 'px';
+        this.hoverDom.style.display = 'block';
+      }
+    }
+    onRowHover && onRowHover(currentIndex);
   };
 
   Table.prototype.render = function render() {
@@ -1264,7 +1302,15 @@ var Table = function (_Component) {
       ),
       _react2["default"].createElement(_beeLoading2["default"], _extends({
         container: this
-      }, loading))
+      }, loading)),
+      props.hoverContent && _react2["default"].createElement(
+        'div',
+        { className: 'u-row-hover',
+          onMouseEnter: this.onRowHoverMouseEnter, onMouseLeave: this.onRowHoverMouseLeave, ref: function ref(el) {
+            return _this6.hoverDom = el;
+          } },
+        props.hoverContent
+      )
     );
   };
 

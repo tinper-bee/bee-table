@@ -195,20 +195,24 @@ var TableRow = function (_Component) {
     onRowDoubleClick(record, index, event);
   };
 
-  TableRow.prototype.onMouseEnter = function onMouseEnter() {
+  TableRow.prototype.onMouseEnter = function onMouseEnter(e) {
     var _props7 = this.props,
         onHover = _props7.onHover,
-        hoverKey = _props7.hoverKey;
+        hoverKey = _props7.hoverKey,
+        fixedIndex = _props7.fixedIndex;
 
-    onHover(true, hoverKey);
+    this.setState({ hovered: true });
+    onHover(true, hoverKey, e, fixedIndex);
   };
 
-  TableRow.prototype.onMouseLeave = function onMouseLeave() {
+  TableRow.prototype.onMouseLeave = function onMouseLeave(e) {
     var _props8 = this.props,
         onHover = _props8.onHover,
-        hoverKey = _props8.hoverKey;
+        hoverKey = _props8.hoverKey,
+        fixedIndex = _props8.fixedIndex;
 
-    onHover(false, hoverKey);
+    this.setState({ hovered: false });
+    onHover(false, hoverKey, e, fixedIndex);
   };
 
   TableRow.prototype.render = function render() {
@@ -229,8 +233,7 @@ var TableRow = function (_Component) {
         indent = _props9.indent,
         indentSize = _props9.indentSize,
         isHiddenExpandIcon = _props9.isHiddenExpandIcon,
-        fixed = _props9.fixed,
-        hoverKey = _props9.hoverKey;
+        fixed = _props9.fixed;
 
     var showSum = false;
     var className = this.props.className;
@@ -239,7 +242,7 @@ var TableRow = function (_Component) {
     if (this.state.hovered) {
       className += ' ' + clsPrefix + '-hover';
     }
-
+    // console.log('className--'+className,index);
     //判断是否为合计行
     if (className.indexOf('sumrow') > -1) {
       showSum = true;
@@ -297,7 +300,8 @@ var TableRow = function (_Component) {
         // key={hoverKey}
         , ref: this.bindElement
       },
-      cells.length > 0 ? cells : _react2["default"].createElement('td', null)
+      cells.length > 0 ? cells : _react2["default"].createElement('td', null),
+      _react2["default"].createElement('div', { className: 'u-row-hover2' })
     );
   };
 

@@ -51,6 +51,7 @@ const propTypes = {
   onFilterClear: PropTypes.func,
   syncHover: PropTypes.bool,
   tabIndex:PropTypes.string,
+  hoverContent:PropTypes.func
 };
 
 const defaultProps = {
@@ -83,7 +84,7 @@ const defaultProps = {
   syncHover: true,
   setRowHeight:()=>{},
   setRowParentIndex:()=>{},
-  tabIndex:'0'
+  tabIndex:'0',
 };
 
 class Table extends Component {
@@ -625,7 +626,6 @@ class Table extends Component {
           treeType={childrenColumn||this.treeType?true:false}
           fixedIndex={fixedIndex+lazyCurrentIndex}
           rootIndex = {rootIndex}
-          hoverContent={props.hoverContent}
         />
       );
       this.treeRowIndex++;
@@ -1060,7 +1060,8 @@ class Table extends Component {
 
   handleRowHover(isHover, key,event,currentIndex) {
     //增加新的API，设置是否同步Hover状态，提高性能，避免无关的渲染
-    let { syncHover,onRowHover } = this.props;
+    let { syncHover,onRowHover,data } = this.props;
+    const record = data[currentIndex];
     // 固定列、或者含有hoverdom时情况下同步hover状态
     if(this.columnManager.isAnyColumnsFixed() && syncHover ){
       this.hoverKey = key;
@@ -1078,7 +1079,8 @@ class Table extends Component {
         this.hoverDom.style.display = 'block';
       }
     }
-    onRowHover && onRowHover(currentIndex);
+
+    onRowHover && onRowHover(currentIndex,record);
 
   }
 
@@ -1164,7 +1166,7 @@ class Table extends Component {
           container={this}
           {...loading} />
         { props.hoverContent && <div className="u-row-hover"
-                                     onMouseEnter={this.onRowHoverMouseEnter} onMouseLeave={this.onRowHoverMouseLeave} ref={el=> this.hoverDom = el }>{props.hoverContent}</div>}
+                                     onMouseEnter={this.onRowHoverMouseEnter} onMouseLeave={this.onRowHoverMouseLeave} ref={el=> this.hoverDom = el }>{props.hoverContent()}</div>}
       </div>
     );
   }

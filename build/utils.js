@@ -10,6 +10,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 exports.measureScrollbar = measureScrollbar;
 exports.debounce = debounce;
 exports.warningOnce = warningOnce;
+exports.getOffset = getOffset;
 exports.addClass = addClass;
 exports.removeClass = removeClass;
 exports.ObjectAssign = ObjectAssign;
@@ -97,6 +98,19 @@ function warningOnce(condition, format, args) {
     warned[format] = true;
   }
 }
+function getOffset(Node, offset) {
+  if (!offset) {
+    offset = {};
+    offset.top = 0;
+    offset.left = 0;
+  }
+  if (Node == document.body) {
+    return offset;
+  }
+  offset.top += Node.offsetTop;
+  offset.left += Node.offsetLeft;
+  if (Node.offsetParent) return getOffset(Node.offsetParent, offset);else return offset;
+};
 
 var tryParseInt = exports.tryParseInt = function tryParseInt(value) {
   var defaultValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
