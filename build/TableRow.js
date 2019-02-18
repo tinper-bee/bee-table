@@ -300,8 +300,7 @@ var TableRow = function (_Component) {
         // key={hoverKey}
         , ref: this.bindElement
       },
-      cells.length > 0 ? cells : _react2["default"].createElement('td', null),
-      _react2["default"].createElement('div', { className: 'u-row-hover2' })
+      cells.length > 0 ? cells : _react2["default"].createElement('td', null)
     );
   };
 

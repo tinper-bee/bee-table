@@ -99,7 +99,8 @@ var propTypes = {
   onFilterChange: _propTypes2["default"].func,
   onFilterClear: _propTypes2["default"].func,
   syncHover: _propTypes2["default"].bool,
-  tabIndex: _propTypes2["default"].string
+  tabIndex: _propTypes2["default"].string,
+  hoverContent: _propTypes2["default"].func
 };
 
 var defaultProps = {
@@ -760,8 +761,7 @@ var Table = function (_Component) {
         setRowParentIndex: props.setRowParentIndex,
         treeType: childrenColumn || this.treeType ? true : false,
         fixedIndex: fixedIndex + lazyCurrentIndex,
-        rootIndex: rootIndex,
-        hoverContent: props.hoverContent
+        rootIndex: rootIndex
       })));
       this.treeRowIndex++;
       var subVisible = visible && isRowExpanded;
@@ -1221,9 +1221,11 @@ var Table = function (_Component) {
     //增加新的API，设置是否同步Hover状态，提高性能，避免无关的渲染
     var _props9 = this.props,
         syncHover = _props9.syncHover,
-        onRowHover = _props9.onRowHover;
-    // 固定列、或者含有hoverdom时情况下同步hover状态
+        onRowHover = _props9.onRowHover,
+        data = _props9.data;
 
+    var record = data[currentIndex];
+    // 固定列、或者含有hoverdom时情况下同步hover状态
     if (this.columnManager.isAnyColumnsFixed() && syncHover) {
       this.hoverKey = key;
       this.store.setState({
@@ -1240,7 +1242,8 @@ var Table = function (_Component) {
         this.hoverDom.style.display = 'block';
       }
     }
-    onRowHover && onRowHover(currentIndex);
+
+    onRowHover && onRowHover(currentIndex, record);
   };
 
   Table.prototype.render = function render() {
@@ -1309,7 +1312,7 @@ var Table = function (_Component) {
           onMouseEnter: this.onRowHoverMouseEnter, onMouseLeave: this.onRowHoverMouseLeave, ref: function ref(el) {
             return _this6.hoverDom = el;
           } },
-        props.hoverContent
+        props.hoverContent()
       )
     );
   };
