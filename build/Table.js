@@ -1207,6 +1207,9 @@ var Table = function (_Component) {
       if (bodyTable && e.target !== bodyTable) {
         bodyTable.scrollTop = e.target.scrollTop;
       }
+      if (this.hoverDom) {
+        this.hoverDom.style.display = 'none';
+      }
       this.lastScrollTop = e.target.scrollTop;
       if (handleScrollY) {
         (0, _utils.debounce)(handleScrollY(this.lastScrollTop, this.treeType), 300);
@@ -1236,7 +1239,12 @@ var Table = function (_Component) {
       this.currentHoverKey = key;
       var td = (0, _utils.closest)(event.target, 'td');
       if (td) {
-        this.hoverDom.style.top = td.offsetTop + 'px';
+        var scrollTop = this.lastScrollTop ? this.lastScrollTop : 0;
+        var top = td.offsetTop - scrollTop;
+        if (this.refs.headTable) {
+          top = top + this.refs.headTable.clientHeight;
+        }
+        this.hoverDom.style.top = top + 'px';
         this.hoverDom.style.height = td.offsetHeight + 'px';
         this.hoverDom.style.lineHeight = td.offsetHeight + 'px';
         this.hoverDom.style.display = 'block';

@@ -62,7 +62,7 @@ const columns = [
   }
 ];
 
-const data = [ ...new Array(10000) ].map((e, i) => {
+const data = [ ...new Array(20) ].map((e, i) => {
     const rs = { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };
     if(i%3==0){
         rs.b = '女';
@@ -80,9 +80,18 @@ class Demo30 extends Component {
       selectedRowIndex: 0
     }
   }
-
+  add=()=>{
+    let {data} = this.state;
+    const len =data.length;
+    data.push({a: len + 'a', b: len+ 'b', c: len + 'c', d: len + 'd', key: len });
+    this.setState({
+      data
+    });
+  }
   render() {
     return (
+      <div>
+        <button onClick={this.add}>new</button>
         <BigDataTable
           columns={columns}
           data={data}
@@ -92,7 +101,7 @@ class Demo30 extends Component {
             console.log('currentIndex--'+index);
           }}
         />
-
+</div>
      
     );
   }

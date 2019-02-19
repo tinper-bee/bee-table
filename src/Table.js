@@ -1046,12 +1046,16 @@ class Table extends Component {
       if (bodyTable && e.target !== bodyTable) {
         bodyTable.scrollTop = e.target.scrollTop;
       }
+      if(this.hoverDom){
+        this.hoverDom.style.display = 'none'
+      }
       this.lastScrollTop = e.target.scrollTop;
       if(handleScrollY){
         debounce(
           handleScrollY(this.lastScrollTop,this.treeType),
         300)
       }
+    
     }
     
     // Remember last scrollLeft for scroll direction detecting.
@@ -1073,9 +1077,14 @@ class Table extends Component {
       this.currentHoverKey = key;
       const td = closest(event.target,'td');
       if(td){
-        this.hoverDom.style.top = td.offsetTop+'px';
-        this.hoverDom.style.height = td.offsetHeight +'px';
-        this.hoverDom.style.lineHeight = td.offsetHeight +'px';
+        const scrollTop = this.lastScrollTop ?this.lastScrollTop:0
+        let top = td.offsetTop -  scrollTop;
+        if(this.refs.headTable){
+          top = top + this.refs.headTable.clientHeight; 
+        }
+        this.hoverDom.style.top = top + 'px';
+        this.hoverDom.style.height = td.offsetHeight + 'px';
+        this.hoverDom.style.lineHeight = td.offsetHeight + 'px';
         this.hoverDom.style.display = 'block';
       }
     }

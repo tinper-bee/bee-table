@@ -57,16 +57,20 @@ export default function bigData(Table) {
           _this.currentIndex = 0;
           _this.startIndex = _this.currentIndex; //数据开始位置
           _this.endIndex = _this.currentIndex + _this.loadCount; //数据结束位置
-          if(_this.endIndex > dataLen){
-            _this.endIndex = dataLen;
-          }
+        
       }
       if (nextProps.data !== props.data) {
         _this.computeCachedRowParentIndex(nextProps.data);
+        if(nextProps.data.length>0){
+          _this.endIndex = _this.startIndex + _this.loadCount; //数据结束位置
+        }
       }
       //如果传currentIndex，会判断该条数据是否在可视区域，如果没有的话，则重新计算startIndex和endIndex
       if(currentIndex!==-1 && currentIndex !== this.currentIndex){
         _this.setStartAndEndIndex(currentIndex,dataLen);
+      }
+      if(_this.endIndex > dataLen){
+        _this.endIndex = dataLen;
       }
     }
 
