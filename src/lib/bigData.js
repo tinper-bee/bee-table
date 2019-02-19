@@ -62,16 +62,14 @@ export default function bigData(Table) {
       if (nextProps.data !== props.data) {
         _this.computeCachedRowParentIndex(nextProps.data);
         if(nextProps.data.length>0){
-          _this.endIndex = _this.startIndex + _this.loadCount; //数据结束位置
+          _this.endIndex = _this.currentIndex - nextProps.loadBuffer + _this.loadCount; //数据结束位置
         }
       }
       //如果传currentIndex，会判断该条数据是否在可视区域，如果没有的话，则重新计算startIndex和endIndex
       if(currentIndex!==-1 && currentIndex !== this.currentIndex){
         _this.setStartAndEndIndex(currentIndex,dataLen);
       }
-      if(_this.endIndex > dataLen){
-        _this.endIndex = dataLen;
-      }
+
     }
 
     componentDidMount() {
@@ -429,7 +427,16 @@ export default function bigData(Table) {
     render() {
       const { data } = this.props;
       const { scrollTop } = this;
-      const { endIndex, startIndex } = this;
+      let { endIndex, startIndex } = this;
+      if(startIndex < 0){
+        startIndex = 0;
+      }
+      if(endIndex < 0 ){
+        endIndex = 0;
+      }
+      if(endIndex > data.length){
+        endIndex = data.length;
+      }
       const lazyLoad = {
         startIndex: startIndex,
         startParentIndex: startIndex //为树状节点做准备
