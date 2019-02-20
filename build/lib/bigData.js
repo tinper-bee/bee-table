@@ -85,7 +85,7 @@ function bigData(Table) {
       if (nextProps.data !== props.data) {
         _this.computeCachedRowParentIndex(nextProps.data);
         if (nextProps.data.length > 0) {
-          _this.endIndex = _this.currentIndex - this.loadBuffer + _this.loadCount; //数据结束位置
+          _this.endIndex = _this.currentIndex - nextProps.loadBuffer + _this.loadCount; //数据结束位置
         }
       }
       //如果传currentIndex，会判断该条数据是否在可视区域，如果没有的话，则重新计算startIndex和endIndex
