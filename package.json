@@ -46,7 +46,7 @@
   "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
  },
  "dependencies": {
-  "bee-button": "^1.0.6",
+  "bee-button": "^2.0.2",
   "bee-datepicker": "latest",
   "bee-dnd": "^1.0.2",
   "bee-dropdown": "^1.0.1",
@@ -76,7 +76,7 @@
  "devDependencies": {
   "babel-jest": "^22.0.4",
   "bee-animate": "latest",
-  "bee-checkbox": "^1.1.1",
+  "bee-checkbox": "^2.0.1",
   "bee-form": "1.1.10",
   "bee-input-group": "latest",
   "bee-layout": "latest",

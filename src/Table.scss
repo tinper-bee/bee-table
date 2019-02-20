@@ -5,11 +5,13 @@
 $text-color: #666;
 $font-size-base: 12px;
 $line-height: 1.5;
-$table-border-color: $border-color-base;
-$table-head-background-color: #f7f7f7;
+// 主题定制border：
+$table-border-color: unquote("rgb(#{$table-border-color-base})");
+// $table-head-background-color: #f7f7f7;
+// $table-head-text-color: #666;
 $vertical-padding: 12px;
 $horizontal-padding: 8px;
-$table-border-color: #e9e9e9;
+// $table-border-color: #e9e9e9;
 
 $table-hover-color: #E7F2FC;
 $table-move-in-color: $bg-color-base;
@@ -54,21 +56,39 @@ $checkbox-height:16px;
 
   td {
     border-bottom: 1px solid $table-border-color;
+    a{
+      color: $brand-primary;
+      &:hover{
+        color: $brand-primary-hover;
+      }
+      &:active{
+        color: $brand-primary-active;
+      }
+    }
   }
 
   tr {
     // transition: all 0.3s ease;
     &:hover {
-      background: $table-hover-color;
+      background: $hover-bg-color-base;
       td {
         .uf-eye{
           visibility: visible !important;
         }
       }
     }
+    tr a{
+      color: $brand-primary;
+      &:hover{
+        color: $brand-primary-hover;
+      }
+      &:active{
+        color: $brand-primary-active;
+      }
+    }
   }
   tr.tr-row-hover {
-    background: $table-hover-color;
+    background: $hover-bg-color-base;
   }
 
   th,
@@ -91,7 +111,7 @@ $checkbox-height:16px;
     }
   }
   &-row-hover {
-    background: rgb(227, 242, 253);
+    background: $hover-bg-color-base;
   }
 
   &-scroll {
@@ -99,24 +119,25 @@ $checkbox-height:16px;
   }
   &-bordered {
     table {
-      border: 1px solid #e9e9e9;
+      border: 1px solid $table-border-color;
       box-sizing: border-box;
       table-layout: fixed;
       // width:auto;
     }
     th {
-      border-bottom: 1px solid #e9e9e9;
+      border-bottom: 1px solid $table-border-color;
       box-sizing: border-box;
     }
     th,
     td {
-      border-right: 1px solid #e9e9e9;
+      border-right: 1px solid $table-border-color;
       box-sizing: border-box;
     }
   }
   &-header {
     overflow: hidden;
     background: $table-head-background-color;
+    color: $table-head-text-color;
   }
 
   &.fixed-height td {
@@ -209,6 +230,11 @@ $checkbox-height:16px;
 
     &-collapsed:after {
       content: "+";
+    }
+  }
+  &-row{
+    &.selected{
+      background: $hover-bg-color-base;
     }
   }
   tr.u-table-expanded-row {
@@ -312,6 +338,7 @@ $checkbox-height:16px;
     }
     th{
       background: $table-head-background-color;
+      color: $table-head-text-color;
       background-clip:padding-box;
       //禁止选中文字
       -moz-user-select: -moz-none;
@@ -383,7 +410,7 @@ $checkbox-height:16px;
       cursor: move;
     }
     .th-drag:hover{
-      background: rgb(227,242,253);
+      background: $hover-bg-color-base;
     }
     //为了区分是拖拽宽度还是交换列，先注释上面了
     // .th-drag:hover{
