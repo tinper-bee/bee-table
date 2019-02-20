@@ -26,7 +26,7 @@ export default function bigData(Table) {
       const rowHeight = this.props.height ? this.props.height : defaultHeight;
       //默认显示25条，rowsInView根据定高算的。在非固定高下，这个只是一个大概的值。
       const scrollY = this.props.scroll.y ? parseInt(this.props.scroll.y) : 0;
-      this.rowsInView = scrollY ? Math.ceil(scrollY / rowHeight) : 20;
+      this.rowsInView = scrollY ? Math.floor(scrollY / rowHeight) : 20;
       this.currentIndex = 0;
       this.loadCount = props.loadBuffer
         ? this.rowsInView + props.loadBuffer * 2
@@ -50,7 +50,7 @@ export default function bigData(Table) {
       if (nextProps.scroll.y !== props.scroll.y) {
         const rowHeight = nextProps.height ? nextProps.height : defaultHeight;
         const scrollY = nextProps.scroll.y ? parseInt(nextProps.scroll.y) : 0;
-        _this.rowsInView = scrollY ? Math.ceil(scrollY / rowHeight) : 20;
+        _this.rowsInView = scrollY ? Math.floor(scrollY / rowHeight) : 20;
         _this.loadCount = props.loadBuffer
           ? _this.rowsInView + props.loadBuffer * 2
           : 26; //一次加载多少数据

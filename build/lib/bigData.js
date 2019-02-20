@@ -49,7 +49,7 @@ function bigData(Table) {
       var rowHeight = _this2.props.height ? _this2.props.height : defaultHeight;
       //默认显示25条，rowsInView根据定高算的。在非固定高下，这个只是一个大概的值。
       var scrollY = _this2.props.scroll.y ? parseInt(_this2.props.scroll.y) : 0;
-      _this2.rowsInView = scrollY ? Math.ceil(scrollY / rowHeight) : 20;
+      _this2.rowsInView = scrollY ? Math.floor(scrollY / rowHeight) : 20;
       _this2.currentIndex = 0;
       _this2.loadCount = props.loadBuffer ? _this2.rowsInView + props.loadBuffer * 2 : 26; //一次加载多少数据
       _this2.cachedRowHeight = []; //缓存每行的高度
@@ -76,7 +76,7 @@ function bigData(Table) {
       if (nextProps.scroll.y !== props.scroll.y) {
         var rowHeight = nextProps.height ? nextProps.height : defaultHeight;
         var scrollY = nextProps.scroll.y ? parseInt(nextProps.scroll.y) : 0;
-        _this.rowsInView = scrollY ? Math.ceil(scrollY / rowHeight) : 20;
+        _this.rowsInView = scrollY ? Math.floor(scrollY / rowHeight) : 20;
         _this.loadCount = props.loadBuffer ? _this.rowsInView + props.loadBuffer * 2 : 26; //一次加载多少数据
         _this.currentIndex = 0;
         _this.startIndex = _this.currentIndex; //数据开始位置
