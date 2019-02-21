@@ -47,7 +47,7 @@ const innerColumns = [
             alert("这是第" + index + "列，内容为:" + text);
           }}
         >
-          一些操作
+          {'一些操作'+index}
         </a>
       );
     }
@@ -61,6 +61,8 @@ const innerColumns = [
 const data16 = [ ...new Array(10000) ].map((e, i) => {
     return { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };
    })
+
+
 
 
 
@@ -81,14 +83,16 @@ class Demo31 extends Component {
     }
   }
   expandedRowRender = (record, index, indent) => {
-    let height = 42 * (this.state.data_obj[0].length+ 2);
-    const data = record.key%2?this.state.data_obj[0]:this.state.data_obj[0]
+    let height = 200;
+    let innderData = [ ...new Array(100) ].map((e, i) => {
+      return { a: index+"-"+ i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key:  index+"-"+ i };
+     })
     return (
       <Table
         
         columns={innerColumns}
-        style={{height:height}}
-        data={this.state.data_obj[record.key]} 
+        scroll={{y:height}}
+        data={innderData} 
 
       />
     );

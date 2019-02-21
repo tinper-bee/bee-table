@@ -158,6 +158,7 @@ export default function sort(Table, Icon) {
       if (!oldData) {
         oldData = data.concat();
       }
+      let  sortCol ;
       //单列排序，清空其他列的排序
       if (sort.mode == "single") {
         //todo 5
@@ -171,10 +172,12 @@ export default function sort(Table, Icon) {
           }
         });
         seleObj.order = order;
+        sortCol = [{ order: order, field: seleObj.dataIndex }]
         //通过后端请求
         if (sort.backSource && typeof sort.sortFun === "function") {
           //获取排序的字段和方式
-          sort.sortFun([{ order: order, field: seleObj.dataIndex }]);
+          sort.sortFun(sortCol);
+          
         } else {
           if (order === "ascend") {
             data = data.sort(function(a, b) {
@@ -187,6 +190,7 @@ export default function sort(Table, Icon) {
           } else {
             data = oldData.concat();
           }
+          typeof sort.sortFun === "function" && sort.sortFun(sortCol,data);
         }
       } else {
         seleObj = flatColumns.find(da => da.key == column.key);
@@ -197,10 +201,12 @@ export default function sort(Table, Icon) {
         if (!seleObj.orderNum && (order == "ascend" || order == "descend")) {
           seleObj.orderNum = this.getOrderNum();
         }
+        sortCol = this.getOrderCols(flatColumns);
         if (sort.backSource && typeof sort.sortFun === "function") {
-          sort.sortFun(this.getOrderCols(flatColumns));
+          sort.sortFun(sortCol);
         } else {
           data = this.multiSort(flatColumns);
+          typeof sort.sortFun === "function" && sort.sortFun(sortCol,data);
         }
       }
       this.setState({ data, oldData, flatColumns });

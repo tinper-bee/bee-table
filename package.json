@@ -49,7 +49,7 @@
   "bee-button": "^1.0.6",
   "bee-datepicker": "latest",
   "bee-dnd": "^1.0.2",
-  "bee-dropdown": "^1.0.1",
+  "bee-dropdown": "1.0.3",
   "bee-form-control": "latest",
   "bee-icon": "^1.0.5",
   "bee-input-number": "^1.1.15",

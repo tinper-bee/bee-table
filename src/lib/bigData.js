@@ -333,7 +333,7 @@ export default function bigData(Table) {
             if (endIndex > data.length) {
               endIndex = data.length;
             }
-            if (startIndex !== this.startIndex || endIndex !== this.endIndex) {
+            if (endIndex !== this.endIndex) {
               this.startIndex = startIndex;
               this.endIndex = endIndex;
               this.setState({ needRender: !needRender });
@@ -351,7 +351,7 @@ export default function bigData(Table) {
             if (startIndex < 0) {
               startIndex = 0;
             }
-            if (startIndex !== this.startIndex || endIndex !== this.endIndex) {
+            if (startIndex !== this.startIndex ) {
               this.startIndex = startIndex;
               this.endIndex = this.startIndex + loadCount;
               this.setState({ needRender: !needRender });
