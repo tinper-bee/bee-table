@@ -12,7 +12,7 @@ import Icon from 'bee-icon';
 import Popover from 'bee-popover';
 import Table from "../../src";
 import BigData from "../../src/lib/bigData";
-import multiSelect from '../../src/lib/MultiSelect';
+import multiSelect from '../../src/lib/multiSelect';
 import filterColumn from '../../src/lib/filterColumn';
 
 let  ComplexTable = filterColumn(multiSelect(BigData(Table), Checkbox), Popover, Icon);

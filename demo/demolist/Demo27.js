@@ -11,7 +11,7 @@
 
 import React, { Component } from 'react';
 import Table from '../../src';
-import multiSelect from '../../src/lib/MultiSelect';
+import multiSelect from '../../src/lib/multiSelect';
 import sort from '../../src/lib/sort';
 import Checkbox from 'bee-checkbox';
 import Icon from 'bee-icon';
