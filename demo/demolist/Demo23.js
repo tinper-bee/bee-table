@@ -14,7 +14,7 @@ const columns23 = [
     title: "名字",
     dataIndex: "a",
     key: "a",
-    width: '800',
+    width: '200',
     fixed:'left'
   },
   {

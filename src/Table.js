@@ -778,7 +778,7 @@ class Table extends Component {
         //显示表头滚动条
         if(headerScroll){
           if(fixed){
-           //内容少，不用显示滚动条
+      
            if(this.domWidthDiff <= 0){
               headStyle.marginBottom = `${scrollbarWidth}px`;
               bodyStyle.marginBottom = `-${scrollbarWidth}px`;
