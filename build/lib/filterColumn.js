@@ -90,7 +90,7 @@ function filterColumn(Table, Popover) {
           showModal = _state.showModal;
 
 
-      var locale = (0, _tool.getComponentLocale)(this.props, this.context, "Table", function () {
+      var locale = (0, _tool.getComponentLocale)(this.props, this.context, 'Table', function () {
         return _i18n2["default"];
       });
 
@@ -160,6 +160,8 @@ function filterColumn(Table, Popover) {
     afterFilter: noop,
     columnFilterAble: true,
     scroll: {}
+  }, _class.contextTypes = {
+    beeLocale: PropTypes.object
   }, _initialiseProps = function _initialiseProps() {
     var _this2 = this;
 
