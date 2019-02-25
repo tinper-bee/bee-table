@@ -185,10 +185,8 @@
         color: rgb(66,165,245); }
       .u-table td a:active {
         color: rgb(21,101,192); }
-  .u-table tr:hover {
-    background: rgb(227,242,253); }
-    .u-table tr:hover td .uf-eye {
-      visibility: visible !important; }
+  .u-table tr:hover td .uf-eye {
+    visibility: visible !important; }
   .u-table tr tr a {
     color: rgb(30,136,229); }
     .u-table tr tr a:hover {

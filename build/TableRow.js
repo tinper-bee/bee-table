@@ -204,7 +204,7 @@ var TableRow = function (_Component) {
         fixedIndex = _props7.fixedIndex,
         syncHover = _props7.syncHover;
 
-    if (!syncHover) {
+    if (syncHover) {
       this.setState({ hovered: true });
     }
     onHover(true, hoverKey, e, fixedIndex);
@@ -217,7 +217,7 @@ var TableRow = function (_Component) {
         fixedIndex = _props8.fixedIndex,
         syncHover = _props8.syncHover;
 
-    if (!syncHover) {
+    if (syncHover) {
       this.setState({ hovered: false });
     }
     onHover(false, hoverKey, e, fixedIndex);

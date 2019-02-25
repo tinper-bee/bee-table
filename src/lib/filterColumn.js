@@ -21,7 +21,9 @@ export default function filterColumn(Table, Popover) {
       columnFilterAble: true,
       scroll: {}
     };
-
+    static contextTypes = {
+      beeLocale: PropTypes.object
+    }
     constructor(props) {
       super(props);
       const { columns } = props;
@@ -142,12 +144,8 @@ export default function filterColumn(Table, Popover) {
       const { data, prefixCls, scroll: scrollPro } = this.props;
       const { columns, showModal } = this.state;
 
-      let locale = getComponentLocale(
-        this.props,
-        this.context,
-        "Table",
-        () => i18n
-      );
+   
+      let locale = getComponentLocale(this.props, this.context, 'Table', () => i18n);
 
       let _columns = [],
         widthState = 0,
