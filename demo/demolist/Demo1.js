@@ -12,7 +12,8 @@ import Table from "../../src";
 
 const columns = [
   {
-    title: "用户名", dataIndex: "a", key: "a", width: 80, className: "rowClassName",
+    title: "用户名", dataIndex: "a", key: "a", width: 300, className: "rowClassName",
+    fixed:'left',
     render: (text, record, index) => {
       return (
         <Tooltip inverse overlay={text}>
@@ -28,7 +29,7 @@ const columns = [
       );
     }
   },
-  { id: "123", title: "性别", dataIndex: "b", key: "b", width: '10%' },
+  { id: "123", title: "性别", dataIndex: "b", key: "b", width: 500},
   { title: "年龄", dataIndex: "c", key: "c", width: 200 },
   {
     title: "操作",

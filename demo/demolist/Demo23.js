@@ -14,13 +14,14 @@ const columns23 = [
     title: "名字",
     dataIndex: "a",
     key: "a",
-    width: '200'
+    width: '800',
+    fixed:'left'
   },
   {
     title: "性别",
     dataIndex: "b",
     key: "b",
-    width: '100'
+    width: '600'
   },
   {
     title: "年龄",
@@ -29,19 +30,22 @@ const columns23 = [
     width: '200',
     sumCol: true,
     sorter: (a, b) => a.c - b.c
-  },
+  }, 
   {
     title: "武功级别",
     dataIndex: "d",
     key: "d",
-    fixed:'right',
-    width: 200,
+    width: 500,
   }
 ];
 
 const data23 = [
   { a: "杨过", b: "男", c: 30,d:'内行', key: "2" },
   { a: "令狐冲", b: "男", c: 41,d:'大侠', key: "1" },
+  { a: "郭靖", b: "男", c: 25,d:'大侠', key: "31" } , { a: "杨过", b: "男", c: 30,d:'内行', key: "21" },
+  { a: "令狐冲", b: "男", c: 41,d:'大侠', key: "11" },
+  { a: "郭靖", b: "男", c: 25,d:'大侠', key: "32" } , { a: "杨过", b: "男", c: 30,d:'内行', key: "22" },
+  { a: "令狐冲", b: "男", c: 41,d:'大侠', key: "12" },
   { a: "郭靖", b: "男", c: 25,d:'大侠', key: "3" }
 ];
 
@@ -60,7 +64,7 @@ class Demo23 extends Component {
     return <DragColumnTable columns={columns23} data={data23} bordered
     dragborder={true} 
     draggable={true} 
-    
+    scroll={{y:200}}
     onDropBorder ={(e,width)=>{
       console.log(width+"--调整列宽后触发事件",e.target);
     }}

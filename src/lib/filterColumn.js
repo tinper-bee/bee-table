@@ -4,7 +4,7 @@ import Icon from "bee-icon";
 import { ObjectAssign } from "./util";
 import i18n from "./i18n";
 import { getComponentLocale } from "bee-locale/build/tool";
-
+import PropTypes from "prop-types";
 function noop() {}
 /**
  * 参数: 过滤表头
