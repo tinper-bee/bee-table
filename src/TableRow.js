@@ -112,31 +112,36 @@ class TableRow extends Component{
       expandRowByClick,
       expanded,
       onExpand,
+      fixedIndex
     } = this.props;
     if (expandable && expandRowByClick) {
-      onExpand(!expanded, record, index,event);
+      onExpand(!expanded, record, fixedIndex,event);
     }
     this.set((e)=> {  
-      onRowClick(record, index, event);
+      onRowClick(record, fixedIndex, event);
     });
   }
 
   onRowDoubleClick(event) {
-    const { record, index, onRowDoubleClick } = this.props;
+    const { record, index, onRowDoubleClick,fixedIndex } = this.props;
     this.clear();
-    onRowDoubleClick(record, index, event);
+    onRowDoubleClick(record, fixedIndex, event);
   }
 
   onMouseEnter(e) {
-    const { onHover, hoverKey,fixedIndex } = this.props;
-    this.setState({ hovered: true });
+    const { onHover, hoverKey,fixedIndex,syncHover } = this.props;
+    if(syncHover){
+      this.setState({ hovered: true });
+    }
     onHover(true, hoverKey,e,fixedIndex);
   }
 
   onMouseLeave(e) {
 
-    const { onHover, hoverKey ,fixedIndex} = this.props;
-    this.setState({ hovered: false });
+    const { onHover, hoverKey ,fixedIndex,syncHover} = this.props;
+    if(syncHover){
+      this.setState({ hovered: false });
+    }
     onHover(false, hoverKey,e,fixedIndex);
   }
 

@@ -175,13 +175,14 @@ var TableRow = function (_Component) {
         expandable = _props5.expandable,
         expandRowByClick = _props5.expandRowByClick,
         expanded = _props5.expanded,
-        onExpand = _props5.onExpand;
+        onExpand = _props5.onExpand,
+        fixedIndex = _props5.fixedIndex;
 
     if (expandable && expandRowByClick) {
-      onExpand(!expanded, record, index, event);
+      onExpand(!expanded, record, fixedIndex, event);
     }
     this.set(function (e) {
-      onRowClick(record, index, event);
+      onRowClick(record, fixedIndex, event);
     });
   };
 
@@ -189,19 +190,23 @@ var TableRow = function (_Component) {
     var _props6 = this.props,
         record = _props6.record,
         index = _props6.index,
-        onRowDoubleClick = _props6.onRowDoubleClick;
+        onRowDoubleClick = _props6.onRowDoubleClick,
+        fixedIndex = _props6.fixedIndex;
 
     this.clear();
-    onRowDoubleClick(record, index, event);
+    onRowDoubleClick(record, fixedIndex, event);
   };
 
   TableRow.prototype.onMouseEnter = function onMouseEnter(e) {
     var _props7 = this.props,
         onHover = _props7.onHover,
         hoverKey = _props7.hoverKey,
-        fixedIndex = _props7.fixedIndex;
+        fixedIndex = _props7.fixedIndex,
+        syncHover = _props7.syncHover;
 
-    this.setState({ hovered: true });
+    if (!syncHover) {
+      this.setState({ hovered: true });
+    }
     onHover(true, hoverKey, e, fixedIndex);
   };
 
@@ -209,9 +214,12 @@ var TableRow = function (_Component) {
     var _props8 = this.props,
         onHover = _props8.onHover,
         hoverKey = _props8.hoverKey,
-        fixedIndex = _props8.fixedIndex;
+        fixedIndex = _props8.fixedIndex,
+        syncHover = _props8.syncHover;
 
-    this.setState({ hovered: false });
+    if (!syncHover) {
+      this.setState({ hovered: false });
+    }
     onHover(false, hoverKey, e, fixedIndex);
   };
 

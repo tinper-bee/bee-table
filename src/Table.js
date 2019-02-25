@@ -85,6 +85,7 @@ const defaultProps = {
   setRowHeight:()=>{},
   setRowParentIndex:()=>{},
   tabIndex:'0',
+  noExpandedRowKeys:[]
 };
 
 class Table extends Component {
@@ -289,7 +290,7 @@ class Table extends Component {
       expandedRows.push(this.getRowKey(record, index));
       this.onExpandedRowsChange(expandedRows);
     }
-    this.props.onExpand(expanded, record);
+    this.props.onExpand(expanded, record,index);
   }
 
   onRowDestroy(record, rowIndex) {
@@ -515,7 +516,7 @@ class Table extends Component {
     const expandRowByClick = props.expandRowByClick;
     const { fixedColumnsBodyRowsHeight } = this.state;
     let rst = [];
-    let isHiddenExpandIcon;
+
     let height;
     const rowClassName = props.rowClassName;
     const rowRef = props.rowRef;
@@ -534,32 +535,34 @@ class Table extends Component {
     const lazyCurrentIndex =  props.lazyLoad && props.lazyLoad.startIndex ?props.lazyLoad.startIndex :0;
     const lazyParentIndex = props.lazyLoad && props.lazyLoad.startParentIndex ?props.lazyLoad.startParentIndex :0;
     for (let i = 0; i < data.length; i++) {
+      let isHiddenExpandIcon;
       const record = data[i];
       const key = this.getRowKey(record, i);
       const childrenColumn = record[childrenColumnName];
       const isRowExpanded = this.isRowExpanded(record, i);
       let expandedRowContent;
       let expandedContentHeight = 0;
+        //fixedIndex一般是跟index是一个值的，只有是树结构时，会讲子节点的值也累计上
+        let fixedIndex = i;
+        //判断是否是tree结构
+        if (this.treeType) {
+          fixedIndex = this.treeRowIndex;
+        }
       if (expandedRowRender && isRowExpanded) {
-        expandedRowContent = expandedRowRender(record, i, indent);
+        expandedRowContent = expandedRowRender(record, fixedIndex+lazyCurrentIndex, indent);
         expandedContentHeight = parseInt(expandedRowContent.props && expandedRowContent.props.style && expandedRowContent.props.style.height?expandedRowContent.props.style.height:0);
       }
       //只有当使用expandedRowRender参数的时候才去识别isHiddenExpandIcon（隐藏行展开的icon）
       if (expandedRowRender && typeof props.haveExpandIcon == 'function') {
         isHiddenExpandIcon = props.haveExpandIcon(record, i);
       }
-      let className = rowClassName(record, i, indent);
+     
 
       const onHoverProps = {};
 
       onHoverProps.onHover = this.handleRowHover;
       
-      //fixedIndex一般是跟index是一个值的，只有是树结构时，会讲子节点的值也累计上
-      let fixedIndex = i;
-      //判断是否是tree结构
-      if (this.treeType) {
-        fixedIndex = this.treeRowIndex;
-      }
+    
 
       if (props.height) {
         height = props.height
@@ -575,7 +578,7 @@ class Table extends Component {
       } else {
         leafColumns = this.columnManager.leafColumns();
       }
-
+      let className = rowClassName(record, fixedIndex+lazyCurrentIndex, indent);
 
       //合计代码如果是最后一行并且有合计功能时，最后一行为合计列
       if(i == data.length -1 && props.showSum){
@@ -591,6 +594,11 @@ class Table extends Component {
       if(rootIndex ==-1){
         index = i+lazyParentIndex
       }
+      let noexpandable;
+      if(props.noExpandedRowKeys.indexOf(key) >= 0){
+        noexpandable = true;
+        isHiddenExpandIcon = true;
+      }
       rst.push(
         <TableRow
           indent={indent}
@@ -604,7 +612,7 @@ class Table extends Component {
           visible={visible}
           expandRowByClick={expandRowByClick}
           onExpand={this.onExpanded}
-          expandable={childrenColumn || expandedRowRender}
+          expandable={!noexpandable && (childrenColumn || expandedRowRender)}
           expanded={isRowExpanded}
           clsPrefix={`${props.clsPrefix}-row`}
           childrenColumnName={childrenColumnName}
@@ -626,6 +634,7 @@ class Table extends Component {
           treeType={childrenColumn||this.treeType?true:false}
           fixedIndex={fixedIndex+lazyCurrentIndex}
           rootIndex = {rootIndex}
+          syncHover = {props.syncHover}
         />
       );
       this.treeRowIndex++;

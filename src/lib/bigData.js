@@ -42,6 +42,7 @@ export default function bigData(Table) {
       this.endIndex = this.currentIndex + this.loadCount; //数据结束位置
       this.setRowHeight = this.setRowHeight.bind(this);
       this.setRowParentIndex = this.setRowParentIndex.bind(this);
+      this.expandedRowKeys = [];
     }
     componentWillReceiveProps(nextProps) {
       const props = this.props;
@@ -227,30 +228,6 @@ export default function bigData(Table) {
       _this.scrollTop = nextScrollTop;
       const viewHeight = parseInt(scroll.y);
       _this.treeType = treeType;
-      // let index = currentIndex;//记录下次当前位置
-      // let temp = currentIndex ?nextScrollTop - currentScrollTop:nextScrollTop;
-
-      // const isOrder = temp > 0 ?true:false;//true为向下滚动、false为向上滚动
-
-      // //根据scrollTop计算下次当前索引的位置
-      // if(isOrder){
-      //     while (temp > 0) {
-      //         temp -= this.cachedRowHeight[index] || rowHeight
-      //         if(temp > 0){
-      //           index += 1
-      //           //保存当前index对应的scrollTop
-      //         this.currentScrollTop += this.cachedRowHeight[index]|| rowHeight;
-      //         }
-      //       }
-      // }else{
-      //     while(temp < 0){
-      //         temp += this.cachedRowHeight[index] || rowHeight
-      //         if(temp < 0){
-      //           index -= 1
-      //           this.currentScrollTop -= this.cachedRowHeight[index]|| rowHeight;
-      //         }
-      //     }
-      // }
       let index = 0;
       let temp = nextScrollTop;
       let currentKey;
@@ -319,17 +296,6 @@ export default function bigData(Table) {
           if (rowsInView + index > endIndex - rowDiff && isOrder) {
             startIndex = index - loadBuffer > 0 ? index - loadBuffer : 0;
             endIndex = startIndex + loadCount;
-            //树状结构则根据当前的节点重新计算startIndex和endIndex
-            // if(treeType){
-            //     const currentParentIndex =  _this.cachedRowParentIndex[index];
-            //     startIndex = currentParentIndex - loadBuffer>0?currentParentIndex - loadBuffer:0;
-            //     endIndex = startIndex + loadCount;
-            //     // console.log(endIndex,"endIndex的parentIndex",parentEndIndex);
-            //     // endIndex = parentEndIndex +1
-            // }else{
-            //   startIndex = index - loadBuffer>0?index - loadBuffer:0;
-            //   endIndex = startIndex + loadCount;
-            // }
             if (endIndex > data.length) {
               endIndex = data.length;
             }
@@ -338,12 +304,6 @@ export default function bigData(Table) {
               this.endIndex = endIndex;
               this.setState({ needRender: !needRender });
             }
-            // console.log(
-            //   "===================",
-            //   "**index**" + index,
-            //   " **startIndex**" + this.startIndex,
-            //   "**endIndex**" + this.endIndex
-            // );
           }
           // 向上滚动，当前的index是否已经加载（currentIndex），若干上临界值小于startIndex则重新渲染
           if (!isOrder && index < startIndex + rowDiff) {
@@ -401,33 +361,61 @@ export default function bigData(Table) {
       return parentIndex;
     }
 
-    onExpand = (expandState, record) => {
+    onExpand = (expandState, record,index) => {
       const _this = this;
+      let {expandedRowKeys = []} =  _this;
+      const {needRender} = _this.state;
+      const rowKey = _this.getRowKey(record, index);
+      // 记录展开子表行的key
       // 展开
-      if (expandState) {
-        record.children &&
-          record.children.forEach((item, index) => {
-            _this.expandChildRowKeys.push(_this.getRowKey(item, index));
-          });
-      } else {
-        // 收起
-        record.children &&
-          record.children.forEach((item, index) => {
-            _this.expandChildRowKeys.splice(
-              _this.expandChildRowKeys.findIndex(
-                fitem => fitem.key === item.key
-              ),
-              1
-            );
-          });
+      if( record.children){
+        if (expandState) {
+            record.children.forEach((item, index) => {
+              _this.expandChildRowKeys.push(rowKey);
+            });
+  
+        } else {
+          // 收起
+            record.children.forEach((item, index) => {
+              _this.expandChildRowKeys.splice(
+                _this.expandChildRowKeys.findIndex(
+                  fitem => fitem.key === item.key
+                ),
+                1
+              );
+            });
+        }
       }
-
+      //滚动加载expandedRowKeys自己维护，否则有展开不全的问题
+      if(!_this.props.expandedRowKeys){
+        if(expandState){
+          expandedRowKeys.push(rowKey);
+          
+         }else{
+           let index = -1;
+           expandedRowKeys.forEach((r, i) => {
+             if (r === rowKey) {
+               index = i;
+             }
+           });
+           if (index !== -1) {
+             expandedRowKeys.splice(index, 1);
+             this.setState({ needRender: !needRender });
+           }
+         }
+      }
+      
+      
+    // expandState为true时，记录下
       _this.props.onExpand(expandState, record);
     };
+
+    
     render() {
       const { data } = this.props;
       const { scrollTop } = this;
       let { endIndex, startIndex } = this;
+      let expandedRowKeys = this.props.expandedRowKeys?this.props.expandedRowKeys: this.expandedRowKeys;
       if(startIndex < 0){
         startIndex = 0;
       }
@@ -466,7 +454,7 @@ export default function bigData(Table) {
         lazyLoad.preHeight = this.getSumHeight(0, startIndex);
         lazyLoad.sufHeight = this.getSumHeight(endIndex, data.length);
       }
-      // console.log('*******ScrollTop*****'+scrollTop);
+      // console.log('*******expandedRowKeys*****'+expandedRowKeys);
       return (
         <Table
           {...this.props}
@@ -478,6 +466,7 @@ export default function bigData(Table) {
           setRowParentIndex={this.setRowParentIndex}
           onExpand={this.onExpand}
           onExpandedRowsChange={this.onExpandedRowsChange}
+          expandedRowKeys={expandedRowKeys}
           //   className={'lazy-table'}
         />
       );
