@@ -37,28 +37,7 @@ const columns = [
     }
   },
   { id: "123", title: "性别", dataIndex: "b", key: "b", width: 80},
-  { title: "年龄", dataIndex: "c", key: "c", width: 200 },
-  {
-    title: "操作",
-    dataIndex: "d",
-    key: "d",
-    fixed:'right',
-    render(text, record, index) {
-      return (
-        <div style={{ position: 'relative' }} title={text} >
-          <a
-            href="javascript:;"
-            tooltip={text}
-            onClick={() => {
-              alert('这是第' + index + '列，内容为:' + text);
-            }}
-          >
-            一些操作
-              </a>
-        </div>
-      );
-    }
-  }
+  { title: "年龄", dataIndex: "c", key: "c", width: 200 }
 ];
 
 const data = [ ...new Array(1000) ].map((e, i) => {
