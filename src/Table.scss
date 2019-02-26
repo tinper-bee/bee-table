@@ -97,9 +97,7 @@ $checkbox-height:16px;
     word-break: break-all;
   }
   tr {
-    th:last-child{ //拖拽tag影响了表格整体宽度
-      overflow: hidden;
-    }
+    
     &.filterable{
       th{
         padding-top: 4px;
@@ -132,6 +130,13 @@ $checkbox-height:16px;
     td {
       border-right: 1px solid $table-border-color;
       box-sizing: border-box;
+    }
+  }
+  &-drag-border{
+    tr {
+      th.th-can-not-drag{ //拖拽tag影响了表格整体宽度
+        overflow: hidden;
+      }
     }
   }
   &-header {

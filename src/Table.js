@@ -84,8 +84,7 @@ const defaultProps = {
   syncHover: true,
   setRowHeight:()=>{},
   setRowParentIndex:()=>{},
-  tabIndex:'0',
-  noExpandedRowKeys:[]
+  tabIndex:'0'
 };
 
 class Table extends Component {
@@ -594,11 +593,6 @@ class Table extends Component {
       if(rootIndex ==-1){
         index = i+lazyParentIndex
       }
-      let noexpandable;
-      if(props.noExpandedRowKeys.indexOf(key) >= 0){
-        noexpandable = true;
-        isHiddenExpandIcon = true;
-      }
       rst.push(
         <TableRow
           indent={indent}
@@ -612,7 +606,7 @@ class Table extends Component {
           visible={visible}
           expandRowByClick={expandRowByClick}
           onExpand={this.onExpanded}
-          expandable={!noexpandable && (childrenColumn || expandedRowRender)}
+          expandable={childrenColumn || expandedRowRender}
           expanded={isRowExpanded}
           clsPrefix={`${props.clsPrefix}-row`}
           childrenColumnName={childrenColumnName}
@@ -1014,7 +1008,7 @@ class Table extends Component {
     const { headTable, bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this.refs;
     // Prevent scrollTop setter trigger onScroll event
     // http://stackoverflow.com/q/1386696
-    if (e.target !== this.scrollTarget && this.scrollTarget !== headTable) {
+    if (e.currentTarget !== e.target) {
       return;
     }
     if (e.target.scrollLeft !== this.lastScrollLeft) {

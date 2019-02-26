@@ -157,7 +157,31 @@ class TableHeader extends Component {
       }
     }
   }
-  
+  /**
+   *相关滚动条联动操作
+   *
+   * @memberof TableHeader
+   */
+  optTableMargin =(table,scrollbarWidth)=>{
+    if(table){
+      table.style.marginBottom = scrollbarWidth + "px"
+    }
+  }
+
+  optTableScroll = (table,overflow ={})=>{
+    if(table){
+      const innerTable = table.querySelector('.u-table-body-inner');
+      if(innerTable){
+        overflow.x && (innerTable.style.overflowX = overflow.x);
+        overflow.y && (innerTable.style.overflowY = overflow.y);
+      }
+     
+    }
+  }
+
+
+
+
   /**
    * 调整列宽的move事件
    * @memberof TableHeader
@@ -182,31 +206,44 @@ class TableHeader extends Component {
         if(this.fixedTable.cols){
             this.fixedTable.cols[this.drag.currIndex].style.width = newWidth + "px";
         }
+        let oldTableWidth = parseInt(this.table.table.style.width ?this.table.table.style.width:this.table.table.scrollWidth);
+        const newTableWidth = oldTableWidth + diff ;
+        this.table.table.style.width  = newTableWidth;//改变table的width
 
+        let showScroll =  contentDomWidth - newTableWidth - scrollbarWidth ;
+        const fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header') ;
+        const fixedRighHeadertTable = contentTable.querySelector('.u-table-fixed-right .u-table-header');
+        const contentTableHeader  = contentTable.querySelector('.u-table-scroll .u-table-header');
+        const fixedLeftBodyTable = contentTable.querySelector('.u-table-fixed-left .u-table-body-outer') ;
+        const fixedRightBodyTable = contentTable.querySelector('.u-table-fixed-right .u-table-body-outer') ;
+       
         //表头滚动条处理
         if(headerScroll){
-            let oldTableWidth = parseInt(this.table.table.style.width ?this.table.table.style.width:this.table.table.scrollWidth);
-            const newTableWidth = oldTableWidth + diff ;
-            this.table.table.style.width  = newTableWidth;//改变table的width
-
-            let showScroll =  contentDomWidth - newTableWidth - scrollbarWidth ;
-            // if(bordered){
-            //     showScroll = showScroll -1;
-            // }
-            const fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header') ;
-            const fixedRighHeadertTable = contentTable.querySelector('.u-table-fixed-right .u-table-header');
-            const contentTableHeader  = contentTable.querySelector('.u-table-scroll .u-table-header');
             if(showScroll < 0){
                 //找到固定列表格，设置表头的marginBottom值为scrollbarWidth;
                 contentTableHeader.style.overflowX = 'scroll';
-                fixedLeftHeaderTable && (fixedLeftHeaderTable.style.marginBottom = scrollbarWidth + "px");
-                fixedRighHeadertTable && (fixedRighHeadertTable.style.marginBottom = scrollbarWidth + "px");
+               this.optTableMargin(fixedLeftHeaderTable,scrollbarWidth);
+               this.optTableMargin(fixedRighHeadertTable,scrollbarWidth);
+                // fixedLeftHeaderTable && (fixedLeftHeaderTable.style.marginBottom = scrollbarWidth + "px");
+                // fixedRighHeadertTable && (fixedRighHeadertTable.style.marginBottom = scrollbarWidth + "px");
               //todo inner scroll-x去掉；outer marginbottom 设置成-15px】
               }else{
                 contentTableHeader.style.overflowX = 'hidden';
-                fixedLeftHeaderTable && (fixedLeftHeaderTable.style.marginBottom = '0px');
-                fixedRighHeadertTable && (fixedRighHeadertTable.style.marginBottom = '0px');
+                this.optTableMargin(fixedLeftHeaderTable,0);
+               this.optTableMargin(fixedRighHeadertTable,0);
             }
+        }else{
+          if(showScroll < 0){
+               this.optTableMargin(fixedLeftBodyTable,'-'+scrollbarWidth);
+               this.optTableMargin(fixedRightBodyTable,'-'+scrollbarWidth);
+               this.optTableScroll(fixedLeftBodyTable,{x:'scroll'});
+               this.optTableScroll(fixedRightBodyTable,{x:'scroll'});
+          }else{
+            this.optTableMargin(fixedLeftBodyTable,0);
+            this.optTableMargin(fixedRightBodyTable,0);
+            this.optTableScroll(fixedLeftBodyTable,{x:'auto'});
+               this.optTableScroll(fixedRightBodyTable,{x:'auto'});
+          }
         }
         
       }

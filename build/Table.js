@@ -911,7 +911,7 @@ var Table = function (_Component) {
         //显示表头滚动条
         if (headerScroll) {
           if (fixed) {
-            //内容少，不用显示滚动条
+
             if (this.domWidthDiff <= 0) {
               headStyle.marginBottom = scrollbarWidth + 'px';
               bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
@@ -1179,7 +1179,7 @@ var Table = function (_Component) {
     // Prevent scrollTop setter trigger onScroll event
     // http://stackoverflow.com/q/1386696
 
-    if (e.target !== this.scrollTarget && this.scrollTarget !== headTable) {
+    if (e.currentTarget !== e.target) {
       return;
     }
     if (e.target.scrollLeft !== this.lastScrollLeft) {

@@ -96,6 +96,7 @@ var TableHeader = function (_Component) {
             contentTableHeader.style.overflowX = 'scroll';
             fixedLeftHeaderTable && (fixedLeftHeaderTable.style.marginBottom = scrollbarWidth + "px");
             fixedRighHeadertTable && (fixedRighHeadertTable.style.marginBottom = scrollbarWidth + "px");
+            //todo inner scroll-x去掉；outer marginbottom 设置成-15px】
           } else {
             contentTableHeader.style.overflowX = 'hidden';
             fixedLeftHeaderTable && (fixedLeftHeaderTable.style.marginBottom = '0px');

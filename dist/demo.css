@@ -8640,8 +8640,6 @@ ul {
   .u-table td {
     padding: 12px 8px;
     word-break: break-all; }
-  .u-table tr th:last-child {
-    overflow: hidden; }
   .u-table tr.filterable th {
     padding-top: 4px;
     padding-bottom: 4px; }
@@ -8662,6 +8660,8 @@ ul {
   .u-table-bordered td {
     border-right: 1px solid rgb(233,233,233);
     box-sizing: border-box; }
+  .u-table-drag-border tr th.th-can-not-drag {
+    overflow: hidden; }
   .u-table-header {
     overflow: hidden;
     background: rgb(247,247,247);

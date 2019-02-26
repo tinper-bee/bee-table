@@ -11001,8 +11001,7 @@
 	  syncHover: true,
 	  setRowHeight: function setRowHeight() {},
 	  setRowParentIndex: function setRowParentIndex() {},
-	  tabIndex: '0',
-	  noExpandedRowKeys: []
+	  tabIndex: '0'
 	};
 	
 	var Table = function (_Component) {
@@ -11586,11 +11585,6 @@
 	      if (rootIndex == -1) {
 	        index = i + lazyParentIndex;
 	      }
-	      var noexpandable = void 0;
-	      if (props.noExpandedRowKeys.indexOf(key) >= 0) {
-	        noexpandable = true;
-	        isHiddenExpandIcon = true;
-	      }
 	      rst.push(_react2['default'].createElement(_TableRow2['default'], _extends({
 	        indent: indent,
 	        indentSize: props.indentSize,
@@ -11603,7 +11597,7 @@
 	        visible: visible,
 	        expandRowByClick: expandRowByClick,
 	        onExpand: this.onExpanded,
-	        expandable: !noexpandable && (childrenColumn || expandedRowRender),
+	        expandable: childrenColumn || expandedRowRender,
 	        expanded: isRowExpanded,
 	        clsPrefix: props.clsPrefix + '-row',
 	        childrenColumnName: childrenColumnName,
@@ -12036,7 +12030,7 @@
 	    // Prevent scrollTop setter trigger onScroll event
 	    // http://stackoverflow.com/q/1386696
 	
-	    if (e.target !== this.scrollTarget && this.scrollTarget !== headTable) {
+	    if (e.currentTarget !== e.target) {
 	      return;
 	    }
 	    if (e.target.scrollLeft !== this.lastScrollLeft) {
@@ -13167,6 +13161,24 @@
 	
 	    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 	
+	    _this.optTableMargin = function (table, scrollbarWidth) {
+	      if (table) {
+	        table.style.marginBottom = scrollbarWidth + "px";
+	      }
+	    };
+	
+	    _this.optTableScroll = function (table) {
+	      var overflow = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+	
+	      if (table) {
+	        var innerTable = table.querySelector('.u-table-body-inner');
+	        if (innerTable) {
+	          overflow.x && (innerTable.style.overflowX = overflow.x);
+	          overflow.y && (innerTable.style.overflowY = overflow.y);
+	        }
+	      }
+	    };
+	
 	    _this.onLineMouseMove = function (e) {
 	      var _this$props = _this.props,
 	          clsPrefix = _this$props.clsPrefix,
@@ -13194,30 +13206,43 @@
 	        if (_this.fixedTable.cols) {
 	          _this.fixedTable.cols[_this.drag.currIndex].style.width = newWidth + "px";
 	        }
+	        var oldTableWidth = parseInt(_this.table.table.style.width ? _this.table.table.style.width : _this.table.table.scrollWidth);
+	        var newTableWidth = oldTableWidth + diff;
+	        _this.table.table.style.width = newTableWidth; //改变table的width
+	
+	        var showScroll = contentDomWidth - newTableWidth - scrollbarWidth;
+	        var fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header');
+	        var fixedRighHeadertTable = contentTable.querySelector('.u-table-fixed-right .u-table-header');
+	        var contentTableHeader = contentTable.querySelector('.u-table-scroll .u-table-header');
+	        var fixedLeftBodyTable = contentTable.querySelector('.u-table-fixed-left .u-table-body-outer');
+	        var fixedRightBodyTable = contentTable.querySelector('.u-table-fixed-right .u-table-body-outer');
 	
 	        //表头滚动条处理
 	        if (headerScroll) {
-	          var oldTableWidth = parseInt(_this.table.table.style.width ? _this.table.table.style.width : _this.table.table.scrollWidth);
-	          var newTableWidth = oldTableWidth + diff;
-	          _this.table.table.style.width = newTableWidth; //改变table的width
-	
-	          var showScroll = contentDomWidth - newTableWidth - scrollbarWidth;
-	          // if(bordered){
-	          //     showScroll = showScroll -1;
-	          // }
-	          var fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header');
-	          var fixedRighHeadertTable = contentTable.querySelector('.u-table-fixed-right .u-table-header');
-	          var contentTableHeader = contentTable.querySelector('.u-table-scroll .u-table-header');
 	          if (showScroll < 0) {
 	            //找到固定列表格，设置表头的marginBottom值为scrollbarWidth;
 	            contentTableHeader.style.overflowX = 'scroll';
-	            fixedLeftHeaderTable && (fixedLeftHeaderTable.style.marginBottom = scrollbarWidth + "px");
-	            fixedRighHeadertTable && (fixedRighHeadertTable.style.marginBottom = scrollbarWidth + "px");
+	            _this.optTableMargin(fixedLeftHeaderTable, scrollbarWidth);
+	            _this.optTableMargin(fixedRighHeadertTable, scrollbarWidth);
+	            // fixedLeftHeaderTable && (fixedLeftHeaderTable.style.marginBottom = scrollbarWidth + "px");
+	            // fixedRighHeadertTable && (fixedRighHeadertTable.style.marginBottom = scrollbarWidth + "px");
 	            //todo inner scroll-x去掉；outer marginbottom 设置成-15px】
 	          } else {
 	            contentTableHeader.style.overflowX = 'hidden';
-	            fixedLeftHeaderTable && (fixedLeftHeaderTable.style.marginBottom = '0px');
-	            fixedRighHeadertTable && (fixedRighHeadertTable.style.marginBottom = '0px');
+	            _this.optTableMargin(fixedLeftHeaderTable, 0);
+	            _this.optTableMargin(fixedRighHeadertTable, 0);
+	          }
+	        } else {
+	          if (showScroll < 0) {
+	            _this.optTableMargin(fixedLeftBodyTable, '-' + scrollbarWidth);
+	            _this.optTableMargin(fixedRightBodyTable, '-' + scrollbarWidth);
+	            _this.optTableScroll(fixedLeftBodyTable, { x: 'scroll' });
+	            _this.optTableScroll(fixedRightBodyTable, { x: 'scroll' });
+	          } else {
+	            _this.optTableMargin(fixedLeftBodyTable, 0);
+	            _this.optTableMargin(fixedRightBodyTable, 0);
+	            _this.optTableScroll(fixedLeftBodyTable, { x: 'auto' });
+	            _this.optTableScroll(fixedRightBodyTable, { x: 'auto' });
 	          }
 	        }
 	      }
@@ -13577,6 +13602,12 @@
 	      }
 	    }
 	  };
+	  /**
+	   *相关滚动条联动操作
+	   *
+	   * @memberof TableHeader
+	   */
+	
 	
 	  /**
 	   * 调整列宽的move事件
