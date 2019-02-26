@@ -144,8 +144,7 @@ var defaultProps = {
   syncHover: true,
   setRowHeight: function setRowHeight() {},
   setRowParentIndex: function setRowParentIndex() {},
-  tabIndex: '0',
-  noExpandedRowKeys: []
+  tabIndex: '0'
 };
 
 var Table = function (_Component) {
@@ -729,11 +728,6 @@ var Table = function (_Component) {
       if (rootIndex == -1) {
         index = i + lazyParentIndex;
       }
-      var noexpandable = void 0;
-      if (props.noExpandedRowKeys.indexOf(key) >= 0) {
-        noexpandable = true;
-        isHiddenExpandIcon = true;
-      }
       rst.push(_react2["default"].createElement(_TableRow2["default"], _extends({
         indent: indent,
         indentSize: props.indentSize,
@@ -746,7 +740,7 @@ var Table = function (_Component) {
         visible: visible,
         expandRowByClick: expandRowByClick,
         onExpand: this.onExpanded,
-        expandable: !noexpandable && (childrenColumn || expandedRowRender),
+        expandable: childrenColumn || expandedRowRender,
         expanded: isRowExpanded,
         clsPrefix: props.clsPrefix + '-row',
         childrenColumnName: childrenColumnName,

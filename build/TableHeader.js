@@ -50,6 +50,24 @@ var TableHeader = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
+    _this.optTableMargin = function (table, scrollbarWidth) {
+      if (table) {
+        table.style.marginBottom = scrollbarWidth + "px";
+      }
+    };
+
+    _this.optTableScroll = function (table) {
+      var overflow = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+      if (table) {
+        var innerTable = table.querySelector('.u-table-body-inner');
+        if (innerTable) {
+          overflow.x && (innerTable.style.overflowX = overflow.x);
+          overflow.y && (innerTable.style.overflowY = overflow.y);
+        }
+      }
+    };
+
     _this.onLineMouseMove = function (e) {
       var _this$props = _this.props,
           clsPrefix = _this$props.clsPrefix,
@@ -77,30 +95,43 @@ var TableHeader = function (_Component) {
         if (_this.fixedTable.cols) {
           _this.fixedTable.cols[_this.drag.currIndex].style.width = newWidth + "px";
         }
+        var oldTableWidth = parseInt(_this.table.table.style.width ? _this.table.table.style.width : _this.table.table.scrollWidth);
+        var newTableWidth = oldTableWidth + diff;
+        _this.table.table.style.width = newTableWidth; //改变table的width
+
+        var showScroll = contentDomWidth - newTableWidth - scrollbarWidth;
+        var fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header');
+        var fixedRighHeadertTable = contentTable.querySelector('.u-table-fixed-right .u-table-header');
+        var contentTableHeader = contentTable.querySelector('.u-table-scroll .u-table-header');
+        var fixedLeftBodyTable = contentTable.querySelector('.u-table-fixed-left .u-table-body-outer');
+        var fixedRightBodyTable = contentTable.querySelector('.u-table-fixed-right .u-table-body-outer');
 
         //表头滚动条处理
         if (headerScroll) {
-          var oldTableWidth = parseInt(_this.table.table.style.width ? _this.table.table.style.width : _this.table.table.scrollWidth);
-          var newTableWidth = oldTableWidth + diff;
-          _this.table.table.style.width = newTableWidth; //改变table的width
-
-          var showScroll = contentDomWidth - newTableWidth - scrollbarWidth;
-          // if(bordered){
-          //     showScroll = showScroll -1;
-          // }
-          var fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header');
-          var fixedRighHeadertTable = contentTable.querySelector('.u-table-fixed-right .u-table-header');
-          var contentTableHeader = contentTable.querySelector('.u-table-scroll .u-table-header');
           if (showScroll < 0) {
             //找到固定列表格，设置表头的marginBottom值为scrollbarWidth;
             contentTableHeader.style.overflowX = 'scroll';
-            fixedLeftHeaderTable && (fixedLeftHeaderTable.style.marginBottom = scrollbarWidth + "px");
-            fixedRighHeadertTable && (fixedRighHeadertTable.style.marginBottom = scrollbarWidth + "px");
+            _this.optTableMargin(fixedLeftHeaderTable, scrollbarWidth);
+            _this.optTableMargin(fixedRighHeadertTable, scrollbarWidth);
+            // fixedLeftHeaderTable && (fixedLeftHeaderTable.style.marginBottom = scrollbarWidth + "px");
+            // fixedRighHeadertTable && (fixedRighHeadertTable.style.marginBottom = scrollbarWidth + "px");
             //todo inner scroll-x去掉；outer marginbottom 设置成-15px】
           } else {
             contentTableHeader.style.overflowX = 'hidden';
-            fixedLeftHeaderTable && (fixedLeftHeaderTable.style.marginBottom = '0px');
-            fixedRighHeadertTable && (fixedRighHeadertTable.style.marginBottom = '0px');
+            _this.optTableMargin(fixedLeftHeaderTable, 0);
+            _this.optTableMargin(fixedRighHeadertTable, 0);
+          }
+        } else {
+          if (showScroll < 0) {
+            _this.optTableMargin(fixedLeftBodyTable, '-' + scrollbarWidth);
+            _this.optTableMargin(fixedRightBodyTable, '-' + scrollbarWidth);
+            _this.optTableScroll(fixedLeftBodyTable, { x: 'scroll' });
+            _this.optTableScroll(fixedRightBodyTable, { x: 'scroll' });
+          } else {
+            _this.optTableMargin(fixedLeftBodyTable, 0);
+            _this.optTableMargin(fixedRightBodyTable, 0);
+            _this.optTableScroll(fixedLeftBodyTable, { x: 'auto' });
+            _this.optTableScroll(fixedRightBodyTable, { x: 'auto' });
           }
         }
       }
@@ -460,6 +491,12 @@ var TableHeader = function (_Component) {
       }
     }
   };
+  /**
+   *相关滚动条联动操作
+   *
+   * @memberof TableHeader
+   */
+
 
   /**
    * 调整列宽的move事件
