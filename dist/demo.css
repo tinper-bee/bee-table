@@ -9111,6 +9111,28 @@ ul {
   position: absolute;
   left: 100; }
 
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px; }
+
+::-webkit-scrollbar-button {
+  display: none; }
+
+::-webkit-scrollbar-thumb {
+  background: #d5d5d5 !important;
+  border-radius: 5px; }
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: #d5d5d5;
+  position: absolute; }
+
+::-webkit-scrollbar-track {
+  display: none; }
+
+::-webkit-scrollbar-track-piece {
+  display: none; }
+
 /* FormGroup */
 /*  Navlayout  */
 /* FormGroup */
