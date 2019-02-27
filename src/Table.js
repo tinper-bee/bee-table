@@ -1039,7 +1039,7 @@ class Table extends Component {
       }
     }
     // console.log('lastScrollTop--'+this.lastScrollTop+'--eventScrollTop--'+ e.target.scrollTop);
-    if (scroll.y && this.lastScrollTop != e.target.scrollTop) {
+    if (scroll.y && this.lastScrollTop != e.target.scrollTop && e.target !== headTable) {
       if (fixedColumnsBodyLeft && e.target !== fixedColumnsBodyLeft) {
         fixedColumnsBodyLeft.scrollTop = e.target.scrollTop;
       }
