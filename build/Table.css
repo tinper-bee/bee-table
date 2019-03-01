@@ -180,21 +180,21 @@
   .u-table td {
     border-bottom: 1px solid rgb(233,233,233); }
     .u-table td a {
-      color: rgb(30,136,229); }
+      color: rgb(245, 60, 50); }
       .u-table td a:hover {
-        color: rgb(66,165,245); }
+        color: rgb(230, 0, 18); }
       .u-table td a:active {
-        color: rgb(21,101,192); }
+        color: rgb(230, 0, 18); }
   .u-table tr:hover td .uf-eye {
     visibility: visible !important; }
   .u-table tr tr a {
-    color: rgb(30,136,229); }
+    color: rgb(245, 60, 50); }
     .u-table tr tr a:hover {
-      color: rgb(66,165,245); }
+      color: rgb(230, 0, 18); }
     .u-table tr tr a:active {
-      color: rgb(21,101,192); }
+      color: rgb(230, 0, 18); }
   .u-table tr.tr-row-hover {
-    background: rgb(227,242,253); }
+    background: rgb(235, 236, 240); }
   .u-table th,
   .u-table td {
     padding: 12px 8px;
@@ -205,7 +205,7 @@
     .u-table tr.filterable th .filterContext {
       height: 35px; }
   .u-table-row-hover {
-    background: rgb(227,242,253); }
+    background: rgb(235, 236, 240); }
   .u-table-scroll {
     overflow: auto; }
   .u-table-bordered table {
@@ -285,7 +285,7 @@
   .u-table-row-collapsed:after, .u-table-expanded-row-collapsed:after {
     content: "+"; }
   .u-table-row.selected {
-    background: rgb(227,242,253); }
+    background: rgb(235, 236, 240); }
   .u-table tr.u-table-expanded-row {
     background: #f7f7f7; }
     .u-table tr.u-table-expanded-row:hover {
@@ -401,7 +401,7 @@
   .u-table-thead .th-drag {
     cursor: move; }
   .u-table-thead .th-drag:hover {
-    background: rgb(227,242,253); }
+    background: rgb(235, 236, 240); }
   .u-table-thead .th-drag-hover {
     background: #ccc; }
   .u-table-thead-th {
