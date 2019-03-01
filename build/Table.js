@@ -244,7 +244,7 @@ var Table = function (_Component) {
     _this.getEmptyText = _this.getEmptyText.bind(_this);
     _this.getHeaderRowStyle = _this.getHeaderRowStyle.bind(_this);
     _this.syncFixedTableRowHeight = _this.syncFixedTableRowHeight.bind(_this);
-    _this.resetScrollY = _this.resetScrollY.bind(_this);
+    _this.resetScrollX = _this.resetScrollX.bind(_this);
     _this.findExpandedRow = _this.findExpandedRow.bind(_this);
     _this.isRowExpanded = _this.isRowExpanded.bind(_this);
     _this.detectScrollTarget = _this.detectScrollTarget.bind(_this);
@@ -258,7 +258,7 @@ var Table = function (_Component) {
   Table.prototype.componentDidMount = function componentDidMount() {
     _utils.EventUtil.addHandler(this.contentTable, 'keydown', this.onKeyDown);
     _utils.EventUtil.addHandler(this.contentTable, 'focus', this.onFocus);
-    setTimeout(this.resetScrollY, 300);
+    setTimeout(this.resetScrollX, 300);
     //含有纵向滚动条
     if (this.props.scroll.y) {
       this.scrollbarWidth = (0, _utils.measureScrollbar)();
@@ -278,9 +278,6 @@ var Table = function (_Component) {
       this.setState({
         data: nextProps.data
       });
-      if (!nextProps.data || nextProps.data.length === 0) {
-        this.resetScrollY();
-      }
     }
     if ('expandedRowKeys' in nextProps) {
       this.setState({
@@ -305,13 +302,13 @@ var Table = function (_Component) {
       this.firstDid = true; //避免重复update
     }
     if (nextProps.resetScroll) {
-      this.resetScrollY();
+      this.resetScrollX();
     }
 
     // console.log('this.scrollTop**********',this.scrollTop);
   };
 
-  Table.prototype.componentDidUpdate = function componentDidUpdate() {
+  Table.prototype.componentDidUpdate = function componentDidUpdate(prevProps) {
 
     if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
@@ -326,6 +323,9 @@ var Table = function (_Component) {
       this.refs.fixedColumnsBodyRight && (this.refs.fixedColumnsBodyRight.scrollTop = this.scrollTop);
       this.refs.bodyTable.scrollTop = this.scrollTop;
       this.scrollTop = -1;
+    }
+    if (prevProps.data.length === 0 || this.props.data.length === 0) {
+      this.resetScrollX();
     }
   };
 
@@ -1120,7 +1120,7 @@ var Table = function (_Component) {
     });
   };
 
-  Table.prototype.resetScrollY = function resetScrollY() {
+  Table.prototype.resetScrollX = function resetScrollX() {
     if (this.refs.headTable) {
       this.refs.headTable.scrollLeft = 0;
     }
@@ -1198,7 +1198,7 @@ var Table = function (_Component) {
       }
     }
     // console.log('lastScrollTop--'+this.lastScrollTop+'--eventScrollTop--'+ e.target.scrollTop);
-    if (scroll.y && this.lastScrollTop != e.target.scrollTop) {
+    if (scroll.y && this.lastScrollTop != e.target.scrollTop && e.target !== headTable) {
       if (fixedColumnsBodyLeft && e.target !== fixedColumnsBodyLeft) {
         fixedColumnsBodyLeft.scrollTop = e.target.scrollTop;
       }

@@ -84,7 +84,8 @@ const defaultProps = {
   syncHover: true,
   setRowHeight:()=>{},
   setRowParentIndex:()=>{},
-  tabIndex:'0'
+  tabIndex:'0',
+  heightConsistent:false
 };
 
 class Table extends Component {
@@ -132,7 +133,7 @@ class Table extends Component {
     this.getEmptyText = this.getEmptyText.bind(this);
     this.getHeaderRowStyle = this.getHeaderRowStyle.bind(this);
     this.syncFixedTableRowHeight = this.syncFixedTableRowHeight.bind(this);
-    this.resetScrollY = this.resetScrollY.bind(this);
+    this.resetScrollX = this.resetScrollX.bind(this);
     this.findExpandedRow = this.findExpandedRow.bind(this);
     this.isRowExpanded = this.isRowExpanded.bind(this);
     this.detectScrollTarget = this.detectScrollTarget.bind(this);
@@ -145,7 +146,7 @@ class Table extends Component {
   componentDidMount() {
     EventUtil.addHandler(this.contentTable,'keydown',this.onKeyDown);
     EventUtil.addHandler(this.contentTable,'focus',this.onFocus);
-    setTimeout(this.resetScrollY, 300);
+    setTimeout(this.resetScrollX, 300);
     //含有纵向滚动条
     if(this.props.scroll.y){
        this.scrollbarWidth = measureScrollbar();
@@ -168,9 +169,6 @@ class Table extends Component {
       this.setState({
         data: nextProps.data,
       });
-      if (!nextProps.data || nextProps.data.length === 0) {
-        this.resetScrollY();
-      }
     }
     if ('expandedRowKeys' in nextProps) {
       this.setState({
@@ -195,14 +193,14 @@ class Table extends Component {
       this.firstDid = true;//避免重复update
     }
     if(nextProps.resetScroll){
-      this.resetScrollY();
+      this.resetScrollX();
     }
  
     // console.log('this.scrollTop**********',this.scrollTop);
 
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
 
     if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
@@ -218,7 +216,9 @@ class Table extends Component {
       this.refs.bodyTable.scrollTop = this.scrollTop;
       this.scrollTop = -1;
     }
-
+    if (prevProps.data.length === 0  || this.props.data.length === 0 ) {
+      this.resetScrollX();
+    }
 
   }
 
@@ -565,7 +565,7 @@ class Table extends Component {
 
       if (props.height) {
         height = props.height
-      } else if(fixed) {
+      } else if(fixed || props.heightConsistent) {
         height = fixedColumnsBodyRowsHeight[fixedIndex];
       }
 
@@ -942,11 +942,13 @@ class Table extends Component {
 
   syncFixedTableRowHeight() {
     //this.props.height、headerHeight分别为用户传入的行高和表头高度，如果有值，所有行的高度都是固定的，主要为了避免在千行数据中有固定列时获取行高度有问题
-    const { clsPrefix, height, headerHeight,columns } = this.props;
+    const { clsPrefix, height, headerHeight,columns,heightConsistent } = this.props;
     const headRows = this.refs.headTable ?
       this.refs.headTable.querySelectorAll('thead') :
       this.refs.bodyTable.querySelectorAll('thead');
     const bodyRows = this.refs.bodyTable.querySelectorAll(`.${clsPrefix}-row`) || [];
+    const leftBodyRows = this.refs.fixedColumnsBodyLeft && this.refs.fixedColumnsBodyLeft.querySelectorAll(`.${clsPrefix}-row`) || [];
+    const rightBodyRows = this.refs.fixedColumnsBodyRight && this.refs.fixedColumnsBodyRight.querySelectorAll(`.${clsPrefix}-row`) || [];
     const fixedColumnsHeadRowsHeight = [].map.call(
       headRows, row =>{ 
         let height = headerHeight; 
@@ -956,8 +958,28 @@ class Table extends Component {
         return headerHeight ? height : (row.getBoundingClientRect().height || 'auto')}
     );
     const fixedColumnsBodyRowsHeight = [].map.call(
-      bodyRows, row => height ? height : (row.getBoundingClientRect().height || 'auto')
+      bodyRows, (row,index) =>{
+        let rsHeight = height;
+        if(rsHeight){
+          return rsHeight;
+        }else{
+          // 为了提高性能，默认获取主表的高度，但是有的场景中固定列的高度比主表的高度高，所以提供此属性，会统计所有列的高度取最大的，设置
+          if(heightConsistent){
+            let leftHeight,rightHeight,currentHeight,maxHeight;
+            leftHeight = leftBodyRows[index]?leftBodyRows[index].getBoundingClientRect().height:0;
+            rightHeight = rightBodyRows[index]?rightBodyRows[index].getBoundingClientRect().height:0;
+            currentHeight = row.getBoundingClientRect().height
+            maxHeight = Math.max(leftHeight,rightHeight,currentHeight);
+            return maxHeight || 'auto'
+          }else{
+            return row.getBoundingClientRect().height || 'auto'
+          }
+        }
+       
+        
+      } 
     );
+      
     if (shallowequal(this.state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
       shallowequal(this.state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
       return;
@@ -968,7 +990,7 @@ class Table extends Component {
     });
   }
 
-  resetScrollY() {
+  resetScrollX() {
     if (this.refs.headTable) {
       this.refs.headTable.scrollLeft = 0;
     }

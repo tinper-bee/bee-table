@@ -7,7 +7,8 @@
 
 import React, { Component } from "react";
 import Table from "../../src";
-
+import dragColumn from '../../src/lib/dragColumn';
+const DragColumnTable = dragColumn(Table);
 const columns16 = [
   {
     title: "操作",
@@ -79,7 +80,7 @@ class Demo16 extends Component {
         columns={columns17}
         style={{height:height}}
         data={this.state.data_obj[record.key]} 
-
+       
       />
     );
   };
@@ -114,12 +115,14 @@ class Demo16 extends Component {
   }
   render() {
     return (
-      <Table
+      <DragColumnTable
         columns={columns16}
         data={data16}
         onExpand={this.getData}
         expandedRowRender={this.expandedRowRender}
         scroll={{x:true}}
+        dragborder={true} 
+        draggable={true} 
         title={currentData => <div>标题: 这是一个标题</div>}
         footer={currentData => <div>表尾: 我是小尾巴</div>}
       />
