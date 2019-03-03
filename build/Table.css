@@ -558,6 +558,9 @@
 .editable-cell-text-wrapper {
   padding-right: 24px; }
 
+.editable-cell-input-wrapper .u-input-group {
+  display: inline; }
+
 .editable-cell-text-wrapper {
   padding: 5px 24px 5px 5px;
   height: 30px; }

@@ -50,7 +50,7 @@ class Demo8 extends Component {
 
   render() {
     return (
-      <div>
+      <div className="demo8">
         <Table columns={columns8} data={this.state.data} />
         <Pagination
           first

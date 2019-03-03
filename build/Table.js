@@ -144,7 +144,8 @@ var defaultProps = {
   syncHover: true,
   setRowHeight: function setRowHeight() {},
   setRowParentIndex: function setRowParentIndex() {},
-  tabIndex: '0'
+  tabIndex: '0',
+  heightConsistent: false
 };
 
 var Table = function (_Component) {
@@ -700,7 +701,7 @@ var Table = function (_Component) {
 
       if (props.height) {
         height = props.height;
-      } else if (fixed) {
+      } else if (fixed || props.heightConsistent) {
         height = fixedColumnsBodyRowsHeight[fixedIndex];
       }
 
@@ -1097,10 +1098,13 @@ var Table = function (_Component) {
         clsPrefix = _props7.clsPrefix,
         height = _props7.height,
         headerHeight = _props7.headerHeight,
-        columns = _props7.columns;
+        columns = _props7.columns,
+        heightConsistent = _props7.heightConsistent;
 
     var headRows = this.refs.headTable ? this.refs.headTable.querySelectorAll('thead') : this.refs.bodyTable.querySelectorAll('thead');
     var bodyRows = this.refs.bodyTable.querySelectorAll('.' + clsPrefix + '-row') || [];
+    var leftBodyRows = this.refs.fixedColumnsBodyLeft && this.refs.fixedColumnsBodyLeft.querySelectorAll('.' + clsPrefix + '-row') || [];
+    var rightBodyRows = this.refs.fixedColumnsBodyRight && this.refs.fixedColumnsBodyRight.querySelectorAll('.' + clsPrefix + '-row') || [];
     var fixedColumnsHeadRowsHeight = [].map.call(headRows, function (row) {
       var height = headerHeight;
       if (headerHeight) {
@@ -1108,9 +1112,28 @@ var Table = function (_Component) {
       }
       return headerHeight ? height : row.getBoundingClientRect().height || 'auto';
     });
-    var fixedColumnsBodyRowsHeight = [].map.call(bodyRows, function (row) {
-      return height ? height : row.getBoundingClientRect().height || 'auto';
+    var fixedColumnsBodyRowsHeight = [].map.call(bodyRows, function (row, index) {
+      var rsHeight = height;
+      if (rsHeight) {
+        return rsHeight;
+      } else {
+        // 为了提高性能，默认获取主表的高度，但是有的场景中固定列的高度比主表的高度高，所以提供此属性，会统计所有列的高度取最大的，设置
+        if (heightConsistent) {
+          var leftHeight = void 0,
+              rightHeight = void 0,
+              currentHeight = void 0,
+              maxHeight = void 0;
+          leftHeight = leftBodyRows[index] ? leftBodyRows[index].getBoundingClientRect().height : 0;
+          rightHeight = rightBodyRows[index] ? rightBodyRows[index].getBoundingClientRect().height : 0;
+          currentHeight = row.getBoundingClientRect().height;
+          maxHeight = Math.max(leftHeight, rightHeight, currentHeight);
+          return maxHeight || 'auto';
+        } else {
+          return row.getBoundingClientRect().height || 'auto';
+        }
+      }
     });
+
     if ((0, _shallowequal2["default"])(this.state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) && (0, _shallowequal2["default"])(this.state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
       return;
     }
