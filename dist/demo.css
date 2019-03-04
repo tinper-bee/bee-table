@@ -8792,6 +8792,9 @@ ul {
 .editable-cell-text-wrapper {
   padding-right: 24px; }
 
+.editable-cell-input-wrapper .u-form-item.formItem-style .u-label {
+  display: none; }
+
 .editable-cell-input-wrapper .u-input-group .u-form-control {
   height: 26px; }
 
