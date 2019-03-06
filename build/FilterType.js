@@ -14,7 +14,11 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _zh_CN = require('rc-calendar/lib/locale/zh_CN');
+var _beeDatepicker = require('bee-datepicker');
+
+var _beeDatepicker2 = _interopRequireDefault(_beeDatepicker);
+
+var _zh_CN = require('bee-datepicker/build/locale/zh_CN');
 
 var _zh_CN2 = _interopRequireDefault(_zh_CN);
 
@@ -29,10 +33,6 @@ var _beeSelect2 = _interopRequireDefault(_beeSelect);
 var _beeInputNumber = require('bee-input-number');
 
 var _beeInputNumber2 = _interopRequireDefault(_beeInputNumber);
-
-var _beeDatepicker = require('bee-datepicker');
-
-var _beeDatepicker2 = _interopRequireDefault(_beeDatepicker);
 
 var _FilterDropDown = require('./FilterDropDown');
 

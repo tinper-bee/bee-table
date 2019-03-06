@@ -276,7 +276,6 @@ class Table extends Component {
     if(y){
       const bodyH = this.refs.bodyTable.clientHeight;
       const bodyContentH = this.refs.bodyTable.querySelector('table').clientHeight;
-      console.log(bodyH,bodyContentH);
       if(bodyContentH <= bodyH){
         this.refs.bodyTable.style.overflowY='auto';
         this.refs.headTable.style.overflowY='auto';

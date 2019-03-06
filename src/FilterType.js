@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import zhCN from "rc-calendar/lib/locale/zh_CN";
+import DatePicker from 'bee-datepicker';
+import zhCN from 'bee-datepicker/build/locale/zh_CN';
 import FormControl from 'bee-form-control';
 import Select from 'bee-select';
 import InputNumber from 'bee-input-number';
-import DatePicker from 'bee-datepicker';
 import FilterDropDown from './FilterDropDown';
 
 const { RangePicker } = DatePicker;
