@@ -219,7 +219,8 @@ class Table extends Component {
     if (prevProps.data.length === 0  || this.props.data.length === 0 ) {
       this.resetScrollX();
     }
-
+    // 是否传入 scroll中的y属性，如果传入判断是否是整数，如果是则进行比较 。bodyTable 的clientHeight进行判断
+    this.isShowScrollY();
   }
 
   componentWillUnmount() {
@@ -268,7 +269,20 @@ class Table extends Component {
       this.setState({ contentWidthDiff: 0, lastShowIndex });//重新渲染，为了显示滚动条
     }
   }
-
+  //根据内容动态的判断是否显示纵向滚动条
+  isShowScrollY(){
+    const props = this.props;
+    const y = props.scroll && props.scroll.y;
+    if(y){
+      const bodyH = this.refs.bodyTable.clientHeight;
+      const bodyContentH = this.refs.bodyTable.querySelector('table').clientHeight;
+      console.log(bodyH,bodyContentH);
+      if(bodyContentH <= bodyH){
+        this.refs.bodyTable.style.overflowY='auto';
+        this.refs.headTable.style.overflowY='auto';
+      }
+    }
+  }
   onExpandedRowsChange(expandedRowKeys) {
     if (!this.props.expandedRowKeys) {
       this.setState({ expandedRowKeys });

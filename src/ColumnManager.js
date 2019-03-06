@@ -184,7 +184,7 @@ export default class ColumnManager {
         if (column.fixed === 'left' || column.fixed === true){
           let width = column.width;
           if(typeof(width) == 'string' && width.includes('%') ){
-            width = contentWidth *  parseInt(col.width) /100;
+            width = contentWidth *  parseInt(column.width) /100;
           }
           leftColumnsWidth += parseInt(width)
         }
@@ -200,7 +200,7 @@ export default class ColumnManager {
        if (column.fixed === 'right'){
         let width = column.width;
         if(typeof(width) == 'string' && width.includes('%') ){
-          width = contentWidth *  parseInt(col.width) /100;
+          width = contentWidth *  parseInt(column.width) /100;
         }
         rightColumnsWidth += parseInt(width)
        }

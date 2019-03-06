@@ -76,11 +76,7 @@
 	
 	var CARETUP = _react2['default'].createElement('i', { className: 'uf uf-arrow-up' });
 	
-<<<<<<< HEAD
-	var Demo1 = __webpack_require__(84);var Demo2 = __webpack_require__(511);var Demo3 = __webpack_require__(516);var Demo4 = __webpack_require__(517);var Demo5 = __webpack_require__(518);var Demo6 = __webpack_require__(519);var Demo7 = __webpack_require__(523);var Demo8 = __webpack_require__(524);var Demo9 = __webpack_require__(529);var Demo10 = __webpack_require__(530);var Demo11 = __webpack_require__(531);var Demo12 = __webpack_require__(533);var Demo13 = __webpack_require__(539);var Demo14 = __webpack_require__(541);var Demo15 = __webpack_require__(550);var Demo16 = __webpack_require__(551);var Demo17 = __webpack_require__(552);var Demo18 = __webpack_require__(553);var Demo19 = __webpack_require__(554);var Demo20 = __webpack_require__(555);var Demo21 = __webpack_require__(556);var Demo22 = __webpack_require__(561);var Demo23 = __webpack_require__(562);var Demo24 = __webpack_require__(563);var Demo25 = __webpack_require__(564);var Demo26 = __webpack_require__(565);var Demo27 = __webpack_require__(566);var Demo28 = __webpack_require__(567);var Demo29 = __webpack_require__(568);var Demo30 = __webpack_require__(591);var Demo31 = __webpack_require__(593);var Demo32 = __webpack_require__(594);var Demo34 = __webpack_require__(595);var Demo35 = __webpack_require__(596);var DemoArray = [{ "example": _react2['default'].createElement(Demo1, null), "title": " 简单表格、文字过长，两种tip", "code": "/**\n*\n* @title 简单表格、文字过长，两种tip\n* 【Tooltip】\n* @description\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Tooltip, Button } from 'tinper-bee';\n\nconst columns = [\n  {\n    title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 300, className: \"rowClassName\",\n    fixed:'left',\n    render: (text, record, index) => {\n      return (\n        <Tooltip inverse overlay={text}>\n          <span tootip={text} style={{\n            display: \"inline-block\",\n            width: \"60px\",\n            textOverflow: \"ellipsis\",\n            overflow: \"hidden\",\n            whiteSpace: \"nowrap\",\n            verticalAlign: \"middle\",\n          }}>{text}</span>\n        </Tooltip>\n      );\n    }\n  },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 500},\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    render(text, record, index) {\n      return (\n        <div style={{ position: 'relative' }} title={text} >\n          <a\n            href=\"javascript:;\"\n            tooltip={text}\n            onClick={() => {\n              alert('这是第' + index + '列，内容为:' + text);\n            }}\n          >\n            一些操作\n              </a>\n        </div>\n      );\n    }\n  }\n];\n\nconst data = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过叔叔的女儿黄蓉\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\nclass Demo1 extends Component {\n\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: data,\n      selectedRowIndex: 0\n    }\n  }\n\n  render() {\n    return (\n   \n        <Table\n          columns={columns}\n          data={data}\n          parentNodeId='parent'\n          height={43}\n          headerHeight={42}\n          onRowClick={(record, index, indent) => {\n            this.setState({\n              selectedRowIndex: index\n            });\n          }}\n        />\n\n     \n    );\n  }\n}\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo2, null), "title": " 增删改表格", "code": "/**\n*\n* @title 增删改表格\n* @description 这是带有增删改功能的表格（此编辑功能未使用render组件）\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Popconfirm, Input, Icon, Animate, Button } from 'tinper-bee';\n\nclass EditableCell extends React.Component {\n  state = {\n    value: this.props.value,\n    editable: false\n  };\n  handleChange = e => {\n    const value = e;\n    this.setState({ value });\n  };\n  check = () => {\n    this.setState({ editable: false });\n    if (this.props.onChange) {\n      this.props.onChange(this.state.value);\n    }\n  };\n  edit = () => {\n    this.setState({ editable: true });\n  };\n  handleKeydown = event => {\n    if (event.keyCode == 13) {\n      this.check();\n    }\n  };\n  render() {\n    const { value, editable } = this.state;\n    return (\n      <div className=\"editable-cell\">\n        {editable ? (\n          <div className=\"editable-cell-input-wrapper\">\n            <Input\n              value={value}\n              onChange={this.handleChange}\n              onKeyDown={this.handleKeydown}\n            />\n            <Icon\n              type=\"uf-correct\"\n              className=\"editable-cell-icon-check\"\n              onClick={this.check}\n            />\n          </div>\n        ) : (\n          <div className=\"editable-cell-text-wrapper\">\n            {value || \" \"}\n            <Icon\n              type=\"uf-pencil\"\n              className=\"editable-cell-icon\"\n              onClick={this.edit}\n            />\n          </div>\n        )}\n      </div>\n    );\n  }\n}\n\nclass Demo2 extends React.Component {\n  constructor(props) {\n    super(props);\n    this.columns = [\n      {\n        title: \"姓名\",\n        dataIndex: \"name\",\n        key: \"name\",\n        width: \"30%\",\n        render: (text, record, index) => (\n          <EditableCell\n            value={text}\n            onChange={this.onCellChange(index, \"name\")}\n          />\n        )\n      },\n      {\n        title: \"年龄\",\n        dataIndex: \"age\",\n        key: \"age\"\n      },\n      {\n        title: \"你懂的\",\n        dataIndex: \"address\",\n        key: \"address\"\n      },\n      {\n        title: \"操作\",\n        dataIndex: \"operation\",\n        key: \"operation\",\n        render: (text, record, index) => {\n          return this.state.dataSource.length > 1 ? (\n            <Popconfirm content=\"确认删除?\" id=\"aa\" onClose={this.onDelete(index)}>\n              <Icon type=\"uf-del\" />\n            </Popconfirm>\n          ) : null;\n        }\n      }\n    ];\n\n    this.state = {\n      dataSource: [\n        {\n          key: \"0\",\n          name: \"沉鱼\",\n          age: \"18\",\n          address: \"96, 77, 89\"\n        },\n        {\n          key: \"1\",\n          name: \"落雁\",\n          age: \"16\",\n          address: \"90, 70, 80\"\n        },\n        {\n          key: \"2\",\n          name: \"闭月\",\n          age: \"17\",\n          address: \"80, 60, 80\"\n        },\n        {\n          key: \"3\",\n          name: \"羞花\",\n          age: \"20\",\n          address: \"120, 60, 90\"\n        }\n      ],\n      count: 4\n    };\n  }\n  onCellChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onDelete = (index) => {\n    return () => {\n      const dataSource = [...this.state.dataSource];\n      dataSource.splice(index, 1);\n      this.setState({ dataSource });\n    }\n  };\n  handleAdd = () => {\n    const { count, dataSource } = this.state;\n    const newData = {\n      key: count,\n      name: `凤姐 ${count}`,\n      age: 32,\n      address: `100 100 100`\n    };\n    this.setState({\n      dataSource: [...dataSource, newData],\n      count: count + 1\n    });\n  };\n\n  getBodyWrapper = body => {\n    return (\n      <Animate\n        transitionName=\"move\"\n        component=\"tbody\"\n        className={body.props.className}\n      >\n        {body.props.children}\n      </Animate>\n    );\n  };\n  render() {\n    const { dataSource } = this.state;\n    const columns = this.columns;\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.handleAdd}\n        >\n          添加\n        </Button>\n        <Table\n          data={dataSource}\n          columns={columns}\n          getBodyWrapper={this.getBodyWrapper}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 这是带有增删改功能的表格（此编辑功能未使用render组件）" }, { "example": _react2['default'].createElement(Demo3, null), "title": " 表头分组并自定义表头高度", "code": "/**\n *\n * @title 表头分组并自定义表头高度\n * @description columns[n] 可以内嵌 children，以渲染分组表头。\n * 自定义表头高度需要传headerHeight，注：修改th的padding top和bottom置为0，否则会有影响\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table, Button } from 'tinper-bee';\n\nconst { ColumnGroup, Column } = Table;\n\nconst columns = [\n  {\n    title: \"Name\",\n    dataIndex: \"name\",\n    key: \"name\",\n    width: 100,\n    fixed: \"left\"\n  },\n  {\n    title: \"Other\",\n    width:600,\n    children: [\n      {\n        title: \"Age\",\n        dataIndex: \"age\",\n        key: \"age\",\n        width: 200\n      },\n      {\n        title: \"Address\",\n        children: [\n          {\n            title: \"Street\",\n            dataIndex: \"street\",\n            key: \"street\",\n            width: 200\n          },\n          {\n            title: \"Block\",\n            children: [\n              {\n                title: \"Building\",\n                dataIndex: \"building\",\n                key: \"building\",\n                width: 100\n              },\n              {\n                title: \"Door No.\",\n                dataIndex: \"number\",\n                key: \"number\",\n                width: 100\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  {\n    title: \"Company\",\n    width:400,\n    children: [\n      {\n        title: \"Company Address\",\n        dataIndex: \"companyAddress\",\n        key: \"companyAddress\",\n        width:200,\n      },\n      {\n        title: \"Company Name\",\n        dataIndex: \"companyName\",\n        key: \"companyName\",\n        width:200,\n      }\n    ]\n  },\n  {\n    title: \"Gender\",\n    dataIndex: \"gender\",\n    key: \"gender\",\n    width: 60,\n    fixed: \"right\"\n  }\n];\n\nconst data = [];\nfor (let i = 0; i < 20; i++) {\n  data.push({\n    key: i,\n    name: \"John Brown\",\n    age: i + 1,\n    street: \"Lake Park\",\n    building: \"C\",\n    number: 2035,\n    companyAddress: \"Lake Street 42\",\n    companyName: \"SoftLake Co\",\n    gender: \"M\"\n  });\n}\n\nclass Demo3 extends Component {\n  render() {\n    return (\n      <Table\n        className={'demo3'}\n        columns={columns}\n        data={data}\n        headerHeight={40} //自定义表头高度\n        bordered\n        scroll={{ y: 240 }}\n      />\n    );\n  }\n}\n\n\n", "desc": " columns[n] 可以内嵌 children，以渲染分组表头。", "scss_code": ".demo3{\n    .u-table-thead th {\n        padding-top: 0px;\n        padding-bottom: 0px;\n    }\n}" }, { "example": _react2['default'].createElement(Demo4, null), "title": " 树形数据展示", "code": "/**\n*\n* @title 树形数据展示\n* @description 通过在data中配置children数据，来自动生成树形数据\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\nconst columns4 = [\n  {\n    title: \"Name\",\n    dataIndex: \"name\",\n    key: \"name\",\n    width: \"40%\"\n  },\n  {\n    title: \"Age\",\n    dataIndex: \"age\",\n    key: \"age\",\n    width: \"30%\"\n  },\n  {\n    title: \"Address\",\n    dataIndex: \"address\",\n    key: \"address\"\n  }\n];\n\nconst data4 = [\n  {\n    key: 1,\n    name: \"John Brown sr.\",\n    age: 60,\n    address: \"New York No. 1 Lake Park\",\n    children: [\n      {\n        key: 11,\n        name: \"John Brown\",\n        age: 42,\n        address: \"New York No. 2 Lake Park\"\n      },\n      {\n        key: 12,\n        name: \"John Brown jr.\",\n        age: 30,\n        address: \"New York No. 3 Lake Park\",\n        children: [\n          {\n            key: 121,\n            name: \"Jimmy Brown\",\n            age: 16,\n            address: \"New York No. 3 Lake Park\"\n          }\n        ]\n      },\n      {\n        key: 13,\n        name: \"Jim Green sr.\",\n        age: 72,\n        address: \"London No. 1 Lake Park\",\n        children: [\n          {\n            key: 131,\n            name: \"Jim Green\",\n            age: 42,\n            address: \"London No. 2 Lake Park\",\n            children: [\n              {\n                key: 1311,\n                name: \"Jim Green jr.\",\n                age: 25,\n                address: \"London No. 3 Lake Park\"\n              },\n              {\n                key: 1312,\n                name: \"Jimmy Green sr.\",\n                age: 18,\n                address: \"London No. 4 Lake Park\"\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  {\n    key: 2,\n    name: \"Joe Black\",\n    age: 32,\n    address: \"Sidney No. 1 Lake Park\"\n  }\n];\nclass Demo4 extends Component {\n\n  constructor(props){\n      super(props);\n      this.state = {\n        data: data4,\n        factoryValue: 0,\n        selectedRow: new Array(data4.length)//状态同步\n      }\n  }\n\n  render() {\n    return <Table \n    rowClassName={(record,index,indent)=>{\n      if (this.state.selectedRow[index]) {\n          return 'selected';\n      } else {\n          return '';\n      }\n    }}\n    onRowClick={(record,index,indent)=>{\n      let selectedRow = new Array(this.state.data.length);\n      selectedRow[index] = true;\n      this.setState({\n          factoryValue: record,\n          selectedRow: selectedRow\n      });\n    }}\n    \n    columns={columns4} data={data4} />;\n  }\n}\n\n\n", "desc": " 通过在data中配置children数据，来自动生成树形数据" }, { "example": _react2['default'].createElement(Demo5, null), "title": " 固定列", "code": "/**\n*\n* @title 固定列\n* @description 固定列到表格的某侧\n*\n*/\n\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\n\nconst columns5 = [\n  {\n    title: \"Full Name\",\n    width: 100,\n    dataIndex: \"name\",\n    key: \"name\",\n    fixed: \"left\"\n  },\n  { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\", fixed: \"left\" },\n  { title: \"address\", dataIndex: \"address\", key: \"address\" }\n];\n\nconst data5 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    address: \"New York Park\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  }\n];\n\nclass Demo5 extends Component {\n  render() {\n    return <Table columns={columns5} data={data5} scroll={{ x: \"110%\", y: 140 }} />;\n  }\n}\n\n", "desc": " 固定列到表格的某侧" }, { "example": _react2['default'].createElement(Demo6, null), "title": " 固定表头", "code": "/**\n*\n* @title 固定表头\n* @description 方便一页内展示大量数据。需要指定 column 的 width 属性，否则列头和内容可能不对齐。(还可以设置scroll来支持横向或纵向滚动)\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\nimport dragColumn from \"tinper-bee/lib/dragColumn\";;;\nconst DragColumnTable = dragColumn(Table);\n\nconst columns6 = [\n  {\n    title: \"Full Name\",\n    width: 100,\n    dataIndex: \"name\",\n    key: \"name\"\n  },\n  { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\"},\n  { title: \"Address\", dataIndex: \"address\", key: \"1\" }\n];\n\nconst data6 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    address: \"New York Park\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },{\n    key: \"11\",\n    name: \"John Brown\",\n    age: 32,\n    address: \"New York Park\"\n  },\n  {\n    key: \"12\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"13\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"14\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  }\n];\n\nclass Demo6 extends Component {\n  render() {\n    return <DragColumnTable columns={columns6} data={data6} scroll={{y: 150 }} dragborder={true}  />;\n  }\n}\n\n", "desc": " 方便一页内展示大量数据。需要指定 column 的 width 属性，否则列头和内容可能不对齐。(还可以设置scroll来支持横向或纵向滚动)" }, { "example": _react2['default'].createElement(Demo7, null), "title": " 主子表", "code": "/**\n *\n * @title 主子表\n * @description 主表点击子表联动\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\n\nconst columns7 = [\n  { title: \"班级\", dataIndex: \"a\", key: \"a\" },\n  { title: \"人数\", dataIndex: \"b\", key: \"b\" },\n  { title: \"班主任\", dataIndex: \"c\", key: \"c\" },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst data7 = [\n  { a: \"02级一班\", b: \"2\", c: \"欧阳锋\", d: \"大侠\", key: \"1\" },\n  { a: \"03级二班\", b: \"3\", c: \"归海一刀\", d: \"大侠\", key: \"2\" },\n  { a: \"05级三班\", b: \"1\", c: \"一拳超人\", d: \"愣头青\", key: \"3\" }\n];\n\nconst columns7_1 = [\n  { title: \"姓名\", dataIndex: \"a\", key: \"a\" },\n  { title: \"班级\", dataIndex: \"b\", key: \"b\" },\n  { title: \"系别\", dataIndex: \"c\", key: \"c\" }\n];\n\nclass Demo7 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      children_data: []\n    };\n  }\n\n  rowclick = (record, index) => {\n    if (record.a === \"02级一班\") {\n      this.setState({\n        children_data: [\n          { a: \"郭靖\", b: \"02级一班\", c: \"文学系\", key: \"1\" },\n          { a: \"黄蓉\", b: \"02级一班\", c: \"文学系\", key: \"2\" }\n        ]\n      });\n    } else if (record.a === \"03级二班\") {\n      this.setState({\n        children_data: [\n          { a: \"杨过\", b: \"03级二班\", c: \"外语系\", key: \"1\" },\n          { a: \"小龙女\", b: \"03级二班\", c: \"外语系\", key: \"2\" },\n          { a: \"傻姑\", b: \"03级二班\", c: \"外语系\", key: \"3\" }\n        ]\n      });\n    } else if (record.a === \"05级三班\") {\n      this.setState({\n        children_data: [{ a: \"金圣叹\", b: \"05级三班\", c: \"美术系\", key: \"1\" }]\n      });\n    }\n  };\n\n  render() {\n    return (\n      <div>\n        <Table\n          columns={columns7}\n          data={data7}\n          onRowClick={this.rowclick}\n          title={currentData => <div>标题: 我是主表</div>}\n        />\n        <Table\n          style={{ marginTop: 40 }}\n          columns={columns7_1}\n          data={this.state.children_data}\n          title={currentData => <div>标题: 我是子表</div>}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 主表点击子表联动" }, { "example": _react2['default'].createElement(Demo8, null), "title": " 表格+分页", "code": "/**\n *\n * @title 表格+分页\n * @description 点击分页联动表格\n */\n\nimport React, { Component } from \"react\";\n\nimport { Table, Pagination } from 'tinper-bee';\n\nconst columns8 = [\n  { title: \"姓名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst pageData = {\n  1: [\n    { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"2\" },\n    { a: \"令狐冲\", b: \"男\", c: 41, d: \"大侠\", key: \"1\" },\n    { a: \"郭靖\", b: \"男\", c: 25, d: \"大侠\", key: \"3\" }\n  ],\n  2: [\n    { a: \"芙蓉姐姐\", b: \"女\", c: 23, d: \"大侠\", key: \"1\" },\n    { a: \"芙蓉妹妹\", b: \"女\", c: 23, d: \"内行\", key: \"2\" }\n  ]\n};\n\nclass Demo8 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: pageData[1],\n      activePage: 1\n    };\n  }\n\n  handleSelect(eventKey) {\n    this.setState({\n      data: pageData[eventKey],\n      activePage: eventKey\n    });\n  }\n\n  render() {\n    return (\n      <div>\n        <Table columns={columns8} data={this.state.data} />\n        <Pagination\n          first\n          last\n          prev\n          next\n          maxButtons={5}\n          boundaryLinks\n          activePage={this.state.activePage}\n          onSelect={this.handleSelect.bind(this)}\n          onDataNumSelect={this.dataNumSelect}\n          showJump={true}\n          total={100}\n          dataNum={2}\n        />\n      </div>\n    );\n  }\n}\n\n", "desc": " 点击分页联动表格" }, { "example": _react2['default'].createElement(Demo9, null), "title": " 表格+搜索", "code": "/**\n *\n * @title 表格+搜索\n * @description 搜索刷新表格数据\n *\n *\n * import {Table} from 'tinper-bee';\n */\n\nimport React, { Component } from \"react\";\n\nimport { Table, FormControl, InputGroup, Icon } from 'tinper-bee';\n\nclass Search extends Component {\n  state = {\n    searchValue: \"\",\n    empty: false\n  };\n\n  /**\n     * 搜索\n     */\n  handleSearch = () => {\n    let { onSearch } = this.props;\n    this.setState({\n      empty: true\n    });\n    onSearch && onSearch(this.state.searchValue);\n  };\n\n  /**\n     * 捕获回车\n     * @param e\n     */\n  handleKeyDown = e => {\n    if (e.keyCode === 13) {\n      this.handleSearch();\n    }\n  };\n\n  /**\n     * 输入框改变\n     * @param e\n     */\n  handleChange = (e) => {\n    this.setState({\n      searchValue: e\n    });\n  };\n\n  /**\n     * 清空输入框\n     */\n  emptySearch = () => {\n    let { onEmpty } = this.props;\n    this.setState({\n      searchValue: \"\",\n      empty: false\n    });\n    onEmpty && onEmpty();\n  };\n\n  render() {\n    return (\n      <InputGroup simple className=\"search-component\">\n        <FormControl\n          onChange={this.handleChange}\n          value={this.state.searchValue}\n          onKeyDown={this.handleKeyDown}\n          placeholder=\"请输入用户名\"\n          type=\"text\"\n        />\n        {this.state.empty ? (\n          <Icon\n            type=\"uf-close-c\"\n            onClick={this.emptySearch}\n            className=\"empty-search\"\n          />\n        ) : null}\n\n        <InputGroup.Button onClick={this.handleSearch} shape=\"border\">\n          <Icon type=\"uf-search\" />\n        </InputGroup.Button>\n      </InputGroup>\n    );\n  }\n}\n\nconst columns9 = [\n  {\n    title: \"姓名\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst userData = [\n  { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"大侠\", key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"大侠\", key: \"3\" }\n];\n\nclass Demo9 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: userData\n    };\n  }\n\n  handleSearch = value => {\n    if (value === \"\") {\n      return this.setState({\n        data: userData\n      });\n    }\n    let regExp = new RegExp(value, \"ig\");\n    let data = userData.filter(item => regExp.test(item.a));\n    this.setState({\n      data\n    });\n  };\n\n  handleEmpty = () => {\n    this.setState({\n      data: userData\n    });\n  };\n\n  render() {\n    return (\n      <div>\n        <div className=\"clearfix\">\n          <Search onSearch={this.handleSearch} onEmpty={this.handleEmpty} />\n        </div>\n        <Table columns={columns9} data={this.state.data} />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 搜索刷新表格数据" }, { "example": _react2['default'].createElement(Demo10, null), "title": " 无数据时显示", "code": "/**\n*\n* @title 无数据时显示\n* @description 无数据时显示效果展示（可自定义）\n *\n* import {Table} from 'tinper-bee';\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\nconst columns10 = [\n    {\n      title: \"Name\",\n      dataIndex: \"name\",\n      key: \"name\",\n      width: \"40%\"\n    },\n    {\n      title: \"Age\",\n      dataIndex: \"age\",\n      key: \"age\",\n      width: \"30%\"\n    },\n    {\n      title: \"Address\",\n      dataIndex: \"address\",\n      key: \"address\"\n    }\n  ];\n  \n  const data10 = [\n    \n  ];\n\n  const emptyFunc = () => <span>这里没有数据！</span>\n  \n  class Demo10 extends Component {\n    render() {\n      return <Table columns={columns10} data={data10} emptyText={emptyFunc} />;\n    }\n  }\n\n", "desc": " 无数据时显示效果展示（可自定义）" }, { "example": _react2['default'].createElement(Demo11, null), "title": " 列排序", "code": "/**\n* @description  column中增加sorter: (a, b) => a.c - b.c 这里的a,b代表前后两个数据，c代表比较当前对象的字段名称\n* @title 列排序\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee';\nimport sort from \"tinper-bee/lib/sort.js\";;\nlet ComplexTable = sort(Table, Icon);\nconst columns11 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst data11 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\n];\n\nconst defaultProps11 = {\n  prefixCls: \"bee-table\"\n};\nclass Demo11 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      sortOrder: \"\",\n      data: data11\n    };\n  }\n  render() {\n\n    return <ComplexTable columns={columns11} data={this.state.data} />;\n  }\n}\nDemo11.defaultProps = defaultProps11;\n\n\n", "desc": "  column中增加sorter: (a, b) => a.c - b.c 这里的a,b代表前后两个数据，c代表比较当前对象的字段名称" }, { "example": _react2['default'].createElement(Demo12, null), "title": " 全选功能", "code": "/**\n*\n* @title 全选功能\n* @description 点击表格左列按钮即可选中，并且在选中的回调函数中能获取到选中的数据（未使用封装好的全选功能）\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Checkbox } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/multiSelect.js\";;\n\nconst columns12 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst data12 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\",_checked:true },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" ,_checked:true},\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" ,_checked:true}\n];\n//拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常\nlet MultiSelectTable  = multiSelect(Table, Checkbox);\n\nclass Demo12 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: data12\n    };\n  }\n  getSelectedDataFunc = data => {\n    console.log(data);\n  };\n  \n  render() {\n    let multiObj = {\n      type: \"checkbox\"\n    };\n    return (\n      <MultiSelectTable \n        columns={columns12} \n        data={data12} \n        multiSelect={multiObj}\n        getSelectedDataFunc={this.getSelectedDataFunc}/>\n    );\n  }\n}\n\n", "desc": " 点击表格左列按钮即可选中，并且在选中的回调函数中能获取到选中的数据（未使用封装好的全选功能）" }, { "example": _react2['default'].createElement(Demo13, null), "title": " 多列排序、全选功能、合计", "code": "/**\n *\n * @title 多列排序、全选功能、合计\n * @description 多列排序、全选功能、合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）新增回调函数(sorterClick)\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table, Icon, Button, Checkbox } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/multiSelect.js\";;\nimport sort from \"tinper-bee/lib/sort.js\";;\nimport sum from \"tinper-bee/lib/sum.js\";;\n\nconst columns13 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    className:'dfasd',\n    width: 200\n  },\n  {\n    title: \"功力指数\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c,\n    sorterClick:(data,type)=>{//排序的回调函数\n      //type value is up or down\n      console.log(\"data\",data);\n    }\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c,\n    sorterClick:(data,type)=>{//排序的回调函数\n      //type value is up or down\n      console.log(\"data\",data);\n    }\n  },\n  {\n    title: \"成绩\",\n    dataIndex: \"e\",\n    key: \"e\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c,\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width: 200\n  }\n];\n\nconst data13 = [\n  { a: \"杨过\", b: 675, c: 30, d: \"内行\",e:100, key: \"2\" },\n  { a: \"令狐冲\", b: 43, c: 41, d: \"大侠\",e:90, key: \"1\" },\n  { a: \"令狐冲1\", b: 43, c: 81, d: \"大侠\", e:120,key: \"4\" },\n  { a: \"令狐冲2\", b: 43, c: 81, d: \"大侠\", e:130,key: \"5\" },\n  { a: \"郭靖\", b: 153, c: 25, d: \"大侠\",e:90, key: \"3\" }\n];\n\n\n//拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常\nlet ComplexTable = multiSelect(sum(sort(Table, Icon)), Checkbox);\n\nclass Demo13 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data13: data13,\n      selectedRow: this.selectedRow,\n      selectDisabled: this.selectDisabled\n    };\n  }\n  getSelectedDataFunc = data => {\n    console.log(data);\n  };\n  selectDisabled = (record, index) => {\n    // console.log(record);\n    if (index === 1) {\n      return true;\n    }\n    return false;\n  };\n  selectedRow = (record, index) => {\n    // console.log(record);\n    if (index === 0) {\n      return true;\n    }\n    return false;\n  };\n  onClick = () => {\n    this.setState({\n      selectedRow: function() {}\n    });\n  };\n\n  render() {\n    let multiObj = {\n      type: \"checkbox\"\n    };\n    let sortObj = {\n      mode:'multiple'\n    }\n   \n    return (\n      <div>\n        <Button className=\"editable-add-btn\" onClick={this.onClick}>\n          change selectedRow\n        </Button>\n        <ComplexTable\n          selectDisabled={this.state.selectDisabled}\n          selectedRow={this.state.selectedRow}\n          columns={columns13}\n          data={this.state.data13}\n          multiSelect={multiObj}\n          sort={sortObj}\n          getSelectedDataFunc={this.getSelectedDataFunc}\n        />\n      </div>\n    );\n  }\n}\n", "desc": " 多列排序、全选功能、合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）新增回调函数(sorterClick)" }, { "example": _react2['default'].createElement(Demo14, null), "title": " 编辑态表格", "code": "/**\n*\n* @title 编辑态表格\n* @description 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）\n*\n*/\n\nimport React from \"react\";\nimport { Table, Select, Datepicker, Checkbox, Input, Icon, Form, Button, Tooltip, Animate } from 'tinper-bee';\nimport renderInput from \"tinper-bee/lib/InputRender.js\";;\nimport renderDate from \"tinper-bee/lib/DateRender.js\";;\nimport renderSelect from \"tinper-bee/lib/SelectRender.js\";;\n\nconst InputRender = renderInput(Form, Input, Icon);\nconst DateRender = renderDate(Datepicker, Icon);\nconst SelectRender = renderSelect(Select, Icon);\n\nconst format = \"YYYY-MM-DD\";\nconst format2 = \"YYYY-MM\";\nconst format3 = \"YYYY-MM-DD HH:mm:ss\";\n\nconst dateInputPlaceholder = \"选择日期\";\nconst dateInputPlaceholder2 = \"选择年月\";\nconst dataSource = [\n  {\n    key: \"boyuzhou\",\n    value: \"jack\"\n  },\n  {\n    key: \"renhualiu\",\n    value: \"lucy\"\n  },\n  {\n    key: \"yuzhao\",\n    value: \"yiminghe\"\n  }\n];\nclass Demo14 extends React.Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      dataSource: [\n        {\n          key: \"0\",\n          name: \"沉鱼\",\n          number: \"10\",\n          age: \"y\",\n          address: \"jack\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"1\",\n          name: \"落雁\",\n          number: \"100\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"2\",\n          name: \"闭月\",\n          number: \"1000\",\n          age: \"n\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"3\",\n          name: \"羞花\",\n          number: \"9999\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        }\n      ],\n      count: 4\n    };\n    this.columns = [\n      {\n        title: \"普通输入\",\n        dataIndex: \"name\",\n        key: \"name\",\n        width: \"150px\",\n        render: (text, record, index) => (\n          <InputRender\n            name=\"name\"\n            placeholder=\"请输入姓名\"\n            value={text}\n            isclickTrigger={true}\n            check={this.check}\n            onChange={this.onInputChange(index, \"name\")}\n            isRequire={true}\n            method=\"blur\"\n            errorMessage={\n              <Tooltip overlay={\"错误提示\"}>\n                <Icon type=\"uf-exc-c\" className=\"\" />\n              </Tooltip>\n            }\n          />\n        )\n      },\n      {\n        title: \"货币输入\",\n        dataIndex: \"number\",\n        key: \"number\",\n        width: \"150px\",\n        render: (text, record, index) => (\n          <InputRender\n            format=\"Currency\"\n            name=\"number\"\n            placeholder=\"请输入货币\"\n            value={text}\n            isclickTrigger={true}\n            check={this.check}\n            onChange={this.onInputChange(index, \"number\")}\n            isRequire={true}\n            method=\"blur\"\n            errorMessage={\n              <Tooltip overlay={\"错误提示\"}>\n                <Icon type=\"uf-exc-c\" className=\"\" />\n              </Tooltip>\n            }\n            reg={/^[0-9]+$/}\n          />\n        )\n      },\n      {\n        title: \"复选\",\n        dataIndex: \"age\",\n        key: \"age\",\n        width: \"100px\",\n        render: (text, record, index) => (\n          <Checkbox\n            checked={record.age}\n            onChange={this.onCheckChange(index, \"age\")}\n          />\n        )\n      },\n      {\n        title: \"下拉框\",\n        dataIndex: \"address\",\n        key: \"address\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <SelectRender\n              dataSource={dataSource}\n              isclickTrigger={true}\n              value={text}\n              onChange={this.onSelectChange(index, \"address\")}\n            >\n              <Option value=\"jack\">boyuzhou</Option>\n              <Option value=\"lucy\">renhualiu</Option>\n              <Option value=\"disabled\" disabled>\n                Disabled\n              </Option>\n              <Option value=\"yiminghe\">yuzhao</Option>\n            </SelectRender>\n          );\n        }\n      },\n      {\n        title: \"年月日\",\n        dataIndex: \"datepicker\",\n        key: \"datepicker\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <DateRender\n              value={text}\n              isclickTrigger={true}\n              format={format}\n              onSelect={this.onDateSelect}\n              onChange={this.onDateChange}\n              placeholder={dateInputPlaceholder}\n            />\n          );\n        }\n      },\n      {\n        title: \"年月\",\n        dataIndex: \"MonthPicker\",\n        key: \"MonthPicker\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <DateRender\n              value={text}\n              type=\"MonthPicker\"\n              isclickTrigger={true}\n              format={format2}\n              onSelect={this.onSelect}\n              onChange={this.onChange}\n              placeholder={dateInputPlaceholder2}\n            />\n          );\n        }\n      }\n    ];\n  }\n  check = (flag, obj) => {\n    console.log(flag);\n    console.log(obj);\n  };\n\n  onInputChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onCheckChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onSelectChange = (index, key) => {\n    return value => {\n      console.log(`selected ${value}`);\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onDateChange = d => {\n    console.log(d);\n  };\n  onDateSelect = d => {\n    console.log(d);\n  };\n  onDelete = index => {\n    return () => {\n      const dataSource = [...this.state.dataSource];\n      dataSource.splice(index, 1);\n      this.setState({ dataSource });\n    };\n  };\n  handleAdd = () => {\n    const { count, dataSource } = this.state;\n    const newData = {\n      key: count,\n      name: `凤姐 ${count}`,\n      age: 32,\n      address: \"jack\",\n      datepicker: \"2017-06-12\",\n      MonthPicker: \"2017-02\"\n    };\n    this.setState({\n      dataSource: [...dataSource, newData],\n      count: count + 1\n    });\n  };\n\n  getBodyWrapper = body => {\n    return (\n      <Animate\n        transitionName=\"move\"\n        component=\"tbody\"\n        className={body.props.className}\n      >\n        {body.props.children}\n      </Animate>\n    );\n  };\n  getData = () => {\n    console.log(this.state.dataSource);\n  };\n  render() {\n    const { dataSource } = this.state;\n    const columns = this.columns;\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.handleAdd}\n        >\n          添加一行\n        </Button>\n        <Button\n          style={{marginLeft:\"5px\"}}\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.getData}\n        >\n          获取数据\n        </Button>\n        <Table\n          data={dataSource}\n          columns={columns}\n          getBodyWrapper={this.getBodyWrapper}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）" }, { "example": _react2['default'].createElement(Demo15, null), "title": " 表格行/列合并", "code": "/**\n*\n* @title 表格行/列合并\n* @description 表头只支持列合并，使用 column 里的 colSpan 进行设置。表格支持行/列合并，使用 render 里的单元格属性 colSpan 或者 rowSpan 设值为 0 时，设置的表格不会渲染。\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\n\nconst renderContent = (value, row, index) => {\n  const obj = {\n    children: value,\n    props: {},\n  };\n  if (index === 4) {\n    obj.props.colSpan = 0;\n  }\n  return obj;\n};\n\nconst columns = [{\n  title: 'Name',\n  key: \"name\",\n  dataIndex: 'name',\n  render: (text, row, index) => {\n    if (index < 4) {\n      return <a href=\"#\">{text}</a>;\n    }\n    return {\n      children: <a href=\"#\">{text}</a>,\n      props: {\n        colSpan: 5,\n      },\n    };\n  },\n}, {\n  title: 'Age',\n  key: \"Age\",\n  dataIndex: 'age',\n  render: renderContent,\n}, {\n  title: 'Home phone',\n  colSpan: 2,\n  key: \"tel\",\n  dataIndex: 'tel',\n  render: (value, row, index) => {\n    const obj = {\n      children: value,\n      props: {},\n    };\n    if (index === 2) {\n      obj.props.rowSpan = 2;\n    }\n    if (index === 3) {\n      obj.props.rowSpan = 0;\n    }\n    if (index === 4) {\n      obj.props.colSpan = 0;\n    }\n    return obj;\n  },\n}, {\n  title: 'Phone',\n  colSpan: 0,\n  key: \"phone\",\n  dataIndex: 'phone',\n  render: renderContent,\n}, {\n  title: 'Address',\n  key: \"address\",\n  dataIndex: 'address',\n  render: renderContent,\n}];\n\nconst data = [{\n  key: '1',\n  name: 'John Brown',\n  age: 32,\n  tel: '0571-22098909',\n  phone: 18889898989,\n  address: 'New York No. 1 Lake Park',\n}, {\n  key: '2',\n  name: 'Jim Green',\n  tel: '0571-22098333',\n  phone: 18889898888,\n  age: 42,\n  address: 'London No. 1 Lake Park',\n}, {\n  key: '3',\n  name: 'Joe Black',\n  age: 32,\n  tel: '0575-22098909',\n  phone: 18900010002,\n  address: 'Sidney No. 1 Lake Park',\n}, {\n  key: '4',\n  name: 'Jim Red',\n  age: 18,\n  tel: '0575-22098909',\n  phone: 18900010002,\n  address: 'London No. 2 Lake Park',\n}, {\n  key: '5',\n  name: 'Jake White',\n  age: 18,\n  tel: '0575-22098909',\n  phone: 18900010002,\n  address: 'Dublin No. 2 Lake Park',\n}];\n\nclass Demo15 extends Component {\n  render() {\n    return (\n       <Table columns={columns} data={data}/>\n    );\n  }\n}\n\n\n\n", "desc": " 表头只支持列合并，使用 column 里的 colSpan 进行设置。表格支持行/列合并，使用 render 里的单元格属性 colSpan 或者 rowSpan 设值为 0 时，设置的表格不会渲染。" }, { "example": _react2['default'].createElement(Demo16, null), "title": " 嵌套子表格", "code": "/**\n*\n* @title 嵌套子表格\n* @description 通过expandedRowRender参数来实现子表格\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\nimport dragColumn from \"tinper-bee/lib/dragColumn\";;\nconst DragColumnTable = dragColumn(Table);\nconst columns16 = [\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\", \n    width:200,\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert(\"这是第\" + index + \"列，内容为:\" + text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  },\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 250 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  \n];\nconst columns17 = [\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width:200,\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert(\"这是第\" + index + \"列，内容为:\" + text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  },\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  \n];\n\nconst data16 = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\n\nclass Demo16 extends Component {\n  constructor(props){\n    super(props);\n    this.state={\n      data_obj:{}\n    }\n  }\n  expandedRowRender = (record, index, indent) => {\n    let height = 42 * (this.state.data_obj[record.key].length+ 2);\n    \n    return (\n      <Table\n        columns={columns17}\n        style={{height:height}}\n        data={this.state.data_obj[record.key]} \n       \n      />\n    );\n  };\n  getData=(expanded, record)=>{\n    //当点击展开的时候才去请求数据\n    let new_obj = Object.assign({},this.state.data_obj);\n    if(expanded){\n      if(record.key==='1'){\n        new_obj[record.key] = [\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n          { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" }\n        ]\n        this.setState({\n          data_obj:new_obj\n        })\n      }else{\n        new_obj[record.key] = [\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" }\n        ]\n        this.setState({\n          data_obj:new_obj\n        })\n      }\n    }\n  }\n  haveExpandIcon=(record, index)=>{\n    //控制是否显示行展开icon，该参数只有在和expandedRowRender同时使用才生效\n    if(index == 0){\n      return true;\n    }\n    return false;\n  }\n  render() {\n    return (\n      <DragColumnTable\n        columns={columns16}\n        data={data16}\n        onExpand={this.getData}\n        expandedRowRender={this.expandedRowRender}\n        scroll={{x:true}}\n        dragborder={true} \n        draggable={true} \n        title={currentData => <div>标题: 这是一个标题</div>}\n        footer={currentData => <div>表尾: 我是小尾巴</div>}\n      />\n    );\n  }\n}\n\n\n", "desc": " 通过expandedRowRender参数来实现子表格" }, { "example": _react2['default'].createElement(Demo17, null), "title": " loading属性指定表格是否加载中", "code": "/**\n*\n* @title loading属性指定表格是否加载中\n* @description  loading可以传boolean或者obj对象，obj为bee-loading组件的参数类型\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Button } from 'tinper-bee';\n\nconst columns17 = [\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert('这是第'+index+'列，内容为:'+text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  }\n];\n\nconst data17 = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\nclass Demo17 extends Component {\n  constructor(props){\n    super(props);\n    this.state = {\n      loading : true\n    }\n  }\n  changeLoading = () => {\n    this.setState({\n      loading : !this.state.loading\n    })\n  }\n  render() {\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.changeLoading}\n        >\n          切换loading\n        </Button>\n        <Table\n          columns={columns17}\n          data={data17}\n          title={currentData => <div>标题: 这是一个标题</div>}\n          footer={currentData => <div>表尾: 我是小尾巴</div>}\n          // loading={this.state.loading}或者是boolean\n          loading={{show:this.state.loading,loadingType:\"line\"}}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": "  loading可以传boolean或者obj对象，obj为bee-loading组件的参数类型" }, { "example": _react2['default'].createElement(Demo18, null), "title": " 合并标题后的合计,且支持多字段统计", "code": "/**\n *\n * @title 合并标题后的合计,且支持多字段统计\n * @description 合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table, Button } from 'tinper-bee'; \nimport sum from \"tinper-bee/lib/sum.js\";;\n \nlet ComplexTable = sum(Table);\n\nconst columns = [\n  {\n    title: \"Name\",\n    dataIndex: \"name\",\n    key: \"name\",\n    width: 100,\n    fixed: \"left\"\n  },\n  {\n    title: \"Other\",\n    children: [\n      {\n        title: \"Age\",\n        dataIndex: \"age\",\n        key: \"age\",\n        width: 200,\n        sumCol: true,\n      },\n      {\n        title: \"Address\",\n        children: [\n          {\n            title: \"Street\",\n            dataIndex: \"street\",\n            key: \"street\",\n            width: 200\n          },\n          {\n            title: \"Block\",\n            children: [\n              {\n                title: \"Building\",\n                dataIndex: \"building\",\n                key: \"building\",\n                width: 100\n              },\n              {\n                title: \"Door No.\",\n                dataIndex: \"number\",\n                key: \"number\",\n                // width: 100,\n                sumCol: true,\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  // {\n  //   title: \"Company\",\n  //   children: [\n  //     {\n  //       title: \"Company Address\",\n  //       dataIndex: \"companyAddress\",\n  //       key: \"companyAddress\",\n  //       width: 100,\n  //     },\n  //     {\n  //       title: \"Company Name\",\n  //       dataIndex: \"companyName\",\n  //       key: \"companyName\",\n  //       width: 100,\n  //     }\n  //   ]\n  // },\n  {\n    title: \"Gender\",\n    dataIndex: \"gender\",\n    key: \"gender\",\n    width: 80,\n    fixed: \"right\"\n  }\n];\n\nfunction getData(){\n  const data = [];\n  for (let i = 0; i < 5; i++) {\n    data.push({\n      key: i,\n      name: \"John Brown\"+i,\n      age: i + Math.floor(Math.random()*10),\n      street: \"Lake Park\",\n      building: \"C\",\n      number: 20 *  Math.floor(Math.random()*10),\n      companyAddress: \"Lake Street 42\",\n      companyName: \"SoftLake Co\",\n      gender: \"M\"\n    });\n  }\n  return data;\n}\n\nclass Demo18 extends Component {\n  \n  constructor(props) {\n    super(props);\n    this.state = {\n      data: getData()\n    };\n  }\n\n  changeData = ()=>{\n    this.setState({\n      data: getData()\n    });\n  }\n\n  render() {\n    const {data} = this.state;\n    return (\n      <div>\n        <Button \n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.changeData}\n        >\n          动态设置数据源\n        </Button>\n\n         <ComplexTable \n          columns={columns}\n          data={data}\n          bordered\n          // scroll={{ x: \"130%\", y: 140 }}\n        />\n      </div>\n    );\n  }\n}\n\n", "desc": " 合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）" }, { "example": _react2['default'].createElement(Demo19, null), "title": " 编辑态表格", "code": "/**\n*\n* @title 编辑态表格\n* @description 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）\n*\n*/\n\nimport React from \"react\";\nimport { Table, Select, Form, Input, Icon, Tooltip, Animate, Button } from 'tinper-bee';\nimport renderInput from \"tinper-bee/lib/InputRender.js\";;\nimport renderSelect from \"tinper-bee/lib/SelectRender.js\";;\n\nconst InputRender = renderInput(Form, Input, Icon);\nconst SelectRender = renderSelect(Select, Icon);\n\nconst Option = Select.Option;\n\nconst dataSource = [\n  {\n    key: \"boyuzhou\",\n    value: \"jack\"\n  },\n  {\n    key: \"renhualiu\",\n    value: \"lucy\"\n  },\n  {\n    key: \"yuzhao\",\n    value: \"yiminghe\"\n  }\n];\nclass Demo19 extends React.Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      dataSource: [\n        {\n          key: \"0\",\n          name: \"沉鱼\",\n          number: \"10\",\n          age: \"y\",\n          address: \"jack\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"1\",\n          name: \"落雁\",\n          number: \"100\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"2\",\n          name: \"闭月\",\n          number: \"1000\",\n          age: \"n\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"3\",\n          name: \"羞花\",\n          number: \"9999\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        }\n      ],\n      count: 4\n    };\n    this.columns = [ \n      {\n        title: \"货币输入\",\n        dataIndex: \"number\",\n        key: \"number\",\n        width: \"150px\",\n        render: (text, record, index) => (\n          <InputRender\n            format=\"Currency\"\n            name=\"name\"\n            placeholder=\"请输入姓名\"\n            value={text}\n            isclickTrigger={true}\n            check={this.check}\n            onChange={this.onInputChange(index, \"name\")}\n            isRequire={true}\n            method=\"blur\"\n            errorMessage={\n              <Tooltip overlay={\"错误提示\"}>\n                <Icon type=\"uf-exc-c\" className=\"\" />\n              </Tooltip>\n            }\n            reg={/^[0-9]+$/}\n          />\n        )\n      },\n       \n      {\n        title:(<div>下拉框的div</div>),\n        dataIndex: \"address\",\n        key: \"address\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <SelectRender\n              dataSource={dataSource}\n              isclickTrigger={true}\n              value={text}\n              onChange={this.onSelectChange(index, \"address\")}\n              onFocus={this.handFocus}\n              onBlur={this.onBlur}\n              autofocus\n            >\n              <Option value=\"jack\">boyuzhou</Option>\n              <Option value=\"lucy\">renhualiu</Option>\n              <Option value=\"disabled\" disabled>\n                Disabled\n              </Option>\n              <Option value=\"yiminghe\">yuzhao</Option>\n            </SelectRender>\n          );\n        }\n      }\n    ];\n  }\n  check = (flag, obj) => {\n    console.log(flag);\n    console.log(obj);\n  };\n\n  handFocus = (value,e) => {\n    console.log(value+` 获取焦点事件`);\n  };\n  onBlur = (value,e) => {\n    console.log(value+` onBlur`);\n  };\n\n  onInputChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n\n  onSelectChange = (index, key) => {\n    return value => {\n      console.log(`selected ${value}`);\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n\n  handleAdd = () => {\n    const { count, dataSource } = this.state;\n    const newData = {\n      key: count,\n      name: `凤姐 ${count}`,\n      age: 32,\n      address: \"jack\",\n      datepicker: \"2017-06-12\",\n      MonthPicker: \"2017-02\"\n    };\n    this.setState({\n      dataSource: [...dataSource, newData],\n      count: count + 1\n    });\n  };\n\n  getBodyWrapper = body => {\n    return (\n      <Animate\n        transitionName=\"move\"\n        component=\"tbody\"\n        className={body.props.className}\n      >\n        {body.props.children}\n      </Animate>\n    );\n  };\n  getData = () => {\n    console.log(this.state.dataSource);\n  };\n  render() {\n    const { dataSource } = this.state;\n    const columns = this.columns;\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.handleAdd}\n        >\n          添加一行\n        </Button>\n        <Button\n          style={{marginLeft:\"5px\"}}\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.getData}\n        >\n          获取数据\n        </Button>\n        <Table\n          data={dataSource}\n          columns={columns}\n          getBodyWrapper={this.getBodyWrapper}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）" }, { "example": _react2['default'].createElement(Demo20, null), "title": " 简单表格选中行的背景色、表头表尾", "code": "/**\n*\n* @title 简单表格选中行的背景色、表头表尾\n* @description\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Tooltip, Button } from 'tinper-bee';\n\nconst columns = [\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width:80 , className:\"rowClassName\"},\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n];\n\nconst data = [\n  { a: \"令狐冲\", b: \"男\", c: 41, key: \"1\" },\n  { a: \"杨过叔叔的女儿黄蓉\", b: \"男\", c: 67, key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, key: \"3\" }\n];\n\nclass Demo26 extends Component {\n\n  constructor(props){\n      super(props);\n      this.state = {\n        data: data,\n        selectedRowIndex: 0\n      }\n  }\n\n  render() {\n    return (\n      <Table\n        columns={columns}\n        data={data}\n        rowClassName={(record,index,indent)=>{\n          if (this.state.selectedRowIndex == index) {\n              return 'selected';\n          } else {\n              return '';\n          }\n        }}\n        onRowClick={(record,index,indent)=>{\n          this.setState({ \n              selectedRowIndex: index\n          });\n        }}\n        title={currentData => <div>标题: 这是一个标题</div>}\n        footer={currentData => <div>表尾: 我是小尾巴</div>}\n      /> \n    );\n  }\n}\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo21, null), "title": " 根据列进行过滤", "code": "/**\n*\n* @title 根据列进行过滤\n* @description 点击表格右侧按钮，进行表格列的数据过滤。可以自定义设置显示某列，通过ifshow属性控制，默认为true都显示。afterFilter为过滤之后的回调函数\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Popover, Checkbox, Icon } from 'tinper-bee';\nimport filterColumn from \"tinper-bee/lib/filterColumn\";;\nimport sum from \"tinper-bee/lib/sum\";;\n\nconst data21 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行',e: \"操作\", key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠',e: \"操作\", key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠',e: \"操作\", key: \"3\" }\n];\n\nconst FilterColumnTable = filterColumn(Table, Popover, Icon);\n\nconst defaultProps21 = {\n  prefixCls: \"bee-table\"\n};\n\nclass Demo21 extends Component {\n  constructor(props) {\n    super(props);\n    this.state ={\n              columns21: [\n                {\n                  title: \"名字\",\n                  dataIndex: \"a\",\n                  key: \"a\"\n                  // width: 100\n                },\n                {\n                  title: \"性别\",\n                  dataIndex: \"b\",\n                  key: \"b\",\n                  // width: 100\n                },\n                {\n                  title: \"年龄\",\n                  dataIndex: \"c\",\n                  key: \"c\",\n                  ifshow:false,\n                  // width: 200,\n                  // sumCol: true,\n                  sorter: (a, b) => a.c - b.c\n                },\n                {\n                  title: \"武功级别\",\n                  dataIndex: \"d\",\n                  key: \"d\"\n                },\n                {\n                  title: \"操作\",\n                  dataIndex: \"e\",\n                  key: \"e\",\n                  render(text, record, index){\n                    return (\n                      <div  title={text} >\n                          <a href=\"#\"\n                              tooltip={text}\n                              onClick={() => {\n                                alert('这是第'+index+'列，内容为:'+text);\n                              }}\n                              // style={{\n                              //     position: 'absolute',\n                              //     top: 5,\n                              //     left: 0\n                              // }}\n                            >\n                              一些操作\n                            </a>\n                      </div>\n                    );\n                  }\n                }\n              ]};\n  }\n  afterFilter = (optData,columns)=>{\n    if(optData.key == 'b'){\n        if(optData.ifshow){\n          columns[2].ifshow = false;\n        }else{\n          columns[2].ifshow = true;\n        }\n        this.setState({\n          columns21 :columns,\n          showFilterPopover:true\n        });\n    }\n    \n  }\n \n  render() {\n    \n    return <FilterColumnTable columns={this.state.columns21} data={data21} afterFilter={this.afterFilter} showFilterPopover={this.state.showFilterPopover}/>;\n  }\n}\nDemo21.defaultProps = defaultProps21;\n\n\n", "desc": " 点击表格右侧按钮，进行表格列的数据过滤。可以自定义设置显示某列，通过ifshow属性控制，默认为true都显示。afterFilter为过滤之后的回调函数" }, { "example": _react2['default'].createElement(Demo22, null), "title": " 列的拖拽，交换表头的顺序", "code": "/**\n*\n* @title 列的拖拽，交换表头的顺序\n* @description 点击列的表头，进行左右拖拽\n*/\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee'; \nimport dragColumn from \"tinper-bee/lib/dragColumn\";;\n\n\nconst columns22 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 200\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width: 200,\n  }\n];\n\nconst data22 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\n];\n\nconst DragColumnTable = dragColumn(Table);\n\nconst defaultProps22 = {\n  prefixCls: \"bee-table\"\n};\n\nclass Demo22 extends Component {\n  constructor(props) {\n    super(props); \n  }\n \n  render() {\n    return <DragColumnTable columns={columns22} data={data22} bordered\n    \n    draggable={true} \n    />;\n  }\n}\nDemo22.defaultProps = defaultProps22;\n\n\n", "desc": " 点击列的表头，进行左右拖拽" }, { "example": _react2['default'].createElement(Demo23, null), "title": " 拖拽调整列的宽度", "code": "/**\n*\n* @title 拖拽调整列的宽度\n* @description 注：不支持tree结构的表头、合并表头的table【目前支持表头拖拽宽度、交互列一起使用】\n*/\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee'; \nimport dragColumn from \"tinper-bee/lib/dragColumn\";;\n\n\nconst columns23 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: '200',\n    fixed:'left'\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: '600'\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: '200',\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c\n  }, \n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width: 500,\n  }\n];\n\nconst data23 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"31\" } , { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"21\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"11\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"32\" } , { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"22\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"12\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\n];\n\nconst DragColumnTable = dragColumn(Table);\n\nconst defaultProps23 = {\n  prefixCls: \"bee-table\"\n};\n\nclass Demo23 extends Component {\n  constructor(props) {\n    super(props); \n  }\n\n  render() {\n    return <DragColumnTable columns={columns23} data={data23} bordered\n    dragborder={true} \n    draggable={true} \n    scroll={{y:200}}\n    onDropBorder ={(e,width)=>{\n      console.log(width+\"--调整列宽后触发事件\",e.target);\n    }}\n    />;\n  }\n}\nDemo23.defaultProps = defaultProps23;\n\n\n", "desc": " 注：不支持tree结构的表头、合并表头的table【目前支持表头拖拽宽度、交互列一起使用】" }, { "example": _react2['default'].createElement(Demo24, null), "title": " 动态设置固、取消固定列", "code": "/**\n*\n* @title 动态设置固、取消固定列\n* @description 动态设置固、取消固定列\n* @description 动态固定列设置 一个table动态设置一个方向【fixed: \"left\"，fixed: \"right\"】。\n*\n*/\nimport React, { Component } from 'react';\nimport { Table, Dropdown, Menu, Icon } from 'tinper-bee';\n\n\nconst { Item } = Menu;\n// const columns24 = [\n//   {\n//     title: \"Full Name\",\n//     width: 100,\n//     dataIndex: \"name\",\n//     key: \"name\",\n//     fixed: \"left\",\n//   },\n//   { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\", fixed: \"left\" },\n//   { title: \"Column 1\", dataIndex: \"address\", key: \"1\"  },\n//   { title: \"Column 2\", dataIndex: \"address2\", key: \"2\" },\n//   { title: \"Column 3\", dataIndex: \"address\", key: \"3\" },\n//   { title: \"Column 4\", dataIndex: \"address\", key: \"4\" },\n//   { title: \"Column 24\", dataIndex: \"address\", key: \"24\" },\n//   { title: \"Column 6\", dataIndex: \"address\", key: \"6\" },\n//   { title: \"Column 7\", dataIndex: \"address\", key: \"7\" },\n//   { title: \"Column 8\", dataIndex: \"address\", key: \"8\" }\n// ];\n\n\nconst columns24 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100,\n    fixed: \"left\",\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100,\n    fixed: \"left\",\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 100, \n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width: 150 \n  },\n  {\n    title: \"对手\",\n    dataIndex: \"e\",\n    key: \"e\",\n    width: 100 \n  },\n  {\n    title: \"帮派\",\n    dataIndex: \"f\",\n    key: \"f\",\n    width: 100 \n  },\n  {\n    title: \"武功类型\",\n    dataIndex: \"g\",\n    key: \"g\",\n    width: 100 \n  },\n  {\n    title: \"师傅\",\n    dataIndex: \"k\",\n    key: \"k\",\n    // width: 100 \n  },\n  {\n    title: \"攻击系数\",\n    dataIndex: \"h\",\n    key: \"h\",\n    width: 100 \n  }\n];\n\n\nconst data24 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行',e:'黄荣',f:'古墓派',g:'剑术',k:'小龙女',h:'0.5', key: \"1\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'剑客',e:'自己',f:'无',g:'剑术',k:'无',h:'0.5', key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠',e:'黄荣',f:'朝廷',g:'内容',k:'外侵势力',h:'0.6', key: \"3\" }\n]; \n \nclass Demo24 extends Component {\n\n  constructor(props) {\n    super(props);\n    // let columns = [];\n    // Object.assign(columns,columns24);\n    // columns.forEach(da=>da.onHeadCellClick=this.onHeadCellClick);\n    this.state = {\n      columns:columns24\n    }\n  }\n\n  \n    onSelect = ({key,item})=>{ \n      console.log(`${key} selected`); //获取key\n      let currentObject = item.props.data; //获取选中对象的数据\n      let {columns} = this.state;\n      let fixedCols = [];\n      let nonColums = [];\n      columns.find(da=>{\n        if(da.key == key){\n          da.fixed?delete da.fixed:da.fixed = 'left';\n        }\n        da.fixed?fixedCols.push(da):nonColums.push(da);\n      });\n    \n      columns = [...fixedCols,...nonColums]\n\n      this.setState({\n        columns\n      });\n    }\n  //表头增加下拉菜单\n  renderColumnsDropdown(columns) {\n    const icon ='uf-arrow-down';\n    \n    return columns.map((originColumn,index) => {\n      let column = Object.assign({}, originColumn);\n      let menuInfo = [], title='锁定';\n      if(originColumn.fixed){\n        title = '解锁'\n      }\n      menuInfo.push({\n        info:title,\n        key:originColumn.key,\n        index:index\n      });\n      const menu = (\n        <Menu onSelect={this.onSelect} >{\n            menuInfo.map(da=>{ return <Item key={da.key} data={da} >{da.info}</Item> })\n            }\n        </Menu>)\n      column.title = (\n        <span className='title-con drop-menu'>\n          {column.title}\n          <Dropdown\n            trigger={['click']} \n            overlay={menu}\n            animation=\"slide-up\"\n          >\n           <Icon type={icon}/>\n          </Dropdown> \n          \n        </span>\n      );\n      return column;\n    });\n    \n  }\n\n  render() {\n    let {columns} = this.state;\n     columns = this.renderColumnsDropdown(columns);\n    return <div className=\"demo24\">\n            <Table columns={columns} data={data24} scroll={{ x: \"110%\", y: 240 }}/>\n          </div>;\n  }\n}\n\n", "desc": " 动态设置固、取消固定列", "scss_code": "th{\n    .drop-menu{\n        .uf{\n            font-size: 12px;\n            visibility: hidden;\n            margin-left: 15px;\n        }\n        \n    \n    }\n    &:hover{\n        .uf{\n                visibility: visible;\n        }\n    }\n\n}\n\n" }, { "example": _react2['default'].createElement(Demo25, null), "title": " 根据列进行过滤、拖拽交换列综合使用案例", "code": "/**\n* @title 根据列进行过滤、拖拽交换列综合使用案例\n* @description 新增属性【checkMinSize 当前表格显示最少列数 】 1. 当所有列都设置了width属性后，需要给table增加checkMinSize属性 2. 所有列不设置width。\n*/\n\n/**注：\n *  在使用过滤列的时候，如果每一列都设置了width属性，勾选的时候回出现重复列问题。当表格的宽度小于合计宽度的时候，就会出现此问题。 \n *  必须有个别列不设置width属性，即可避免此问题。\n */\nimport React, { Component } from 'react';\nimport { Table, Popover, Checkbox, Icon } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/multiSelect\";;\nimport filterColumn from \"tinper-bee/lib/filterColumn\";;\nimport dragColumn from \"tinper-bee/lib/dragColumn\";;\n\nimport sum from \"tinper-bee/lib/sum\";;\n\n //Cloumns1\nfunction getCloumns(){\n  const column = [\n      {\n          title: \"序号\",\n          dataIndex: \"index\",\n          key: \"index\",\n          width: 100, \n      },\n      {\n          title: \"订单编号\",\n          dataIndex: \"orderCode\",\n          key: \"orderCode\",\n          width: 100, \n      },\n      {\n          title: \"供应商名称\",\n          dataIndex: \"supplierName\",\n          key: \"supplierName\",\n          width: 100\n      },\n      {\n          title: \"类型\",\n          dataIndex: \"type_name\",\n          key: \"type_name\",\n          width: 100\n      },\n      {\n          title: \"采购组织\",\n          dataIndex: \"purchasing\",\n          key: \"purchasing\",\n          width: 100\n      },\n      {\n          title: \"采购组\",\n          dataIndex: \"purchasingGroup\",\n          key: \"purchasingGroup\",\n           width: 300\n      },\n      {\n          title: \"凭证日期\",\n          dataIndex: \"voucherDate\",\n          key: \"voucherDate\",\n          width: 100,\n          \n      },\n      {\n          title: \"审批状态\",\n          dataIndex: \"approvalState_name\",\n          key: \"approvalState_name\",\n          width: 100\n      },\n      {\n          title: \"确认状态\",\n          dataIndex: \"confirmState_name\",\n          key: \"confirmState_name\",\n           width: 100\n      }, \n      {\n          title: \"关闭状态\",\n          dataIndex: \"closeState_name\",\n          key: \"closeState_name\",\n          width: 100\n      },\n      {\n          title: \"操作\",\n          dataIndex: \"d\",\n          key: \"d\",\n          width:100,\n          fixed: \"right\",\n          render(text, record, index) {\n              return (\n                  <div className='operation-btn'>\n                    <a href=\"#\"\n                      tooltip={text}\n                      onClick={() => {\n                        alert('这是第'+index+'列，内容为:'+text);\n                      }}\n                    >\n                      一些操作\n                    </a>\n                  </div>\n              )\n          }\n      }\n  ];\n  return column;\n}\n\nconst dataList = [ \n  { \n      index: 1, \n      orderCode:\"2343\", \n      supplierName: \"xxx\",\n      type_name: \"123\",\n      purchasing:'内行', \n      purchasingGroup:\"323\",\n      voucherDate:\"kkkk\",\n      approvalState_name:\"vvvv\",\n      confirmState_name:\"aaaa\",\n      closeState_name:\"vnnnnn\",\n      d:\"操作\",\n      key: \"1\"\n  }, \n  { \n    index: 2, \n    _checked:true,\n    orderCode:\"222\", \n    supplierName: \"22xxx\",\n    type_name: \"1223\",\n    purchasing:'内行2', \n    purchasingGroup:\"3223\",\n    voucherDate:\"222kk\",\n    approvalState_name:\"22vvvv\",\n    confirmState_name:\"2aaaa\",\n    closeState_name:\"2vnnnnn\",\n    d:\"2操作\",\n    key: \"2\"\n  },\n  { \n    index: 3, \n    orderCode:\"222\", \n    supplierName: \"22xxx\",\n    _disabled:true,\n    type_name: \"1223\",\n    purchasing:'内行2', \n    purchasingGroup:\"3223\",\n    voucherDate:\"222kk\",\n    approvalState_name:\"22vvvv\",\n    confirmState_name:\"2aaaa\",\n    closeState_name:\"2vnnnnn\",\n    d:\"3操作\",\n    key: \"3\"\n  },\n  { \n    index: 4, \n    orderCode:\"222\", \n    supplierName: \"22xxx\",\n    type_name: \"1223\",\n    purchasing:'内行2', \n    purchasingGroup:\"3223\",\n    voucherDate:\"222kk\",\n    approvalState_name:\"22vvvv\",\n    confirmState_name:\"2aaaa\",\n    closeState_name:\"2vnnnnn\",\n    d:\"4操作\",\n    key: \"4\"\n  },\n]\n\nconst DragColumnTable = filterColumn(dragColumn(multiSelect(Table, Checkbox)),Popover);\n\nconst defaultProps25 = {\n  prefixCls: \"bee-table\"\n};\n\nclass Demo25 extends Component {\n  constructor(props) {\n    super(props);\n  }\n\n  getSelectedDataFunc=(data)=>{\n      console.log(\"data\",data);\n  }\n \n  getCloumnsScroll=(columns)=>{\n    let sum = 0;\n    columns.forEach((da)=>{\n        sum += da.width;\n    })\n    console.log(\"sum\",sum);\n    return (sum);\n  }\n\n  selectedRow=(record, index)=>{\n\n  }\n\n  render() {\n    let columns = getCloumns();\n    \n    return <div className=\"demo25\">\n            <DragColumnTable \n                columns={columns}\n                data={dataList} \n                getSelectedDataFunc={this.getSelectedDataFunc}\n                \n                checkMinSize={7}\n                draggable={true}\n                multiSelect={{type: \"checkbox\"}}\n                scroll={{x:true, y: 100}}\n                selectedRow={this.selectedRow}\n                // scroll={{x:this.getCloumnsScroll(columns), y: 150}}\n                />\n            </div>\n  }\n}\nDemo25.defaultProps = defaultProps25;\n\n\n", "desc": " 新增属性【checkMinSize 当前表格显示最少列数 】 1. 当所有列都设置了width属性后，需要给table增加checkMinSize属性 2. 所有列不设置width。" }, { "example": _react2['default'].createElement(Demo26, null), "title": " 按条件和值过滤", "code": "/**\n*\n* @title 按条件和值过滤\n* @description 可以根据输入项目以及判断条件对表格内的数据进行过滤\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\nconst columns26 = [\n  { title: \"姓名\", width: 180, dataIndex: \"name\", key: \"name\", filterType: \"text\", filterDropdown: \"show\" },\n  { title: \"年龄\", width: 150, dataIndex: \"age\", key: \"age\", filterType: \"dropdown\", filterDropdown: \"show\" },\n  { title: \"日期\", width: 200, dataIndex: \"date\", key: \"date\", filterType: \"date\", filterDropdown: \"show\", format: \"YYYY-MM-DD\" },\n  { title: \"居住地址\", width: 150, dataIndex: \"address\", key: \"address\", filterType: \"dropdown\", filterDropdown: \"show\" },\n  { title: \"备注\", dataIndex: \"mark\", key: \"mark\" }\n];\n\nconst data26 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-19\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  }, {\n    key: \"5\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"6\",\n    name: \"Jim Green\",\n    age: 48,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"7\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"8\",\n    name: \"Jim Green\",\n    age: 38,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  }\n];\n\nclass Demo26 extends Component {\n  handlerFilterChange = (key, val, condition) => {\n    console.log('参数：key=', key, ' value=', val, 'condition=', condition);\n  }\n\n  handlerFilterClear = (key) => {\n    console.log('清除条件', key);\n  }\n  render() {\n    return <Table\n      onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()\n      onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()\n      filterDelay={500}//输入文本多少ms触发回调函数，默认300ms\n      filterable={true}//是否开启过滤数据功能\n      bordered\n      columns={columns26}\n      data={data26} />;\n  }\n}\n\n", "desc": " 可以根据输入项目以及判断条件对表格内的数据进行过滤" }, { "example": _react2['default'].createElement(Demo27, null), "title": " 组合过滤和其他功能使用", "code": "/**\n*\n* @title 组合过滤和其他功能使用\n* @description 在过滤数据行的基础上增加列拖拽、动态菜单显示、下拉条件动态传入自定义等\n*\n*/\n\n/**\n * @description \n */\n\nimport React, { Component } from 'react';\nimport { Table, Dropdown, Menu, Icon, Checkbox } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/multiSelect\";;\nimport sort from \"tinper-bee/lib/sort\";;\n\n\nconst { Item } = Menu;\nconst SubMenu = Menu.SubMenu;\nconst MenuItemGroup = Menu.ItemGroup;\n\n\nconst dataList = [\n  { \"key\": \"1\", value: \"库存明细\", id: \"a\" },\n  { \"key\": \"2\", value: \"订单明细\", id: \"v\" },\n  { \"key\": \"3\", value: \"发货明细\", id: \"c\" }\n]\n\nconst data27 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-19\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  }, {\n    key: \"5\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"6\",\n    name: \"Jim Green\",\n    age: 48,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"7\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"8\",\n    name: \"Jim Green\",\n    age: 38,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  }\n];\n\n\nconst MultiSelectTable = multiSelect(Table, Checkbox);\nconst ComplexTable = sort(MultiSelectTable, Icon);\nclass Demo27 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      dropdownvalue: []\n    }\n  }\n  handlerFilterChange = (key, val, condition) => {\n    console.log('参数：key=', key, ' value=', val, 'condition=', condition);\n  }\n\n  handlerFilterClear = (key) => {\n    console.log('清除条件', key);\n  }\n  getSelectedDataFunc = data => {\n    console.log(data);\n  }\n  onClick = (item) => {\n    console.log(item);\n  }\n\n  render() {\n    const menu1 = (\n      <Menu onClick={this.onClick} style={{ width: 240 }} mode=\"vertical\" >\n        <SubMenu key=\"sub1\" title={<span><span>组织 1</span></span>}>\n          <MenuItemGroup title=\"Item 1\">\n            <Menu.Item key=\"1\">选项 1</Menu.Item>\n            <Menu.Item key=\"2\">选项 2</Menu.Item>\n          </MenuItemGroup>\n          <MenuItemGroup title=\"Iteom 2\">\n            <Menu.Item key=\"3\">选项 3</Menu.Item>\n            <Menu.Item key=\"4\">选项 4</Menu.Item>\n          </MenuItemGroup>\n        </SubMenu>\n      </Menu>)\n    let multiObj = {\n      type: \"checkbox\"\n    };\n    let columns27 = [\n      {\n        title: \"\", width: 40, dataIndex: \"key\", key: \"key\", render: (text, record, index) => {\n          return <Dropdown\n            trigger={['click']}\n            overlay={menu1}\n            animation=\"slide-up\"\n          >\n            <Icon style={{ \"visibility\": \"hidden\" }} type=\"uf-eye\" />\n          </Dropdown>\n        }\n      },\n      {\n        title: \"姓名\",\n        width: 180,\n        dataIndex: \"name\",\n        key: \"name\",\n        filterType: \"text\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"string\"//字符条件\n      },\n      {\n        title: \"年龄\",\n        width: 180,\n        dataIndex: \"age\",\n        key: \"age\",\n        filterType: \"number\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"number\"//字符条件\n      },\n      {\n        title: \"日期\",\n        width: 190,\n        dataIndex: \"date\",\n        key: \"date\",\n        filterType: \"date\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"string\"//字符条件\n      },\n      {\n        title: \"时间范围\",\n        width: 290,\n        dataIndex: \"mark\",\n        key: \"mark\",\n        filterType: \"daterange\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"number\"//字符条件\n      },\n      {\n        title: \"地址\",\n        width: 100,\n        dataIndex: \"address\",\n        key: \"address\",\n        filterType: \"dropdown\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"number\"//字符条件\n      }\n    ];\n    return <ComplexTable\n      onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()\n      onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()\n      filterDelay={500}//输入文本多少ms触发回调函数，默认500ms\n      filterable={true}//是否开启过滤数据功能\n      getSelectedDataFunc={this.getSelectedDataFunc}\n      bordered\n      multiSelect={multiObj}\n      columns={columns27}\n      data={data27} />;\n  }\n}\n\n", "desc": " 在过滤数据行的基础上增加列拖拽、动态菜单显示、下拉条件动态传入自定义等" }, { "example": _react2['default'].createElement(Demo28, null), "title": " 列排序,后端排序", "code": "/**\n*\n* @title 列排序,后端排序\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee';\nimport sort from \"tinper-bee/lib/sort.js\";;\nlet ComplexTable = sort(Table, Icon);\nconst columns11 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  },\n  {\n    title: \"分数\",\n    dataIndex: \"e\",\n    key: \"e\",\n    sorter: (a, b) => a.c - b.c\n  },\n];\n\nconst data11 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', e:139,key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', e:109, key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', e:159, key: \"3\" }\n];\n\nconst defaultProps = {\n  prefixCls: \"bee-table\"\n};\nclass Demo28 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      sortOrder: \"\",\n      data: data11\n    };\n  }\n  /**\n   * 后端获取数据\n   */\n  sortFun = (sortParam)=>{\n    console.info(sortParam);\n    //将参数传递给后端排序\n  }\n  render() {\n    let sortObj = {\n      mode:'multiple',\n      backSource:true,\n      sortFun:this.sortFun\n    }\n    return <ComplexTable columns={columns11} data={this.state.data} sort={sortObj}/>;\n  }\n}\nDemo28.defaultProps = defaultProps;\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo29, null), "title": " 从弹出框内显示过滤行并且设置可选下拉条件", "code": "/**\n*\n* @title 从弹出框内显示过滤行并且设置可选下拉条件\n* @description 通过Modal组件来展示表格的过滤相关能力，并且通过filterDropdownIncludeKeys设置可选条件\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Button, Modal } from 'tinper-bee';\n\n\nconst columns29 = [\n  {\n    title: \"姓名\",\n    width: 180,\n    dataIndex: \"name\",\n    key: \"name\",\n    filterType: \"text\",\n    filterDropdown: \"show\",\n    filterDropdownIncludeKeys: ['LIKE', 'EQ']\n  },\n  {\n    title: \"年龄\",\n    width: 170,\n    dataIndex: \"age\",\n    key: \"age\",\n    filterType: \"number\",\n    filterDropdown: \"show\",\n    filterDropdownType: \"number\",\n    filterDropdownIncludeKeys: ['EQ'],\n    filterInputNumberOptions: {\n      max: 200,\n      min: 0,\n      step: 1,\n      precision: 0\n    }\n  },\n  {\n    title: \"日期\",\n    width: 200,\n    dataIndex: \"date\",\n    key: \"date\",\n    filterType: \"date\",\n    filterDropdown: \"show\",\n    format: \"YYYY-MM-DD\"\n  }\n];\n\nconst data29 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-19\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  }, {\n    key: \"5\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"6\",\n    name: \"Jim Green\",\n    age: 48,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"7\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"8\",\n    name: \"Jim Green\",\n    age: 38,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  }\n];\n\nclass Demo29 extends Component {\n  constructor() {\n    super();\n    this.state = {\n      show: false\n    }\n    this.close = this.close.bind(this);\n    this.open = this.open.bind(this);\n  }\n  handlerFilterChange = (key, val, condition) => {\n    console.log('参数：key=', key, ' value=', val, 'condition=', condition);\n  }\n\n  handlerFilterClear = (key) => {\n    console.log('清除条件', key);\n  }\n  close() {\n    this.setState({\n      show: false\n    });\n  }\n  open() {\n    this.setState({\n      show: true\n    });\n  }\n  render() {\n    return (<div><Modal\n      show={this.state.show}\n      onHide={this.close}\n      autoFocus={false}\n      enforceFocus={false}\n    >\n      <Modal.Header closeButton>\n        <Modal.Title>过滤行</Modal.Title>\n      </Modal.Header>\n      <Modal.Body>\n        <Table\n          onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()\n          onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()\n          filterDelay={500}//输入文本多少ms触发回调函数，默认300ms\n          filterable={true}//是否开启过滤数据功能\n          bordered\n          columns={columns29}\n          data={data29} />\n      </Modal.Body>\n    </Modal>\n      <Button colors=\"primary\" onClick={this.open}>显示表格</Button>\n    </div>)\n  }\n}\n\n", "desc": " 通过Modal组件来展示表格的过滤相关能力，并且通过filterDropdownIncludeKeys设置可选条件" }, { "example": _react2['default'].createElement(Demo30, null), "title": " 大数据加载", "code": "/**\n*\n* @title 大数据加载\n* 【Tooltip】\n* @description\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Tooltip } from 'tinper-bee';\nimport BigData from \"tinper-bee/lib/bigData\";;\nconst BigDataTable = BigData(Table);\nconst columns = [\n    {\n        title:'序号',\n        dataIndex:'index',\n        width:'50',\n        render:(text,record,index)=>{\n            return index\n        }\n    },\n    {\n    title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 580, className: \"rowClassName\",\n    render: (text, record, index) => {\n      return (\n        <Tooltip inverse overlay={text}>\n          <span tootip={text} style={{\n            display: \"inline-block\",\n            width: \"80px\",\n            textOverflow: \"ellipsis\",\n            overflow: \"hidden\",\n            whiteSpace: \"nowrap\",\n            verticalAlign: \"middle\",\n          }}>{text}</span>\n        </Tooltip>\n      );\n    }\n  },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 80},\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 }\n\n];\n\nconst data = [ ...new Array(10000) ].map((e, i) => {\n    const rs = { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };\n    if(i%3==0){\n        rs.b = '女';\n    }\n    return rs;\n   })\n\n\nclass Demo30 extends Component {\n\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: data,\n      selectedRowIndex: 0\n    }\n  }\n\n  render() {\n    return (\n        <BigDataTable\n          columns={columns}\n          data={data}\n          scroll={{y:300}}\n          height={40}\n          onRowClick={(record, index, indent) => {\n            console.log('currentIndex--'+index);\n          }}\n        />\n\n     \n    );\n  }\n}\n\n", "desc": "", "scss_code": ".big-data tr td {\n    // height: 48px;\n}" }, { "example": _react2['default'].createElement(Demo31, null), "title": " 含有嵌套子表格的大数据场景", "code": "/**\n*\n* @title 含有嵌套子表格的大数据场景\n* @description 通过expandedRowRender参数来实现子表格\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\nimport BigData from \"tinper-bee/lib/bigData\";;\nconst BigDataTable = BigData(Table);\nconst outColumns = [\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\", \n    width:200,\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert(\"这是第\" + index + \"列，内容为:\" + text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  },\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 250 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  \n];\nconst innerColumns = [\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width:200,\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert(\"这是第\" + index + \"列，内容为:\" + text);\n          }}\n        >\n          {'一些操作'+index}\n        </a>\n      );\n    }\n  },\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  \n];\n\nconst data16 = [ ...new Array(10000) ].map((e, i) => {\n    return { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };\n   })\n\n\n\n\n\nclass Demo31 extends Component {\n  constructor(props){\n    super(props);\n    this.state={\n      data_obj:{\n        0:[\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n          { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" }\n        ],\n        1: [\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n          { a: \"菲菲\", b: \"nv\", c: 67, d: \"操作\", key: \"2\" }\n        ],\n      }\n    }\n  }\n  expandedRowRender = (record, index, indent) => {\n    let height = 200;\n    let innderData = [ ...new Array(100) ].map((e, i) => {\n      return { a: index+\"-\"+ i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key:  index+\"-\"+ i };\n     })\n    return (\n      <Table\n        \n        columns={innerColumns}\n        scroll={{y:height}}\n        data={innderData} \n\n      />\n    );\n  };\n  getData=(expanded, record)=>{\n    //当点击展开的时候才去请求数据\n    let new_obj = Object.assign({},this.state.data_obj);\n    if(expanded){\n      if(record.key==='1'){\n        new_obj[record.key] = [\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n          { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" }\n        ]\n        this.setState({\n          data_obj:new_obj\n        })\n      }else{\n        new_obj[record.key] = [\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n          { a: \"菲菲\", b: \"nv\", c: 67, d: \"操作\", key: \"2\" }\n        ]\n        this.setState({\n          data_obj:new_obj\n        })\n      }\n    }\n  }\n  haveExpandIcon=(record, index)=>{\n    //控制是否显示行展开icon，该参数只有在和expandedRowRender同时使用才生效\n    if(index == 0){\n      return true;\n    }\n    return false;\n  }\n  render() {\n    return (\n      <BigDataTable\n        columns={outColumns}\n        data={data16}\n        onExpand={this.getData}\n        expandedRowRender={this.expandedRowRender}\n        scroll={{y:350}}\n        // defaultExpandedRowKeys={[0,1]}\n        title={currentData => <div>标题: 这是一个标题</div>}\n        footer={currentData => <div>表尾: 我是小尾巴</div>}\n      />\n    );\n  }\n}\n\n\n", "desc": " 通过expandedRowRender参数来实现子表格" }, { "example": _react2['default'].createElement(Demo32, null), "title": " 大数据加载下的复杂Table", "code": "/**\n*\n* @title 大数据加载下的复杂Table\n*\n* @description\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Popover, Icon, Checkbox, Tooltip } from 'tinper-bee';\nimport BigData from \"tinper-bee/lib/bigData\";;\nimport multiSelect from \"tinper-bee/lib/multiSelect\";;\nimport filterColumn from \"tinper-bee/lib/filterColumn\";;\n\nlet  ComplexTable = filterColumn(multiSelect(BigData(Table), Checkbox), Popover, Icon);\n\nconst columns = [\n    {\n        title:'序号',\n        dataIndex:'index',\n        width:'50',\n        render:(text,record,index)=>{\n            return index\n        }\n    },\n    {\n    title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 580, className: \"rowClassName\",\n    render: (text, record, index) => {\n      return (\n        <Tooltip inverse overlay={text}>\n          <span tootip={text} style={{\n            display: \"inline-block\",\n            width: \"80px\",\n            textOverflow: \"ellipsis\",\n            overflow: \"hidden\",\n            whiteSpace: \"nowrap\",\n            verticalAlign: \"middle\",\n          }}>{text}</span>\n        </Tooltip>\n      );\n    }\n  },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 80},\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 }\n];\n\nconst data = [ ...new Array(10000) ].map((e, i) => {\n    const rs = { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };\n    if(i%3==0){\n        rs.b = '女';\n    }\n    return rs;\n   })\n\n\nclass Demo32 extends Component {\n\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: data,\n      selectedRowIndex: 0\n    }\n  }\n  getSelectedDataFunc = data => {\n    console.log(data);\n  };\n\n  render() {\n    return (\n        <ComplexTable\n          columns={columns}\n          data={data}\n          parentNodeId='parent'\n          scroll={{y:300}}\n          height={40}\n          bordered\n          onRowClick={(record, index, indent) => {\n            this.setState({\n              selectedRowIndex: index\n            });\n          }}\n          getSelectedDataFunc={this.getSelectedDataFunc}/>\n\n    );\n  }\n}\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo34, null), "title": " 树状结构的大数据场景", "code": "/**\n*\n* @title 树状结构的大数据场景\n* 【Tooltip】\n* @description\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Tooltip } from 'tinper-bee';\nimport BigData from \"tinper-bee/lib/bigData\";;\nconst BigDataTable = BigData(Table);\nconst columns = [\n    {\n        title:'序号',\n        dataIndex:'index',\n        width:'150',\n        render:(text,record,index)=>{\n            return index\n        }\n    },\n    {\n    title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 580, className: \"rowClassName\",\n    render: (text, record, index) => {\n      return (\n        <Tooltip inverse overlay={text}>\n          <span tootip={text} style={{\n            display: \"inline-block\",\n            width: \"80px\",\n            textOverflow: \"ellipsis\",\n            overflow: \"hidden\",\n            whiteSpace: \"nowrap\",\n            verticalAlign: \"middle\",\n          }}>{text}</span>\n        </Tooltip>\n      );\n    }\n  },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 80},\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 }\n];\n\nconst data = [ ...new Array(1000) ].map((e, i) => {\n    const rs = { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };\n    if(i%3==0){\n        rs.b = '女';\n        rs.children = [];\n        for(let subi=0;subi<3;subi++){\n          rs.children.push({a: i +subi + 'asub', b: i +subi + 'bsub', c: i + subi +'csub', d: i + subi +'dsub', key: i+ `${subi} sub`});\n        }\n    }else{\n      rs.children = [];\n        for(let subi=0;subi<3;subi++){\n          rs.children.push({a: i +subi + 'asub', b: i +subi + 'bsub', c: i + subi +'csub', d: i + subi +'dsub', key: i+ `${subi} sub`});\n        }\n    }\n    return rs;\n   })\n\n\nclass Demo30 extends Component {\n\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: data,\n      selectedRowIndex: 0\n    }\n  }\n  onExpandedRowsChange = (params)=>{\n    console.log(params);\n  }\n  onExpand = (expandKeys)=>{\n    console.log('expand---'+expandKeys);\n  }\n  render() {\n    return (\n        <BigDataTable\n          columns={columns}\n          data={data}\n          parentNodeId='parent'\n          scroll={{y:300}}\n          height={40}\n          onRowClick={(record, index, indent) => {\n            console.log('currentIndex--'+index);\n          }}\n        />\n\n     \n    );\n  }\n}\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo35, null), "title": " hover呼出菜单栏", "code": "/**\n*\n* @title hover呼出菜单栏\n* @description\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Tooltip, Button } from 'tinper-bee';\n\nconst columns = [\n  {\n    title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 80, className: \"rowClassName\",\n    fixed:'left',\n    render: (text, record, index) => {\n      return (\n        <Tooltip inverse overlay={text}>\n          <span tootip={text} style={{\n            display: \"inline-block\",\n            width: \"60px\",\n            textOverflow: \"ellipsis\",\n            overflow: \"hidden\",\n            whiteSpace: \"nowrap\",\n            verticalAlign: \"middle\",\n          }}>{text}</span>\n        </Tooltip>\n      );\n    }\n  },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 300 },\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    render(text, record, index) {\n      return (\n        <div style={{ position: 'relative' }} title={text} >\n          <a\n            href=\"javascript:;\"\n            tooltip={text}\n            onClick={() => {\n              alert('这是第' + index + '列，内容为:' + text);\n            }}\n          >\n            一些操作\n              </a>\n        </div>\n      );\n    }\n  }\n];\n\nconst data = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过叔叔的女儿黄蓉\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\nclass Demo35 extends Component {\n\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: data,\n      selectedRowIndex: 0\n    }\n  }\n\n  delFun=()=>{\n  //  console.log('click'+this.currentIndex);\n  let {data} = this.state;\n  data.splice(this.currentIndex,1);\n  this.setState({\n    data\n  });\n }\n onRowHover=(index,record)=>{\n  this.currentIndex = index;\n  this.currentRecord = record;\n }\n  getHoverContent=()=>{\n    return <div className=\"opt-btns\"><button  onClick={this.delFun}>删除</button> </div>\n  }\n  render() {\n    return (\n        \n        <Table\n          columns={columns}\n          data={data}\n          parentNodeId='parent'\n          height={43}\n          headerHeight={42}\n          hoverContent={this.getHoverContent}\n          onRowHover={this.onRowHover}\n          onRowClick={(record, index, indent) => {\n            this.setState({\n              selectedRowIndex: index\n            });\n          }}\n        />\n\n     \n    );\n  }\n}\n\n\n", "desc": "", "scss_code": ".opt-btns{\n    button{\n      background: #505F79 ;\n      height: 26px;\n      color:#FFFFFF;\n      line-height: 26px;\n    }\n  }" }];
-=======
-	var Demo1 = __webpack_require__(84);var Demo2 = __webpack_require__(511);var Demo3 = __webpack_require__(516);var Demo4 = __webpack_require__(517);var Demo5 = __webpack_require__(518);var Demo6 = __webpack_require__(519);var Demo7 = __webpack_require__(523);var Demo8 = __webpack_require__(524);var Demo9 = __webpack_require__(529);var Demo10 = __webpack_require__(530);var Demo11 = __webpack_require__(531);var Demo12 = __webpack_require__(533);var Demo13 = __webpack_require__(539);var Demo14 = __webpack_require__(541);var Demo15 = __webpack_require__(550);var Demo16 = __webpack_require__(551);var Demo17 = __webpack_require__(552);var Demo18 = __webpack_require__(553);var Demo19 = __webpack_require__(554);var Demo20 = __webpack_require__(555);var Demo21 = __webpack_require__(556);var Demo22 = __webpack_require__(561);var Demo23 = __webpack_require__(562);var Demo24 = __webpack_require__(563);var Demo25 = __webpack_require__(564);var Demo26 = __webpack_require__(565);var Demo27 = __webpack_require__(566);var Demo28 = __webpack_require__(567);var Demo29 = __webpack_require__(568);var Demo30 = __webpack_require__(591);var Demo31 = __webpack_require__(593);var Demo32 = __webpack_require__(594);var Demo34 = __webpack_require__(595);var Demo35 = __webpack_require__(596);var DemoArray = [{ "example": _react2['default'].createElement(Demo1, null), "title": " 简单表格、文字过长，两种tip", "code": "/**\r\n*\r\n* @title 简单表格、文字过长，两种tip\r\n* 【Tooltip】\r\n* @description\r\n*/\r\n\r\nimport React, { Component } from \"react\";\r\n\n\nimport { Table, Tooltip, Button } from 'tinper-bee';\r\n\r\nconst columns = [\r\n  {\r\n    title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 300, className: \"rowClassName\",\r\n    fixed:'left',\r\n    render: (text, record, index) => {\r\n      return (\r\n        <Tooltip inverse overlay={text}>\r\n          <span tootip={text} style={{\r\n            display: \"inline-block\",\r\n            width: \"60px\",\r\n            textOverflow: \"ellipsis\",\r\n            overflow: \"hidden\",\r\n            whiteSpace: \"nowrap\",\r\n            verticalAlign: \"middle\",\r\n          }}>{text}</span>\r\n        </Tooltip>\r\n      );\r\n    }\r\n  },\r\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 500},\r\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\r\n  {\r\n    title: \"操作\",\r\n    dataIndex: \"d\",\r\n    key: \"d\",\r\n    render(text, record, index) {\r\n      return (\r\n        <div style={{ position: 'relative' }} title={text} >\r\n          <a\r\n            href=\"javascript:;\"\r\n            tooltip={text}\r\n            onClick={() => {\r\n              alert('这是第' + index + '列，内容为:' + text);\r\n            }}\r\n          >\r\n            一些操作\r\n              </a>\r\n        </div>\r\n      );\r\n    }\r\n  }\r\n];\r\n\r\nconst data = [\r\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\r\n  { a: \"杨过叔叔的女儿黄蓉\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\r\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\r\n];\r\n\r\nclass Demo1 extends Component {\r\n\r\n  constructor(props) {\r\n    super(props);\r\n    this.state = {\r\n      data: data,\r\n      selectedRowIndex: 0\r\n    }\r\n  }\r\n\r\n  render() {\r\n    return (\r\n   \r\n        <Table\r\n          columns={columns}\r\n          data={data}\r\n          parentNodeId='parent'\r\n          height={43}\r\n          headerHeight={42}\r\n          onRowClick={(record, index, indent) => {\r\n            this.setState({\r\n              selectedRowIndex: index\r\n            });\r\n          }}\r\n        />\r\n\r\n     \r\n    );\r\n  }\r\n}\r\n\r\n\r\n", "desc": "" }, { "example": _react2['default'].createElement(Demo2, null), "title": " 增删改表格", "code": "/**\r\n*\r\n* @title 增删改表格\r\n* @description 这是带有增删改功能的表格（此编辑功能未使用render组件）\r\n*\r\n*/\r\n\r\n\nimport React, { Component } from \"react\";\r\nimport { Table, Popconfirm, Input, Icon, Animate, Button } from 'tinper-bee';\r\n\n\n\n\n\r\nclass EditableCell extends React.Component {\r\n  state = {\r\n    value: this.props.value,\r\n    editable: false\r\n  };\r\n  handleChange = e => {\r\n    const value = e;\r\n    this.setState({ value });\r\n  };\r\n  check = () => {\r\n    this.setState({ editable: false });\r\n    if (this.props.onChange) {\r\n      this.props.onChange(this.state.value);\r\n    }\r\n  };\r\n  edit = () => {\r\n    this.setState({ editable: true });\r\n  };\r\n  handleKeydown = event => {\r\n    if (event.keyCode == 13) {\r\n      this.check();\r\n    }\r\n  };\r\n  render() {\r\n    const { value, editable } = this.state;\r\n    return (\r\n      <div className=\"editable-cell\">\r\n        {editable ? (\r\n          <div className=\"editable-cell-input-wrapper\">\r\n            <Input\r\n              value={value}\r\n              onChange={this.handleChange}\r\n              onKeyDown={this.handleKeydown}\r\n            />\r\n            <Icon\r\n              type=\"uf-correct\"\r\n              className=\"editable-cell-icon-check\"\r\n              onClick={this.check}\r\n            />\r\n          </div>\r\n        ) : (\r\n          <div className=\"editable-cell-text-wrapper\">\r\n            {value || \" \"}\r\n            <Icon\r\n              type=\"uf-pencil\"\r\n              className=\"editable-cell-icon\"\r\n              onClick={this.edit}\r\n            />\r\n          </div>\r\n        )}\r\n      </div>\r\n    );\r\n  }\r\n}\r\n\r\nclass Demo2 extends React.Component {\r\n  constructor(props) {\r\n    super(props);\r\n    this.columns = [\r\n      {\r\n        title: \"姓名\",\r\n        dataIndex: \"name\",\r\n        key: \"name\",\r\n        width: \"30%\",\r\n        render: (text, record, index) => (\r\n          <EditableCell\r\n            value={text}\r\n            onChange={this.onCellChange(index, \"name\")}\r\n          />\r\n        )\r\n      },\r\n      {\r\n        title: \"年龄\",\r\n        dataIndex: \"age\",\r\n        key: \"age\"\r\n      },\r\n      {\r\n        title: \"你懂的\",\r\n        dataIndex: \"address\",\r\n        key: \"address\"\r\n      },\r\n      {\r\n        title: \"操作\",\r\n        dataIndex: \"operation\",\r\n        key: \"operation\",\r\n        render: (text, record, index) => {\r\n          return this.state.dataSource.length > 1 ? (\r\n            <Popconfirm content=\"确认删除?\" id=\"aa\" onClose={this.onDelete(index)}>\r\n              <Icon type=\"uf-del\" />\r\n            </Popconfirm>\r\n          ) : null;\r\n        }\r\n      }\r\n    ];\r\n\r\n    this.state = {\r\n      dataSource: [\r\n        {\r\n          key: \"0\",\r\n          name: \"沉鱼\",\r\n          age: \"18\",\r\n          address: \"96, 77, 89\"\r\n        },\r\n        {\r\n          key: \"1\",\r\n          name: \"落雁\",\r\n          age: \"16\",\r\n          address: \"90, 70, 80\"\r\n        },\r\n        {\r\n          key: \"2\",\r\n          name: \"闭月\",\r\n          age: \"17\",\r\n          address: \"80, 60, 80\"\r\n        },\r\n        {\r\n          key: \"3\",\r\n          name: \"羞花\",\r\n          age: \"20\",\r\n          address: \"120, 60, 90\"\r\n        }\r\n      ],\r\n      count: 4\r\n    };\r\n  }\r\n  onCellChange = (index, key) => {\r\n    return value => {\r\n      const dataSource = [...this.state.dataSource];\r\n      dataSource[index][key] = value;\r\n      this.setState({ dataSource });\r\n    };\r\n  };\r\n  onDelete = (index) => {\r\n    return () => {\r\n      const dataSource = [...this.state.dataSource];\r\n      dataSource.splice(index, 1);\r\n      this.setState({ dataSource });\r\n    }\r\n  };\r\n  handleAdd = () => {\r\n    const { count, dataSource } = this.state;\r\n    const newData = {\r\n      key: count,\r\n      name: `凤姐 ${count}`,\r\n      age: 32,\r\n      address: `100 100 100`\r\n    };\r\n    this.setState({\r\n      dataSource: [...dataSource, newData],\r\n      count: count + 1\r\n    });\r\n  };\r\n\r\n  getBodyWrapper = body => {\r\n    return (\r\n      <Animate\r\n        transitionName=\"move\"\r\n        component=\"tbody\"\r\n        className={body.props.className}\r\n      >\r\n        {body.props.children}\r\n      </Animate>\r\n    );\r\n  };\r\n  render() {\r\n    const { dataSource } = this.state;\r\n    const columns = this.columns;\r\n    return (\r\n      <div>\r\n        <Button\r\n          className=\"editable-add-btn\"\r\n          type=\"ghost\"\r\n          onClick={this.handleAdd}\r\n        >\r\n          添加\r\n        </Button>\r\n        <Table\r\n          data={dataSource}\r\n          columns={columns}\r\n          getBodyWrapper={this.getBodyWrapper}\r\n        />\r\n      </div>\r\n    );\r\n  }\r\n}\r\n\r\n\r\n", "desc": " 这是带有增删改功能的表格（此编辑功能未使用render组件）" }, { "example": _react2['default'].createElement(Demo3, null), "title": " 表头分组并自定义表头高度", "code": "/**\r\n *\r\n * @title 表头分组并自定义表头高度\r\n * @description columns[n] 可以内嵌 children，以渲染分组表头。\r\n * 自定义表头高度需要传headerHeight，注：修改th的padding top和bottom置为0，否则会有影响\r\n *\r\n */\r\n\r\n\nimport React, { Component } from \"react\";\r\nimport { Table, Button } from 'tinper-bee';\r\n\r\nconst { ColumnGroup, Column } = Table;\r\n\r\nconst columns = [\r\n  {\r\n    title: \"Name\",\r\n    dataIndex: \"name\",\r\n    key: \"name\",\r\n    width: 100,\r\n    fixed: \"left\"\r\n  },\r\n  {\r\n    title: \"Other\",\r\n    width:600,\r\n    children: [\r\n      {\r\n        title: \"Age\",\r\n        dataIndex: \"age\",\r\n        key: \"age\",\r\n        width: 200\r\n      },\r\n      {\r\n        title: \"Address\",\r\n        children: [\r\n          {\r\n            title: \"Street\",\r\n            dataIndex: \"street\",\r\n            key: \"street\",\r\n            width: 200\r\n          },\r\n          {\r\n            title: \"Block\",\r\n            children: [\r\n              {\r\n                title: \"Building\",\r\n                dataIndex: \"building\",\r\n                key: \"building\",\r\n                width: 100\r\n              },\r\n              {\r\n                title: \"Door No.\",\r\n                dataIndex: \"number\",\r\n                key: \"number\",\r\n                width: 100\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    title: \"Company\",\r\n    width:400,\r\n    children: [\r\n      {\r\n        title: \"Company Address\",\r\n        dataIndex: \"companyAddress\",\r\n        key: \"companyAddress\",\r\n        width:200,\r\n      },\r\n      {\r\n        title: \"Company Name\",\r\n        dataIndex: \"companyName\",\r\n        key: \"companyName\",\r\n        width:200,\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    title: \"Gender\",\r\n    dataIndex: \"gender\",\r\n    key: \"gender\",\r\n    width: 60,\r\n    fixed: \"right\"\r\n  }\r\n];\r\n\r\nconst data = [];\r\nfor (let i = 0; i < 20; i++) {\r\n  data.push({\r\n    key: i,\r\n    name: \"John Brown\",\r\n    age: i + 1,\r\n    street: \"Lake Park\",\r\n    building: \"C\",\r\n    number: 2035,\r\n    companyAddress: \"Lake Street 42\",\r\n    companyName: \"SoftLake Co\",\r\n    gender: \"M\"\r\n  });\r\n}\r\n\r\nclass Demo3 extends Component {\r\n  render() {\r\n    return (\r\n      <Table\r\n        className={'demo3'}\r\n        columns={columns}\r\n        data={data}\r\n        headerHeight={40} //自定义表头高度\r\n        bordered\r\n        scroll={{ y: 240 }}\r\n      />\r\n    );\r\n  }\r\n}\r\n\r\n\r\n", "desc": " columns[n] 可以内嵌 children，以渲染分组表头。", "scss_code": ".demo3{\r\n    .u-table-thead th {\r\n        padding-top: 0px;\r\n        padding-bottom: 0px;\r\n    }\r\n}" }, { "example": _react2['default'].createElement(Demo4, null), "title": " 树形数据展示", "code": "/**\r\n*\r\n* @title 树形数据展示\r\n* @description 通过在data中配置children数据，来自动生成树形数据\r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\r\nimport { Table } from 'tinper-bee';\r\n\r\n\r\nconst columns4 = [\r\n  {\r\n    title: \"Name\",\r\n    dataIndex: \"name\",\r\n    key: \"name\",\r\n    width: \"40%\"\r\n  },\r\n  {\r\n    title: \"Age\",\r\n    dataIndex: \"age\",\r\n    key: \"age\",\r\n    width: \"30%\"\r\n  },\r\n  {\r\n    title: \"Address\",\r\n    dataIndex: \"address\",\r\n    key: \"address\"\r\n  }\r\n];\r\n\r\nconst data4 = [\r\n  {\r\n    key: 1,\r\n    name: \"John Brown sr.\",\r\n    age: 60,\r\n    address: \"New York No. 1 Lake Park\",\r\n    children: [\r\n      {\r\n        key: 11,\r\n        name: \"John Brown\",\r\n        age: 42,\r\n        address: \"New York No. 2 Lake Park\"\r\n      },\r\n      {\r\n        key: 12,\r\n        name: \"John Brown jr.\",\r\n        age: 30,\r\n        address: \"New York No. 3 Lake Park\",\r\n        children: [\r\n          {\r\n            key: 121,\r\n            name: \"Jimmy Brown\",\r\n            age: 16,\r\n            address: \"New York No. 3 Lake Park\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        key: 13,\r\n        name: \"Jim Green sr.\",\r\n        age: 72,\r\n        address: \"London No. 1 Lake Park\",\r\n        children: [\r\n          {\r\n            key: 131,\r\n            name: \"Jim Green\",\r\n            age: 42,\r\n            address: \"London No. 2 Lake Park\",\r\n            children: [\r\n              {\r\n                key: 1311,\r\n                name: \"Jim Green jr.\",\r\n                age: 25,\r\n                address: \"London No. 3 Lake Park\"\r\n              },\r\n              {\r\n                key: 1312,\r\n                name: \"Jimmy Green sr.\",\r\n                age: 18,\r\n                address: \"London No. 4 Lake Park\"\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    key: 2,\r\n    name: \"Joe Black\",\r\n    age: 32,\r\n    address: \"Sidney No. 1 Lake Park\"\r\n  }\r\n];\r\nclass Demo4 extends Component {\r\n\r\n  constructor(props){\r\n      super(props);\r\n      this.state = {\r\n        data: data4,\r\n        factoryValue: 0,\r\n        selectedRow: new Array(data4.length)//状态同步\r\n      }\r\n  }\r\n\r\n  render() {\r\n    return <Table \r\n    rowClassName={(record,index,indent)=>{\r\n      if (this.state.selectedRow[index]) {\r\n          return 'selected';\r\n      } else {\r\n          return '';\r\n      }\r\n    }}\r\n    onRowClick={(record,index,indent)=>{\r\n      let selectedRow = new Array(this.state.data.length);\r\n      selectedRow[index] = true;\r\n      this.setState({\r\n          factoryValue: record,\r\n          selectedRow: selectedRow\r\n      });\r\n    }}\r\n    \r\n    columns={columns4} data={data4} />;\r\n  }\r\n}\r\n\r\n\r\n", "desc": " 通过在data中配置children数据，来自动生成树形数据" }, { "example": _react2['default'].createElement(Demo5, null), "title": " 固定列", "code": "/**\r\n*\r\n* @title 固定列\r\n* @description 固定列到表格的某侧\r\n*\r\n*/\r\n\r\n\r\n\r\nimport React, { Component } from 'react';\r\nimport { Table } from 'tinper-bee';\r\n\r\n\r\n\r\nconst columns5 = [\r\n  {\r\n    title: \"Full Name\",\r\n    width: 100,\r\n    dataIndex: \"name\",\r\n    key: \"name\",\r\n    fixed: \"left\"\r\n  },\r\n  { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\", fixed: \"left\" },\r\n  { title: \"address\", dataIndex: \"address\", key: \"address\" }\r\n];\r\n\r\nconst data5 = [\r\n  {\r\n    key: \"1\",\r\n    name: \"John Brown\",\r\n    age: 32,\r\n    address: \"New York Park\"\r\n  },\r\n  {\r\n    key: \"2\",\r\n    name: \"Jim Green\",\r\n    age: 40,\r\n    address: \"London Park\"\r\n  },\r\n  {\r\n    key: \"3\",\r\n    name: \"Jim Green\",\r\n    age: 40,\r\n    address: \"London Park\"\r\n  },\r\n  {\r\n    key: \"4\",\r\n    name: \"Jim Green\",\r\n    age: 40,\r\n    address: \"London Park\"\r\n  }\r\n];\r\n\r\nclass Demo5 extends Component {\r\n  render() {\r\n    return <Table columns={columns5} data={data5} scroll={{ x: \"110%\", y: 140 }} />;\r\n  }\r\n}\r\n\r\n", "desc": " 固定列到表格的某侧" }, { "example": _react2['default'].createElement(Demo6, null), "title": " 固定表头", "code": "/**\r\n*\r\n* @title 固定表头\r\n* @description 方便一页内展示大量数据。需要指定 column 的 width 属性，否则列头和内容可能不对齐。(还可以设置scroll来支持横向或纵向滚动)\r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\r\nimport { Table } from 'tinper-bee';\r\nimport dragColumn from \"tinper-bee/lib/dragColumn\";;;\r\nconst DragColumnTable = dragColumn(Table);\r\n\r\nconst columns6 = [\r\n  {\r\n    title: \"Full Name\",\r\n    width: 100,\r\n    dataIndex: \"name\",\r\n    key: \"name\"\r\n  },\r\n  { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\"},\r\n  { title: \"Address\", dataIndex: \"address\", key: \"1\" }\r\n];\r\n\r\nconst data6 = [\r\n  {\r\n    key: \"1\",\r\n    name: \"John Brown\",\r\n    age: 32,\r\n    address: \"New York Park\"\r\n  },\r\n  {\r\n    key: \"2\",\r\n    name: \"Jim Green\",\r\n    age: 40,\r\n    address: \"London Park\"\r\n  },\r\n  {\r\n    key: \"3\",\r\n    name: \"Jim Green\",\r\n    age: 40,\r\n    address: \"London Park\"\r\n  },\r\n  {\r\n    key: \"4\",\r\n    name: \"Jim Green\",\r\n    age: 40,\r\n    address: \"London Park\"\r\n  },{\r\n    key: \"11\",\r\n    name: \"John Brown\",\r\n    age: 32,\r\n    address: \"New York Park\"\r\n  },\r\n  {\r\n    key: \"12\",\r\n    name: \"Jim Green\",\r\n    age: 40,\r\n    address: \"London Park\"\r\n  },\r\n  {\r\n    key: \"13\",\r\n    name: \"Jim Green\",\r\n    age: 40,\r\n    address: \"London Park\"\r\n  },\r\n  {\r\n    key: \"14\",\r\n    name: \"Jim Green\",\r\n    age: 40,\r\n    address: \"London Park\"\r\n  }\r\n];\r\n\r\nclass Demo6 extends Component {\r\n  render() {\r\n    return <DragColumnTable columns={columns6} data={data6} scroll={{y: 150 }} dragborder={true}  />;\r\n  }\r\n}\r\n\r\n", "desc": " 方便一页内展示大量数据。需要指定 column 的 width 属性，否则列头和内容可能不对齐。(还可以设置scroll来支持横向或纵向滚动)" }, { "example": _react2['default'].createElement(Demo7, null), "title": " 主子表", "code": "/**\r\n *\r\n * @title 主子表\r\n * @description 主表点击子表联动\r\n *\r\n */\r\n\r\nimport React, { Component } from \"react\";\r\nimport { Table } from 'tinper-bee';\r\n\r\nconst columns7 = [\r\n  { title: \"班级\", dataIndex: \"a\", key: \"a\" },\r\n  { title: \"人数\", dataIndex: \"b\", key: \"b\" },\r\n  { title: \"班主任\", dataIndex: \"c\", key: \"c\" },\r\n  {\r\n    title: \"武功级别\",\r\n    dataIndex: \"d\",\r\n    key: \"d\"\r\n  }\r\n];\r\n\r\nconst data7 = [\r\n  { a: \"02级一班\", b: \"2\", c: \"欧阳锋\", d: \"大侠\", key: \"1\" },\r\n  { a: \"03级二班\", b: \"3\", c: \"归海一刀\", d: \"大侠\", key: \"2\" },\r\n  { a: \"05级三班\", b: \"1\", c: \"一拳超人\", d: \"愣头青\", key: \"3\" }\r\n];\r\n\r\nconst columns7_1 = [\r\n  { title: \"姓名\", dataIndex: \"a\", key: \"a\" },\r\n  { title: \"班级\", dataIndex: \"b\", key: \"b\" },\r\n  { title: \"系别\", dataIndex: \"c\", key: \"c\" }\r\n];\r\n\r\nclass Demo7 extends Component {\r\n  constructor(props) {\r\n    super(props);\r\n    this.state = {\r\n      children_data: []\r\n    };\r\n  }\r\n\r\n  rowclick = (record, index) => {\r\n    if (record.a === \"02级一班\") {\r\n      this.setState({\r\n        children_data: [\r\n          { a: \"郭靖\", b: \"02级一班\", c: \"文学系\", key: \"1\" },\r\n          { a: \"黄蓉\", b: \"02级一班\", c: \"文学系\", key: \"2\" }\r\n        ]\r\n      });\r\n    } else if (record.a === \"03级二班\") {\r\n      this.setState({\r\n        children_data: [\r\n          { a: \"杨过\", b: \"03级二班\", c: \"外语系\", key: \"1\" },\r\n          { a: \"小龙女\", b: \"03级二班\", c: \"外语系\", key: \"2\" },\r\n          { a: \"傻姑\", b: \"03级二班\", c: \"外语系\", key: \"3\" }\r\n        ]\r\n      });\r\n    } else if (record.a === \"05级三班\") {\r\n      this.setState({\r\n        children_data: [{ a: \"金圣叹\", b: \"05级三班\", c: \"美术系\", key: \"1\" }]\r\n      });\r\n    }\r\n  };\r\n\r\n  render() {\r\n    return (\r\n      <div>\r\n        <Table\r\n          columns={columns7}\r\n          data={data7}\r\n          onRowClick={this.rowclick}\r\n          title={currentData => <div>标题: 我是主表</div>}\r\n        />\r\n        <Table\r\n          style={{ marginTop: 40 }}\r\n          columns={columns7_1}\r\n          data={this.state.children_data}\r\n          title={currentData => <div>标题: 我是子表</div>}\r\n        />\r\n      </div>\r\n    );\r\n  }\r\n}\r\n\r\n\r\n", "desc": " 主表点击子表联动" }, { "example": _react2['default'].createElement(Demo8, null), "title": " 表格+分页", "code": "/**\r\n *\r\n * @title 表格+分页\r\n * @description 点击分页联动表格\r\n */\r\n\r\nimport React, { Component } from \"react\";\r\n\r\nimport { Table, Pagination } from 'tinper-bee';\r\n\n\r\nconst columns8 = [\r\n  { title: \"姓名\", dataIndex: \"a\", key: \"a\", width: 100 },\r\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\r\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\r\n  {\r\n    title: \"武功级别\",\r\n    dataIndex: \"d\",\r\n    key: \"d\"\r\n  }\r\n];\r\n\r\nconst pageData = {\r\n  1: [\r\n    { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"2\" },\r\n    { a: \"令狐冲\", b: \"男\", c: 41, d: \"大侠\", key: \"1\" },\r\n    { a: \"郭靖\", b: \"男\", c: 25, d: \"大侠\", key: \"3\" }\r\n  ],\r\n  2: [\r\n    { a: \"芙蓉姐姐\", b: \"女\", c: 23, d: \"大侠\", key: \"1\" },\r\n    { a: \"芙蓉妹妹\", b: \"女\", c: 23, d: \"内行\", key: \"2\" }\r\n  ]\r\n};\r\n\r\nclass Demo8 extends Component {\r\n  constructor(props) {\r\n    super(props);\r\n    this.state = {\r\n      data: pageData[1],\r\n      activePage: 1\r\n    };\r\n  }\r\n\r\n  handleSelect(eventKey) {\r\n    this.setState({\r\n      data: pageData[eventKey],\r\n      activePage: eventKey\r\n    });\r\n  }\r\n\r\n  render() {\r\n    return (\r\n      <div>\r\n        <Table columns={columns8} data={this.state.data} />\r\n        <Pagination\r\n          first\r\n          last\r\n          prev\r\n          next\r\n          maxButtons={5}\r\n          boundaryLinks\r\n          activePage={this.state.activePage}\r\n          onSelect={this.handleSelect.bind(this)}\r\n          onDataNumSelect={this.dataNumSelect}\r\n          showJump={true}\r\n          total={100}\r\n          dataNum={2}\r\n        />\r\n      </div>\r\n    );\r\n  }\r\n}\r\n\r\n", "desc": " 点击分页联动表格" }, { "example": _react2['default'].createElement(Demo9, null), "title": " 表格+搜索", "code": "/**\r\n *\r\n * @title 表格+搜索\r\n * @description 搜索刷新表格数据\r\n *\r\n *\r\n * import {Table} from 'tinper-bee';\r\n */\r\n\r\nimport React, { Component } from \"react\";\r\n\r\nimport { Table, FormControl, InputGroup, Icon } from 'tinper-bee';\r\n\n\n\n\r\nclass Search extends Component {\r\n  state = {\r\n    searchValue: \"\",\r\n    empty: false\r\n  };\r\n\r\n  /**\r\n     * 搜索\r\n     */\r\n  handleSearch = () => {\r\n    let { onSearch } = this.props;\r\n    this.setState({\r\n      empty: true\r\n    });\r\n    onSearch && onSearch(this.state.searchValue);\r\n  };\r\n\r\n  /**\r\n     * 捕获回车\r\n     * @param e\r\n     */\r\n  handleKeyDown = e => {\r\n    if (e.keyCode === 13) {\r\n      this.handleSearch();\r\n    }\r\n  };\r\n\r\n  /**\r\n     * 输入框改变\r\n     * @param e\r\n     */\r\n  handleChange = (e) => {\r\n    this.setState({\r\n      searchValue: e\r\n    });\r\n  };\r\n\r\n  /**\r\n     * 清空输入框\r\n     */\r\n  emptySearch = () => {\r\n    let { onEmpty } = this.props;\r\n    this.setState({\r\n      searchValue: \"\",\r\n      empty: false\r\n    });\r\n    onEmpty && onEmpty();\r\n  };\r\n\r\n  render() {\r\n    return (\r\n      <InputGroup simple className=\"search-component\">\r\n        <FormControl\r\n          onChange={this.handleChange}\r\n          value={this.state.searchValue}\r\n          onKeyDown={this.handleKeyDown}\r\n          placeholder=\"请输入用户名\"\r\n          type=\"text\"\r\n        />\r\n        {this.state.empty ? (\r\n          <Icon\r\n            type=\"uf-close-c\"\r\n            onClick={this.emptySearch}\r\n            className=\"empty-search\"\r\n          />\r\n        ) : null}\r\n\r\n        <InputGroup.Button onClick={this.handleSearch} shape=\"border\">\r\n          <Icon type=\"uf-search\" />\r\n        </InputGroup.Button>\r\n      </InputGroup>\r\n    );\r\n  }\r\n}\r\n\r\nconst columns9 = [\r\n  {\r\n    title: \"姓名\",\r\n    dataIndex: \"a\",\r\n    key: \"a\",\r\n    width: 100\r\n  },\r\n  {\r\n    title: \"性别\",\r\n    dataIndex: \"b\",\r\n    key: \"b\",\r\n    width: 100\r\n  },\r\n  {\r\n    title: \"年龄\",\r\n    dataIndex: \"c\",\r\n    key: \"c\",\r\n    width: 200\r\n  },\r\n  {\r\n    title: \"武功级别\",\r\n    dataIndex: \"d\",\r\n    key: \"d\"\r\n  }\r\n];\r\n\r\nconst userData = [\r\n  { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"2\" },\r\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"大侠\", key: \"1\" },\r\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"大侠\", key: \"3\" }\r\n];\r\n\r\nclass Demo9 extends Component {\r\n  constructor(props) {\r\n    super(props);\r\n    this.state = {\r\n      data: userData\r\n    };\r\n  }\r\n\r\n  handleSearch = value => {\r\n    if (value === \"\") {\r\n      return this.setState({\r\n        data: userData\r\n      });\r\n    }\r\n    let regExp = new RegExp(value, \"ig\");\r\n    let data = userData.filter(item => regExp.test(item.a));\r\n    this.setState({\r\n      data\r\n    });\r\n  };\r\n\r\n  handleEmpty = () => {\r\n    this.setState({\r\n      data: userData\r\n    });\r\n  };\r\n\r\n  render() {\r\n    return (\r\n      <div>\r\n        <div className=\"clearfix\">\r\n          <Search onSearch={this.handleSearch} onEmpty={this.handleEmpty} />\r\n        </div>\r\n        <Table columns={columns9} data={this.state.data} />\r\n      </div>\r\n    );\r\n  }\r\n}\r\n\r\n\r\n", "desc": " 搜索刷新表格数据" }, { "example": _react2['default'].createElement(Demo10, null), "title": " 无数据时显示", "code": "/**\r\n*\r\n* @title 无数据时显示\r\n* @description 无数据时显示效果展示（可自定义）\r\n *\r\n* import {Table} from 'tinper-bee';\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\r\nimport { Table } from 'tinper-bee';\r\n\r\n\r\nconst columns10 = [\r\n    {\r\n      title: \"Name\",\r\n      dataIndex: \"name\",\r\n      key: \"name\",\r\n      width: \"40%\"\r\n    },\r\n    {\r\n      title: \"Age\",\r\n      dataIndex: \"age\",\r\n      key: \"age\",\r\n      width: \"30%\"\r\n    },\r\n    {\r\n      title: \"Address\",\r\n      dataIndex: \"address\",\r\n      key: \"address\"\r\n    }\r\n  ];\r\n  \r\n  const data10 = [\r\n    \r\n  ];\r\n\r\n  const emptyFunc = () => <span>这里没有数据！</span>\r\n  \r\n  class Demo10 extends Component {\r\n    render() {\r\n      return <Table columns={columns10} data={data10} emptyText={emptyFunc} />;\r\n    }\r\n  }\r\n\r\n", "desc": " 无数据时显示效果展示（可自定义）" }, { "example": _react2['default'].createElement(Demo11, null), "title": " 列排序", "code": "/**\r\n* @description  column中增加sorter: (a, b) => a.c - b.c 这里的a,b代表前后两个数据，c代表比较当前对象的字段名称\r\n* @title 列排序\r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\r\nimport { Table, Icon } from 'tinper-bee';\r\n\nimport sort from \"tinper-bee/lib/sort.js\";;\r\nlet ComplexTable = sort(Table, Icon);\r\nconst columns11 = [\r\n  {\r\n    title: \"名字\",\r\n    dataIndex: \"a\",\r\n    key: \"a\",\r\n    width: 100\r\n  },\r\n  {\r\n    title: \"性别\",\r\n    dataIndex: \"b\",\r\n    key: \"b\",\r\n    width: 100\r\n  },\r\n  {\r\n    title: \"年龄\",\r\n    dataIndex: \"c\",\r\n    key: \"c\",\r\n    width: 200,\r\n    sorter: (a, b) => a.c - b.c\r\n  },\r\n  {\r\n    title: \"武功级别\",\r\n    dataIndex: \"d\",\r\n    key: \"d\"\r\n  }\r\n];\r\n\r\nconst data11 = [\r\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\r\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\r\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\r\n];\r\n\r\nconst defaultProps11 = {\r\n  prefixCls: \"bee-table\"\r\n};\r\nclass Demo11 extends Component {\r\n  constructor(props) {\r\n    super(props);\r\n    this.state = {\r\n      sortOrder: \"\",\r\n      data: data11\r\n    };\r\n  }\r\n  render() {\r\n\r\n    return <ComplexTable columns={columns11} data={this.state.data} />;\r\n  }\r\n}\r\nDemo11.defaultProps = defaultProps11;\r\n\r\n\r\n", "desc": "  column中增加sorter: (a, b) => a.c - b.c 这里的a,b代表前后两个数据，c代表比较当前对象的字段名称" }, { "example": _react2['default'].createElement(Demo12, null), "title": " 全选功能", "code": "/**\r\n*\r\n* @title 全选功能\r\n* @description 点击表格左列按钮即可选中，并且在选中的回调函数中能获取到选中的数据（未使用封装好的全选功能）\r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\r\nimport { Table, Checkbox } from 'tinper-bee';\r\nimport multiSelect from \"tinper-bee/lib/multiSelect.js\";;\r\n\n\r\nconst columns12 = [\r\n  {\r\n    title: \"名字\",\r\n    dataIndex: \"a\",\r\n    key: \"a\",\r\n    width: 100\r\n  },\r\n  {\r\n    title: \"性别\",\r\n    dataIndex: \"b\",\r\n    key: \"b\",\r\n    width: 100\r\n  },\r\n  {\r\n    title: \"年龄\",\r\n    dataIndex: \"c\",\r\n    key: \"c\",\r\n    width: 200,\r\n    sorter: (a, b) => a.c - b.c\r\n  },\r\n  {\r\n    title: \"武功级别\",\r\n    dataIndex: \"d\",\r\n    key: \"d\"\r\n  }\r\n];\r\n\r\nconst data12 = [\r\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\",_checked:true },\r\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" ,_checked:true},\r\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" ,_checked:true}\r\n];\r\n//拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常\r\nlet MultiSelectTable  = multiSelect(Table, Checkbox);\r\n\r\nclass Demo12 extends Component {\r\n  constructor(props) {\r\n    super(props);\r\n    this.state = {\r\n      data: data12\r\n    };\r\n  }\r\n  getSelectedDataFunc = data => {\r\n    console.log(data);\r\n  };\r\n  \r\n  render() {\r\n    let multiObj = {\r\n      type: \"checkbox\"\r\n    };\r\n    return (\r\n      <MultiSelectTable \r\n        columns={columns12} \r\n        data={data12} \r\n        multiSelect={multiObj}\r\n        getSelectedDataFunc={this.getSelectedDataFunc}/>\r\n    );\r\n  }\r\n}\r\n\r\n", "desc": " 点击表格左列按钮即可选中，并且在选中的回调函数中能获取到选中的数据（未使用封装好的全选功能）" }, { "example": _react2['default'].createElement(Demo13, null), "title": " 多列排序、全选功能、合计", "code": "/**\r\n *\r\n * @title 多列排序、全选功能、合计\r\n * @description 多列排序、全选功能、合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）新增回调函数(sorterClick)\r\n *\r\n */\r\n\r\nimport React, { Component } from \"react\";\r\nimport { Table, Icon, Button, Checkbox } from 'tinper-bee';\r\n\n\n\nimport multiSelect from \"tinper-bee/lib/multiSelect.js\";;\r\nimport sort from \"tinper-bee/lib/sort.js\";;\r\nimport sum from \"tinper-bee/lib/sum.js\";;\r\n\r\nconst columns13 = [\r\n  {\r\n    title: \"名字\",\r\n    dataIndex: \"a\",\r\n    key: \"a\",\r\n    className:'dfasd',\r\n    width: 200\r\n  },\r\n  {\r\n    title: \"功力指数\",\r\n    dataIndex: \"b\",\r\n    key: \"b\",\r\n    width: 200,\r\n    sumCol: true,\r\n    sorter: (a, b) => a.c - b.c,\r\n    sorterClick:(data,type)=>{//排序的回调函数\r\n      //type value is up or down\r\n      console.log(\"data\",data);\r\n    }\r\n  },\r\n  {\r\n    title: \"年龄\",\r\n    dataIndex: \"c\",\r\n    key: \"c\",\r\n    width: 200,\r\n    sumCol: true,\r\n    sorter: (a, b) => a.c - b.c,\r\n    sorterClick:(data,type)=>{//排序的回调函数\r\n      //type value is up or down\r\n      console.log(\"data\",data);\r\n    }\r\n  },\r\n  {\r\n    title: \"成绩\",\r\n    dataIndex: \"e\",\r\n    key: \"e\",\r\n    width: 200,\r\n    sumCol: true,\r\n    sorter: (a, b) => a.c - b.c,\r\n  },\r\n  {\r\n    title: \"武功级别\",\r\n    dataIndex: \"d\",\r\n    key: \"d\",\r\n    width: 200\r\n  }\r\n];\r\n\r\nconst data13 = [\r\n  { a: \"杨过\", b: 675, c: 30, d: \"内行\",e:100, key: \"2\" },\r\n  { a: \"令狐冲\", b: 43, c: 41, d: \"大侠\",e:90, key: \"1\" },\r\n  { a: \"令狐冲1\", b: 43, c: 81, d: \"大侠\", e:120,key: \"4\" },\r\n  { a: \"令狐冲2\", b: 43, c: 81, d: \"大侠\", e:130,key: \"5\" },\r\n  { a: \"郭靖\", b: 153, c: 25, d: \"大侠\",e:90, key: \"3\" }\r\n];\r\n\r\n\r\n//拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常\r\nlet ComplexTable = multiSelect(sum(sort(Table, Icon)), Checkbox);\r\n\r\nclass Demo13 extends Component {\r\n  constructor(props) {\r\n    super(props);\r\n    this.state = {\r\n      data13: data13,\r\n      selectedRow: this.selectedRow,\r\n      selectDisabled: this.selectDisabled\r\n    };\r\n  }\r\n  getSelectedDataFunc = data => {\r\n    console.log(data);\r\n  };\r\n  selectDisabled = (record, index) => {\r\n    // console.log(record);\r\n    if (index === 1) {\r\n      return true;\r\n    }\r\n    return false;\r\n  };\r\n  selectedRow = (record, index) => {\r\n    // console.log(record);\r\n    if (index === 0) {\r\n      return true;\r\n    }\r\n    return false;\r\n  };\r\n  onClick = () => {\r\n    this.setState({\r\n      selectedRow: function() {}\r\n    });\r\n  };\r\n\r\n  render() {\r\n    let multiObj = {\r\n      type: \"checkbox\"\r\n    };\r\n    let sortObj = {\r\n      mode:'multiple'\r\n    }\r\n   \r\n    return (\r\n      <div>\r\n        <Button className=\"editable-add-btn\" onClick={this.onClick}>\r\n          change selectedRow\r\n        </Button>\r\n        <ComplexTable\r\n          selectDisabled={this.state.selectDisabled}\r\n          selectedRow={this.state.selectedRow}\r\n          columns={columns13}\r\n          data={this.state.data13}\r\n          multiSelect={multiObj}\r\n          sort={sortObj}\r\n          getSelectedDataFunc={this.getSelectedDataFunc}\r\n        />\r\n      </div>\r\n    );\r\n  }\r\n}\r\n", "desc": " 多列排序、全选功能、合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）新增回调函数(sorterClick)" }, { "example": _react2['default'].createElement(Demo14, null), "title": " 编辑态表格", "code": "/**\r\n*\r\n* @title 编辑态表格\r\n* @description 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）\r\n*\r\n*/\r\n\r\nimport React from \"react\";\r\nimport { Table, Select, Datepicker, Checkbox, Input, Icon, Form, Button, Tooltip, Animate } from 'tinper-bee';\r\n\n\n\n\n\n\n\n\n\nimport renderInput from \"tinper-bee/lib/InputRender.js\";;\r\nimport renderDate from \"tinper-bee/lib/DateRender.js\";;\r\nimport renderSelect from \"tinper-bee/lib/SelectRender.js\";;\r\n\r\nconst InputRender = renderInput(Form, Input, Icon);\r\nconst DateRender = renderDate(Datepicker, Icon);\r\nconst SelectRender = renderSelect(Select, Icon);\r\n\r\nconst format = \"YYYY-MM-DD\";\r\nconst format2 = \"YYYY-MM\";\r\nconst format3 = \"YYYY-MM-DD HH:mm:ss\";\r\n\r\nconst dateInputPlaceholder = \"选择日期\";\r\nconst dateInputPlaceholder2 = \"选择年月\";\r\nconst dataSource = [\r\n  {\r\n    key: \"boyuzhou\",\r\n    value: \"jack\"\r\n  },\r\n  {\r\n    key: \"renhualiu\",\r\n    value: \"lucy\"\r\n  },\r\n  {\r\n    key: \"yuzhao\",\r\n    value: \"yiminghe\"\r\n  }\r\n];\r\nclass Demo14 extends React.Component {\r\n  constructor(props) {\r\n    super(props);\r\n    this.state = {\r\n      dataSource: [\r\n        {\r\n          key: \"0\",\r\n          name: \"沉鱼\",\r\n          number: \"10\",\r\n          age: \"y\",\r\n          address: \"jack\",\r\n          datepicker: \"2017-06-12\",\r\n          MonthPicker: \"2017-02\"\r\n        },\r\n        {\r\n          key: \"1\",\r\n          name: \"落雁\",\r\n          number: \"100\",\r\n          age: \"y\",\r\n          address: \"lucy\",\r\n          datepicker: \"2017-06-12\",\r\n          MonthPicker: \"2017-02\"\r\n        },\r\n        {\r\n          key: \"2\",\r\n          name: \"闭月\",\r\n          number: \"1000\",\r\n          age: \"n\",\r\n          address: \"lucy\",\r\n          datepicker: \"2017-06-12\",\r\n          MonthPicker: \"2017-02\"\r\n        },\r\n        {\r\n          key: \"3\",\r\n          name: \"羞花\",\r\n          number: \"9999\",\r\n          age: \"y\",\r\n          address: \"lucy\",\r\n          datepicker: \"2017-06-12\",\r\n          MonthPicker: \"2017-02\"\r\n        }\r\n      ],\r\n      count: 4\r\n    };\r\n    this.columns = [\r\n      {\r\n        title: \"普通输入\",\r\n        dataIndex: \"name\",\r\n        key: \"name\",\r\n        width: \"150px\",\r\n        render: (text, record, index) => (\r\n          <InputRender\r\n            name=\"name\"\r\n            placeholder=\"请输入姓名\"\r\n            value={text}\r\n            isclickTrigger={true}\r\n            check={this.check}\r\n            onChange={this.onInputChange(index, \"name\")}\r\n            isRequire={true}\r\n            method=\"blur\"\r\n            errorMessage={\r\n              <Tooltip overlay={\"错误提示\"}>\r\n                <Icon type=\"uf-exc-c\" className=\"\" />\r\n              </Tooltip>\r\n            }\r\n          />\r\n        )\r\n      },\r\n      {\r\n        title: \"货币输入\",\r\n        dataIndex: \"number\",\r\n        key: \"number\",\r\n        width: \"150px\",\r\n        render: (text, record, index) => (\r\n          <InputRender\r\n            format=\"Currency\"\r\n            name=\"number\"\r\n            placeholder=\"请输入货币\"\r\n            value={text}\r\n            isclickTrigger={true}\r\n            check={this.check}\r\n            onChange={this.onInputChange(index, \"number\")}\r\n            isRequire={true}\r\n            method=\"blur\"\r\n            errorMessage={\r\n              <Tooltip overlay={\"错误提示\"}>\r\n                <Icon type=\"uf-exc-c\" className=\"\" />\r\n              </Tooltip>\r\n            }\r\n            reg={/^[0-9]+$/}\r\n          />\r\n        )\r\n      },\r\n      {\r\n        title: \"复选\",\r\n        dataIndex: \"age\",\r\n        key: \"age\",\r\n        width: \"100px\",\r\n        render: (text, record, index) => (\r\n          <Checkbox\r\n            checked={record.age}\r\n            onChange={this.onCheckChange(index, \"age\")}\r\n          />\r\n        )\r\n      },\r\n      {\r\n        title: \"下拉框\",\r\n        dataIndex: \"address\",\r\n        key: \"address\",\r\n        width: \"200px\",\r\n        render: (text, record, index) => {\r\n          return (\r\n            <SelectRender\r\n              dataSource={dataSource}\r\n              isclickTrigger={true}\r\n              value={text}\r\n              onChange={this.onSelectChange(index, \"address\")}\r\n            >\r\n              <Option value=\"jack\">boyuzhou</Option>\r\n              <Option value=\"lucy\">renhualiu</Option>\r\n              <Option value=\"disabled\" disabled>\r\n                Disabled\r\n              </Option>\r\n              <Option value=\"yiminghe\">yuzhao</Option>\r\n            </SelectRender>\r\n          );\r\n        }\r\n      },\r\n      {\r\n        title: \"年月日\",\r\n        dataIndex: \"datepicker\",\r\n        key: \"datepicker\",\r\n        width: \"200px\",\r\n        render: (text, record, index) => {\r\n          return (\r\n            <DateRender\r\n              value={text}\r\n              isclickTrigger={true}\r\n              format={format}\r\n              onSelect={this.onDateSelect}\r\n              onChange={this.onDateChange}\r\n              placeholder={dateInputPlaceholder}\r\n            />\r\n          );\r\n        }\r\n      },\r\n      {\r\n        title: \"年月\",\r\n        dataIndex: \"MonthPicker\",\r\n        key: \"MonthPicker\",\r\n        width: \"200px\",\r\n        render: (text, record, index) => {\r\n          return (\r\n            <DateRender\r\n              value={text}\r\n              type=\"MonthPicker\"\r\n              isclickTrigger={true}\r\n              format={format2}\r\n              onSelect={this.onSelect}\r\n              onChange={this.onChange}\r\n              placeholder={dateInputPlaceholder2}\r\n            />\r\n          );\r\n        }\r\n      }\r\n    ];\r\n  }\r\n  check = (flag, obj) => {\r\n    console.log(flag);\r\n    console.log(obj);\r\n  };\r\n\r\n  onInputChange = (index, key) => {\r\n    return value => {\r\n      const dataSource = [...this.state.dataSource];\r\n      dataSource[index][key] = value;\r\n      this.setState({ dataSource });\r\n    };\r\n  };\r\n  onCheckChange = (index, key) => {\r\n    return value => {\r\n      const dataSource = [...this.state.dataSource];\r\n      dataSource[index][key] = value;\r\n      this.setState({ dataSource });\r\n    };\r\n  };\r\n  onSelectChange = (index, key) => {\r\n    return value => {\r\n      console.log(`selected ${value}`);\r\n      const dataSource = [...this.state.dataSource];\r\n      dataSource[index][key] = value;\r\n      this.setState({ dataSource });\r\n    };\r\n  };\r\n  onDateChange = d => {\r\n    console.log(d);\r\n  };\r\n  onDateSelect = d => {\r\n    console.log(d);\r\n  };\r\n  onDelete = index => {\r\n    return () => {\r\n      const dataSource = [...this.state.dataSource];\r\n      dataSource.splice(index, 1);\r\n      this.setState({ dataSource });\r\n    };\r\n  };\r\n  handleAdd = () => {\r\n    const { count, dataSource } = this.state;\r\n    const newData = {\r\n      key: count,\r\n      name: `凤姐 ${count}`,\r\n      age: 32,\r\n      address: \"jack\",\r\n      datepicker: \"2017-06-12\",\r\n      MonthPicker: \"2017-02\"\r\n    };\r\n    this.setState({\r\n      dataSource: [...dataSource, newData],\r\n      count: count + 1\r\n    });\r\n  };\r\n\r\n  getBodyWrapper = body => {\r\n    return (\r\n      <Animate\r\n        transitionName=\"move\"\r\n        component=\"tbody\"\r\n        className={body.props.className}\r\n      >\r\n        {body.props.children}\r\n      </Animate>\r\n    );\r\n  };\r\n  getData = () => {\r\n    console.log(this.state.dataSource);\r\n  };\r\n  render() {\r\n    const { dataSource } = this.state;\r\n    const columns = this.columns;\r\n    return (\r\n      <div>\r\n        <Button\r\n          className=\"editable-add-btn\"\r\n          type=\"ghost\"\r\n          onClick={this.handleAdd}\r\n        >\r\n          添加一行\r\n        </Button>\r\n        <Button\r\n          style={{marginLeft:\"5px\"}}\r\n          className=\"editable-add-btn\"\r\n          type=\"ghost\"\r\n          onClick={this.getData}\r\n        >\r\n          获取数据\r\n        </Button>\r\n        <Table\r\n          data={dataSource}\r\n          columns={columns}\r\n          getBodyWrapper={this.getBodyWrapper}\r\n        />\r\n      </div>\r\n    );\r\n  }\r\n}\r\n\r\n\r\n", "desc": " 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）" }, { "example": _react2['default'].createElement(Demo15, null), "title": " 表格行/列合并", "code": "/**\r\n*\r\n* @title 表格行/列合并\r\n* @description 表头只支持列合并，使用 column 里的 colSpan 进行设置。表格支持行/列合并，使用 render 里的单元格属性 colSpan 或者 rowSpan 设值为 0 时，设置的表格不会渲染。\r\n*\r\n*/\r\n\r\nimport React, { Component } from \"react\";\r\nimport { Table } from 'tinper-bee';\r\n\r\nconst renderContent = (value, row, index) => {\r\n  const obj = {\r\n    children: value,\r\n    props: {},\r\n  };\r\n  if (index === 4) {\r\n    obj.props.colSpan = 0;\r\n  }\r\n  return obj;\r\n};\r\n\r\nconst columns = [{\r\n  title: 'Name',\r\n  key: \"name\",\r\n  dataIndex: 'name',\r\n  render: (text, row, index) => {\r\n    if (index < 4) {\r\n      return <a href=\"#\">{text}</a>;\r\n    }\r\n    return {\r\n      children: <a href=\"#\">{text}</a>,\r\n      props: {\r\n        colSpan: 5,\r\n      },\r\n    };\r\n  },\r\n}, {\r\n  title: 'Age',\r\n  key: \"Age\",\r\n  dataIndex: 'age',\r\n  render: renderContent,\r\n}, {\r\n  title: 'Home phone',\r\n  colSpan: 2,\r\n  key: \"tel\",\r\n  dataIndex: 'tel',\r\n  render: (value, row, index) => {\r\n    const obj = {\r\n      children: value,\r\n      props: {},\r\n    };\r\n    if (index === 2) {\r\n      obj.props.rowSpan = 2;\r\n    }\r\n    if (index === 3) {\r\n      obj.props.rowSpan = 0;\r\n    }\r\n    if (index === 4) {\r\n      obj.props.colSpan = 0;\r\n    }\r\n    return obj;\r\n  },\r\n}, {\r\n  title: 'Phone',\r\n  colSpan: 0,\r\n  key: \"phone\",\r\n  dataIndex: 'phone',\r\n  render: renderContent,\r\n}, {\r\n  title: 'Address',\r\n  key: \"address\",\r\n  dataIndex: 'address',\r\n  render: renderContent,\r\n}];\r\n\r\nconst data = [{\r\n  key: '1',\r\n  name: 'John Brown',\r\n  age: 32,\r\n  tel: '0571-22098909',\r\n  phone: 18889898989,\r\n  address: 'New York No. 1 Lake Park',\r\n}, {\r\n  key: '2',\r\n  name: 'Jim Green',\r\n  tel: '0571-22098333',\r\n  phone: 18889898888,\r\n  age: 42,\r\n  address: 'London No. 1 Lake Park',\r\n}, {\r\n  key: '3',\r\n  name: 'Joe Black',\r\n  age: 32,\r\n  tel: '0575-22098909',\r\n  phone: 18900010002,\r\n  address: 'Sidney No. 1 Lake Park',\r\n}, {\r\n  key: '4',\r\n  name: 'Jim Red',\r\n  age: 18,\r\n  tel: '0575-22098909',\r\n  phone: 18900010002,\r\n  address: 'London No. 2 Lake Park',\r\n}, {\r\n  key: '5',\r\n  name: 'Jake White',\r\n  age: 18,\r\n  tel: '0575-22098909',\r\n  phone: 18900010002,\r\n  address: 'Dublin No. 2 Lake Park',\r\n}];\r\n\r\nclass Demo15 extends Component {\r\n  render() {\r\n    return (\r\n       <Table columns={columns} data={data}/>\r\n    );\r\n  }\r\n}\r\n\r\n\r\n\r\n", "desc": " 表头只支持列合并，使用 column 里的 colSpan 进行设置。表格支持行/列合并，使用 render 里的单元格属性 colSpan 或者 rowSpan 设值为 0 时，设置的表格不会渲染。" }, { "example": _react2['default'].createElement(Demo16, null), "title": " 嵌套子表格", "code": "/**\r\n*\r\n* @title 嵌套子表格\r\n* @description 通过expandedRowRender参数来实现子表格\r\n*\r\n*/\r\n\r\nimport React, { Component } from \"react\";\r\nimport { Table } from 'tinper-bee';\r\n\r\nconst columns16 = [\r\n  {\r\n    title: \"操作\",\r\n    dataIndex: \"d\",\r\n    key: \"d\", \r\n    width:200,\r\n    render(text, record, index) {\r\n      return (\r\n        <a\r\n          href=\"#\"\r\n          onClick={() => {\r\n            alert(\"这是第\" + index + \"列，内容为:\" + text);\r\n          }}\r\n        >\r\n          一些操作\r\n        </a>\r\n      );\r\n    }\r\n  },\r\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 250 },\r\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\r\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\r\n  \r\n];\r\nconst columns17 = [\r\n  {\r\n    title: \"操作\",\r\n    dataIndex: \"d\",\r\n    key: \"d\",\r\n    width:200,\r\n    render(text, record, index) {\r\n      return (\r\n        <a\r\n          href=\"#\"\r\n          onClick={() => {\r\n            alert(\"这是第\" + index + \"列，内容为:\" + text);\r\n          }}\r\n        >\r\n          一些操作\r\n        </a>\r\n      );\r\n    }\r\n  },\r\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 100 },\r\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\r\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\r\n  \r\n];\r\n\r\nconst data16 = [\r\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\r\n  { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\r\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\r\n];\r\n\r\n\r\nclass Demo16 extends Component {\r\n  constructor(props){\r\n    super(props);\r\n    this.state={\r\n      data_obj:{}\r\n    }\r\n  }\r\n  expandedRowRender = (record, index, indent) => {\r\n    let height = 42 * (this.state.data_obj[record.key].length+ 2);\r\n    \r\n    return (\r\n      <Table\r\n        columns={columns17}\r\n        style={{height:height}}\r\n        data={this.state.data_obj[record.key]} \r\n\r\n      />\r\n    );\r\n  };\r\n  getData=(expanded, record)=>{\r\n    //当点击展开的时候才去请求数据\r\n    let new_obj = Object.assign({},this.state.data_obj);\r\n    if(expanded){\r\n      if(record.key==='1'){\r\n        new_obj[record.key] = [\r\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\r\n          { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" }\r\n        ]\r\n        this.setState({\r\n          data_obj:new_obj\r\n        })\r\n      }else{\r\n        new_obj[record.key] = [\r\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" }\r\n        ]\r\n        this.setState({\r\n          data_obj:new_obj\r\n        })\r\n      }\r\n    }\r\n  }\r\n  haveExpandIcon=(record, index)=>{\r\n    //控制是否显示行展开icon，该参数只有在和expandedRowRender同时使用才生效\r\n    if(index == 0){\r\n      return true;\r\n    }\r\n    return false;\r\n  }\r\n  render() {\r\n    return (\r\n      <Table\r\n        columns={columns16}\r\n        data={data16}\r\n        onExpand={this.getData}\r\n        expandedRowRender={this.expandedRowRender}\r\n        scroll={{x:true}}\r\n        title={currentData => <div>标题: 这是一个标题</div>}\r\n        footer={currentData => <div>表尾: 我是小尾巴</div>}\r\n      />\r\n    );\r\n  }\r\n}\r\n\r\n\r\n", "desc": " 通过expandedRowRender参数来实现子表格" }, { "example": _react2['default'].createElement(Demo17, null), "title": " loading属性指定表格是否加载中", "code": "/**\r\n*\r\n* @title loading属性指定表格是否加载中\r\n* @description  loading可以传boolean或者obj对象，obj为bee-loading组件的参数类型\r\n*\r\n*/\r\n\r\nimport React, { Component } from \"react\";\r\nimport { Table, Button } from 'tinper-bee';\r\n\n\r\nconst columns17 = [\r\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 100 },\r\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\r\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\r\n  {\r\n    title: \"操作\",\r\n    dataIndex: \"d\",\r\n    key: \"d\",\r\n    render(text, record, index) {\r\n      return (\r\n        <a\r\n          href=\"#\"\r\n          onClick={() => {\r\n            alert('这是第'+index+'列，内容为:'+text);\r\n          }}\r\n        >\r\n          一些操作\r\n        </a>\r\n      );\r\n    }\r\n  }\r\n];\r\n\r\nconst data17 = [\r\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\r\n  { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\r\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\r\n];\r\n\r\nclass Demo17 extends Component {\r\n  constructor(props){\r\n    super(props);\r\n    this.state = {\r\n      loading : true\r\n    }\r\n  }\r\n  changeLoading = () => {\r\n    this.setState({\r\n      loading : !this.state.loading\r\n    })\r\n  }\r\n  render() {\r\n    return (\r\n      <div>\r\n        <Button\r\n          className=\"editable-add-btn\"\r\n          type=\"ghost\"\r\n          onClick={this.changeLoading}\r\n        >\r\n          切换loading\r\n        </Button>\r\n        <Table\r\n          columns={columns17}\r\n          data={data17}\r\n          title={currentData => <div>标题: 这是一个标题</div>}\r\n          footer={currentData => <div>表尾: 我是小尾巴</div>}\r\n          // loading={this.state.loading}或者是boolean\r\n          loading={{show:this.state.loading,loadingType:\"line\"}}\r\n        />\r\n      </div>\r\n    );\r\n  }\r\n}\r\n\r\n\r\n", "desc": "  loading可以传boolean或者obj对象，obj为bee-loading组件的参数类型" }, { "example": _react2['default'].createElement(Demo18, null), "title": " 合并标题后的合计,且支持多字段统计", "code": "/**\r\n *\r\n * @title 合并标题后的合计,且支持多字段统计\r\n * @description 合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）\r\n *\r\n */\r\n\r\nimport React, { Component } from \"react\";\r\n\nimport { Table, Button } from 'tinper-bee'; \r\nimport sum from \"tinper-bee/lib/sum.js\";;\r\n \r\nlet ComplexTable = sum(Table);\r\n\r\nconst columns = [\r\n  {\r\n    title: \"Name\",\r\n    dataIndex: \"name\",\r\n    key: \"name\",\r\n    width: 100,\r\n    fixed: \"left\"\r\n  },\r\n  {\r\n    title: \"Other\",\r\n    children: [\r\n      {\r\n        title: \"Age\",\r\n        dataIndex: \"age\",\r\n        key: \"age\",\r\n        width: 200,\r\n        sumCol: true,\r\n      },\r\n      {\r\n        title: \"Address\",\r\n        children: [\r\n          {\r\n            title: \"Street\",\r\n            dataIndex: \"street\",\r\n            key: \"street\",\r\n            width: 200\r\n          },\r\n          {\r\n            title: \"Block\",\r\n            children: [\r\n              {\r\n                title: \"Building\",\r\n                dataIndex: \"building\",\r\n                key: \"building\",\r\n                width: 100\r\n              },\r\n              {\r\n                title: \"Door No.\",\r\n                dataIndex: \"number\",\r\n                key: \"number\",\r\n                // width: 100,\r\n                sumCol: true,\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  },\r\n  // {\r\n  //   title: \"Company\",\r\n  //   children: [\r\n  //     {\r\n  //       title: \"Company Address\",\r\n  //       dataIndex: \"companyAddress\",\r\n  //       key: \"companyAddress\",\r\n  //       width: 100,\r\n  //     },\r\n  //     {\r\n  //       title: \"Company Name\",\r\n  //       dataIndex: \"companyName\",\r\n  //       key: \"companyName\",\r\n  //       width: 100,\r\n  //     }\r\n  //   ]\r\n  // },\r\n  {\r\n    title: \"Gender\",\r\n    dataIndex: \"gender\",\r\n    key: \"gender\",\r\n    width: 80,\r\n    fixed: \"right\"\r\n  }\r\n];\r\n\r\nfunction getData(){\r\n  const data = [];\r\n  for (let i = 0; i < 5; i++) {\r\n    data.push({\r\n      key: i,\r\n      name: \"John Brown\"+i,\r\n      age: i + Math.floor(Math.random()*10),\r\n      street: \"Lake Park\",\r\n      building: \"C\",\r\n      number: 20 *  Math.floor(Math.random()*10),\r\n      companyAddress: \"Lake Street 42\",\r\n      companyName: \"SoftLake Co\",\r\n      gender: \"M\"\r\n    });\r\n  }\r\n  return data;\r\n}\r\n\r\nclass Demo18 extends Component {\r\n  \r\n  constructor(props) {\r\n    super(props);\r\n    this.state = {\r\n      data: getData()\r\n    };\r\n  }\r\n\r\n  changeData = ()=>{\r\n    this.setState({\r\n      data: getData()\r\n    });\r\n  }\r\n\r\n  render() {\r\n    const {data} = this.state;\r\n    return (\r\n      <div>\r\n        <Button \r\n          className=\"editable-add-btn\"\r\n          type=\"ghost\"\r\n          onClick={this.changeData}\r\n        >\r\n          动态设置数据源\r\n        </Button>\r\n\r\n         <ComplexTable \r\n          columns={columns}\r\n          data={data}\r\n          bordered\r\n          // scroll={{ x: \"130%\", y: 140 }}\r\n        />\r\n      </div>\r\n    );\r\n  }\r\n}\r\n\r\n", "desc": " 合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）" }, { "example": _react2['default'].createElement(Demo19, null), "title": " 编辑态表格", "code": "/**\r\n*\r\n* @title 编辑态表格\r\n* @description 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）\r\n*\r\n*/\r\n\r\n\nimport React from \"react\";\r\nimport { Table, Select, Form, Input, Icon, Tooltip, Animate, Button } from 'tinper-bee';\r\n\n\n\n\n\n\nimport renderInput from \"tinper-bee/lib/InputRender.js\";;\r\nimport renderSelect from \"tinper-bee/lib/SelectRender.js\";;\r\n\r\nconst InputRender = renderInput(Form, Input, Icon);\r\nconst SelectRender = renderSelect(Select, Icon);\r\n\r\nconst Option = Select.Option;\r\n\r\nconst dataSource = [\r\n  {\r\n    key: \"boyuzhou\",\r\n    value: \"jack\"\r\n  },\r\n  {\r\n    key: \"renhualiu\",\r\n    value: \"lucy\"\r\n  },\r\n  {\r\n    key: \"yuzhao\",\r\n    value: \"yiminghe\"\r\n  }\r\n];\r\nclass Demo19 extends React.Component {\r\n  constructor(props) {\r\n    super(props);\r\n    this.state = {\r\n      dataSource: [\r\n        {\r\n          key: \"0\",\r\n          name: \"沉鱼\",\r\n          number: \"10\",\r\n          age: \"y\",\r\n          address: \"jack\",\r\n          datepicker: \"2017-06-12\",\r\n          MonthPicker: \"2017-02\"\r\n        },\r\n        {\r\n          key: \"1\",\r\n          name: \"落雁\",\r\n          number: \"100\",\r\n          age: \"y\",\r\n          address: \"lucy\",\r\n          datepicker: \"2017-06-12\",\r\n          MonthPicker: \"2017-02\"\r\n        },\r\n        {\r\n          key: \"2\",\r\n          name: \"闭月\",\r\n          number: \"1000\",\r\n          age: \"n\",\r\n          address: \"lucy\",\r\n          datepicker: \"2017-06-12\",\r\n          MonthPicker: \"2017-02\"\r\n        },\r\n        {\r\n          key: \"3\",\r\n          name: \"羞花\",\r\n          number: \"9999\",\r\n          age: \"y\",\r\n          address: \"lucy\",\r\n          datepicker: \"2017-06-12\",\r\n          MonthPicker: \"2017-02\"\r\n        }\r\n      ],\r\n      count: 4\r\n    };\r\n    this.columns = [ \r\n      {\r\n        title: \"货币输入\",\r\n        dataIndex: \"number\",\r\n        key: \"number\",\r\n        width: \"150px\",\r\n        render: (text, record, index) => (\r\n          <InputRender\r\n            format=\"Currency\"\r\n            name=\"name\"\r\n            placeholder=\"请输入姓名\"\r\n            value={text}\r\n            isclickTrigger={true}\r\n            check={this.check}\r\n            onChange={this.onInputChange(index, \"name\")}\r\n            isRequire={true}\r\n            method=\"blur\"\r\n            errorMessage={\r\n              <Tooltip overlay={\"错误提示\"}>\r\n                <Icon type=\"uf-exc-c\" className=\"\" />\r\n              </Tooltip>\r\n            }\r\n            reg={/^[0-9]+$/}\r\n          />\r\n        )\r\n      },\r\n       \r\n      {\r\n        title:(<div>下拉框的div</div>),\r\n        dataIndex: \"address\",\r\n        key: \"address\",\r\n        width: \"200px\",\r\n        render: (text, record, index) => {\r\n          return (\r\n            <SelectRender\r\n              dataSource={dataSource}\r\n              isclickTrigger={true}\r\n              value={text}\r\n              onChange={this.onSelectChange(index, \"address\")}\r\n              onFocus={this.handFocus}\r\n              onBlur={this.onBlur}\r\n              autofocus\r\n            >\r\n              <Option value=\"jack\">boyuzhou</Option>\r\n              <Option value=\"lucy\">renhualiu</Option>\r\n              <Option value=\"disabled\" disabled>\r\n                Disabled\r\n              </Option>\r\n              <Option value=\"yiminghe\">yuzhao</Option>\r\n            </SelectRender>\r\n          );\r\n        }\r\n      }\r\n    ];\r\n  }\r\n  check = (flag, obj) => {\r\n    console.log(flag);\r\n    console.log(obj);\r\n  };\r\n\r\n  handFocus = (value,e) => {\r\n    console.log(value+` 获取焦点事件`);\r\n  };\r\n  onBlur = (value,e) => {\r\n    console.log(value+` onBlur`);\r\n  };\r\n\r\n  onInputChange = (index, key) => {\r\n    return value => {\r\n      const dataSource = [...this.state.dataSource];\r\n      dataSource[index][key] = value;\r\n      this.setState({ dataSource });\r\n    };\r\n  };\r\n\r\n  onSelectChange = (index, key) => {\r\n    return value => {\r\n      console.log(`selected ${value}`);\r\n      const dataSource = [...this.state.dataSource];\r\n      dataSource[index][key] = value;\r\n      this.setState({ dataSource });\r\n    };\r\n  };\r\n\r\n  handleAdd = () => {\r\n    const { count, dataSource } = this.state;\r\n    const newData = {\r\n      key: count,\r\n      name: `凤姐 ${count}`,\r\n      age: 32,\r\n      address: \"jack\",\r\n      datepicker: \"2017-06-12\",\r\n      MonthPicker: \"2017-02\"\r\n    };\r\n    this.setState({\r\n      dataSource: [...dataSource, newData],\r\n      count: count + 1\r\n    });\r\n  };\r\n\r\n  getBodyWrapper = body => {\r\n    return (\r\n      <Animate\r\n        transitionName=\"move\"\r\n        component=\"tbody\"\r\n        className={body.props.className}\r\n      >\r\n        {body.props.children}\r\n      </Animate>\r\n    );\r\n  };\r\n  getData = () => {\r\n    console.log(this.state.dataSource);\r\n  };\r\n  render() {\r\n    const { dataSource } = this.state;\r\n    const columns = this.columns;\r\n    return (\r\n      <div>\r\n        <Button\r\n          className=\"editable-add-btn\"\r\n          type=\"ghost\"\r\n          onClick={this.handleAdd}\r\n        >\r\n          添加一行\r\n        </Button>\r\n        <Button\r\n          style={{marginLeft:\"5px\"}}\r\n          className=\"editable-add-btn\"\r\n          type=\"ghost\"\r\n          onClick={this.getData}\r\n        >\r\n          获取数据\r\n        </Button>\r\n        <Table\r\n          data={dataSource}\r\n          columns={columns}\r\n          getBodyWrapper={this.getBodyWrapper}\r\n        />\r\n      </div>\r\n    );\r\n  }\r\n}\r\n\r\n\r\n", "desc": " 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）" }, { "example": _react2['default'].createElement(Demo20, null), "title": " 简单表格选中行的背景色、表头表尾", "code": "/**\r\n*\r\n* @title 简单表格选中行的背景色、表头表尾\r\n* @description\r\n*/\r\n\r\nimport React, { Component } from \"react\";\r\n\n\nimport { Table, Tooltip, Button } from 'tinper-bee';\r\n\r\nconst columns = [\r\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width:80 , className:\"rowClassName\"},\r\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\r\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\r\n];\r\n\r\nconst data = [\r\n  { a: \"令狐冲\", b: \"男\", c: 41, key: \"1\" },\r\n  { a: \"杨过叔叔的女儿黄蓉\", b: \"男\", c: 67, key: \"2\" },\r\n  { a: \"郭靖\", b: \"男\", c: 25, key: \"3\" }\r\n];\r\n\r\nclass Demo26 extends Component {\r\n\r\n  constructor(props){\r\n      super(props);\r\n      this.state = {\r\n        data: data,\r\n        selectedRowIndex: 0\r\n      }\r\n  }\r\n\r\n  render() {\r\n    return (\r\n      <Table\r\n        columns={columns}\r\n        data={data}\r\n        rowClassName={(record,index,indent)=>{\r\n          if (this.state.selectedRowIndex == index) {\r\n              return 'selected';\r\n          } else {\r\n              return '';\r\n          }\r\n        }}\r\n        onRowClick={(record,index,indent)=>{\r\n          this.setState({ \r\n              selectedRowIndex: index\r\n          });\r\n        }}\r\n        title={currentData => <div>标题: 这是一个标题</div>}\r\n        footer={currentData => <div>表尾: 我是小尾巴</div>}\r\n      /> \r\n    );\r\n  }\r\n}\r\n\r\n\r\n", "desc": "" }, { "example": _react2['default'].createElement(Demo21, null), "title": " 根据列进行过滤", "code": "/**\r\n*\r\n* @title 根据列进行过滤\r\n* @description 点击表格右侧按钮，进行表格列的数据过滤。可以自定义设置显示某列，通过ifshow属性控制，默认为true都显示。afterFilter为过滤之后的回调函数\r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\r\nimport { Table, Popover, Checkbox, Icon } from 'tinper-bee';\r\nimport filterColumn from \"tinper-bee/lib/filterColumn\";;\r\nimport sum from \"tinper-bee/lib/sum\";;\r\n\n\n\n\r\nconst data21 = [\r\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行',e: \"操作\", key: \"2\" },\r\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠',e: \"操作\", key: \"1\" },\r\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠',e: \"操作\", key: \"3\" }\r\n];\r\n\r\nconst FilterColumnTable = filterColumn(Table, Popover, Icon);\r\n\r\nconst defaultProps21 = {\r\n  prefixCls: \"bee-table\"\r\n};\r\n\r\nclass Demo21 extends Component {\r\n  constructor(props) {\r\n    super(props);\r\n    this.state ={\r\n              columns21: [\r\n                {\r\n                  title: \"名字\",\r\n                  dataIndex: \"a\",\r\n                  key: \"a\"\r\n                  // width: 100\r\n                },\r\n                {\r\n                  title: \"性别\",\r\n                  dataIndex: \"b\",\r\n                  key: \"b\",\r\n                  // width: 100\r\n                },\r\n                {\r\n                  title: \"年龄\",\r\n                  dataIndex: \"c\",\r\n                  key: \"c\",\r\n                  ifshow:false,\r\n                  // width: 200,\r\n                  // sumCol: true,\r\n                  sorter: (a, b) => a.c - b.c\r\n                },\r\n                {\r\n                  title: \"武功级别\",\r\n                  dataIndex: \"d\",\r\n                  key: \"d\"\r\n                },\r\n                {\r\n                  title: \"操作\",\r\n                  dataIndex: \"e\",\r\n                  key: \"e\",\r\n                  render(text, record, index){\r\n                    return (\r\n                      <div  title={text} >\r\n                          <a href=\"#\"\r\n                              tooltip={text}\r\n                              onClick={() => {\r\n                                alert('这是第'+index+'列，内容为:'+text);\r\n                              }}\r\n                              // style={{\r\n                              //     position: 'absolute',\r\n                              //     top: 5,\r\n                              //     left: 0\r\n                              // }}\r\n                            >\r\n                              一些操作\r\n                            </a>\r\n                      </div>\r\n                    );\r\n                  }\r\n                }\r\n              ]};\r\n  }\r\n  afterFilter = (optData,columns)=>{\r\n    if(optData.key == 'b'){\r\n        if(optData.ifshow){\r\n          columns[2].ifshow = false;\r\n        }else{\r\n          columns[2].ifshow = true;\r\n        }\r\n        this.setState({\r\n          columns21 :columns,\r\n          showFilterPopover:true\r\n        });\r\n    }\r\n    \r\n  }\r\n \r\n  render() {\r\n    \r\n    return <FilterColumnTable columns={this.state.columns21} data={data21} afterFilter={this.afterFilter} showFilterPopover={this.state.showFilterPopover}/>;\r\n  }\r\n}\r\nDemo21.defaultProps = defaultProps21;\r\n\r\n\r\n", "desc": " 点击表格右侧按钮，进行表格列的数据过滤。可以自定义设置显示某列，通过ifshow属性控制，默认为true都显示。afterFilter为过滤之后的回调函数" }, { "example": _react2['default'].createElement(Demo22, null), "title": " 列的拖拽，交换表头的顺序", "code": "/**\r\n*\r\n* @title 列的拖拽，交换表头的顺序\r\n* @description 点击列的表头，进行左右拖拽\r\n*/\r\nimport React, { Component } from 'react';\r\nimport { Table, Icon } from 'tinper-bee'; \r\nimport dragColumn from \"tinper-bee/lib/dragColumn\";;\r\n\r\n\n\r\nconst columns22 = [\r\n  {\r\n    title: \"名字\",\r\n    dataIndex: \"a\",\r\n    key: \"a\",\r\n    width: 100\r\n  },\r\n  {\r\n    title: \"性别\",\r\n    dataIndex: \"b\",\r\n    key: \"b\",\r\n    width: 200\r\n  },\r\n  {\r\n    title: \"年龄\",\r\n    dataIndex: \"c\",\r\n    key: \"c\",\r\n    width: 200,\r\n    sumCol: true,\r\n    sorter: (a, b) => a.c - b.c\r\n  },\r\n  {\r\n    title: \"武功级别\",\r\n    dataIndex: \"d\",\r\n    key: \"d\",\r\n    width: 200,\r\n  }\r\n];\r\n\r\nconst data22 = [\r\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\r\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\r\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\r\n];\r\n\r\nconst DragColumnTable = dragColumn(Table);\r\n\r\nconst defaultProps22 = {\r\n  prefixCls: \"bee-table\"\r\n};\r\n\r\nclass Demo22 extends Component {\r\n  constructor(props) {\r\n    super(props); \r\n  }\r\n \r\n  render() {\r\n    return <DragColumnTable columns={columns22} data={data22} bordered\r\n    \r\n    draggable={true} \r\n    />;\r\n  }\r\n}\r\nDemo22.defaultProps = defaultProps22;\r\n\r\n\r\n", "desc": " 点击列的表头，进行左右拖拽" }, { "example": _react2['default'].createElement(Demo23, null), "title": " 拖拽调整列的宽度", "code": "/**\r\n*\r\n* @title 拖拽调整列的宽度\r\n* @description 注：不支持tree结构的表头、合并表头的table【目前支持表头拖拽宽度、交互列一起使用】\r\n*/\r\nimport React, { Component } from 'react';\r\nimport { Table, Icon } from 'tinper-bee'; \r\nimport dragColumn from \"tinper-bee/lib/dragColumn\";;\r\n\r\n\n\r\nconst columns23 = [\r\n  {\r\n    title: \"名字\",\r\n    dataIndex: \"a\",\r\n    key: \"a\",\r\n    width: '200',\r\n    fixed:'left'\r\n  },\r\n  {\r\n    title: \"性别\",\r\n    dataIndex: \"b\",\r\n    key: \"b\",\r\n    width: '600'\r\n  },\r\n  {\r\n    title: \"年龄\",\r\n    dataIndex: \"c\",\r\n    key: \"c\",\r\n    width: '200',\r\n    sumCol: true,\r\n    sorter: (a, b) => a.c - b.c\r\n  }, \r\n  {\r\n    title: \"武功级别\",\r\n    dataIndex: \"d\",\r\n    key: \"d\",\r\n    width: 500,\r\n  }\r\n];\r\n\r\nconst data23 = [\r\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\r\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\r\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"31\" } , { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"21\" },\r\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"11\" },\r\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"32\" } , { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"22\" },\r\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"12\" },\r\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\r\n];\r\n\r\nconst DragColumnTable = dragColumn(Table);\r\n\r\nconst defaultProps23 = {\r\n  prefixCls: \"bee-table\"\r\n};\r\n\r\nclass Demo23 extends Component {\r\n  constructor(props) {\r\n    super(props); \r\n  }\r\n\r\n  render() {\r\n    return <DragColumnTable columns={columns23} data={data23} bordered\r\n    dragborder={true} \r\n    draggable={true} \r\n    scroll={{y:200}}\r\n    onDropBorder ={(e,width)=>{\r\n      console.log(width+\"--调整列宽后触发事件\",e.target);\r\n    }}\r\n    />;\r\n  }\r\n}\r\nDemo23.defaultProps = defaultProps23;\r\n\r\n\r\n", "desc": " 注：不支持tree结构的表头、合并表头的table【目前支持表头拖拽宽度、交互列一起使用】" }, { "example": _react2['default'].createElement(Demo24, null), "title": " 动态设置固、取消固定列", "code": "/**\r\n*\r\n* @title 动态设置固、取消固定列\r\n* @description 动态设置固、取消固定列\r\n* @description 动态固定列设置 一个table动态设置一个方向【fixed: \"left\"，fixed: \"right\"】。\r\n*\r\n*/\r\nimport React, { Component } from 'react';\r\nimport { Table, Dropdown, Menu, Icon } from 'tinper-bee';\r\n\n\n\n\r\n\r\nconst { Item } = Menu;\r\n// const columns24 = [\r\n//   {\r\n//     title: \"Full Name\",\r\n//     width: 100,\r\n//     dataIndex: \"name\",\r\n//     key: \"name\",\r\n//     fixed: \"left\",\r\n//   },\r\n//   { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\", fixed: \"left\" },\r\n//   { title: \"Column 1\", dataIndex: \"address\", key: \"1\"  },\r\n//   { title: \"Column 2\", dataIndex: \"address2\", key: \"2\" },\r\n//   { title: \"Column 3\", dataIndex: \"address\", key: \"3\" },\r\n//   { title: \"Column 4\", dataIndex: \"address\", key: \"4\" },\r\n//   { title: \"Column 24\", dataIndex: \"address\", key: \"24\" },\r\n//   { title: \"Column 6\", dataIndex: \"address\", key: \"6\" },\r\n//   { title: \"Column 7\", dataIndex: \"address\", key: \"7\" },\r\n//   { title: \"Column 8\", dataIndex: \"address\", key: \"8\" }\r\n// ];\r\n\r\n\r\nconst columns24 = [\r\n  {\r\n    title: \"名字\",\r\n    dataIndex: \"a\",\r\n    key: \"a\",\r\n    width: 100,\r\n    fixed: \"left\",\r\n  },\r\n  {\r\n    title: \"性别\",\r\n    dataIndex: \"b\",\r\n    key: \"b\",\r\n    width: 100,\r\n    fixed: \"left\",\r\n  },\r\n  {\r\n    title: \"年龄\",\r\n    dataIndex: \"c\",\r\n    key: \"c\",\r\n    width: 100, \r\n  },\r\n  {\r\n    title: \"武功级别\",\r\n    dataIndex: \"d\",\r\n    key: \"d\",\r\n    width: 150 \r\n  },\r\n  {\r\n    title: \"对手\",\r\n    dataIndex: \"e\",\r\n    key: \"e\",\r\n    width: 100 \r\n  },\r\n  {\r\n    title: \"帮派\",\r\n    dataIndex: \"f\",\r\n    key: \"f\",\r\n    width: 100 \r\n  },\r\n  {\r\n    title: \"武功类型\",\r\n    dataIndex: \"g\",\r\n    key: \"g\",\r\n    width: 100 \r\n  },\r\n  {\r\n    title: \"师傅\",\r\n    dataIndex: \"k\",\r\n    key: \"k\",\r\n    // width: 100 \r\n  },\r\n  {\r\n    title: \"攻击系数\",\r\n    dataIndex: \"h\",\r\n    key: \"h\",\r\n    width: 100 \r\n  }\r\n];\r\n\r\n\r\nconst data24 = [\r\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行',e:'黄荣',f:'古墓派',g:'剑术',k:'小龙女',h:'0.5', key: \"1\" },\r\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'剑客',e:'自己',f:'无',g:'剑术',k:'无',h:'0.5', key: \"2\" },\r\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠',e:'黄荣',f:'朝廷',g:'内容',k:'外侵势力',h:'0.6', key: \"3\" }\r\n]; \r\n \r\nclass Demo24 extends Component {\r\n\r\n  constructor(props) {\r\n    super(props);\r\n    // let columns = [];\r\n    // Object.assign(columns,columns24);\r\n    // columns.forEach(da=>da.onHeadCellClick=this.onHeadCellClick);\r\n    this.state = {\r\n      columns:columns24\r\n    }\r\n  }\r\n\r\n  \r\n    onSelect = ({key,item})=>{ \r\n      console.log(`${key} selected`); //获取key\r\n      let currentObject = item.props.data; //获取选中对象的数据\r\n      let {columns} = this.state;\r\n      let fixedCols = [];\r\n      let nonColums = [];\r\n      columns.find(da=>{\r\n        if(da.key == key){\r\n          da.fixed?delete da.fixed:da.fixed = 'left';\r\n        }\r\n        da.fixed?fixedCols.push(da):nonColums.push(da);\r\n      });\r\n    \r\n      columns = [...fixedCols,...nonColums]\r\n\r\n      this.setState({\r\n        columns\r\n      });\r\n    }\r\n  //表头增加下拉菜单\r\n  renderColumnsDropdown(columns) {\r\n    const icon ='uf-arrow-down';\r\n    \r\n    return columns.map((originColumn,index) => {\r\n      let column = Object.assign({}, originColumn);\r\n      let menuInfo = [], title='锁定';\r\n      if(originColumn.fixed){\r\n        title = '解锁'\r\n      }\r\n      menuInfo.push({\r\n        info:title,\r\n        key:originColumn.key,\r\n        index:index\r\n      });\r\n      const menu = (\r\n        <Menu onSelect={this.onSelect} >{\r\n            menuInfo.map(da=>{ return <Item key={da.key} data={da} >{da.info}</Item> })\r\n            }\r\n        </Menu>)\r\n      column.title = (\r\n        <span className='title-con drop-menu'>\r\n          {column.title}\r\n          <Dropdown\r\n            trigger={['click']} \r\n            overlay={menu}\r\n            animation=\"slide-up\"\r\n          >\r\n           <Icon type={icon}/>\r\n          </Dropdown> \r\n          \r\n        </span>\r\n      );\r\n      return column;\r\n    });\r\n    \r\n  }\r\n\r\n  render() {\r\n    let {columns} = this.state;\r\n     columns = this.renderColumnsDropdown(columns);\r\n    return <div className=\"demo24\">\r\n            <Table columns={columns} data={data24} scroll={{ x: \"110%\", y: 240 }}/>\r\n          </div>;\r\n  }\r\n}\r\n\r\n", "desc": " 动态设置固、取消固定列", "scss_code": "th{\r\n    .drop-menu{\r\n        .uf{\r\n            font-size: 12px;\r\n            visibility: hidden;\r\n            margin-left: 15px;\r\n        }\r\n        \r\n    \r\n    }\r\n    &:hover{\r\n        .uf{\r\n                visibility: visible;\r\n        }\r\n    }\r\n\r\n}\r\n\r\n" }, { "example": _react2['default'].createElement(Demo25, null), "title": " 根据列进行过滤、拖拽交换列综合使用案例", "code": "/**\r\n* @title 根据列进行过滤、拖拽交换列综合使用案例\r\n* @description 新增属性【checkMinSize 当前表格显示最少列数 】 1. 当所有列都设置了width属性后，需要给table增加checkMinSize属性 2. 所有列不设置width。\r\n*/\r\n\r\n/**注：\r\n *  在使用过滤列的时候，如果每一列都设置了width属性，勾选的时候回出现重复列问题。当表格的宽度小于合计宽度的时候，就会出现此问题。 \r\n *  必须有个别列不设置width属性，即可避免此问题。\r\n */\r\nimport React, { Component } from 'react';\r\nimport { Table, Popover, Checkbox, Icon } from 'tinper-bee';\r\nimport multiSelect from \"tinper-bee/lib/multiSelect\";;\r\nimport filterColumn from \"tinper-bee/lib/filterColumn\";;\r\nimport dragColumn from \"tinper-bee/lib/dragColumn\";;\r\n\r\nimport sum from \"tinper-bee/lib/sum\";;\r\n\n\n\n\r\n //Cloumns1\r\nfunction getCloumns(){\r\n  const column = [\r\n      {\r\n          title: \"序号\",\r\n          dataIndex: \"index\",\r\n          key: \"index\",\r\n          width: 100, \r\n      },\r\n      {\r\n          title: \"订单编号\",\r\n          dataIndex: \"orderCode\",\r\n          key: \"orderCode\",\r\n          width: 100, \r\n      },\r\n      {\r\n          title: \"供应商名称\",\r\n          dataIndex: \"supplierName\",\r\n          key: \"supplierName\",\r\n          width: 100\r\n      },\r\n      {\r\n          title: \"类型\",\r\n          dataIndex: \"type_name\",\r\n          key: \"type_name\",\r\n          width: 100\r\n      },\r\n      {\r\n          title: \"采购组织\",\r\n          dataIndex: \"purchasing\",\r\n          key: \"purchasing\",\r\n          width: 100\r\n      },\r\n      {\r\n          title: \"采购组\",\r\n          dataIndex: \"purchasingGroup\",\r\n          key: \"purchasingGroup\",\r\n           width: 300\r\n      },\r\n      {\r\n          title: \"凭证日期\",\r\n          dataIndex: \"voucherDate\",\r\n          key: \"voucherDate\",\r\n          width: 100,\r\n          \r\n      },\r\n      {\r\n          title: \"审批状态\",\r\n          dataIndex: \"approvalState_name\",\r\n          key: \"approvalState_name\",\r\n          width: 100\r\n      },\r\n      {\r\n          title: \"确认状态\",\r\n          dataIndex: \"confirmState_name\",\r\n          key: \"confirmState_name\",\r\n           width: 100\r\n      }, \r\n      {\r\n          title: \"关闭状态\",\r\n          dataIndex: \"closeState_name\",\r\n          key: \"closeState_name\",\r\n          width: 100\r\n      },\r\n      {\r\n          title: \"操作\",\r\n          dataIndex: \"d\",\r\n          key: \"d\",\r\n          width:100,\r\n          fixed: \"right\",\r\n          render(text, record, index) {\r\n              return (\r\n                  <div className='operation-btn'>\r\n                    <a href=\"#\"\r\n                      tooltip={text}\r\n                      onClick={() => {\r\n                        alert('这是第'+index+'列，内容为:'+text);\r\n                      }}\r\n                    >\r\n                      一些操作\r\n                    </a>\r\n                  </div>\r\n              )\r\n          }\r\n      }\r\n  ];\r\n  return column;\r\n}\r\n\r\nconst dataList = [ \r\n  { \r\n      index: 1, \r\n      orderCode:\"2343\", \r\n      supplierName: \"xxx\",\r\n      type_name: \"123\",\r\n      purchasing:'内行', \r\n      purchasingGroup:\"323\",\r\n      voucherDate:\"kkkk\",\r\n      approvalState_name:\"vvvv\",\r\n      confirmState_name:\"aaaa\",\r\n      closeState_name:\"vnnnnn\",\r\n      d:\"操作\",\r\n      key: \"1\"\r\n  }, \r\n  { \r\n    index: 2, \r\n    _checked:true,\r\n    orderCode:\"222\", \r\n    supplierName: \"22xxx\",\r\n    type_name: \"1223\",\r\n    purchasing:'内行2', \r\n    purchasingGroup:\"3223\",\r\n    voucherDate:\"222kk\",\r\n    approvalState_name:\"22vvvv\",\r\n    confirmState_name:\"2aaaa\",\r\n    closeState_name:\"2vnnnnn\",\r\n    d:\"2操作\",\r\n    key: \"2\"\r\n  },\r\n  { \r\n    index: 3, \r\n    orderCode:\"222\", \r\n    supplierName: \"22xxx\",\r\n    _disabled:true,\r\n    type_name: \"1223\",\r\n    purchasing:'内行2', \r\n    purchasingGroup:\"3223\",\r\n    voucherDate:\"222kk\",\r\n    approvalState_name:\"22vvvv\",\r\n    confirmState_name:\"2aaaa\",\r\n    closeState_name:\"2vnnnnn\",\r\n    d:\"3操作\",\r\n    key: \"3\"\r\n  },\r\n  { \r\n    index: 4, \r\n    orderCode:\"222\", \r\n    supplierName: \"22xxx\",\r\n    type_name: \"1223\",\r\n    purchasing:'内行2', \r\n    purchasingGroup:\"3223\",\r\n    voucherDate:\"222kk\",\r\n    approvalState_name:\"22vvvv\",\r\n    confirmState_name:\"2aaaa\",\r\n    closeState_name:\"2vnnnnn\",\r\n    d:\"4操作\",\r\n    key: \"4\"\r\n  },\r\n]\r\n\r\nconst DragColumnTable = filterColumn(dragColumn(multiSelect(Table, Checkbox)),Popover);\r\n\r\nconst defaultProps25 = {\r\n  prefixCls: \"bee-table\"\r\n};\r\n\r\nclass Demo25 extends Component {\r\n  constructor(props) {\r\n    super(props);\r\n  }\r\n\r\n  getSelectedDataFunc=(data)=>{\r\n      console.log(\"data\",data);\r\n  }\r\n \r\n  getCloumnsScroll=(columns)=>{\r\n    let sum = 0;\r\n    columns.forEach((da)=>{\r\n        sum += da.width;\r\n    })\r\n    console.log(\"sum\",sum);\r\n    return (sum);\r\n  }\r\n\r\n  selectedRow=(record, index)=>{\r\n\r\n  }\r\n\r\n  render() {\r\n    let columns = getCloumns();\r\n    \r\n    return <div className=\"demo25\">\r\n            <DragColumnTable \r\n                columns={columns}\r\n                data={dataList} \r\n                getSelectedDataFunc={this.getSelectedDataFunc}\r\n                \r\n                checkMinSize={7}\r\n                draggable={true}\r\n                multiSelect={{type: \"checkbox\"}}\r\n                scroll={{x:true, y: 100}}\r\n                selectedRow={this.selectedRow}\r\n                // scroll={{x:this.getCloumnsScroll(columns), y: 150}}\r\n                />\r\n            </div>\r\n  }\r\n}\r\nDemo25.defaultProps = defaultProps25;\r\n\r\n\r\n", "desc": " 新增属性【checkMinSize 当前表格显示最少列数 】 1. 当所有列都设置了width属性后，需要给table增加checkMinSize属性 2. 所有列不设置width。" }, { "example": _react2['default'].createElement(Demo26, null), "title": " 按条件和值过滤", "code": "/**\r\n*\r\n* @title 按条件和值过滤\r\n* @description 可以根据输入项目以及判断条件对表格内的数据进行过滤\r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\r\nimport { Table } from 'tinper-bee';\r\n\r\n\r\nconst columns26 = [\r\n  { title: \"姓名\", width: 180, dataIndex: \"name\", key: \"name\", filterType: \"text\", filterDropdown: \"show\" },\r\n  { title: \"年龄\", width: 150, dataIndex: \"age\", key: \"age\", filterType: \"dropdown\", filterDropdown: \"show\" },\r\n  { title: \"日期\", width: 200, dataIndex: \"date\", key: \"date\", filterType: \"date\", filterDropdown: \"show\", format: \"YYYY-MM-DD\" },\r\n  { title: \"居住地址\", width: 150, dataIndex: \"address\", key: \"address\", filterType: \"dropdown\", filterDropdown: \"show\" },\r\n  { title: \"备注\", dataIndex: \"mark\", key: \"mark\" }\r\n];\r\n\r\nconst data26 = [\r\n  {\r\n    key: \"1\",\r\n    name: \"John Brown\",\r\n    age: 32,\r\n    date: \"2018-09-19\",\r\n    address: \"朝阳区\",\r\n    mark: \"无\"\r\n  },\r\n  {\r\n    key: \"2\",\r\n    name: \"Jim Green\",\r\n    age: 40,\r\n    date: \"2018-09-18\",\r\n    address: \"朝阳区\",\r\n    mark: \"无\"\r\n  },\r\n  {\r\n    key: \"3\",\r\n    name: \"Jim Green\",\r\n    age: 40,\r\n    date: \"2018-09-18\",\r\n    address: \"东城区\",\r\n    mark: \"无\"\r\n  },\r\n  {\r\n    key: \"4\",\r\n    name: \"Jim Green\",\r\n    age: 40,\r\n    date: \"2018-09-18\",\r\n    address: \"东城区\",\r\n    mark: \"无\"\r\n  }, {\r\n    key: \"5\",\r\n    name: \"John Brown\",\r\n    age: 32,\r\n    date: \"2018-09-18\",\r\n    address: \"海淀区\",\r\n    mark: \"无\"\r\n  },\r\n  {\r\n    key: \"6\",\r\n    name: \"Jim Green\",\r\n    age: 48,\r\n    date: \"2018-09-18\",\r\n    address: \"海淀区\",\r\n    mark: \"无\"\r\n  },\r\n  {\r\n    key: \"7\",\r\n    name: \"Jim Green\",\r\n    age: 40,\r\n    date: \"2018-09-18\",\r\n    address: \"海淀区\",\r\n    mark: \"无\"\r\n  },\r\n  {\r\n    key: \"8\",\r\n    name: \"Jim Green\",\r\n    age: 38,\r\n    date: \"2018-09-18\",\r\n    address: \"海淀区\",\r\n    mark: \"无\"\r\n  }\r\n];\r\n\r\nclass Demo26 extends Component {\r\n  handlerFilterChange = (key, val, condition) => {\r\n    console.log('参数：key=', key, ' value=', val, 'condition=', condition);\r\n  }\r\n\r\n  handlerFilterClear = (key) => {\r\n    console.log('清除条件', key);\r\n  }\r\n  render() {\r\n    return <Table\r\n      onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()\r\n      onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()\r\n      filterDelay={500}//输入文本多少ms触发回调函数，默认300ms\r\n      filterable={true}//是否开启过滤数据功能\r\n      bordered\r\n      columns={columns26}\r\n      data={data26} />;\r\n  }\r\n}\r\n\r\n", "desc": " 可以根据输入项目以及判断条件对表格内的数据进行过滤" }, { "example": _react2['default'].createElement(Demo27, null), "title": " 组合过滤和其他功能使用", "code": "/**\r\n*\r\n* @title 组合过滤和其他功能使用\r\n* @description 在过滤数据行的基础上增加列拖拽、动态菜单显示、下拉条件动态传入自定义等\r\n*\r\n*/\r\n\r\n/**\r\n * @description \r\n */\r\n\r\nimport React, { Component } from 'react';\r\nimport { Table, Dropdown, Menu, Icon, Checkbox } from 'tinper-bee';\r\nimport multiSelect from \"tinper-bee/lib/multiSelect\";;\r\nimport sort from \"tinper-bee/lib/sort\";;\r\n\n\n\n\n\r\n\r\nconst { Item } = Menu;\r\nconst SubMenu = Menu.SubMenu;\r\nconst MenuItemGroup = Menu.ItemGroup;\r\n\r\n\r\nconst dataList = [\r\n  { \"key\": \"1\", value: \"库存明细\", id: \"a\" },\r\n  { \"key\": \"2\", value: \"订单明细\", id: \"v\" },\r\n  { \"key\": \"3\", value: \"发货明细\", id: \"c\" }\r\n]\r\n\r\nconst data27 = [\r\n  {\r\n    key: \"1\",\r\n    name: \"John Brown\",\r\n    age: 32,\r\n    date: \"2018-09-19\",\r\n    address: \"朝阳区\",\r\n    mark: \"无\"\r\n  },\r\n  {\r\n    key: \"2\",\r\n    name: \"Jim Green\",\r\n    age: 40,\r\n    date: \"2018-09-18\",\r\n    address: \"朝阳区\",\r\n    mark: \"无\"\r\n  },\r\n  {\r\n    key: \"3\",\r\n    name: \"Jim Green\",\r\n    age: 40,\r\n    date: \"2018-09-18\",\r\n    address: \"东城区\",\r\n    mark: \"无\"\r\n  },\r\n  {\r\n    key: \"4\",\r\n    name: \"Jim Green\",\r\n    age: 40,\r\n    date: \"2018-09-18\",\r\n    address: \"东城区\",\r\n    mark: \"无\"\r\n  }, {\r\n    key: \"5\",\r\n    name: \"John Brown\",\r\n    age: 32,\r\n    date: \"2018-09-18\",\r\n    address: \"海淀区\",\r\n    mark: \"无\"\r\n  },\r\n  {\r\n    key: \"6\",\r\n    name: \"Jim Green\",\r\n    age: 48,\r\n    date: \"2018-09-18\",\r\n    address: \"海淀区\",\r\n    mark: \"无\"\r\n  },\r\n  {\r\n    key: \"7\",\r\n    name: \"Jim Green\",\r\n    age: 40,\r\n    date: \"2018-09-18\",\r\n    address: \"海淀区\",\r\n    mark: \"无\"\r\n  },\r\n  {\r\n    key: \"8\",\r\n    name: \"Jim Green\",\r\n    age: 38,\r\n    date: \"2018-09-18\",\r\n    address: \"海淀区\",\r\n    mark: \"无\"\r\n  }\r\n];\r\n\r\n\r\nconst MultiSelectTable = multiSelect(Table, Checkbox);\r\nconst ComplexTable = sort(MultiSelectTable, Icon);\r\nclass Demo27 extends Component {\r\n  constructor(props) {\r\n    super(props);\r\n    this.state = {\r\n      dropdownvalue: []\r\n    }\r\n  }\r\n  handlerFilterChange = (key, val, condition) => {\r\n    console.log('参数：key=', key, ' value=', val, 'condition=', condition);\r\n  }\r\n\r\n  handlerFilterClear = (key) => {\r\n    console.log('清除条件', key);\r\n  }\r\n  getSelectedDataFunc = data => {\r\n    console.log(data);\r\n  }\r\n  onClick = (item) => {\r\n    console.log(item);\r\n  }\r\n\r\n  render() {\r\n    const menu1 = (\r\n      <Menu onClick={this.onClick} style={{ width: 240 }} mode=\"vertical\" >\r\n        <SubMenu key=\"sub1\" title={<span><span>组织 1</span></span>}>\r\n          <MenuItemGroup title=\"Item 1\">\r\n            <Menu.Item key=\"1\">选项 1</Menu.Item>\r\n            <Menu.Item key=\"2\">选项 2</Menu.Item>\r\n          </MenuItemGroup>\r\n          <MenuItemGroup title=\"Iteom 2\">\r\n            <Menu.Item key=\"3\">选项 3</Menu.Item>\r\n            <Menu.Item key=\"4\">选项 4</Menu.Item>\r\n          </MenuItemGroup>\r\n        </SubMenu>\r\n      </Menu>)\r\n    let multiObj = {\r\n      type: \"checkbox\"\r\n    };\r\n    let columns27 = [\r\n      {\r\n        title: \"\", width: 40, dataIndex: \"key\", key: \"key\", render: (text, record, index) => {\r\n          return <Dropdown\r\n            trigger={['click']}\r\n            overlay={menu1}\r\n            animation=\"slide-up\"\r\n          >\r\n            <Icon style={{ \"visibility\": \"hidden\" }} type=\"uf-eye\" />\r\n          </Dropdown>\r\n        }\r\n      },\r\n      {\r\n        title: \"姓名\",\r\n        width: 180,\r\n        dataIndex: \"name\",\r\n        key: \"name\",\r\n        filterType: \"text\",//输入框类型\r\n        filterDropdown: \"show\",//显示条件\r\n        filterDropdownType: \"string\"//字符条件\r\n      },\r\n      {\r\n        title: \"年龄\",\r\n        width: 180,\r\n        dataIndex: \"age\",\r\n        key: \"age\",\r\n        filterType: \"number\",//输入框类型\r\n        filterDropdown: \"show\",//显示条件\r\n        filterDropdownType: \"number\"//字符条件\r\n      },\r\n      {\r\n        title: \"日期\",\r\n        width: 190,\r\n        dataIndex: \"date\",\r\n        key: \"date\",\r\n        filterType: \"date\",//输入框类型\r\n        filterDropdown: \"show\",//显示条件\r\n        filterDropdownType: \"string\"//字符条件\r\n      },\r\n      {\r\n        title: \"时间范围\",\r\n        width: 290,\r\n        dataIndex: \"mark\",\r\n        key: \"mark\",\r\n        filterType: \"daterange\",//输入框类型\r\n        filterDropdown: \"show\",//显示条件\r\n        filterDropdownType: \"number\"//字符条件\r\n      },\r\n      {\r\n        title: \"地址\",\r\n        width: 100,\r\n        dataIndex: \"address\",\r\n        key: \"address\",\r\n        filterType: \"dropdown\",//输入框类型\r\n        filterDropdown: \"show\",//显示条件\r\n        filterDropdownType: \"number\"//字符条件\r\n      }\r\n    ];\r\n    return <ComplexTable\r\n      onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()\r\n      onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()\r\n      filterDelay={500}//输入文本多少ms触发回调函数，默认500ms\r\n      filterable={true}//是否开启过滤数据功能\r\n      getSelectedDataFunc={this.getSelectedDataFunc}\r\n      bordered\r\n      multiSelect={multiObj}\r\n      columns={columns27}\r\n      data={data27} />;\r\n  }\r\n}\r\n\r\n", "desc": " 在过滤数据行的基础上增加列拖拽、动态菜单显示、下拉条件动态传入自定义等" }, { "example": _react2['default'].createElement(Demo28, null), "title": " 列排序,后端排序", "code": "/**\r\n*\r\n* @title 列排序,后端排序\r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\r\nimport { Table, Icon } from 'tinper-bee';\r\n\nimport sort from \"tinper-bee/lib/sort.js\";;\r\nlet ComplexTable = sort(Table, Icon);\r\nconst columns11 = [\r\n  {\r\n    title: \"名字\",\r\n    dataIndex: \"a\",\r\n    key: \"a\",\r\n    width: 100\r\n  },\r\n  {\r\n    title: \"性别\",\r\n    dataIndex: \"b\",\r\n    key: \"b\",\r\n    width: 100\r\n  },\r\n  {\r\n    title: \"年龄\",\r\n    dataIndex: \"c\",\r\n    key: \"c\",\r\n    width: 200,\r\n    sorter: (a, b) => a.c - b.c\r\n  },\r\n  {\r\n    title: \"武功级别\",\r\n    dataIndex: \"d\",\r\n    key: \"d\"\r\n  },\r\n  {\r\n    title: \"分数\",\r\n    dataIndex: \"e\",\r\n    key: \"e\",\r\n    sorter: (a, b) => a.c - b.c\r\n  },\r\n];\r\n\r\nconst data11 = [\r\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', e:139,key: \"2\" },\r\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', e:109, key: \"1\" },\r\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', e:159, key: \"3\" }\r\n];\r\n\r\nconst defaultProps = {\r\n  prefixCls: \"bee-table\"\r\n};\r\nclass Demo28 extends Component {\r\n  constructor(props) {\r\n    super(props);\r\n    this.state = {\r\n      sortOrder: \"\",\r\n      data: data11\r\n    };\r\n  }\r\n  /**\r\n   * 后端获取数据\r\n   */\r\n  sortFun = (sortParam)=>{\r\n    console.info(sortParam);\r\n    //将参数传递给后端排序\r\n  }\r\n  render() {\r\n    let sortObj = {\r\n      mode:'multiple',\r\n      backSource:true,\r\n      sortFun:this.sortFun\r\n    }\r\n    return <ComplexTable columns={columns11} data={this.state.data} sort={sortObj}/>;\r\n  }\r\n}\r\nDemo28.defaultProps = defaultProps;\r\n\r\n\r\n", "desc": "" }, { "example": _react2['default'].createElement(Demo29, null), "title": " 从弹出框内显示过滤行并且设置可选下拉条件", "code": "/**\r\n*\r\n* @title 从弹出框内显示过滤行并且设置可选下拉条件\r\n* @description 通过Modal组件来展示表格的过滤相关能力，并且通过filterDropdownIncludeKeys设置可选条件\r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\r\nimport { Table, Button, Modal } from 'tinper-bee';\r\n\n\n\r\n\r\nconst columns29 = [\r\n  {\r\n    title: \"姓名\",\r\n    width: 180,\r\n    dataIndex: \"name\",\r\n    key: \"name\",\r\n    filterType: \"text\",\r\n    filterDropdown: \"show\",\r\n    filterDropdownIncludeKeys: ['LIKE', 'EQ']\r\n  },\r\n  {\r\n    title: \"年龄\",\r\n    width: 170,\r\n    dataIndex: \"age\",\r\n    key: \"age\",\r\n    filterType: \"number\",\r\n    filterDropdown: \"show\",\r\n    filterDropdownType: \"number\",\r\n    filterDropdownIncludeKeys: ['EQ'],\r\n    filterInputNumberOptions: {\r\n      max: 200,\r\n      min: 0,\r\n      step: 1,\r\n      precision: 0\r\n    }\r\n  },\r\n  {\r\n    title: \"日期\",\r\n    width: 200,\r\n    dataIndex: \"date\",\r\n    key: \"date\",\r\n    filterType: \"date\",\r\n    filterDropdown: \"show\",\r\n    format: \"YYYY-MM-DD\"\r\n  }\r\n];\r\n\r\nconst data29 = [\r\n  {\r\n    key: \"1\",\r\n    name: \"John Brown\",\r\n    age: 32,\r\n    date: \"2018-09-19\",\r\n    address: \"朝阳区\",\r\n    mark: \"无\"\r\n  },\r\n  {\r\n    key: \"2\",\r\n    name: \"Jim Green\",\r\n    age: 40,\r\n    date: \"2018-09-18\",\r\n    address: \"朝阳区\",\r\n    mark: \"无\"\r\n  },\r\n  {\r\n    key: \"3\",\r\n    name: \"Jim Green\",\r\n    age: 40,\r\n    date: \"2018-09-18\",\r\n    address: \"东城区\",\r\n    mark: \"无\"\r\n  },\r\n  {\r\n    key: \"4\",\r\n    name: \"Jim Green\",\r\n    age: 40,\r\n    date: \"2018-09-18\",\r\n    address: \"东城区\",\r\n    mark: \"无\"\r\n  }, {\r\n    key: \"5\",\r\n    name: \"John Brown\",\r\n    age: 32,\r\n    date: \"2018-09-18\",\r\n    address: \"海淀区\",\r\n    mark: \"无\"\r\n  },\r\n  {\r\n    key: \"6\",\r\n    name: \"Jim Green\",\r\n    age: 48,\r\n    date: \"2018-09-18\",\r\n    address: \"海淀区\",\r\n    mark: \"无\"\r\n  },\r\n  {\r\n    key: \"7\",\r\n    name: \"Jim Green\",\r\n    age: 40,\r\n    date: \"2018-09-18\",\r\n    address: \"海淀区\",\r\n    mark: \"无\"\r\n  },\r\n  {\r\n    key: \"8\",\r\n    name: \"Jim Green\",\r\n    age: 38,\r\n    date: \"2018-09-18\",\r\n    address: \"海淀区\",\r\n    mark: \"无\"\r\n  }\r\n];\r\n\r\nclass Demo29 extends Component {\r\n  constructor() {\r\n    super();\r\n    this.state = {\r\n      show: false\r\n    }\r\n    this.close = this.close.bind(this);\r\n    this.open = this.open.bind(this);\r\n  }\r\n  handlerFilterChange = (key, val, condition) => {\r\n    console.log('参数：key=', key, ' value=', val, 'condition=', condition);\r\n  }\r\n\r\n  handlerFilterClear = (key) => {\r\n    console.log('清除条件', key);\r\n  }\r\n  close() {\r\n    this.setState({\r\n      show: false\r\n    });\r\n  }\r\n  open() {\r\n    this.setState({\r\n      show: true\r\n    });\r\n  }\r\n  render() {\r\n    return (<div><Modal\r\n      show={this.state.show}\r\n      onHide={this.close}\r\n      autoFocus={false}\r\n      enforceFocus={false}\r\n    >\r\n      <Modal.Header closeButton>\r\n        <Modal.Title>过滤行</Modal.Title>\r\n      </Modal.Header>\r\n      <Modal.Body>\r\n        <Table\r\n          onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()\r\n          onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()\r\n          filterDelay={500}//输入文本多少ms触发回调函数，默认300ms\r\n          filterable={true}//是否开启过滤数据功能\r\n          bordered\r\n          columns={columns29}\r\n          data={data29} />\r\n      </Modal.Body>\r\n    </Modal>\r\n      <Button colors=\"primary\" onClick={this.open}>显示表格</Button>\r\n    </div>)\r\n  }\r\n}\r\n\r\n", "desc": " 通过Modal组件来展示表格的过滤相关能力，并且通过filterDropdownIncludeKeys设置可选条件" }, { "example": _react2['default'].createElement(Demo30, null), "title": " 大数据加载", "code": "/**\r\n*\r\n* @title 大数据加载\r\n* 【Tooltip】\r\n* @description\r\n*/\r\n\r\nimport React, { Component } from \"react\";\r\n\nimport { Table, Tooltip } from 'tinper-bee';\r\nimport BigData from \"tinper-bee/lib/bigData\";;\r\nconst BigDataTable = BigData(Table);\r\nconst columns = [\r\n    {\r\n        title:'序号',\r\n        dataIndex:'index',\r\n        width:'50',\r\n        render:(text,record,index)=>{\r\n            return index\r\n        }\r\n    },\r\n    {\r\n    title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 580, className: \"rowClassName\",\r\n    render: (text, record, index) => {\r\n      return (\r\n        <Tooltip inverse overlay={text}>\r\n          <span tootip={text} style={{\r\n            display: \"inline-block\",\r\n            width: \"80px\",\r\n            textOverflow: \"ellipsis\",\r\n            overflow: \"hidden\",\r\n            whiteSpace: \"nowrap\",\r\n            verticalAlign: \"middle\",\r\n          }}>{text}</span>\r\n        </Tooltip>\r\n      );\r\n    }\r\n  },\r\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 80},\r\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 }\r\n\r\n];\r\n\r\nconst data = [ ...new Array(10000) ].map((e, i) => {\r\n    const rs = { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };\r\n    if(i%3==0){\r\n        rs.b = '女';\r\n    }\r\n    return rs;\r\n   })\r\n\r\n\r\nclass Demo30 extends Component {\r\n\r\n  constructor(props) {\r\n    super(props);\r\n    this.state = {\r\n      data: data,\r\n      selectedRowIndex: 0\r\n    }\r\n  }\r\n\r\n  render() {\r\n    return (\r\n        <BigDataTable\r\n          columns={columns}\r\n          data={data}\r\n          scroll={{y:300}}\r\n          height={40}\r\n          onRowClick={(record, index, indent) => {\r\n            console.log('currentIndex--'+index);\r\n          }}\r\n        />\r\n\r\n     \r\n    );\r\n  }\r\n}\r\n\r\n", "desc": "", "scss_code": ".big-data tr td {\r\n    // height: 48px;\r\n}" }, { "example": _react2['default'].createElement(Demo31, null), "title": " 含有嵌套子表格的大数据场景", "code": "/**\r\n*\r\n* @title 含有嵌套子表格的大数据场景\r\n* @description 通过expandedRowRender参数来实现子表格\r\n*\r\n*/\r\n\r\nimport React, { Component } from \"react\";\r\nimport { Table } from 'tinper-bee';\r\nimport BigData from \"tinper-bee/lib/bigData\";;\r\nconst BigDataTable = BigData(Table);\r\nconst outColumns = [\r\n  {\r\n    title: \"操作\",\r\n    dataIndex: \"d\",\r\n    key: \"d\", \r\n    width:200,\r\n    render(text, record, index) {\r\n      return (\r\n        <a\r\n          href=\"#\"\r\n          onClick={() => {\r\n            alert(\"这是第\" + index + \"列，内容为:\" + text);\r\n          }}\r\n        >\r\n          一些操作\r\n        </a>\r\n      );\r\n    }\r\n  },\r\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 250 },\r\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\r\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\r\n  \r\n];\r\nconst innerColumns = [\r\n  {\r\n    title: \"操作\",\r\n    dataIndex: \"d\",\r\n    key: \"d\",\r\n    width:200,\r\n    render(text, record, index) {\r\n      return (\r\n        <a\r\n          href=\"#\"\r\n          onClick={() => {\r\n            alert(\"这是第\" + index + \"列，内容为:\" + text);\r\n          }}\r\n        >\r\n          {'一些操作'+index}\r\n        </a>\r\n      );\r\n    }\r\n  },\r\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 100 },\r\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\r\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\r\n  \r\n];\r\n\r\nconst data16 = [ ...new Array(10000) ].map((e, i) => {\r\n    return { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };\r\n   })\r\n\r\n\r\n\r\n\r\n\r\nclass Demo31 extends Component {\r\n  constructor(props){\r\n    super(props);\r\n    this.state={\r\n      data_obj:{\r\n        0:[\r\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\r\n          { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" }\r\n        ],\r\n        1: [\r\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\r\n          { a: \"菲菲\", b: \"nv\", c: 67, d: \"操作\", key: \"2\" }\r\n        ],\r\n      }\r\n    }\r\n  }\r\n  expandedRowRender = (record, index, indent) => {\r\n    let height = 200;\r\n    let innderData = [ ...new Array(100) ].map((e, i) => {\r\n      return { a: index+\"-\"+ i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key:  index+\"-\"+ i };\r\n     })\r\n    return (\r\n      <Table\r\n        \r\n        columns={innerColumns}\r\n        scroll={{y:height}}\r\n        data={innderData} \r\n\r\n      />\r\n    );\r\n  };\r\n  getData=(expanded, record)=>{\r\n    //当点击展开的时候才去请求数据\r\n    let new_obj = Object.assign({},this.state.data_obj);\r\n    if(expanded){\r\n      if(record.key==='1'){\r\n        new_obj[record.key] = [\r\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\r\n          { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" }\r\n        ]\r\n        this.setState({\r\n          data_obj:new_obj\r\n        })\r\n      }else{\r\n        new_obj[record.key] = [\r\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\r\n          { a: \"菲菲\", b: \"nv\", c: 67, d: \"操作\", key: \"2\" }\r\n        ]\r\n        this.setState({\r\n          data_obj:new_obj\r\n        })\r\n      }\r\n    }\r\n  }\r\n  haveExpandIcon=(record, index)=>{\r\n    //控制是否显示行展开icon，该参数只有在和expandedRowRender同时使用才生效\r\n    if(index == 0){\r\n      return true;\r\n    }\r\n    return false;\r\n  }\r\n  render() {\r\n    return (\r\n      <BigDataTable\r\n        columns={outColumns}\r\n        data={data16}\r\n        onExpand={this.getData}\r\n        expandedRowRender={this.expandedRowRender}\r\n        scroll={{y:350}}\r\n        // defaultExpandedRowKeys={[0,1]}\r\n        title={currentData => <div>标题: 这是一个标题</div>}\r\n        footer={currentData => <div>表尾: 我是小尾巴</div>}\r\n      />\r\n    );\r\n  }\r\n}\r\n\r\n\r\n", "desc": " 通过expandedRowRender参数来实现子表格" }, { "example": _react2['default'].createElement(Demo32, null), "title": " 大数据加载下的复杂Table", "code": "/**\r\n*\r\n* @title 大数据加载下的复杂Table\r\n*\r\n* @description\r\n*/\r\n\r\nimport React, { Component } from \"react\";\r\n\n\n\n\nimport { Table, Popover, Icon, Checkbox, Tooltip } from 'tinper-bee';\r\nimport BigData from \"tinper-bee/lib/bigData\";;\r\nimport multiSelect from \"tinper-bee/lib/multiSelect\";;\r\nimport filterColumn from \"tinper-bee/lib/filterColumn\";;\r\n\r\nlet  ComplexTable = filterColumn(multiSelect(BigData(Table), Checkbox), Popover, Icon);\r\n\r\nconst columns = [\r\n    {\r\n        title:'序号',\r\n        dataIndex:'index',\r\n        width:'50',\r\n        render:(text,record,index)=>{\r\n            return index\r\n        }\r\n    },\r\n    {\r\n    title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 580, className: \"rowClassName\",\r\n    render: (text, record, index) => {\r\n      return (\r\n        <Tooltip inverse overlay={text}>\r\n          <span tootip={text} style={{\r\n            display: \"inline-block\",\r\n            width: \"80px\",\r\n            textOverflow: \"ellipsis\",\r\n            overflow: \"hidden\",\r\n            whiteSpace: \"nowrap\",\r\n            verticalAlign: \"middle\",\r\n          }}>{text}</span>\r\n        </Tooltip>\r\n      );\r\n    }\r\n  },\r\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 80},\r\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 }\r\n];\r\n\r\nconst data = [ ...new Array(10000) ].map((e, i) => {\r\n    const rs = { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };\r\n    if(i%3==0){\r\n        rs.b = '女';\r\n    }\r\n    return rs;\r\n   })\r\n\r\n\r\nclass Demo32 extends Component {\r\n\r\n  constructor(props) {\r\n    super(props);\r\n    this.state = {\r\n      data: data,\r\n      selectedRowIndex: 0\r\n    }\r\n  }\r\n  getSelectedDataFunc = data => {\r\n    console.log(data);\r\n  };\r\n\r\n  render() {\r\n    return (\r\n        <ComplexTable\r\n          columns={columns}\r\n          data={data}\r\n          parentNodeId='parent'\r\n          scroll={{y:300}}\r\n          height={40}\r\n          bordered\r\n          onRowClick={(record, index, indent) => {\r\n            this.setState({\r\n              selectedRowIndex: index\r\n            });\r\n          }}\r\n          getSelectedDataFunc={this.getSelectedDataFunc}/>\r\n\r\n    );\r\n  }\r\n}\r\n\r\n\r\n", "desc": "" }, { "example": _react2['default'].createElement(Demo34, null), "title": " 树状结构的大数据场景", "code": "/**\r\n*\r\n* @title 树状结构的大数据场景\r\n* 【Tooltip】\r\n* @description\r\n*/\r\n\r\nimport React, { Component } from \"react\";\r\n\nimport { Table, Tooltip } from 'tinper-bee';\r\nimport BigData from \"tinper-bee/lib/bigData\";;\r\nconst BigDataTable = BigData(Table);\r\nconst columns = [\r\n    {\r\n        title:'序号',\r\n        dataIndex:'index',\r\n        width:'150',\r\n        render:(text,record,index)=>{\r\n            return index\r\n        }\r\n    },\r\n    {\r\n    title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 580, className: \"rowClassName\",\r\n    render: (text, record, index) => {\r\n      return (\r\n        <Tooltip inverse overlay={text}>\r\n          <span tootip={text} style={{\r\n            display: \"inline-block\",\r\n            width: \"80px\",\r\n            textOverflow: \"ellipsis\",\r\n            overflow: \"hidden\",\r\n            whiteSpace: \"nowrap\",\r\n            verticalAlign: \"middle\",\r\n          }}>{text}</span>\r\n        </Tooltip>\r\n      );\r\n    }\r\n  },\r\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 80},\r\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 }\r\n];\r\n\r\nconst data = [ ...new Array(1000) ].map((e, i) => {\r\n    const rs = { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };\r\n    if(i%3==0){\r\n        rs.b = '女';\r\n        rs.children = [];\r\n        for(let subi=0;subi<3;subi++){\r\n          rs.children.push({a: i +subi + 'asub', b: i +subi + 'bsub', c: i + subi +'csub', d: i + subi +'dsub', key: i+ `${subi} sub`});\r\n        }\r\n    }else{\r\n      rs.children = [];\r\n        for(let subi=0;subi<3;subi++){\r\n          rs.children.push({a: i +subi + 'asub', b: i +subi + 'bsub', c: i + subi +'csub', d: i + subi +'dsub', key: i+ `${subi} sub`});\r\n        }\r\n    }\r\n    return rs;\r\n   })\r\n\r\n\r\nclass Demo30 extends Component {\r\n\r\n  constructor(props) {\r\n    super(props);\r\n    this.state = {\r\n      data: data,\r\n      selectedRowIndex: 0\r\n    }\r\n  }\r\n  onExpandedRowsChange = (params)=>{\r\n    console.log(params);\r\n  }\r\n  onExpand = (expandKeys)=>{\r\n    console.log('expand---'+expandKeys);\r\n  }\r\n  render() {\r\n    return (\r\n        <BigDataTable\r\n          columns={columns}\r\n          data={data}\r\n          parentNodeId='parent'\r\n          scroll={{y:300}}\r\n          height={40}\r\n          onRowClick={(record, index, indent) => {\r\n            console.log('currentIndex--'+index);\r\n          }}\r\n        />\r\n\r\n     \r\n    );\r\n  }\r\n}\r\n\r\n\r\n", "desc": "" }, { "example": _react2['default'].createElement(Demo35, null), "title": " hover呼出菜单栏", "code": "/**\r\n*\r\n* @title hover呼出菜单栏\r\n* @description\r\n*/\r\n\r\nimport React, { Component } from \"react\";\r\n\n\nimport { Table, Tooltip, Button } from 'tinper-bee';\r\n\r\nconst columns = [\r\n  {\r\n    title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 80, className: \"rowClassName\",\r\n    fixed:'left',\r\n    render: (text, record, index) => {\r\n      return (\r\n        <Tooltip inverse overlay={text}>\r\n          <span tootip={text} style={{\r\n            display: \"inline-block\",\r\n            width: \"60px\",\r\n            textOverflow: \"ellipsis\",\r\n            overflow: \"hidden\",\r\n            whiteSpace: \"nowrap\",\r\n            verticalAlign: \"middle\",\r\n          }}>{text}</span>\r\n        </Tooltip>\r\n      );\r\n    }\r\n  },\r\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\r\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 300 },\r\n  {\r\n    title: \"操作\",\r\n    dataIndex: \"d\",\r\n    key: \"d\",\r\n    render(text, record, index) {\r\n      return (\r\n        <div style={{ position: 'relative' }} title={text} >\r\n          <a\r\n            href=\"javascript:;\"\r\n            tooltip={text}\r\n            onClick={() => {\r\n              alert('这是第' + index + '列，内容为:' + text);\r\n            }}\r\n          >\r\n            一些操作\r\n              </a>\r\n        </div>\r\n      );\r\n    }\r\n  }\r\n];\r\n\r\nconst data = [\r\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\r\n  { a: \"杨过叔叔的女儿黄蓉\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\r\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\r\n];\r\n\r\nclass Demo35 extends Component {\r\n\r\n  constructor(props) {\r\n    super(props);\r\n    this.state = {\r\n      data: data,\r\n      selectedRowIndex: 0\r\n    }\r\n  }\r\n\r\n  delFun=()=>{\r\n  //  console.log('click'+this.currentIndex);\r\n  let {data} = this.state;\r\n  data.splice(this.currentIndex,1);\r\n  this.setState({\r\n    data\r\n  });\r\n }\r\n onRowHover=(index,record)=>{\r\n  this.currentIndex = index;\r\n  this.currentRecord = record;\r\n }\r\n  getHoverContent=()=>{\r\n    return <div className=\"opt-btns\"><button  onClick={this.delFun}>删除</button> </div>\r\n  }\r\n  render() {\r\n    return (\r\n        \r\n        <Table\r\n          columns={columns}\r\n          data={data}\r\n          parentNodeId='parent'\r\n          height={43}\r\n          headerHeight={42}\r\n          hoverContent={this.getHoverContent}\r\n          onRowHover={this.onRowHover}\r\n          onRowClick={(record, index, indent) => {\r\n            this.setState({\r\n              selectedRowIndex: index\r\n            });\r\n          }}\r\n        />\r\n\r\n     \r\n    );\r\n  }\r\n}\r\n\r\n\r\n", "desc": "", "scss_code": ".opt-btns{\r\n    button{\r\n      background: #505F79 ;\r\n      height: 26px;\r\n      color:#FFFFFF;\r\n      line-height: 26px;\r\n    }\r\n  }" }];
->>>>>>> 6c8af4fcabd8bb6a38427c6c2e592a0c9e3650d6
+	var Demo1 = __webpack_require__(84);var Demo2 = __webpack_require__(491);var Demo3 = __webpack_require__(496);var Demo4 = __webpack_require__(497);var Demo5 = __webpack_require__(498);var Demo6 = __webpack_require__(499);var Demo7 = __webpack_require__(503);var Demo8 = __webpack_require__(504);var Demo9 = __webpack_require__(509);var Demo10 = __webpack_require__(510);var Demo11 = __webpack_require__(511);var Demo12 = __webpack_require__(513);var Demo13 = __webpack_require__(519);var Demo14 = __webpack_require__(521);var Demo15 = __webpack_require__(530);var Demo16 = __webpack_require__(531);var Demo17 = __webpack_require__(532);var Demo18 = __webpack_require__(533);var Demo19 = __webpack_require__(534);var Demo20 = __webpack_require__(535);var Demo21 = __webpack_require__(536);var Demo22 = __webpack_require__(541);var Demo23 = __webpack_require__(542);var Demo24 = __webpack_require__(543);var Demo25 = __webpack_require__(544);var Demo26 = __webpack_require__(545);var Demo27 = __webpack_require__(546);var Demo28 = __webpack_require__(547);var Demo29 = __webpack_require__(548);var Demo30 = __webpack_require__(571);var Demo31 = __webpack_require__(573);var Demo32 = __webpack_require__(574);var Demo34 = __webpack_require__(575);var Demo35 = __webpack_require__(576);var DemoArray = [{ "example": _react2['default'].createElement(Demo1, null), "title": " 简单表格、文字过长，两种tip", "code": "/**\n*\n* @title 简单表格、文字过长，两种tip\n* 【Tooltip】\n* @description\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Tooltip, Button } from 'tinper-bee';\n\nconst columns = [\n  {\n    title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 300, className: \"rowClassName\",\n    fixed:'left',\n    render: (text, record, index) => {\n      return (\n        <Tooltip inverse overlay={text}>\n          <span tootip={text} style={{\n            display: \"inline-block\",\n            width: \"60px\",\n            textOverflow: \"ellipsis\",\n            overflow: \"hidden\",\n            whiteSpace: \"nowrap\",\n            verticalAlign: \"middle\",\n          }}>{text}</span>\n        </Tooltip>\n      );\n    }\n  },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 500},\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    render(text, record, index) {\n      return (\n        <div style={{ position: 'relative' }} title={text} >\n          <a\n            href=\"javascript:;\"\n            tooltip={text}\n            onClick={() => {\n              alert('这是第' + index + '列，内容为:' + text);\n            }}\n          >\n            一些操作\n              </a>\n        </div>\n      );\n    }\n  }\n];\n\nconst data = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过叔叔的女儿黄蓉\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\nclass Demo1 extends Component {\n\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: data,\n      selectedRowIndex: 0\n    }\n  }\n\n  render() {\n    return (\n   \n        <Table\n          columns={columns}\n          data={data}\n          parentNodeId='parent'\n          height={43}\n          headerHeight={42}\n          onRowClick={(record, index, indent) => {\n            this.setState({\n              selectedRowIndex: index\n            });\n          }}\n        />\n\n     \n    );\n  }\n}\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo2, null), "title": " 增删改表格", "code": "/**\n*\n* @title 增删改表格\n* @description 这是带有增删改功能的表格（此编辑功能未使用render组件）\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Popconfirm, Input, Icon, Animate, Button } from 'tinper-bee';\n\nclass EditableCell extends React.Component {\n  state = {\n    value: this.props.value,\n    editable: false\n  };\n  handleChange = e => {\n    const value = e;\n    this.setState({ value });\n  };\n  check = () => {\n    this.setState({ editable: false });\n    if (this.props.onChange) {\n      this.props.onChange(this.state.value);\n    }\n  };\n  edit = () => {\n    this.setState({ editable: true });\n  };\n  handleKeydown = event => {\n    if (event.keyCode == 13) {\n      this.check();\n    }\n  };\n  render() {\n    const { value, editable } = this.state;\n    return (\n      <div className=\"editable-cell\">\n        {editable ? (\n          <div className=\"editable-cell-input-wrapper\">\n            <Input\n              value={value}\n              onChange={this.handleChange}\n              onKeyDown={this.handleKeydown}\n            />\n            <Icon\n              type=\"uf-correct\"\n              className=\"editable-cell-icon-check\"\n              onClick={this.check}\n            />\n          </div>\n        ) : (\n          <div className=\"editable-cell-text-wrapper\">\n            {value || \" \"}\n            <Icon\n              type=\"uf-pencil\"\n              className=\"editable-cell-icon\"\n              onClick={this.edit}\n            />\n          </div>\n        )}\n      </div>\n    );\n  }\n}\n\nclass Demo2 extends React.Component {\n  constructor(props) {\n    super(props);\n    this.columns = [\n      {\n        title: \"姓名\",\n        dataIndex: \"name\",\n        key: \"name\",\n        width: \"30%\",\n        render: (text, record, index) => (\n          <EditableCell\n            value={text}\n            onChange={this.onCellChange(index, \"name\")}\n          />\n        )\n      },\n      {\n        title: \"年龄\",\n        dataIndex: \"age\",\n        key: \"age\"\n      },\n      {\n        title: \"你懂的\",\n        dataIndex: \"address\",\n        key: \"address\"\n      },\n      {\n        title: \"操作\",\n        dataIndex: \"operation\",\n        key: \"operation\",\n        render: (text, record, index) => {\n          return this.state.dataSource.length > 1 ? (\n            <Popconfirm content=\"确认删除?\" id=\"aa\" onClose={this.onDelete(index)}>\n              <Icon type=\"uf-del\" />\n            </Popconfirm>\n          ) : null;\n        }\n      }\n    ];\n\n    this.state = {\n      dataSource: [\n        {\n          key: \"0\",\n          name: \"沉鱼\",\n          age: \"18\",\n          address: \"96, 77, 89\"\n        },\n        {\n          key: \"1\",\n          name: \"落雁\",\n          age: \"16\",\n          address: \"90, 70, 80\"\n        },\n        {\n          key: \"2\",\n          name: \"闭月\",\n          age: \"17\",\n          address: \"80, 60, 80\"\n        },\n        {\n          key: \"3\",\n          name: \"羞花\",\n          age: \"20\",\n          address: \"120, 60, 90\"\n        }\n      ],\n      count: 4\n    };\n  }\n  onCellChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onDelete = (index) => {\n    return () => {\n      const dataSource = [...this.state.dataSource];\n      dataSource.splice(index, 1);\n      this.setState({ dataSource });\n    }\n  };\n  handleAdd = () => {\n    const { count, dataSource } = this.state;\n    const newData = {\n      key: count,\n      name: `凤姐 ${count}`,\n      age: 32,\n      address: `100 100 100`\n    };\n    this.setState({\n      dataSource: [...dataSource, newData],\n      count: count + 1\n    });\n  };\n\n  getBodyWrapper = body => {\n    return (\n      <Animate\n        transitionName=\"move\"\n        component=\"tbody\"\n        className={body.props.className}\n      >\n        {body.props.children}\n      </Animate>\n    );\n  };\n  render() {\n    const { dataSource } = this.state;\n    const columns = this.columns;\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.handleAdd}\n        >\n          添加\n        </Button>\n        <Table\n          data={dataSource}\n          columns={columns}\n          getBodyWrapper={this.getBodyWrapper}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 这是带有增删改功能的表格（此编辑功能未使用render组件）" }, { "example": _react2['default'].createElement(Demo3, null), "title": " 表头分组并自定义表头高度", "code": "/**\n *\n * @title 表头分组并自定义表头高度\n * @description columns[n] 可以内嵌 children，以渲染分组表头。\n * 自定义表头高度需要传headerHeight，注：修改th的padding top和bottom置为0，否则会有影响\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table, Button } from 'tinper-bee';\n\nconst { ColumnGroup, Column } = Table;\n\nconst columns = [\n  {\n    title: \"Name\",\n    dataIndex: \"name\",\n    key: \"name\",\n    width: 100,\n    fixed: \"left\"\n  },\n  {\n    title: \"Other\",\n    width:600,\n    children: [\n      {\n        title: \"Age\",\n        dataIndex: \"age\",\n        key: \"age\",\n        width: 200\n      },\n      {\n        title: \"Address\",\n        children: [\n          {\n            title: \"Street\",\n            dataIndex: \"street\",\n            key: \"street\",\n            width: 200\n          },\n          {\n            title: \"Block\",\n            children: [\n              {\n                title: \"Building\",\n                dataIndex: \"building\",\n                key: \"building\",\n                width: 100\n              },\n              {\n                title: \"Door No.\",\n                dataIndex: \"number\",\n                key: \"number\",\n                width: 100\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  {\n    title: \"Company\",\n    width:400,\n    children: [\n      {\n        title: \"Company Address\",\n        dataIndex: \"companyAddress\",\n        key: \"companyAddress\",\n        width:200,\n      },\n      {\n        title: \"Company Name\",\n        dataIndex: \"companyName\",\n        key: \"companyName\",\n        width:200,\n      }\n    ]\n  },\n  {\n    title: \"Gender\",\n    dataIndex: \"gender\",\n    key: \"gender\",\n    width: 60,\n    fixed: \"right\"\n  }\n];\n\nconst data = [];\nfor (let i = 0; i < 20; i++) {\n  data.push({\n    key: i,\n    name: \"John Brown\",\n    age: i + 1,\n    street: \"Lake Park\",\n    building: \"C\",\n    number: 2035,\n    companyAddress: \"Lake Street 42\",\n    companyName: \"SoftLake Co\",\n    gender: \"M\"\n  });\n}\n\nclass Demo3 extends Component {\n  render() {\n    return (\n      <Table\n        className={'demo3'}\n        columns={columns}\n        data={data}\n        headerHeight={40} //自定义表头高度\n        bordered\n        scroll={{ y: 240 }}\n      />\n    );\n  }\n}\n\n\n", "desc": " columns[n] 可以内嵌 children，以渲染分组表头。", "scss_code": ".demo3{\n    .u-table-thead th {\n        padding-top: 0px;\n        padding-bottom: 0px;\n    }\n}" }, { "example": _react2['default'].createElement(Demo4, null), "title": " 树形数据展示", "code": "/**\n*\n* @title 树形数据展示\n* @description 通过在data中配置children数据，来自动生成树形数据\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\nconst columns4 = [\n  {\n    title: \"Name\",\n    dataIndex: \"name\",\n    key: \"name\",\n    width: \"40%\"\n  },\n  {\n    title: \"Age\",\n    dataIndex: \"age\",\n    key: \"age\",\n    width: \"30%\"\n  },\n  {\n    title: \"Address\",\n    dataIndex: \"address\",\n    key: \"address\"\n  }\n];\n\nconst data4 = [\n  {\n    key: 1,\n    name: \"John Brown sr.\",\n    age: 60,\n    address: \"New York No. 1 Lake Park\",\n    children: [\n      {\n        key: 11,\n        name: \"John Brown\",\n        age: 42,\n        address: \"New York No. 2 Lake Park\"\n      },\n      {\n        key: 12,\n        name: \"John Brown jr.\",\n        age: 30,\n        address: \"New York No. 3 Lake Park\",\n        children: [\n          {\n            key: 121,\n            name: \"Jimmy Brown\",\n            age: 16,\n            address: \"New York No. 3 Lake Park\"\n          }\n        ]\n      },\n      {\n        key: 13,\n        name: \"Jim Green sr.\",\n        age: 72,\n        address: \"London No. 1 Lake Park\",\n        children: [\n          {\n            key: 131,\n            name: \"Jim Green\",\n            age: 42,\n            address: \"London No. 2 Lake Park\",\n            children: [\n              {\n                key: 1311,\n                name: \"Jim Green jr.\",\n                age: 25,\n                address: \"London No. 3 Lake Park\"\n              },\n              {\n                key: 1312,\n                name: \"Jimmy Green sr.\",\n                age: 18,\n                address: \"London No. 4 Lake Park\"\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  {\n    key: 2,\n    name: \"Joe Black\",\n    age: 32,\n    address: \"Sidney No. 1 Lake Park\"\n  }\n];\nclass Demo4 extends Component {\n\n  constructor(props){\n      super(props);\n      this.state = {\n        data: data4,\n        factoryValue: 0,\n        selectedRow: new Array(data4.length)//状态同步\n      }\n  }\n\n  render() {\n    return <Table \n    rowClassName={(record,index,indent)=>{\n      if (this.state.selectedRow[index]) {\n          return 'selected';\n      } else {\n          return '';\n      }\n    }}\n    onRowClick={(record,index,indent)=>{\n      let selectedRow = new Array(this.state.data.length);\n      selectedRow[index] = true;\n      this.setState({\n          factoryValue: record,\n          selectedRow: selectedRow\n      });\n    }}\n    \n    columns={columns4} data={data4} />;\n  }\n}\n\n\n", "desc": " 通过在data中配置children数据，来自动生成树形数据" }, { "example": _react2['default'].createElement(Demo5, null), "title": " 固定列", "code": "/**\n*\n* @title 固定列\n* @description 固定列到表格的某侧\n*\n*/\n\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\n\nconst columns5 = [\n  {\n    title: \"Full Name\",\n    width: 100,\n    dataIndex: \"name\",\n    key: \"name\",\n    fixed: \"left\"\n  },\n  { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\", fixed: \"left\" },\n  { title: \"address\", dataIndex: \"address\", key: \"address\" }\n];\n\nconst data5 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    address: \"New York Park\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  }\n];\n\nclass Demo5 extends Component {\n  render() {\n    return <Table columns={columns5} data={data5} scroll={{ x: \"110%\", y: 140 }} />;\n  }\n}\n\n", "desc": " 固定列到表格的某侧" }, { "example": _react2['default'].createElement(Demo6, null), "title": " 固定表头", "code": "/**\n*\n* @title 固定表头\n* @description 方便一页内展示大量数据。需要指定 column 的 width 属性，否则列头和内容可能不对齐。(还可以设置scroll来支持横向或纵向滚动)\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\nimport dragColumn from \"tinper-bee/lib/dragColumn\";;;\nconst DragColumnTable = dragColumn(Table);\n\nconst columns6 = [\n  {\n    title: \"Full Name\",\n    width: 100,\n    dataIndex: \"name\",\n    key: \"name\"\n  },\n  { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\"},\n  { title: \"Address\", dataIndex: \"address\", key: \"1\" }\n];\n\nconst data6 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    address: \"New York Park\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },{\n    key: \"11\",\n    name: \"John Brown\",\n    age: 32,\n    address: \"New York Park\"\n  },\n  {\n    key: \"12\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"13\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  },\n  {\n    key: \"14\",\n    name: \"Jim Green\",\n    age: 40,\n    address: \"London Park\"\n  }\n];\n\nclass Demo6 extends Component {\n  render() {\n    return <DragColumnTable columns={columns6} data={data6} scroll={{y: 150 }} dragborder={true}  />;\n  }\n}\n\n", "desc": " 方便一页内展示大量数据。需要指定 column 的 width 属性，否则列头和内容可能不对齐。(还可以设置scroll来支持横向或纵向滚动)" }, { "example": _react2['default'].createElement(Demo7, null), "title": " 主子表", "code": "/**\n *\n * @title 主子表\n * @description 主表点击子表联动\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\n\nconst columns7 = [\n  { title: \"班级\", dataIndex: \"a\", key: \"a\" },\n  { title: \"人数\", dataIndex: \"b\", key: \"b\" },\n  { title: \"班主任\", dataIndex: \"c\", key: \"c\" },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst data7 = [\n  { a: \"02级一班\", b: \"2\", c: \"欧阳锋\", d: \"大侠\", key: \"1\" },\n  { a: \"03级二班\", b: \"3\", c: \"归海一刀\", d: \"大侠\", key: \"2\" },\n  { a: \"05级三班\", b: \"1\", c: \"一拳超人\", d: \"愣头青\", key: \"3\" }\n];\n\nconst columns7_1 = [\n  { title: \"姓名\", dataIndex: \"a\", key: \"a\" },\n  { title: \"班级\", dataIndex: \"b\", key: \"b\" },\n  { title: \"系别\", dataIndex: \"c\", key: \"c\" }\n];\n\nclass Demo7 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      children_data: []\n    };\n  }\n\n  rowclick = (record, index) => {\n    if (record.a === \"02级一班\") {\n      this.setState({\n        children_data: [\n          { a: \"郭靖\", b: \"02级一班\", c: \"文学系\", key: \"1\" },\n          { a: \"黄蓉\", b: \"02级一班\", c: \"文学系\", key: \"2\" }\n        ]\n      });\n    } else if (record.a === \"03级二班\") {\n      this.setState({\n        children_data: [\n          { a: \"杨过\", b: \"03级二班\", c: \"外语系\", key: \"1\" },\n          { a: \"小龙女\", b: \"03级二班\", c: \"外语系\", key: \"2\" },\n          { a: \"傻姑\", b: \"03级二班\", c: \"外语系\", key: \"3\" }\n        ]\n      });\n    } else if (record.a === \"05级三班\") {\n      this.setState({\n        children_data: [{ a: \"金圣叹\", b: \"05级三班\", c: \"美术系\", key: \"1\" }]\n      });\n    }\n  };\n\n  render() {\n    return (\n      <div>\n        <Table\n          columns={columns7}\n          data={data7}\n          onRowClick={this.rowclick}\n          title={currentData => <div>标题: 我是主表</div>}\n        />\n        <Table\n          style={{ marginTop: 40 }}\n          columns={columns7_1}\n          data={this.state.children_data}\n          title={currentData => <div>标题: 我是子表</div>}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 主表点击子表联动" }, { "example": _react2['default'].createElement(Demo8, null), "title": " 表格+分页", "code": "/**\n *\n * @title 表格+分页\n * @description 点击分页联动表格\n */\n\nimport React, { Component } from \"react\";\n\nimport { Table, Pagination } from 'tinper-bee';\n\nconst columns8 = [\n  { title: \"姓名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst pageData = {\n  1: [\n    { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"2\" },\n    { a: \"令狐冲\", b: \"男\", c: 41, d: \"大侠\", key: \"1\" },\n    { a: \"郭靖\", b: \"男\", c: 25, d: \"大侠\", key: \"3\" }\n  ],\n  2: [\n    { a: \"芙蓉姐姐\", b: \"女\", c: 23, d: \"大侠\", key: \"1\" },\n    { a: \"芙蓉妹妹\", b: \"女\", c: 23, d: \"内行\", key: \"2\" }\n  ]\n};\n\nclass Demo8 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: pageData[1],\n      activePage: 1\n    };\n  }\n\n  handleSelect(eventKey) {\n    this.setState({\n      data: pageData[eventKey],\n      activePage: eventKey\n    });\n  }\n\n  render() {\n    return (\n      <div>\n        <Table columns={columns8} data={this.state.data} />\n        <Pagination\n          first\n          last\n          prev\n          next\n          maxButtons={5}\n          boundaryLinks\n          activePage={this.state.activePage}\n          onSelect={this.handleSelect.bind(this)}\n          onDataNumSelect={this.dataNumSelect}\n          showJump={true}\n          total={100}\n          dataNum={2}\n        />\n      </div>\n    );\n  }\n}\n\n", "desc": " 点击分页联动表格" }, { "example": _react2['default'].createElement(Demo9, null), "title": " 表格+搜索", "code": "/**\n *\n * @title 表格+搜索\n * @description 搜索刷新表格数据\n *\n *\n * import {Table} from 'tinper-bee';\n */\n\nimport React, { Component } from \"react\";\n\nimport { Table, FormControl, InputGroup, Icon } from 'tinper-bee';\n\nclass Search extends Component {\n  state = {\n    searchValue: \"\",\n    empty: false\n  };\n\n  /**\n     * 搜索\n     */\n  handleSearch = () => {\n    let { onSearch } = this.props;\n    this.setState({\n      empty: true\n    });\n    onSearch && onSearch(this.state.searchValue);\n  };\n\n  /**\n     * 捕获回车\n     * @param e\n     */\n  handleKeyDown = e => {\n    if (e.keyCode === 13) {\n      this.handleSearch();\n    }\n  };\n\n  /**\n     * 输入框改变\n     * @param e\n     */\n  handleChange = (e) => {\n    this.setState({\n      searchValue: e\n    });\n  };\n\n  /**\n     * 清空输入框\n     */\n  emptySearch = () => {\n    let { onEmpty } = this.props;\n    this.setState({\n      searchValue: \"\",\n      empty: false\n    });\n    onEmpty && onEmpty();\n  };\n\n  render() {\n    return (\n      <InputGroup simple className=\"search-component\">\n        <FormControl\n          onChange={this.handleChange}\n          value={this.state.searchValue}\n          onKeyDown={this.handleKeyDown}\n          placeholder=\"请输入用户名\"\n          type=\"text\"\n        />\n        {this.state.empty ? (\n          <Icon\n            type=\"uf-close-c\"\n            onClick={this.emptySearch}\n            className=\"empty-search\"\n          />\n        ) : null}\n\n        <InputGroup.Button onClick={this.handleSearch} shape=\"border\">\n          <Icon type=\"uf-search\" />\n        </InputGroup.Button>\n      </InputGroup>\n    );\n  }\n}\n\nconst columns9 = [\n  {\n    title: \"姓名\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst userData = [\n  { a: \"杨过\", b: \"男\", c: 30, d: \"内行\", key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"大侠\", key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"大侠\", key: \"3\" }\n];\n\nclass Demo9 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: userData\n    };\n  }\n\n  handleSearch = value => {\n    if (value === \"\") {\n      return this.setState({\n        data: userData\n      });\n    }\n    let regExp = new RegExp(value, \"ig\");\n    let data = userData.filter(item => regExp.test(item.a));\n    this.setState({\n      data\n    });\n  };\n\n  handleEmpty = () => {\n    this.setState({\n      data: userData\n    });\n  };\n\n  render() {\n    return (\n      <div>\n        <div className=\"clearfix\">\n          <Search onSearch={this.handleSearch} onEmpty={this.handleEmpty} />\n        </div>\n        <Table columns={columns9} data={this.state.data} />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 搜索刷新表格数据" }, { "example": _react2['default'].createElement(Demo10, null), "title": " 无数据时显示", "code": "/**\n*\n* @title 无数据时显示\n* @description 无数据时显示效果展示（可自定义）\n *\n* import {Table} from 'tinper-bee';\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\nconst columns10 = [\n    {\n      title: \"Name\",\n      dataIndex: \"name\",\n      key: \"name\",\n      width: \"40%\"\n    },\n    {\n      title: \"Age\",\n      dataIndex: \"age\",\n      key: \"age\",\n      width: \"30%\"\n    },\n    {\n      title: \"Address\",\n      dataIndex: \"address\",\n      key: \"address\"\n    }\n  ];\n  \n  const data10 = [\n    \n  ];\n\n  const emptyFunc = () => <span>这里没有数据！</span>\n  \n  class Demo10 extends Component {\n    render() {\n      return <Table columns={columns10} data={data10} emptyText={emptyFunc} />;\n    }\n  }\n\n", "desc": " 无数据时显示效果展示（可自定义）" }, { "example": _react2['default'].createElement(Demo11, null), "title": " 列排序", "code": "/**\n* @description  column中增加sorter: (a, b) => a.c - b.c 这里的a,b代表前后两个数据，c代表比较当前对象的字段名称\n* @title 列排序\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee';\nimport sort from \"tinper-bee/lib/sort.js\";;\nlet ComplexTable = sort(Table, Icon);\nconst columns11 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst data11 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\n];\n\nconst defaultProps11 = {\n  prefixCls: \"bee-table\"\n};\nclass Demo11 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      sortOrder: \"\",\n      data: data11\n    };\n  }\n  render() {\n\n    return <ComplexTable columns={columns11} data={this.state.data} />;\n  }\n}\nDemo11.defaultProps = defaultProps11;\n\n\n", "desc": "  column中增加sorter: (a, b) => a.c - b.c 这里的a,b代表前后两个数据，c代表比较当前对象的字段名称" }, { "example": _react2['default'].createElement(Demo12, null), "title": " 全选功能", "code": "/**\n*\n* @title 全选功能\n* @description 点击表格左列按钮即可选中，并且在选中的回调函数中能获取到选中的数据（未使用封装好的全选功能）\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Checkbox } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/multiSelect.js\";;\n\nconst columns12 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  }\n];\n\nconst data12 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\",_checked:true },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" ,_checked:true},\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" ,_checked:true}\n];\n//拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常\nlet MultiSelectTable  = multiSelect(Table, Checkbox);\n\nclass Demo12 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: data12\n    };\n  }\n  getSelectedDataFunc = data => {\n    console.log(data);\n  };\n  \n  render() {\n    let multiObj = {\n      type: \"checkbox\"\n    };\n    return (\n      <MultiSelectTable \n        columns={columns12} \n        data={data12} \n        multiSelect={multiObj}\n        getSelectedDataFunc={this.getSelectedDataFunc}/>\n    );\n  }\n}\n\n", "desc": " 点击表格左列按钮即可选中，并且在选中的回调函数中能获取到选中的数据（未使用封装好的全选功能）" }, { "example": _react2['default'].createElement(Demo13, null), "title": " 多列排序、全选功能、合计", "code": "/**\n *\n * @title 多列排序、全选功能、合计\n * @description 多列排序、全选功能、合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）新增回调函数(sorterClick)\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table, Icon, Button, Checkbox } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/multiSelect.js\";;\nimport sort from \"tinper-bee/lib/sort.js\";;\nimport sum from \"tinper-bee/lib/sum.js\";;\n\nconst columns13 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    className:'dfasd',\n    width: 200\n  },\n  {\n    title: \"功力指数\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c,\n    sorterClick:(data,type)=>{//排序的回调函数\n      //type value is up or down\n      console.log(\"data\",data);\n    }\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c,\n    sorterClick:(data,type)=>{//排序的回调函数\n      //type value is up or down\n      console.log(\"data\",data);\n    }\n  },\n  {\n    title: \"成绩\",\n    dataIndex: \"e\",\n    key: \"e\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c,\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width: 200\n  }\n];\n\nconst data13 = [\n  { a: \"杨过\", b: 675, c: 30, d: \"内行\",e:100, key: \"2\" },\n  { a: \"令狐冲\", b: 43, c: 41, d: \"大侠\",e:90, key: \"1\" },\n  { a: \"令狐冲1\", b: 43, c: 81, d: \"大侠\", e:120,key: \"4\" },\n  { a: \"令狐冲2\", b: 43, c: 81, d: \"大侠\", e:130,key: \"5\" },\n  { a: \"郭靖\", b: 153, c: 25, d: \"大侠\",e:90, key: \"3\" }\n];\n\n\n//拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常\nlet ComplexTable = multiSelect(sum(sort(Table, Icon)), Checkbox);\n\nclass Demo13 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      data13: data13,\n      selectedRow: this.selectedRow,\n      selectDisabled: this.selectDisabled\n    };\n  }\n  getSelectedDataFunc = data => {\n    console.log(data);\n  };\n  selectDisabled = (record, index) => {\n    // console.log(record);\n    if (index === 1) {\n      return true;\n    }\n    return false;\n  };\n  selectedRow = (record, index) => {\n    // console.log(record);\n    if (index === 0) {\n      return true;\n    }\n    return false;\n  };\n  onClick = () => {\n    this.setState({\n      selectedRow: function() {}\n    });\n  };\n\n  render() {\n    let multiObj = {\n      type: \"checkbox\"\n    };\n    let sortObj = {\n      mode:'multiple'\n    }\n   \n    return (\n      <div>\n        <Button className=\"editable-add-btn\" onClick={this.onClick}>\n          change selectedRow\n        </Button>\n        <ComplexTable\n          selectDisabled={this.state.selectDisabled}\n          selectedRow={this.state.selectedRow}\n          columns={columns13}\n          data={this.state.data13}\n          multiSelect={multiObj}\n          sort={sortObj}\n          getSelectedDataFunc={this.getSelectedDataFunc}\n        />\n      </div>\n    );\n  }\n}\n", "desc": " 多列排序、全选功能、合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）新增回调函数(sorterClick)" }, { "example": _react2['default'].createElement(Demo14, null), "title": " 编辑态表格", "code": "/**\n*\n* @title 编辑态表格\n* @description 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）\n*\n*/\n\nimport React from \"react\";\nimport { Table, Select, Datepicker, Checkbox, Input, Icon, Form, Button, Tooltip, Animate } from 'tinper-bee';\nimport renderInput from \"tinper-bee/lib/InputRender.js\";;\nimport renderDate from \"tinper-bee/lib/DateRender.js\";;\nimport renderSelect from \"tinper-bee/lib/SelectRender.js\";;\n\nconst InputRender = renderInput(Form, Input, Icon);\nconst DateRender = renderDate(Datepicker, Icon);\nconst SelectRender = renderSelect(Select, Icon);\n\nconst format = \"YYYY-MM-DD\";\nconst format2 = \"YYYY-MM\";\nconst format3 = \"YYYY-MM-DD HH:mm:ss\";\n\nconst dateInputPlaceholder = \"选择日期\";\nconst dateInputPlaceholder2 = \"选择年月\";\nconst dataSource = [\n  {\n    key: \"boyuzhou\",\n    value: \"jack\"\n  },\n  {\n    key: \"renhualiu\",\n    value: \"lucy\"\n  },\n  {\n    key: \"yuzhao\",\n    value: \"yiminghe\"\n  }\n];\nclass Demo14 extends React.Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      dataSource: [\n        {\n          key: \"0\",\n          name: \"沉鱼\",\n          number: \"10\",\n          age: \"y\",\n          address: \"jack\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"1\",\n          name: \"落雁\",\n          number: \"100\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"2\",\n          name: \"闭月\",\n          number: \"1000\",\n          age: \"n\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"3\",\n          name: \"羞花\",\n          number: \"9999\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        }\n      ],\n      count: 4\n    };\n    this.columns = [\n      {\n        title: \"普通输入\",\n        dataIndex: \"name\",\n        key: \"name\",\n        width: \"150px\",\n        render: (text, record, index) => (\n          <InputRender\n            name=\"name\"\n            placeholder=\"请输入姓名\"\n            value={text}\n            isclickTrigger={true}\n            check={this.check}\n            onChange={this.onInputChange(index, \"name\")}\n            isRequire={true}\n            method=\"blur\"\n            errorMessage={\n              <Tooltip overlay={\"错误提示\"}>\n                <Icon type=\"uf-exc-c\" className=\"\" />\n              </Tooltip>\n            }\n          />\n        )\n      },\n      {\n        title: \"货币输入\",\n        dataIndex: \"number\",\n        key: \"number\",\n        width: \"150px\",\n        render: (text, record, index) => (\n          <InputRender\n            format=\"Currency\"\n            name=\"number\"\n            placeholder=\"请输入货币\"\n            value={text}\n            isclickTrigger={true}\n            check={this.check}\n            onChange={this.onInputChange(index, \"number\")}\n            isRequire={true}\n            method=\"blur\"\n            errorMessage={\n              <Tooltip overlay={\"错误提示\"}>\n                <Icon type=\"uf-exc-c\" className=\"\" />\n              </Tooltip>\n            }\n            reg={/^[0-9]+$/}\n          />\n        )\n      },\n      {\n        title: \"复选\",\n        dataIndex: \"age\",\n        key: \"age\",\n        width: \"100px\",\n        render: (text, record, index) => (\n          <Checkbox\n            checked={record.age}\n            onChange={this.onCheckChange(index, \"age\")}\n          />\n        )\n      },\n      {\n        title: \"下拉框\",\n        dataIndex: \"address\",\n        key: \"address\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <SelectRender\n              dataSource={dataSource}\n              isclickTrigger={true}\n              value={text}\n              onChange={this.onSelectChange(index, \"address\")}\n            >\n              <Option value=\"jack\">boyuzhou</Option>\n              <Option value=\"lucy\">renhualiu</Option>\n              <Option value=\"disabled\" disabled>\n                Disabled\n              </Option>\n              <Option value=\"yiminghe\">yuzhao</Option>\n            </SelectRender>\n          );\n        }\n      },\n      {\n        title: \"年月日\",\n        dataIndex: \"datepicker\",\n        key: \"datepicker\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <DateRender\n              value={text}\n              isclickTrigger={true}\n              format={format}\n              onSelect={this.onDateSelect}\n              onChange={this.onDateChange}\n              placeholder={dateInputPlaceholder}\n            />\n          );\n        }\n      },\n      {\n        title: \"年月\",\n        dataIndex: \"MonthPicker\",\n        key: \"MonthPicker\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <DateRender\n              value={text}\n              type=\"MonthPicker\"\n              isclickTrigger={true}\n              format={format2}\n              onSelect={this.onSelect}\n              onChange={this.onChange}\n              placeholder={dateInputPlaceholder2}\n            />\n          );\n        }\n      }\n    ];\n  }\n  check = (flag, obj) => {\n    console.log(flag);\n    console.log(obj);\n  };\n\n  onInputChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onCheckChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onSelectChange = (index, key) => {\n    return value => {\n      console.log(`selected ${value}`);\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n  onDateChange = d => {\n    console.log(d);\n  };\n  onDateSelect = d => {\n    console.log(d);\n  };\n  onDelete = index => {\n    return () => {\n      const dataSource = [...this.state.dataSource];\n      dataSource.splice(index, 1);\n      this.setState({ dataSource });\n    };\n  };\n  handleAdd = () => {\n    const { count, dataSource } = this.state;\n    const newData = {\n      key: count,\n      name: `凤姐 ${count}`,\n      age: 32,\n      address: \"jack\",\n      datepicker: \"2017-06-12\",\n      MonthPicker: \"2017-02\"\n    };\n    this.setState({\n      dataSource: [...dataSource, newData],\n      count: count + 1\n    });\n  };\n\n  getBodyWrapper = body => {\n    return (\n      <Animate\n        transitionName=\"move\"\n        component=\"tbody\"\n        className={body.props.className}\n      >\n        {body.props.children}\n      </Animate>\n    );\n  };\n  getData = () => {\n    console.log(this.state.dataSource);\n  };\n  render() {\n    const { dataSource } = this.state;\n    const columns = this.columns;\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.handleAdd}\n        >\n          添加一行\n        </Button>\n        <Button\n          style={{marginLeft:\"5px\"}}\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.getData}\n        >\n          获取数据\n        </Button>\n        <Table\n          data={dataSource}\n          columns={columns}\n          getBodyWrapper={this.getBodyWrapper}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）" }, { "example": _react2['default'].createElement(Demo15, null), "title": " 表格行/列合并", "code": "/**\n*\n* @title 表格行/列合并\n* @description 表头只支持列合并，使用 column 里的 colSpan 进行设置。表格支持行/列合并，使用 render 里的单元格属性 colSpan 或者 rowSpan 设值为 0 时，设置的表格不会渲染。\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\n\nconst renderContent = (value, row, index) => {\n  const obj = {\n    children: value,\n    props: {},\n  };\n  if (index === 4) {\n    obj.props.colSpan = 0;\n  }\n  return obj;\n};\n\nconst columns = [{\n  title: 'Name',\n  key: \"name\",\n  dataIndex: 'name',\n  render: (text, row, index) => {\n    if (index < 4) {\n      return <a href=\"#\">{text}</a>;\n    }\n    return {\n      children: <a href=\"#\">{text}</a>,\n      props: {\n        colSpan: 5,\n      },\n    };\n  },\n}, {\n  title: 'Age',\n  key: \"Age\",\n  dataIndex: 'age',\n  render: renderContent,\n}, {\n  title: 'Home phone',\n  colSpan: 2,\n  key: \"tel\",\n  dataIndex: 'tel',\n  render: (value, row, index) => {\n    const obj = {\n      children: value,\n      props: {},\n    };\n    if (index === 2) {\n      obj.props.rowSpan = 2;\n    }\n    if (index === 3) {\n      obj.props.rowSpan = 0;\n    }\n    if (index === 4) {\n      obj.props.colSpan = 0;\n    }\n    return obj;\n  },\n}, {\n  title: 'Phone',\n  colSpan: 0,\n  key: \"phone\",\n  dataIndex: 'phone',\n  render: renderContent,\n}, {\n  title: 'Address',\n  key: \"address\",\n  dataIndex: 'address',\n  render: renderContent,\n}];\n\nconst data = [{\n  key: '1',\n  name: 'John Brown',\n  age: 32,\n  tel: '0571-22098909',\n  phone: 18889898989,\n  address: 'New York No. 1 Lake Park',\n}, {\n  key: '2',\n  name: 'Jim Green',\n  tel: '0571-22098333',\n  phone: 18889898888,\n  age: 42,\n  address: 'London No. 1 Lake Park',\n}, {\n  key: '3',\n  name: 'Joe Black',\n  age: 32,\n  tel: '0575-22098909',\n  phone: 18900010002,\n  address: 'Sidney No. 1 Lake Park',\n}, {\n  key: '4',\n  name: 'Jim Red',\n  age: 18,\n  tel: '0575-22098909',\n  phone: 18900010002,\n  address: 'London No. 2 Lake Park',\n}, {\n  key: '5',\n  name: 'Jake White',\n  age: 18,\n  tel: '0575-22098909',\n  phone: 18900010002,\n  address: 'Dublin No. 2 Lake Park',\n}];\n\nclass Demo15 extends Component {\n  render() {\n    return (\n       <Table columns={columns} data={data}/>\n    );\n  }\n}\n\n\n\n", "desc": " 表头只支持列合并，使用 column 里的 colSpan 进行设置。表格支持行/列合并，使用 render 里的单元格属性 colSpan 或者 rowSpan 设值为 0 时，设置的表格不会渲染。" }, { "example": _react2['default'].createElement(Demo16, null), "title": " 嵌套子表格", "code": "/**\n*\n* @title 嵌套子表格\n* @description 通过expandedRowRender参数来实现子表格\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\nimport dragColumn from \"tinper-bee/lib/dragColumn\";;\nconst DragColumnTable = dragColumn(Table);\nconst columns16 = [\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\", \n    width:200,\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert(\"这是第\" + index + \"列，内容为:\" + text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  },\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 250 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  \n];\nconst columns17 = [\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width:200,\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert(\"这是第\" + index + \"列，内容为:\" + text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  },\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  \n];\n\nconst data16 = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\n\nclass Demo16 extends Component {\n  constructor(props){\n    super(props);\n    this.state={\n      data_obj:{}\n    }\n  }\n  expandedRowRender = (record, index, indent) => {\n    let height = 42 * (this.state.data_obj[record.key].length+ 2);\n    \n    return (\n      <Table\n        columns={columns17}\n        style={{height:height}}\n        data={this.state.data_obj[record.key]} \n       \n      />\n    );\n  };\n  getData=(expanded, record)=>{\n    //当点击展开的时候才去请求数据\n    let new_obj = Object.assign({},this.state.data_obj);\n    if(expanded){\n      if(record.key==='1'){\n        new_obj[record.key] = [\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n          { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" }\n        ]\n        this.setState({\n          data_obj:new_obj\n        })\n      }else{\n        new_obj[record.key] = [\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" }\n        ]\n        this.setState({\n          data_obj:new_obj\n        })\n      }\n    }\n  }\n  haveExpandIcon=(record, index)=>{\n    //控制是否显示行展开icon，该参数只有在和expandedRowRender同时使用才生效\n    if(index == 0){\n      return true;\n    }\n    return false;\n  }\n  render() {\n    return (\n      <DragColumnTable\n        columns={columns16}\n        data={data16}\n        onExpand={this.getData}\n        expandedRowRender={this.expandedRowRender}\n        scroll={{x:true}}\n        dragborder={true} \n        draggable={true} \n        title={currentData => <div>标题: 这是一个标题</div>}\n        footer={currentData => <div>表尾: 我是小尾巴</div>}\n      />\n    );\n  }\n}\n\n\n", "desc": " 通过expandedRowRender参数来实现子表格" }, { "example": _react2['default'].createElement(Demo17, null), "title": " loading属性指定表格是否加载中", "code": "/**\n*\n* @title loading属性指定表格是否加载中\n* @description  loading可以传boolean或者obj对象，obj为bee-loading组件的参数类型\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Button } from 'tinper-bee';\n\nconst columns17 = [\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert('这是第'+index+'列，内容为:'+text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  }\n];\n\nconst data17 = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\nclass Demo17 extends Component {\n  constructor(props){\n    super(props);\n    this.state = {\n      loading : true\n    }\n  }\n  changeLoading = () => {\n    this.setState({\n      loading : !this.state.loading\n    })\n  }\n  render() {\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.changeLoading}\n        >\n          切换loading\n        </Button>\n        <Table\n          columns={columns17}\n          data={data17}\n          title={currentData => <div>标题: 这是一个标题</div>}\n          footer={currentData => <div>表尾: 我是小尾巴</div>}\n          // loading={this.state.loading}或者是boolean\n          loading={{show:this.state.loading,loadingType:\"line\"}}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": "  loading可以传boolean或者obj对象，obj为bee-loading组件的参数类型" }, { "example": _react2['default'].createElement(Demo18, null), "title": " 合并标题后的合计,且支持多字段统计", "code": "/**\n *\n * @title 合并标题后的合计,且支持多字段统计\n * @description 合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）\n *\n */\n\nimport React, { Component } from \"react\";\nimport { Table, Button } from 'tinper-bee'; \nimport sum from \"tinper-bee/lib/sum.js\";;\n \nlet ComplexTable = sum(Table);\n\nconst columns = [\n  {\n    title: \"Name\",\n    dataIndex: \"name\",\n    key: \"name\",\n    width: 100,\n    fixed: \"left\"\n  },\n  {\n    title: \"Other\",\n    children: [\n      {\n        title: \"Age\",\n        dataIndex: \"age\",\n        key: \"age\",\n        width: 200,\n        sumCol: true,\n      },\n      {\n        title: \"Address\",\n        children: [\n          {\n            title: \"Street\",\n            dataIndex: \"street\",\n            key: \"street\",\n            width: 200\n          },\n          {\n            title: \"Block\",\n            children: [\n              {\n                title: \"Building\",\n                dataIndex: \"building\",\n                key: \"building\",\n                width: 100\n              },\n              {\n                title: \"Door No.\",\n                dataIndex: \"number\",\n                key: \"number\",\n                // width: 100,\n                sumCol: true,\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  // {\n  //   title: \"Company\",\n  //   children: [\n  //     {\n  //       title: \"Company Address\",\n  //       dataIndex: \"companyAddress\",\n  //       key: \"companyAddress\",\n  //       width: 100,\n  //     },\n  //     {\n  //       title: \"Company Name\",\n  //       dataIndex: \"companyName\",\n  //       key: \"companyName\",\n  //       width: 100,\n  //     }\n  //   ]\n  // },\n  {\n    title: \"Gender\",\n    dataIndex: \"gender\",\n    key: \"gender\",\n    width: 80,\n    fixed: \"right\"\n  }\n];\n\nfunction getData(){\n  const data = [];\n  for (let i = 0; i < 5; i++) {\n    data.push({\n      key: i,\n      name: \"John Brown\"+i,\n      age: i + Math.floor(Math.random()*10),\n      street: \"Lake Park\",\n      building: \"C\",\n      number: 20 *  Math.floor(Math.random()*10),\n      companyAddress: \"Lake Street 42\",\n      companyName: \"SoftLake Co\",\n      gender: \"M\"\n    });\n  }\n  return data;\n}\n\nclass Demo18 extends Component {\n  \n  constructor(props) {\n    super(props);\n    this.state = {\n      data: getData()\n    };\n  }\n\n  changeData = ()=>{\n    this.setState({\n      data: getData()\n    });\n  }\n\n  render() {\n    const {data} = this.state;\n    return (\n      <div>\n        <Button \n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.changeData}\n        >\n          动态设置数据源\n        </Button>\n\n         <ComplexTable \n          columns={columns}\n          data={data}\n          bordered\n          // scroll={{ x: \"130%\", y: 140 }}\n        />\n      </div>\n    );\n  }\n}\n\n", "desc": " 合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）" }, { "example": _react2['default'].createElement(Demo19, null), "title": " 编辑态表格", "code": "/**\n*\n* @title 编辑态表格\n* @description 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）\n*\n*/\n\nimport React from \"react\";\nimport { Table, Select, Form, Input, Icon, Tooltip, Animate, Button } from 'tinper-bee';\nimport renderInput from \"tinper-bee/lib/InputRender.js\";;\nimport renderSelect from \"tinper-bee/lib/SelectRender.js\";;\n\nconst InputRender = renderInput(Form, Input, Icon);\nconst SelectRender = renderSelect(Select, Icon);\n\nconst Option = Select.Option;\n\nconst dataSource = [\n  {\n    key: \"boyuzhou\",\n    value: \"jack\"\n  },\n  {\n    key: \"renhualiu\",\n    value: \"lucy\"\n  },\n  {\n    key: \"yuzhao\",\n    value: \"yiminghe\"\n  }\n];\nclass Demo19 extends React.Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      dataSource: [\n        {\n          key: \"0\",\n          name: \"沉鱼\",\n          number: \"10\",\n          age: \"y\",\n          address: \"jack\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"1\",\n          name: \"落雁\",\n          number: \"100\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"2\",\n          name: \"闭月\",\n          number: \"1000\",\n          age: \"n\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        },\n        {\n          key: \"3\",\n          name: \"羞花\",\n          number: \"9999\",\n          age: \"y\",\n          address: \"lucy\",\n          datepicker: \"2017-06-12\",\n          MonthPicker: \"2017-02\"\n        }\n      ],\n      count: 4\n    };\n    this.columns = [ \n      {\n        title: \"货币输入\",\n        dataIndex: \"number\",\n        key: \"number\",\n        width: \"150px\",\n        render: (text, record, index) => (\n          <InputRender\n            format=\"Currency\"\n            name=\"name\"\n            placeholder=\"请输入姓名\"\n            value={text}\n            isclickTrigger={true}\n            check={this.check}\n            onChange={this.onInputChange(index, \"name\")}\n            isRequire={true}\n            method=\"blur\"\n            errorMessage={\n              <Tooltip overlay={\"错误提示\"}>\n                <Icon type=\"uf-exc-c\" className=\"\" />\n              </Tooltip>\n            }\n            reg={/^[0-9]+$/}\n          />\n        )\n      },\n       \n      {\n        title:(<div>下拉框的div</div>),\n        dataIndex: \"address\",\n        key: \"address\",\n        width: \"200px\",\n        render: (text, record, index) => {\n          return (\n            <SelectRender\n              dataSource={dataSource}\n              isclickTrigger={true}\n              value={text}\n              onChange={this.onSelectChange(index, \"address\")}\n              onFocus={this.handFocus}\n              onBlur={this.onBlur}\n              autofocus\n            >\n              <Option value=\"jack\">boyuzhou</Option>\n              <Option value=\"lucy\">renhualiu</Option>\n              <Option value=\"disabled\" disabled>\n                Disabled\n              </Option>\n              <Option value=\"yiminghe\">yuzhao</Option>\n            </SelectRender>\n          );\n        }\n      }\n    ];\n  }\n  check = (flag, obj) => {\n    console.log(flag);\n    console.log(obj);\n  };\n\n  handFocus = (value,e) => {\n    console.log(value+` 获取焦点事件`);\n  };\n  onBlur = (value,e) => {\n    console.log(value+` onBlur`);\n  };\n\n  onInputChange = (index, key) => {\n    return value => {\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n\n  onSelectChange = (index, key) => {\n    return value => {\n      console.log(`selected ${value}`);\n      const dataSource = [...this.state.dataSource];\n      dataSource[index][key] = value;\n      this.setState({ dataSource });\n    };\n  };\n\n  handleAdd = () => {\n    const { count, dataSource } = this.state;\n    const newData = {\n      key: count,\n      name: `凤姐 ${count}`,\n      age: 32,\n      address: \"jack\",\n      datepicker: \"2017-06-12\",\n      MonthPicker: \"2017-02\"\n    };\n    this.setState({\n      dataSource: [...dataSource, newData],\n      count: count + 1\n    });\n  };\n\n  getBodyWrapper = body => {\n    return (\n      <Animate\n        transitionName=\"move\"\n        component=\"tbody\"\n        className={body.props.className}\n      >\n        {body.props.children}\n      </Animate>\n    );\n  };\n  getData = () => {\n    console.log(this.state.dataSource);\n  };\n  render() {\n    const { dataSource } = this.state;\n    const columns = this.columns;\n    return (\n      <div>\n        <Button\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.handleAdd}\n        >\n          添加一行\n        </Button>\n        <Button\n          style={{marginLeft:\"5px\"}}\n          className=\"editable-add-btn\"\n          type=\"ghost\"\n          onClick={this.getData}\n        >\n          获取数据\n        </Button>\n        <Table\n          data={dataSource}\n          columns={columns}\n          getBodyWrapper={this.getBodyWrapper}\n        />\n      </div>\n    );\n  }\n}\n\n\n", "desc": " 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）" }, { "example": _react2['default'].createElement(Demo20, null), "title": " 简单表格选中行的背景色、表头表尾", "code": "/**\n*\n* @title 简单表格选中行的背景色、表头表尾\n* @description\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Tooltip, Button } from 'tinper-bee';\n\nconst columns = [\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width:80 , className:\"rowClassName\"},\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n];\n\nconst data = [\n  { a: \"令狐冲\", b: \"男\", c: 41, key: \"1\" },\n  { a: \"杨过叔叔的女儿黄蓉\", b: \"男\", c: 67, key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, key: \"3\" }\n];\n\nclass Demo26 extends Component {\n\n  constructor(props){\n      super(props);\n      this.state = {\n        data: data,\n        selectedRowIndex: 0\n      }\n  }\n\n  render() {\n    return (\n      <Table\n        columns={columns}\n        data={data}\n        rowClassName={(record,index,indent)=>{\n          if (this.state.selectedRowIndex == index) {\n              return 'selected';\n          } else {\n              return '';\n          }\n        }}\n        onRowClick={(record,index,indent)=>{\n          this.setState({ \n              selectedRowIndex: index\n          });\n        }}\n        title={currentData => <div>标题: 这是一个标题</div>}\n        footer={currentData => <div>表尾: 我是小尾巴</div>}\n      /> \n    );\n  }\n}\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo21, null), "title": " 根据列进行过滤", "code": "/**\n*\n* @title 根据列进行过滤\n* @description 点击表格右侧按钮，进行表格列的数据过滤。可以自定义设置显示某列，通过ifshow属性控制，默认为true都显示。afterFilter为过滤之后的回调函数\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Popover, Checkbox, Icon } from 'tinper-bee';\nimport filterColumn from \"tinper-bee/lib/filterColumn\";;\nimport sum from \"tinper-bee/lib/sum\";;\n\nconst data21 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行',e: \"操作\", key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠',e: \"操作\", key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠',e: \"操作\", key: \"3\" }\n];\n\nconst FilterColumnTable = filterColumn(Table, Popover, Icon);\n\nconst defaultProps21 = {\n  prefixCls: \"bee-table\"\n};\n\nclass Demo21 extends Component {\n  constructor(props) {\n    super(props);\n    this.state ={\n              columns21: [\n                {\n                  title: \"名字\",\n                  dataIndex: \"a\",\n                  key: \"a\"\n                  // width: 100\n                },\n                {\n                  title: \"性别\",\n                  dataIndex: \"b\",\n                  key: \"b\",\n                  // width: 100\n                },\n                {\n                  title: \"年龄\",\n                  dataIndex: \"c\",\n                  key: \"c\",\n                  ifshow:false,\n                  // width: 200,\n                  // sumCol: true,\n                  sorter: (a, b) => a.c - b.c\n                },\n                {\n                  title: \"武功级别\",\n                  dataIndex: \"d\",\n                  key: \"d\"\n                },\n                {\n                  title: \"操作\",\n                  dataIndex: \"e\",\n                  key: \"e\",\n                  render(text, record, index){\n                    return (\n                      <div  title={text} >\n                          <a href=\"#\"\n                              tooltip={text}\n                              onClick={() => {\n                                alert('这是第'+index+'列，内容为:'+text);\n                              }}\n                              // style={{\n                              //     position: 'absolute',\n                              //     top: 5,\n                              //     left: 0\n                              // }}\n                            >\n                              一些操作\n                            </a>\n                      </div>\n                    );\n                  }\n                }\n              ]};\n  }\n  afterFilter = (optData,columns)=>{\n    if(optData.key == 'b'){\n        if(optData.ifshow){\n          columns[2].ifshow = false;\n        }else{\n          columns[2].ifshow = true;\n        }\n        this.setState({\n          columns21 :columns,\n          showFilterPopover:true\n        });\n    }\n    \n  }\n \n  render() {\n    \n    return <FilterColumnTable columns={this.state.columns21} data={data21} afterFilter={this.afterFilter} showFilterPopover={this.state.showFilterPopover}/>;\n  }\n}\nDemo21.defaultProps = defaultProps21;\n\n\n", "desc": " 点击表格右侧按钮，进行表格列的数据过滤。可以自定义设置显示某列，通过ifshow属性控制，默认为true都显示。afterFilter为过滤之后的回调函数" }, { "example": _react2['default'].createElement(Demo22, null), "title": " 列的拖拽，交换表头的顺序", "code": "/**\n*\n* @title 列的拖拽，交换表头的顺序\n* @description 点击列的表头，进行左右拖拽\n*/\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee'; \nimport dragColumn from \"tinper-bee/lib/dragColumn\";;\n\n\nconst columns22 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 200\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width: 200,\n  }\n];\n\nconst data22 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\n];\n\nconst DragColumnTable = dragColumn(Table);\n\nconst defaultProps22 = {\n  prefixCls: \"bee-table\"\n};\n\nclass Demo22 extends Component {\n  constructor(props) {\n    super(props); \n  }\n \n  render() {\n    return <DragColumnTable columns={columns22} data={data22} bordered\n    \n    draggable={true} \n    />;\n  }\n}\nDemo22.defaultProps = defaultProps22;\n\n\n", "desc": " 点击列的表头，进行左右拖拽" }, { "example": _react2['default'].createElement(Demo23, null), "title": " 拖拽调整列的宽度", "code": "/**\n*\n* @title 拖拽调整列的宽度\n* @description 注：不支持tree结构的表头、合并表头的table【目前支持表头拖拽宽度、交互列一起使用】\n*/\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee'; \nimport dragColumn from \"tinper-bee/lib/dragColumn\";;\n\n\nconst columns23 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: '200',\n    fixed:'left'\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: '600'\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: '200',\n    sumCol: true,\n    sorter: (a, b) => a.c - b.c\n  }, \n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width: 500,\n  }\n];\n\nconst data23 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"31\" } , { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"21\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"11\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"32\" } , { a: \"杨过\", b: \"男\", c: 30,d:'内行', key: \"22\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', key: \"12\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', key: \"3\" }\n];\n\nconst DragColumnTable = dragColumn(Table);\n\nconst defaultProps23 = {\n  prefixCls: \"bee-table\"\n};\n\nclass Demo23 extends Component {\n  constructor(props) {\n    super(props); \n  }\n\n  render() {\n    return <DragColumnTable columns={columns23} data={data23} bordered\n    dragborder={true} \n    draggable={true} \n    scroll={{y:200}}\n    onDropBorder ={(e,width)=>{\n      console.log(width+\"--调整列宽后触发事件\",e.target);\n    }}\n    />;\n  }\n}\nDemo23.defaultProps = defaultProps23;\n\n\n", "desc": " 注：不支持tree结构的表头、合并表头的table【目前支持表头拖拽宽度、交互列一起使用】" }, { "example": _react2['default'].createElement(Demo24, null), "title": " 动态设置固、取消固定列", "code": "/**\n*\n* @title 动态设置固、取消固定列\n* @description 动态设置固、取消固定列\n* @description 动态固定列设置 一个table动态设置一个方向【fixed: \"left\"，fixed: \"right\"】。\n*\n*/\nimport React, { Component } from 'react';\nimport { Table, Dropdown, Menu, Icon } from 'tinper-bee';\n\n\nconst { Item } = Menu;\n// const columns24 = [\n//   {\n//     title: \"Full Name\",\n//     width: 100,\n//     dataIndex: \"name\",\n//     key: \"name\",\n//     fixed: \"left\",\n//   },\n//   { title: \"Age\", width: 100, dataIndex: \"age\", key: \"age\", fixed: \"left\" },\n//   { title: \"Column 1\", dataIndex: \"address\", key: \"1\"  },\n//   { title: \"Column 2\", dataIndex: \"address2\", key: \"2\" },\n//   { title: \"Column 3\", dataIndex: \"address\", key: \"3\" },\n//   { title: \"Column 4\", dataIndex: \"address\", key: \"4\" },\n//   { title: \"Column 24\", dataIndex: \"address\", key: \"24\" },\n//   { title: \"Column 6\", dataIndex: \"address\", key: \"6\" },\n//   { title: \"Column 7\", dataIndex: \"address\", key: \"7\" },\n//   { title: \"Column 8\", dataIndex: \"address\", key: \"8\" }\n// ];\n\n\nconst columns24 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100,\n    fixed: \"left\",\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100,\n    fixed: \"left\",\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 100, \n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width: 150 \n  },\n  {\n    title: \"对手\",\n    dataIndex: \"e\",\n    key: \"e\",\n    width: 100 \n  },\n  {\n    title: \"帮派\",\n    dataIndex: \"f\",\n    key: \"f\",\n    width: 100 \n  },\n  {\n    title: \"武功类型\",\n    dataIndex: \"g\",\n    key: \"g\",\n    width: 100 \n  },\n  {\n    title: \"师傅\",\n    dataIndex: \"k\",\n    key: \"k\",\n    // width: 100 \n  },\n  {\n    title: \"攻击系数\",\n    dataIndex: \"h\",\n    key: \"h\",\n    width: 100 \n  }\n];\n\n\nconst data24 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行',e:'黄荣',f:'古墓派',g:'剑术',k:'小龙女',h:'0.5', key: \"1\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'剑客',e:'自己',f:'无',g:'剑术',k:'无',h:'0.5', key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠',e:'黄荣',f:'朝廷',g:'内容',k:'外侵势力',h:'0.6', key: \"3\" }\n]; \n \nclass Demo24 extends Component {\n\n  constructor(props) {\n    super(props);\n    // let columns = [];\n    // Object.assign(columns,columns24);\n    // columns.forEach(da=>da.onHeadCellClick=this.onHeadCellClick);\n    this.state = {\n      columns:columns24\n    }\n  }\n\n  \n    onSelect = ({key,item})=>{ \n      console.log(`${key} selected`); //获取key\n      let currentObject = item.props.data; //获取选中对象的数据\n      let {columns} = this.state;\n      let fixedCols = [];\n      let nonColums = [];\n      columns.find(da=>{\n        if(da.key == key){\n          da.fixed?delete da.fixed:da.fixed = 'left';\n        }\n        da.fixed?fixedCols.push(da):nonColums.push(da);\n      });\n    \n      columns = [...fixedCols,...nonColums]\n\n      this.setState({\n        columns\n      });\n    }\n  //表头增加下拉菜单\n  renderColumnsDropdown(columns) {\n    const icon ='uf-arrow-down';\n    \n    return columns.map((originColumn,index) => {\n      let column = Object.assign({}, originColumn);\n      let menuInfo = [], title='锁定';\n      if(originColumn.fixed){\n        title = '解锁'\n      }\n      menuInfo.push({\n        info:title,\n        key:originColumn.key,\n        index:index\n      });\n      const menu = (\n        <Menu onSelect={this.onSelect} >{\n            menuInfo.map(da=>{ return <Item key={da.key} data={da} >{da.info}</Item> })\n            }\n        </Menu>)\n      column.title = (\n        <span className='title-con drop-menu'>\n          {column.title}\n          <Dropdown\n            trigger={['click']} \n            overlay={menu}\n            animation=\"slide-up\"\n          >\n           <Icon type={icon}/>\n          </Dropdown> \n          \n        </span>\n      );\n      return column;\n    });\n    \n  }\n\n  render() {\n    let {columns} = this.state;\n     columns = this.renderColumnsDropdown(columns);\n    return <div className=\"demo24\">\n            <Table columns={columns} data={data24} scroll={{ x: \"110%\", y: 240 }}/>\n          </div>;\n  }\n}\n\n", "desc": " 动态设置固、取消固定列", "scss_code": "th{\n    .drop-menu{\n        .uf{\n            font-size: 12px;\n            visibility: hidden;\n            margin-left: 15px;\n        }\n        \n    \n    }\n    &:hover{\n        .uf{\n                visibility: visible;\n        }\n    }\n\n}\n\n" }, { "example": _react2['default'].createElement(Demo25, null), "title": " 根据列进行过滤、拖拽交换列综合使用案例", "code": "/**\n* @title 根据列进行过滤、拖拽交换列综合使用案例\n* @description 新增属性【checkMinSize 当前表格显示最少列数 】 1. 当所有列都设置了width属性后，需要给table增加checkMinSize属性 2. 所有列不设置width。\n*/\n\n/**注：\n *  在使用过滤列的时候，如果每一列都设置了width属性，勾选的时候回出现重复列问题。当表格的宽度小于合计宽度的时候，就会出现此问题。 \n *  必须有个别列不设置width属性，即可避免此问题。\n */\nimport React, { Component } from 'react';\nimport { Table, Popover, Checkbox, Icon } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/multiSelect\";;\nimport filterColumn from \"tinper-bee/lib/filterColumn\";;\nimport dragColumn from \"tinper-bee/lib/dragColumn\";;\n\nimport sum from \"tinper-bee/lib/sum\";;\n\n //Cloumns1\nfunction getCloumns(){\n  const column = [\n      {\n          title: \"序号\",\n          dataIndex: \"index\",\n          key: \"index\",\n          width: 100, \n      },\n      {\n          title: \"订单编号\",\n          dataIndex: \"orderCode\",\n          key: \"orderCode\",\n          width: 100, \n      },\n      {\n          title: \"供应商名称\",\n          dataIndex: \"supplierName\",\n          key: \"supplierName\",\n          width: 100\n      },\n      {\n          title: \"类型\",\n          dataIndex: \"type_name\",\n          key: \"type_name\",\n          width: 100\n      },\n      {\n          title: \"采购组织\",\n          dataIndex: \"purchasing\",\n          key: \"purchasing\",\n          width: 100\n      },\n      {\n          title: \"采购组\",\n          dataIndex: \"purchasingGroup\",\n          key: \"purchasingGroup\",\n           width: 300\n      },\n      {\n          title: \"凭证日期\",\n          dataIndex: \"voucherDate\",\n          key: \"voucherDate\",\n          width: 100,\n          \n      },\n      {\n          title: \"审批状态\",\n          dataIndex: \"approvalState_name\",\n          key: \"approvalState_name\",\n          width: 100\n      },\n      {\n          title: \"确认状态\",\n          dataIndex: \"confirmState_name\",\n          key: \"confirmState_name\",\n           width: 100\n      }, \n      {\n          title: \"关闭状态\",\n          dataIndex: \"closeState_name\",\n          key: \"closeState_name\",\n          width: 100\n      },\n      {\n          title: \"操作\",\n          dataIndex: \"d\",\n          key: \"d\",\n          width:100,\n          fixed: \"right\",\n          render(text, record, index) {\n              return (\n                  <div className='operation-btn'>\n                    <a href=\"#\"\n                      tooltip={text}\n                      onClick={() => {\n                        alert('这是第'+index+'列，内容为:'+text);\n                      }}\n                    >\n                      一些操作\n                    </a>\n                  </div>\n              )\n          }\n      }\n  ];\n  return column;\n}\n\nconst dataList = [ \n  { \n      index: 1, \n      orderCode:\"2343\", \n      supplierName: \"xxx\",\n      type_name: \"123\",\n      purchasing:'内行', \n      purchasingGroup:\"323\",\n      voucherDate:\"kkkk\",\n      approvalState_name:\"vvvv\",\n      confirmState_name:\"aaaa\",\n      closeState_name:\"vnnnnn\",\n      d:\"操作\",\n      key: \"1\"\n  }, \n  { \n    index: 2, \n    _checked:true,\n    orderCode:\"222\", \n    supplierName: \"22xxx\",\n    type_name: \"1223\",\n    purchasing:'内行2', \n    purchasingGroup:\"3223\",\n    voucherDate:\"222kk\",\n    approvalState_name:\"22vvvv\",\n    confirmState_name:\"2aaaa\",\n    closeState_name:\"2vnnnnn\",\n    d:\"2操作\",\n    key: \"2\"\n  },\n  { \n    index: 3, \n    orderCode:\"222\", \n    supplierName: \"22xxx\",\n    _disabled:true,\n    type_name: \"1223\",\n    purchasing:'内行2', \n    purchasingGroup:\"3223\",\n    voucherDate:\"222kk\",\n    approvalState_name:\"22vvvv\",\n    confirmState_name:\"2aaaa\",\n    closeState_name:\"2vnnnnn\",\n    d:\"3操作\",\n    key: \"3\"\n  },\n  { \n    index: 4, \n    orderCode:\"222\", \n    supplierName: \"22xxx\",\n    type_name: \"1223\",\n    purchasing:'内行2', \n    purchasingGroup:\"3223\",\n    voucherDate:\"222kk\",\n    approvalState_name:\"22vvvv\",\n    confirmState_name:\"2aaaa\",\n    closeState_name:\"2vnnnnn\",\n    d:\"4操作\",\n    key: \"4\"\n  },\n]\n\nconst DragColumnTable = filterColumn(dragColumn(multiSelect(Table, Checkbox)),Popover);\n\nconst defaultProps25 = {\n  prefixCls: \"bee-table\"\n};\n\nclass Demo25 extends Component {\n  constructor(props) {\n    super(props);\n  }\n\n  getSelectedDataFunc=(data)=>{\n      console.log(\"data\",data);\n  }\n \n  getCloumnsScroll=(columns)=>{\n    let sum = 0;\n    columns.forEach((da)=>{\n        sum += da.width;\n    })\n    console.log(\"sum\",sum);\n    return (sum);\n  }\n\n  selectedRow=(record, index)=>{\n\n  }\n\n  render() {\n    let columns = getCloumns();\n    \n    return <div className=\"demo25\">\n            <DragColumnTable \n                columns={columns}\n                data={dataList} \n                getSelectedDataFunc={this.getSelectedDataFunc}\n                \n                checkMinSize={7}\n                draggable={true}\n                multiSelect={{type: \"checkbox\"}}\n                scroll={{x:true, y: 100}}\n                selectedRow={this.selectedRow}\n                // scroll={{x:this.getCloumnsScroll(columns), y: 150}}\n                />\n            </div>\n  }\n}\nDemo25.defaultProps = defaultProps25;\n\n\n", "desc": " 新增属性【checkMinSize 当前表格显示最少列数 】 1. 当所有列都设置了width属性后，需要给table增加checkMinSize属性 2. 所有列不设置width。" }, { "example": _react2['default'].createElement(Demo26, null), "title": " 按条件和值过滤", "code": "/**\n*\n* @title 按条件和值过滤\n* @description 可以根据输入项目以及判断条件对表格内的数据进行过滤\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table } from 'tinper-bee';\n\n\nconst columns26 = [\n  { title: \"姓名\", width: 180, dataIndex: \"name\", key: \"name\", filterType: \"text\", filterDropdown: \"show\" },\n  { title: \"年龄\", width: 150, dataIndex: \"age\", key: \"age\", filterType: \"dropdown\", filterDropdown: \"show\" },\n  { title: \"日期\", width: 200, dataIndex: \"date\", key: \"date\", filterType: \"date\", filterDropdown: \"show\", format: \"YYYY-MM-DD\" },\n  { title: \"居住地址\", width: 150, dataIndex: \"address\", key: \"address\", filterType: \"dropdown\", filterDropdown: \"show\" },\n  { title: \"备注\", dataIndex: \"mark\", key: \"mark\" }\n];\n\nconst data26 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-19\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  }, {\n    key: \"5\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"6\",\n    name: \"Jim Green\",\n    age: 48,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"7\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"8\",\n    name: \"Jim Green\",\n    age: 38,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  }\n];\n\nclass Demo26 extends Component {\n  handlerFilterChange = (key, val, condition) => {\n    console.log('参数：key=', key, ' value=', val, 'condition=', condition);\n  }\n\n  handlerFilterClear = (key) => {\n    console.log('清除条件', key);\n  }\n  render() {\n    return <Table\n      onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()\n      onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()\n      filterDelay={500}//输入文本多少ms触发回调函数，默认300ms\n      filterable={true}//是否开启过滤数据功能\n      bordered\n      columns={columns26}\n      data={data26} />;\n  }\n}\n\n", "desc": " 可以根据输入项目以及判断条件对表格内的数据进行过滤" }, { "example": _react2['default'].createElement(Demo27, null), "title": " 组合过滤和其他功能使用", "code": "/**\n*\n* @title 组合过滤和其他功能使用\n* @description 在过滤数据行的基础上增加列拖拽、动态菜单显示、下拉条件动态传入自定义等\n*\n*/\n\n/**\n * @description \n */\n\nimport React, { Component } from 'react';\nimport { Table, Dropdown, Menu, Icon, Checkbox } from 'tinper-bee';\nimport multiSelect from \"tinper-bee/lib/multiSelect\";;\nimport sort from \"tinper-bee/lib/sort\";;\n\n\nconst { Item } = Menu;\nconst SubMenu = Menu.SubMenu;\nconst MenuItemGroup = Menu.ItemGroup;\n\n\nconst dataList = [\n  { \"key\": \"1\", value: \"库存明细\", id: \"a\" },\n  { \"key\": \"2\", value: \"订单明细\", id: \"v\" },\n  { \"key\": \"3\", value: \"发货明细\", id: \"c\" }\n]\n\nconst data27 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-19\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  }, {\n    key: \"5\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"6\",\n    name: \"Jim Green\",\n    age: 48,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"7\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"8\",\n    name: \"Jim Green\",\n    age: 38,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  }\n];\n\n\nconst MultiSelectTable = multiSelect(Table, Checkbox);\nconst ComplexTable = sort(MultiSelectTable, Icon);\nclass Demo27 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      dropdownvalue: []\n    }\n  }\n  handlerFilterChange = (key, val, condition) => {\n    console.log('参数：key=', key, ' value=', val, 'condition=', condition);\n  }\n\n  handlerFilterClear = (key) => {\n    console.log('清除条件', key);\n  }\n  getSelectedDataFunc = data => {\n    console.log(data);\n  }\n  onClick = (item) => {\n    console.log(item);\n  }\n\n  render() {\n    const menu1 = (\n      <Menu onClick={this.onClick} style={{ width: 240 }} mode=\"vertical\" >\n        <SubMenu key=\"sub1\" title={<span><span>组织 1</span></span>}>\n          <MenuItemGroup title=\"Item 1\">\n            <Menu.Item key=\"1\">选项 1</Menu.Item>\n            <Menu.Item key=\"2\">选项 2</Menu.Item>\n          </MenuItemGroup>\n          <MenuItemGroup title=\"Iteom 2\">\n            <Menu.Item key=\"3\">选项 3</Menu.Item>\n            <Menu.Item key=\"4\">选项 4</Menu.Item>\n          </MenuItemGroup>\n        </SubMenu>\n      </Menu>)\n    let multiObj = {\n      type: \"checkbox\"\n    };\n    let columns27 = [\n      {\n        title: \"\", width: 40, dataIndex: \"key\", key: \"key\", render: (text, record, index) => {\n          return <Dropdown\n            trigger={['click']}\n            overlay={menu1}\n            animation=\"slide-up\"\n          >\n            <Icon style={{ \"visibility\": \"hidden\" }} type=\"uf-eye\" />\n          </Dropdown>\n        }\n      },\n      {\n        title: \"姓名\",\n        width: 180,\n        dataIndex: \"name\",\n        key: \"name\",\n        filterType: \"text\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"string\"//字符条件\n      },\n      {\n        title: \"年龄\",\n        width: 180,\n        dataIndex: \"age\",\n        key: \"age\",\n        filterType: \"number\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"number\"//字符条件\n      },\n      {\n        title: \"日期\",\n        width: 190,\n        dataIndex: \"date\",\n        key: \"date\",\n        filterType: \"date\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"string\"//字符条件\n      },\n      {\n        title: \"时间范围\",\n        width: 290,\n        dataIndex: \"mark\",\n        key: \"mark\",\n        filterType: \"daterange\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"number\"//字符条件\n      },\n      {\n        title: \"地址\",\n        width: 100,\n        dataIndex: \"address\",\n        key: \"address\",\n        filterType: \"dropdown\",//输入框类型\n        filterDropdown: \"show\",//显示条件\n        filterDropdownType: \"number\"//字符条件\n      }\n    ];\n    return <ComplexTable\n      onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()\n      onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()\n      filterDelay={500}//输入文本多少ms触发回调函数，默认500ms\n      filterable={true}//是否开启过滤数据功能\n      getSelectedDataFunc={this.getSelectedDataFunc}\n      bordered\n      multiSelect={multiObj}\n      columns={columns27}\n      data={data27} />;\n  }\n}\n\n", "desc": " 在过滤数据行的基础上增加列拖拽、动态菜单显示、下拉条件动态传入自定义等" }, { "example": _react2['default'].createElement(Demo28, null), "title": " 列排序,后端排序", "code": "/**\n*\n* @title 列排序,后端排序\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Icon } from 'tinper-bee';\nimport sort from \"tinper-bee/lib/sort.js\";;\nlet ComplexTable = sort(Table, Icon);\nconst columns11 = [\n  {\n    title: \"名字\",\n    dataIndex: \"a\",\n    key: \"a\",\n    width: 100\n  },\n  {\n    title: \"性别\",\n    dataIndex: \"b\",\n    key: \"b\",\n    width: 100\n  },\n  {\n    title: \"年龄\",\n    dataIndex: \"c\",\n    key: \"c\",\n    width: 200,\n    sorter: (a, b) => a.c - b.c\n  },\n  {\n    title: \"武功级别\",\n    dataIndex: \"d\",\n    key: \"d\"\n  },\n  {\n    title: \"分数\",\n    dataIndex: \"e\",\n    key: \"e\",\n    sorter: (a, b) => a.c - b.c\n  },\n];\n\nconst data11 = [\n  { a: \"杨过\", b: \"男\", c: 30,d:'内行', e:139,key: \"2\" },\n  { a: \"令狐冲\", b: \"男\", c: 41,d:'大侠', e:109, key: \"1\" },\n  { a: \"郭靖\", b: \"男\", c: 25,d:'大侠', e:159, key: \"3\" }\n];\n\nconst defaultProps = {\n  prefixCls: \"bee-table\"\n};\nclass Demo28 extends Component {\n  constructor(props) {\n    super(props);\n    this.state = {\n      sortOrder: \"\",\n      data: data11\n    };\n  }\n  /**\n   * 后端获取数据\n   */\n  sortFun = (sortParam)=>{\n    console.info(sortParam);\n    //将参数传递给后端排序\n  }\n  render() {\n    let sortObj = {\n      mode:'multiple',\n      backSource:true,\n      sortFun:this.sortFun\n    }\n    return <ComplexTable columns={columns11} data={this.state.data} sort={sortObj}/>;\n  }\n}\nDemo28.defaultProps = defaultProps;\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo29, null), "title": " 从弹出框内显示过滤行并且设置可选下拉条件", "code": "/**\n*\n* @title 从弹出框内显示过滤行并且设置可选下拉条件\n* @description 通过Modal组件来展示表格的过滤相关能力，并且通过filterDropdownIncludeKeys设置可选条件\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Table, Button, Modal } from 'tinper-bee';\n\n\nconst columns29 = [\n  {\n    title: \"姓名\",\n    width: 180,\n    dataIndex: \"name\",\n    key: \"name\",\n    filterType: \"text\",\n    filterDropdown: \"show\",\n    filterDropdownIncludeKeys: ['LIKE', 'EQ']\n  },\n  {\n    title: \"年龄\",\n    width: 170,\n    dataIndex: \"age\",\n    key: \"age\",\n    filterType: \"number\",\n    filterDropdown: \"show\",\n    filterDropdownType: \"number\",\n    filterDropdownIncludeKeys: ['EQ'],\n    filterInputNumberOptions: {\n      max: 200,\n      min: 0,\n      step: 1,\n      precision: 0\n    }\n  },\n  {\n    title: \"日期\",\n    width: 200,\n    dataIndex: \"date\",\n    key: \"date\",\n    filterType: \"date\",\n    filterDropdown: \"show\",\n    format: \"YYYY-MM-DD\"\n  }\n];\n\nconst data29 = [\n  {\n    key: \"1\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-19\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"2\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"朝阳区\",\n    mark: \"无\"\n  },\n  {\n    key: \"3\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  },\n  {\n    key: \"4\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"东城区\",\n    mark: \"无\"\n  }, {\n    key: \"5\",\n    name: \"John Brown\",\n    age: 32,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"6\",\n    name: \"Jim Green\",\n    age: 48,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"7\",\n    name: \"Jim Green\",\n    age: 40,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  },\n  {\n    key: \"8\",\n    name: \"Jim Green\",\n    age: 38,\n    date: \"2018-09-18\",\n    address: \"海淀区\",\n    mark: \"无\"\n  }\n];\n\nclass Demo29 extends Component {\n  constructor() {\n    super();\n    this.state = {\n      show: false\n    }\n    this.close = this.close.bind(this);\n    this.open = this.open.bind(this);\n  }\n  handlerFilterChange = (key, val, condition) => {\n    console.log('参数：key=', key, ' value=', val, 'condition=', condition);\n  }\n\n  handlerFilterClear = (key) => {\n    console.log('清除条件', key);\n  }\n  close() {\n    this.setState({\n      show: false\n    });\n  }\n  open() {\n    this.setState({\n      show: true\n    });\n  }\n  render() {\n    return (<div><Modal\n      show={this.state.show}\n      onHide={this.close}\n      autoFocus={false}\n      enforceFocus={false}\n    >\n      <Modal.Header closeButton>\n        <Modal.Title>过滤行</Modal.Title>\n      </Modal.Header>\n      <Modal.Body>\n        <Table\n          onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()\n          onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()\n          filterDelay={500}//输入文本多少ms触发回调函数，默认300ms\n          filterable={true}//是否开启过滤数据功能\n          bordered\n          columns={columns29}\n          data={data29} />\n      </Modal.Body>\n    </Modal>\n      <Button colors=\"primary\" onClick={this.open}>显示表格</Button>\n    </div>)\n  }\n}\n\n", "desc": " 通过Modal组件来展示表格的过滤相关能力，并且通过filterDropdownIncludeKeys设置可选条件" }, { "example": _react2['default'].createElement(Demo30, null), "title": " 大数据加载", "code": "/**\n*\n* @title 大数据加载\n* 【Tooltip】\n* @description\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Tooltip } from 'tinper-bee';\nimport BigData from \"tinper-bee/lib/bigData\";;\nconst BigDataTable = BigData(Table);\nconst columns = [\n    {\n        title:'序号',\n        dataIndex:'index',\n        width:'50',\n        render:(text,record,index)=>{\n            return index\n        }\n    },\n    {\n    title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 580, className: \"rowClassName\",\n    render: (text, record, index) => {\n      return (\n        <Tooltip inverse overlay={text}>\n          <span tootip={text} style={{\n            display: \"inline-block\",\n            width: \"80px\",\n            textOverflow: \"ellipsis\",\n            overflow: \"hidden\",\n            whiteSpace: \"nowrap\",\n            verticalAlign: \"middle\",\n          }}>{text}</span>\n        </Tooltip>\n      );\n    }\n  },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 80},\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 }\n\n];\n\nconst data = [ ...new Array(10000) ].map((e, i) => {\n    const rs = { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };\n    if(i%3==0){\n        rs.b = '女';\n    }\n    return rs;\n   })\n\n\nclass Demo30 extends Component {\n\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: data,\n      selectedRowIndex: 0\n    }\n  }\n\n  render() {\n    return (\n        <BigDataTable\n          columns={columns}\n          data={data}\n          scroll={{y:300}}\n          height={40}\n          onRowClick={(record, index, indent) => {\n            console.log('currentIndex--'+index);\n          }}\n        />\n\n     \n    );\n  }\n}\n\n", "desc": "", "scss_code": ".big-data tr td {\n    // height: 48px;\n}" }, { "example": _react2['default'].createElement(Demo31, null), "title": " 含有嵌套子表格的大数据场景", "code": "/**\n*\n* @title 含有嵌套子表格的大数据场景\n* @description 通过expandedRowRender参数来实现子表格\n*\n*/\n\nimport React, { Component } from \"react\";\nimport { Table } from 'tinper-bee';\nimport BigData from \"tinper-bee/lib/bigData\";;\nconst BigDataTable = BigData(Table);\nconst outColumns = [\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\", \n    width:200,\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert(\"这是第\" + index + \"列，内容为:\" + text);\n          }}\n        >\n          一些操作\n        </a>\n      );\n    }\n  },\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 250 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  \n];\nconst innerColumns = [\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    width:200,\n    render(text, record, index) {\n      return (\n        <a\n          href=\"#\"\n          onClick={() => {\n            alert(\"这是第\" + index + \"列，内容为:\" + text);\n          }}\n        >\n          {'一些操作'+index}\n        </a>\n      );\n    }\n  },\n  { title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 100 },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 },\n  \n];\n\nconst data16 = [ ...new Array(10000) ].map((e, i) => {\n    return { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };\n   })\n\n\n\n\n\nclass Demo31 extends Component {\n  constructor(props){\n    super(props);\n    this.state={\n      data_obj:{\n        0:[\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n          { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" }\n        ],\n        1: [\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n          { a: \"菲菲\", b: \"nv\", c: 67, d: \"操作\", key: \"2\" }\n        ],\n      }\n    }\n  }\n  expandedRowRender = (record, index, indent) => {\n    let height = 200;\n    let innderData = [ ...new Array(100) ].map((e, i) => {\n      return { a: index+\"-\"+ i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key:  index+\"-\"+ i };\n     })\n    return (\n      <Table\n        \n        columns={innerColumns}\n        scroll={{y:height}}\n        data={innderData} \n\n      />\n    );\n  };\n  getData=(expanded, record)=>{\n    //当点击展开的时候才去请求数据\n    let new_obj = Object.assign({},this.state.data_obj);\n    if(expanded){\n      if(record.key==='1'){\n        new_obj[record.key] = [\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n          { a: \"杨过\", b: \"男\", c: 67, d: \"操作\", key: \"2\" }\n        ]\n        this.setState({\n          data_obj:new_obj\n        })\n      }else{\n        new_obj[record.key] = [\n          { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n          { a: \"菲菲\", b: \"nv\", c: 67, d: \"操作\", key: \"2\" }\n        ]\n        this.setState({\n          data_obj:new_obj\n        })\n      }\n    }\n  }\n  haveExpandIcon=(record, index)=>{\n    //控制是否显示行展开icon，该参数只有在和expandedRowRender同时使用才生效\n    if(index == 0){\n      return true;\n    }\n    return false;\n  }\n  render() {\n    return (\n      <BigDataTable\n        columns={outColumns}\n        data={data16}\n        onExpand={this.getData}\n        expandedRowRender={this.expandedRowRender}\n        scroll={{y:350}}\n        // defaultExpandedRowKeys={[0,1]}\n        title={currentData => <div>标题: 这是一个标题</div>}\n        footer={currentData => <div>表尾: 我是小尾巴</div>}\n      />\n    );\n  }\n}\n\n\n", "desc": " 通过expandedRowRender参数来实现子表格" }, { "example": _react2['default'].createElement(Demo32, null), "title": " 大数据加载下的复杂Table", "code": "/**\n*\n* @title 大数据加载下的复杂Table\n*\n* @description\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Popover, Icon, Checkbox, Tooltip } from 'tinper-bee';\nimport BigData from \"tinper-bee/lib/bigData\";;\nimport multiSelect from \"tinper-bee/lib/multiSelect\";;\nimport filterColumn from \"tinper-bee/lib/filterColumn\";;\n\nlet  ComplexTable = filterColumn(multiSelect(BigData(Table), Checkbox), Popover, Icon);\n\nconst columns = [\n    {\n        title:'序号',\n        dataIndex:'index',\n        width:'50',\n        render:(text,record,index)=>{\n            return index\n        }\n    },\n    {\n    title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 580, className: \"rowClassName\",\n    render: (text, record, index) => {\n      return (\n        <Tooltip inverse overlay={text}>\n          <span tootip={text} style={{\n            display: \"inline-block\",\n            width: \"80px\",\n            textOverflow: \"ellipsis\",\n            overflow: \"hidden\",\n            whiteSpace: \"nowrap\",\n            verticalAlign: \"middle\",\n          }}>{text}</span>\n        </Tooltip>\n      );\n    }\n  },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 80},\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 }\n];\n\nconst data = [ ...new Array(10000) ].map((e, i) => {\n    const rs = { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };\n    if(i%3==0){\n        rs.b = '女';\n    }\n    return rs;\n   })\n\n\nclass Demo32 extends Component {\n\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: data,\n      selectedRowIndex: 0\n    }\n  }\n  getSelectedDataFunc = data => {\n    console.log(data);\n  };\n\n  render() {\n    return (\n        <ComplexTable\n          columns={columns}\n          data={data}\n          parentNodeId='parent'\n          scroll={{y:300}}\n          height={40}\n          bordered\n          onRowClick={(record, index, indent) => {\n            this.setState({\n              selectedRowIndex: index\n            });\n          }}\n          getSelectedDataFunc={this.getSelectedDataFunc}/>\n\n    );\n  }\n}\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo34, null), "title": " 树状结构的大数据场景", "code": "/**\n*\n* @title 树状结构的大数据场景\n* 【Tooltip】\n* @description\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Tooltip } from 'tinper-bee';\nimport BigData from \"tinper-bee/lib/bigData\";;\nconst BigDataTable = BigData(Table);\nconst columns = [\n    {\n        title:'序号',\n        dataIndex:'index',\n        width:'150',\n        render:(text,record,index)=>{\n            return index\n        }\n    },\n    {\n    title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 580, className: \"rowClassName\",\n    render: (text, record, index) => {\n      return (\n        <Tooltip inverse overlay={text}>\n          <span tootip={text} style={{\n            display: \"inline-block\",\n            width: \"80px\",\n            textOverflow: \"ellipsis\",\n            overflow: \"hidden\",\n            whiteSpace: \"nowrap\",\n            verticalAlign: \"middle\",\n          }}>{text}</span>\n        </Tooltip>\n      );\n    }\n  },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 80},\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 200 }\n];\n\nconst data = [ ...new Array(1000) ].map((e, i) => {\n    const rs = { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };\n    if(i%3==0){\n        rs.b = '女';\n        rs.children = [];\n        for(let subi=0;subi<3;subi++){\n          rs.children.push({a: i +subi + 'asub', b: i +subi + 'bsub', c: i + subi +'csub', d: i + subi +'dsub', key: i+ `${subi} sub`});\n        }\n    }else{\n      rs.children = [];\n        for(let subi=0;subi<3;subi++){\n          rs.children.push({a: i +subi + 'asub', b: i +subi + 'bsub', c: i + subi +'csub', d: i + subi +'dsub', key: i+ `${subi} sub`});\n        }\n    }\n    return rs;\n   })\n\n\nclass Demo30 extends Component {\n\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: data,\n      selectedRowIndex: 0\n    }\n  }\n  onExpandedRowsChange = (params)=>{\n    console.log(params);\n  }\n  onExpand = (expandKeys)=>{\n    console.log('expand---'+expandKeys);\n  }\n  render() {\n    return (\n        <BigDataTable\n          columns={columns}\n          data={data}\n          parentNodeId='parent'\n          scroll={{y:300}}\n          height={40}\n          onRowClick={(record, index, indent) => {\n            console.log('currentIndex--'+index);\n          }}\n        />\n\n     \n    );\n  }\n}\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo35, null), "title": " hover呼出菜单栏", "code": "/**\n*\n* @title hover呼出菜单栏\n* @description\n*/\n\nimport React, { Component } from \"react\";\nimport { Table, Tooltip, Button } from 'tinper-bee';\n\nconst columns = [\n  {\n    title: \"用户名\", dataIndex: \"a\", key: \"a\", width: 80, className: \"rowClassName\",\n    fixed:'left',\n    render: (text, record, index) => {\n      return (\n        <Tooltip inverse overlay={text}>\n          <span tootip={text} style={{\n            display: \"inline-block\",\n            width: \"60px\",\n            textOverflow: \"ellipsis\",\n            overflow: \"hidden\",\n            whiteSpace: \"nowrap\",\n            verticalAlign: \"middle\",\n          }}>{text}</span>\n        </Tooltip>\n      );\n    }\n  },\n  { id: \"123\", title: \"性别\", dataIndex: \"b\", key: \"b\", width: 100 },\n  { title: \"年龄\", dataIndex: \"c\", key: \"c\", width: 300 },\n  {\n    title: \"操作\",\n    dataIndex: \"d\",\n    key: \"d\",\n    render(text, record, index) {\n      return (\n        <div style={{ position: 'relative' }} title={text} >\n          <a\n            href=\"javascript:;\"\n            tooltip={text}\n            onClick={() => {\n              alert('这是第' + index + '列，内容为:' + text);\n            }}\n          >\n            一些操作\n              </a>\n        </div>\n      );\n    }\n  }\n];\n\nconst data = [\n  { a: \"令狐冲\", b: \"男\", c: 41, d: \"操作\", key: \"1\" },\n  { a: \"杨过叔叔的女儿黄蓉\", b: \"男\", c: 67, d: \"操作\", key: \"2\" },\n  { a: \"郭靖\", b: \"男\", c: 25, d: \"操作\", key: \"3\" }\n];\n\nclass Demo35 extends Component {\n\n  constructor(props) {\n    super(props);\n    this.state = {\n      data: data,\n      selectedRowIndex: 0\n    }\n  }\n\n  delFun=()=>{\n  //  console.log('click'+this.currentIndex);\n  let {data} = this.state;\n  data.splice(this.currentIndex,1);\n  this.setState({\n    data\n  });\n }\n onRowHover=(index,record)=>{\n  this.currentIndex = index;\n  this.currentRecord = record;\n }\n  getHoverContent=()=>{\n    return <div className=\"opt-btns\"><button  onClick={this.delFun}>删除</button> </div>\n  }\n  render() {\n    return (\n        \n        <Table\n          columns={columns}\n          data={data}\n          parentNodeId='parent'\n          height={43}\n          headerHeight={42}\n          hoverContent={this.getHoverContent}\n          onRowHover={this.onRowHover}\n          onRowClick={(record, index, indent) => {\n            this.setState({\n              selectedRowIndex: index\n            });\n          }}\n        />\n\n     \n    );\n  }\n}\n\n\n", "desc": "", "scss_code": ".opt-btns{\n    button{\n      background: #505F79 ;\n      height: 26px;\n      color:#FFFFFF;\n      line-height: 26px;\n    }\n  }" }];
 	
 	var Demo = function (_Component) {
 	    _inherits(Demo, _Component);
@@ -5584,6 +5580,16 @@
 	  var documentWidth = documentElement.scrollWidth;
 	  var documentHeight = documentElement.scrollHeight;
 	
+	  // scrollXXX on html is sync with body which means overflow: hidden on body gets wrong scrollXXX.
+	  // We should cut this ourself.
+	  var bodyStyle = getComputedStyle(body);
+	  if (bodyStyle.overflowX === 'hidden') {
+	    documentWidth = win.innerWidth;
+	  }
+	  if (bodyStyle.overflowY === 'hidden') {
+	    documentHeight = win.innerHeight;
+	  }
+	
 	  // Reset element position after calculate the visible area
 	  if (element.style) {
 	    element.style.position = originalPosition;
@@ -10907,8 +10913,8 @@
 	'use strict';
 	
 	var Table = __webpack_require__(110);
-	var Column = __webpack_require__(506);
-	var ColumnGroup = __webpack_require__(507);
+	var Column = __webpack_require__(486);
+	var ColumnGroup = __webpack_require__(487);
 	
 	Table.Column = Column;
 	Table.ColumnGroup = ColumnGroup;
@@ -10957,15 +10963,15 @@
 	
 	var _addEventListener2 = _interopRequireDefault(_addEventListener);
 	
-	var _ColumnManager = __webpack_require__(505);
+	var _ColumnManager = __webpack_require__(485);
 	
 	var _ColumnManager2 = _interopRequireDefault(_ColumnManager);
 	
-	var _createStore = __webpack_require__(508);
+	var _createStore = __webpack_require__(488);
 	
 	var _createStore2 = _interopRequireDefault(_createStore);
 	
-	var _beeLoading = __webpack_require__(509);
+	var _beeLoading = __webpack_require__(489);
 	
 	var _beeLoading2 = _interopRequireDefault(_beeLoading);
 	
@@ -11249,6 +11255,8 @@
 	    if (prevProps.data.length === 0 || this.props.data.length === 0) {
 	      this.resetScrollX();
 	    }
+	    // 是否传入 scroll中的y属性，如果传入判断是否是整数，如果是则进行比较 。bodyTable 的clientHeight进行判断
+	    this.isShowScrollY();
 	  };
 	
 	  Table.prototype.componentWillUnmount = function componentWillUnmount() {
@@ -11294,6 +11302,22 @@
 	    } else {
 	      this.contentWidth = this.computeWidth;
 	      this.setState({ contentWidthDiff: 0, lastShowIndex: lastShowIndex }); //重新渲染，为了显示滚动条
+	    }
+	  };
+	  //根据内容动态的判断是否显示纵向滚动条
+	
+	
+	  Table.prototype.isShowScrollY = function isShowScrollY() {
+	    var props = this.props;
+	    var y = props.scroll && props.scroll.y;
+	    if (y) {
+	      var bodyH = this.refs.bodyTable.clientHeight;
+	      var bodyContentH = this.refs.bodyTable.querySelector('table').clientHeight;
+	      console.log(bodyH, bodyContentH);
+	      if (bodyContentH <= bodyH) {
+	        this.refs.bodyTable.style.overflowY = 'auto';
+	        this.refs.headTable.style.overflowY = 'auto';
+	      }
 	    }
 	  };
 	
@@ -14852,15 +14876,15 @@
 	
 	var _beeSelect2 = _interopRequireDefault(_beeSelect);
 	
-	var _beeInputNumber = __webpack_require__(294);
+	var _beeInputNumber = __webpack_require__(289);
 	
 	var _beeInputNumber2 = _interopRequireDefault(_beeInputNumber);
 	
-	var _beeDatepicker = __webpack_require__(301);
+	var _beeDatepicker = __webpack_require__(296);
 	
 	var _beeDatepicker2 = _interopRequireDefault(_beeDatepicker);
 	
-	var _FilterDropDown = __webpack_require__(484);
+	var _FilterDropDown = __webpack_require__(464);
 	
 	var _FilterDropDown2 = _interopRequireDefault(_FilterDropDown);
 	
@@ -15697,13 +15721,13 @@
 	
 	var _Select2 = _interopRequireDefault(_Select);
 	
-	var _Option = __webpack_require__(280);
+	var _Option = __webpack_require__(275);
 	
 	var _Option2 = _interopRequireDefault(_Option);
 	
-	var _PropTypes = __webpack_require__(292);
+	var _PropTypes = __webpack_require__(287);
 	
-	var _OptGroup = __webpack_require__(293);
+	var _OptGroup = __webpack_require__(288);
 	
 	var _OptGroup2 = _interopRequireDefault(_OptGroup);
 	
@@ -15740,11 +15764,11 @@
 	
 	var _RcSelect2 = _interopRequireDefault(_RcSelect);
 	
-	var _Option = __webpack_require__(280);
+	var _Option = __webpack_require__(275);
 	
 	var _Option2 = _interopRequireDefault(_Option);
 	
-	var _OptGroup = __webpack_require__(293);
+	var _OptGroup = __webpack_require__(288);
 	
 	var _OptGroup2 = _interopRequireDefault(_OptGroup);
 	
@@ -15934,17 +15958,17 @@
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
-	var _Option = __webpack_require__(280);
+	var _Option = __webpack_require__(275);
 	
 	var _Option2 = _interopRequireDefault(_Option);
 	
-	var _util = __webpack_require__(281);
+	var _util = __webpack_require__(276);
 	
-	var _SelectTrigger = __webpack_require__(282);
+	var _SelectTrigger = __webpack_require__(277);
 	
 	var _SelectTrigger2 = _interopRequireDefault(_SelectTrigger);
 	
-	var _PropTypes = __webpack_require__(292);
+	var _PropTypes = __webpack_require__(287);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -17571,15 +17595,15 @@
 	
 	var _SubMenu2 = _interopRequireDefault(_SubMenu);
 	
-	var _MenuItem = __webpack_require__(274);
+	var _MenuItem = __webpack_require__(269);
 	
 	var _MenuItem2 = _interopRequireDefault(_MenuItem);
 	
-	var _MenuItemGroup = __webpack_require__(278);
+	var _MenuItemGroup = __webpack_require__(273);
 	
 	var _MenuItemGroup2 = _interopRequireDefault(_MenuItemGroup);
 	
-	var _Divider = __webpack_require__(279);
+	var _Divider = __webpack_require__(274);
 	
 	var _Divider2 = _interopRequireDefault(_Divider);
 	
@@ -18015,7 +18039,7 @@
 /* 150 */
 /***/ (function(module, exports) {
 
-	var core = module.exports = { version: '2.6.4' };
+	var core = module.exports = { version: '2.6.5' };
 	if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 
@@ -19898,7 +19922,7 @@
 /* 233 */
 /***/ (function(module, exports) {
 
-	/** @license React v16.8.1
+	/** @license React v16.8.3
 	 * react-is.production.min.js
 	 *
 	 * Copyright (c) Facebook, Inc. and its affiliates.
@@ -19919,7 +19943,7 @@
 /* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {/** @license React v16.8.1
+	/* WEBPACK VAR INJECTION */(function(process) {/** @license React v16.8.3
 	 * react-is.development.js
 	 *
 	 * Copyright (c) Facebook, Inc. and its affiliates.
@@ -21367,7 +21391,7 @@
 	
 	// Fix ssr
 	if (canUseDOM) {
-	  __webpack_require__(273);
+	  __webpack_require__(268);
 	}
 	
 	var DOMWrap = function (_React$Component) {
@@ -22685,11 +22709,11 @@
 	
 	var _SubPopupMenu2 = _interopRequireDefault(_SubPopupMenu);
 	
-	var _placements = __webpack_require__(272);
+	var _placements = __webpack_require__(267);
 	
 	var _placements2 = _interopRequireDefault(_placements);
 	
-	var _rcAnimate = __webpack_require__(261);
+	var _rcAnimate = __webpack_require__(258);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
@@ -23284,13 +23308,23 @@
 
 	'use strict';
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	exports.__esModule = true;
 	
 	var _extends2 = __webpack_require__(144);
 	
 	var _extends3 = _interopRequireDefault(_extends2);
+	
+	var _classCallCheck2 = __webpack_require__(184);
+	
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+	
+	var _possibleConstructorReturn2 = __webpack_require__(185);
+	
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+	
+	var _inherits2 = __webpack_require__(219);
+	
+	var _inherits3 = _interopRequireDefault(_inherits2);
 	
 	var _react = __webpack_require__(4);
 	
@@ -23302,27 +23336,31 @@
 	
 	var _reactDom = __webpack_require__(12);
 	
-	var _createReactClass = __webpack_require__(245);
-	
-	var _createReactClass2 = _interopRequireDefault(_createReactClass);
-	
-	var _contains = __webpack_require__(251);
+	var _contains = __webpack_require__(245);
 	
 	var _contains2 = _interopRequireDefault(_contains);
 	
-	var _addEventListener = __webpack_require__(252);
+	var _addEventListener = __webpack_require__(246);
 	
 	var _addEventListener2 = _interopRequireDefault(_addEventListener);
 	
-	var _Popup = __webpack_require__(253);
+	var _ContainerRender = __webpack_require__(247);
+	
+	var _ContainerRender2 = _interopRequireDefault(_ContainerRender);
+	
+	var _Portal = __webpack_require__(252);
+	
+	var _Portal2 = _interopRequireDefault(_Portal);
+	
+	var _classnames = __webpack_require__(3);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	var _utils = __webpack_require__(253);
+	
+	var _Popup = __webpack_require__(254);
 	
 	var _Popup2 = _interopRequireDefault(_Popup);
-	
-	var _utils = __webpack_require__(270);
-	
-	var _getContainerRenderMixin = __webpack_require__(271);
-	
-	var _getContainerRenderMixin2 = _interopRequireDefault(_getContainerRenderMixin);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -23336,118 +23374,66 @@
 	  return window.document;
 	}
 	
-	var isMobile = typeof navigator !== 'undefined' && !!navigator.userAgent.match(/(Android|iPhone|iPad|iPod|iOS|UCWEB)/i);
+	var ALL_HANDLERS = ['onClick', 'onMouseDown', 'onTouchStart', 'onMouseEnter', 'onMouseLeave', 'onFocus', 'onBlur', 'onContextMenu'];
 	
-	var ALL_HANDLERS = ['onClick', 'onMouseDown', 'onTouchStart', 'onMouseEnter', 'onMouseLeave', 'onFocus', 'onBlur'];
+	var IS_REACT_16 = !!_reactDom.createPortal;
 	
-	var Trigger = (0, _createReactClass2['default'])({
-	  displayName: 'Trigger',
-	  propTypes: {
-	    children: _propTypes2['default'].any,
-	    action: _propTypes2['default'].oneOfType([_propTypes2['default'].string, _propTypes2['default'].arrayOf(_propTypes2['default'].string)]),
-	    showAction: _propTypes2['default'].any,
-	    hideAction: _propTypes2['default'].any,
-	    getPopupClassNameFromAlign: _propTypes2['default'].any,
-	    onPopupVisibleChange: _propTypes2['default'].func,
-	    afterPopupVisibleChange: _propTypes2['default'].func,
-	    popup: _propTypes2['default'].oneOfType([_propTypes2['default'].node, _propTypes2['default'].func]).isRequired,
-	    popupStyle: _propTypes2['default'].object,
-	    prefixCls: _propTypes2['default'].string,
-	    popupClassName: _propTypes2['default'].string,
-	    popupPlacement: _propTypes2['default'].string,
-	    builtinPlacements: _propTypes2['default'].object,
-	    popupTransitionName: _propTypes2['default'].oneOfType([_propTypes2['default'].string, _propTypes2['default'].object]),
-	    popupAnimation: _propTypes2['default'].any,
-	    mouseEnterDelay: _propTypes2['default'].number,
-	    mouseLeaveDelay: _propTypes2['default'].number,
-	    zIndex: _propTypes2['default'].number,
-	    focusDelay: _propTypes2['default'].number,
-	    blurDelay: _propTypes2['default'].number,
-	    getPopupContainer: _propTypes2['default'].func,
-	    getDocument: _propTypes2['default'].func,
-	    destroyPopupOnHide: _propTypes2['default'].bool,
-	    mask: _propTypes2['default'].bool,
-	    maskClosable: _propTypes2['default'].bool,
-	    onPopupAlign: _propTypes2['default'].func,
-	    popupAlign: _propTypes2['default'].object,
-	    popupVisible: _propTypes2['default'].bool,
-	    maskTransitionName: _propTypes2['default'].oneOfType([_propTypes2['default'].string, _propTypes2['default'].object]),
-	    maskAnimation: _propTypes2['default'].string
-	  },
+	var contextTypes = {
+	  rcTrigger: _propTypes2['default'].shape({
+	    onPopupMouseDown: _propTypes2['default'].func
+	  })
+	};
 	
-	  mixins: [(0, _getContainerRenderMixin2['default'])({
-	    autoMount: false,
+	var Trigger = function (_React$Component) {
+	  (0, _inherits3['default'])(Trigger, _React$Component);
 	
-	    isVisible: function isVisible(instance) {
-	      return instance.state.popupVisible;
-	    },
-	    getContainer: function getContainer(instance) {
-	      var props = instance.props;
+	  function Trigger(props) {
+	    (0, _classCallCheck3['default'])(this, Trigger);
 	
-	      var popupContainer = document.createElement('div');
-	      // Make sure default popup container will never cause scrollbar appearing
-	      // https://github.com/react-component/trigger/issues/41
-	      popupContainer.style.position = 'absolute';
-	      popupContainer.style.top = '0';
-	      popupContainer.style.left = '0';
-	      popupContainer.style.width = '100%';
-	      var mountNode = props.getPopupContainer ? props.getPopupContainer((0, _reactDom.findDOMNode)(instance)) : props.getDocument().body;
-	      mountNode.appendChild(popupContainer);
-	      return popupContainer;
-	    }
-	  })],
+	    var _this = (0, _possibleConstructorReturn3['default'])(this, _React$Component.call(this, props));
 	
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      prefixCls: 'rc-trigger-popup',
-	      getPopupClassNameFromAlign: returnEmptyString,
-	      getDocument: returnDocument,
-	      onPopupVisibleChange: noop,
-	      afterPopupVisibleChange: noop,
-	      onPopupAlign: noop,
-	      popupClassName: '',
-	      mouseEnterDelay: 0,
-	      mouseLeaveDelay: 0.1,
-	      focusDelay: 0,
-	      blurDelay: 0.15,
-	      popupStyle: {},
-	      destroyPopupOnHide: false,
-	      popupAlign: {},
-	      defaultPopupVisible: false,
-	      mask: false,
-	      maskClosable: true,
-	      action: [],
-	      showAction: [],
-	      hideAction: []
-	    };
-	  },
-	  getInitialState: function getInitialState() {
-	    var props = this.props;
+	    _initialiseProps.call(_this);
+	
 	    var popupVisible = void 0;
 	    if ('popupVisible' in props) {
 	      popupVisible = !!props.popupVisible;
 	    } else {
 	      popupVisible = !!props.defaultPopupVisible;
 	    }
-	    return {
+	
+	    _this.prevPopupVisible = popupVisible;
+	
+	    _this.state = {
 	      popupVisible: popupVisible
 	    };
-	  },
-	  componentWillMount: function componentWillMount() {
-	    var _this = this;
+	    return _this;
+	  }
+	
+	  Trigger.prototype.getChildContext = function getChildContext() {
+	    return {
+	      rcTrigger: {
+	        onPopupMouseDown: this.onPopupMouseDown
+	      }
+	    };
+	  };
+	
+	  Trigger.prototype.componentWillMount = function componentWillMount() {
+	    var _this2 = this;
 	
 	    ALL_HANDLERS.forEach(function (h) {
-	      _this['fire' + h] = function (e) {
-	        _this.fireEvents(h, e);
+	      _this2['fire' + h] = function (e) {
+	        _this2.fireEvents(h, e);
 	      };
 	    });
-	  },
-	  componentDidMount: function componentDidMount() {
+	  };
+	
+	  Trigger.prototype.componentDidMount = function componentDidMount() {
 	    this.componentDidUpdate({}, {
 	      popupVisible: this.state.popupVisible
 	    });
-	  },
-	  componentWillReceiveProps: function componentWillReceiveProps(_ref) {
+	  };
+	
+	  Trigger.prototype.componentWillReceiveProps = function componentWillReceiveProps(_ref) {
 	    var popupVisible = _ref.popupVisible;
 	
 	    if (popupVisible !== undefined) {
@@ -23455,148 +23441,67 @@
 	        popupVisible: popupVisible
 	      });
 	    }
-	  },
-	  componentDidUpdate: function componentDidUpdate(_, prevState) {
+	  };
+	
+	  Trigger.prototype.componentDidUpdate = function componentDidUpdate(_, prevState) {
 	    var props = this.props;
 	    var state = this.state;
-	    this.renderComponent(null, function () {
+	    var triggerAfterPopupVisibleChange = function triggerAfterPopupVisibleChange() {
 	      if (prevState.popupVisible !== state.popupVisible) {
 	        props.afterPopupVisibleChange(state.popupVisible);
 	      }
-	    });
+	    };
+	    if (!IS_REACT_16) {
+	      this.renderComponent(null, triggerAfterPopupVisibleChange);
+	    }
 	
-	    // We must listen to `mousedown`, edge case:
+	    this.prevPopupVisible = prevState.popupVisible;
+	
+	    // We must listen to `mousedown` or `touchstart`, edge case:
 	    // https://github.com/ant-design/ant-design/issues/5804
 	    // https://github.com/react-component/calendar/issues/250
 	    // https://github.com/react-component/trigger/issues/50
 	    if (state.popupVisible) {
 	      var currentDocument = void 0;
-	      if (!this.clickOutsideHandler && this.isClickToHide()) {
+	      if (!this.clickOutsideHandler && (this.isClickToHide() || this.isContextMenuToShow())) {
 	        currentDocument = props.getDocument();
 	        this.clickOutsideHandler = (0, _addEventListener2['default'])(currentDocument, 'mousedown', this.onDocumentClick);
 	      }
 	      // always hide on mobile
-	      // `isMobile` fix: mask clicked will cause below element events triggered
-	      // https://github.com/ant-design/ant-design-mobile/issues/1909
-	      // https://github.com/ant-design/ant-design-mobile/issues/1928
-	      if (!this.touchOutsideHandler && isMobile) {
+	      if (!this.touchOutsideHandler) {
 	        currentDocument = currentDocument || props.getDocument();
-	        this.touchOutsideHandler = (0, _addEventListener2['default'])(currentDocument, 'click', this.onDocumentClick);
+	        this.touchOutsideHandler = (0, _addEventListener2['default'])(currentDocument, 'touchstart', this.onDocumentClick);
+	      }
+	      // close popup when trigger type contains 'onContextMenu' and document is scrolling.
+	      if (!this.contextMenuOutsideHandler1 && this.isContextMenuToShow()) {
+	        currentDocument = currentDocument || props.getDocument();
+	        this.contextMenuOutsideHandler1 = (0, _addEventListener2['default'])(currentDocument, 'scroll', this.onContextMenuClose);
+	      }
+	      // close popup when trigger type contains 'onContextMenu' and window is blur.
+	      if (!this.contextMenuOutsideHandler2 && this.isContextMenuToShow()) {
+	        this.contextMenuOutsideHandler2 = (0, _addEventListener2['default'])(window, 'blur', this.onContextMenuClose);
 	      }
 	      return;
 	    }
 	
 	    this.clearOutsideHandler();
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
+	  };
+	
+	  Trigger.prototype.componentWillUnmount = function componentWillUnmount() {
 	    this.clearDelayTimer();
 	    this.clearOutsideHandler();
-	  },
-	  onMouseEnter: function onMouseEnter(e) {
-	    this.fireEvents('onMouseEnter', e);
-	    this.delaySetPopupVisible(true, this.props.mouseEnterDelay);
-	  },
-	  onMouseLeave: function onMouseLeave(e) {
-	    this.fireEvents('onMouseLeave', e);
-	    this.delaySetPopupVisible(false, this.props.mouseLeaveDelay);
-	  },
-	  onPopupMouseEnter: function onPopupMouseEnter() {
-	    this.clearDelayTimer();
-	  },
-	  onPopupMouseLeave: function onPopupMouseLeave(e) {
-	    // https://github.com/react-component/trigger/pull/13
-	    // react bug?
-	    if (e.relatedTarget && !e.relatedTarget.setTimeout && this._component && this._component.getPopupDomNode && (0, _contains2['default'])(this._component.getPopupDomNode(), e.relatedTarget)) {
-	      return;
-	    }
-	    this.delaySetPopupVisible(false, this.props.mouseLeaveDelay);
-	  },
-	  onFocus: function onFocus(e) {
-	    this.fireEvents('onFocus', e);
-	    // incase focusin and focusout
-	    this.clearDelayTimer();
-	    if (this.isFocusToShow()) {
-	      this.focusTime = Date.now();
-	      this.delaySetPopupVisible(true, this.props.focusDelay);
-	    }
-	  },
-	  onMouseDown: function onMouseDown(e) {
-	    this.fireEvents('onMouseDown', e);
-	    this.preClickTime = Date.now();
-	  },
-	  onTouchStart: function onTouchStart(e) {
-	    this.fireEvents('onTouchStart', e);
-	    this.preTouchTime = Date.now();
-	  },
-	  onBlur: function onBlur(e) {
-	    this.fireEvents('onBlur', e);
-	    this.clearDelayTimer();
-	    if (this.isBlurToHide()) {
-	      this.delaySetPopupVisible(false, this.props.blurDelay);
-	    }
-	  },
-	  onClick: function onClick(event) {
-	    this.fireEvents('onClick', event);
-	    // focus will trigger click
-	    if (this.focusTime) {
-	      var preTime = void 0;
-	      if (this.preClickTime && this.preTouchTime) {
-	        preTime = Math.min(this.preClickTime, this.preTouchTime);
-	      } else if (this.preClickTime) {
-	        preTime = this.preClickTime;
-	      } else if (this.preTouchTime) {
-	        preTime = this.preTouchTime;
-	      }
-	      if (Math.abs(preTime - this.focusTime) < 20) {
-	        return;
-	      }
-	      this.focusTime = 0;
-	    }
-	    this.preClickTime = 0;
-	    this.preTouchTime = 0;
-	    event.preventDefault();
-	    var nextVisible = !this.state.popupVisible;
-	    if (this.isClickToHide() && !nextVisible || nextVisible && this.isClickToShow()) {
-	      this.setPopupVisible(!this.state.popupVisible);
-	    }
-	  },
-	  onDocumentClick: function onDocumentClick(event) {
-	    if (this.props.mask && !this.props.maskClosable) {
-	      return;
-	    }
-	    var target = event.target;
-	    var root = (0, _reactDom.findDOMNode)(this);
-	    var popupNode = this.getPopupDomNode();
-	    if (!(0, _contains2['default'])(root, target) && !(0, _contains2['default'])(popupNode, target)) {
-	      this.close();
-	    }
-	  },
-	  getPopupDomNode: function getPopupDomNode() {
+	    clearTimeout(this.mouseDownTimeout);
+	  };
+	
+	  Trigger.prototype.getPopupDomNode = function getPopupDomNode() {
 	    // for test
 	    if (this._component && this._component.getPopupDomNode) {
 	      return this._component.getPopupDomNode();
 	    }
 	    return null;
-	  },
-	  getRootDomNode: function getRootDomNode() {
-	    return (0, _reactDom.findDOMNode)(this);
-	  },
-	  getPopupClassNameFromAlign: function getPopupClassNameFromAlign(align) {
-	    var className = [];
-	    var props = this.props;
-	    var popupPlacement = props.popupPlacement,
-	        builtinPlacements = props.builtinPlacements,
-	        prefixCls = props.prefixCls;
+	  };
 	
-	    if (popupPlacement && builtinPlacements) {
-	      className.push((0, _utils.getPopupClassNameFromAlign)(builtinPlacements, prefixCls, align));
-	    }
-	    if (props.getPopupClassNameFromAlign) {
-	      className.push(props.getPopupClassNameFromAlign(align));
-	    }
-	    return className.join(' ');
-	  },
-	  getPopupAlign: function getPopupAlign() {
+	  Trigger.prototype.getPopupAlign = function getPopupAlign() {
 	    var props = this.props;
 	    var popupPlacement = props.popupPlacement,
 	        popupAlign = props.popupAlign,
@@ -23606,140 +23511,148 @@
 	      return (0, _utils.getAlignFromPlacement)(builtinPlacements, popupPlacement, popupAlign);
 	    }
 	    return popupAlign;
-	  },
-	  getComponent: function getComponent() {
-	    var props = this.props,
-	        state = this.state;
+	  };
 	
-	    var mouseProps = {};
-	    if (this.isMouseEnterToShow()) {
-	      mouseProps.onMouseEnter = this.onPopupMouseEnter;
-	    }
-	    if (this.isMouseLeaveToHide()) {
-	      mouseProps.onMouseLeave = this.onPopupMouseLeave;
-	    }
-	    return _react2['default'].createElement(
-	      _Popup2['default'],
-	      (0, _extends3['default'])({
-	        prefixCls: props.prefixCls,
-	        destroyPopupOnHide: props.destroyPopupOnHide,
-	        visible: state.popupVisible,
-	        className: props.popupClassName,
-	        action: props.action,
-	        align: this.getPopupAlign(),
-	        onAlign: props.onPopupAlign,
-	        animation: props.popupAnimation,
-	        getClassNameFromAlign: this.getPopupClassNameFromAlign
-	      }, mouseProps, {
-	        getRootDomNode: this.getRootDomNode,
-	        style: props.popupStyle,
-	        mask: props.mask,
-	        zIndex: props.zIndex,
-	        transitionName: props.popupTransitionName,
-	        maskAnimation: props.maskAnimation,
-	        maskTransitionName: props.maskTransitionName
-	      }),
-	      typeof props.popup === 'function' ? props.popup() : props.popup
-	    );
-	  },
-	  setPopupVisible: function setPopupVisible(popupVisible) {
+	  /**
+	   * @param popupVisible    Show or not the popup element
+	   * @param event           SyntheticEvent, used for `pointAlign`
+	   */
+	  Trigger.prototype.setPopupVisible = function setPopupVisible(popupVisible, event) {
+	    var alignPoint = this.props.alignPoint;
+	
+	
 	    this.clearDelayTimer();
+	
 	    if (this.state.popupVisible !== popupVisible) {
 	      if (!('popupVisible' in this.props)) {
-	        this.setState({
-	          popupVisible: popupVisible
-	        });
+	        this.setState({ popupVisible: popupVisible });
 	      }
 	      this.props.onPopupVisibleChange(popupVisible);
 	    }
-	  },
-	  delaySetPopupVisible: function delaySetPopupVisible(visible, delayS) {
-	    var _this2 = this;
+	
+	    // Always record the point position since mouseEnterDelay will delay the show
+	    if (alignPoint && event) {
+	      this.setPoint(event);
+	    }
+	  };
+	
+	  Trigger.prototype.delaySetPopupVisible = function delaySetPopupVisible(visible, delayS, event) {
+	    var _this3 = this;
 	
 	    var delay = delayS * 1000;
 	    this.clearDelayTimer();
 	    if (delay) {
+	      var point = event ? { pageX: event.pageX, pageY: event.pageY } : null;
 	      this.delayTimer = setTimeout(function () {
-	        _this2.setPopupVisible(visible);
-	        _this2.clearDelayTimer();
+	        _this3.setPopupVisible(visible, point);
+	        _this3.clearDelayTimer();
 	      }, delay);
 	    } else {
-	      this.setPopupVisible(visible);
+	      this.setPopupVisible(visible, event);
 	    }
-	  },
-	  clearDelayTimer: function clearDelayTimer() {
+	  };
+	
+	  Trigger.prototype.clearDelayTimer = function clearDelayTimer() {
 	    if (this.delayTimer) {
 	      clearTimeout(this.delayTimer);
 	      this.delayTimer = null;
 	    }
-	  },
-	  clearOutsideHandler: function clearOutsideHandler() {
+	  };
+	
+	  Trigger.prototype.clearOutsideHandler = function clearOutsideHandler() {
 	    if (this.clickOutsideHandler) {
 	      this.clickOutsideHandler.remove();
 	      this.clickOutsideHandler = null;
+	    }
+	
+	    if (this.contextMenuOutsideHandler1) {
+	      this.contextMenuOutsideHandler1.remove();
+	      this.contextMenuOutsideHandler1 = null;
+	    }
+	
+	    if (this.contextMenuOutsideHandler2) {
+	      this.contextMenuOutsideHandler2.remove();
+	      this.contextMenuOutsideHandler2 = null;
 	    }
 	
 	    if (this.touchOutsideHandler) {
 	      this.touchOutsideHandler.remove();
 	      this.touchOutsideHandler = null;
 	    }
-	  },
-	  createTwoChains: function createTwoChains(event) {
+	  };
+	
+	  Trigger.prototype.createTwoChains = function createTwoChains(event) {
 	    var childPros = this.props.children.props;
 	    var props = this.props;
 	    if (childPros[event] && props[event]) {
 	      return this['fire' + event];
 	    }
 	    return childPros[event] || props[event];
-	  },
-	  isClickToShow: function isClickToShow() {
+	  };
+	
+	  Trigger.prototype.isClickToShow = function isClickToShow() {
 	    var _props = this.props,
 	        action = _props.action,
 	        showAction = _props.showAction;
 	
 	    return action.indexOf('click') !== -1 || showAction.indexOf('click') !== -1;
-	  },
-	  isClickToHide: function isClickToHide() {
+	  };
+	
+	  Trigger.prototype.isContextMenuToShow = function isContextMenuToShow() {
 	    var _props2 = this.props,
 	        action = _props2.action,
-	        hideAction = _props2.hideAction;
+	        showAction = _props2.showAction;
 	
-	    return action.indexOf('click') !== -1 || hideAction.indexOf('click') !== -1;
-	  },
-	  isMouseEnterToShow: function isMouseEnterToShow() {
+	    return action.indexOf('contextMenu') !== -1 || showAction.indexOf('contextMenu') !== -1;
+	  };
+	
+	  Trigger.prototype.isClickToHide = function isClickToHide() {
 	    var _props3 = this.props,
 	        action = _props3.action,
-	        showAction = _props3.showAction;
+	        hideAction = _props3.hideAction;
 	
-	    return action.indexOf('hover') !== -1 || showAction.indexOf('mouseEnter') !== -1;
-	  },
-	  isMouseLeaveToHide: function isMouseLeaveToHide() {
+	    return action.indexOf('click') !== -1 || hideAction.indexOf('click') !== -1;
+	  };
+	
+	  Trigger.prototype.isMouseEnterToShow = function isMouseEnterToShow() {
 	    var _props4 = this.props,
 	        action = _props4.action,
-	        hideAction = _props4.hideAction;
+	        showAction = _props4.showAction;
 	
-	    return action.indexOf('hover') !== -1 || hideAction.indexOf('mouseLeave') !== -1;
-	  },
-	  isFocusToShow: function isFocusToShow() {
+	    return action.indexOf('hover') !== -1 || showAction.indexOf('mouseEnter') !== -1;
+	  };
+	
+	  Trigger.prototype.isMouseLeaveToHide = function isMouseLeaveToHide() {
 	    var _props5 = this.props,
 	        action = _props5.action,
-	        showAction = _props5.showAction;
+	        hideAction = _props5.hideAction;
 	
-	    return action.indexOf('focus') !== -1 || showAction.indexOf('focus') !== -1;
-	  },
-	  isBlurToHide: function isBlurToHide() {
+	    return action.indexOf('hover') !== -1 || hideAction.indexOf('mouseLeave') !== -1;
+	  };
+	
+	  Trigger.prototype.isFocusToShow = function isFocusToShow() {
 	    var _props6 = this.props,
 	        action = _props6.action,
-	        hideAction = _props6.hideAction;
+	        showAction = _props6.showAction;
+	
+	    return action.indexOf('focus') !== -1 || showAction.indexOf('focus') !== -1;
+	  };
+	
+	  Trigger.prototype.isBlurToHide = function isBlurToHide() {
+	    var _props7 = this.props,
+	        action = _props7.action,
+	        hideAction = _props7.hideAction;
 	
 	    return action.indexOf('focus') !== -1 || hideAction.indexOf('blur') !== -1;
-	  },
-	  forcePopupAlign: function forcePopupAlign() {
+	  };
+	
+	  Trigger.prototype.forcePopupAlign = function forcePopupAlign() {
 	    if (this.state.popupVisible && this._component && this._component.alignInstance) {
 	      this._component.alignInstance.forceAlign();
 	    }
-	  },
-	  fireEvents: function fireEvents(type, e) {
+	  };
+	
+	  Trigger.prototype.fireEvents = function fireEvents(type, e) {
 	    var childCallback = this.props.children.props[type];
 	    if (childCallback) {
 	      childCallback(e);
@@ -23748,15 +23661,31 @@
 	    if (callback) {
 	      callback(e);
 	    }
-	  },
-	  close: function close() {
+	  };
+	
+	  Trigger.prototype.close = function close() {
 	    this.setPopupVisible(false);
-	  },
-	  render: function render() {
-	    var props = this.props;
-	    var children = props.children;
+	  };
+	
+	  Trigger.prototype.render = function render() {
+	    var _this4 = this;
+	
+	    var popupVisible = this.state.popupVisible;
+	    var _props8 = this.props,
+	        children = _props8.children,
+	        forceRender = _props8.forceRender,
+	        alignPoint = _props8.alignPoint,
+	        className = _props8.className;
+	
 	    var child = _react2['default'].Children.only(children);
-	    var newChildProps = {};
+	    var newChildProps = { key: 'trigger' };
+	
+	    if (this.isContextMenuToShow()) {
+	      newChildProps.onContextMenu = this.onContextMenu;
+	    } else {
+	      newChildProps.onContextMenu = this.createTwoChains('onContextMenu');
+	    }
+	
 	    if (this.isClickToHide() || this.isClickToShow()) {
 	      newChildProps.onClick = this.onClick;
 	      newChildProps.onMouseDown = this.onMouseDown;
@@ -23768,6 +23697,9 @@
 	    }
 	    if (this.isMouseEnterToShow()) {
 	      newChildProps.onMouseEnter = this.onMouseEnter;
+	      if (alignPoint) {
+	        newChildProps.onMouseMove = this.onMouseMove;
+	      }
 	    } else {
 	      newChildProps.onMouseEnter = this.createTwoChains('onMouseEnter');
 	    }
@@ -23784,1173 +23716,372 @@
 	      newChildProps.onBlur = this.createTwoChains('onBlur');
 	    }
 	
-	    return _react2['default'].cloneElement(child, newChildProps);
-	  }
-	});
+	    var childrenClassName = (0, _classnames2['default'])(child && child.props && child.props.className, className);
+	    if (childrenClassName) {
+	      newChildProps.className = childrenClassName;
+	    }
+	    var trigger = _react2['default'].cloneElement(child, newChildProps);
+	
+	    if (!IS_REACT_16) {
+	      return _react2['default'].createElement(
+	        _ContainerRender2['default'],
+	        {
+	          parent: this,
+	          visible: popupVisible,
+	          autoMount: false,
+	          forceRender: forceRender,
+	          getComponent: this.getComponent,
+	          getContainer: this.getContainer
+	        },
+	        function (_ref2) {
+	          var renderComponent = _ref2.renderComponent;
+	
+	          _this4.renderComponent = renderComponent;
+	          return trigger;
+	        }
+	      );
+	    }
+	
+	    var portal = void 0;
+	    // prevent unmounting after it's rendered
+	    if (popupVisible || this._component || forceRender) {
+	      portal = _react2['default'].createElement(
+	        _Portal2['default'],
+	        {
+	          key: 'portal',
+	          getContainer: this.getContainer,
+	          didUpdate: this.handlePortalUpdate
+	        },
+	        this.getComponent()
+	      );
+	    }
+	
+	    return [trigger, portal];
+	  };
+	
+	  return Trigger;
+	}(_react2['default'].Component);
+	
+	Trigger.propTypes = {
+	  children: _propTypes2['default'].any,
+	  action: _propTypes2['default'].oneOfType([_propTypes2['default'].string, _propTypes2['default'].arrayOf(_propTypes2['default'].string)]),
+	  showAction: _propTypes2['default'].any,
+	  hideAction: _propTypes2['default'].any,
+	  getPopupClassNameFromAlign: _propTypes2['default'].any,
+	  onPopupVisibleChange: _propTypes2['default'].func,
+	  afterPopupVisibleChange: _propTypes2['default'].func,
+	  popup: _propTypes2['default'].oneOfType([_propTypes2['default'].node, _propTypes2['default'].func]).isRequired,
+	  popupStyle: _propTypes2['default'].object,
+	  prefixCls: _propTypes2['default'].string,
+	  popupClassName: _propTypes2['default'].string,
+	  className: _propTypes2['default'].string,
+	  popupPlacement: _propTypes2['default'].string,
+	  builtinPlacements: _propTypes2['default'].object,
+	  popupTransitionName: _propTypes2['default'].oneOfType([_propTypes2['default'].string, _propTypes2['default'].object]),
+	  popupAnimation: _propTypes2['default'].any,
+	  mouseEnterDelay: _propTypes2['default'].number,
+	  mouseLeaveDelay: _propTypes2['default'].number,
+	  zIndex: _propTypes2['default'].number,
+	  focusDelay: _propTypes2['default'].number,
+	  blurDelay: _propTypes2['default'].number,
+	  getPopupContainer: _propTypes2['default'].func,
+	  getDocument: _propTypes2['default'].func,
+	  forceRender: _propTypes2['default'].bool,
+	  destroyPopupOnHide: _propTypes2['default'].bool,
+	  mask: _propTypes2['default'].bool,
+	  maskClosable: _propTypes2['default'].bool,
+	  onPopupAlign: _propTypes2['default'].func,
+	  popupAlign: _propTypes2['default'].object,
+	  popupVisible: _propTypes2['default'].bool,
+	  defaultPopupVisible: _propTypes2['default'].bool,
+	  maskTransitionName: _propTypes2['default'].oneOfType([_propTypes2['default'].string, _propTypes2['default'].object]),
+	  maskAnimation: _propTypes2['default'].string,
+	  stretch: _propTypes2['default'].string,
+	  alignPoint: _propTypes2['default'].bool // Maybe we can support user pass position in the future
+	};
+	Trigger.contextTypes = contextTypes;
+	Trigger.childContextTypes = contextTypes;
+	Trigger.defaultProps = {
+	  prefixCls: 'rc-trigger-popup',
+	  getPopupClassNameFromAlign: returnEmptyString,
+	  getDocument: returnDocument,
+	  onPopupVisibleChange: noop,
+	  afterPopupVisibleChange: noop,
+	  onPopupAlign: noop,
+	  popupClassName: '',
+	  mouseEnterDelay: 0,
+	  mouseLeaveDelay: 0.1,
+	  focusDelay: 0,
+	  blurDelay: 0.15,
+	  popupStyle: {},
+	  destroyPopupOnHide: false,
+	  popupAlign: {},
+	  defaultPopupVisible: false,
+	  mask: false,
+	  maskClosable: true,
+	  action: [],
+	  showAction: [],
+	  hideAction: []
+	};
+	
+	var _initialiseProps = function _initialiseProps() {
+	  var _this5 = this;
+	
+	  this.onMouseEnter = function (e) {
+	    var mouseEnterDelay = _this5.props.mouseEnterDelay;
+	
+	    _this5.fireEvents('onMouseEnter', e);
+	    _this5.delaySetPopupVisible(true, mouseEnterDelay, mouseEnterDelay ? null : e);
+	  };
+	
+	  this.onMouseMove = function (e) {
+	    _this5.fireEvents('onMouseMove', e);
+	    _this5.setPoint(e);
+	  };
+	
+	  this.onMouseLeave = function (e) {
+	    _this5.fireEvents('onMouseLeave', e);
+	    _this5.delaySetPopupVisible(false, _this5.props.mouseLeaveDelay);
+	  };
+	
+	  this.onPopupMouseEnter = function () {
+	    _this5.clearDelayTimer();
+	  };
+	
+	  this.onPopupMouseLeave = function (e) {
+	    // https://github.com/react-component/trigger/pull/13
+	    // react bug?
+	    if (e.relatedTarget && !e.relatedTarget.setTimeout && _this5._component && _this5._component.getPopupDomNode && (0, _contains2['default'])(_this5._component.getPopupDomNode(), e.relatedTarget)) {
+	      return;
+	    }
+	    _this5.delaySetPopupVisible(false, _this5.props.mouseLeaveDelay);
+	  };
+	
+	  this.onFocus = function (e) {
+	    _this5.fireEvents('onFocus', e);
+	    // incase focusin and focusout
+	    _this5.clearDelayTimer();
+	    if (_this5.isFocusToShow()) {
+	      _this5.focusTime = Date.now();
+	      _this5.delaySetPopupVisible(true, _this5.props.focusDelay);
+	    }
+	  };
+	
+	  this.onMouseDown = function (e) {
+	    _this5.fireEvents('onMouseDown', e);
+	    _this5.preClickTime = Date.now();
+	  };
+	
+	  this.onTouchStart = function (e) {
+	    _this5.fireEvents('onTouchStart', e);
+	    _this5.preTouchTime = Date.now();
+	  };
+	
+	  this.onBlur = function (e) {
+	    _this5.fireEvents('onBlur', e);
+	    _this5.clearDelayTimer();
+	    if (_this5.isBlurToHide()) {
+	      _this5.delaySetPopupVisible(false, _this5.props.blurDelay);
+	    }
+	  };
+	
+	  this.onContextMenu = function (e) {
+	    e.preventDefault();
+	    _this5.fireEvents('onContextMenu', e);
+	    _this5.setPopupVisible(true, e);
+	  };
+	
+	  this.onContextMenuClose = function () {
+	    if (_this5.isContextMenuToShow()) {
+	      _this5.close();
+	    }
+	  };
+	
+	  this.onClick = function (event) {
+	    _this5.fireEvents('onClick', event);
+	    // focus will trigger click
+	    if (_this5.focusTime) {
+	      var preTime = void 0;
+	      if (_this5.preClickTime && _this5.preTouchTime) {
+	        preTime = Math.min(_this5.preClickTime, _this5.preTouchTime);
+	      } else if (_this5.preClickTime) {
+	        preTime = _this5.preClickTime;
+	      } else if (_this5.preTouchTime) {
+	        preTime = _this5.preTouchTime;
+	      }
+	      if (Math.abs(preTime - _this5.focusTime) < 20) {
+	        return;
+	      }
+	      _this5.focusTime = 0;
+	    }
+	    _this5.preClickTime = 0;
+	    _this5.preTouchTime = 0;
+	    if (event && event.preventDefault) {
+	      event.preventDefault();
+	    }
+	    var nextVisible = !_this5.state.popupVisible;
+	    if (_this5.isClickToHide() && !nextVisible || nextVisible && _this5.isClickToShow()) {
+	      _this5.setPopupVisible(!_this5.state.popupVisible, event);
+	    }
+	  };
+	
+	  this.onPopupMouseDown = function () {
+	    var _context$rcTrigger = _this5.context.rcTrigger,
+	        rcTrigger = _context$rcTrigger === undefined ? {} : _context$rcTrigger;
+	
+	    _this5.hasPopupMouseDown = true;
+	
+	    clearTimeout(_this5.mouseDownTimeout);
+	    _this5.mouseDownTimeout = setTimeout(function () {
+	      _this5.hasPopupMouseDown = false;
+	    }, 0);
+	
+	    if (rcTrigger.onPopupMouseDown) {
+	      rcTrigger.onPopupMouseDown.apply(rcTrigger, arguments);
+	    }
+	  };
+	
+	  this.onDocumentClick = function (event) {
+	    if (_this5.props.mask && !_this5.props.maskClosable) {
+	      return;
+	    }
+	
+	    var target = event.target;
+	    var root = (0, _reactDom.findDOMNode)(_this5);
+	    if (!(0, _contains2['default'])(root, target) && !_this5.hasPopupMouseDown) {
+	      _this5.close();
+	    }
+	  };
+	
+	  this.getRootDomNode = function () {
+	    return (0, _reactDom.findDOMNode)(_this5);
+	  };
+	
+	  this.getPopupClassNameFromAlign = function (align) {
+	    var className = [];
+	    var _props9 = _this5.props,
+	        popupPlacement = _props9.popupPlacement,
+	        builtinPlacements = _props9.builtinPlacements,
+	        prefixCls = _props9.prefixCls,
+	        alignPoint = _props9.alignPoint,
+	        getPopupClassNameFromAlign = _props9.getPopupClassNameFromAlign;
+	
+	    if (popupPlacement && builtinPlacements) {
+	      className.push((0, _utils.getAlignPopupClassName)(builtinPlacements, prefixCls, align, alignPoint));
+	    }
+	    if (getPopupClassNameFromAlign) {
+	      className.push(getPopupClassNameFromAlign(align));
+	    }
+	    return className.join(' ');
+	  };
+	
+	  this.getComponent = function () {
+	    var _props10 = _this5.props,
+	        prefixCls = _props10.prefixCls,
+	        destroyPopupOnHide = _props10.destroyPopupOnHide,
+	        popupClassName = _props10.popupClassName,
+	        action = _props10.action,
+	        onPopupAlign = _props10.onPopupAlign,
+	        popupAnimation = _props10.popupAnimation,
+	        popupTransitionName = _props10.popupTransitionName,
+	        popupStyle = _props10.popupStyle,
+	        mask = _props10.mask,
+	        maskAnimation = _props10.maskAnimation,
+	        maskTransitionName = _props10.maskTransitionName,
+	        zIndex = _props10.zIndex,
+	        popup = _props10.popup,
+	        stretch = _props10.stretch,
+	        alignPoint = _props10.alignPoint;
+	    var _state = _this5.state,
+	        popupVisible = _state.popupVisible,
+	        point = _state.point;
+	
+	
+	    var align = _this5.getPopupAlign();
+	
+	    var mouseProps = {};
+	    if (_this5.isMouseEnterToShow()) {
+	      mouseProps.onMouseEnter = _this5.onPopupMouseEnter;
+	    }
+	    if (_this5.isMouseLeaveToHide()) {
+	      mouseProps.onMouseLeave = _this5.onPopupMouseLeave;
+	    }
+	
+	    mouseProps.onMouseDown = _this5.onPopupMouseDown;
+	    mouseProps.onTouchStart = _this5.onPopupMouseDown;
+	
+	    return _react2['default'].createElement(
+	      _Popup2['default'],
+	      (0, _extends3['default'])({
+	        prefixCls: prefixCls,
+	        destroyPopupOnHide: destroyPopupOnHide,
+	        visible: popupVisible,
+	        point: alignPoint && point,
+	        className: popupClassName,
+	        action: action,
+	        align: align,
+	        onAlign: onPopupAlign,
+	        animation: popupAnimation,
+	        getClassNameFromAlign: _this5.getPopupClassNameFromAlign
+	      }, mouseProps, {
+	        stretch: stretch,
+	        getRootDomNode: _this5.getRootDomNode,
+	        style: popupStyle,
+	        mask: mask,
+	        zIndex: zIndex,
+	        transitionName: popupTransitionName,
+	        maskAnimation: maskAnimation,
+	        maskTransitionName: maskTransitionName,
+	        ref: _this5.savePopup
+	      }),
+	      typeof popup === 'function' ? popup() : popup
+	    );
+	  };
+	
+	  this.getContainer = function () {
+	    var props = _this5.props;
+	
+	    var popupContainer = document.createElement('div');
+	    // Make sure default popup container will never cause scrollbar appearing
+	    // https://github.com/react-component/trigger/issues/41
+	    popupContainer.style.position = 'absolute';
+	    popupContainer.style.top = '0';
+	    popupContainer.style.left = '0';
+	    popupContainer.style.width = '100%';
+	    var mountNode = props.getPopupContainer ? props.getPopupContainer((0, _reactDom.findDOMNode)(_this5)) : props.getDocument().body;
+	    mountNode.appendChild(popupContainer);
+	    return popupContainer;
+	  };
+	
+	  this.setPoint = function (point) {
+	    var alignPoint = _this5.props.alignPoint;
+	
+	    if (!alignPoint || !point) return;
+	
+	    _this5.setState({
+	      point: {
+	        pageX: point.pageX,
+	        pageY: point.pageY
+	      }
+	    });
+	  };
+	
+	  this.handlePortalUpdate = function () {
+	    if (_this5.prevPopupVisible !== _this5.state.popupVisible) {
+	      _this5.props.afterPopupVisibleChange(_this5.state.popupVisible);
+	    }
+	  };
+	
+	  this.savePopup = function (node) {
+	    _this5._component = node;
+	  };
+	};
 	
 	exports['default'] = Trigger;
 	module.exports = exports['default'];
 
 /***/ }),
 /* 245 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 *
-	 */
-	
-	'use strict';
-	
-	var React = __webpack_require__(4);
-	var factory = __webpack_require__(246);
-	
-	if (typeof React === 'undefined') {
-	  throw Error(
-	    'create-react-class could not find the React object. If you are using script tags, ' +
-	      'make sure that React is being loaded before create-react-class.'
-	  );
-	}
-	
-	// Hack to grab NoopUpdateQueue from isomorphic React
-	var ReactNoopUpdateQueue = new React.Component().updater;
-	
-	module.exports = factory(
-	  React.Component,
-	  React.isValidElement,
-	  ReactNoopUpdateQueue
-	);
-
-
-/***/ }),
-/* 246 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 *
-	 */
-	
-	'use strict';
-	
-	var _assign = __webpack_require__(44);
-	
-	var emptyObject = __webpack_require__(247);
-	var _invariant = __webpack_require__(248);
-	
-	if (process.env.NODE_ENV !== 'production') {
-	  var warning = __webpack_require__(249);
-	}
-	
-	var MIXINS_KEY = 'mixins';
-	
-	// Helper function to allow the creation of anonymous functions which do not
-	// have .name set to the name of the variable being assigned to.
-	function identity(fn) {
-	  return fn;
-	}
-	
-	var ReactPropTypeLocationNames;
-	if (process.env.NODE_ENV !== 'production') {
-	  ReactPropTypeLocationNames = {
-	    prop: 'prop',
-	    context: 'context',
-	    childContext: 'child context'
-	  };
-	} else {
-	  ReactPropTypeLocationNames = {};
-	}
-	
-	function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
-	  /**
-	   * Policies that describe methods in `ReactClassInterface`.
-	   */
-	
-	  var injectedMixins = [];
-	
-	  /**
-	   * Composite components are higher-level components that compose other composite
-	   * or host components.
-	   *
-	   * To create a new type of `ReactClass`, pass a specification of
-	   * your new class to `React.createClass`. The only requirement of your class
-	   * specification is that you implement a `render` method.
-	   *
-	   *   var MyComponent = React.createClass({
-	   *     render: function() {
-	   *       return <div>Hello World</div>;
-	   *     }
-	   *   });
-	   *
-	   * The class specification supports a specific protocol of methods that have
-	   * special meaning (e.g. `render`). See `ReactClassInterface` for
-	   * more the comprehensive protocol. Any other properties and methods in the
-	   * class specification will be available on the prototype.
-	   *
-	   * @interface ReactClassInterface
-	   * @internal
-	   */
-	  var ReactClassInterface = {
-	    /**
-	     * An array of Mixin objects to include when defining your component.
-	     *
-	     * @type {array}
-	     * @optional
-	     */
-	    mixins: 'DEFINE_MANY',
-	
-	    /**
-	     * An object containing properties and methods that should be defined on
-	     * the component's constructor instead of its prototype (static methods).
-	     *
-	     * @type {object}
-	     * @optional
-	     */
-	    statics: 'DEFINE_MANY',
-	
-	    /**
-	     * Definition of prop types for this component.
-	     *
-	     * @type {object}
-	     * @optional
-	     */
-	    propTypes: 'DEFINE_MANY',
-	
-	    /**
-	     * Definition of context types for this component.
-	     *
-	     * @type {object}
-	     * @optional
-	     */
-	    contextTypes: 'DEFINE_MANY',
-	
-	    /**
-	     * Definition of context types this component sets for its children.
-	     *
-	     * @type {object}
-	     * @optional
-	     */
-	    childContextTypes: 'DEFINE_MANY',
-	
-	    // ==== Definition methods ====
-	
-	    /**
-	     * Invoked when the component is mounted. Values in the mapping will be set on
-	     * `this.props` if that prop is not specified (i.e. using an `in` check).
-	     *
-	     * This method is invoked before `getInitialState` and therefore cannot rely
-	     * on `this.state` or use `this.setState`.
-	     *
-	     * @return {object}
-	     * @optional
-	     */
-	    getDefaultProps: 'DEFINE_MANY_MERGED',
-	
-	    /**
-	     * Invoked once before the component is mounted. The return value will be used
-	     * as the initial value of `this.state`.
-	     *
-	     *   getInitialState: function() {
-	     *     return {
-	     *       isOn: false,
-	     *       fooBaz: new BazFoo()
-	     *     }
-	     *   }
-	     *
-	     * @return {object}
-	     * @optional
-	     */
-	    getInitialState: 'DEFINE_MANY_MERGED',
-	
-	    /**
-	     * @return {object}
-	     * @optional
-	     */
-	    getChildContext: 'DEFINE_MANY_MERGED',
-	
-	    /**
-	     * Uses props from `this.props` and state from `this.state` to render the
-	     * structure of the component.
-	     *
-	     * No guarantees are made about when or how often this method is invoked, so
-	     * it must not have side effects.
-	     *
-	     *   render: function() {
-	     *     var name = this.props.name;
-	     *     return <div>Hello, {name}!</div>;
-	     *   }
-	     *
-	     * @return {ReactComponent}
-	     * @required
-	     */
-	    render: 'DEFINE_ONCE',
-	
-	    // ==== Delegate methods ====
-	
-	    /**
-	     * Invoked when the component is initially created and about to be mounted.
-	     * This may have side effects, but any external subscriptions or data created
-	     * by this method must be cleaned up in `componentWillUnmount`.
-	     *
-	     * @optional
-	     */
-	    componentWillMount: 'DEFINE_MANY',
-	
-	    /**
-	     * Invoked when the component has been mounted and has a DOM representation.
-	     * However, there is no guarantee that the DOM node is in the document.
-	     *
-	     * Use this as an opportunity to operate on the DOM when the component has
-	     * been mounted (initialized and rendered) for the first time.
-	     *
-	     * @param {DOMElement} rootNode DOM element representing the component.
-	     * @optional
-	     */
-	    componentDidMount: 'DEFINE_MANY',
-	
-	    /**
-	     * Invoked before the component receives new props.
-	     *
-	     * Use this as an opportunity to react to a prop transition by updating the
-	     * state using `this.setState`. Current props are accessed via `this.props`.
-	     *
-	     *   componentWillReceiveProps: function(nextProps, nextContext) {
-	     *     this.setState({
-	     *       likesIncreasing: nextProps.likeCount > this.props.likeCount
-	     *     });
-	     *   }
-	     *
-	     * NOTE: There is no equivalent `componentWillReceiveState`. An incoming prop
-	     * transition may cause a state change, but the opposite is not true. If you
-	     * need it, you are probably looking for `componentWillUpdate`.
-	     *
-	     * @param {object} nextProps
-	     * @optional
-	     */
-	    componentWillReceiveProps: 'DEFINE_MANY',
-	
-	    /**
-	     * Invoked while deciding if the component should be updated as a result of
-	     * receiving new props, state and/or context.
-	     *
-	     * Use this as an opportunity to `return false` when you're certain that the
-	     * transition to the new props/state/context will not require a component
-	     * update.
-	     *
-	     *   shouldComponentUpdate: function(nextProps, nextState, nextContext) {
-	     *     return !equal(nextProps, this.props) ||
-	     *       !equal(nextState, this.state) ||
-	     *       !equal(nextContext, this.context);
-	     *   }
-	     *
-	     * @param {object} nextProps
-	     * @param {?object} nextState
-	     * @param {?object} nextContext
-	     * @return {boolean} True if the component should update.
-	     * @optional
-	     */
-	    shouldComponentUpdate: 'DEFINE_ONCE',
-	
-	    /**
-	     * Invoked when the component is about to update due to a transition from
-	     * `this.props`, `this.state` and `this.context` to `nextProps`, `nextState`
-	     * and `nextContext`.
-	     *
-	     * Use this as an opportunity to perform preparation before an update occurs.
-	     *
-	     * NOTE: You **cannot** use `this.setState()` in this method.
-	     *
-	     * @param {object} nextProps
-	     * @param {?object} nextState
-	     * @param {?object} nextContext
-	     * @param {ReactReconcileTransaction} transaction
-	     * @optional
-	     */
-	    componentWillUpdate: 'DEFINE_MANY',
-	
-	    /**
-	     * Invoked when the component's DOM representation has been updated.
-	     *
-	     * Use this as an opportunity to operate on the DOM when the component has
-	     * been updated.
-	     *
-	     * @param {object} prevProps
-	     * @param {?object} prevState
-	     * @param {?object} prevContext
-	     * @param {DOMElement} rootNode DOM element representing the component.
-	     * @optional
-	     */
-	    componentDidUpdate: 'DEFINE_MANY',
-	
-	    /**
-	     * Invoked when the component is about to be removed from its parent and have
-	     * its DOM representation destroyed.
-	     *
-	     * Use this as an opportunity to deallocate any external resources.
-	     *
-	     * NOTE: There is no `componentDidUnmount` since your component will have been
-	     * destroyed by that point.
-	     *
-	     * @optional
-	     */
-	    componentWillUnmount: 'DEFINE_MANY',
-	
-	    /**
-	     * Replacement for (deprecated) `componentWillMount`.
-	     *
-	     * @optional
-	     */
-	    UNSAFE_componentWillMount: 'DEFINE_MANY',
-	
-	    /**
-	     * Replacement for (deprecated) `componentWillReceiveProps`.
-	     *
-	     * @optional
-	     */
-	    UNSAFE_componentWillReceiveProps: 'DEFINE_MANY',
-	
-	    /**
-	     * Replacement for (deprecated) `componentWillUpdate`.
-	     *
-	     * @optional
-	     */
-	    UNSAFE_componentWillUpdate: 'DEFINE_MANY',
-	
-	    // ==== Advanced methods ====
-	
-	    /**
-	     * Updates the component's currently mounted DOM representation.
-	     *
-	     * By default, this implements React's rendering and reconciliation algorithm.
-	     * Sophisticated clients may wish to override this.
-	     *
-	     * @param {ReactReconcileTransaction} transaction
-	     * @internal
-	     * @overridable
-	     */
-	    updateComponent: 'OVERRIDE_BASE'
-	  };
-	
-	  /**
-	   * Similar to ReactClassInterface but for static methods.
-	   */
-	  var ReactClassStaticInterface = {
-	    /**
-	     * This method is invoked after a component is instantiated and when it
-	     * receives new props. Return an object to update state in response to
-	     * prop changes. Return null to indicate no change to state.
-	     *
-	     * If an object is returned, its keys will be merged into the existing state.
-	     *
-	     * @return {object || null}
-	     * @optional
-	     */
-	    getDerivedStateFromProps: 'DEFINE_MANY_MERGED'
-	  };
-	
-	  /**
-	   * Mapping from class specification keys to special processing functions.
-	   *
-	   * Although these are declared like instance properties in the specification
-	   * when defining classes using `React.createClass`, they are actually static
-	   * and are accessible on the constructor instead of the prototype. Despite
-	   * being static, they must be defined outside of the "statics" key under
-	   * which all other static methods are defined.
-	   */
-	  var RESERVED_SPEC_KEYS = {
-	    displayName: function(Constructor, displayName) {
-	      Constructor.displayName = displayName;
-	    },
-	    mixins: function(Constructor, mixins) {
-	      if (mixins) {
-	        for (var i = 0; i < mixins.length; i++) {
-	          mixSpecIntoComponent(Constructor, mixins[i]);
-	        }
-	      }
-	    },
-	    childContextTypes: function(Constructor, childContextTypes) {
-	      if (process.env.NODE_ENV !== 'production') {
-	        validateTypeDef(Constructor, childContextTypes, 'childContext');
-	      }
-	      Constructor.childContextTypes = _assign(
-	        {},
-	        Constructor.childContextTypes,
-	        childContextTypes
-	      );
-	    },
-	    contextTypes: function(Constructor, contextTypes) {
-	      if (process.env.NODE_ENV !== 'production') {
-	        validateTypeDef(Constructor, contextTypes, 'context');
-	      }
-	      Constructor.contextTypes = _assign(
-	        {},
-	        Constructor.contextTypes,
-	        contextTypes
-	      );
-	    },
-	    /**
-	     * Special case getDefaultProps which should move into statics but requires
-	     * automatic merging.
-	     */
-	    getDefaultProps: function(Constructor, getDefaultProps) {
-	      if (Constructor.getDefaultProps) {
-	        Constructor.getDefaultProps = createMergedResultFunction(
-	          Constructor.getDefaultProps,
-	          getDefaultProps
-	        );
-	      } else {
-	        Constructor.getDefaultProps = getDefaultProps;
-	      }
-	    },
-	    propTypes: function(Constructor, propTypes) {
-	      if (process.env.NODE_ENV !== 'production') {
-	        validateTypeDef(Constructor, propTypes, 'prop');
-	      }
-	      Constructor.propTypes = _assign({}, Constructor.propTypes, propTypes);
-	    },
-	    statics: function(Constructor, statics) {
-	      mixStaticSpecIntoComponent(Constructor, statics);
-	    },
-	    autobind: function() {}
-	  };
-	
-	  function validateTypeDef(Constructor, typeDef, location) {
-	    for (var propName in typeDef) {
-	      if (typeDef.hasOwnProperty(propName)) {
-	        // use a warning instead of an _invariant so components
-	        // don't show up in prod but only in __DEV__
-	        if (process.env.NODE_ENV !== 'production') {
-	          warning(
-	            typeof typeDef[propName] === 'function',
-	            '%s: %s type `%s` is invalid; it must be a function, usually from ' +
-	              'React.PropTypes.',
-	            Constructor.displayName || 'ReactClass',
-	            ReactPropTypeLocationNames[location],
-	            propName
-	          );
-	        }
-	      }
-	    }
-	  }
-	
-	  function validateMethodOverride(isAlreadyDefined, name) {
-	    var specPolicy = ReactClassInterface.hasOwnProperty(name)
-	      ? ReactClassInterface[name]
-	      : null;
-	
-	    // Disallow overriding of base class methods unless explicitly allowed.
-	    if (ReactClassMixin.hasOwnProperty(name)) {
-	      _invariant(
-	        specPolicy === 'OVERRIDE_BASE',
-	        'ReactClassInterface: You are attempting to override ' +
-	          '`%s` from your class specification. Ensure that your method names ' +
-	          'do not overlap with React methods.',
-	        name
-	      );
-	    }
-	
-	    // Disallow defining methods more than once unless explicitly allowed.
-	    if (isAlreadyDefined) {
-	      _invariant(
-	        specPolicy === 'DEFINE_MANY' || specPolicy === 'DEFINE_MANY_MERGED',
-	        'ReactClassInterface: You are attempting to define ' +
-	          '`%s` on your component more than once. This conflict may be due ' +
-	          'to a mixin.',
-	        name
-	      );
-	    }
-	  }
-	
-	  /**
-	   * Mixin helper which handles policy validation and reserved
-	   * specification keys when building React classes.
-	   */
-	  function mixSpecIntoComponent(Constructor, spec) {
-	    if (!spec) {
-	      if (process.env.NODE_ENV !== 'production') {
-	        var typeofSpec = typeof spec;
-	        var isMixinValid = typeofSpec === 'object' && spec !== null;
-	
-	        if (process.env.NODE_ENV !== 'production') {
-	          warning(
-	            isMixinValid,
-	            "%s: You're attempting to include a mixin that is either null " +
-	              'or not an object. Check the mixins included by the component, ' +
-	              'as well as any mixins they include themselves. ' +
-	              'Expected object but got %s.',
-	            Constructor.displayName || 'ReactClass',
-	            spec === null ? null : typeofSpec
-	          );
-	        }
-	      }
-	
-	      return;
-	    }
-	
-	    _invariant(
-	      typeof spec !== 'function',
-	      "ReactClass: You're attempting to " +
-	        'use a component class or function as a mixin. Instead, just use a ' +
-	        'regular object.'
-	    );
-	    _invariant(
-	      !isValidElement(spec),
-	      "ReactClass: You're attempting to " +
-	        'use a component as a mixin. Instead, just use a regular object.'
-	    );
-	
-	    var proto = Constructor.prototype;
-	    var autoBindPairs = proto.__reactAutoBindPairs;
-	
-	    // By handling mixins before any other properties, we ensure the same
-	    // chaining order is applied to methods with DEFINE_MANY policy, whether
-	    // mixins are listed before or after these methods in the spec.
-	    if (spec.hasOwnProperty(MIXINS_KEY)) {
-	      RESERVED_SPEC_KEYS.mixins(Constructor, spec.mixins);
-	    }
-	
-	    for (var name in spec) {
-	      if (!spec.hasOwnProperty(name)) {
-	        continue;
-	      }
-	
-	      if (name === MIXINS_KEY) {
-	        // We have already handled mixins in a special case above.
-	        continue;
-	      }
-	
-	      var property = spec[name];
-	      var isAlreadyDefined = proto.hasOwnProperty(name);
-	      validateMethodOverride(isAlreadyDefined, name);
-	
-	      if (RESERVED_SPEC_KEYS.hasOwnProperty(name)) {
-	        RESERVED_SPEC_KEYS[name](Constructor, property);
-	      } else {
-	        // Setup methods on prototype:
-	        // The following member methods should not be automatically bound:
-	        // 1. Expected ReactClass methods (in the "interface").
-	        // 2. Overridden methods (that were mixed in).
-	        var isReactClassMethod = ReactClassInterface.hasOwnProperty(name);
-	        var isFunction = typeof property === 'function';
-	        var shouldAutoBind =
-	          isFunction &&
-	          !isReactClassMethod &&
-	          !isAlreadyDefined &&
-	          spec.autobind !== false;
-	
-	        if (shouldAutoBind) {
-	          autoBindPairs.push(name, property);
-	          proto[name] = property;
-	        } else {
-	          if (isAlreadyDefined) {
-	            var specPolicy = ReactClassInterface[name];
-	
-	            // These cases should already be caught by validateMethodOverride.
-	            _invariant(
-	              isReactClassMethod &&
-	                (specPolicy === 'DEFINE_MANY_MERGED' ||
-	                  specPolicy === 'DEFINE_MANY'),
-	              'ReactClass: Unexpected spec policy %s for key %s ' +
-	                'when mixing in component specs.',
-	              specPolicy,
-	              name
-	            );
-	
-	            // For methods which are defined more than once, call the existing
-	            // methods before calling the new property, merging if appropriate.
-	            if (specPolicy === 'DEFINE_MANY_MERGED') {
-	              proto[name] = createMergedResultFunction(proto[name], property);
-	            } else if (specPolicy === 'DEFINE_MANY') {
-	              proto[name] = createChainedFunction(proto[name], property);
-	            }
-	          } else {
-	            proto[name] = property;
-	            if (process.env.NODE_ENV !== 'production') {
-	              // Add verbose displayName to the function, which helps when looking
-	              // at profiling tools.
-	              if (typeof property === 'function' && spec.displayName) {
-	                proto[name].displayName = spec.displayName + '_' + name;
-	              }
-	            }
-	          }
-	        }
-	      }
-	    }
-	  }
-	
-	  function mixStaticSpecIntoComponent(Constructor, statics) {
-	    if (!statics) {
-	      return;
-	    }
-	
-	    for (var name in statics) {
-	      var property = statics[name];
-	      if (!statics.hasOwnProperty(name)) {
-	        continue;
-	      }
-	
-	      var isReserved = name in RESERVED_SPEC_KEYS;
-	      _invariant(
-	        !isReserved,
-	        'ReactClass: You are attempting to define a reserved ' +
-	          'property, `%s`, that shouldn\'t be on the "statics" key. Define it ' +
-	          'as an instance property instead; it will still be accessible on the ' +
-	          'constructor.',
-	        name
-	      );
-	
-	      var isAlreadyDefined = name in Constructor;
-	      if (isAlreadyDefined) {
-	        var specPolicy = ReactClassStaticInterface.hasOwnProperty(name)
-	          ? ReactClassStaticInterface[name]
-	          : null;
-	
-	        _invariant(
-	          specPolicy === 'DEFINE_MANY_MERGED',
-	          'ReactClass: You are attempting to define ' +
-	            '`%s` on your component more than once. This conflict may be ' +
-	            'due to a mixin.',
-	          name
-	        );
-	
-	        Constructor[name] = createMergedResultFunction(Constructor[name], property);
-	
-	        return;
-	      }
-	
-	      Constructor[name] = property;
-	    }
-	  }
-	
-	  /**
-	   * Merge two objects, but throw if both contain the same key.
-	   *
-	   * @param {object} one The first object, which is mutated.
-	   * @param {object} two The second object
-	   * @return {object} one after it has been mutated to contain everything in two.
-	   */
-	  function mergeIntoWithNoDuplicateKeys(one, two) {
-	    _invariant(
-	      one && two && typeof one === 'object' && typeof two === 'object',
-	      'mergeIntoWithNoDuplicateKeys(): Cannot merge non-objects.'
-	    );
-	
-	    for (var key in two) {
-	      if (two.hasOwnProperty(key)) {
-	        _invariant(
-	          one[key] === undefined,
-	          'mergeIntoWithNoDuplicateKeys(): ' +
-	            'Tried to merge two objects with the same key: `%s`. This conflict ' +
-	            'may be due to a mixin; in particular, this may be caused by two ' +
-	            'getInitialState() or getDefaultProps() methods returning objects ' +
-	            'with clashing keys.',
-	          key
-	        );
-	        one[key] = two[key];
-	      }
-	    }
-	    return one;
-	  }
-	
-	  /**
-	   * Creates a function that invokes two functions and merges their return values.
-	   *
-	   * @param {function} one Function to invoke first.
-	   * @param {function} two Function to invoke second.
-	   * @return {function} Function that invokes the two argument functions.
-	   * @private
-	   */
-	  function createMergedResultFunction(one, two) {
-	    return function mergedResult() {
-	      var a = one.apply(this, arguments);
-	      var b = two.apply(this, arguments);
-	      if (a == null) {
-	        return b;
-	      } else if (b == null) {
-	        return a;
-	      }
-	      var c = {};
-	      mergeIntoWithNoDuplicateKeys(c, a);
-	      mergeIntoWithNoDuplicateKeys(c, b);
-	      return c;
-	    };
-	  }
-	
-	  /**
-	   * Creates a function that invokes two functions and ignores their return vales.
-	   *
-	   * @param {function} one Function to invoke first.
-	   * @param {function} two Function to invoke second.
-	   * @return {function} Function that invokes the two argument functions.
-	   * @private
-	   */
-	  function createChainedFunction(one, two) {
-	    return function chainedFunction() {
-	      one.apply(this, arguments);
-	      two.apply(this, arguments);
-	    };
-	  }
-	
-	  /**
-	   * Binds a method to the component.
-	   *
-	   * @param {object} component Component whose method is going to be bound.
-	   * @param {function} method Method to be bound.
-	   * @return {function} The bound method.
-	   */
-	  function bindAutoBindMethod(component, method) {
-	    var boundMethod = method.bind(component);
-	    if (process.env.NODE_ENV !== 'production') {
-	      boundMethod.__reactBoundContext = component;
-	      boundMethod.__reactBoundMethod = method;
-	      boundMethod.__reactBoundArguments = null;
-	      var componentName = component.constructor.displayName;
-	      var _bind = boundMethod.bind;
-	      boundMethod.bind = function(newThis) {
-	        for (
-	          var _len = arguments.length,
-	            args = Array(_len > 1 ? _len - 1 : 0),
-	            _key = 1;
-	          _key < _len;
-	          _key++
-	        ) {
-	          args[_key - 1] = arguments[_key];
-	        }
-	
-	        // User is trying to bind() an autobound method; we effectively will
-	        // ignore the value of "this" that the user is trying to use, so
-	        // let's warn.
-	        if (newThis !== component && newThis !== null) {
-	          if (process.env.NODE_ENV !== 'production') {
-	            warning(
-	              false,
-	              'bind(): React component methods may only be bound to the ' +
-	                'component instance. See %s',
-	              componentName
-	            );
-	          }
-	        } else if (!args.length) {
-	          if (process.env.NODE_ENV !== 'production') {
-	            warning(
-	              false,
-	              'bind(): You are binding a component method to the component. ' +
-	                'React does this for you automatically in a high-performance ' +
-	                'way, so you can safely remove this call. See %s',
-	              componentName
-	            );
-	          }
-	          return boundMethod;
-	        }
-	        var reboundMethod = _bind.apply(boundMethod, arguments);
-	        reboundMethod.__reactBoundContext = component;
-	        reboundMethod.__reactBoundMethod = method;
-	        reboundMethod.__reactBoundArguments = args;
-	        return reboundMethod;
-	      };
-	    }
-	    return boundMethod;
-	  }
-	
-	  /**
-	   * Binds all auto-bound methods in a component.
-	   *
-	   * @param {object} component Component whose method is going to be bound.
-	   */
-	  function bindAutoBindMethods(component) {
-	    var pairs = component.__reactAutoBindPairs;
-	    for (var i = 0; i < pairs.length; i += 2) {
-	      var autoBindKey = pairs[i];
-	      var method = pairs[i + 1];
-	      component[autoBindKey] = bindAutoBindMethod(component, method);
-	    }
-	  }
-	
-	  var IsMountedPreMixin = {
-	    componentDidMount: function() {
-	      this.__isMounted = true;
-	    }
-	  };
-	
-	  var IsMountedPostMixin = {
-	    componentWillUnmount: function() {
-	      this.__isMounted = false;
-	    }
-	  };
-	
-	  /**
-	   * Add more to the ReactClass base class. These are all legacy features and
-	   * therefore not already part of the modern ReactComponent.
-	   */
-	  var ReactClassMixin = {
-	    /**
-	     * TODO: This will be deprecated because state should always keep a consistent
-	     * type signature and the only use case for this, is to avoid that.
-	     */
-	    replaceState: function(newState, callback) {
-	      this.updater.enqueueReplaceState(this, newState, callback);
-	    },
-	
-	    /**
-	     * Checks whether or not this composite component is mounted.
-	     * @return {boolean} True if mounted, false otherwise.
-	     * @protected
-	     * @final
-	     */
-	    isMounted: function() {
-	      if (process.env.NODE_ENV !== 'production') {
-	        warning(
-	          this.__didWarnIsMounted,
-	          '%s: isMounted is deprecated. Instead, make sure to clean up ' +
-	            'subscriptions and pending requests in componentWillUnmount to ' +
-	            'prevent memory leaks.',
-	          (this.constructor && this.constructor.displayName) ||
-	            this.name ||
-	            'Component'
-	        );
-	        this.__didWarnIsMounted = true;
-	      }
-	      return !!this.__isMounted;
-	    }
-	  };
-	
-	  var ReactClassComponent = function() {};
-	  _assign(
-	    ReactClassComponent.prototype,
-	    ReactComponent.prototype,
-	    ReactClassMixin
-	  );
-	
-	  /**
-	   * Creates a composite component class given a class specification.
-	   * See https://facebook.github.io/react/docs/top-level-api.html#react.createclass
-	   *
-	   * @param {object} spec Class specification (which must define `render`).
-	   * @return {function} Component constructor function.
-	   * @public
-	   */
-	  function createClass(spec) {
-	    // To keep our warnings more understandable, we'll use a little hack here to
-	    // ensure that Constructor.name !== 'Constructor'. This makes sure we don't
-	    // unnecessarily identify a class without displayName as 'Constructor'.
-	    var Constructor = identity(function(props, context, updater) {
-	      // This constructor gets overridden by mocks. The argument is used
-	      // by mocks to assert on what gets mounted.
-	
-	      if (process.env.NODE_ENV !== 'production') {
-	        warning(
-	          this instanceof Constructor,
-	          'Something is calling a React component directly. Use a factory or ' +
-	            'JSX instead. See: https://fb.me/react-legacyfactory'
-	        );
-	      }
-	
-	      // Wire up auto-binding
-	      if (this.__reactAutoBindPairs.length) {
-	        bindAutoBindMethods(this);
-	      }
-	
-	      this.props = props;
-	      this.context = context;
-	      this.refs = emptyObject;
-	      this.updater = updater || ReactNoopUpdateQueue;
-	
-	      this.state = null;
-	
-	      // ReactClasses doesn't have constructors. Instead, they use the
-	      // getInitialState and componentWillMount methods for initialization.
-	
-	      var initialState = this.getInitialState ? this.getInitialState() : null;
-	      if (process.env.NODE_ENV !== 'production') {
-	        // We allow auto-mocks to proceed as if they're returning null.
-	        if (
-	          initialState === undefined &&
-	          this.getInitialState._isMockFunction
-	        ) {
-	          // This is probably bad practice. Consider warning here and
-	          // deprecating this convenience.
-	          initialState = null;
-	        }
-	      }
-	      _invariant(
-	        typeof initialState === 'object' && !Array.isArray(initialState),
-	        '%s.getInitialState(): must return an object or null',
-	        Constructor.displayName || 'ReactCompositeComponent'
-	      );
-	
-	      this.state = initialState;
-	    });
-	    Constructor.prototype = new ReactClassComponent();
-	    Constructor.prototype.constructor = Constructor;
-	    Constructor.prototype.__reactAutoBindPairs = [];
-	
-	    injectedMixins.forEach(mixSpecIntoComponent.bind(null, Constructor));
-	
-	    mixSpecIntoComponent(Constructor, IsMountedPreMixin);
-	    mixSpecIntoComponent(Constructor, spec);
-	    mixSpecIntoComponent(Constructor, IsMountedPostMixin);
-	
-	    // Initialize the defaultProps property after all mixins have been merged.
-	    if (Constructor.getDefaultProps) {
-	      Constructor.defaultProps = Constructor.getDefaultProps();
-	    }
-	
-	    if (process.env.NODE_ENV !== 'production') {
-	      // This is a tag to indicate that the use of these method names is ok,
-	      // since it's used with createClass. If it's not, then it's likely a
-	      // mistake so we'll warn you to use the static property, property
-	      // initializer or constructor respectively.
-	      if (Constructor.getDefaultProps) {
-	        Constructor.getDefaultProps.isReactClassApproved = {};
-	      }
-	      if (Constructor.prototype.getInitialState) {
-	        Constructor.prototype.getInitialState.isReactClassApproved = {};
-	      }
-	    }
-	
-	    _invariant(
-	      Constructor.prototype.render,
-	      'createClass(...): Class specification must implement a `render` method.'
-	    );
-	
-	    if (process.env.NODE_ENV !== 'production') {
-	      warning(
-	        !Constructor.prototype.componentShouldUpdate,
-	        '%s has a method called ' +
-	          'componentShouldUpdate(). Did you mean shouldComponentUpdate()? ' +
-	          'The name is phrased as a question because the function is ' +
-	          'expected to return a value.',
-	        spec.displayName || 'A component'
-	      );
-	      warning(
-	        !Constructor.prototype.componentWillRecieveProps,
-	        '%s has a method called ' +
-	          'componentWillRecieveProps(). Did you mean componentWillReceiveProps()?',
-	        spec.displayName || 'A component'
-	      );
-	      warning(
-	        !Constructor.prototype.UNSAFE_componentWillRecieveProps,
-	        '%s has a method called UNSAFE_componentWillRecieveProps(). ' +
-	          'Did you mean UNSAFE_componentWillReceiveProps()?',
-	        spec.displayName || 'A component'
-	      );
-	    }
-	
-	    // Reduce time spent doing lookups by setting these on the prototype.
-	    for (var methodName in ReactClassInterface) {
-	      if (!Constructor.prototype[methodName]) {
-	        Constructor.prototype[methodName] = null;
-	      }
-	    }
-	
-	    return Constructor;
-	  }
-	
-	  return createClass;
-	}
-	
-	module.exports = factory;
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33)))
-
-/***/ }),
-/* 247 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 *
-	 */
-	
-	'use strict';
-	
-	var emptyObject = {};
-	
-	if (process.env.NODE_ENV !== 'production') {
-	  Object.freeze(emptyObject);
-	}
-	
-	module.exports = emptyObject;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33)))
-
-/***/ }),
-/* 248 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 *
-	 */
-	
-	'use strict';
-	
-	/**
-	 * Use invariant() to assert state which your program assumes to be true.
-	 *
-	 * Provide sprintf-style format (only %s is supported) and arguments
-	 * to provide information about what broke and what you were
-	 * expecting.
-	 *
-	 * The invariant message will be stripped in production, but the invariant
-	 * will remain to ensure logic does not differ in production.
-	 */
-	
-	var validateFormat = function validateFormat(format) {};
-	
-	if (process.env.NODE_ENV !== 'production') {
-	  validateFormat = function validateFormat(format) {
-	    if (format === undefined) {
-	      throw new Error('invariant requires an error message argument');
-	    }
-	  };
-	}
-	
-	function invariant(condition, format, a, b, c, d, e, f) {
-	  validateFormat(format);
-	
-	  if (!condition) {
-	    var error;
-	    if (format === undefined) {
-	      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
-	    } else {
-	      var args = [a, b, c, d, e, f];
-	      var argIndex = 0;
-	      error = new Error(format.replace(/%s/g, function () {
-	        return args[argIndex++];
-	      }));
-	      error.name = 'Invariant Violation';
-	    }
-	
-	    error.framesToPop = 1; // we don't care about invariant's own frame
-	    throw error;
-	  }
-	}
-	
-	module.exports = invariant;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33)))
-
-/***/ }),
-/* 249 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright (c) 2014-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 *
-	 */
-	
-	'use strict';
-	
-	var emptyFunction = __webpack_require__(250);
-	
-	/**
-	 * Similar to invariant but only logs a warning if the condition is not met.
-	 * This can be used to log issues in development environments in critical
-	 * paths. Removing the logging code for production environments will keep the
-	 * same logic and follow the same code paths.
-	 */
-	
-	var warning = emptyFunction;
-	
-	if (process.env.NODE_ENV !== 'production') {
-	  var printWarning = function printWarning(format) {
-	    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-	      args[_key - 1] = arguments[_key];
-	    }
-	
-	    var argIndex = 0;
-	    var message = 'Warning: ' + format.replace(/%s/g, function () {
-	      return args[argIndex++];
-	    });
-	    if (typeof console !== 'undefined') {
-	      console.error(message);
-	    }
-	    try {
-	      // --- Welcome to debugging React ---
-	      // This error was thrown as a convenience so that you can use this stack
-	      // to find the callsite that caused this warning to fire.
-	      throw new Error(message);
-	    } catch (x) {}
-	  };
-	
-	  warning = function warning(condition, format) {
-	    if (format === undefined) {
-	      throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
-	    }
-	
-	    if (format.indexOf('Failed Composite propType: ') === 0) {
-	      return; // Ignore CompositeComponent proptype check.
-	    }
-	
-	    if (!condition) {
-	      for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-	        args[_key2 - 2] = arguments[_key2];
-	      }
-	
-	      printWarning.apply(undefined, [format].concat(args));
-	    }
-	  };
-	}
-	
-	module.exports = warning;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33)))
-
-/***/ }),
-/* 250 */
-/***/ (function(module, exports) {
-
-	"use strict";
-	
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 *
-	 * 
-	 */
-	
-	function makeEmptyFunction(arg) {
-	  return function () {
-	    return arg;
-	  };
-	}
-	
-	/**
-	 * This function accepts and discards inputs; it has no side effects. This is
-	 * primarily useful idiomatically for overridable function endpoints which
-	 * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
-	 */
-	var emptyFunction = function emptyFunction() {};
-	
-	emptyFunction.thatReturns = makeEmptyFunction;
-	emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-	emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-	emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-	emptyFunction.thatReturnsThis = function () {
-	  return this;
-	};
-	emptyFunction.thatReturnsArgument = function (arg) {
-	  return arg;
-	};
-	
-	module.exports = emptyFunction;
-
-/***/ }),
-/* 251 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -24973,7 +24104,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 252 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25003,7 +24134,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 253 */
+/* 247 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25012,15 +24143,11 @@
 	  value: true
 	});
 	
-	var _extends2 = __webpack_require__(144);
-	
-	var _extends3 = _interopRequireDefault(_extends2);
-	
 	var _classCallCheck2 = __webpack_require__(184);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _createClass2 = __webpack_require__(254);
+	var _createClass2 = __webpack_require__(248);
 	
 	var _createClass3 = _interopRequireDefault(_createClass2);
 	
@@ -25036,271 +24163,117 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
 	var _reactDom = __webpack_require__(12);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcAlign = __webpack_require__(258);
+	var _propTypes = __webpack_require__(5);
 	
-	var _rcAlign2 = _interopRequireDefault(_rcAlign);
-	
-	var _rcAnimate = __webpack_require__(261);
-	
-	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
-	
-	var _PopupInner = __webpack_require__(268);
-	
-	var _PopupInner2 = _interopRequireDefault(_PopupInner);
-	
-	var _LazyRenderBox = __webpack_require__(269);
-	
-	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
-	
-	var _utils = __webpack_require__(270);
+	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var Popup = function (_Component) {
-	  (0, _inherits3['default'])(Popup, _Component);
+	var ContainerRender = function (_React$Component) {
+	  (0, _inherits3['default'])(ContainerRender, _React$Component);
 	
-	  function Popup(props) {
-	    (0, _classCallCheck3['default'])(this, Popup);
+	  function ContainerRender() {
+	    var _ref;
 	
-	    var _this = (0, _possibleConstructorReturn3['default'])(this, (Popup.__proto__ || Object.getPrototypeOf(Popup)).call(this, props));
+	    var _temp, _this, _ret;
 	
-	    _initialiseProps.call(_this);
+	    (0, _classCallCheck3['default'])(this, ContainerRender);
 	
-	    _this.savePopupRef = _utils.saveRef.bind(_this, 'popupInstance');
-	    _this.saveAlignRef = _utils.saveRef.bind(_this, 'alignInstance');
-	    return _this;
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+	
+	    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3['default'])(this, (_ref = ContainerRender.__proto__ || Object.getPrototypeOf(ContainerRender)).call.apply(_ref, [this].concat(args))), _this), _this.removeContainer = function () {
+	      if (_this.container) {
+	        _reactDom2['default'].unmountComponentAtNode(_this.container);
+	        _this.container.parentNode.removeChild(_this.container);
+	        _this.container = null;
+	      }
+	    }, _this.renderComponent = function (props, ready) {
+	      var _this$props = _this.props,
+	          visible = _this$props.visible,
+	          getComponent = _this$props.getComponent,
+	          forceRender = _this$props.forceRender,
+	          getContainer = _this$props.getContainer,
+	          parent = _this$props.parent;
+	
+	      if (visible || parent._component || forceRender) {
+	        if (!_this.container) {
+	          _this.container = getContainer();
+	        }
+	        _reactDom2['default'].unstable_renderSubtreeIntoContainer(parent, getComponent(props), _this.container, function callback() {
+	          if (ready) {
+	            ready.call(this);
+	          }
+	        });
+	      }
+	    }, _temp), (0, _possibleConstructorReturn3['default'])(_this, _ret);
 	  }
 	
-	  (0, _createClass3['default'])(Popup, [{
+	  (0, _createClass3['default'])(ContainerRender, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      this.rootNode = this.getPopupDomNode();
-	    }
-	  }, {
-	    key: 'getPopupDomNode',
-	    value: function getPopupDomNode() {
-	      return _reactDom2['default'].findDOMNode(this.popupInstance);
-	    }
-	  }, {
-	    key: 'getMaskTransitionName',
-	    value: function getMaskTransitionName() {
-	      var props = this.props;
-	      var transitionName = props.maskTransitionName;
-	      var animation = props.maskAnimation;
-	      if (!transitionName && animation) {
-	        transitionName = props.prefixCls + '-' + animation;
+	      if (this.props.autoMount) {
+	        this.renderComponent();
 	      }
-	      return transitionName;
 	    }
 	  }, {
-	    key: 'getTransitionName',
-	    value: function getTransitionName() {
-	      var props = this.props;
-	      var transitionName = props.transitionName;
-	      if (!transitionName && props.animation) {
-	        transitionName = props.prefixCls + '-' + props.animation;
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      if (this.props.autoMount) {
+	        this.renderComponent();
 	      }
-	      return transitionName;
 	    }
 	  }, {
-	    key: 'getClassName',
-	    value: function getClassName(currentAlignClassName) {
-	      return this.props.prefixCls + ' ' + this.props.className + ' ' + currentAlignClassName;
-	    }
-	  }, {
-	    key: 'getPopupElement',
-	    value: function getPopupElement() {
-	      var savePopupRef = this.savePopupRef,
-	          props = this.props;
-	      var align = props.align,
-	          style = props.style,
-	          visible = props.visible,
-	          prefixCls = props.prefixCls,
-	          destroyPopupOnHide = props.destroyPopupOnHide;
-	
-	      var className = this.getClassName(this.currentAlignClassName || props.getClassNameFromAlign(align));
-	      var hiddenClassName = prefixCls + '-hidden';
-	      if (!visible) {
-	        this.currentAlignClassName = null;
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      if (this.props.autoDestroy) {
+	        this.removeContainer();
 	      }
-	      var newStyle = (0, _extends3['default'])({}, style, this.getZIndexStyle());
-	      var popupInnerProps = {
-	        className: className,
-	        prefixCls: prefixCls,
-	        ref: savePopupRef,
-	        onMouseEnter: props.onMouseEnter,
-	        onMouseLeave: props.onMouseLeave,
-	        style: newStyle
-	      };
-	      if (destroyPopupOnHide) {
-	        return _react2['default'].createElement(
-	          _rcAnimate2['default'],
-	          {
-	            component: '',
-	            exclusive: true,
-	            transitionAppear: true,
-	            transitionName: this.getTransitionName()
-	          },
-	          visible ? _react2['default'].createElement(
-	            _rcAlign2['default'],
-	            {
-	              target: this.getTarget,
-	              key: 'popup',
-	              ref: this.saveAlignRef,
-	              monitorWindowResize: true,
-	              align: align,
-	              onAlign: this.onAlign
-	            },
-	            _react2['default'].createElement(
-	              _PopupInner2['default'],
-	              (0, _extends3['default'])({
-	                visible: true
-	              }, popupInnerProps),
-	              props.children
-	            )
-	          ) : null
-	        );
-	      }
-	      return _react2['default'].createElement(
-	        _rcAnimate2['default'],
-	        {
-	          component: '',
-	          exclusive: true,
-	          transitionAppear: true,
-	          transitionName: this.getTransitionName(),
-	          showProp: 'xVisible'
-	        },
-	        _react2['default'].createElement(
-	          _rcAlign2['default'],
-	          {
-	            target: this.getTarget,
-	            key: 'popup',
-	            ref: this.saveAlignRef,
-	            monitorWindowResize: true,
-	            xVisible: visible,
-	            childrenProps: { visible: 'xVisible' },
-	            disabled: !visible,
-	            align: align,
-	            onAlign: this.onAlign
-	          },
-	          _react2['default'].createElement(
-	            _PopupInner2['default'],
-	            (0, _extends3['default'])({
-	              hiddenClassName: hiddenClassName
-	            }, popupInnerProps),
-	            props.children
-	          )
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'getZIndexStyle',
-	    value: function getZIndexStyle() {
-	      var style = {};
-	      var props = this.props;
-	      if (props.zIndex !== undefined) {
-	        style.zIndex = props.zIndex;
-	      }
-	      return style;
-	    }
-	  }, {
-	    key: 'getMaskElement',
-	    value: function getMaskElement() {
-	      var props = this.props;
-	      var maskElement = void 0;
-	      if (props.mask) {
-	        var maskTransition = this.getMaskTransitionName();
-	        maskElement = _react2['default'].createElement(_LazyRenderBox2['default'], {
-	          style: this.getZIndexStyle(),
-	          key: 'mask',
-	          className: props.prefixCls + '-mask',
-	          hiddenClassName: props.prefixCls + '-mask-hidden',
-	          visible: props.visible
-	        });
-	        if (maskTransition) {
-	          maskElement = _react2['default'].createElement(
-	            _rcAnimate2['default'],
-	            {
-	              key: 'mask',
-	              showProp: 'visible',
-	              transitionAppear: true,
-	              component: '',
-	              transitionName: maskTransition
-	            },
-	            maskElement
-	          );
-	        }
-	      }
-	      return maskElement;
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2['default'].createElement(
-	        'div',
-	        null,
-	        this.getMaskElement(),
-	        this.getPopupElement()
-	      );
+	      return this.props.children({
+	        renderComponent: this.renderComponent,
+	        removeContainer: this.removeContainer
+	      });
 	    }
 	  }]);
-	  return Popup;
-	}(_react.Component);
+	  return ContainerRender;
+	}(_react2['default'].Component);
 	
-	Popup.propTypes = {
+	ContainerRender.propTypes = {
+	  autoMount: _propTypes2['default'].bool,
+	  autoDestroy: _propTypes2['default'].bool,
 	  visible: _propTypes2['default'].bool,
-	  style: _propTypes2['default'].object,
-	  getClassNameFromAlign: _propTypes2['default'].func,
-	  onAlign: _propTypes2['default'].func,
-	  getRootDomNode: _propTypes2['default'].func,
-	  onMouseEnter: _propTypes2['default'].func,
-	  align: _propTypes2['default'].any,
-	  destroyPopupOnHide: _propTypes2['default'].bool,
-	  className: _propTypes2['default'].string,
-	  prefixCls: _propTypes2['default'].string,
-	  onMouseLeave: _propTypes2['default'].func
+	  forceRender: _propTypes2['default'].bool,
+	  parent: _propTypes2['default'].any,
+	  getComponent: _propTypes2['default'].func.isRequired,
+	  getContainer: _propTypes2['default'].func.isRequired,
+	  children: _propTypes2['default'].func.isRequired
 	};
-	
-	var _initialiseProps = function _initialiseProps() {
-	  var _this2 = this;
-	
-	  this.onAlign = function (popupDomNode, align) {
-	    var props = _this2.props;
-	    var currentAlignClassName = props.getClassNameFromAlign(align);
-	    // FIX: https://github.com/react-component/trigger/issues/56
-	    // FIX: https://github.com/react-component/tooltip/issues/79
-	    if (_this2.currentAlignClassName !== currentAlignClassName) {
-	      _this2.currentAlignClassName = currentAlignClassName;
-	      popupDomNode.className = _this2.getClassName(currentAlignClassName);
-	    }
-	    props.onAlign(popupDomNode, align);
-	  };
-	
-	  this.getTarget = function () {
-	    return _this2.props.getRootDomNode();
-	  };
+	ContainerRender.defaultProps = {
+	  autoMount: true,
+	  autoDestroy: true,
+	  forceRender: false
 	};
-	
-	exports['default'] = Popup;
+	exports['default'] = ContainerRender;
 	module.exports = exports['default'];
 
 /***/ }),
-/* 254 */
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	exports.__esModule = true;
 	
-	var _defineProperty = __webpack_require__(255);
+	var _defineProperty = __webpack_require__(249);
 	
 	var _defineProperty2 = _interopRequireDefault(_defineProperty);
 	
@@ -25325,16 +24298,16 @@
 	}();
 
 /***/ }),
-/* 255 */
+/* 249 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(256), __esModule: true };
+	module.exports = { "default": __webpack_require__(250), __esModule: true };
 
 /***/ }),
-/* 256 */
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	__webpack_require__(257);
+	__webpack_require__(251);
 	var $Object = __webpack_require__(150).Object;
 	module.exports = function defineProperty(it, key, desc) {
 	  return $Object.defineProperty(it, key, desc);
@@ -25342,7 +24315,7 @@
 
 
 /***/ }),
-/* 257 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var $export = __webpack_require__(148);
@@ -25351,30 +24324,162 @@
 
 
 /***/ }),
-/* 258 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	exports.__esModule = true;
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	
-	var _Align = __webpack_require__(259);
+	var _classCallCheck2 = __webpack_require__(184);
 	
-	var _Align2 = _interopRequireDefault(_Align);
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+	
+	var _createClass2 = __webpack_require__(248);
+	
+	var _createClass3 = _interopRequireDefault(_createClass2);
+	
+	var _possibleConstructorReturn2 = __webpack_require__(185);
+	
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+	
+	var _inherits2 = __webpack_require__(219);
+	
+	var _inherits3 = _interopRequireDefault(_inherits2);
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(12);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _propTypes = __webpack_require__(5);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	exports['default'] = _Align2['default']; // export this package's api
+	var Portal = function (_React$Component) {
+	  (0, _inherits3['default'])(Portal, _React$Component);
 	
+	  function Portal() {
+	    (0, _classCallCheck3['default'])(this, Portal);
+	    return (0, _possibleConstructorReturn3['default'])(this, (Portal.__proto__ || Object.getPrototypeOf(Portal)).apply(this, arguments));
+	  }
+	
+	  (0, _createClass3['default'])(Portal, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.createContainer();
+	    }
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate(prevProps) {
+	      var didUpdate = this.props.didUpdate;
+	
+	      if (didUpdate) {
+	        didUpdate(prevProps);
+	      }
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      this.removeContainer();
+	    }
+	  }, {
+	    key: 'createContainer',
+	    value: function createContainer() {
+	      this._container = this.props.getContainer();
+	      this.forceUpdate();
+	    }
+	  }, {
+	    key: 'removeContainer',
+	    value: function removeContainer() {
+	      if (this._container) {
+	        this._container.parentNode.removeChild(this._container);
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      if (this._container) {
+	        return _reactDom2['default'].createPortal(this.props.children, this._container);
+	      }
+	      return null;
+	    }
+	  }]);
+	  return Portal;
+	}(_react2['default'].Component);
+	
+	Portal.propTypes = {
+	  getContainer: _propTypes2['default'].func.isRequired,
+	  children: _propTypes2['default'].node.isRequired,
+	  didUpdate: _propTypes2['default'].func
+	};
+	exports['default'] = Portal;
 	module.exports = exports['default'];
 
 /***/ }),
-/* 259 */
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
+	
+	var _extends2 = __webpack_require__(144);
+	
+	var _extends3 = _interopRequireDefault(_extends2);
+	
+	exports.getAlignFromPlacement = getAlignFromPlacement;
+	exports.getAlignPopupClassName = getAlignPopupClassName;
+	exports.saveRef = saveRef;
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	function isPointsEq(a1, a2, isAlignPoint) {
+	  if (isAlignPoint) {
+	    return a1[0] === a2[0];
+	  }
+	  return a1[0] === a2[0] && a1[1] === a2[1];
+	}
+	
+	function getAlignFromPlacement(builtinPlacements, placementStr, align) {
+	  var baseAlign = builtinPlacements[placementStr] || {};
+	  return (0, _extends3['default'])({}, baseAlign, align);
+	}
+	
+	function getAlignPopupClassName(builtinPlacements, prefixCls, align, isAlignPoint) {
+	  var points = align.points;
+	  for (var placement in builtinPlacements) {
+	    if (builtinPlacements.hasOwnProperty(placement)) {
+	      if (isPointsEq(builtinPlacements[placement].points, points, isAlignPoint)) {
+	        return prefixCls + '-placement-' + placement;
+	      }
+	    }
+	  }
+	  return '';
+	}
+	
+	function saveRef(name, component) {
+	  this[name] = component;
+	}
+
+/***/ }),
+/* 254 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	exports.__esModule = true;
+	
+	var _extends2 = __webpack_require__(144);
+	
+	var _extends3 = _interopRequireDefault(_extends2);
 	
 	var _classCallCheck2 = __webpack_require__(184);
 	
@@ -25400,13 +24505,422 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
+	var _rcAlign = __webpack_require__(255);
+	
+	var _rcAlign2 = _interopRequireDefault(_rcAlign);
+	
+	var _rcAnimate = __webpack_require__(258);
+	
+	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
+	
+	var _PopupInner = __webpack_require__(265);
+	
+	var _PopupInner2 = _interopRequireDefault(_PopupInner);
+	
+	var _LazyRenderBox = __webpack_require__(266);
+	
+	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
+	
+	var _utils = __webpack_require__(253);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var Popup = function (_Component) {
+	  (0, _inherits3['default'])(Popup, _Component);
+	
+	  function Popup(props) {
+	    (0, _classCallCheck3['default'])(this, Popup);
+	
+	    var _this = (0, _possibleConstructorReturn3['default'])(this, _Component.call(this, props));
+	
+	    _initialiseProps.call(_this);
+	
+	    _this.state = {
+	      // Used for stretch
+	      stretchChecked: false,
+	      targetWidth: undefined,
+	      targetHeight: undefined
+	    };
+	
+	    _this.savePopupRef = _utils.saveRef.bind(_this, 'popupInstance');
+	    _this.saveAlignRef = _utils.saveRef.bind(_this, 'alignInstance');
+	    return _this;
+	  }
+	
+	  Popup.prototype.componentDidMount = function componentDidMount() {
+	    this.rootNode = this.getPopupDomNode();
+	    this.setStretchSize();
+	  };
+	
+	  Popup.prototype.componentDidUpdate = function componentDidUpdate() {
+	    this.setStretchSize();
+	  };
+	
+	  // Record size if stretch needed
+	
+	
+	  Popup.prototype.getPopupDomNode = function getPopupDomNode() {
+	    return _reactDom2['default'].findDOMNode(this.popupInstance);
+	  };
+	
+	  // `target` on `rc-align` can accept as a function to get the bind element or a point.
+	  // ref: https://www.npmjs.com/package/rc-align
+	
+	
+	  Popup.prototype.getMaskTransitionName = function getMaskTransitionName() {
+	    var props = this.props;
+	    var transitionName = props.maskTransitionName;
+	    var animation = props.maskAnimation;
+	    if (!transitionName && animation) {
+	      transitionName = props.prefixCls + '-' + animation;
+	    }
+	    return transitionName;
+	  };
+	
+	  Popup.prototype.getTransitionName = function getTransitionName() {
+	    var props = this.props;
+	    var transitionName = props.transitionName;
+	    if (!transitionName && props.animation) {
+	      transitionName = props.prefixCls + '-' + props.animation;
+	    }
+	    return transitionName;
+	  };
+	
+	  Popup.prototype.getClassName = function getClassName(currentAlignClassName) {
+	    return this.props.prefixCls + ' ' + this.props.className + ' ' + currentAlignClassName;
+	  };
+	
+	  Popup.prototype.getPopupElement = function getPopupElement() {
+	    var _this2 = this;
+	
+	    var savePopupRef = this.savePopupRef;
+	    var _state = this.state,
+	        stretchChecked = _state.stretchChecked,
+	        targetHeight = _state.targetHeight,
+	        targetWidth = _state.targetWidth;
+	    var _props = this.props,
+	        align = _props.align,
+	        visible = _props.visible,
+	        prefixCls = _props.prefixCls,
+	        style = _props.style,
+	        getClassNameFromAlign = _props.getClassNameFromAlign,
+	        destroyPopupOnHide = _props.destroyPopupOnHide,
+	        stretch = _props.stretch,
+	        children = _props.children,
+	        onMouseEnter = _props.onMouseEnter,
+	        onMouseLeave = _props.onMouseLeave,
+	        onMouseDown = _props.onMouseDown,
+	        onTouchStart = _props.onTouchStart;
+	
+	    var className = this.getClassName(this.currentAlignClassName || getClassNameFromAlign(align));
+	    var hiddenClassName = prefixCls + '-hidden';
+	
+	    if (!visible) {
+	      this.currentAlignClassName = null;
+	    }
+	
+	    var sizeStyle = {};
+	    if (stretch) {
+	      // Stretch with target
+	      if (stretch.indexOf('height') !== -1) {
+	        sizeStyle.height = targetHeight;
+	      } else if (stretch.indexOf('minHeight') !== -1) {
+	        sizeStyle.minHeight = targetHeight;
+	      }
+	      if (stretch.indexOf('width') !== -1) {
+	        sizeStyle.width = targetWidth;
+	      } else if (stretch.indexOf('minWidth') !== -1) {
+	        sizeStyle.minWidth = targetWidth;
+	      }
+	
+	      // Delay force align to makes ui smooth
+	      if (!stretchChecked) {
+	        sizeStyle.visibility = 'hidden';
+	        setTimeout(function () {
+	          if (_this2.alignInstance) {
+	            _this2.alignInstance.forceAlign();
+	          }
+	        }, 0);
+	      }
+	    }
+	
+	    var newStyle = (0, _extends3['default'])({}, sizeStyle, style, this.getZIndexStyle());
+	
+	    var popupInnerProps = {
+	      className: className,
+	      prefixCls: prefixCls,
+	      ref: savePopupRef,
+	      onMouseEnter: onMouseEnter,
+	      onMouseLeave: onMouseLeave,
+	      onMouseDown: onMouseDown,
+	      onTouchStart: onTouchStart,
+	      style: newStyle
+	    };
+	    if (destroyPopupOnHide) {
+	      return _react2['default'].createElement(
+	        _rcAnimate2['default'],
+	        {
+	          component: '',
+	          exclusive: true,
+	          transitionAppear: true,
+	          transitionName: this.getTransitionName()
+	        },
+	        visible ? _react2['default'].createElement(
+	          _rcAlign2['default'],
+	          {
+	            target: this.getAlignTarget(),
+	            key: 'popup',
+	            ref: this.saveAlignRef,
+	            monitorWindowResize: true,
+	            align: align,
+	            onAlign: this.onAlign
+	          },
+	          _react2['default'].createElement(
+	            _PopupInner2['default'],
+	            (0, _extends3['default'])({
+	              visible: true
+	            }, popupInnerProps),
+	            children
+	          )
+	        ) : null
+	      );
+	    }
+	
+	    return _react2['default'].createElement(
+	      _rcAnimate2['default'],
+	      {
+	        component: '',
+	        exclusive: true,
+	        transitionAppear: true,
+	        transitionName: this.getTransitionName(),
+	        showProp: 'xVisible'
+	      },
+	      _react2['default'].createElement(
+	        _rcAlign2['default'],
+	        {
+	          target: this.getAlignTarget(),
+	          key: 'popup',
+	          ref: this.saveAlignRef,
+	          monitorWindowResize: true,
+	          xVisible: visible,
+	          childrenProps: { visible: 'xVisible' },
+	          disabled: !visible,
+	          align: align,
+	          onAlign: this.onAlign
+	        },
+	        _react2['default'].createElement(
+	          _PopupInner2['default'],
+	          (0, _extends3['default'])({
+	            hiddenClassName: hiddenClassName
+	          }, popupInnerProps),
+	          children
+	        )
+	      )
+	    );
+	  };
+	
+	  Popup.prototype.getZIndexStyle = function getZIndexStyle() {
+	    var style = {};
+	    var props = this.props;
+	    if (props.zIndex !== undefined) {
+	      style.zIndex = props.zIndex;
+	    }
+	    return style;
+	  };
+	
+	  Popup.prototype.getMaskElement = function getMaskElement() {
+	    var props = this.props;
+	    var maskElement = void 0;
+	    if (props.mask) {
+	      var maskTransition = this.getMaskTransitionName();
+	      maskElement = _react2['default'].createElement(_LazyRenderBox2['default'], {
+	        style: this.getZIndexStyle(),
+	        key: 'mask',
+	        className: props.prefixCls + '-mask',
+	        hiddenClassName: props.prefixCls + '-mask-hidden',
+	        visible: props.visible
+	      });
+	      if (maskTransition) {
+	        maskElement = _react2['default'].createElement(
+	          _rcAnimate2['default'],
+	          {
+	            key: 'mask',
+	            showProp: 'visible',
+	            transitionAppear: true,
+	            component: '',
+	            transitionName: maskTransition
+	          },
+	          maskElement
+	        );
+	      }
+	    }
+	    return maskElement;
+	  };
+	
+	  Popup.prototype.render = function render() {
+	    return _react2['default'].createElement(
+	      'div',
+	      null,
+	      this.getMaskElement(),
+	      this.getPopupElement()
+	    );
+	  };
+	
+	  return Popup;
+	}(_react.Component);
+	
+	Popup.propTypes = {
+	  visible: _propTypes2['default'].bool,
+	  style: _propTypes2['default'].object,
+	  getClassNameFromAlign: _propTypes2['default'].func,
+	  onAlign: _propTypes2['default'].func,
+	  getRootDomNode: _propTypes2['default'].func,
+	  align: _propTypes2['default'].any,
+	  destroyPopupOnHide: _propTypes2['default'].bool,
+	  className: _propTypes2['default'].string,
+	  prefixCls: _propTypes2['default'].string,
+	  onMouseEnter: _propTypes2['default'].func,
+	  onMouseLeave: _propTypes2['default'].func,
+	  onMouseDown: _propTypes2['default'].func,
+	  onTouchStart: _propTypes2['default'].func,
+	  stretch: _propTypes2['default'].string,
+	  children: _propTypes2['default'].node,
+	  point: _propTypes2['default'].shape({
+	    pageX: _propTypes2['default'].number,
+	    pageY: _propTypes2['default'].number
+	  })
+	};
+	
+	var _initialiseProps = function _initialiseProps() {
+	  var _this3 = this;
+	
+	  this.onAlign = function (popupDomNode, align) {
+	    var props = _this3.props;
+	    var currentAlignClassName = props.getClassNameFromAlign(align);
+	    // FIX: https://github.com/react-component/trigger/issues/56
+	    // FIX: https://github.com/react-component/tooltip/issues/79
+	    if (_this3.currentAlignClassName !== currentAlignClassName) {
+	      _this3.currentAlignClassName = currentAlignClassName;
+	      popupDomNode.className = _this3.getClassName(currentAlignClassName);
+	    }
+	    props.onAlign(popupDomNode, align);
+	  };
+	
+	  this.setStretchSize = function () {
+	    var _props2 = _this3.props,
+	        stretch = _props2.stretch,
+	        getRootDomNode = _props2.getRootDomNode,
+	        visible = _props2.visible;
+	    var _state2 = _this3.state,
+	        stretchChecked = _state2.stretchChecked,
+	        targetHeight = _state2.targetHeight,
+	        targetWidth = _state2.targetWidth;
+	
+	
+	    if (!stretch || !visible) {
+	      if (stretchChecked) {
+	        _this3.setState({ stretchChecked: false });
+	      }
+	      return;
+	    }
+	
+	    var $ele = getRootDomNode();
+	    if (!$ele) return;
+	
+	    var height = $ele.offsetHeight;
+	    var width = $ele.offsetWidth;
+	
+	    if (targetHeight !== height || targetWidth !== width || !stretchChecked) {
+	      _this3.setState({
+	        stretchChecked: true,
+	        targetHeight: height,
+	        targetWidth: width
+	      });
+	    }
+	  };
+	
+	  this.getTargetElement = function () {
+	    return _this3.props.getRootDomNode();
+	  };
+	
+	  this.getAlignTarget = function () {
+	    var point = _this3.props.point;
+	
+	    if (point) {
+	      return point;
+	    }
+	    return _this3.getTargetElement;
+	  };
+	};
+	
+	exports['default'] = Popup;
+	module.exports = exports['default'];
+
+/***/ }),
+/* 255 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _Align = __webpack_require__(256);
+	
+	var _Align2 = _interopRequireDefault(_Align);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	exports['default'] = _Align2['default']; // export this package's api
+	
+	module.exports = exports['default'];
+
+/***/ }),
+/* 256 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _classCallCheck2 = __webpack_require__(184);
+	
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+	
+	var _createClass2 = __webpack_require__(248);
+	
+	var _createClass3 = _interopRequireDefault(_createClass2);
+	
+	var _possibleConstructorReturn2 = __webpack_require__(185);
+	
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+	
+	var _inherits2 = __webpack_require__(219);
+	
+	var _inherits3 = _interopRequireDefault(_inherits2);
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _propTypes = __webpack_require__(5);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	var _reactDom = __webpack_require__(12);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
 	var _domAlign = __webpack_require__(51);
 	
-	var _addEventListener = __webpack_require__(252);
+	var _addEventListener = __webpack_require__(246);
 	
 	var _addEventListener2 = _interopRequireDefault(_addEventListener);
 	
-	var _util = __webpack_require__(260);
+	var _util = __webpack_require__(257);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -25424,6 +24938,8 @@
 	  (0, _inherits3['default'])(Align, _Component);
 	
 	  function Align() {
+	    var _ref;
+	
 	    var _temp, _this, _ret;
 	
 	    (0, _classCallCheck3['default'])(this, Align);
@@ -25432,7 +24948,7 @@
 	      args[_key] = arguments[_key];
 	    }
 	
-	    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3['default'])(this, _Component.call.apply(_Component, [this].concat(args))), _this), _this.forceAlign = function () {
+	    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3['default'])(this, (_ref = Align.__proto__ || Object.getPrototypeOf(Align)).call.apply(_ref, [this].concat(args))), _this), _this.forceAlign = function () {
 	      var _this$props = _this.props,
 	          disabled = _this$props.disabled,
 	          target = _this$props.target,
@@ -25446,11 +24962,17 @@
 	        var element = getElement(target);
 	        var point = getPoint(target);
 	
+	        // IE lose focus after element realign
+	        // We should record activeElement and restore later
+	        var activeElement = document.activeElement;
+	
 	        if (element) {
 	          result = (0, _domAlign.alignElement)(source, element, align);
 	        } else if (point) {
 	          result = (0, _domAlign.alignPoint)(source, point, align);
 	        }
+	
+	        (0, _util.restoreFocus)(activeElement, source);
 	
 	        if (onAlign) {
 	          onAlign(source, result);
@@ -25459,101 +24981,108 @@
 	    }, _temp), (0, _possibleConstructorReturn3['default'])(_this, _ret);
 	  }
 	
-	  Align.prototype.componentDidMount = function componentDidMount() {
-	    var props = this.props;
-	    // if parent ref not attached .... use document.getElementById
-	    this.forceAlign();
-	    if (!props.disabled && props.monitorWindowResize) {
-	      this.startMonitorWindowResize();
+	  (0, _createClass3['default'])(Align, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var props = this.props;
+	      // if parent ref not attached .... use document.getElementById
+	      this.forceAlign();
+	      if (!props.disabled && props.monitorWindowResize) {
+	        this.startMonitorWindowResize();
+	      }
 	    }
-	  };
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate(prevProps) {
+	      var reAlign = false;
+	      var props = this.props;
 	
-	  Align.prototype.componentDidUpdate = function componentDidUpdate(prevProps) {
-	    var reAlign = false;
-	    var props = this.props;
+	      if (!props.disabled) {
+	        var source = _reactDom2['default'].findDOMNode(this);
+	        var sourceRect = source ? source.getBoundingClientRect() : null;
 	
-	    if (!props.disabled) {
-	      var source = _reactDom2['default'].findDOMNode(this);
-	      var sourceRect = source ? source.getBoundingClientRect() : null;
-	
-	      if (prevProps.disabled) {
-	        reAlign = true;
-	      } else {
-	        var lastElement = getElement(prevProps.target);
-	        var currentElement = getElement(props.target);
-	        var lastPoint = getPoint(prevProps.target);
-	        var currentPoint = getPoint(props.target);
-	
-	        if ((0, _util.isWindow)(lastElement) && (0, _util.isWindow)(currentElement)) {
-	          // Skip if is window
-	          reAlign = false;
-	        } else if (lastElement !== currentElement || // Element change
-	        lastElement && !currentElement && currentPoint || // Change from element to point
-	        lastPoint && currentPoint && currentElement || // Change from point to element
-	        currentPoint && !(0, _util.isSamePoint)(lastPoint, currentPoint)) {
+	        if (prevProps.disabled) {
 	          reAlign = true;
+	        } else {
+	          var lastElement = getElement(prevProps.target);
+	          var currentElement = getElement(props.target);
+	          var lastPoint = getPoint(prevProps.target);
+	          var currentPoint = getPoint(props.target);
+	
+	          if ((0, _util.isWindow)(lastElement) && (0, _util.isWindow)(currentElement)) {
+	            // Skip if is window
+	            reAlign = false;
+	          } else if (lastElement !== currentElement || // Element change
+	          lastElement && !currentElement && currentPoint || // Change from element to point
+	          lastPoint && currentPoint && currentElement || // Change from point to element
+	          currentPoint && !(0, _util.isSamePoint)(lastPoint, currentPoint)) {
+	            reAlign = true;
+	          }
+	
+	          // If source element size changed
+	          var preRect = this.sourceRect || {};
+	          if (!reAlign && source && (!(0, _util.isSimilarValue)(preRect.width, sourceRect.width) || !(0, _util.isSimilarValue)(preRect.height, sourceRect.height))) {
+	            reAlign = true;
+	          }
 	        }
 	
-	        // If source element size changed
-	        var preRect = this.sourceRect || {};
-	        if (!reAlign && source && (preRect.width !== sourceRect.width || preRect.height !== sourceRect.height)) {
-	          reAlign = true;
-	        }
+	        this.sourceRect = sourceRect;
 	      }
 	
-	      this.sourceRect = sourceRect;
-	    }
+	      if (reAlign) {
+	        this.forceAlign();
+	      }
 	
-	    if (reAlign) {
-	      this.forceAlign();
+	      if (props.monitorWindowResize && !props.disabled) {
+	        this.startMonitorWindowResize();
+	      } else {
+	        this.stopMonitorWindowResize();
+	      }
 	    }
-	
-	    if (props.monitorWindowResize && !props.disabled) {
-	      this.startMonitorWindowResize();
-	    } else {
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
 	      this.stopMonitorWindowResize();
 	    }
-	  };
-	
-	  Align.prototype.componentWillUnmount = function componentWillUnmount() {
-	    this.stopMonitorWindowResize();
-	  };
-	
-	  Align.prototype.startMonitorWindowResize = function startMonitorWindowResize() {
-	    if (!this.resizeHandler) {
-	      this.bufferMonitor = (0, _util.buffer)(this.forceAlign, this.props.monitorBufferTime);
-	      this.resizeHandler = (0, _addEventListener2['default'])(window, 'resize', this.bufferMonitor);
+	  }, {
+	    key: 'startMonitorWindowResize',
+	    value: function startMonitorWindowResize() {
+	      if (!this.resizeHandler) {
+	        this.bufferMonitor = (0, _util.buffer)(this.forceAlign, this.props.monitorBufferTime);
+	        this.resizeHandler = (0, _addEventListener2['default'])(window, 'resize', this.bufferMonitor);
+	      }
 	    }
-	  };
-	
-	  Align.prototype.stopMonitorWindowResize = function stopMonitorWindowResize() {
-	    if (this.resizeHandler) {
-	      this.bufferMonitor.clear();
-	      this.resizeHandler.remove();
-	      this.resizeHandler = null;
+	  }, {
+	    key: 'stopMonitorWindowResize',
+	    value: function stopMonitorWindowResize() {
+	      if (this.resizeHandler) {
+	        this.bufferMonitor.clear();
+	        this.resizeHandler.remove();
+	        this.resizeHandler = null;
+	      }
 	    }
-	  };
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
 	
-	  Align.prototype.render = function render() {
-	    var _this2 = this;
+	      var _props = this.props,
+	          childrenProps = _props.childrenProps,
+	          children = _props.children;
 	
-	    var _props = this.props,
-	        childrenProps = _props.childrenProps,
-	        children = _props.children;
+	      var child = _react2['default'].Children.only(children);
+	      if (childrenProps) {
+	        var newProps = {};
+	        var propList = Object.keys(childrenProps);
+	        propList.forEach(function (prop) {
+	          newProps[prop] = _this2.props[childrenProps[prop]];
+	        });
 	
-	    var child = _react2['default'].Children.only(children);
-	    if (childrenProps) {
-	      var newProps = {};
-	      var propList = Object.keys(childrenProps);
-	      propList.forEach(function (prop) {
-	        newProps[prop] = _this2.props[childrenProps[prop]];
-	      });
-	
-	      return _react2['default'].cloneElement(child, newProps);
+	        return _react2['default'].cloneElement(child, newProps);
+	      }
+	      return child;
 	    }
-	    return child;
-	  };
-	
+	  }]);
 	  return Align;
 	}(_react.Component);
 	
@@ -25584,15 +25113,26 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 260 */
-/***/ (function(module, exports) {
+/* 257 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	exports.__esModule = true;
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	exports.buffer = buffer;
 	exports.isSamePoint = isSamePoint;
 	exports.isWindow = isWindow;
+	exports.isSimilarValue = isSimilarValue;
+	exports.restoreFocus = restoreFocus;
+	
+	var _contains = __webpack_require__(245);
+	
+	var _contains2 = _interopRequireDefault(_contains);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
 	function buffer(fn, ms) {
 	  var timer = void 0;
 	
@@ -25631,9 +25171,22 @@
 	function isWindow(obj) {
 	  return obj && typeof obj === 'object' && obj.window === obj;
 	}
+	
+	function isSimilarValue(val1, val2) {
+	  var int1 = Math.floor(val1);
+	  var int2 = Math.floor(val2);
+	  return Math.abs(int1 - int2) <= 1;
+	}
+	
+	function restoreFocus(activeElement, container) {
+	  // Focus back if is in the container
+	  if (activeElement !== document.activeElement && (0, _contains2['default'])(container, activeElement)) {
+	    activeElement.focus();
+	  }
+	}
 
 /***/ }),
-/* 261 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25646,7 +25199,7 @@
 	
 	var _extends3 = _interopRequireDefault(_extends2);
 	
-	var _defineProperty2 = __webpack_require__(262);
+	var _defineProperty2 = __webpack_require__(259);
 	
 	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 	
@@ -25654,7 +25207,7 @@
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _createClass2 = __webpack_require__(254);
+	var _createClass2 = __webpack_require__(248);
 	
 	var _createClass3 = _interopRequireDefault(_createClass2);
 	
@@ -25674,13 +25227,13 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _ChildrenUtils = __webpack_require__(263);
+	var _ChildrenUtils = __webpack_require__(260);
 	
-	var _AnimateChild = __webpack_require__(264);
+	var _AnimateChild = __webpack_require__(261);
 	
 	var _AnimateChild2 = _interopRequireDefault(_AnimateChild);
 	
-	var _animate = __webpack_require__(267);
+	var _animate = __webpack_require__(264);
 	
 	var _animate2 = _interopRequireDefault(_animate);
 	
@@ -26027,14 +25580,14 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 262 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	exports.__esModule = true;
 	
-	var _defineProperty = __webpack_require__(255);
+	var _defineProperty = __webpack_require__(249);
 	
 	var _defineProperty2 = _interopRequireDefault(_defineProperty);
 	
@@ -26056,7 +25609,7 @@
 	};
 
 /***/ }),
-/* 263 */
+/* 260 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26178,7 +25731,7 @@
 	}
 
 /***/ }),
-/* 264 */
+/* 261 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26191,7 +25744,7 @@
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _createClass2 = __webpack_require__(254);
+	var _createClass2 = __webpack_require__(248);
 	
 	var _createClass3 = _interopRequireDefault(_createClass2);
 	
@@ -26215,11 +25768,11 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _cssAnimation = __webpack_require__(265);
+	var _cssAnimation = __webpack_require__(262);
 	
 	var _cssAnimation2 = _interopRequireDefault(_cssAnimation);
 	
-	var _animate = __webpack_require__(267);
+	var _animate = __webpack_require__(264);
 	
 	var _animate2 = _interopRequireDefault(_animate);
 	
@@ -26327,7 +25880,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 265 */
+/* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26341,7 +25894,7 @@
 	
 	var _typeof3 = _interopRequireDefault(_typeof2);
 	
-	var _Event = __webpack_require__(266);
+	var _Event = __webpack_require__(263);
 	
 	var _Event2 = _interopRequireDefault(_Event);
 	
@@ -26523,7 +26076,7 @@
 	exports['default'] = cssAnimation;
 
 /***/ }),
-/* 266 */
+/* 263 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -26663,7 +26216,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 267 */
+/* 264 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -26695,22 +26248,16 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 268 */
+/* 265 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	exports.__esModule = true;
 	
 	var _classCallCheck2 = __webpack_require__(184);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-	
-	var _createClass2 = __webpack_require__(254);
-	
-	var _createClass3 = _interopRequireDefault(_createClass2);
 	
 	var _possibleConstructorReturn2 = __webpack_require__(185);
 	
@@ -26728,7 +26275,7 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _LazyRenderBox = __webpack_require__(269);
+	var _LazyRenderBox = __webpack_require__(266);
 	
 	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
 	
@@ -26739,33 +26286,33 @@
 	
 	  function PopupInner() {
 	    (0, _classCallCheck3['default'])(this, PopupInner);
-	    return (0, _possibleConstructorReturn3['default'])(this, (PopupInner.__proto__ || Object.getPrototypeOf(PopupInner)).apply(this, arguments));
+	    return (0, _possibleConstructorReturn3['default'])(this, _Component.apply(this, arguments));
 	  }
 	
-	  (0, _createClass3['default'])(PopupInner, [{
-	    key: 'render',
-	    value: function render() {
-	      var props = this.props;
-	      var className = props.className;
-	      if (!props.visible) {
-	        className += ' ' + props.hiddenClassName;
-	      }
-	      return _react2['default'].createElement(
-	        'div',
-	        {
-	          className: className,
-	          onMouseEnter: props.onMouseEnter,
-	          onMouseLeave: props.onMouseLeave,
-	          style: props.style
-	        },
-	        _react2['default'].createElement(
-	          _LazyRenderBox2['default'],
-	          { className: props.prefixCls + '-content', visible: props.visible },
-	          props.children
-	        )
-	      );
+	  PopupInner.prototype.render = function render() {
+	    var props = this.props;
+	    var className = props.className;
+	    if (!props.visible) {
+	      className += ' ' + props.hiddenClassName;
 	    }
-	  }]);
+	    return _react2['default'].createElement(
+	      'div',
+	      {
+	        className: className,
+	        onMouseEnter: props.onMouseEnter,
+	        onMouseLeave: props.onMouseLeave,
+	        onMouseDown: props.onMouseDown,
+	        onTouchStart: props.onTouchStart,
+	        style: props.style
+	      },
+	      _react2['default'].createElement(
+	        _LazyRenderBox2['default'],
+	        { className: props.prefixCls + '-content', visible: props.visible },
+	        props.children
+	      )
+	    );
+	  };
+	
 	  return PopupInner;
 	}(_react.Component);
 	
@@ -26775,20 +26322,20 @@
 	  prefixCls: _propTypes2['default'].string,
 	  onMouseEnter: _propTypes2['default'].func,
 	  onMouseLeave: _propTypes2['default'].func,
+	  onMouseDown: _propTypes2['default'].func,
+	  onTouchStart: _propTypes2['default'].func,
 	  children: _propTypes2['default'].any
 	};
 	exports['default'] = PopupInner;
 	module.exports = exports['default'];
 
 /***/ }),
-/* 269 */
+/* 266 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	exports.__esModule = true;
 	
 	var _objectWithoutProperties2 = __webpack_require__(183);
 	
@@ -26797,10 +26344,6 @@
 	var _classCallCheck2 = __webpack_require__(184);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-	
-	var _createClass2 = __webpack_require__(254);
-	
-	var _createClass3 = _interopRequireDefault(_createClass2);
 	
 	var _possibleConstructorReturn2 = __webpack_require__(185);
 	
@@ -26825,33 +26368,30 @@
 	
 	  function LazyRenderBox() {
 	    (0, _classCallCheck3['default'])(this, LazyRenderBox);
-	    return (0, _possibleConstructorReturn3['default'])(this, (LazyRenderBox.__proto__ || Object.getPrototypeOf(LazyRenderBox)).apply(this, arguments));
+	    return (0, _possibleConstructorReturn3['default'])(this, _Component.apply(this, arguments));
 	  }
 	
-	  (0, _createClass3['default'])(LazyRenderBox, [{
-	    key: 'shouldComponentUpdate',
-	    value: function shouldComponentUpdate(nextProps) {
-	      return nextProps.hiddenClassName || nextProps.visible;
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _props = this.props,
-	          hiddenClassName = _props.hiddenClassName,
-	          visible = _props.visible,
-	          props = (0, _objectWithoutProperties3['default'])(_props, ['hiddenClassName', 'visible']);
+	  LazyRenderBox.prototype.shouldComponentUpdate = function shouldComponentUpdate(nextProps) {
+	    return nextProps.hiddenClassName || nextProps.visible;
+	  };
+	
+	  LazyRenderBox.prototype.render = function render() {
+	    var _props = this.props,
+	        hiddenClassName = _props.hiddenClassName,
+	        visible = _props.visible,
+	        props = (0, _objectWithoutProperties3['default'])(_props, ['hiddenClassName', 'visible']);
 	
 	
-	      if (hiddenClassName || _react2['default'].Children.count(props.children) > 1) {
-	        if (!visible && hiddenClassName) {
-	          props.className += ' ' + hiddenClassName;
-	        }
-	        return _react2['default'].createElement('div', props);
+	    if (hiddenClassName || _react2['default'].Children.count(props.children) > 1) {
+	      if (!visible && hiddenClassName) {
+	        props.className += ' ' + hiddenClassName;
 	      }
-	
-	      return _react2['default'].Children.only(props.children);
+	      return _react2['default'].createElement('div', props);
 	    }
-	  }]);
+	
+	    return _react2['default'].Children.only(props.children);
+	  };
+	
 	  return LazyRenderBox;
 	}(_react.Component);
 	
@@ -26865,160 +26405,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 270 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends2 = __webpack_require__(144);
-	
-	var _extends3 = _interopRequireDefault(_extends2);
-	
-	exports.getAlignFromPlacement = getAlignFromPlacement;
-	exports.getPopupClassNameFromAlign = getPopupClassNameFromAlign;
-	exports.saveRef = saveRef;
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	function isPointsEq(a1, a2) {
-	  return a1[0] === a2[0] && a1[1] === a2[1];
-	}
-	
-	function getAlignFromPlacement(builtinPlacements, placementStr, align) {
-	  var baseAlign = builtinPlacements[placementStr] || {};
-	  return (0, _extends3['default'])({}, baseAlign, align);
-	}
-	
-	function getPopupClassNameFromAlign(builtinPlacements, prefixCls, align) {
-	  var points = align.points;
-	  for (var placement in builtinPlacements) {
-	    if (builtinPlacements.hasOwnProperty(placement)) {
-	      if (isPointsEq(builtinPlacements[placement].points, points)) {
-	        return prefixCls + '-placement-' + placement;
-	      }
-	    }
-	  }
-	  return '';
-	}
-	
-	function saveRef(name, component) {
-	  this[name] = component;
-	}
-
-/***/ }),
-/* 271 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends2 = __webpack_require__(144);
-	
-	var _extends3 = _interopRequireDefault(_extends2);
-	
-	exports['default'] = getContainerRenderMixin;
-	
-	var _reactDom = __webpack_require__(12);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	function defaultGetContainer() {
-	  var container = document.createElement('div');
-	  document.body.appendChild(container);
-	  return container;
-	}
-	
-	function getContainerRenderMixin(config) {
-	  var _config$autoMount = config.autoMount,
-	      autoMount = _config$autoMount === undefined ? true : _config$autoMount,
-	      _config$autoDestroy = config.autoDestroy,
-	      autoDestroy = _config$autoDestroy === undefined ? true : _config$autoDestroy,
-	      isVisible = config.isVisible,
-	      isForceRender = config.isForceRender,
-	      getComponent = config.getComponent,
-	      _config$getContainer = config.getContainer,
-	      getContainer = _config$getContainer === undefined ? defaultGetContainer : _config$getContainer;
-	
-	
-	  var mixin = void 0;
-	
-	  function _renderComponent(instance, componentArg, ready) {
-	    if (!isVisible || instance._component || isVisible(instance) || isForceRender && isForceRender(instance)) {
-	      if (!instance._container) {
-	        instance._container = getContainer(instance);
-	      }
-	      var component = void 0;
-	      if (instance.getComponent) {
-	        component = instance.getComponent(componentArg);
-	      } else {
-	        component = getComponent(instance, componentArg);
-	      }
-	      _reactDom2['default'].unstable_renderSubtreeIntoContainer(instance, component, instance._container, function callback() {
-	        instance._component = this;
-	        if (ready) {
-	          ready.call(this);
-	        }
-	      });
-	    }
-	  }
-	
-	  if (autoMount) {
-	    mixin = (0, _extends3['default'])({}, mixin, {
-	      componentDidMount: function componentDidMount() {
-	        _renderComponent(this);
-	      },
-	      componentDidUpdate: function componentDidUpdate() {
-	        _renderComponent(this);
-	      }
-	    });
-	  }
-	
-	  if (!autoMount || !autoDestroy) {
-	    mixin = (0, _extends3['default'])({}, mixin, {
-	      renderComponent: function renderComponent(componentArg, ready) {
-	        _renderComponent(this, componentArg, ready);
-	      }
-	    });
-	  }
-	
-	  function _removeContainer(instance) {
-	    if (instance._container) {
-	      var container = instance._container;
-	      _reactDom2['default'].unmountComponentAtNode(container);
-	      container.parentNode.removeChild(container);
-	      instance._container = null;
-	    }
-	  }
-	
-	  if (autoDestroy) {
-	    mixin = (0, _extends3['default'])({}, mixin, {
-	      componentWillUnmount: function componentWillUnmount() {
-	        _removeContainer(this);
-	      }
-	    });
-	  } else {
-	    mixin = (0, _extends3['default'])({}, mixin, {
-	      removeContainer: function removeContainer() {
-	        _removeContainer(this);
-	      }
-	    });
-	  }
-	
-	  return mixin;
-	}
-	module.exports = exports['default'];
-
-/***/ }),
-/* 272 */
+/* 267 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -27055,7 +26442,7 @@
 	exports['default'] = placements;
 
 /***/ }),
-/* 273 */
+/* 268 */
 /***/ (function(module, exports) {
 
 	// mutationobserver-shim v0.3.2 (github.com/megawac/MutationObserver.js)
@@ -27070,7 +26457,7 @@
 
 
 /***/ }),
-/* 274 */
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27114,7 +26501,7 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _domScrollIntoView = __webpack_require__(275);
+	var _domScrollIntoView = __webpack_require__(270);
 	
 	var _domScrollIntoView2 = _interopRequireDefault(_domScrollIntoView);
 	
@@ -27350,20 +26737,20 @@
 	exports['default'] = connected;
 
 /***/ }),
-/* 275 */
+/* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(276);
+	module.exports = __webpack_require__(271);
 
 /***/ }),
-/* 276 */
+/* 271 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var util = __webpack_require__(277);
+	var util = __webpack_require__(272);
 	
 	function scrollIntoView(elem, container, config) {
 	  config = config || {};
@@ -27492,7 +26879,7 @@
 	module.exports = scrollIntoView;
 
 /***/ }),
-/* 277 */
+/* 272 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -27936,7 +27323,7 @@
 	}, domUtils);
 
 /***/ }),
-/* 278 */
+/* 273 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28054,7 +27441,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 279 */
+/* 274 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28121,7 +27508,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 280 */
+/* 275 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28168,7 +27555,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 281 */
+/* 276 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28383,7 +27770,7 @@
 	}
 
 /***/ }),
-/* 282 */
+/* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28394,7 +27781,7 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _trigger = __webpack_require__(283);
+	var _trigger = __webpack_require__(278);
 	
 	var _trigger2 = _interopRequireDefault(_trigger);
 	
@@ -28414,9 +27801,9 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _util = __webpack_require__(281);
+	var _util = __webpack_require__(276);
 	
-	var _DropdownMenu = __webpack_require__(289);
+	var _DropdownMenu = __webpack_require__(284);
 	
 	var _DropdownMenu2 = _interopRequireDefault(_DropdownMenu);
 	
@@ -28634,15 +28021,15 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 283 */
+/* 278 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(284);
+	module.exports = __webpack_require__(279);
 
 /***/ }),
-/* 284 */
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28671,11 +28058,11 @@
 	
 	var _tinperBeeCore = __webpack_require__(27);
 	
-	var _Popup = __webpack_require__(285);
+	var _Popup = __webpack_require__(280);
 	
 	var _Popup2 = _interopRequireDefault(_Popup);
 	
-	var _utils = __webpack_require__(288);
+	var _utils = __webpack_require__(283);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -29235,7 +28622,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 285 */
+/* 280 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29266,11 +28653,11 @@
 	
 	var _beeAnimate2 = _interopRequireDefault(_beeAnimate);
 	
-	var _PopupInner = __webpack_require__(286);
+	var _PopupInner = __webpack_require__(281);
 	
 	var _PopupInner2 = _interopRequireDefault(_PopupInner);
 	
-	var _LazyRenderBox = __webpack_require__(287);
+	var _LazyRenderBox = __webpack_require__(282);
 	
 	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
 	
@@ -29510,7 +28897,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 286 */
+/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29527,7 +28914,7 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _LazyRenderBox = __webpack_require__(287);
+	var _LazyRenderBox = __webpack_require__(282);
 	
 	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
 	
@@ -29591,7 +28978,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 287 */
+/* 282 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29666,7 +29053,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 288 */
+/* 283 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -29701,7 +29088,7 @@
 	}
 
 /***/ }),
-/* 289 */
+/* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29728,15 +29115,15 @@
 	
 	var _rcMenu2 = _interopRequireDefault(_rcMenu);
 	
-	var _domScrollIntoView = __webpack_require__(275);
+	var _domScrollIntoView = __webpack_require__(270);
 	
 	var _domScrollIntoView2 = _interopRequireDefault(_domScrollIntoView);
 	
-	var _raf = __webpack_require__(290);
+	var _raf = __webpack_require__(285);
 	
 	var _raf2 = _interopRequireDefault(_raf);
 	
-	var _util = __webpack_require__(281);
+	var _util = __webpack_require__(276);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -29943,10 +29330,10 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 290 */
+/* 285 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {var now = __webpack_require__(291)
+	/* WEBPACK VAR INJECTION */(function(global) {var now = __webpack_require__(286)
 	  , root = typeof window === 'undefined' ? global : window
 	  , vendors = ['moz', 'webkit']
 	  , suffix = 'AnimationFrame'
@@ -30025,7 +29412,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 291 */
+/* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {// Generated by CoffeeScript 1.12.2
@@ -30068,7 +29455,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33)))
 
 /***/ }),
-/* 292 */
+/* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30153,7 +29540,7 @@
 	};
 
 /***/ }),
-/* 293 */
+/* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30193,7 +29580,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 294 */
+/* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30202,7 +29589,7 @@
 	  value: true
 	});
 	
-	var _InputNumber = __webpack_require__(295);
+	var _InputNumber = __webpack_require__(290);
 	
 	var _InputNumber2 = _interopRequireDefault(_InputNumber);
 	
@@ -30212,7 +29599,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 295 */
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30231,7 +29618,7 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _beeInputGroup = __webpack_require__(296);
+	var _beeInputGroup = __webpack_require__(291);
 	
 	var _beeInputGroup2 = _interopRequireDefault(_beeInputGroup);
 	
@@ -30377,6 +29764,9 @@
 	            });
 	            if (value == '.' || value.indexOf('.') == value.length - 1) {
 	                //当输入小数点的时候
+	                onChange && onChange(value);
+	            } else if (value[value.indexOf('.') + 1] == 0) {
+	                //当输入 d.0 的时候，不转换Number
 	                onChange && onChange(value);
 	            } else {
 	                toNumber ? onChange && onChange(Number(value)) : onChange && onChange(value);
@@ -30757,15 +30147,15 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 296 */
+/* 291 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(297);
+	module.exports = __webpack_require__(292);
 
 /***/ }),
-/* 297 */
+/* 292 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30784,11 +30174,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _beeInputGroupAddon = __webpack_require__(298);
+	var _beeInputGroupAddon = __webpack_require__(293);
 	
 	var _beeInputGroupAddon2 = _interopRequireDefault(_beeInputGroupAddon);
 	
-	var _InputGroupButton = __webpack_require__(300);
+	var _InputGroupButton = __webpack_require__(295);
 	
 	var _InputGroupButton2 = _interopRequireDefault(_InputGroupButton);
 	
@@ -30845,7 +30235,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 298 */
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30854,7 +30244,7 @@
 	  value: true
 	});
 	
-	var _InputGroupAddon = __webpack_require__(299);
+	var _InputGroupAddon = __webpack_require__(294);
 	
 	var _InputGroupAddon2 = _interopRequireDefault(_InputGroupAddon);
 	
@@ -30864,7 +30254,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 299 */
+/* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30928,7 +30318,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 300 */
+/* 295 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30991,7 +30381,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 301 */
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31004,23 +30394,23 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _DatePicker = __webpack_require__(302);
+	var _DatePicker = __webpack_require__(297);
 	
 	var _DatePicker2 = _interopRequireDefault(_DatePicker);
 	
-	var _MonthPicker = __webpack_require__(460);
+	var _MonthPicker = __webpack_require__(457);
 	
 	var _MonthPicker2 = _interopRequireDefault(_MonthPicker);
 	
-	var _RangePicker = __webpack_require__(462);
+	var _RangePicker = __webpack_require__(459);
 	
 	var _RangePicker2 = _interopRequireDefault(_RangePicker);
 	
-	var _WeekPicker = __webpack_require__(482);
+	var _WeekPicker = __webpack_require__(462);
 	
 	var _WeekPicker2 = _interopRequireDefault(_WeekPicker);
 	
-	var _YearPicker = __webpack_require__(483);
+	var _YearPicker = __webpack_require__(463);
 	
 	var _YearPicker2 = _interopRequireDefault(_YearPicker);
 	
@@ -31035,7 +30425,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 302 */
+/* 297 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -31046,7 +30436,7 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _rcCalendar = __webpack_require__(303);
+	var _rcCalendar = __webpack_require__(298);
 	
 	var _rcCalendar2 = _interopRequireDefault(_rcCalendar);
 	
@@ -31054,9 +30444,13 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactDom = __webpack_require__(12);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
 	var _tinperBeeCore = __webpack_require__(27);
 	
-	var _Picker = __webpack_require__(454);
+	var _Picker = __webpack_require__(450);
 	
 	var _Picker2 = _interopRequireDefault(_Picker);
 	
@@ -31064,11 +30458,11 @@
 	
 	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 	
-	var _Panel = __webpack_require__(456);
+	var _Panel = __webpack_require__(452);
 	
 	var _Panel2 = _interopRequireDefault(_Panel);
 	
-	var _moment = __webpack_require__(308);
+	var _moment = __webpack_require__(303);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
@@ -31076,9 +30470,13 @@
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _beeInputGroup = __webpack_require__(296);
+	var _beeInputGroup = __webpack_require__(291);
 	
 	var _beeInputGroup2 = _interopRequireDefault(_beeInputGroup);
+	
+	var _zh_CN = __webpack_require__(456);
+	
+	var _zh_CN2 = _interopRequireDefault(_zh_CN);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -31108,7 +30506,8 @@
 	      type: "month",
 	      value: props.value || props.defaultValue || _moment2["default"].Moment,
 	      open: props.open || false,
-	      inputValue: props.value && props.value.format(props.format) || props.defaultValue && props.defaultValue.format(props.format) || ''
+	      inputValue: props.value && props.value.format(props.format) || props.defaultValue && props.defaultValue.format(props.format) || '',
+	      showClose: false
 	    };
 	    return _this;
 	  }
@@ -31119,10 +30518,16 @@
 	        value: nextProps.value
 	      });
 	    }
-	    this.setState({
-	      renderIcon: nextProps.renderIcon,
-	      open: nextProps.open || false
-	    });
+	    if ("open" in nextProps) {
+	      this.setState({
+	        open: nextProps.open
+	      });
+	    }
+	    if ("renderIcon" in nextProps) {
+	      this.setState({
+	        renderIcon: nextProps.renderIcon
+	      });
+	    }
 	  };
 	
 	  DatePicker.prototype.render = function render() {
@@ -31168,9 +30573,10 @@
 	      { className: props.className },
 	      _react2["default"].createElement(
 	        _Picker2["default"],
-	        _extends({}, props, pickerChangeHandler, {
+	        _extends({
+	          animation: "slide-up"
+	        }, props, pickerChangeHandler, {
 	          onOpenChange: this.onOpenChange,
-	          animation: "slide-up",
 	          calendar: calendar,
 	          mode: 'year',
 	          open: this.state.open,
@@ -31179,8 +30585,14 @@
 	        function () {
 	          return _react2["default"].createElement(
 	            _beeInputGroup2["default"],
-	            { simple: true, className: "datepicker-input-group" },
+	            { simple: true, className: "datepicker-input-group",
+	              onMouseEnter: _this2.onMouseEnter,
+	              onMouseLeave: _this2.onMouseLeave
+	            },
 	            _react2["default"].createElement(_beeFormControl2["default"], _extends({
+	              ref: function ref(_ref) {
+	                return _this2.outInput = _ref;
+	              },
 	              disabled: props.disabled,
 	              placeholder: _this2.props.placeholder,
 	              onClick: function onClick(event) {
@@ -31192,9 +30604,15 @@
 	              },
 	              onKeyDown: _this2.outInputKeydown
 	            }, keyboardInputProps, autofocus)),
-	            _react2["default"].createElement(
+	            _this2.state.value && _this2.state.showClose && !props.disabled ? _react2["default"].createElement(
 	              _beeInputGroup2["default"].Button,
-	              { shape: "border", onClick: function onClick(e) {
+	              { shape: "border",
+	                onClick: _this2.clear },
+	              _react2["default"].createElement("i", { className: "uf uf-close-c" })
+	            ) : _react2["default"].createElement(
+	              _beeInputGroup2["default"].Button,
+	              { shape: "border",
+	                onClick: function onClick(e) {
 	                  props.keyboardInput ? _this2.iconClick(e) : '';
 	                } },
 	              props.renderIcon()
@@ -31235,6 +30653,7 @@
 	          });
 	          var v = _this3.state.value;
 	          _this3.props.onOpenChange(false, v, v && v.format(_this3.props.format) || '');
+	          _reactDom2["default"].findDOMNode(_this3.outInput).focus(); // 按esc时候焦点回到input输入框
 	        }
 	      };
 	    }
@@ -31324,6 +30743,27 @@
 	    }
 	    _this3.props.outInputKeydown && _this3.props.outInputKeydown(e);
 	  };
+	
+	  this.onMouseLeave = function (e) {
+	    _this3.setState({
+	      showClose: false
+	    });
+	  };
+	
+	  this.onMouseEnter = function (e) {
+	    _this3.setState({
+	      showClose: true
+	    });
+	  };
+	
+	  this.clear = function (e) {
+	    e.stopPropagation();
+	    _this3.setState({
+	      inputValue: '',
+	      value: ''
+	    });
+	    _this3.props.onChange && _this3.props.onChange('', '');
+	  };
 	};
 	
 	DatePicker.defaultProps = {
@@ -31332,14 +30772,17 @@
 	  },
 	  focusOnOpen: true,
 	  defultSelect: false,
-	  onOpenChange: function onOpenChange() {}
+	  onOpenChange: function onOpenChange() {},
+	  onChange: function onChange() {},
+	  locale: _zh_CN2["default"],
+	  showMonthInput: false
 	};
 	
 	exports["default"] = DatePicker;
 	module.exports = exports["default"];
 
 /***/ }),
-/* 303 */
+/* 298 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31348,17 +30791,17 @@
 	  value: true
 	});
 	
-	var _Calendar = __webpack_require__(304);
+	var _Calendar = __webpack_require__(299);
 	
 	var _Calendar2 = _interopRequireDefault(_Calendar);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
-	exports['default'] = _Calendar2['default'];
+	exports["default"] = _Calendar2["default"];
 	module.exports = exports['default'];
 
 /***/ }),
-/* 304 */
+/* 299 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31367,9 +30810,7 @@
 	  value: true
 	});
 	
-	var _extends2 = __webpack_require__(144);
-	
-	var _extends3 = _interopRequireDefault(_extends2);
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
 	var _react = __webpack_require__(4);
 	
@@ -31379,10 +30820,6 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _createReactClass = __webpack_require__(245);
-	
-	var _createReactClass2 = _interopRequireDefault(_createReactClass);
-	
 	var _propTypes = __webpack_require__(5);
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -31391,255 +30828,131 @@
 	
 	var _KeyCode2 = _interopRequireDefault(_KeyCode);
 	
-	var _DateTable = __webpack_require__(305);
+	var _reactLifecyclesCompat = __webpack_require__(141);
+	
+	var _DateTable = __webpack_require__(300);
 	
 	var _DateTable2 = _interopRequireDefault(_DateTable);
 	
-	var _CalendarHeader = __webpack_require__(440);
+	var _CalendarHeader = __webpack_require__(435);
 	
 	var _CalendarHeader2 = _interopRequireDefault(_CalendarHeader);
 	
-	var _CalendarFooter = __webpack_require__(446);
+	var _CalendarFooter = __webpack_require__(442);
 	
 	var _CalendarFooter2 = _interopRequireDefault(_CalendarFooter);
 	
-	var _CalendarMixin = __webpack_require__(450);
+	var _CalendarMixin = __webpack_require__(446);
 	
-	var _CalendarMixin2 = _interopRequireDefault(_CalendarMixin);
+	var _CommonMixin = __webpack_require__(447);
 	
-	var _CommonMixin = __webpack_require__(451);
-	
-	var _CommonMixin2 = _interopRequireDefault(_CommonMixin);
-	
-	var _DateInput = __webpack_require__(453);
+	var _DateInput = __webpack_require__(439);
 	
 	var _DateInput2 = _interopRequireDefault(_DateInput);
 	
-	var _util = __webpack_require__(439);
+	var _util = __webpack_require__(434);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var _toTime = __webpack_require__(449);
+	
+	var _moment = __webpack_require__(303);
+	
+	var _moment2 = _interopRequireDefault(_moment);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 	
 	function noop() {}
 	
-	function goStartMonth() {
-	  var next = this.state.value.clone();
-	  next.startOf('month');
-	  this.setValue(next);
-	}
+	var Calendar = function (_React$Component) {
+	  _inherits(Calendar, _React$Component);
 	
-	function goEndMonth() {
-	  var next = this.state.value.clone();
-	  next.endOf('month');
-	  this.setValue(next);
-	}
+	  function Calendar(props) {
+	    _classCallCheck(this, Calendar);
 	
-	function goTime(direction, unit) {
-	  var next = this.state.value.clone();
-	  next.add(direction, unit);
-	  this.setValue(next);
-	}
+	    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
 	
-	function goMonth(direction) {
-	  return goTime.call(this, direction, 'months');
-	}
+	    _initialiseProps.call(_this);
 	
-	function goYear(direction) {
-	  return goTime.call(this, direction, 'years');
-	}
-	
-	function goWeek(direction) {
-	  return goTime.call(this, direction, 'weeks');
-	}
-	
-	function goDay(direction) {
-	  return goTime.call(this, direction, 'days');
-	}
-	
-	var Calendar = (0, _createReactClass2['default'])({
-	  displayName: 'Calendar',
-	
-	  propTypes: {
-	    disabledDate: _propTypes2['default'].func,
-	    disabledTime: _propTypes2['default'].any,
-	    value: _propTypes2['default'].object,
-	    selectedValue: _propTypes2['default'].object,
-	    defaultValue: _propTypes2['default'].object,
-	    className: _propTypes2['default'].string,
-	    locale: _propTypes2['default'].object,
-	    showWeekNumber: _propTypes2['default'].bool,
-	    style: _propTypes2['default'].object,
-	    showToday: _propTypes2['default'].bool,
-	    showDateInput: _propTypes2['default'].bool,
-	    visible: _propTypes2['default'].bool,
-	    onSelect: _propTypes2['default'].func,
-	    onOk: _propTypes2['default'].func,
-	    showOk: _propTypes2['default'].bool,
-	    prefixCls: _propTypes2['default'].string,
-	    onKeyDown: _propTypes2['default'].func,
-	    timePicker: _propTypes2['default'].element,
-	    dateInputPlaceholder: _propTypes2['default'].any,
-	    onClear: _propTypes2['default'].func,
-	    onChange: _propTypes2['default'].func,
-	    renderFooter: _propTypes2['default'].func,
-	    renderSidebar: _propTypes2['default'].func
-	  },
-	
-	  mixins: [_CommonMixin2['default'], _CalendarMixin2['default']],
-	
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      showToday: true,
-	      showDateInput: true,
-	      timePicker: null,
-	      onOk: noop
+	    _this.state = {
+	      mode: _this.props.mode || 'date',
+	      value: props.value || props.defaultValue || (0, _moment2["default"])(),
+	      selectedValue: props.selectedValue || props.defaultSelectedValue
 	    };
-	  },
-	  getInitialState: function getInitialState() {
-	    return {
-	      showTimePicker: false
-	    };
-	  },
-	  onKeyDown: function onKeyDown(event) {
-	    if (event.target.nodeName.toLowerCase() === 'input') {
-	      return undefined;
-	    }
-	    var keyCode = event.keyCode;
-	    // mac
-	    var ctrlKey = event.ctrlKey || event.metaKey;
-	    var disabledDate = this.props.disabledDate;
-	    var value = this.state.value;
+	    return _this;
+	  }
 	
-	    switch (keyCode) {
-	      case _KeyCode2['default'].DOWN:
-	        goWeek.call(this, 1);
-	        event.preventDefault();
-	        return 1;
-	      case _KeyCode2['default'].UP:
-	        goWeek.call(this, -1);
-	        event.preventDefault();
-	        return 1;
-	      case _KeyCode2['default'].LEFT:
-	        if (ctrlKey) {
-	          goYear.call(this, -1);
-	        } else {
-	          goDay.call(this, -1);
-	        }
-	        event.preventDefault();
-	        return 1;
-	      case _KeyCode2['default'].RIGHT:
-	        if (ctrlKey) {
-	          goYear.call(this, 1);
-	        } else {
-	          goDay.call(this, 1);
-	        }
-	        event.preventDefault();
-	        return 1;
-	      case _KeyCode2['default'].HOME:
-	        goStartMonth.call(this);
-	        event.preventDefault();
-	        return 1;
-	      case _KeyCode2['default'].END:
-	        goEndMonth.call(this);
-	        event.preventDefault();
-	        return 1;
-	      case _KeyCode2['default'].PAGE_DOWN:
-	        goMonth.call(this, 1);
-	        event.preventDefault();
-	        return 1;
-	      case _KeyCode2['default'].PAGE_UP:
-	        goMonth.call(this, -1);
-	        event.preventDefault();
-	        return 1;
-	      case _KeyCode2['default'].ENTER:
-	        if (!disabledDate || !disabledDate(value)) {
-	          this.onSelect(value, {
-	            source: 'keyboard'
-	          });
-	        }
-	        event.preventDefault();
-	        return 1;
-	      default:
-	        this.props.onKeyDown(event);
-	        return 1;
+	  Calendar.prototype.componentDidMount = function componentDidMount() {
+	    if (this.props.showDateInput) {
+	      this.saveFocusElement(_DateInput2["default"].getInstance());
 	    }
-	  },
-	  onClear: function onClear() {
-	    this.onSelect(null);
-	    this.props.onClear();
-	  },
-	  onOk: function onOk() {
-	    var selectedValue = this.state.selectedValue;
+	  };
 	
-	    if (this.isAllowedDate(selectedValue)) {
-	      this.props.onOk(selectedValue);
+	  Calendar.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps, state) {
+	    var value = nextProps.value,
+	        selectedValue = nextProps.selectedValue;
+	
+	    var newState = {};
+	
+	    if ('mode' in nextProps && state.mode !== nextProps.mode) {
+	      newState = { mode: nextProps.mode };
 	    }
-	  },
-	  onDateInputChange: function onDateInputChange(value) {
-	    this.onSelect(value, {
-	      source: 'dateInput'
-	    });
-	  },
-	  onDateTableSelect: function onDateTableSelect(value) {
-	    var timePicker = this.props.timePicker;
-	    var selectedValue = this.state.selectedValue;
-	
-	    if (!selectedValue && timePicker) {
-	      var timePickerDefaultValue = timePicker.props.defaultValue;
-	      if (timePickerDefaultValue) {
-	        (0, _util.syncTime)(timePickerDefaultValue, value);
-	      }
+	    if ('value' in nextProps) {
+	      newState.value = value || nextProps.defaultValue || (0, _CalendarMixin.getNowByCurrentStateValue)(state.value);
 	    }
-	    this.onSelect(value);
-	  },
-	  onToday: function onToday() {
-	    var value = this.state.value;
+	    if ('selectedValue' in nextProps) {
+	      newState.selectedValue = selectedValue;
+	    }
 	
-	    var now = (0, _util.getTodayTime)(value);
-	    this.onSelect(now, {
-	      source: 'todayButton'
-	    });
-	  },
-	  getRootDOMNode: function getRootDOMNode() {
-	    return _reactDom2['default'].findDOMNode(this);
-	  },
-	  openTimePicker: function openTimePicker() {
-	    this.setState({
-	      showTimePicker: true
-	    });
-	  },
-	  closeTimePicker: function closeTimePicker() {
-	    this.setState({
-	      showTimePicker: false
-	    });
-	  },
-	  render: function render() {
-	    var props = this.props;
+	    return newState;
+	  };
+	
+	  Calendar.prototype.render = function render() {
+	    var props = this.props,
+	        state = this.state;
 	    var locale = props.locale,
 	        prefixCls = props.prefixCls,
 	        disabledDate = props.disabledDate,
 	        dateInputPlaceholder = props.dateInputPlaceholder,
 	        timePicker = props.timePicker,
-	        disabledTime = props.disabledTime;
-	
-	    var state = this.state;
+	        disabledTime = props.disabledTime,
+	        clearIcon = props.clearIcon,
+	        renderFooter = props.renderFooter,
+	        showMonthInput = props.showMonthInput;
 	    var value = state.value,
 	        selectedValue = state.selectedValue,
-	        showTimePicker = state.showTimePicker;
+	        mode = state.mode;
 	
+	    var showTimePicker = mode === 'time';
 	    var disabledTimeConfig = showTimePicker && disabledTime && timePicker ? (0, _util.getTimeConfig)(selectedValue, disabledTime) : null;
 	
-	    var timePickerEle = timePicker && showTimePicker ? _react2['default'].cloneElement(timePicker, (0, _extends3['default'])({
-	      showHour: true,
-	      showSecond: true,
-	      showMinute: true
-	    }, timePicker.props, disabledTimeConfig, {
-	      onChange: this.onDateInputChange,
-	      defaultOpenValue: timePicker.props.defaultValue,
-	      value: selectedValue,
-	      disabledTime: disabledTime
-	    })) : null;
-	    var dateInputElement = props.showDateInput ? _react2['default'].createElement(_DateInput2['default'], {
-	      ref: 'dateInput',
+	    var timePickerEle = null;
+	
+	    if (timePicker && showTimePicker) {
+	      var timePickerProps = _extends({
+	        showHour: true,
+	        showSecond: true,
+	        showMinute: true
+	      }, timePicker.props, disabledTimeConfig, {
+	        onChange: this.onDateInputChange,
+	        value: selectedValue,
+	        disabledTime: disabledTime
+	      });
+	
+	      if (timePicker.props.defaultValue !== undefined) {
+	        timePickerProps.defaultOpenValue = timePicker.props.defaultValue;
+	      }
+	
+	      timePickerEle = _react2["default"].cloneElement(timePicker, timePickerProps);
+	    }
+	
+	    var dateInputElement = props.showDateInput ? _react2["default"].createElement(_DateInput2["default"], {
 	      format: this.getFormat(),
 	      key: 'date-input',
 	      value: value,
@@ -31651,35 +30964,49 @@
 	      onClear: this.onClear,
 	      prefixCls: prefixCls,
 	      selectedValue: selectedValue,
-	      onChange: this.onDateInputChange
+	      onChange: this.onDateInputChange,
+	      onSelect: this.onDateInputSelect,
+	      clearIcon: clearIcon
 	    }) : null;
-	    var children = [props.renderSidebar(), _react2['default'].createElement(
+	
+	    var children = [];
+	    if (props.renderSidebar) {
+	      children.push(props.renderSidebar());
+	    }
+	    children.push(_react2["default"].createElement(
 	      'div',
 	      { className: prefixCls + '-panel', key: 'panel' },
 	      dateInputElement,
-	      _react2['default'].createElement(
+	      _react2["default"].createElement(
 	        'div',
-	        { className: prefixCls + '-date-panel' },
-	        _react2['default'].createElement(_CalendarHeader2['default'], {
+	        {
+	          tabIndex: this.props.focusablePanel ? 0 : undefined,
+	          className: prefixCls + '-date-panel'
+	        },
+	        _react2["default"].createElement(_CalendarHeader2["default"], {
 	          locale: locale,
-	          onValueChange: this.setValue,
+	          mode: mode,
 	          value: value,
+	          onValueChange: this.setValue,
+	          onPanelChange: this.onPanelChange,
+	          renderFooter: renderFooter,
 	          showTimePicker: showTimePicker,
-	          prefixCls: prefixCls
+	          prefixCls: prefixCls,
+	          showMonthInput: showMonthInput
 	        }),
-	        timePicker && showTimePicker ? _react2['default'].createElement(
+	        timePicker && showTimePicker ? _react2["default"].createElement(
 	          'div',
 	          { className: prefixCls + '-time-picker' },
-	          _react2['default'].createElement(
+	          _react2["default"].createElement(
 	            'div',
 	            { className: prefixCls + '-time-picker-panel' },
 	            timePickerEle
 	          )
 	        ) : null,
-	        _react2['default'].createElement(
+	        _react2["default"].createElement(
 	          'div',
 	          { className: prefixCls + '-body' },
-	          _react2['default'].createElement(_DateTable2['default'], {
+	          _react2["default"].createElement(_DateTable2["default"], {
 	            locale: locale,
 	            value: value,
 	            selectedValue: selectedValue,
@@ -31690,8 +31017,9 @@
 	            showWeekNumber: props.showWeekNumber
 	          })
 	        ),
-	        _react2['default'].createElement(_CalendarFooter2['default'], {
+	        _react2["default"].createElement(_CalendarFooter2["default"], {
 	          showOk: props.showOk,
+	          mode: mode,
 	          renderFooter: props.renderFooter,
 	          locale: locale,
 	          prefixCls: prefixCls,
@@ -31703,7 +31031,7 @@
 	          selectedValue: selectedValue,
 	          value: value,
 	          disabledDate: disabledDate,
-	          okDisabled: !this.isAllowedDate(selectedValue),
+	          okDisabled: props.showOk !== false && (!selectedValue || !this.isAllowedDate(selectedValue)),
 	          onOk: this.onOk,
 	          onSelect: this.onSelect,
 	          onToday: this.onToday,
@@ -31711,20 +31039,205 @@
 	          onCloseTimePicker: this.closeTimePicker
 	        })
 	      )
-	    )];
+	    ));
 	
 	    return this.renderRoot({
 	      children: children,
 	      className: props.showWeekNumber ? prefixCls + '-week-number' : ''
 	    });
-	  }
+	  };
+	
+	  return Calendar;
+	}(_react2["default"].Component);
+	
+	Calendar.propTypes = _extends({}, _CalendarMixin.calendarMixinPropTypes, _CommonMixin.propType, {
+	  prefixCls: _propTypes2["default"].string,
+	  className: _propTypes2["default"].string,
+	  style: _propTypes2["default"].object,
+	  defaultValue: _propTypes2["default"].object,
+	  value: _propTypes2["default"].object,
+	  selectedValue: _propTypes2["default"].object,
+	  defaultSelectedValue: _propTypes2["default"].object,
+	  mode: _propTypes2["default"].oneOf(['time', 'date', 'month', 'year', 'decade']),
+	  locale: _propTypes2["default"].object,
+	  showDateInput: _propTypes2["default"].bool,
+	  showWeekNumber: _propTypes2["default"].bool,
+	  showToday: _propTypes2["default"].bool,
+	  showOk: _propTypes2["default"].bool,
+	  onSelect: _propTypes2["default"].func,
+	  onOk: _propTypes2["default"].func,
+	  onKeyDown: _propTypes2["default"].func,
+	  timePicker: _propTypes2["default"].element,
+	  dateInputPlaceholder: _propTypes2["default"].any,
+	  onClear: _propTypes2["default"].func,
+	  onChange: _propTypes2["default"].func,
+	  onPanelChange: _propTypes2["default"].func,
+	  disabledDate: _propTypes2["default"].func,
+	  disabledTime: _propTypes2["default"].any,
+	  dateRender: _propTypes2["default"].func,
+	  renderFooter: _propTypes2["default"].func,
+	  renderSidebar: _propTypes2["default"].func,
+	  clearIcon: _propTypes2["default"].node,
+	  focusablePanel: _propTypes2["default"].bool
+	});
+	Calendar.defaultProps = _extends({}, _CalendarMixin.calendarMixinDefaultProps, _CommonMixin.defaultProp, {
+	  showToday: true,
+	  showDateInput: true,
+	  timePicker: null,
+	  onOk: noop,
+	  onPanelChange: noop,
+	  focusablePanel: true
 	});
 	
-	exports['default'] = Calendar;
+	var _initialiseProps = function _initialiseProps() {
+	  var _this2 = this;
+	
+	  this.onPanelChange = function (value, mode) {
+	    var props = _this2.props,
+	        state = _this2.state;
+	
+	    if (!('mode' in props)) {
+	      _this2.setState({ mode: mode });
+	    }
+	    props.onPanelChange(value || state.value, mode);
+	  };
+	
+	  this.onKeyDown = function (event) {
+	    if (event.target.nodeName.toLowerCase() === 'input') {
+	      return undefined;
+	    }
+	    var keyCode = event.keyCode;
+	    // mac
+	    var ctrlKey = event.ctrlKey || event.metaKey;
+	    var disabledDate = _this2.props.disabledDate;
+	    var value = _this2.state.value;
+	
+	    switch (keyCode) {
+	      case _KeyCode2["default"].DOWN:
+	        _this2.goTime(1, 'weeks');
+	        event.preventDefault();
+	        return 1;
+	      case _KeyCode2["default"].UP:
+	        _this2.goTime(-1, 'weeks');
+	        event.preventDefault();
+	        return 1;
+	      case _KeyCode2["default"].LEFT:
+	        if (ctrlKey) {
+	          _this2.goTime(-1, 'years');
+	        } else {
+	          _this2.goTime(-1, 'days');
+	        }
+	        event.preventDefault();
+	        return 1;
+	      case _KeyCode2["default"].RIGHT:
+	        if (ctrlKey) {
+	          _this2.goTime(1, 'years');
+	        } else {
+	          _this2.goTime(1, 'days');
+	        }
+	        event.preventDefault();
+	        return 1;
+	      case _KeyCode2["default"].HOME:
+	        _this2.setValue((0, _toTime.goStartMonth)(_this2.state.value));
+	        event.preventDefault();
+	        return 1;
+	      case _KeyCode2["default"].END:
+	        _this2.setValue((0, _toTime.goEndMonth)(_this2.state.value));
+	        event.preventDefault();
+	        return 1;
+	      case _KeyCode2["default"].PAGE_DOWN:
+	        _this2.goTime(1, 'month');
+	        event.preventDefault();
+	        return 1;
+	      case _KeyCode2["default"].PAGE_UP:
+	        _this2.goTime(-1, 'month');
+	        event.preventDefault();
+	        return 1;
+	      case _KeyCode2["default"].ENTER:
+	        if (!disabledDate || !disabledDate(value)) {
+	          _this2.onSelect(value, {
+	            source: 'keyboard'
+	          });
+	        }
+	        event.preventDefault();
+	        return 1;
+	      default:
+	        _this2.props.onKeyDown(event);
+	        return 1;
+	    }
+	  };
+	
+	  this.onClear = function () {
+	    _this2.onSelect(null);
+	    _this2.props.onClear();
+	  };
+	
+	  this.onOk = function () {
+	    var selectedValue = _this2.state.selectedValue;
+	
+	    if (_this2.isAllowedDate(selectedValue)) {
+	      _this2.props.onOk(selectedValue);
+	    }
+	  };
+	
+	  this.onDateInputChange = function (value) {
+	    _this2.onSelect(value, {
+	      source: 'dateInput'
+	    });
+	  };
+	
+	  this.onDateInputSelect = function (value) {
+	    _this2.onSelect(value, {
+	      source: 'dateInputSelect'
+	    });
+	  };
+	
+	  this.onDateTableSelect = function (value) {
+	    var timePicker = _this2.props.timePicker;
+	    var selectedValue = _this2.state.selectedValue;
+	
+	    if (!selectedValue && timePicker) {
+	      var timePickerDefaultValue = timePicker.props.defaultValue;
+	      if (timePickerDefaultValue) {
+	        (0, _util.syncTime)(timePickerDefaultValue, value);
+	      }
+	    }
+	    _this2.onSelect(value);
+	  };
+	
+	  this.onToday = function () {
+	    var value = _this2.state.value;
+	
+	    var now = (0, _util.getTodayTime)(value);
+	    _this2.onSelect(now, {
+	      source: 'todayButton'
+	    });
+	  };
+	
+	  this.getRootDOMNode = function () {
+	    return _reactDom2["default"].findDOMNode(_this2);
+	  };
+	
+	  this.openTimePicker = function () {
+	    _this2.onPanelChange(null, 'time');
+	  };
+	
+	  this.closeTimePicker = function () {
+	    _this2.onPanelChange(null, 'date');
+	  };
+	
+	  this.goTime = function (direction, unit) {
+	    _this2.setValue((0, _toTime.goTime)(_this2.state.value, direction, unit));
+	  };
+	};
+	
+	(0, _reactLifecyclesCompat.polyfill)(Calendar);
+	
+	exports["default"] = (0, _CalendarMixin.calendarMixinWrapper)((0, _CommonMixin.commonMixinWrapper)(Calendar));
 	module.exports = exports['default'];
 
 /***/ }),
-/* 305 */
+/* 300 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31733,65 +31246,56 @@
 	  value: true
 	});
 	
-	var _classCallCheck2 = __webpack_require__(184);
-	
-	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-	
-	var _createClass2 = __webpack_require__(254);
-	
-	var _createClass3 = _interopRequireDefault(_createClass2);
-	
-	var _possibleConstructorReturn2 = __webpack_require__(185);
-	
-	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-	
-	var _inherits2 = __webpack_require__(219);
-	
-	var _inherits3 = _interopRequireDefault(_inherits2);
-	
 	var _react = __webpack_require__(4);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _DateTHead = __webpack_require__(306);
+	var _DateTHead = __webpack_require__(301);
 	
 	var _DateTHead2 = _interopRequireDefault(_DateTHead);
 	
-	var _DateTBody = __webpack_require__(438);
+	var _DateTBody = __webpack_require__(433);
 	
 	var _DateTBody2 = _interopRequireDefault(_DateTBody);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 	
 	var DateTable = function (_React$Component) {
-	  (0, _inherits3['default'])(DateTable, _React$Component);
+	  _inherits(DateTable, _React$Component);
 	
 	  function DateTable() {
-	    (0, _classCallCheck3['default'])(this, DateTable);
-	    return (0, _possibleConstructorReturn3['default'])(this, (DateTable.__proto__ || Object.getPrototypeOf(DateTable)).apply(this, arguments));
+	    _classCallCheck(this, DateTable);
+	
+	    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
 	  }
 	
-	  (0, _createClass3['default'])(DateTable, [{
-	    key: 'render',
-	    value: function render() {
-	      var props = this.props;
-	      var prefixCls = props.prefixCls;
-	      return _react2['default'].createElement(
-	        'table',
-	        { className: prefixCls + '-table', cellSpacing: '0', role: 'grid' },
-	        _react2['default'].createElement(_DateTHead2['default'], props),
-	        _react2['default'].createElement(_DateTBody2['default'], props)
-	      );
-	    }
-	  }]);
-	  return DateTable;
-	}(_react2['default'].Component);
+	  DateTable.prototype.render = function render() {
+	    var props = this.props;
+	    var prefixCls = props.prefixCls;
+	    return _react2["default"].createElement(
+	      'table',
+	      { className: prefixCls + '-table', cellSpacing: '0', role: 'grid' },
+	      _react2["default"].createElement(_DateTHead2["default"], props),
+	      _react2["default"].createElement(_DateTBody2["default"], props)
+	    );
+	  };
 	
-	exports['default'] = DateTable;
+	  return DateTable;
+	}(_react2["default"].Component);
+	
+	exports["default"] = DateTable;
 	module.exports = exports['default'];
 
 /***/ }),
-/* 306 */
+/* 301 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31800,113 +31304,104 @@
 	  value: true
 	});
 	
-	var _classCallCheck2 = __webpack_require__(184);
-	
-	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-	
-	var _createClass2 = __webpack_require__(254);
-	
-	var _createClass3 = _interopRequireDefault(_createClass2);
-	
-	var _possibleConstructorReturn2 = __webpack_require__(185);
-	
-	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-	
-	var _inherits2 = __webpack_require__(219);
-	
-	var _inherits3 = _interopRequireDefault(_inherits2);
-	
 	var _react = __webpack_require__(4);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _DateConstants = __webpack_require__(307);
+	var _DateConstants = __webpack_require__(302);
 	
 	var _DateConstants2 = _interopRequireDefault(_DateConstants);
 	
-	var _moment = __webpack_require__(308);
+	var _moment = __webpack_require__(303);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 	
 	var DateTHead = function (_React$Component) {
-	  (0, _inherits3['default'])(DateTHead, _React$Component);
+	  _inherits(DateTHead, _React$Component);
 	
 	  function DateTHead() {
-	    (0, _classCallCheck3['default'])(this, DateTHead);
-	    return (0, _possibleConstructorReturn3['default'])(this, (DateTHead.__proto__ || Object.getPrototypeOf(DateTHead)).apply(this, arguments));
+	    _classCallCheck(this, DateTHead);
+	
+	    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
 	  }
 	
-	  (0, _createClass3['default'])(DateTHead, [{
-	    key: 'render',
-	    value: function render() {
-	      var props = this.props;
-	      var value = props.value;
-	      var localeData = value.localeData();
-	      var prefixCls = props.prefixCls;
-	      var veryShortWeekdays = [];
-	      var weekDays = [];
-	      var firstDayOfWeek = localeData.firstDayOfWeek();
-	      var showWeekNumberEl = void 0;
-	      var now = (0, _moment2['default'])();
-	      for (var dateColIndex = 0; dateColIndex < _DateConstants2['default'].DATE_COL_COUNT; dateColIndex++) {
-	        var index = (firstDayOfWeek + dateColIndex) % _DateConstants2['default'].DATE_COL_COUNT;
-	        now.day(index);
-	        veryShortWeekdays[dateColIndex] = localeData.weekdaysMin(now);
-	        weekDays[dateColIndex] = localeData.weekdaysShort(now);
-	      }
+	  DateTHead.prototype.render = function render() {
+	    var props = this.props;
+	    var value = props.value;
+	    var localeData = value.localeData();
+	    var prefixCls = props.prefixCls;
+	    var veryShortWeekdays = [];
+	    var weekDays = [];
+	    var firstDayOfWeek = localeData.firstDayOfWeek();
+	    var showWeekNumberEl = void 0;
+	    var now = (0, _moment2["default"])();
+	    for (var dateColIndex = 0; dateColIndex < _DateConstants2["default"].DATE_COL_COUNT; dateColIndex++) {
+	      var index = (firstDayOfWeek + dateColIndex) % _DateConstants2["default"].DATE_COL_COUNT;
+	      now.day(index);
+	      veryShortWeekdays[dateColIndex] = localeData.weekdaysMin(now);
+	      weekDays[dateColIndex] = localeData.weekdaysShort(now);
+	    }
 	
-	      if (props.showWeekNumber) {
-	        showWeekNumberEl = _react2['default'].createElement(
-	          'th',
-	          {
-	            role: 'columnheader',
-	            className: prefixCls + '-column-header ' + prefixCls + '-week-number-header'
-	          },
-	          _react2['default'].createElement(
-	            'span',
-	            { className: prefixCls + '-column-header-inner' },
-	            'x'
-	          )
-	        );
-	      }
-	      var weekDaysEls = weekDays.map(function (day, xindex) {
-	        return _react2['default'].createElement(
-	          'th',
-	          {
-	            key: xindex,
-	            role: 'columnheader',
-	            title: day,
-	            className: prefixCls + '-column-header'
-	          },
-	          _react2['default'].createElement(
-	            'span',
-	            { className: prefixCls + '-column-header-inner' },
-	            veryShortWeekdays[xindex]
-	          )
-	        );
-	      });
-	      return _react2['default'].createElement(
-	        'thead',
-	        null,
-	        _react2['default'].createElement(
-	          'tr',
-	          { role: 'row' },
-	          showWeekNumberEl,
-	          weekDaysEls
+	    if (props.showWeekNumber) {
+	      showWeekNumberEl = _react2["default"].createElement(
+	        'th',
+	        {
+	          role: 'columnheader',
+	          className: prefixCls + '-column-header ' + prefixCls + '-week-number-header'
+	        },
+	        _react2["default"].createElement(
+	          'span',
+	          { className: prefixCls + '-column-header-inner' },
+	          'x'
 	        )
 	      );
 	    }
-	  }]);
-	  return DateTHead;
-	}(_react2['default'].Component);
+	    var weekDaysEls = weekDays.map(function (day, xindex) {
+	      return _react2["default"].createElement(
+	        'th',
+	        {
+	          key: xindex,
+	          role: 'columnheader',
+	          title: day,
+	          className: prefixCls + '-column-header'
+	        },
+	        _react2["default"].createElement(
+	          'span',
+	          { className: prefixCls + '-column-header-inner' },
+	          veryShortWeekdays[xindex]
+	        )
+	      );
+	    });
+	    return _react2["default"].createElement(
+	      'thead',
+	      null,
+	      _react2["default"].createElement(
+	        'tr',
+	        { role: 'row' },
+	        showWeekNumberEl,
+	        weekDaysEls
+	      )
+	    );
+	  };
 	
-	exports['default'] = DateTHead;
+	  return DateTHead;
+	}(_react2["default"].Component);
+	
+	exports["default"] = DateTHead;
 	module.exports = exports['default'];
 
 /***/ }),
-/* 307 */
+/* 302 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -31918,10 +31413,10 @@
 	  DATE_ROW_COUNT: 6,
 	  DATE_COL_COUNT: 7
 	};
-	module.exports = exports['default'];
+	module.exports = exports["default"];
 
 /***/ }),
-/* 308 */
+/* 303 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var require;/* WEBPACK VAR INJECTION */(function(module) {//! moment.js
@@ -33776,7 +33271,7 @@
 	            try {
 	                oldLocale = globalLocale._abbr;
 	                var aliasedRequire = require;
-	                __webpack_require__(310)("./" + name);
+	                __webpack_require__(305)("./" + name);
 	                getSetGlobalLocale(oldLocale);
 	            } catch (e) {}
 	        }
@@ -36527,10 +36022,10 @@
 	
 	})));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(309)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(304)(module)))
 
 /***/ }),
-/* 309 */
+/* 304 */
 /***/ (function(module, exports) {
 
 	module.exports = function(module) {
@@ -36546,264 +36041,264 @@
 
 
 /***/ }),
-/* 310 */
+/* 305 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./af": 311,
-		"./af.js": 311,
-		"./ar": 312,
-		"./ar-dz": 313,
-		"./ar-dz.js": 313,
-		"./ar-kw": 314,
-		"./ar-kw.js": 314,
-		"./ar-ly": 315,
-		"./ar-ly.js": 315,
-		"./ar-ma": 316,
-		"./ar-ma.js": 316,
-		"./ar-sa": 317,
-		"./ar-sa.js": 317,
-		"./ar-tn": 318,
-		"./ar-tn.js": 318,
-		"./ar.js": 312,
-		"./az": 319,
-		"./az.js": 319,
-		"./be": 320,
-		"./be.js": 320,
-		"./bg": 321,
-		"./bg.js": 321,
-		"./bm": 322,
-		"./bm.js": 322,
-		"./bn": 323,
-		"./bn.js": 323,
-		"./bo": 324,
-		"./bo.js": 324,
-		"./br": 325,
-		"./br.js": 325,
-		"./bs": 326,
-		"./bs.js": 326,
-		"./ca": 327,
-		"./ca.js": 327,
-		"./cs": 328,
-		"./cs.js": 328,
-		"./cv": 329,
-		"./cv.js": 329,
-		"./cy": 330,
-		"./cy.js": 330,
-		"./da": 331,
-		"./da.js": 331,
-		"./de": 332,
-		"./de-at": 333,
-		"./de-at.js": 333,
-		"./de-ch": 334,
-		"./de-ch.js": 334,
-		"./de.js": 332,
-		"./dv": 335,
-		"./dv.js": 335,
-		"./el": 336,
-		"./el.js": 336,
-		"./en-SG": 337,
-		"./en-SG.js": 337,
-		"./en-au": 338,
-		"./en-au.js": 338,
-		"./en-ca": 339,
-		"./en-ca.js": 339,
-		"./en-gb": 340,
-		"./en-gb.js": 340,
-		"./en-ie": 341,
-		"./en-ie.js": 341,
-		"./en-il": 342,
-		"./en-il.js": 342,
-		"./en-nz": 343,
-		"./en-nz.js": 343,
-		"./eo": 344,
-		"./eo.js": 344,
-		"./es": 345,
-		"./es-do": 346,
-		"./es-do.js": 346,
-		"./es-us": 347,
-		"./es-us.js": 347,
-		"./es.js": 345,
-		"./et": 348,
-		"./et.js": 348,
-		"./eu": 349,
-		"./eu.js": 349,
-		"./fa": 350,
-		"./fa.js": 350,
-		"./fi": 351,
-		"./fi.js": 351,
-		"./fo": 352,
-		"./fo.js": 352,
-		"./fr": 353,
-		"./fr-ca": 354,
-		"./fr-ca.js": 354,
-		"./fr-ch": 355,
-		"./fr-ch.js": 355,
-		"./fr.js": 353,
-		"./fy": 356,
-		"./fy.js": 356,
-		"./ga": 357,
-		"./ga.js": 357,
-		"./gd": 358,
-		"./gd.js": 358,
-		"./gl": 359,
-		"./gl.js": 359,
-		"./gom-latn": 360,
-		"./gom-latn.js": 360,
-		"./gu": 361,
-		"./gu.js": 361,
-		"./he": 362,
-		"./he.js": 362,
-		"./hi": 363,
-		"./hi.js": 363,
-		"./hr": 364,
-		"./hr.js": 364,
-		"./hu": 365,
-		"./hu.js": 365,
-		"./hy-am": 366,
-		"./hy-am.js": 366,
-		"./id": 367,
-		"./id.js": 367,
-		"./is": 368,
-		"./is.js": 368,
-		"./it": 369,
-		"./it-ch": 370,
-		"./it-ch.js": 370,
-		"./it.js": 369,
-		"./ja": 371,
-		"./ja.js": 371,
-		"./jv": 372,
-		"./jv.js": 372,
-		"./ka": 373,
-		"./ka.js": 373,
-		"./kk": 374,
-		"./kk.js": 374,
-		"./km": 375,
-		"./km.js": 375,
-		"./kn": 376,
-		"./kn.js": 376,
-		"./ko": 377,
-		"./ko.js": 377,
-		"./ku": 378,
-		"./ku.js": 378,
-		"./ky": 379,
-		"./ky.js": 379,
-		"./lb": 380,
-		"./lb.js": 380,
-		"./lo": 381,
-		"./lo.js": 381,
-		"./lt": 382,
-		"./lt.js": 382,
-		"./lv": 383,
-		"./lv.js": 383,
-		"./me": 384,
-		"./me.js": 384,
-		"./mi": 385,
-		"./mi.js": 385,
-		"./mk": 386,
-		"./mk.js": 386,
-		"./ml": 387,
-		"./ml.js": 387,
-		"./mn": 388,
-		"./mn.js": 388,
-		"./mr": 389,
-		"./mr.js": 389,
-		"./ms": 390,
-		"./ms-my": 391,
-		"./ms-my.js": 391,
-		"./ms.js": 390,
-		"./mt": 392,
-		"./mt.js": 392,
-		"./my": 393,
-		"./my.js": 393,
-		"./nb": 394,
-		"./nb.js": 394,
-		"./ne": 395,
-		"./ne.js": 395,
-		"./nl": 396,
-		"./nl-be": 397,
-		"./nl-be.js": 397,
-		"./nl.js": 396,
-		"./nn": 398,
-		"./nn.js": 398,
-		"./pa-in": 399,
-		"./pa-in.js": 399,
-		"./pl": 400,
-		"./pl.js": 400,
-		"./pt": 401,
-		"./pt-br": 402,
-		"./pt-br.js": 402,
-		"./pt.js": 401,
-		"./ro": 403,
-		"./ro.js": 403,
-		"./ru": 404,
-		"./ru.js": 404,
-		"./sd": 405,
-		"./sd.js": 405,
-		"./se": 406,
-		"./se.js": 406,
-		"./si": 407,
-		"./si.js": 407,
-		"./sk": 408,
-		"./sk.js": 408,
-		"./sl": 409,
-		"./sl.js": 409,
-		"./sq": 410,
-		"./sq.js": 410,
-		"./sr": 411,
-		"./sr-cyrl": 412,
-		"./sr-cyrl.js": 412,
-		"./sr.js": 411,
-		"./ss": 413,
-		"./ss.js": 413,
-		"./sv": 414,
-		"./sv.js": 414,
-		"./sw": 415,
-		"./sw.js": 415,
-		"./ta": 416,
-		"./ta.js": 416,
-		"./te": 417,
-		"./te.js": 417,
-		"./tet": 418,
-		"./tet.js": 418,
-		"./tg": 419,
-		"./tg.js": 419,
-		"./th": 420,
-		"./th.js": 420,
-		"./tl-ph": 421,
-		"./tl-ph.js": 421,
-		"./tlh": 422,
-		"./tlh.js": 422,
-		"./tr": 423,
-		"./tr.js": 423,
-		"./tzl": 424,
-		"./tzl.js": 424,
-		"./tzm": 425,
-		"./tzm-latn": 426,
-		"./tzm-latn.js": 426,
-		"./tzm.js": 425,
-		"./ug-cn": 427,
-		"./ug-cn.js": 427,
-		"./uk": 428,
-		"./uk.js": 428,
-		"./ur": 429,
-		"./ur.js": 429,
-		"./uz": 430,
-		"./uz-latn": 431,
-		"./uz-latn.js": 431,
-		"./uz.js": 430,
-		"./vi": 432,
-		"./vi.js": 432,
-		"./x-pseudo": 433,
-		"./x-pseudo.js": 433,
-		"./yo": 434,
-		"./yo.js": 434,
-		"./zh-cn": 435,
-		"./zh-cn.js": 435,
-		"./zh-hk": 436,
-		"./zh-hk.js": 436,
-		"./zh-tw": 437,
-		"./zh-tw.js": 437
+		"./af": 306,
+		"./af.js": 306,
+		"./ar": 307,
+		"./ar-dz": 308,
+		"./ar-dz.js": 308,
+		"./ar-kw": 309,
+		"./ar-kw.js": 309,
+		"./ar-ly": 310,
+		"./ar-ly.js": 310,
+		"./ar-ma": 311,
+		"./ar-ma.js": 311,
+		"./ar-sa": 312,
+		"./ar-sa.js": 312,
+		"./ar-tn": 313,
+		"./ar-tn.js": 313,
+		"./ar.js": 307,
+		"./az": 314,
+		"./az.js": 314,
+		"./be": 315,
+		"./be.js": 315,
+		"./bg": 316,
+		"./bg.js": 316,
+		"./bm": 317,
+		"./bm.js": 317,
+		"./bn": 318,
+		"./bn.js": 318,
+		"./bo": 319,
+		"./bo.js": 319,
+		"./br": 320,
+		"./br.js": 320,
+		"./bs": 321,
+		"./bs.js": 321,
+		"./ca": 322,
+		"./ca.js": 322,
+		"./cs": 323,
+		"./cs.js": 323,
+		"./cv": 324,
+		"./cv.js": 324,
+		"./cy": 325,
+		"./cy.js": 325,
+		"./da": 326,
+		"./da.js": 326,
+		"./de": 327,
+		"./de-at": 328,
+		"./de-at.js": 328,
+		"./de-ch": 329,
+		"./de-ch.js": 329,
+		"./de.js": 327,
+		"./dv": 330,
+		"./dv.js": 330,
+		"./el": 331,
+		"./el.js": 331,
+		"./en-SG": 332,
+		"./en-SG.js": 332,
+		"./en-au": 333,
+		"./en-au.js": 333,
+		"./en-ca": 334,
+		"./en-ca.js": 334,
+		"./en-gb": 335,
+		"./en-gb.js": 335,
+		"./en-ie": 336,
+		"./en-ie.js": 336,
+		"./en-il": 337,
+		"./en-il.js": 337,
+		"./en-nz": 338,
+		"./en-nz.js": 338,
+		"./eo": 339,
+		"./eo.js": 339,
+		"./es": 340,
+		"./es-do": 341,
+		"./es-do.js": 341,
+		"./es-us": 342,
+		"./es-us.js": 342,
+		"./es.js": 340,
+		"./et": 343,
+		"./et.js": 343,
+		"./eu": 344,
+		"./eu.js": 344,
+		"./fa": 345,
+		"./fa.js": 345,
+		"./fi": 346,
+		"./fi.js": 346,
+		"./fo": 347,
+		"./fo.js": 347,
+		"./fr": 348,
+		"./fr-ca": 349,
+		"./fr-ca.js": 349,
+		"./fr-ch": 350,
+		"./fr-ch.js": 350,
+		"./fr.js": 348,
+		"./fy": 351,
+		"./fy.js": 351,
+		"./ga": 352,
+		"./ga.js": 352,
+		"./gd": 353,
+		"./gd.js": 353,
+		"./gl": 354,
+		"./gl.js": 354,
+		"./gom-latn": 355,
+		"./gom-latn.js": 355,
+		"./gu": 356,
+		"./gu.js": 356,
+		"./he": 357,
+		"./he.js": 357,
+		"./hi": 358,
+		"./hi.js": 358,
+		"./hr": 359,
+		"./hr.js": 359,
+		"./hu": 360,
+		"./hu.js": 360,
+		"./hy-am": 361,
+		"./hy-am.js": 361,
+		"./id": 362,
+		"./id.js": 362,
+		"./is": 363,
+		"./is.js": 363,
+		"./it": 364,
+		"./it-ch": 365,
+		"./it-ch.js": 365,
+		"./it.js": 364,
+		"./ja": 366,
+		"./ja.js": 366,
+		"./jv": 367,
+		"./jv.js": 367,
+		"./ka": 368,
+		"./ka.js": 368,
+		"./kk": 369,
+		"./kk.js": 369,
+		"./km": 370,
+		"./km.js": 370,
+		"./kn": 371,
+		"./kn.js": 371,
+		"./ko": 372,
+		"./ko.js": 372,
+		"./ku": 373,
+		"./ku.js": 373,
+		"./ky": 374,
+		"./ky.js": 374,
+		"./lb": 375,
+		"./lb.js": 375,
+		"./lo": 376,
+		"./lo.js": 376,
+		"./lt": 377,
+		"./lt.js": 377,
+		"./lv": 378,
+		"./lv.js": 378,
+		"./me": 379,
+		"./me.js": 379,
+		"./mi": 380,
+		"./mi.js": 380,
+		"./mk": 381,
+		"./mk.js": 381,
+		"./ml": 382,
+		"./ml.js": 382,
+		"./mn": 383,
+		"./mn.js": 383,
+		"./mr": 384,
+		"./mr.js": 384,
+		"./ms": 385,
+		"./ms-my": 386,
+		"./ms-my.js": 386,
+		"./ms.js": 385,
+		"./mt": 387,
+		"./mt.js": 387,
+		"./my": 388,
+		"./my.js": 388,
+		"./nb": 389,
+		"./nb.js": 389,
+		"./ne": 390,
+		"./ne.js": 390,
+		"./nl": 391,
+		"./nl-be": 392,
+		"./nl-be.js": 392,
+		"./nl.js": 391,
+		"./nn": 393,
+		"./nn.js": 393,
+		"./pa-in": 394,
+		"./pa-in.js": 394,
+		"./pl": 395,
+		"./pl.js": 395,
+		"./pt": 396,
+		"./pt-br": 397,
+		"./pt-br.js": 397,
+		"./pt.js": 396,
+		"./ro": 398,
+		"./ro.js": 398,
+		"./ru": 399,
+		"./ru.js": 399,
+		"./sd": 400,
+		"./sd.js": 400,
+		"./se": 401,
+		"./se.js": 401,
+		"./si": 402,
+		"./si.js": 402,
+		"./sk": 403,
+		"./sk.js": 403,
+		"./sl": 404,
+		"./sl.js": 404,
+		"./sq": 405,
+		"./sq.js": 405,
+		"./sr": 406,
+		"./sr-cyrl": 407,
+		"./sr-cyrl.js": 407,
+		"./sr.js": 406,
+		"./ss": 408,
+		"./ss.js": 408,
+		"./sv": 409,
+		"./sv.js": 409,
+		"./sw": 410,
+		"./sw.js": 410,
+		"./ta": 411,
+		"./ta.js": 411,
+		"./te": 412,
+		"./te.js": 412,
+		"./tet": 413,
+		"./tet.js": 413,
+		"./tg": 414,
+		"./tg.js": 414,
+		"./th": 415,
+		"./th.js": 415,
+		"./tl-ph": 416,
+		"./tl-ph.js": 416,
+		"./tlh": 417,
+		"./tlh.js": 417,
+		"./tr": 418,
+		"./tr.js": 418,
+		"./tzl": 419,
+		"./tzl.js": 419,
+		"./tzm": 420,
+		"./tzm-latn": 421,
+		"./tzm-latn.js": 421,
+		"./tzm.js": 420,
+		"./ug-cn": 422,
+		"./ug-cn.js": 422,
+		"./uk": 423,
+		"./uk.js": 423,
+		"./ur": 424,
+		"./ur.js": 424,
+		"./uz": 425,
+		"./uz-latn": 426,
+		"./uz-latn.js": 426,
+		"./uz.js": 425,
+		"./vi": 427,
+		"./vi.js": 427,
+		"./x-pseudo": 428,
+		"./x-pseudo.js": 428,
+		"./yo": 429,
+		"./yo.js": 429,
+		"./zh-cn": 430,
+		"./zh-cn.js": 430,
+		"./zh-hk": 431,
+		"./zh-hk.js": 431,
+		"./zh-tw": 432,
+		"./zh-tw.js": 432
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -36816,17 +36311,17 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 310;
+	webpackContext.id = 305;
 
 
 /***/ }),
-/* 311 */
+/* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -36897,13 +36392,13 @@
 
 
 /***/ }),
-/* 312 */
+/* 307 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -37036,13 +36531,13 @@
 
 
 /***/ }),
-/* 313 */
+/* 308 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -37099,13 +36594,13 @@
 
 
 /***/ }),
-/* 314 */
+/* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -37162,13 +36657,13 @@
 
 
 /***/ }),
-/* 315 */
+/* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -37288,13 +36783,13 @@
 
 
 /***/ }),
-/* 316 */
+/* 311 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -37351,13 +36846,13 @@
 
 
 /***/ }),
-/* 317 */
+/* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -37459,13 +36954,13 @@
 
 
 /***/ }),
-/* 318 */
+/* 313 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -37522,13 +37017,13 @@
 
 
 /***/ }),
-/* 319 */
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -37631,13 +37126,13 @@
 
 
 /***/ }),
-/* 320 */
+/* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -37767,13 +37262,13 @@
 
 
 /***/ }),
-/* 321 */
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -37861,13 +37356,13 @@
 
 
 /***/ }),
-/* 322 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -37923,13 +37418,13 @@
 
 
 /***/ }),
-/* 323 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -38046,13 +37541,13 @@
 
 
 /***/ }),
-/* 324 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -38169,13 +37664,13 @@
 
 
 /***/ }),
-/* 325 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -38281,13 +37776,13 @@
 
 
 /***/ }),
-/* 326 */
+/* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -38436,13 +37931,13 @@
 
 
 /***/ }),
-/* 327 */
+/* 322 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -38528,13 +38023,13 @@
 
 
 /***/ }),
-/* 328 */
+/* 323 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -38704,13 +38199,13 @@
 
 
 /***/ }),
-/* 329 */
+/* 324 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -38771,13 +38266,13 @@
 
 
 /***/ }),
-/* 330 */
+/* 325 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -38855,13 +38350,13 @@
 
 
 /***/ }),
-/* 331 */
+/* 326 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -38919,13 +38414,13 @@
 
 
 /***/ }),
-/* 332 */
+/* 327 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -38999,13 +38494,13 @@
 
 
 /***/ }),
-/* 333 */
+/* 328 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -39079,13 +38574,13 @@
 
 
 /***/ }),
-/* 334 */
+/* 329 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -39159,13 +38654,13 @@
 
 
 /***/ }),
-/* 335 */
+/* 330 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -39262,13 +38757,13 @@
 
 
 /***/ }),
-/* 336 */
+/* 331 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -39366,13 +38861,13 @@
 
 
 /***/ }),
-/* 337 */
+/* 332 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -39437,13 +38932,13 @@
 
 
 /***/ }),
-/* 338 */
+/* 333 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -39508,13 +39003,13 @@
 
 
 /***/ }),
-/* 339 */
+/* 334 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -39575,13 +39070,13 @@
 
 
 /***/ }),
-/* 340 */
+/* 335 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -39646,13 +39141,13 @@
 
 
 /***/ }),
-/* 341 */
+/* 336 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -39717,13 +39212,13 @@
 
 
 /***/ }),
-/* 342 */
+/* 337 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -39783,13 +39278,13 @@
 
 
 /***/ }),
-/* 343 */
+/* 338 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -39854,13 +39349,13 @@
 
 
 /***/ }),
-/* 344 */
+/* 339 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -39929,13 +39424,13 @@
 
 
 /***/ }),
-/* 345 */
+/* 340 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40025,13 +39520,13 @@
 
 
 /***/ }),
-/* 346 */
+/* 341 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40121,13 +39616,13 @@
 
 
 /***/ }),
-/* 347 */
+/* 342 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40217,13 +39712,13 @@
 
 
 /***/ }),
-/* 348 */
+/* 343 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40301,13 +39796,13 @@
 
 
 /***/ }),
-/* 349 */
+/* 344 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40371,13 +39866,13 @@
 
 
 /***/ }),
-/* 350 */
+/* 345 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40481,13 +39976,13 @@
 
 
 /***/ }),
-/* 351 */
+/* 346 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40594,13 +40089,13 @@
 
 
 /***/ }),
-/* 352 */
+/* 347 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40658,13 +40153,13 @@
 
 
 /***/ }),
-/* 353 */
+/* 348 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40745,13 +40240,13 @@
 
 
 /***/ }),
-/* 354 */
+/* 349 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40823,13 +40318,13 @@
 
 
 /***/ }),
-/* 355 */
+/* 350 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40905,13 +40400,13 @@
 
 
 /***/ }),
-/* 356 */
+/* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40984,13 +40479,13 @@
 
 
 /***/ }),
-/* 357 */
+/* 352 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41065,13 +40560,13 @@
 
 
 /***/ }),
-/* 358 */
+/* 353 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41145,13 +40640,13 @@
 
 
 /***/ }),
-/* 359 */
+/* 354 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41226,13 +40721,13 @@
 
 
 /***/ }),
-/* 360 */
+/* 355 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41353,13 +40848,13 @@
 
 
 /***/ }),
-/* 361 */
+/* 356 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41481,13 +40976,13 @@
 
 
 /***/ }),
-/* 362 */
+/* 357 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41582,13 +41077,13 @@
 
 
 /***/ }),
-/* 363 */
+/* 358 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41710,13 +41205,13 @@
 
 
 /***/ }),
-/* 364 */
+/* 359 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41868,13 +41363,13 @@
 
 
 /***/ }),
-/* 365 */
+/* 360 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41982,13 +41477,13 @@
 
 
 /***/ }),
-/* 366 */
+/* 361 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42081,13 +41576,13 @@
 
 
 /***/ }),
-/* 367 */
+/* 362 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42167,13 +41662,13 @@
 
 
 /***/ }),
-/* 368 */
+/* 363 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42303,13 +41798,13 @@
 
 
 /***/ }),
-/* 369 */
+/* 364 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42376,13 +41871,13 @@
 
 
 /***/ }),
-/* 370 */
+/* 365 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42449,13 +41944,13 @@
 
 
 /***/ }),
-/* 371 */
+/* 366 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42545,13 +42040,13 @@
 
 
 /***/ }),
-/* 372 */
+/* 367 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42631,13 +42126,13 @@
 
 
 /***/ }),
-/* 373 */
+/* 368 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42724,13 +42219,13 @@
 
 
 /***/ }),
-/* 374 */
+/* 369 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42815,13 +42310,13 @@
 
 
 /***/ }),
-/* 375 */
+/* 370 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42929,13 +42424,13 @@
 
 
 /***/ }),
-/* 376 */
+/* 371 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43059,13 +42554,13 @@
 
 
 /***/ }),
-/* 377 */
+/* 372 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43144,13 +42639,13 @@
 
 
 /***/ }),
-/* 378 */
+/* 373 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43267,13 +42762,13 @@
 
 
 /***/ }),
-/* 379 */
+/* 374 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43358,13 +42853,13 @@
 
 
 /***/ }),
-/* 380 */
+/* 375 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43498,13 +42993,13 @@
 
 
 /***/ }),
-/* 381 */
+/* 376 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43572,13 +43067,13 @@
 
 
 /***/ }),
-/* 382 */
+/* 377 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43694,13 +43189,13 @@
 
 
 /***/ }),
-/* 383 */
+/* 378 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43795,13 +43290,13 @@
 
 
 /***/ }),
-/* 384 */
+/* 379 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43911,13 +43406,13 @@
 
 
 /***/ }),
-/* 385 */
+/* 380 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43979,13 +43474,13 @@
 
 
 /***/ }),
-/* 386 */
+/* 381 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44073,13 +43568,13 @@
 
 
 /***/ }),
-/* 387 */
+/* 382 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44158,13 +43653,13 @@
 
 
 /***/ }),
-/* 388 */
+/* 383 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44266,13 +43761,13 @@
 
 
 /***/ }),
-/* 389 */
+/* 384 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44430,13 +43925,13 @@
 
 
 /***/ }),
-/* 390 */
+/* 385 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44516,13 +44011,13 @@
 
 
 /***/ }),
-/* 391 */
+/* 386 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44602,13 +44097,13 @@
 
 
 /***/ }),
-/* 392 */
+/* 387 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44666,13 +44161,13 @@
 
 
 /***/ }),
-/* 393 */
+/* 388 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44763,13 +44258,13 @@
 
 
 /***/ }),
-/* 394 */
+/* 389 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44829,13 +44324,13 @@
 
 
 /***/ }),
-/* 395 */
+/* 390 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44956,13 +44451,13 @@
 
 
 /***/ }),
-/* 396 */
+/* 391 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45047,13 +44542,13 @@
 
 
 /***/ }),
-/* 397 */
+/* 392 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45138,13 +44633,13 @@
 
 
 /***/ }),
-/* 398 */
+/* 393 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45202,13 +44697,13 @@
 
 
 /***/ }),
-/* 399 */
+/* 394 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45330,13 +44825,13 @@
 
 
 /***/ }),
-/* 400 */
+/* 395 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45460,13 +44955,13 @@
 
 
 /***/ }),
-/* 401 */
+/* 396 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45529,13 +45024,13 @@
 
 
 /***/ }),
-/* 402 */
+/* 397 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45594,13 +45089,13 @@
 
 
 /***/ }),
-/* 403 */
+/* 398 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45673,13 +45168,13 @@
 
 
 /***/ }),
-/* 404 */
+/* 399 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45859,13 +45354,13 @@
 
 
 /***/ }),
-/* 405 */
+/* 400 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45961,13 +45456,13 @@
 
 
 /***/ }),
-/* 406 */
+/* 401 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46025,13 +45520,13 @@
 
 
 /***/ }),
-/* 407 */
+/* 402 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46100,13 +45595,13 @@
 
 
 /***/ }),
-/* 408 */
+/* 403 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46260,13 +45755,13 @@
 
 
 /***/ }),
-/* 409 */
+/* 404 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46437,13 +45932,13 @@
 
 
 /***/ }),
-/* 410 */
+/* 405 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46509,13 +46004,13 @@
 
 
 /***/ }),
-/* 411 */
+/* 406 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46624,13 +46119,13 @@
 
 
 /***/ }),
-/* 412 */
+/* 407 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46739,13 +46234,13 @@
 
 
 /***/ }),
-/* 413 */
+/* 408 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46831,13 +46326,13 @@
 
 
 /***/ }),
-/* 414 */
+/* 409 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46904,13 +46399,13 @@
 
 
 /***/ }),
-/* 415 */
+/* 410 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46967,13 +46462,13 @@
 
 
 /***/ }),
-/* 416 */
+/* 411 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47100,13 +46595,13 @@
 
 
 /***/ }),
-/* 417 */
+/* 412 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47193,13 +46688,13 @@
 
 
 /***/ }),
-/* 418 */
+/* 413 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47264,13 +46759,13 @@
 
 
 /***/ }),
-/* 419 */
+/* 414 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47384,13 +46879,13 @@
 
 
 /***/ }),
-/* 420 */
+/* 415 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47455,13 +46950,13 @@
 
 
 /***/ }),
-/* 421 */
+/* 416 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47521,13 +47016,13 @@
 
 
 /***/ }),
-/* 422 */
+/* 417 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47647,12 +47142,12 @@
 
 
 /***/ }),
-/* 423 */
+/* 418 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47745,13 +47240,13 @@
 
 
 /***/ }),
-/* 424 */
+/* 419 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47840,13 +47335,13 @@
 
 
 /***/ }),
-/* 425 */
+/* 420 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47902,13 +47397,13 @@
 
 
 /***/ }),
-/* 426 */
+/* 421 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47964,13 +47459,13 @@
 
 
 /***/ }),
-/* 427 */
+/* 422 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js language configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48087,13 +47582,13 @@
 
 
 /***/ }),
-/* 428 */
+/* 423 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48245,13 +47740,13 @@
 
 
 /***/ }),
-/* 429 */
+/* 424 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48347,13 +47842,13 @@
 
 
 /***/ }),
-/* 430 */
+/* 425 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48409,13 +47904,13 @@
 
 
 /***/ }),
-/* 431 */
+/* 426 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48471,13 +47966,13 @@
 
 
 /***/ }),
-/* 432 */
+/* 427 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48554,13 +48049,13 @@
 
 
 /***/ }),
-/* 433 */
+/* 428 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48626,13 +48121,13 @@
 
 
 /***/ }),
-/* 434 */
+/* 429 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48690,13 +48185,13 @@
 
 
 /***/ }),
-/* 435 */
+/* 430 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48804,13 +48299,13 @@
 
 
 /***/ }),
-/* 436 */
+/* 431 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48911,13 +48406,13 @@
 
 
 /***/ }),
-/* 437 */
+/* 432 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(308)) :
+	    true ? factory(__webpack_require__(303)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49018,7 +48513,7 @@
 
 
 /***/ }),
-/* 438 */
+/* 433 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49027,17 +48522,9 @@
 	  value: true
 	});
 	
-	var _defineProperty2 = __webpack_require__(262);
-	
-	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
-	
 	var _react = __webpack_require__(4);
 	
 	var _react2 = _interopRequireDefault(_react);
-	
-	var _createReactClass = __webpack_require__(245);
-	
-	var _createReactClass2 = _interopRequireDefault(_createReactClass);
 	
 	var _propTypes = __webpack_require__(5);
 	
@@ -49047,13 +48534,23 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _DateConstants = __webpack_require__(307);
+	var _DateConstants = __webpack_require__(302);
 	
 	var _DateConstants2 = _interopRequireDefault(_DateConstants);
 	
-	var _util = __webpack_require__(439);
+	var _util = __webpack_require__(434);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 	
 	function isSameDay(one, two) {
 	  return one && two && one.isSame(two, 'day');
@@ -49077,26 +48574,16 @@
 	  return 'rc-calendar-' + date.year() + '-' + date.month() + '-' + date.date();
 	}
 	
-	var DateTBody = (0, _createReactClass2['default'])({
-	  displayName: 'DateTBody',
+	var DateTBody = function (_React$Component) {
+	  _inherits(DateTBody, _React$Component);
 	
-	  propTypes: {
-	    contentRender: _propTypes2['default'].func,
-	    dateRender: _propTypes2['default'].func,
-	    disabledDate: _propTypes2['default'].func,
-	    prefixCls: _propTypes2['default'].string,
-	    selectedValue: _propTypes2['default'].oneOfType([_propTypes2['default'].object, _propTypes2['default'].arrayOf(_propTypes2['default'].object)]),
-	    value: _propTypes2['default'].object,
-	    hoverValue: _propTypes2['default'].any,
-	    showWeekNumber: _propTypes2['default'].bool
-	  },
+	  function DateTBody() {
+	    _classCallCheck(this, DateTBody);
 	
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      hoverValue: []
-	    };
-	  },
-	  render: function render() {
+	    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
+	  }
+	
+	  DateTBody.prototype.render = function render() {
 	    var props = this.props;
 	    var contentRender = props.contentRender,
 	        prefixCls = props.prefixCls,
@@ -49118,12 +48605,15 @@
 	    var todayClass = prefixCls + '-today';
 	    var selectedClass = prefixCls + '-selected-day';
 	    var selectedDateClass = prefixCls + '-selected-date'; // do not move with mouse operation
+	    var selectedStartDateClass = prefixCls + '-selected-start-date';
+	    var selectedEndDateClass = prefixCls + '-selected-end-date';
 	    var inRangeClass = prefixCls + '-in-range-cell';
 	    var lastMonthDayClass = prefixCls + '-last-month-cell';
 	    var nextMonthDayClass = prefixCls + '-next-month-btn-day';
 	    var disabledClass = prefixCls + '-disabled-cell';
 	    var firstDisableClass = prefixCls + '-disabled-cell-first-of-row';
 	    var lastDisableClass = prefixCls + '-disabled-cell-last-of-row';
+	    var lastDayOfMonthClass = prefixCls + '-last-day-of-month';
 	    var month1 = value.clone();
 	    month1.date(1);
 	    var day = month1.day();
@@ -49132,8 +48622,9 @@
 	    var lastMonth1 = month1.clone();
 	    lastMonth1.add(0 - lastMonthDiffDay, 'days');
 	    var passed = 0;
-	    for (iIndex = 0; iIndex < _DateConstants2['default'].DATE_ROW_COUNT; iIndex++) {
-	      for (jIndex = 0; jIndex < _DateConstants2['default'].DATE_COL_COUNT; jIndex++) {
+	
+	    for (iIndex = 0; iIndex < _DateConstants2["default"].DATE_ROW_COUNT; iIndex++) {
+	      for (jIndex = 0; jIndex < _DateConstants2["default"].DATE_COL_COUNT; jIndex++) {
 	        current = lastMonth1;
 	        if (passed) {
 	          current = current.clone();
@@ -49146,7 +48637,7 @@
 	    var tableHtml = [];
 	    passed = 0;
 	
-	    for (iIndex = 0; iIndex < _DateConstants2['default'].DATE_ROW_COUNT; iIndex++) {
+	    for (iIndex = 0; iIndex < _DateConstants2["default"].DATE_ROW_COUNT; iIndex++) {
 	      var _cx;
 	
 	      var isCurrentWeek = void 0;
@@ -49154,7 +48645,7 @@
 	      var isActiveWeek = false;
 	      var dateCells = [];
 	      if (showWeekNumber) {
-	        weekNumberCell = _react2['default'].createElement(
+	        weekNumberCell = _react2["default"].createElement(
 	          'td',
 	          {
 	            key: dateTable[passed].week(),
@@ -49164,11 +48655,11 @@
 	          dateTable[passed].week()
 	        );
 	      }
-	      for (jIndex = 0; jIndex < _DateConstants2['default'].DATE_COL_COUNT; jIndex++) {
+	      for (jIndex = 0; jIndex < _DateConstants2["default"].DATE_COL_COUNT; jIndex++) {
 	        var next = null;
 	        var last = null;
 	        current = dateTable[passed];
-	        if (jIndex < _DateConstants2['default'].DATE_COL_COUNT - 1) {
+	        if (jIndex < _DateConstants2["default"].DATE_COL_COUNT - 1) {
 	          next = dateTable[passed + 1];
 	        }
 	        if (jIndex > 0) {
@@ -49195,12 +48686,14 @@
 	              if (isSameDay(current, startValue)) {
 	                selected = true;
 	                isActiveWeek = true;
+	                cls += ' ' + selectedStartDateClass;
 	              }
 	            }
 	            if (startValue && endValue) {
 	              if (isSameDay(current, endValue)) {
 	                selected = true;
 	                isActiveWeek = true;
+	                cls += ' ' + selectedEndDateClass;
 	              } else if (current.isAfter(startValue, 'day') && current.isBefore(endValue, 'day')) {
 	                cls += ' ' + inRangeClass;
 	              }
@@ -49219,8 +48712,13 @@
 	        if (isBeforeCurrentMonthYear) {
 	          cls += ' ' + lastMonthDayClass;
 	        }
+	
 	        if (isAfterCurrentMonthYear) {
 	          cls += ' ' + nextMonthDayClass;
+	        }
+	
+	        if (current.clone().endOf('month').date() === current.date()) {
+	          cls += ' ' + lastDayOfMonthClass;
 	        }
 	
 	        if (disabledDate) {
@@ -49250,7 +48748,7 @@
 	          dateHtml = dateRender(current, value);
 	        } else {
 	          var content = contentRender ? contentRender(current, value) : current.date();
-	          dateHtml = _react2['default'].createElement(
+	          dateHtml = _react2["default"].createElement(
 	            'div',
 	            {
 	              key: getIdFromDate(current),
@@ -49262,14 +48760,15 @@
 	          );
 	        }
 	
-	        dateCells.push(_react2['default'].createElement(
+	        dateCells.push(_react2["default"].createElement(
 	          'td',
 	          {
 	            key: passed,
 	            onClick: disabled ? undefined : props.onSelect.bind(null, current),
 	            onMouseEnter: disabled ? undefined : props.onDayHover && props.onDayHover.bind(null, current) || undefined,
 	            role: 'gridcell',
-	            title: (0, _util.getTitleString)(current), className: cls
+	            title: (0, _util.getTitleString)(current),
+	            className: cls
 	          },
 	          dateHtml
 	        ));
@@ -49277,30 +48776,45 @@
 	        passed++;
 	      }
 	
-	      tableHtml.push(_react2['default'].createElement(
+	      tableHtml.push(_react2["default"].createElement(
 	        'tr',
 	        {
 	          key: iIndex,
 	          role: 'row',
-	          className: (0, _classnames2['default'])((_cx = {}, (0, _defineProperty3['default'])(_cx, prefixCls + '-current-week', isCurrentWeek), (0, _defineProperty3['default'])(_cx, prefixCls + '-active-week', isActiveWeek), _cx))
+	          className: (0, _classnames2["default"])((_cx = {}, _defineProperty(_cx, prefixCls + '-current-week', isCurrentWeek), _defineProperty(_cx, prefixCls + '-active-week', isActiveWeek), _cx))
 	        },
 	        weekNumberCell,
 	        dateCells
 	      ));
 	    }
-	    return _react2['default'].createElement(
+	    return _react2["default"].createElement(
 	      'tbody',
 	      { className: prefixCls + '-tbody' },
 	      tableHtml
 	    );
-	  }
-	});
+	  };
 	
-	exports['default'] = DateTBody;
+	  return DateTBody;
+	}(_react2["default"].Component);
+	
+	DateTBody.propTypes = {
+	  contentRender: _propTypes2["default"].func,
+	  dateRender: _propTypes2["default"].func,
+	  disabledDate: _propTypes2["default"].func,
+	  prefixCls: _propTypes2["default"].string,
+	  selectedValue: _propTypes2["default"].oneOfType([_propTypes2["default"].object, _propTypes2["default"].arrayOf(_propTypes2["default"].object)]),
+	  value: _propTypes2["default"].object,
+	  hoverValue: _propTypes2["default"].any,
+	  showWeekNumber: _propTypes2["default"].bool
+	};
+	DateTBody.defaultProps = {
+	  hoverValue: []
+	};
+	exports["default"] = DateTBody;
 	module.exports = exports['default'];
 
 /***/ }),
-/* 439 */
+/* 434 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49309,9 +48823,7 @@
 	  value: true
 	});
 	
-	var _extends2 = __webpack_require__(144);
-	
-	var _extends3 = _interopRequireDefault(_extends2);
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
 	exports.getTodayTime = getTodayTime;
 	exports.getTitleString = getTitleString;
@@ -49322,12 +48834,13 @@
 	exports.isTimeValidByConfig = isTimeValidByConfig;
 	exports.isTimeValid = isTimeValid;
 	exports.isAllowedDate = isAllowedDate;
+	exports.formatDate = formatDate;
 	
-	var _moment = __webpack_require__(308);
+	var _moment = __webpack_require__(303);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
 	var defaultDisabledTime = {
 	  disabledHours: function disabledHours() {
@@ -49342,13 +48855,13 @@
 	};
 	
 	function getTodayTime(value) {
-	  var today = (0, _moment2['default'])();
+	  var today = (0, _moment2["default"])();
 	  today.locale(value.locale()).utcOffset(value.utcOffset());
 	  return today;
 	}
 	
 	function getTitleString(value) {
-	  return value.format('L');
+	  return value.format('LL');
 	}
 	
 	function getTodayTimeStr(value) {
@@ -49363,7 +48876,7 @@
 	}
 	
 	function syncTime(from, to) {
-	  if (!_moment2['default'].isMoment(from) || !_moment2['default'].isMoment(to)) return;
+	  if (!_moment2["default"].isMoment(from) || !_moment2["default"].isMoment(to)) return;
 	  to.hour(from.hour());
 	  to.minute(from.minute());
 	  to.second(from.second());
@@ -49371,7 +48884,7 @@
 	
 	function getTimeConfig(value, disabledTime) {
 	  var disabledTimeConfig = disabledTime ? disabledTime(value) : {};
-	  disabledTimeConfig = (0, _extends3['default'])({}, defaultDisabledTime, disabledTimeConfig);
+	  disabledTimeConfig = _extends({}, defaultDisabledTime, disabledTimeConfig);
 	  return disabledTimeConfig;
 	}
 	
@@ -49415,9 +48928,21 @@
 	  }
 	  return true;
 	}
+	
+	function formatDate(value, format) {
+	  if (!value) {
+	    return '';
+	  }
+	
+	  if (Array.isArray(format)) {
+	    format = format[0];
+	  }
+	
+	  return value.format(format);
+	}
 
 /***/ }),
-/* 440 */
+/* 435 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49430,27 +48955,35 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _createReactClass = __webpack_require__(245);
-	
-	var _createReactClass2 = _interopRequireDefault(_createReactClass);
-	
 	var _propTypes = __webpack_require__(5);
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _MonthPanel = __webpack_require__(441);
-	
-	var _MonthPanel2 = _interopRequireDefault(_MonthPanel);
-	
-	var _YearPanel = __webpack_require__(442);
-	
-	var _YearPanel2 = _interopRequireDefault(_YearPanel);
-	
-	var _mapSelf = __webpack_require__(445);
+	var _mapSelf = __webpack_require__(436);
 	
 	var _mapSelf2 = _interopRequireDefault(_mapSelf);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var _MonthPanel = __webpack_require__(437);
+	
+	var _MonthPanel2 = _interopRequireDefault(_MonthPanel);
+	
+	var _YearPanel = __webpack_require__(440);
+	
+	var _YearPanel2 = _interopRequireDefault(_YearPanel);
+	
+	var _DecadePanel = __webpack_require__(441);
+	
+	var _DecadePanel2 = _interopRequireDefault(_DecadePanel);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 	
 	function goMonth(direction) {
 	  var next = this.props.value.clone();
@@ -49468,101 +49001,202 @@
 	  return condition ? el : null;
 	}
 	
-	var CalendarHeader = (0, _createReactClass2['default'])({
-	  displayName: 'CalendarHeader',
+	var CalendarHeader = function (_React$Component) {
+	  _inherits(CalendarHeader, _React$Component);
 	
-	  propTypes: {
-	    prefixCls: _propTypes2['default'].string,
-	    value: _propTypes2['default'].object,
-	    onValueChange: _propTypes2['default'].func,
-	    showTimePicker: _propTypes2['default'].bool,
-	    showMonthPanel: _propTypes2['default'].bool,
-	    showYearPanel: _propTypes2['default'].bool,
-	    onPanelChange: _propTypes2['default'].func,
-	    locale: _propTypes2['default'].object,
-	    enablePrev: _propTypes2['default'].any,
-	    enableNext: _propTypes2['default'].any,
-	    disabledMonth: _propTypes2['default'].func
-	  },
+	  function CalendarHeader(props) {
+	    _classCallCheck(this, CalendarHeader);
 	
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      enableNext: 1,
-	      enablePrev: 1,
-	      onPanelChange: function onPanelChange() {},
-	      onValueChange: function onValueChange() {}
-	    };
-	  },
-	  getInitialState: function getInitialState() {
-	    this.nextMonth = goMonth.bind(this, 1);
-	    this.previousMonth = goMonth.bind(this, -1);
-	    this.nextYear = goYear.bind(this, 1);
-	    this.previousYear = goYear.bind(this, -1);
-	    var _props = this.props,
-	        showMonthPanel = _props.showMonthPanel,
-	        showYearPanel = _props.showYearPanel;
+	    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
 	
-	    return { showMonthPanel: showMonthPanel, showYearPanel: showYearPanel };
-	  },
-	  componentWillReceiveProps: function componentWillReceiveProps() {
+	    _initialiseProps.call(_this);
+	
+	    _this.nextMonth = goMonth.bind(_this, 1);
+	    _this.previousMonth = goMonth.bind(_this, -1);
+	    _this.nextYear = goYear.bind(_this, 1);
+	    _this.previousYear = goYear.bind(_this, -1);
+	
+	    _this.state = { yearPanelReferer: null };
+	    return _this;
+	  }
+	
+	  CalendarHeader.prototype.render = function render() {
+	    var _this2 = this;
+	
 	    var props = this.props;
-	    if ('showMonthpanel' in props) {
-	      this.setState({ showMonthPanel: props.showMonthPanel });
+	    var prefixCls = props.prefixCls,
+	        locale = props.locale,
+	        mode = props.mode,
+	        value = props.value,
+	        showTimePicker = props.showTimePicker,
+	        enableNext = props.enableNext,
+	        enablePrev = props.enablePrev,
+	        disabledMonth = props.disabledMonth,
+	        renderFooter = props.renderFooter,
+	        onChange = props.onChange,
+	        onClear = props.onClear,
+	        showMonthInput = props.showMonthInput;
+	
+	
+	    var panel = null;
+	    if (mode === 'month') {
+	      panel = _react2["default"].createElement(_MonthPanel2["default"], {
+	        showDateInput: true,
+	        locale: locale,
+	        showMonthInput: showMonthInput,
+	        defaultValue: value,
+	        rootPrefixCls: prefixCls,
+	        onSelect: this.onMonthSelect,
+	        onYearPanelShow: function onYearPanelShow() {
+	          return _this2.showYearPanel('month');
+	        },
+	        disabledDate: disabledMonth,
+	        cellRender: props.monthCellRender,
+	        contentRender: props.monthCellContentRender,
+	        renderFooter: renderFooter,
+	        onChange: onChange,
+	        onClear: onClear,
+	        value: value
+	      });
 	    }
-	    if ('showYearpanel' in props) {
-	      this.setState({ showYearPanel: props.showYearPanel });
+	    if (mode === 'year') {
+	      panel = _react2["default"].createElement(_YearPanel2["default"], {
+	        locale: locale,
+	        defaultValue: value,
+	        rootPrefixCls: prefixCls,
+	        onSelect: this.onYearSelect,
+	        onDecadePanelShow: this.showDecadePanel,
+	        renderFooter: renderFooter
+	      });
 	    }
-	  },
-	  onSelect: function onSelect(value) {
-	    this.triggerPanelChange({
-	      showMonthPanel: 0,
-	      showYearPanel: 0
-	    });
-	    this.props.onValueChange(value);
-	  },
-	  triggerPanelChange: function triggerPanelChange(panelStatus) {
-	    if (!('showMonthPanel' in this.props)) {
-	      this.setState({ showMonthPanel: panelStatus.showMonthPanel });
+	    if (mode === 'decade') {
+	      panel = _react2["default"].createElement(_DecadePanel2["default"], {
+	        locale: locale,
+	        defaultValue: value,
+	        rootPrefixCls: prefixCls,
+	        onSelect: this.onDecadeSelect,
+	        renderFooter: renderFooter
+	      });
 	    }
-	    if (!('showYearPanel' in this.props)) {
-	      this.setState({ showYearPanel: panelStatus.showYearPanel });
+	
+	    return _react2["default"].createElement(
+	      'div',
+	      { className: prefixCls + '-header' },
+	      _react2["default"].createElement(
+	        'div',
+	        { style: { position: 'relative' }, className: prefixCls + '-header-btns' },
+	        showIf(enablePrev && !showTimePicker, _react2["default"].createElement('a', {
+	          className: prefixCls + '-prev-year-btn',
+	          role: 'button',
+	          onClick: this.previousYear,
+	          title: locale.previousYear
+	        })),
+	        showIf(enablePrev && !showTimePicker, _react2["default"].createElement('a', {
+	          className: prefixCls + '-prev-month-btn',
+	          role: 'button',
+	          onClick: this.previousMonth,
+	          title: locale.previousMonth
+	        })),
+	        this.monthYearElement(showTimePicker),
+	        showIf(enableNext && !showTimePicker, _react2["default"].createElement('a', {
+	          className: prefixCls + '-next-month-btn',
+	          onClick: this.nextMonth,
+	          title: locale.nextMonth
+	        })),
+	        showIf(enableNext && !showTimePicker, _react2["default"].createElement('a', {
+	          className: prefixCls + '-next-year-btn',
+	          onClick: this.nextYear,
+	          title: locale.nextYear
+	        }))
+	      ),
+	      panel
+	    );
+	  };
+	
+	  return CalendarHeader;
+	}(_react2["default"].Component);
+	
+	CalendarHeader.propTypes = {
+	  prefixCls: _propTypes2["default"].string,
+	  value: _propTypes2["default"].object,
+	  onValueChange: _propTypes2["default"].func,
+	  showTimePicker: _propTypes2["default"].bool,
+	  onPanelChange: _propTypes2["default"].func,
+	  locale: _propTypes2["default"].object,
+	  enablePrev: _propTypes2["default"].any,
+	  enableNext: _propTypes2["default"].any,
+	  disabledMonth: _propTypes2["default"].func,
+	  renderFooter: _propTypes2["default"].func,
+	  onMonthSelect: _propTypes2["default"].func
+	};
+	CalendarHeader.defaultProps = {
+	  enableNext: 1,
+	  enablePrev: 1,
+	  onPanelChange: function onPanelChange() {},
+	  onValueChange: function onValueChange() {}
+	};
+	
+	var _initialiseProps = function _initialiseProps() {
+	  var _this3 = this;
+	
+	  this.onMonthSelect = function (value) {
+	    _this3.props.onPanelChange(value, 'date');
+	    if (_this3.props.onMonthSelect) {
+	      _this3.props.onMonthSelect(value);
+	    } else {
+	      _this3.props.onValueChange(value);
 	    }
-	    this.props.onPanelChange(panelStatus);
-	  },
-	  monthYearElement: function monthYearElement(showTimePicker) {
-	    var props = this.props;
+	  };
+	
+	  this.onYearSelect = function (value) {
+	    var referer = _this3.state.yearPanelReferer;
+	    _this3.setState({ yearPanelReferer: null });
+	    _this3.props.onPanelChange(value, referer);
+	    _this3.props.onValueChange(value);
+	  };
+	
+	  this.onDecadeSelect = function (value) {
+	    _this3.props.onPanelChange(value, 'year');
+	    _this3.props.onValueChange(value);
+	  };
+	
+	  this.monthYearElement = function (showTimePicker) {
+	    var props = _this3.props;
 	    var prefixCls = props.prefixCls;
 	    var locale = props.locale;
 	    var value = props.value;
 	    var localeData = value.localeData();
 	    var monthBeforeYear = locale.monthBeforeYear;
 	    var selectClassName = prefixCls + '-' + (monthBeforeYear ? 'my-select' : 'ym-select');
-	    var year = _react2['default'].createElement(
+	    var timeClassName = showTimePicker ? ' ' + prefixCls + '-time-status' : '';
+	    var year = _react2["default"].createElement(
 	      'a',
 	      {
-	        className: prefixCls + '-year-select',
+	        className: prefixCls + '-year-select' + timeClassName,
 	        role: 'button',
-	        onClick: showTimePicker ? null : this.showYearPanel,
-	        title: locale.yearSelect
+	        onClick: showTimePicker ? null : function () {
+	          return _this3.showYearPanel('date');
+	        },
+	        title: showTimePicker ? null : locale.yearSelect
 	      },
 	      value.format(locale.yearFormat)
 	    );
-	    var month = _react2['default'].createElement(
+	    var month = _react2["default"].createElement(
 	      'a',
 	      {
-	        className: prefixCls + '-month-select',
+	        className: prefixCls + '-month-select' + timeClassName,
 	        role: 'button',
-	        onClick: showTimePicker ? null : this.showMonthPanel,
-	        title: locale.monthSelect
+	        onClick: showTimePicker ? null : _this3.showMonthPanel,
+	        title: showTimePicker ? null : locale.monthSelect
 	      },
-	      localeData.monthsShort(value)
+	      locale.monthFormat ? value.format(locale.monthFormat) : localeData.monthsShort(value)
 	    );
 	    var day = void 0;
 	    if (showTimePicker) {
-	      day = _react2['default'].createElement(
+	      day = _react2["default"].createElement(
 	        'a',
 	        {
-	          className: prefixCls + '-day-select',
+	          className: prefixCls + '-day-select' + timeClassName,
 	          role: 'button'
 	        },
 	        value.format(locale.dayFormat)
@@ -49574,951 +49208,33 @@
 	    } else {
 	      my = [year, month, day];
 	    }
-	    return _react2['default'].createElement(
+	    return _react2["default"].createElement(
 	      'span',
 	      { className: selectClassName },
-	      (0, _mapSelf2['default'])(my)
+	      (0, _mapSelf2["default"])(my)
 	    );
-	  },
-	  showMonthPanel: function showMonthPanel() {
-	    this.triggerPanelChange({
-	      showMonthPanel: 1,
-	      showYearPanel: 0
-	    });
-	  },
-	  showYearPanel: function showYearPanel() {
-	    this.triggerPanelChange({
-	      showMonthPanel: 0,
-	      showYearPanel: 1
-	    });
-	  },
-	  render: function render() {
-	    var props = this.props,
-	        state = this.state;
-	    var prefixCls = props.prefixCls,
-	        locale = props.locale,
-	        value = props.value,
-	        showTimePicker = props.showTimePicker,
-	        enableNext = props.enableNext,
-	        enablePrev = props.enablePrev,
-	        disabledMonth = props.disabledMonth;
+	  };
 	
+	  this.showMonthPanel = function () {
+	    // null means that users' interaction doesn't change value
+	    _this3.props.onPanelChange(null, 'month');
+	  };
 	
-	    var panel = null;
-	    if (state.showMonthPanel) {
-	      panel = _react2['default'].createElement(_MonthPanel2['default'], {
-	        locale: locale,
-	        defaultValue: value,
-	        rootPrefixCls: prefixCls,
-	        onSelect: this.onSelect,
-	        disabledDate: disabledMonth
-	      });
-	    } else if (state.showYearPanel) {
-	      panel = _react2['default'].createElement(_YearPanel2['default'], {
-	        locale: locale,
-	        defaultValue: value,
-	        rootPrefixCls: prefixCls,
-	        onSelect: this.onSelect
-	      });
-	    }
+	  this.showYearPanel = function (referer) {
+	    _this3.setState({ yearPanelReferer: referer });
+	    _this3.props.onPanelChange(null, 'year');
+	  };
 	
-	    return _react2['default'].createElement(
-	      'div',
-	      { className: prefixCls + '-header' },
-	      _react2['default'].createElement(
-	        'div',
-	        { style: { position: 'relative' } },
-	        showIf(enablePrev && !showTimePicker, _react2['default'].createElement('a', {
-	          className: prefixCls + '-prev-year-btn',
-	          role: 'button',
-	          onClick: this.previousYear,
-	          title: locale.previousYear
-	        })),
-	        showIf(enablePrev && !showTimePicker, _react2['default'].createElement('a', {
-	          className: prefixCls + '-prev-month-btn',
-	          role: 'button',
-	          onClick: this.previousMonth,
-	          title: locale.previousMonth
-	        })),
-	        this.monthYearElement(showTimePicker),
-	        showIf(enableNext && !showTimePicker, _react2['default'].createElement('a', {
-	          className: prefixCls + '-next-month-btn',
-	          onClick: this.nextMonth,
-	          title: locale.nextMonth
-	        })),
-	        showIf(enableNext && !showTimePicker, _react2['default'].createElement('a', {
-	          className: prefixCls + '-next-year-btn',
-	          onClick: this.nextYear,
-	          title: locale.nextYear
-	        }))
-	      ),
-	      panel
-	    );
-	  }
-	});
+	  this.showDecadePanel = function () {
+	    _this3.props.onPanelChange(null, 'decade');
+	  };
+	};
 	
-	exports['default'] = CalendarHeader;
+	exports["default"] = CalendarHeader;
 	module.exports = exports['default'];
 
 /***/ }),
-/* 441 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _createReactClass = __webpack_require__(245);
-	
-	var _createReactClass2 = _interopRequireDefault(_createReactClass);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _YearPanel = __webpack_require__(442);
-	
-	var _YearPanel2 = _interopRequireDefault(_YearPanel);
-	
-	var _MonthTable = __webpack_require__(444);
-	
-	var _MonthTable2 = _interopRequireDefault(_MonthTable);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	function goYear(direction) {
-	  var next = this.state.value.clone();
-	  next.add(direction, 'year');
-	  this.setAndChangeValue(next);
-	}
-	
-	function noop() {}
-	
-	var MonthPanel = (0, _createReactClass2['default'])({
-	  displayName: 'MonthPanel',
-	
-	  propTypes: {
-	    onChange: _propTypes2['default'].func,
-	    disabledDate: _propTypes2['default'].func,
-	    onSelect: _propTypes2['default'].func
-	  },
-	
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      onChange: noop,
-	      onSelect: noop
-	    };
-	  },
-	  getInitialState: function getInitialState() {
-	    var props = this.props;
-	    // bind methods
-	    this.nextYear = goYear.bind(this, 1);
-	    this.previousYear = goYear.bind(this, -1);
-	    this.prefixCls = props.rootPrefixCls + '-month-panel';
-	    return {
-	      value: props.value || props.defaultValue
-	    };
-	  },
-	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    if ('value' in nextProps) {
-	      this.setState({
-	        value: nextProps.value
-	      });
-	    }
-	  },
-	  onYearPanelSelect: function onYearPanelSelect(current) {
-	    this.setState({
-	      showYearPanel: 0
-	    });
-	    this.setAndChangeValue(current);
-	  },
-	  setAndChangeValue: function setAndChangeValue(value) {
-	    this.setValue(value);
-	    this.props.onChange(value);
-	  },
-	  setAndSelectValue: function setAndSelectValue(value) {
-	    this.setValue(value);
-	    this.props.onSelect(value);
-	  },
-	  setValue: function setValue(value) {
-	    if (!('value' in this.props)) {
-	      this.setState({
-	        value: value
-	      });
-	    }
-	  },
-	  showYearPanel: function showYearPanel() {
-	    this.setState({
-	      showYearPanel: 1
-	    });
-	  },
-	  render: function render() {
-	    var props = this.props;
-	    var value = this.state.value;
-	    var cellRender = props.cellRender;
-	    var contentRender = props.contentRender;
-	    var locale = props.locale;
-	    var year = value.year();
-	    var prefixCls = this.prefixCls;
-	    var yearPanel = void 0;
-	    if (this.state.showYearPanel) {
-	      yearPanel = _react2['default'].createElement(_YearPanel2['default'], {
-	        locale: locale,
-	        value: value,
-	        rootPrefixCls: props.rootPrefixCls,
-	        onSelect: this.onYearPanelSelect
-	      });
-	    }
-	    return _react2['default'].createElement(
-	      'div',
-	      { className: prefixCls, style: props.style },
-	      _react2['default'].createElement(
-	        'div',
-	        null,
-	        _react2['default'].createElement(
-	          'div',
-	          { className: prefixCls + '-header' },
-	          _react2['default'].createElement('a', {
-	            className: prefixCls + '-prev-year-btn',
-	            role: 'button',
-	            onClick: this.previousYear,
-	            title: locale.previousYear
-	          }),
-	          _react2['default'].createElement(
-	            'a',
-	            {
-	              className: prefixCls + '-year-select',
-	              role: 'button',
-	              onClick: this.showYearPanel,
-	              title: locale.yearSelect
-	            },
-	            _react2['default'].createElement(
-	              'span',
-	              { className: prefixCls + '-year-select-content' },
-	              year
-	            ),
-	            _react2['default'].createElement(
-	              'span',
-	              { className: prefixCls + '-year-select-arrow' },
-	              'x'
-	            )
-	          ),
-	          _react2['default'].createElement('a', {
-	            className: prefixCls + '-next-year-btn',
-	            role: 'button',
-	            onClick: this.nextYear,
-	            title: locale.nextYear
-	          })
-	        ),
-	        _react2['default'].createElement(
-	          'div',
-	          { className: prefixCls + '-body' },
-	          _react2['default'].createElement(_MonthTable2['default'], {
-	            disabledDate: props.disabledDate,
-	            onSelect: this.setAndSelectValue,
-	            locale: locale,
-	            value: value,
-	            cellRender: cellRender,
-	            contentRender: contentRender,
-	            prefixCls: prefixCls
-	          })
-	        )
-	      ),
-	      yearPanel
-	    );
-	  }
-	});
-	
-	exports['default'] = MonthPanel;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 442 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _defineProperty2 = __webpack_require__(262);
-	
-	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
-	
-	var _classCallCheck2 = __webpack_require__(184);
-	
-	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-	
-	var _createClass2 = __webpack_require__(254);
-	
-	var _createClass3 = _interopRequireDefault(_createClass2);
-	
-	var _possibleConstructorReturn2 = __webpack_require__(185);
-	
-	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-	
-	var _inherits2 = __webpack_require__(219);
-	
-	var _inherits3 = _interopRequireDefault(_inherits2);
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _classnames = __webpack_require__(3);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	var _DecadePanel = __webpack_require__(443);
-	
-	var _DecadePanel2 = _interopRequireDefault(_DecadePanel);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var ROW = 4;
-	var COL = 3;
-	
-	function goYear(direction) {
-	  var value = this.state.value.clone();
-	  value.add(direction, 'year');
-	  this.setState({
-	    value: value
-	  });
-	}
-	
-	function chooseYear(year) {
-	  var value = this.state.value.clone();
-	  value.year(year);
-	  value.month(this.state.value.month());
-	  this.props.onSelect(value);
-	}
-	
-	var YearPanel = function (_React$Component) {
-	  (0, _inherits3['default'])(YearPanel, _React$Component);
-	
-	  function YearPanel(props) {
-	    (0, _classCallCheck3['default'])(this, YearPanel);
-	
-	    var _this = (0, _possibleConstructorReturn3['default'])(this, (YearPanel.__proto__ || Object.getPrototypeOf(YearPanel)).call(this, props));
-	
-	    _this.prefixCls = props.rootPrefixCls + '-year-panel';
-	    _this.state = {
-	      value: props.value || props.defaultValue
-	    };
-	    _this.nextDecade = goYear.bind(_this, 10);
-	    _this.previousDecade = goYear.bind(_this, -10);
-	    ['showDecadePanel', 'onDecadePanelSelect'].forEach(function (method) {
-	      _this[method] = _this[method].bind(_this);
-	    });
-	    return _this;
-	  }
-	
-	  (0, _createClass3['default'])(YearPanel, [{
-	    key: 'onDecadePanelSelect',
-	    value: function onDecadePanelSelect(current) {
-	      this.setState({
-	        value: current,
-	        showDecadePanel: 0
-	      });
-	    }
-	  }, {
-	    key: 'years',
-	    value: function years() {
-	      var value = this.state.value;
-	      var currentYear = value.year();
-	      var startYear = parseInt(currentYear / 10, 10) * 10;
-	      var previousYear = startYear - 1;
-	      var years = [];
-	      var index = 0;
-	      for (var rowIndex = 0; rowIndex < ROW; rowIndex++) {
-	        years[rowIndex] = [];
-	        for (var colIndex = 0; colIndex < COL; colIndex++) {
-	          var year = previousYear + index;
-	          var content = String(year);
-	          years[rowIndex][colIndex] = {
-	            content: content,
-	            year: year,
-	            title: content
-	          };
-	          index++;
-	        }
-	      }
-	      return years;
-	    }
-	  }, {
-	    key: 'showDecadePanel',
-	    value: function showDecadePanel() {
-	      this.setState({
-	        showDecadePanel: 1
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-	
-	      var props = this.props;
-	      var value = this.state.value;
-	      var locale = props.locale;
-	      var years = this.years();
-	      var currentYear = value.year();
-	      var startYear = parseInt(currentYear / 10, 10) * 10;
-	      var endYear = startYear + 9;
-	      var prefixCls = this.prefixCls;
-	
-	      var yeasEls = years.map(function (row, index) {
-	        var tds = row.map(function (yearData) {
-	          var _classNameMap;
-	
-	          var classNameMap = (_classNameMap = {}, (0, _defineProperty3['default'])(_classNameMap, prefixCls + '-cell', 1), (0, _defineProperty3['default'])(_classNameMap, prefixCls + '-selected-cell', yearData.year === currentYear), (0, _defineProperty3['default'])(_classNameMap, prefixCls + '-last-decade-cell', yearData.year < startYear), (0, _defineProperty3['default'])(_classNameMap, prefixCls + '-next-decade-cell', yearData.year > endYear), _classNameMap);
-	          var clickHandler = void 0;
-	          if (yearData.year < startYear) {
-	            clickHandler = _this2.previousDecade;
-	          } else if (yearData.year > endYear) {
-	            clickHandler = _this2.nextDecade;
-	          } else {
-	            clickHandler = chooseYear.bind(_this2, yearData.year);
-	          }
-	          return _react2['default'].createElement(
-	            'td',
-	            {
-	              role: 'gridcell',
-	              title: yearData.title,
-	              key: yearData.content,
-	              onClick: clickHandler,
-	              className: (0, _classnames2['default'])(classNameMap)
-	            },
-	            _react2['default'].createElement(
-	              'a',
-	              {
-	                className: prefixCls + '-year'
-	              },
-	              yearData.content
-	            )
-	          );
-	        });
-	        return _react2['default'].createElement(
-	          'tr',
-	          { key: index, role: 'row' },
-	          tds
-	        );
-	      });
-	
-	      var decadePanel = void 0;
-	      if (this.state.showDecadePanel) {
-	        decadePanel = _react2['default'].createElement(_DecadePanel2['default'], {
-	          locale: locale,
-	          value: value,
-	          rootPrefixCls: props.rootPrefixCls,
-	          onSelect: this.onDecadePanelSelect
-	        });
-	      }
-	
-	      return _react2['default'].createElement(
-	        'div',
-	        { className: this.prefixCls },
-	        _react2['default'].createElement(
-	          'div',
-	          null,
-	          _react2['default'].createElement(
-	            'div',
-	            { className: prefixCls + '-header' },
-	            _react2['default'].createElement('a', {
-	              className: prefixCls + '-prev-decade-btn',
-	              role: 'button',
-	              onClick: this.previousDecade,
-	              title: locale.previousDecade
-	            }),
-	            _react2['default'].createElement(
-	              'a',
-	              {
-	                className: prefixCls + '-decade-select',
-	                role: 'button',
-	                onClick: this.showDecadePanel,
-	                title: locale.decadeSelect
-	              },
-	              _react2['default'].createElement(
-	                'span',
-	                { className: prefixCls + '-decade-select-content' },
-	                startYear,
-	                '-',
-	                endYear
-	              ),
-	              _react2['default'].createElement(
-	                'span',
-	                { className: prefixCls + '-decade-select-arrow' },
-	                'x'
-	              )
-	            ),
-	            _react2['default'].createElement('a', {
-	              className: prefixCls + '-next-decade-btn',
-	              role: 'button',
-	              onClick: this.nextDecade,
-	              title: locale.nextDecade
-	            })
-	          ),
-	          _react2['default'].createElement(
-	            'div',
-	            { className: prefixCls + '-body' },
-	            _react2['default'].createElement(
-	              'table',
-	              { className: prefixCls + '-table', cellSpacing: '0', role: 'grid' },
-	              _react2['default'].createElement(
-	                'tbody',
-	                { className: prefixCls + '-tbody' },
-	                yeasEls
-	              )
-	            )
-	          )
-	        ),
-	        decadePanel
-	      );
-	    }
-	  }]);
-	  return YearPanel;
-	}(_react2['default'].Component);
-	
-	exports['default'] = YearPanel;
-	
-	
-	YearPanel.propTypes = {
-	  rootPrefixCls: _propTypes2['default'].string,
-	  value: _propTypes2['default'].object,
-	  defaultValue: _propTypes2['default'].object
-	};
-	
-	YearPanel.defaultProps = {
-	  onSelect: function onSelect() {}
-	};
-	module.exports = exports['default'];
-
-/***/ }),
-/* 443 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _defineProperty2 = __webpack_require__(262);
-	
-	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
-	
-	var _classCallCheck2 = __webpack_require__(184);
-	
-	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-	
-	var _createClass2 = __webpack_require__(254);
-	
-	var _createClass3 = _interopRequireDefault(_createClass2);
-	
-	var _possibleConstructorReturn2 = __webpack_require__(185);
-	
-	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-	
-	var _inherits2 = __webpack_require__(219);
-	
-	var _inherits3 = _interopRequireDefault(_inherits2);
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _classnames = __webpack_require__(3);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var ROW = 4;
-	var COL = 3;
-	
-	
-	function goYear(direction) {
-	  var next = this.state.value.clone();
-	  next.add(direction, 'years');
-	  this.setState({
-	    value: next
-	  });
-	}
-	
-	function chooseDecade(year, event) {
-	  var next = this.state.value.clone();
-	  next.year(year);
-	  next.month(this.state.value.month());
-	  this.props.onSelect(next);
-	  event.preventDefault();
-	}
-	
-	var DecadePanel = function (_React$Component) {
-	  (0, _inherits3['default'])(DecadePanel, _React$Component);
-	
-	  function DecadePanel(props) {
-	    (0, _classCallCheck3['default'])(this, DecadePanel);
-	
-	    var _this = (0, _possibleConstructorReturn3['default'])(this, (DecadePanel.__proto__ || Object.getPrototypeOf(DecadePanel)).call(this, props));
-	
-	    _this.state = {
-	      value: props.value || props.defaultValue
-	    };
-	
-	    // bind methods
-	    _this.prefixCls = props.rootPrefixCls + '-decade-panel';
-	    _this.nextCentury = goYear.bind(_this, 100);
-	    _this.previousCentury = goYear.bind(_this, -100);
-	    return _this;
-	  }
-	
-	  (0, _createClass3['default'])(DecadePanel, [{
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-	
-	      var value = this.state.value;
-	      var locale = this.props.locale;
-	      var currentYear = value.year();
-	      var startYear = parseInt(currentYear / 100, 10) * 100;
-	      var preYear = startYear - 10;
-	      var endYear = startYear + 99;
-	      var decades = [];
-	      var index = 0;
-	      var prefixCls = this.prefixCls;
-	
-	      for (var rowIndex = 0; rowIndex < ROW; rowIndex++) {
-	        decades[rowIndex] = [];
-	        for (var colIndex = 0; colIndex < COL; colIndex++) {
-	          var startDecade = preYear + index * 10;
-	          var endDecade = preYear + index * 10 + 9;
-	          decades[rowIndex][colIndex] = {
-	            startDecade: startDecade,
-	            endDecade: endDecade
-	          };
-	          index++;
-	        }
-	      }
-	
-	      var decadesEls = decades.map(function (row, decadeIndex) {
-	        var tds = row.map(function (decadeData) {
-	          var _classNameMap;
-	
-	          var dStartDecade = decadeData.startDecade;
-	          var dEndDecade = decadeData.endDecade;
-	          var isLast = dStartDecade < startYear;
-	          var isNext = dEndDecade > endYear;
-	          var classNameMap = (_classNameMap = {}, (0, _defineProperty3['default'])(_classNameMap, prefixCls + '-cell', 1), (0, _defineProperty3['default'])(_classNameMap, prefixCls + '-selected-cell', dStartDecade <= currentYear && currentYear <= dEndDecade), (0, _defineProperty3['default'])(_classNameMap, prefixCls + '-last-century-cell', isLast), (0, _defineProperty3['default'])(_classNameMap, prefixCls + '-next-century-cell', isNext), _classNameMap);
-	          var content = dStartDecade + '-' + dEndDecade;
-	          var clickHandler = void 0;
-	          if (isLast) {
-	            clickHandler = _this2.previousCentury;
-	          } else if (isNext) {
-	            clickHandler = _this2.nextCentury;
-	          } else {
-	            clickHandler = chooseDecade.bind(_this2, dStartDecade);
-	          }
-	          return _react2['default'].createElement(
-	            'td',
-	            {
-	              key: dStartDecade,
-	              onClick: clickHandler,
-	              role: 'gridcell',
-	              className: (0, _classnames2['default'])(classNameMap)
-	            },
-	            _react2['default'].createElement(
-	              'a',
-	              {
-	                className: prefixCls + '-decade'
-	              },
-	              content
-	            )
-	          );
-	        });
-	        return _react2['default'].createElement(
-	          'tr',
-	          { key: decadeIndex, role: 'row' },
-	          tds
-	        );
-	      });
-	
-	      return _react2['default'].createElement(
-	        'div',
-	        { className: this.prefixCls },
-	        _react2['default'].createElement(
-	          'div',
-	          { className: prefixCls + '-header' },
-	          _react2['default'].createElement('a', {
-	            className: prefixCls + '-prev-century-btn',
-	            role: 'button',
-	            onClick: this.previousCentury,
-	            title: locale.previousCentury
-	          }),
-	          _react2['default'].createElement(
-	            'div',
-	            { className: prefixCls + '-century' },
-	            startYear,
-	            '-',
-	            endYear
-	          ),
-	          _react2['default'].createElement('a', {
-	            className: prefixCls + '-next-century-btn',
-	            role: 'button',
-	            onClick: this.nextCentury,
-	            title: locale.nextCentury
-	          })
-	        ),
-	        _react2['default'].createElement(
-	          'div',
-	          { className: prefixCls + '-body' },
-	          _react2['default'].createElement(
-	            'table',
-	            { className: prefixCls + '-table', cellSpacing: '0', role: 'grid' },
-	            _react2['default'].createElement(
-	              'tbody',
-	              { className: prefixCls + '-tbody' },
-	              decadesEls
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	  return DecadePanel;
-	}(_react2['default'].Component);
-	
-	exports['default'] = DecadePanel;
-	
-	
-	DecadePanel.propTypes = {
-	  locale: _propTypes2['default'].object,
-	  value: _propTypes2['default'].object,
-	  defaultValue: _propTypes2['default'].object,
-	  rootPrefixCls: _propTypes2['default'].string
-	};
-	
-	DecadePanel.defaultProps = {
-	  onSelect: function onSelect() {}
-	};
-	module.exports = exports['default'];
-
-/***/ }),
-/* 444 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _defineProperty2 = __webpack_require__(262);
-	
-	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
-	
-	var _classCallCheck2 = __webpack_require__(184);
-	
-	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-	
-	var _createClass2 = __webpack_require__(254);
-	
-	var _createClass3 = _interopRequireDefault(_createClass2);
-	
-	var _possibleConstructorReturn2 = __webpack_require__(185);
-	
-	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-	
-	var _inherits2 = __webpack_require__(219);
-	
-	var _inherits3 = _interopRequireDefault(_inherits2);
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _classnames = __webpack_require__(3);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	var _index = __webpack_require__(439);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var ROW = 4;
-	var COL = 3;
-	
-	function chooseMonth(month) {
-	  var next = this.state.value.clone();
-	  next.month(month);
-	  this.setAndSelectValue(next);
-	}
-	
-	function noop() {}
-	
-	var MonthTable = function (_Component) {
-	  (0, _inherits3['default'])(MonthTable, _Component);
-	
-	  function MonthTable(props) {
-	    (0, _classCallCheck3['default'])(this, MonthTable);
-	
-	    var _this = (0, _possibleConstructorReturn3['default'])(this, (MonthTable.__proto__ || Object.getPrototypeOf(MonthTable)).call(this, props));
-	
-	    _this.state = {
-	      value: props.value
-	    };
-	    return _this;
-	  }
-	
-	  (0, _createClass3['default'])(MonthTable, [{
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(nextProps) {
-	      if ('value' in nextProps) {
-	        this.setState({
-	          value: nextProps.value
-	        });
-	      }
-	    }
-	  }, {
-	    key: 'setAndSelectValue',
-	    value: function setAndSelectValue(value) {
-	      this.setState({
-	        value: value
-	      });
-	      this.props.onSelect(value);
-	    }
-	  }, {
-	    key: 'months',
-	    value: function months() {
-	      var value = this.state.value;
-	      var current = value.clone();
-	      var months = [];
-	      var index = 0;
-	      for (var rowIndex = 0; rowIndex < ROW; rowIndex++) {
-	        months[rowIndex] = [];
-	        for (var colIndex = 0; colIndex < COL; colIndex++) {
-	          current.month(index);
-	          var content = (0, _index.getMonthName)(current);
-	          months[rowIndex][colIndex] = {
-	            value: index,
-	            content: content,
-	            title: content
-	          };
-	          index++;
-	        }
-	      }
-	      return months;
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-	
-	      var props = this.props;
-	      var value = this.state.value;
-	      var today = (0, _index.getTodayTime)(value);
-	      var months = this.months();
-	      var currentMonth = value.month();
-	      var prefixCls = props.prefixCls,
-	          locale = props.locale,
-	          contentRender = props.contentRender,
-	          cellRender = props.cellRender;
-	
-	      var monthsEls = months.map(function (month, index) {
-	        var tds = month.map(function (monthData) {
-	          var _classNameMap;
-	
-	          var disabled = false;
-	          if (props.disabledDate) {
-	            var testValue = value.clone();
-	            testValue.month(monthData.value);
-	            disabled = props.disabledDate(testValue);
-	          }
-	          var classNameMap = (_classNameMap = {}, (0, _defineProperty3['default'])(_classNameMap, prefixCls + '-cell', 1), (0, _defineProperty3['default'])(_classNameMap, prefixCls + '-cell-disabled', disabled), (0, _defineProperty3['default'])(_classNameMap, prefixCls + '-selected-cell', monthData.value === currentMonth), (0, _defineProperty3['default'])(_classNameMap, prefixCls + '-current-cell', today.year() === value.year() && monthData.value === today.month()), _classNameMap);
-	          var cellEl = void 0;
-	          if (cellRender) {
-	            var currentValue = value.clone();
-	            currentValue.month(monthData.value);
-	            cellEl = cellRender(currentValue, locale);
-	          } else {
-	            var content = void 0;
-	            if (contentRender) {
-	              var _currentValue = value.clone();
-	              _currentValue.month(monthData.value);
-	              content = contentRender(_currentValue, locale);
-	            } else {
-	              content = monthData.content;
-	            }
-	            cellEl = _react2['default'].createElement(
-	              'a',
-	              { className: prefixCls + '-month' },
-	              content
-	            );
-	          }
-	          return _react2['default'].createElement(
-	            'td',
-	            {
-	              role: 'gridcell',
-	              key: monthData.value,
-	              onClick: disabled ? null : chooseMonth.bind(_this2, monthData.value),
-	              title: monthData.title,
-	              className: (0, _classnames2['default'])(classNameMap)
-	            },
-	            cellEl
-	          );
-	        });
-	        return _react2['default'].createElement(
-	          'tr',
-	          { key: index, role: 'row' },
-	          tds
-	        );
-	      });
-	
-	      return _react2['default'].createElement(
-	        'table',
-	        { className: prefixCls + '-table', cellSpacing: '0', role: 'grid' },
-	        _react2['default'].createElement(
-	          'tbody',
-	          { className: prefixCls + '-tbody' },
-	          monthsEls
-	        )
-	      );
-	    }
-	  }]);
-	  return MonthTable;
-	}(_react.Component);
-	
-	MonthTable.defaultProps = {
-	  onSelect: noop
-	};
-	MonthTable.propTypes = {
-	  onSelect: _propTypes2['default'].func,
-	  cellRender: _propTypes2['default'].func,
-	  prefixCls: _propTypes2['default'].string,
-	  value: _propTypes2['default'].object
-	};
-	exports['default'] = MonthTable;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 445 */
+/* 436 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50545,7 +49261,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 446 */
+/* 437 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50554,13 +49270,389 @@
 	  value: true
 	});
 	
-	var _defineProperty2 = __webpack_require__(262);
+	var _react = __webpack_require__(4);
 	
-	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+	var _react2 = _interopRequireDefault(_react);
 	
-	var _extends2 = __webpack_require__(144);
+	var _propTypes = __webpack_require__(5);
 	
-	var _extends3 = _interopRequireDefault(_extends2);
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	var _reactLifecyclesCompat = __webpack_require__(141);
+	
+	var _MonthTable = __webpack_require__(438);
+	
+	var _MonthTable2 = _interopRequireDefault(_MonthTable);
+	
+	var _DateInput = __webpack_require__(439);
+	
+	var _DateInput2 = _interopRequireDefault(_DateInput);
+	
+	var _moment = __webpack_require__(303);
+	
+	var _moment2 = _interopRequireDefault(_moment);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+	
+	function goYear(direction) {
+	  var next = this.state.value.clone();
+	  next.add(direction, 'year');
+	  this.setAndChangeValue(next);
+	}
+	
+	function noop() {}
+	
+	var MonthPanel = function (_React$Component) {
+	  _inherits(MonthPanel, _React$Component);
+	
+	  function MonthPanel(props) {
+	    _classCallCheck(this, MonthPanel);
+	
+	    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+	
+	    _this.setAndChangeValue = function (value) {
+	      _this.setValue(value);
+	      _this.props.onChange(value);
+	    };
+	
+	    _this.setAndSelectValue = function (value) {
+	      _this.setValue(value);
+	      _this.props.onSelect(value);
+	    };
+	
+	    _this.setValue = function (value) {
+	      if (!('value' in _this.props)) {
+	        _this.setState({
+	          value: value
+	        });
+	      }
+	    };
+	
+	    _this.nextYear = goYear.bind(_this, 1);
+	    _this.previousYear = goYear.bind(_this, -1);
+	    _this.prefixCls = props.rootPrefixCls + '-month-panel';
+	
+	    _this.state = {
+	      value: props.value || props.defaultValue
+	    };
+	    return _this;
+	  }
+	
+	  MonthPanel.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps) {
+	    var newState = {};
+	
+	    if ('value' in nextProps) {
+	      newState = {
+	        value: nextProps.value
+	      };
+	    }
+	
+	    return newState;
+	  };
+	
+	  MonthPanel.prototype.render = function render() {
+	    var props = this.props;
+	    var value = this.state.value;
+	    var locale = props.locale,
+	        cellRender = props.cellRender,
+	        contentRender = props.contentRender,
+	        renderFooter = props.renderFooter,
+	        rootPrefixCls = props.rootPrefixCls;
+	
+	    var year = value.year();
+	    var prefixCls = this.prefixCls;
+	
+	    var footer = renderFooter && renderFooter('month');
+	
+	    return _react2["default"].createElement(
+	      'div',
+	      { className: prefixCls, style: props.style },
+	      _react2["default"].createElement(
+	        'div',
+	        null,
+	        _react2["default"].createElement(
+	          'div',
+	          { className: prefixCls + '-header' },
+	          _react2["default"].createElement('a', {
+	            className: prefixCls + '-prev-year-btn',
+	            role: 'button',
+	            onClick: this.previousYear,
+	            title: locale.previousYear
+	          }),
+	          _react2["default"].createElement(
+	            'a',
+	            {
+	              className: prefixCls + '-year-select',
+	              role: 'button',
+	              onClick: props.onYearPanelShow,
+	              title: locale.yearSelect
+	            },
+	            _react2["default"].createElement(
+	              'span',
+	              { className: prefixCls + '-year-select-content' },
+	              year
+	            ),
+	            _react2["default"].createElement(
+	              'span',
+	              { className: prefixCls + '-year-select-arrow' },
+	              'x'
+	            )
+	          ),
+	          _react2["default"].createElement('a', {
+	            className: prefixCls + '-next-year-btn',
+	            role: 'button',
+	            onClick: this.nextYear,
+	            title: locale.nextYear
+	          })
+	        ),
+	        _react2["default"].createElement(
+	          'div',
+	          { className: prefixCls + '-body' },
+	          _react2["default"].createElement(_MonthTable2["default"], {
+	            disabledDate: props.disabledDate,
+	            onSelect: this.setAndSelectValue,
+	            locale: locale,
+	            value: value,
+	            cellRender: cellRender,
+	            contentRender: contentRender,
+	            prefixCls: prefixCls
+	          })
+	        ),
+	        footer && _react2["default"].createElement(
+	          'div',
+	          { className: prefixCls + '-footer' },
+	          footer
+	        )
+	      )
+	    );
+	  };
+	
+	  return MonthPanel;
+	}(_react2["default"].Component);
+	
+	MonthPanel.propTypes = {
+	  onChange: _propTypes2["default"].func,
+	  disabledDate: _propTypes2["default"].func,
+	  onSelect: _propTypes2["default"].func,
+	  renderFooter: _propTypes2["default"].func,
+	  rootPrefixCls: _propTypes2["default"].string,
+	  value: _propTypes2["default"].object,
+	  defaultValue: _propTypes2["default"].object
+	};
+	MonthPanel.defaultProps = {
+	  onChange: noop,
+	  onSelect: noop
+	};
+	
+	
+	(0, _reactLifecyclesCompat.polyfill)(MonthPanel);
+	
+	exports["default"] = MonthPanel;
+	module.exports = exports['default'];
+
+/***/ }),
+/* 438 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _propTypes = __webpack_require__(5);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	var _classnames = __webpack_require__(3);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	var _index = __webpack_require__(434);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+	
+	var ROW = 4;
+	var COL = 3;
+	
+	function chooseMonth(month) {
+	  var next = this.state.value.clone();
+	  next.month(month);
+	  this.setAndSelectValue(next);
+	}
+	
+	function noop() {}
+	
+	var MonthTable = function (_Component) {
+	  _inherits(MonthTable, _Component);
+	
+	  function MonthTable(props) {
+	    _classCallCheck(this, MonthTable);
+	
+	    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
+	
+	    _this.state = {
+	      value: props.value
+	    };
+	    return _this;
+	  }
+	
+	  MonthTable.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+	    if ('value' in nextProps) {
+	      this.setState({
+	        value: nextProps.value
+	      });
+	    }
+	  };
+	
+	  MonthTable.prototype.setAndSelectValue = function setAndSelectValue(value) {
+	    this.setState({
+	      value: value
+	    });
+	    this.props.onSelect(value);
+	  };
+	
+	  MonthTable.prototype.months = function months() {
+	    var value = this.state.value;
+	    var current = value.clone();
+	    var months = [];
+	    var index = 0;
+	    for (var rowIndex = 0; rowIndex < ROW; rowIndex++) {
+	      months[rowIndex] = [];
+	      for (var colIndex = 0; colIndex < COL; colIndex++) {
+	        current.month(index);
+	        var content = (0, _index.getMonthName)(current);
+	        months[rowIndex][colIndex] = {
+	          value: index,
+	          content: content,
+	          title: content
+	        };
+	        index++;
+	      }
+	    }
+	    return months;
+	  };
+	
+	  MonthTable.prototype.render = function render() {
+	    var _this2 = this;
+	
+	    var props = this.props;
+	    var value = this.state.value;
+	    var today = (0, _index.getTodayTime)(value);
+	    var months = this.months();
+	    var currentMonth = value.month();
+	    var prefixCls = props.prefixCls,
+	        locale = props.locale,
+	        contentRender = props.contentRender,
+	        cellRender = props.cellRender;
+	
+	    var monthsEls = months.map(function (month, index) {
+	      var tds = month.map(function (monthData) {
+	        var _classNameMap;
+	
+	        var disabled = false;
+	        if (props.disabledDate) {
+	          var testValue = value.clone();
+	          testValue.month(monthData.value);
+	          disabled = props.disabledDate(testValue);
+	        }
+	        var classNameMap = (_classNameMap = {}, _defineProperty(_classNameMap, prefixCls + '-cell', 1), _defineProperty(_classNameMap, prefixCls + '-cell-disabled', disabled), _defineProperty(_classNameMap, prefixCls + '-selected-cell', monthData.value === currentMonth), _defineProperty(_classNameMap, prefixCls + '-current-cell', today.year() === value.year() && monthData.value === today.month()), _classNameMap);
+	        var cellEl = void 0;
+	        if (cellRender) {
+	          var currentValue = value.clone();
+	          currentValue.month(monthData.value);
+	          cellEl = cellRender(currentValue, locale);
+	        } else {
+	          var content = void 0;
+	          if (contentRender) {
+	            var _currentValue = value.clone();
+	            _currentValue.month(monthData.value);
+	            content = contentRender(_currentValue, locale);
+	          } else {
+	            content = monthData.content;
+	          }
+	          cellEl = _react2["default"].createElement(
+	            'a',
+	            { className: prefixCls + '-month' },
+	            content
+	          );
+	        }
+	        return _react2["default"].createElement(
+	          'td',
+	          {
+	            role: 'gridcell',
+	            key: monthData.value,
+	            onClick: disabled ? null : chooseMonth.bind(_this2, monthData.value),
+	            title: monthData.title,
+	            className: (0, _classnames2["default"])(classNameMap)
+	          },
+	          cellEl
+	        );
+	      });
+	      return _react2["default"].createElement(
+	        'tr',
+	        { key: index, role: 'row' },
+	        tds
+	      );
+	    });
+	
+	    return _react2["default"].createElement(
+	      'table',
+	      { className: prefixCls + '-table', cellSpacing: '0', role: 'grid' },
+	      _react2["default"].createElement(
+	        'tbody',
+	        { className: prefixCls + '-tbody' },
+	        monthsEls
+	      )
+	    );
+	  };
+	
+	  return MonthTable;
+	}(_react.Component);
+	
+	MonthTable.defaultProps = {
+	  onSelect: noop
+	};
+	MonthTable.propTypes = {
+	  onSelect: _propTypes2["default"].func,
+	  cellRender: _propTypes2["default"].func,
+	  prefixCls: _propTypes2["default"].string,
+	  value: _propTypes2["default"].object
+	};
+	exports["default"] = MonthTable;
+	module.exports = exports['default'];
+
+/***/ }),
+/* 439 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	
 	var _react = __webpack_require__(4);
 	
@@ -50570,109 +49662,250 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _createReactClass = __webpack_require__(245);
-	
-	var _createReactClass2 = _interopRequireDefault(_createReactClass);
-	
 	var _propTypes = __webpack_require__(5);
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _mapSelf = __webpack_require__(445);
+	var _KeyCode = __webpack_require__(237);
 	
-	var _mapSelf2 = _interopRequireDefault(_mapSelf);
+	var _KeyCode2 = _interopRequireDefault(_KeyCode);
 	
-	var _classnames = __webpack_require__(3);
+	var _reactLifecyclesCompat = __webpack_require__(141);
 	
-	var _classnames2 = _interopRequireDefault(_classnames);
+	var _moment = __webpack_require__(303);
 	
-	var _TodayButton = __webpack_require__(447);
+	var _moment2 = _interopRequireDefault(_moment);
 	
-	var _TodayButton2 = _interopRequireDefault(_TodayButton);
+	var _util = __webpack_require__(434);
 	
-	var _OkButton = __webpack_require__(448);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
-	var _OkButton2 = _interopRequireDefault(_OkButton);
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
 	
-	var _TimePickerButton = __webpack_require__(449);
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var _TimePickerButton2 = _interopRequireDefault(_TimePickerButton);
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 	
-	var CalendarFooter = (0, _createReactClass2['default'])({
-	  displayName: 'CalendarFooter',
+	var cachedSelectionStart = void 0;
+	var cachedSelectionEnd = void 0;
+	var dateInputInstance = void 0;
 	
-	  propTypes: {
-	    prefixCls: _propTypes2['default'].string,
-	    showDateInput: _propTypes2['default'].bool,
-	    disabledTime: _propTypes2['default'].any,
-	    timePicker: _propTypes2['default'].element,
-	    selectedValue: _propTypes2['default'].any,
-	    showOk: _propTypes2['default'].bool,
-	    onSelect: _propTypes2['default'].func,
-	    value: _propTypes2['default'].object,
-	    renderFooter: _propTypes2['default'].func,
-	    defaultValue: _propTypes2['default'].object
-	  },
+	var DateInput = function (_React$Component) {
+	  _inherits(DateInput, _React$Component);
 	
-	  onSelect: function onSelect(value) {
-	    this.props.onSelect(value);
-	  },
-	  getRootDOMNode: function getRootDOMNode() {
-	    return _reactDom2['default'].findDOMNode(this);
-	  },
-	  render: function render() {
-	    var props = this.props;
-	    var value = props.value,
-	        prefixCls = props.prefixCls,
-	        showOk = props.showOk,
-	        timePicker = props.timePicker,
-	        renderFooter = props.renderFooter;
+	  function DateInput(props) {
+	    _classCallCheck(this, DateInput);
 	
-	    var footerEl = null;
-	    var extraFooter = renderFooter();
-	    if (props.showToday || timePicker || extraFooter) {
-	      var _cx;
+	    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
 	
-	      var nowEl = void 0;
-	      if (props.showToday) {
-	        nowEl = _react2['default'].createElement(_TodayButton2['default'], (0, _extends3['default'])({}, props, { value: value }));
-	      }
-	      var okBtn = void 0;
-	      if (showOk === true || showOk !== false && !!props.timePicker) {
-	        okBtn = _react2['default'].createElement(_OkButton2['default'], props);
-	      }
-	      var timePickerBtn = void 0;
-	      if (!!props.timePicker) {
-	        timePickerBtn = _react2['default'].createElement(_TimePickerButton2['default'], props);
-	      }
+	    _initialiseProps.call(_this);
 	
-	      var footerBtn = void 0;
-	      if (nowEl || timePickerBtn || okBtn) {
-	        footerBtn = _react2['default'].createElement(
-	          'span',
-	          { className: prefixCls + '-footer-btn' },
-	          (0, _mapSelf2['default'])([nowEl, timePickerBtn, okBtn])
-	        );
-	      }
-	      var cls = (0, _classnames2['default'])((_cx = {}, (0, _defineProperty3['default'])(_cx, prefixCls + '-footer', true), (0, _defineProperty3['default'])(_cx, prefixCls + '-footer-show-ok', okBtn), _cx));
-	      footerEl = _react2['default'].createElement(
-	        'div',
-	        { className: cls },
-	        extraFooter,
-	        footerBtn
-	      );
-	    }
-	    return footerEl;
+	    var selectedValue = props.selectedValue;
+	
+	    _this.state = {
+	      str: (0, _util.formatDate)(selectedValue, _this.props.format),
+	      invalid: false,
+	      hasFocus: false
+	    };
+	    return _this;
 	  }
-	});
 	
-	exports['default'] = CalendarFooter;
+	  DateInput.prototype.componentDidUpdate = function componentDidUpdate() {
+	    if (dateInputInstance && this.state.hasFocus && !this.state.invalid && !(cachedSelectionStart === 0 && cachedSelectionEnd === 0)) {
+	      dateInputInstance.setSelectionRange(cachedSelectionStart, cachedSelectionEnd);
+	    }
+	  };
+	
+	  DateInput.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps, state) {
+	    var newState = {};
+	
+	    if (dateInputInstance) {
+	      cachedSelectionStart = dateInputInstance.selectionStart;
+	      cachedSelectionEnd = dateInputInstance.selectionEnd;
+	    }
+	    // when popup show, click body will call this, bug!
+	    var selectedValue = nextProps.selectedValue;
+	    if (!state.hasFocus) {
+	      newState = {
+	        str: (0, _util.formatDate)(selectedValue, nextProps.format),
+	        invalid: false
+	      };
+	    }
+	
+	    return newState;
+	  };
+	
+	  DateInput.getInstance = function getInstance() {
+	    return dateInputInstance;
+	  };
+	
+	  DateInput.prototype.render = function render() {
+	    var props = this.props;
+	    var _state = this.state,
+	        invalid = _state.invalid,
+	        str = _state.str;
+	    var locale = props.locale,
+	        prefixCls = props.prefixCls,
+	        placeholder = props.placeholder,
+	        clearIcon = props.clearIcon;
+	
+	    var invalidClass = invalid ? prefixCls + '-input-invalid' : '';
+	    return _react2["default"].createElement(
+	      'div',
+	      { className: prefixCls + '-input-wrap' },
+	      _react2["default"].createElement(
+	        'div',
+	        { className: prefixCls + '-date-input-wrap' },
+	        _react2["default"].createElement('input', {
+	          ref: this.saveDateInput,
+	          className: prefixCls + '-input ' + invalidClass,
+	          value: str,
+	          disabled: props.disabled,
+	          placeholder: placeholder,
+	          onChange: this.onInputChange,
+	          onKeyDown: this.onKeyDown,
+	          onFocus: this.onFocus,
+	          onBlur: this.onBlur
+	        })
+	      ),
+	      props.showClear ? _react2["default"].createElement(
+	        'a',
+	        {
+	          role: 'button',
+	          title: locale.clear,
+	          onClick: this.onClear
+	        },
+	        clearIcon || _react2["default"].createElement('span', { className: prefixCls + '-clear-btn uf uf-close-c' })
+	      ) : null
+	    );
+	  };
+	
+	  return DateInput;
+	}(_react2["default"].Component);
+	
+	DateInput.propTypes = {
+	  prefixCls: _propTypes2["default"].string,
+	  timePicker: _propTypes2["default"].object,
+	  value: _propTypes2["default"].object,
+	  disabledTime: _propTypes2["default"].any,
+	  format: _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].arrayOf(_propTypes2["default"].string)]),
+	  locale: _propTypes2["default"].object,
+	  disabledDate: _propTypes2["default"].func,
+	  onChange: _propTypes2["default"].func,
+	  onClear: _propTypes2["default"].func,
+	  placeholder: _propTypes2["default"].string,
+	  onSelect: _propTypes2["default"].func,
+	  selectedValue: _propTypes2["default"].object,
+	  clearIcon: _propTypes2["default"].node
+	};
+	
+	var _initialiseProps = function _initialiseProps() {
+	  var _this2 = this;
+	
+	  this.onClear = function () {
+	    _this2.setState({
+	      str: ''
+	    });
+	    _this2.props.onClear(null);
+	  };
+	
+	  this.onInputChange = function (event) {
+	    var str = event.target.value;
+	    var _props = _this2.props,
+	        disabledDate = _props.disabledDate,
+	        format = _props.format,
+	        onChange = _props.onChange,
+	        selectedValue = _props.selectedValue;
+	
+	    // 没有内容，合法并直接退出
+	
+	    if (!str) {
+	      onChange(null);
+	      _this2.setState({
+	        invalid: false,
+	        str: str
+	      });
+	      return;
+	    }
+	
+	    // 不合法直接退出
+	    var parsed = (0, _moment2["default"])(str, format, true);
+	    if (!parsed.isValid()) {
+	      _this2.setState({
+	        invalid: true,
+	        str: str
+	      });
+	      return;
+	    }
+	
+	    var value = _this2.props.value.clone();
+	    value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
+	
+	    if (!value || disabledDate && disabledDate(value)) {
+	      _this2.setState({
+	        invalid: true,
+	        str: str
+	      });
+	      return;
+	    }
+	
+	    if (selectedValue !== value || selectedValue && value && !selectedValue.isSame(value)) {
+	      _this2.setState({
+	        invalid: false,
+	        str: str
+	      });
+	      onChange(value);
+	    }
+	  };
+	
+	  this.onFocus = function () {
+	    _this2.setState({ hasFocus: true });
+	  };
+	
+	  this.onBlur = function () {
+	    _this2.setState(function (prevState, prevProps) {
+	      return {
+	        hasFocus: false,
+	        str: (0, _util.formatDate)(prevProps.value, prevProps.format)
+	      };
+	    });
+	  };
+	
+	  this.onKeyDown = function (_ref) {
+	    var keyCode = _ref.keyCode;
+	    var _props2 = _this2.props,
+	        onSelect = _props2.onSelect,
+	        value = _props2.value;
+	
+	    if (keyCode === _KeyCode2["default"].ENTER && onSelect) {
+	      onSelect(value.clone());
+	    }
+	  };
+	
+	  this.getRootDOMNode = function () {
+	    return _reactDom2["default"].findDOMNode(_this2);
+	  };
+	
+	  this.focus = function () {
+	    if (dateInputInstance) {
+	      dateInputInstance.focus();
+	    }
+	  };
+	
+	  this.saveDateInput = function (dateInput) {
+	    dateInputInstance = dateInput;
+	  };
+	};
+	
+	(0, _reactLifecyclesCompat.polyfill)(DateInput);
+	
+	exports["default"] = DateInput;
 	module.exports = exports['default'];
 
 /***/ }),
-/* 447 */
+/* 440 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50680,15 +49913,661 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports['default'] = TodayButton;
 	
 	var _react = __webpack_require__(4);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _util = __webpack_require__(439);
+	var _propTypes = __webpack_require__(5);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	var _classnames = __webpack_require__(3);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	var _DecadePanel = __webpack_require__(441);
+	
+	var _DecadePanel2 = _interopRequireDefault(_DecadePanel);
+	
+	var _DateInput = __webpack_require__(439);
+	
+	var _DateInput2 = _interopRequireDefault(_DateInput);
+	
+	var _moment = __webpack_require__(303);
+	
+	var _moment2 = _interopRequireDefault(_moment);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+	
+	var ROW = 4;
+	var COL = 3;
+	
+	function goYear(direction) {
+	  var value = this.state.value.clone();
+	  value.add(direction, 'year');
+	  this.setState({
+	    value: value
+	  });
+	}
+	
+	function chooseYear(year) {
+	  var value = this.state.value.clone();
+	  value.year(year);
+	  value.month(this.state.value.month());
+	  this.props.onSelect(value);
+	}
+	
+	var YearPanel = function (_React$Component) {
+	  _inherits(YearPanel, _React$Component);
+	
+	  function YearPanel(props) {
+	    _classCallCheck(this, YearPanel);
+	
+	    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+	
+	    _this.onInputChange = function (value) {
+	      var _this$props = _this.props,
+	          onChange = _this$props.onChange,
+	          format = _this$props.format;
+	
+	      _this.setState({
+	        value: value ? value : (0, _moment2["default"])()
+	      });
+	      onChange && onChange(value, value ? value.format(format) : '');
+	    };
+	
+	    _this.onClear = function () {
+	      var _this$props2 = _this.props,
+	          onChange = _this$props2.onChange,
+	          format = _this$props2.format,
+	          onClear = _this$props2.onClear;
+	
+	      _this.setState({
+	        value: (0, _moment2["default"])()
+	      });
+	      onChange && onChange('', '');
+	      onClear && onClear('', '');
+	    };
+	
+	    _this.prefixCls = props.rootPrefixCls + '-year-panel';
+	    _this.state = {
+	      value: props.value || props.defaultValue
+	    };
+	    _this.nextDecade = goYear.bind(_this, 10);
+	    _this.previousDecade = goYear.bind(_this, -10);
+	    ['showDecadePanel', 'onDecadePanelSelect'].forEach(function (method) {
+	      _this[method] = _this[method].bind(_this);
+	    });
+	    return _this;
+	  }
+	
+	  YearPanel.prototype.onDecadePanelSelect = function onDecadePanelSelect(current) {
+	    this.setState({
+	      value: current,
+	      showDecadePanel: 0
+	    });
+	  };
+	
+	  YearPanel.prototype.years = function years() {
+	    var value = this.state.value;
+	    var currentYear = value.year();
+	    var startYear = parseInt(currentYear / 10, 10) * 10;
+	    var previousYear = startYear - 1;
+	    var years = [];
+	    var index = 0;
+	    for (var rowIndex = 0; rowIndex < ROW; rowIndex++) {
+	      years[rowIndex] = [];
+	      for (var colIndex = 0; colIndex < COL; colIndex++) {
+	        var year = previousYear + index;
+	        var content = String(year);
+	        years[rowIndex][colIndex] = {
+	          content: content,
+	          year: year,
+	          title: content
+	        };
+	        index++;
+	      }
+	    }
+	    return years;
+	  };
+	
+	  YearPanel.prototype.showDecadePanel = function showDecadePanel() {
+	    this.setState({
+	      showDecadePanel: 1
+	    });
+	  };
+	
+	  YearPanel.prototype.render = function render() {
+	    var _this2 = this;
+	
+	    var props = this.props;
+	    var value = this.state.value;
+	    var locale = props.locale;
+	    var years = this.years();
+	    var currentYear = value.year();
+	    var startYear = parseInt(currentYear / 10, 10) * 10;
+	    var endYear = startYear + 9;
+	    var prefixCls = this.prefixCls;
+	
+	    var yeasEls = years.map(function (row, index) {
+	      var tds = row.map(function (yearData) {
+	        var _classNameMap;
+	
+	        var classNameMap = (_classNameMap = {}, _defineProperty(_classNameMap, prefixCls + '-cell', 1), _defineProperty(_classNameMap, prefixCls + '-selected-cell', yearData.year === currentYear), _defineProperty(_classNameMap, prefixCls + '-last-decade-cell', yearData.year < startYear), _defineProperty(_classNameMap, prefixCls + '-next-decade-cell', yearData.year > endYear), _classNameMap);
+	        var clickHandler = void 0;
+	        if (yearData.year < startYear) {
+	          clickHandler = _this2.previousDecade;
+	        } else if (yearData.year > endYear) {
+	          clickHandler = _this2.nextDecade;
+	        } else {
+	          clickHandler = chooseYear.bind(_this2, yearData.year);
+	        }
+	        return _react2["default"].createElement(
+	          'td',
+	          {
+	            role: 'gridcell',
+	            title: yearData.title,
+	            key: yearData.content,
+	            onClick: clickHandler,
+	            className: (0, _classnames2["default"])(classNameMap)
+	          },
+	          _react2["default"].createElement(
+	            'a',
+	            {
+	              className: prefixCls + '-year'
+	            },
+	            yearData.content
+	          )
+	        );
+	      });
+	      return _react2["default"].createElement(
+	        'tr',
+	        { key: index, role: 'row' },
+	        tds
+	      );
+	    });
+	
+	    var decadePanel = void 0;
+	    if (this.state.showDecadePanel) {
+	      decadePanel = _react2["default"].createElement(_DecadePanel2["default"], {
+	        locale: locale,
+	        value: value,
+	        rootPrefixCls: props.rootPrefixCls,
+	        onSelect: this.onDecadePanelSelect
+	      });
+	    }
+	    var showDateInput = props.showDateInput,
+	        rootPrefixCls = props.rootPrefixCls,
+	        format = props.format;
+	
+	    return _react2["default"].createElement(
+	      'div',
+	      { className: this.prefixCls },
+	      _react2["default"].createElement(
+	        'div',
+	        null,
+	        showDateInput ? _react2["default"].createElement(_DateInput2["default"], {
+	          value: value,
+	          prefixCls: this.props.rootPrefixCls,
+	          showClear: true,
+	          locale: locale,
+	          format: format,
+	          onChange: this.onInputChange,
+	          selectedValue: value,
+	          onClear: this.onClear
+	        }) : '',
+	        _react2["default"].createElement(
+	          'div',
+	          { className: prefixCls + '-header' },
+	          _react2["default"].createElement('a', {
+	            className: prefixCls + '-prev-decade-btn',
+	            role: 'button',
+	            onClick: this.previousDecade,
+	            title: locale.previousDecade
+	          }),
+	          _react2["default"].createElement(
+	            'a',
+	            {
+	              className: prefixCls + '-decade-select',
+	              role: 'button',
+	              onClick: this.showDecadePanel,
+	              title: locale.decadeSelect
+	            },
+	            _react2["default"].createElement(
+	              'span',
+	              { className: prefixCls + '-decade-select-content' },
+	              startYear,
+	              '-',
+	              endYear
+	            ),
+	            _react2["default"].createElement(
+	              'span',
+	              { className: prefixCls + '-decade-select-arrow' },
+	              'x'
+	            )
+	          ),
+	          _react2["default"].createElement('a', {
+	            className: prefixCls + '-next-decade-btn',
+	            role: 'button',
+	            onClick: this.nextDecade,
+	            title: locale.nextDecade
+	          })
+	        ),
+	        _react2["default"].createElement(
+	          'div',
+	          { className: prefixCls + '-body' },
+	          _react2["default"].createElement(
+	            'table',
+	            { className: prefixCls + '-table', cellSpacing: '0', role: 'grid' },
+	            _react2["default"].createElement(
+	              'tbody',
+	              { className: prefixCls + '-tbody' },
+	              yeasEls
+	            )
+	          )
+	        )
+	      ),
+	      decadePanel
+	    );
+	  };
+	
+	  return YearPanel;
+	}(_react2["default"].Component);
+	
+	exports["default"] = YearPanel;
+	
+	
+	YearPanel.propTypes = {
+	  rootPrefixCls: _propTypes2["default"].string,
+	  value: _propTypes2["default"].object,
+	  defaultValue: _propTypes2["default"].object
+	};
+	
+	YearPanel.defaultProps = {
+	  onSelect: function onSelect() {},
+	
+	  format: 'YYYY',
+	  showDateInput: false
+	};
+	module.exports = exports['default'];
+
+/***/ }),
+/* 441 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _propTypes = __webpack_require__(5);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	var _classnames = __webpack_require__(3);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+	
+	var ROW = 4;
+	var COL = 3;
+	
+	
+	function goYear(direction) {
+	  var next = this.state.value.clone();
+	  next.add(direction, 'years');
+	  this.setState({
+	    value: next
+	  });
+	}
+	
+	function chooseDecade(year, event) {
+	  var next = this.state.value.clone();
+	  next.year(year);
+	  next.month(this.state.value.month());
+	  this.props.onSelect(next);
+	  event.preventDefault();
+	}
+	
+	var DecadePanel = function (_React$Component) {
+	  _inherits(DecadePanel, _React$Component);
+	
+	  function DecadePanel(props) {
+	    _classCallCheck(this, DecadePanel);
+	
+	    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+	
+	    _this.state = {
+	      value: props.value || props.defaultValue
+	    };
+	
+	    // bind methods
+	    _this.prefixCls = props.rootPrefixCls + '-decade-panel';
+	    _this.nextCentury = goYear.bind(_this, 100);
+	    _this.previousCentury = goYear.bind(_this, -100);
+	    return _this;
+	  }
+	
+	  DecadePanel.prototype.render = function render() {
+	    var _this2 = this;
+	
+	    var value = this.state.value;
+	    var _props = this.props,
+	        locale = _props.locale,
+	        renderFooter = _props.renderFooter;
+	
+	    var currentYear = value.year();
+	    var startYear = parseInt(currentYear / 100, 10) * 100;
+	    var preYear = startYear - 10;
+	    var endYear = startYear + 99;
+	    var decades = [];
+	    var index = 0;
+	    var prefixCls = this.prefixCls;
+	
+	    for (var rowIndex = 0; rowIndex < ROW; rowIndex++) {
+	      decades[rowIndex] = [];
+	      for (var colIndex = 0; colIndex < COL; colIndex++) {
+	        var startDecade = preYear + index * 10;
+	        var endDecade = preYear + index * 10 + 9;
+	        decades[rowIndex][colIndex] = {
+	          startDecade: startDecade,
+	          endDecade: endDecade
+	        };
+	        index++;
+	      }
+	    }
+	
+	    var footer = renderFooter && renderFooter('decade');
+	
+	    var decadesEls = decades.map(function (row, decadeIndex) {
+	      var tds = row.map(function (decadeData) {
+	        var _classNameMap;
+	
+	        var dStartDecade = decadeData.startDecade;
+	        var dEndDecade = decadeData.endDecade;
+	        var isLast = dStartDecade < startYear;
+	        var isNext = dEndDecade > endYear;
+	        var classNameMap = (_classNameMap = {}, _defineProperty(_classNameMap, prefixCls + '-cell', 1), _defineProperty(_classNameMap, prefixCls + '-selected-cell', dStartDecade <= currentYear && currentYear <= dEndDecade), _defineProperty(_classNameMap, prefixCls + '-last-century-cell', isLast), _defineProperty(_classNameMap, prefixCls + '-next-century-cell', isNext), _classNameMap);
+	        var content = dStartDecade + '-' + dEndDecade;
+	        var clickHandler = void 0;
+	        if (isLast) {
+	          clickHandler = _this2.previousCentury;
+	        } else if (isNext) {
+	          clickHandler = _this2.nextCentury;
+	        } else {
+	          clickHandler = chooseDecade.bind(_this2, dStartDecade);
+	        }
+	        return _react2["default"].createElement(
+	          'td',
+	          {
+	            key: dStartDecade,
+	            onClick: clickHandler,
+	            role: 'gridcell',
+	            className: (0, _classnames2["default"])(classNameMap)
+	          },
+	          _react2["default"].createElement(
+	            'a',
+	            {
+	              className: prefixCls + '-decade'
+	            },
+	            content
+	          )
+	        );
+	      });
+	      return _react2["default"].createElement(
+	        'tr',
+	        { key: decadeIndex, role: 'row' },
+	        tds
+	      );
+	    });
+	
+	    return _react2["default"].createElement(
+	      'div',
+	      { className: this.prefixCls },
+	      _react2["default"].createElement(
+	        'div',
+	        { className: prefixCls + '-header' },
+	        _react2["default"].createElement('a', {
+	          className: prefixCls + '-prev-century-btn',
+	          role: 'button',
+	          onClick: this.previousCentury,
+	          title: locale.previousCentury
+	        }),
+	        _react2["default"].createElement(
+	          'div',
+	          { className: prefixCls + '-century' },
+	          startYear,
+	          '-',
+	          endYear
+	        ),
+	        _react2["default"].createElement('a', {
+	          className: prefixCls + '-next-century-btn',
+	          role: 'button',
+	          onClick: this.nextCentury,
+	          title: locale.nextCentury
+	        })
+	      ),
+	      _react2["default"].createElement(
+	        'div',
+	        { className: prefixCls + '-body' },
+	        _react2["default"].createElement(
+	          'table',
+	          { className: prefixCls + '-table', cellSpacing: '0', role: 'grid' },
+	          _react2["default"].createElement(
+	            'tbody',
+	            { className: prefixCls + '-tbody' },
+	            decadesEls
+	          )
+	        )
+	      ),
+	      footer && _react2["default"].createElement(
+	        'div',
+	        { className: prefixCls + '-footer' },
+	        footer
+	      )
+	    );
+	  };
+	
+	  return DecadePanel;
+	}(_react2["default"].Component);
+	
+	exports["default"] = DecadePanel;
+	
+	
+	DecadePanel.propTypes = {
+	  locale: _propTypes2["default"].object,
+	  value: _propTypes2["default"].object,
+	  defaultValue: _propTypes2["default"].object,
+	  rootPrefixCls: _propTypes2["default"].string,
+	  renderFooter: _propTypes2["default"].func
+	};
+	
+	DecadePanel.defaultProps = {
+	  onSelect: function onSelect() {}
+	};
+	module.exports = exports['default'];
+
+/***/ }),
+/* 442 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(12);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _propTypes = __webpack_require__(5);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	var _mapSelf = __webpack_require__(436);
+	
+	var _mapSelf2 = _interopRequireDefault(_mapSelf);
+	
+	var _classnames = __webpack_require__(3);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	var _TodayButton = __webpack_require__(443);
+	
+	var _TodayButton2 = _interopRequireDefault(_TodayButton);
+	
+	var _OkButton = __webpack_require__(444);
+	
+	var _OkButton2 = _interopRequireDefault(_OkButton);
+	
+	var _TimePickerButton = __webpack_require__(445);
+	
+	var _TimePickerButton2 = _interopRequireDefault(_TimePickerButton);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+	
+	var CalendarFooter = function (_React$Component) {
+	  _inherits(CalendarFooter, _React$Component);
+	
+	  function CalendarFooter() {
+	    _classCallCheck(this, CalendarFooter);
+	
+	    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
+	  }
+	
+	  CalendarFooter.prototype.onSelect = function onSelect(value) {
+	    this.props.onSelect(value);
+	  };
+	
+	  CalendarFooter.prototype.getRootDOMNode = function getRootDOMNode() {
+	    return _reactDom2["default"].findDOMNode(this);
+	  };
+	
+	  CalendarFooter.prototype.render = function render() {
+	    var props = this.props;
+	    var value = props.value,
+	        prefixCls = props.prefixCls,
+	        showOk = props.showOk,
+	        timePicker = props.timePicker,
+	        renderFooter = props.renderFooter,
+	        mode = props.mode;
+	
+	    var footerEl = null;
+	    var extraFooter = renderFooter && renderFooter(mode);
+	    if (props.showToday || timePicker || extraFooter) {
+	      var nowEl = void 0;
+	      if (props.showToday) {
+	        nowEl = _react2["default"].createElement(_TodayButton2["default"], _extends({}, props, { value: value }));
+	      }
+	      var okBtn = void 0;
+	      if (showOk === true || showOk !== false && !!props.timePicker) {
+	        okBtn = _react2["default"].createElement(_OkButton2["default"], props);
+	      }
+	      var timePickerBtn = void 0;
+	      if (!!props.timePicker) {
+	        timePickerBtn = _react2["default"].createElement(_TimePickerButton2["default"], props);
+	      }
+	
+	      var footerBtn = void 0;
+	      if (nowEl || timePickerBtn || okBtn || extraFooter) {
+	        footerBtn = _react2["default"].createElement(
+	          'span',
+	          { className: prefixCls + '-footer-btn' },
+	          extraFooter,
+	          (0, _mapSelf2["default"])([nowEl, timePickerBtn, okBtn])
+	        );
+	      }
+	      var cls = (0, _classnames2["default"])(prefixCls + '-footer', _defineProperty({}, prefixCls + '-footer-show-ok', okBtn));
+	      footerEl = _react2["default"].createElement(
+	        'div',
+	        { className: cls },
+	        footerBtn
+	      );
+	    }
+	    return footerEl;
+	  };
+	
+	  return CalendarFooter;
+	}(_react2["default"].Component);
+	
+	CalendarFooter.propTypes = {
+	  prefixCls: _propTypes2["default"].string,
+	  showDateInput: _propTypes2["default"].bool,
+	  disabledTime: _propTypes2["default"].any,
+	  timePicker: _propTypes2["default"].element,
+	  selectedValue: _propTypes2["default"].any,
+	  showOk: _propTypes2["default"].bool,
+	  onSelect: _propTypes2["default"].func,
+	  value: _propTypes2["default"].object,
+	  renderFooter: _propTypes2["default"].func,
+	  defaultValue: _propTypes2["default"].object,
+	  mode: _propTypes2["default"].string
+	};
+	exports["default"] = CalendarFooter;
+	module.exports = exports['default'];
+
+/***/ }),
+/* 443 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports["default"] = TodayButton;
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _util = __webpack_require__(434);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
 	function TodayButton(_ref) {
 	  var prefixCls = _ref.prefixCls,
@@ -50704,7 +50583,7 @@
 	  var disabledToday = disabledDate && !(0, _util.isAllowedDate)((0, _util.getTodayTime)(value), disabledDate);
 	  var isDisabled = disabledToday || disabled;
 	  var disabledTodayClass = isDisabled ? prefixCls + '-today-btn-disabled' : '';
-	  return _react2['default'].createElement(
+	  return _react2["default"].createElement(
 	    'a',
 	    {
 	      className: prefixCls + '-today-btn ' + disabledTodayClass,
@@ -50718,10 +50597,10 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 448 */
+/* 444 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -50732,6 +50611,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _beeButton = __webpack_require__(82);
+	
+	var _beeButton2 = _interopRequireDefault(_beeButton);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
 	function OkButton(_ref) {
@@ -50740,15 +50623,16 @@
 	      okDisabled = _ref.okDisabled,
 	      onOk = _ref.onOk;
 	
-	  var className = prefixCls + "-ok-btn";
-	  if (okDisabled) {
-	    className += " " + prefixCls + "-ok-btn-disabled";
-	  }
+	  var className = prefixCls + '-btn-ok';
+	  // if (okDisabled) {
+	  //   className += ` ${prefixCls}-ok-btn-disabled`;
+	  // }
 	  return _react2["default"].createElement(
-	    "a",
+	    _beeButton2["default"],
 	    {
 	      className: className,
-	      role: "button",
+	      size: 'sm', colors: 'primary',
+	      disabled: okDisabled,
 	      onClick: okDisabled ? null : onOk
 	    },
 	    locale.ok
@@ -50757,7 +50641,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 449 */
+/* 445 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50765,12 +50649,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	
-	var _defineProperty2 = __webpack_require__(262);
-	
-	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
-	
-	exports['default'] = TimePickerButton;
+	exports["default"] = TimePickerButton;
 	
 	var _react = __webpack_require__(4);
 	
@@ -50780,7 +50659,9 @@
 	
 	var _classnames3 = _interopRequireDefault(_classnames2);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
 	function TimePickerButton(_ref) {
 	  var _classnames;
@@ -50792,12 +50673,12 @@
 	      onCloseTimePicker = _ref.onCloseTimePicker,
 	      timePickerDisabled = _ref.timePickerDisabled;
 	
-	  var className = (0, _classnames3['default'])((_classnames = {}, (0, _defineProperty3['default'])(_classnames, prefixCls + '-time-picker-btn', true), (0, _defineProperty3['default'])(_classnames, prefixCls + '-time-picker-btn-disabled', timePickerDisabled), _classnames));
+	  var className = (0, _classnames3["default"])((_classnames = {}, _defineProperty(_classnames, prefixCls + '-time-picker-btn', true), _defineProperty(_classnames, prefixCls + '-time-picker-btn-disabled', timePickerDisabled), _classnames));
 	  var onClick = null;
 	  if (!timePickerDisabled) {
 	    onClick = showTimePicker ? onCloseTimePicker : onOpenTimePicker;
 	  }
-	  return _react2['default'].createElement(
+	  return _react2["default"].createElement(
 	    'a',
 	    {
 	      className: className,
@@ -50810,7 +50691,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 450 */
+/* 446 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50818,10 +50699,8 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	
-	var _defineProperty2 = __webpack_require__(262);
-	
-	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+	exports.calendarMixinWrapper = exports.calendarMixinDefaultProps = exports.calendarMixinPropTypes = undefined;
+	exports.getNowByCurrentStateValue = getNowByCurrentStateValue;
 	
 	var _react = __webpack_require__(4);
 	
@@ -50835,125 +50714,140 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _moment = __webpack_require__(308);
+	var _moment = __webpack_require__(303);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
-	var _index = __webpack_require__(439);
+	var _index = __webpack_require__(434);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 	
 	function noop() {}
-	
-	function getNow() {
-	  return (0, _moment2['default'])();
-	}
 	
 	function getNowByCurrentStateValue(value) {
 	  var ret = void 0;
 	  if (value) {
 	    ret = (0, _index.getTodayTime)(value);
 	  } else {
-	    ret = getNow();
+	    ret = (0, _moment2["default"])();
 	  }
 	  return ret;
 	}
 	
-	var CalendarMixin = {
-	  propTypes: {
-	    value: _propTypes2['default'].object,
-	    defaultValue: _propTypes2['default'].object,
-	    onKeyDown: _propTypes2['default'].func
-	  },
-	
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      onKeyDown: noop
-	    };
-	  },
-	  getInitialState: function getInitialState() {
-	    var props = this.props;
-	    var value = props.value || props.defaultValue || getNow();
-	    return {
-	      value: value,
-	      selectedValue: props.selectedValue || props.defaultSelectedValue
-	    };
-	  },
-	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    var value = nextProps.value;
-	    var selectedValue = nextProps.selectedValue;
-	
-	    if ('value' in nextProps) {
-	      value = value || nextProps.defaultValue || getNowByCurrentStateValue(this.state.value);
-	      this.setState({
-	        value: value
-	      });
-	    }
-	    if ('selectedValue' in nextProps) {
-	      this.setState({
-	        selectedValue: selectedValue
-	      });
-	    }
-	  },
-	  onSelect: function onSelect(value, cause) {
-	    if (value) {
-	      this.setValue(value);
-	    }
-	    this.setSelectedValue(value, cause);
-	  },
-	  renderRoot: function renderRoot(newProps) {
-	    var _className;
-	
-	    var props = this.props;
-	    var prefixCls = props.prefixCls;
-	
-	    var className = (_className = {}, (0, _defineProperty3['default'])(_className, prefixCls, 1), (0, _defineProperty3['default'])(_className, prefixCls + '-hidden', !props.visible), (0, _defineProperty3['default'])(_className, props.className, !!props.className), (0, _defineProperty3['default'])(_className, newProps.className, !!newProps.className), _className);
-	
-	    return _react2['default'].createElement(
-	      'div',
-	      {
-	        ref: 'root',
-	        className: '' + (0, _classnames2['default'])(className),
-	        style: this.props.style,
-	        tabIndex: '0',
-	        onKeyDown: this.onKeyDown
-	      },
-	      newProps.children
-	    );
-	  },
-	  setSelectedValue: function setSelectedValue(selectedValue, cause) {
-	    // if (this.isAllowedDate(selectedValue)) {
-	    if (!('selectedValue' in this.props)) {
-	      this.setState({
-	        selectedValue: selectedValue
-	      });
-	    }
-	    this.props.onSelect(selectedValue, cause);
-	    // }
-	  },
-	  setValue: function setValue(value) {
-	    var originalValue = this.state.value;
-	    if (!('value' in this.props)) {
-	      this.setState({
-	        value: value
-	      });
-	    }
-	    if (originalValue && value && !originalValue.isSame(value) || !originalValue && value || originalValue && !value) {
-	      this.props.onChange(value);
-	    }
-	  },
-	  isAllowedDate: function isAllowedDate(value) {
-	    var disabledDate = this.props.disabledDate;
-	    var disabledTime = this.props.disabledTime;
-	    return (0, _index.isAllowedDate)(value, disabledDate, disabledTime);
-	  }
+	var calendarMixinPropTypes = exports.calendarMixinPropTypes = {
+	  value: _propTypes2["default"].object,
+	  defaultValue: _propTypes2["default"].object,
+	  onKeyDown: _propTypes2["default"].func
 	};
 	
-	exports['default'] = CalendarMixin;
-	module.exports = exports['default'];
+	var calendarMixinDefaultProps = exports.calendarMixinDefaultProps = {
+	  onKeyDown: noop
+	};
+	
+	var calendarMixinWrapper = exports.calendarMixinWrapper = function calendarMixinWrapper(ComposeComponent) {
+	  var _class, _temp2;
+	
+	  return _temp2 = _class = function (_ComposeComponent) {
+	    _inherits(_class, _ComposeComponent);
+	
+	    function _class() {
+	      var _temp, _this, _ret;
+	
+	      _classCallCheck(this, _class);
+	
+	      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	        args[_key] = arguments[_key];
+	      }
+	
+	      return _ret = (_temp = (_this = _possibleConstructorReturn(this, _ComposeComponent.call.apply(_ComposeComponent, [this].concat(args))), _this), _this.onSelect = function (value, cause) {
+	        if (value) {
+	          _this.setValue(value);
+	        }
+	        _this.setSelectedValue(value, cause);
+	      }, _this.renderRoot = function (newProps) {
+	        var _className;
+	
+	        var props = _this.props;
+	        var prefixCls = props.prefixCls;
+	
+	        var className = (_className = {}, _defineProperty(_className, prefixCls, 1), _defineProperty(_className, prefixCls + '-hidden', !props.visible), _defineProperty(_className, props.className, !!props.className), _defineProperty(_className, newProps.className, !!newProps.className), _className);
+	
+	        return _react2["default"].createElement(
+	          'div',
+	          {
+	            ref: _this.saveRoot,
+	            className: '' + (0, _classnames2["default"])(className),
+	            style: _this.props.style,
+	            tabIndex: '0',
+	            onKeyDown: _this.onKeyDown
+	          },
+	          newProps.children
+	        );
+	      }, _this.setSelectedValue = function (selectedValue, cause) {
+	        // if (this.isAllowedDate(selectedValue)) {
+	        if (!('selectedValue' in _this.props)) {
+	          _this.setState({
+	            selectedValue: selectedValue
+	          });
+	        }
+	        if (_this.props.onSelect) {
+	          _this.props.onSelect(selectedValue, cause);
+	        }
+	        // }
+	      }, _this.setValue = function (value) {
+	        var originalValue = _this.state.value;
+	        if (!('value' in _this.props)) {
+	          _this.setState({
+	            value: value
+	          });
+	        }
+	        if (originalValue && value && !originalValue.isSame(value) || !originalValue && value || originalValue && !value) {
+	          _this.props.onChange(value);
+	        }
+	      }, _this.isAllowedDate = function (value) {
+	        var disabledDate = _this.props.disabledDate;
+	        var disabledTime = _this.props.disabledTime;
+	        return (0, _index.isAllowedDate)(value, disabledDate, disabledTime);
+	      }, _temp), _possibleConstructorReturn(_this, _ret);
+	    }
+	
+	    _class.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps, prevState) {
+	      // Use origin function if provided
+	      if (ComposeComponent.getDerivedStateFromProps) {
+	        return ComposeComponent.getDerivedStateFromProps(nextProps, prevState);
+	      }
+	
+	      var value = nextProps.value,
+	          selectedValue = nextProps.selectedValue;
+	
+	      var newState = {};
+	
+	      if ('value' in nextProps) {
+	        newState.value = value || nextProps.defaultValue || getNowByCurrentStateValue(prevState.value);
+	      }
+	      if ('selectedValue' in nextProps) {
+	        newState.selectedValue = selectedValue;
+	      }
+	
+	      return newState;
+	    };
+	
+	    return _class;
+	  }(ComposeComponent), _class.displayName = 'CalendarMixinWrapper', _class.defaultProps = ComposeComponent.defaultProps, _temp2;
+	};
 
 /***/ }),
-/* 451 */
+/* 447 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50961,77 +50855,108 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.commonMixinWrapper = exports.defaultProp = exports.propType = undefined;
 	
 	var _propTypes = __webpack_require__(5);
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _en_US = __webpack_require__(452);
+	var _en_US = __webpack_require__(448);
 	
 	var _en_US2 = _interopRequireDefault(_en_US);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 	
 	function noop() {}
 	
-	exports['default'] = {
-	  propTypes: {
-	    className: _propTypes2['default'].string,
-	    locale: _propTypes2['default'].object,
-	    style: _propTypes2['default'].object,
-	    visible: _propTypes2['default'].bool,
-	    onSelect: _propTypes2['default'].func,
-	    prefixCls: _propTypes2['default'].string,
-	    onChange: _propTypes2['default'].func,
-	    onOk: _propTypes2['default'].func
-	  },
+	var propType = exports.propType = {
+	  className: _propTypes2["default"].string,
+	  locale: _propTypes2["default"].object,
+	  style: _propTypes2["default"].object,
+	  visible: _propTypes2["default"].bool,
+	  onSelect: _propTypes2["default"].func,
+	  prefixCls: _propTypes2["default"].string,
+	  onChange: _propTypes2["default"].func,
+	  onOk: _propTypes2["default"].func
+	};
 	
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      locale: _en_US2['default'],
-	      style: {},
-	      visible: true,
-	      prefixCls: 'rc-calendar',
-	      className: '',
-	      onSelect: noop,
-	      onChange: noop,
-	      onClear: noop,
-	      renderFooter: function renderFooter() {
-	        return null;
-	      },
-	      renderSidebar: function renderSidebar() {
-	        return null;
-	      }
-	    };
+	var defaultProp = exports.defaultProp = {
+	  locale: _en_US2["default"],
+	  style: {},
+	  visible: true,
+	  prefixCls: 'rc-calendar',
+	  className: '',
+	  onSelect: noop,
+	  onChange: noop,
+	  onClear: noop,
+	  renderFooter: function renderFooter() {
+	    return null;
 	  },
-	  shouldComponentUpdate: function shouldComponentUpdate(nextProps) {
-	    return this.props.visible || nextProps.visible;
-	  },
-	  getFormat: function getFormat() {
-	    var format = this.props.format;
-	    var _props = this.props,
-	        locale = _props.locale,
-	        timePicker = _props.timePicker;
-	
-	    if (!format) {
-	      if (timePicker) {
-	        format = locale.dateTimeFormat;
-	      } else {
-	        format = locale.dateFormat;
-	      }
-	    }
-	    return format;
-	  },
-	  focus: function focus() {
-	    if (this.refs.root) {
-	      this.refs.root.focus();
-	    }
+	  renderSidebar: function renderSidebar() {
+	    return null;
 	  }
 	};
-	module.exports = exports['default'];
+	
+	var commonMixinWrapper = exports.commonMixinWrapper = function commonMixinWrapper(ComposeComponent) {
+	  var _class, _temp2;
+	
+	  return _temp2 = _class = function (_ComposeComponent) {
+	    _inherits(_class, _ComposeComponent);
+	
+	    function _class() {
+	      var _temp, _this, _ret;
+	
+	      _classCallCheck(this, _class);
+	
+	      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	        args[_key] = arguments[_key];
+	      }
+	
+	      return _ret = (_temp = (_this = _possibleConstructorReturn(this, _ComposeComponent.call.apply(_ComposeComponent, [this].concat(args))), _this), _this.getFormat = function () {
+	        var format = _this.props.format;
+	        var _this$props = _this.props,
+	            locale = _this$props.locale,
+	            timePicker = _this$props.timePicker;
+	
+	        if (!format) {
+	          if (timePicker) {
+	            format = locale.dateTimeFormat;
+	          } else {
+	            format = locale.dateFormat;
+	          }
+	        }
+	        return format;
+	      }, _this.focus = function () {
+	        if (_this.focusElement) {
+	          _this.focusElement.focus();
+	        } else if (_this.rootInstance) {
+	          _this.rootInstance.focus();
+	        }
+	      }, _this.saveFocusElement = function (focusElement) {
+	        _this.focusElement = focusElement;
+	      }, _this.saveRoot = function (root) {
+	        _this.rootInstance = root;
+	      }, _temp), _possibleConstructorReturn(_this, _ret);
+	    }
+	
+	    _class.prototype.shouldComponentUpdate = function shouldComponentUpdate(nextProps) {
+	      return this.props.visible || nextProps.visible;
+	    };
+	
+	    return _class;
+	  }(ComposeComponent), _class.displayName = 'CommonMixinWrapper', _class.defaultProps = ComposeComponent.defaultProps, _class.getDerivedStateFromProps = ComposeComponent.getDerivedStateFromProps, _temp2;
+	};
 
 /***/ }),
-/* 452 */
+/* 448 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -51039,7 +50964,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports['default'] = {
+	exports["default"] = {
 	  today: 'Today',
 	  now: 'Now',
 	  backToToday: 'Back to today',
@@ -51047,8 +50972,9 @@
 	  clear: 'Clear',
 	  month: 'Month',
 	  year: 'Year',
-	  timeSelect: 'Select time',
-	  dateSelect: 'Select date',
+	  timeSelect: 'select time',
+	  dateSelect: 'select date',
+	  weekSelect: 'Choose a week',
 	  monthSelect: 'Choose a month',
 	  yearSelect: 'Choose a year',
 	  decadeSelect: 'Choose a decade',
@@ -51064,171 +50990,50 @@
 	  previousDecade: 'Last decade',
 	  nextDecade: 'Next decade',
 	  previousCentury: 'Last century',
-	  nextCentury: 'Next century'
+	  nextCentury: 'Next century',
+	  lastWeek: 'Last week',
+	  nowWeek: 'Now week',
+	  nextWeek: 'Next week'
 	};
 	module.exports = exports['default'];
 
 /***/ }),
-/* 453 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 449 */
+/***/ (function(module, exports) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.goStartMonth = goStartMonth;
+	exports.goEndMonth = goEndMonth;
+	exports.goTime = goTime;
+	exports.includesTime = includesTime;
+	function goStartMonth(time) {
+	  return time.clone().startOf('month');
+	}
 	
-	var _react = __webpack_require__(4);
+	function goEndMonth(time) {
+	  return time.clone().endOf('month');
+	}
 	
-	var _react2 = _interopRequireDefault(_react);
+	function goTime(time, direction, unit) {
+	  return time.clone().add(direction, unit);
+	}
 	
-	var _reactDom = __webpack_require__(12);
+	function includesTime() {
+	  var timeList = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+	  var time = arguments[1];
+	  var unit = arguments[2];
 	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _createReactClass = __webpack_require__(245);
-	
-	var _createReactClass2 = _interopRequireDefault(_createReactClass);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _moment = __webpack_require__(308);
-	
-	var _moment2 = _interopRequireDefault(_moment);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var DateInput = (0, _createReactClass2['default'])({
-	  displayName: 'DateInput',
-	
-	  propTypes: {
-	    prefixCls: _propTypes2['default'].string,
-	    timePicker: _propTypes2['default'].object,
-	    value: _propTypes2['default'].object,
-	    disabledTime: _propTypes2['default'].any,
-	    format: _propTypes2['default'].string,
-	    locale: _propTypes2['default'].object,
-	    disabledDate: _propTypes2['default'].func,
-	    onChange: _propTypes2['default'].func,
-	    onClear: _propTypes2['default'].func,
-	    placeholder: _propTypes2['default'].string,
-	    onSelect: _propTypes2['default'].func,
-	    selectedValue: _propTypes2['default'].object
-	  },
-	
-	  getInitialState: function getInitialState() {
-	    var selectedValue = this.props.selectedValue;
-	    return {
-	      str: selectedValue && selectedValue.format(this.props.format) || '',
-	      invalid: false
-	    };
-	  },
-	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    // when popup show, click body will call this, bug!
-	    var selectedValue = nextProps.selectedValue;
-	    this.setState({
-	      str: selectedValue && selectedValue.format(nextProps.format) || '',
-	      invalid: false
-	    });
-	  },
-	  onInputChange: function onInputChange(event) {
-	    var str = event.target.value;
-	    this.setState({
-	      str: str
-	    });
-	    var value = void 0;
-	    var _props = this.props,
-	        disabledDate = _props.disabledDate,
-	        format = _props.format,
-	        onChange = _props.onChange;
-	
-	    if (str) {
-	      var parsed = (0, _moment2['default'])(str, format, true);
-	      if (!parsed.isValid()) {
-	        this.setState({
-	          invalid: true
-	        });
-	        return;
-	      }
-	      value = this.props.value.clone();
-	      value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
-	
-	      if (value && (!disabledDate || !disabledDate(value))) {
-	        var originalValue = this.props.selectedValue;
-	        if (originalValue && value) {
-	          if (!originalValue.isSame(value)) {
-	            onChange(value);
-	          }
-	        } else if (originalValue !== value) {
-	          onChange(value);
-	        }
-	      } else {
-	        this.setState({
-	          invalid: true
-	        });
-	        return;
-	      }
-	    } else {
-	      onChange(null);
-	    }
-	    this.setState({
-	      invalid: false
-	    });
-	  },
-	  onClear: function onClear() {
-	    this.setState({
-	      str: ''
-	    });
-	    this.props.onClear(null);
-	  },
-	  getRootDOMNode: function getRootDOMNode() {
-	    return _reactDom2['default'].findDOMNode(this);
-	  },
-	  focus: function focus() {
-	    this.refs.dateInput.focus();
-	  },
-	  render: function render() {
-	    var props = this.props;
-	    var _state = this.state,
-	        invalid = _state.invalid,
-	        str = _state.str;
-	    var locale = props.locale,
-	        prefixCls = props.prefixCls,
-	        placeholder = props.placeholder;
-	
-	    var invalidClass = invalid ? prefixCls + '-input-invalid' : '';
-	    return _react2['default'].createElement(
-	      'div',
-	      { className: prefixCls + '-input-wrap' },
-	      _react2['default'].createElement(
-	        'div',
-	        { className: prefixCls + '-date-input-wrap' },
-	        _react2['default'].createElement('input', {
-	          ref: 'dateInput',
-	          className: prefixCls + '-input ' + invalidClass,
-	          value: str,
-	          disabled: props.disabled,
-	          placeholder: placeholder,
-	          onChange: this.onInputChange
-	        })
-	      ),
-	      props.showClear ? _react2['default'].createElement('a', {
-	        className: prefixCls + '-clear-btn',
-	        role: 'button',
-	        title: locale.clear,
-	        onClick: this.onClear
-	      }) : null
-	    );
-	  }
-	});
-	
-	exports['default'] = DateInput;
-	module.exports = exports['default'];
+	  return timeList.some(function (t) {
+	    return t.isSame(time, unit);
+	  });
+	}
 
 /***/ }),
-/* 454 */
+/* 450 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51245,13 +51050,11 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _createReactClass = __webpack_require__(245);
-	
-	var _createReactClass2 = _interopRequireDefault(_createReactClass);
-	
 	var _propTypes = __webpack_require__(5);
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	var _reactLifecyclesCompat = __webpack_require__(141);
 	
 	var _createChainedFunction = __webpack_require__(238);
 	
@@ -51261,7 +51064,7 @@
 	
 	var _KeyCode2 = _interopRequireDefault(_KeyCode);
 	
-	var _placements = __webpack_require__(455);
+	var _placements = __webpack_require__(451);
 	
 	var _placements2 = _interopRequireDefault(_placements);
 	
@@ -51269,7 +51072,15 @@
 	
 	var _rcTrigger2 = _interopRequireDefault(_rcTrigger);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 	
 	function noop() {}
 	
@@ -51277,41 +51088,16 @@
 	  this[field] = component;
 	}
 	
-	var Picker = (0, _createReactClass2['default'])({
-	  displayName: 'Picker',
+	var Picker = function (_React$Component) {
+	  _inherits(Picker, _React$Component);
 	
-	  propTypes: {
-	    animation: _propTypes2['default'].oneOfType([_propTypes2['default'].func, _propTypes2['default'].string]),
-	    disabled: _propTypes2['default'].bool,
-	    transitionName: _propTypes2['default'].string,
-	    onChange: _propTypes2['default'].func,
-	    onOpenChange: _propTypes2['default'].func,
-	    children: _propTypes2['default'].func,
-	    getCalendarContainer: _propTypes2['default'].func,
-	    calendar: _propTypes2['default'].element,
-	    style: _propTypes2['default'].object,
-	    open: _propTypes2['default'].bool,
-	    defaultOpen: _propTypes2['default'].bool,
-	    prefixCls: _propTypes2['default'].string,
-	    placement: _propTypes2['default'].any,
-	    value: _propTypes2['default'].oneOfType([_propTypes2['default'].object, _propTypes2['default'].array]),
-	    defaultValue: _propTypes2['default'].oneOfType([_propTypes2['default'].object, _propTypes2['default'].array]),
-	    align: _propTypes2['default'].object
-	  },
+	  function Picker(props) {
+	    _classCallCheck(this, Picker);
 	
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      prefixCls: 'rc-calendar-picker',
-	      style: {},
-	      align: {},
-	      placement: 'bottomLeft',
-	      defaultOpen: false,
-	      onChange: noop,
-	      onOpenChange: noop
-	    };
-	  },
-	  getInitialState: function getInitialState() {
-	    var props = this.props;
+	    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+	
+	    _initialiseProps.call(_this);
+	
 	    var open = void 0;
 	    if ('open' in props) {
 	      open = props.open;
@@ -51319,119 +51105,41 @@
 	      open = props.defaultOpen;
 	    }
 	    var value = props.value || props.defaultValue;
-	    this.saveCalendarRef = refFn.bind(this, 'calendarInstance');
-	    return {
+	    _this.saveCalendarRef = refFn.bind(_this, 'calendarInstance');
+	
+	    _this.state = {
 	      open: open,
 	      value: value
 	    };
-	  },
-	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    var value = nextProps.value,
-	        open = nextProps.open;
+	    return _this;
+	  }
 	
-	    if ('value' in nextProps) {
-	      this.setState({
-	        value: value
-	      });
-	    }
-	    if (open !== undefined) {
-	      this.setState({
-	        open: open
-	      });
-	    }
-	  },
-	  componentDidUpdate: function componentDidUpdate(_, prevState) {
+	  Picker.prototype.componentDidUpdate = function componentDidUpdate(_, prevState) {
 	    if (!prevState.open && this.state.open) {
 	      // setTimeout is for making sure saveCalendarRef happen before focusCalendar
 	      this.focusTimeout = setTimeout(this.focusCalendar, 0, this);
 	    }
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
+	  };
+	
+	  Picker.prototype.componentWillUnmount = function componentWillUnmount() {
 	    clearTimeout(this.focusTimeout);
-	  },
-	  onCalendarKeyDown: function onCalendarKeyDown(event) {
-	    if (event.keyCode === _KeyCode2['default'].ESC) {
-	      event.stopPropagation();
-	      this.close(this.focus);
-	    }
-	  },
-	  onCalendarSelect: function onCalendarSelect(value) {
-	    var cause = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+	  };
 	
-	    var props = this.props;
-	    if (!('value' in props)) {
-	      this.setState({
-	        value: value
-	      });
-	    }
-	    if (cause.source === 'keyboard' || !props.calendar.props.timePicker && cause.source !== 'dateInput' || cause.source === 'todayButton') {
-	      this.close(this.focus);
-	    }
-	    props.onChange(value);
-	  },
-	  onKeyDown: function onKeyDown(event) {
-	    if (event.keyCode === _KeyCode2['default'].DOWN && !this.state.open) {
-	      this.open();
-	      event.preventDefault();
-	    }
-	  },
-	  onCalendarOk: function onCalendarOk() {
-	    this.close(this.focus);
-	  },
-	  onCalendarClear: function onCalendarClear() {
-	    this.close(this.focus);
-	  },
-	  onVisibleChange: function onVisibleChange(open) {
-	    this.setOpen(open);
-	  },
-	  getCalendarElement: function getCalendarElement() {
-	    var props = this.props;
-	    var state = this.state;
-	    var calendarProps = props.calendar.props;
-	    var value = state.value;
+	  Picker.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps) {
+	    var newState = {};
+	    var value = nextProps.value,
+	        open = nextProps.open;
 	
-	    var defaultValue = value;
-	    var extraProps = {
-	      ref: this.saveCalendarRef,
-	      defaultValue: defaultValue || calendarProps.defaultValue,
-	      selectedValue: value,
-	      onKeyDown: this.onCalendarKeyDown,
-	      onOk: (0, _createChainedFunction2['default'])(calendarProps.onOk, this.onCalendarOk),
-	      onSelect: (0, _createChainedFunction2['default'])(calendarProps.onSelect, this.onCalendarSelect),
-	      onClear: (0, _createChainedFunction2['default'])(calendarProps.onClear, this.onCalendarClear)
-	    };
+	    if ('value' in nextProps) {
+	      newState.value = value;
+	    }
+	    if (open !== undefined) {
+	      newState.open = open;
+	    }
+	    return newState;
+	  };
 	
-	    return _react2['default'].cloneElement(props.calendar, extraProps);
-	  },
-	  setOpen: function setOpen(open, callback) {
-	    var onOpenChange = this.props.onOpenChange;
-	
-	    if (this.state.open !== open) {
-	      if (!('open' in this.props)) {
-	        this.setState({
-	          open: open
-	        }, callback);
-	      }
-	      onOpenChange(open);
-	    }
-	  },
-	  open: function open(callback) {
-	    this.setOpen(true, callback);
-	  },
-	  close: function close(callback) {
-	    this.setOpen(false, callback);
-	  },
-	  focus: function focus() {
-	    if (!this.state.open) {
-	      _reactDom2['default'].findDOMNode(this).focus();
-	    }
-	  },
-	  focusCalendar: function focusCalendar() {
-	    if (this.state.open && this.calendarInstance !== null) {
-	      this.calendarInstance.focus();
-	    }
-	  },
-	  render: function render() {
+	  Picker.prototype.render = function render() {
 	    var props = this.props;
 	    var prefixCls = props.prefixCls,
 	        placement = props.placement,
@@ -51440,16 +51148,17 @@
 	        align = props.align,
 	        animation = props.animation,
 	        disabled = props.disabled,
+	        dropdownClassName = props.dropdownClassName,
 	        transitionName = props.transitionName,
 	        children = props.children;
 	
 	    var state = this.state;
-	    return _react2['default'].createElement(
-	      _rcTrigger2['default'],
+	    return _react2["default"].createElement(
+	      _rcTrigger2["default"],
 	      {
 	        popup: this.getCalendarElement(),
 	        popupAlign: align,
-	        builtinPlacements: _placements2['default'],
+	        builtinPlacements: _placements2["default"],
 	        popupPlacement: placement,
 	        action: disabled && !state.open ? [] : ['click'],
 	        destroyPopupOnHide: true,
@@ -51459,18 +51168,149 @@
 	        popupTransitionName: transitionName,
 	        popupVisible: state.open,
 	        onPopupVisibleChange: this.onVisibleChange,
-	        prefixCls: prefixCls
+	        prefixCls: prefixCls,
+	        popupClassName: dropdownClassName
 	      },
-	      _react2['default'].cloneElement(children(state, props), { onKeyDown: this.onKeyDown })
+	      _react2["default"].cloneElement(children(state, props), { onKeyDown: this.onKeyDown })
 	    );
-	  }
-	});
+	  };
 	
-	exports['default'] = Picker;
+	  return Picker;
+	}(_react2["default"].Component);
+	
+	Picker.propTypes = {
+	  animation: _propTypes2["default"].oneOfType([_propTypes2["default"].func, _propTypes2["default"].string]),
+	  disabled: _propTypes2["default"].bool,
+	  transitionName: _propTypes2["default"].string,
+	  onChange: _propTypes2["default"].func,
+	  onOpenChange: _propTypes2["default"].func,
+	  children: _propTypes2["default"].func,
+	  getCalendarContainer: _propTypes2["default"].func,
+	  calendar: _propTypes2["default"].element,
+	  style: _propTypes2["default"].object,
+	  open: _propTypes2["default"].bool,
+	  defaultOpen: _propTypes2["default"].bool,
+	  prefixCls: _propTypes2["default"].string,
+	  placement: _propTypes2["default"].any,
+	  value: _propTypes2["default"].oneOfType([_propTypes2["default"].object, _propTypes2["default"].array]),
+	  defaultValue: _propTypes2["default"].oneOfType([_propTypes2["default"].object, _propTypes2["default"].array]),
+	  align: _propTypes2["default"].object
+	};
+	Picker.defaultProps = {
+	  prefixCls: 'rc-calendar-picker',
+	  style: {},
+	  align: {},
+	  placement: 'bottomLeft',
+	  defaultOpen: false,
+	  onChange: noop,
+	  onOpenChange: noop
+	};
+	
+	var _initialiseProps = function _initialiseProps() {
+	  var _this2 = this;
+	
+	  this.onCalendarKeyDown = function (event) {
+	    if (event.keyCode === _KeyCode2["default"].ESC) {
+	      event.stopPropagation();
+	      _this2.close(_this2.focus);
+	    }
+	  };
+	
+	  this.onCalendarSelect = function (value) {
+	    var cause = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+	
+	    var props = _this2.props;
+	    if (!('value' in props)) {
+	      _this2.setState({
+	        value: value
+	      });
+	    }
+	    if (cause.source === 'keyboard' || cause.source === 'dateInputSelect' || !props.calendar.props.timePicker && cause.source !== 'dateInput' || cause.source === 'todayButton') {
+	      _this2.close(_this2.focus);
+	    }
+	    props.onChange(value);
+	  };
+	
+	  this.onKeyDown = function (event) {
+	    if (!_this2.state.open && (event.keyCode === _KeyCode2["default"].DOWN || event.keyCode === _KeyCode2["default"].ENTER)) {
+	      _this2.open();
+	      event.preventDefault();
+	    }
+	  };
+	
+	  this.onCalendarOk = function () {
+	    _this2.close(_this2.focus);
+	  };
+	
+	  this.onCalendarClear = function () {
+	    _this2.close(_this2.focus);
+	  };
+	
+	  this.onVisibleChange = function (open) {
+	    _this2.setOpen(open);
+	  };
+	
+	  this.getCalendarElement = function () {
+	    var props = _this2.props;
+	    var state = _this2.state;
+	    var calendarProps = props.calendar.props;
+	    var value = state.value;
+	
+	    var defaultValue = value;
+	    var extraProps = {
+	      ref: _this2.saveCalendarRef,
+	      defaultValue: defaultValue || calendarProps.defaultValue,
+	      selectedValue: value,
+	      onKeyDown: _this2.onCalendarKeyDown,
+	      onOk: (0, _createChainedFunction2["default"])(calendarProps.onOk, _this2.onCalendarOk),
+	      onSelect: (0, _createChainedFunction2["default"])(calendarProps.onSelect, _this2.onCalendarSelect),
+	      onClear: (0, _createChainedFunction2["default"])(calendarProps.onClear, _this2.onCalendarClear)
+	    };
+	
+	    return _react2["default"].cloneElement(props.calendar, extraProps);
+	  };
+	
+	  this.setOpen = function (open, callback) {
+	    var onOpenChange = _this2.props.onOpenChange;
+	
+	    if (_this2.state.open !== open) {
+	      if (!('open' in _this2.props)) {
+	        _this2.setState({
+	          open: open
+	        }, callback);
+	      }
+	      onOpenChange(open);
+	    }
+	  };
+	
+	  this.open = function (callback) {
+	    _this2.setOpen(true, callback);
+	  };
+	
+	  this.close = function (callback) {
+	    _this2.setOpen(false, callback);
+	  };
+	
+	  this.focus = function () {
+	    if (!_this2.state.open) {
+	      _reactDom2["default"].findDOMNode(_this2).focus();
+	    }
+	  };
+	
+	  this.focusCalendar = function () {
+	    if (_this2.state.open && !!_this2.calendarInstance) {
+	      _this2.calendarInstance.focus();
+	    }
+	  };
+	};
+	
+	(0, _reactLifecyclesCompat.polyfill)(Picker);
+	
+	exports["default"] = Picker;
 	module.exports = exports['default'];
 
 /***/ }),
-/* 455 */
+/* 451 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -51512,11 +51352,11 @@
 	  }
 	};
 	
-	exports['default'] = placements;
+	exports["default"] = placements;
 	module.exports = exports['default'];
 
 /***/ }),
-/* 456 */
+/* 452 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -51530,13 +51370,13 @@
 	
 	var _propTypes = _interopRequireDefault(__webpack_require__(5));
 	
-	var _moment = _interopRequireDefault(__webpack_require__(308));
+	var _moment = _interopRequireDefault(__webpack_require__(303));
 	
 	var _classnames = _interopRequireDefault(__webpack_require__(3));
 	
-	var _Header = _interopRequireDefault(__webpack_require__(457));
+	var _Header = _interopRequireDefault(__webpack_require__(453));
 	
-	var _Combobox = _interopRequireDefault(__webpack_require__(458));
+	var _Combobox = _interopRequireDefault(__webpack_require__(454));
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -51812,7 +51652,7 @@
 	exports["default"] = _default;
 
 /***/ }),
-/* 457 */
+/* 453 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -51826,7 +51666,7 @@
 	
 	var _propTypes = _interopRequireDefault(__webpack_require__(5));
 	
-	var _moment = _interopRequireDefault(__webpack_require__(308));
+	var _moment = _interopRequireDefault(__webpack_require__(303));
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -52071,7 +51911,7 @@
 	exports["default"] = _default;
 
 /***/ }),
-/* 458 */
+/* 454 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -52085,7 +51925,7 @@
 	
 	var _propTypes = _interopRequireDefault(__webpack_require__(5));
 	
-	var _Select = _interopRequireDefault(__webpack_require__(459));
+	var _Select = _interopRequireDefault(__webpack_require__(455));
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -52383,7 +52223,7 @@
 	exports["default"] = _default;
 
 /***/ }),
-/* 459 */
+/* 455 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -52598,7 +52438,48 @@
 	exports["default"] = _default;
 
 /***/ }),
-/* 460 */
+/* 456 */
+/***/ (function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports["default"] = {
+	  today: '今天',
+	  now: '此刻',
+	  backToToday: '返回今天',
+	  ok: '确定',
+	  timeSelect: '选择时间',
+	  dateSelect: '选择日期',
+	  weekSelect: '选择周',
+	  clear: '清除',
+	  month: '月',
+	  year: '年',
+	  previousMonth: '上个月 (翻页上键)',
+	  nextMonth: '下个月 (翻页下键)',
+	  monthSelect: '选择月份',
+	  yearSelect: '选择年份',
+	  decadeSelect: '选择年代',
+	  yearFormat: 'YYYY年',
+	  dayFormat: 'D日',
+	  dateFormat: 'YYYY年M月D日',
+	  dateTimeFormat: 'YYYY年M月D日 HH时mm分ss秒',
+	  previousYear: '上一年 (Control键加左方向键)',
+	  nextYear: '下一年 (Control键加右方向键)',
+	  previousDecade: '上一年代',
+	  nextDecade: '下一年代',
+	  previousCentury: '上一世纪',
+	  nextCentury: '下一世纪',
+	  lastWeek: '上一周',
+	  nowWeek: '本周',
+	  nextWeek: '下一周'
+	};
+	module.exports = exports['default'];
+
+/***/ }),
+/* 457 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -52607,7 +52488,9 @@
 	  value: true
 	});
 	
-	var _MonthCalendar = __webpack_require__(461);
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _MonthCalendar = __webpack_require__(458);
 	
 	var _MonthCalendar2 = _interopRequireDefault(_MonthCalendar);
 	
@@ -52615,7 +52498,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Picker = __webpack_require__(454);
+	var _Picker = __webpack_require__(450);
 	
 	var _Picker2 = _interopRequireDefault(_Picker);
 	
@@ -52627,9 +52510,13 @@
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _beeInputGroup = __webpack_require__(296);
+	var _beeInputGroup = __webpack_require__(291);
 	
 	var _beeInputGroup2 = _interopRequireDefault(_beeInputGroup);
+	
+	var _zh_CN = __webpack_require__(456);
+	
+	var _zh_CN2 = _interopRequireDefault(_zh_CN);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -52655,6 +52542,13 @@
 	      _this.setState({
 	        value: value
 	      });
+	      var _this$props = _this.props,
+	          onChange = _this$props.onChange,
+	          onClear = _this$props.onClear,
+	          onSelect = _this$props.onSelect,
+	          format = _this$props.format;
+	
+	      onChange && onChange(value, value ? value.format(format) : '');
 	    };
 	
 	    _this.onOpenChange = function (open) {
@@ -52669,10 +52563,31 @@
 	      });
 	    };
 	
+	    _this.onMouseLeave = function (e) {
+	      _this.setState({
+	        showClose: false
+	      });
+	    };
+	
+	    _this.onMouseEnter = function (e) {
+	      _this.setState({
+	        showClose: true
+	      });
+	    };
+	
+	    _this.clear = function (e) {
+	      e.stopPropagation();
+	      _this.setState({
+	        value: ''
+	      });
+	      _this.props.onChange && _this.props.onChange('', '');
+	    };
+	
 	    _this.state = {
 	      type: "month",
 	      value: props.value || props.defaultValue,
-	      open: false
+	      open: false,
+	      showClose: false
 	    };
 	    return _this;
 	  }
@@ -52684,8 +52599,9 @@
 	
 	    var props = this.props;
 	
-	    var monthCalendar = _react2["default"].createElement(_MonthCalendar2["default"], props);
-	
+	    var monthCalendar = _react2["default"].createElement(_MonthCalendar2["default"], _extends({}, props, {
+	      onChange: this.onChange
+	    }));
 	    return _react2["default"].createElement(
 	      "div",
 	      null,
@@ -52693,7 +52609,7 @@
 	        _Picker2["default"],
 	        {
 	          onOpenChange: this.onOpenChange,
-	          animation: "slide-up",
+	          animation: 'animation' in props ? props.animation : "slide-up",
 	          calendar: monthCalendar,
 	          open: this.state.open,
 	          value: state.value,
@@ -52704,13 +52620,22 @@
 	
 	          return _react2["default"].createElement(
 	            _beeInputGroup2["default"],
-	            { simple: true, className: "datepicker-input-group" },
+	            { simple: true, className: "datepicker-input-group",
+	              onMouseEnter: _this2.onMouseEnter,
+	              onMouseLeave: _this2.onMouseLeave
+	            },
 	            _react2["default"].createElement(_beeFormControl2["default"], {
 	              placeholder: _this2.props.placeholder,
 	              className: _this2.props.className,
-	              value: value && value.format(props.format) || ""
+	              value: value && value.format(props.format) || "",
+	              disabled: props.disabled
 	            }),
-	            _react2["default"].createElement(
+	            _this2.state.value && _this2.state.showClose && !props.disabled ? _react2["default"].createElement(
+	              _beeInputGroup2["default"].Button,
+	              { shape: "border",
+	                onClick: _this2.clear },
+	              _react2["default"].createElement("i", { className: "uf uf-close-c" })
+	            ) : _react2["default"].createElement(
 	              _beeInputGroup2["default"].Button,
 	              { shape: "border" },
 	              props.renderIcon()
@@ -52727,14 +52652,18 @@
 	MonthPicker.defaultProps = {
 	  renderIcon: function renderIcon() {
 	    return _react2["default"].createElement(_beeIcon2["default"], { type: "uf-calendar" });
-	  }
+	  },
+	  format: 'YYYY-MM',
+	  showDateInput: true,
+	  showMonthInput: true,
+	  locale: _zh_CN2["default"]
 	};
 	
 	exports["default"] = MonthPicker;
 	module.exports = exports["default"];
 
 /***/ }),
-/* 461 */
+/* 458 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52743,13 +52672,11 @@
 	  value: true
 	});
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	var _react = __webpack_require__(4);
 	
 	var _react2 = _interopRequireDefault(_react);
-	
-	var _createReactClass = __webpack_require__(245);
-	
-	var _createReactClass2 = _interopRequireDefault(_createReactClass);
 	
 	var _propTypes = __webpack_require__(5);
 	
@@ -52759,100 +52686,210 @@
 	
 	var _KeyCode2 = _interopRequireDefault(_KeyCode);
 	
-	var _MonthPanel = __webpack_require__(441);
+	var _CalendarHeader = __webpack_require__(435);
 	
-	var _MonthPanel2 = _interopRequireDefault(_MonthPanel);
+	var _CalendarHeader2 = _interopRequireDefault(_CalendarHeader);
 	
-	var _CalendarMixin = __webpack_require__(450);
+	var _CalendarFooter = __webpack_require__(442);
 	
-	var _CalendarMixin2 = _interopRequireDefault(_CalendarMixin);
+	var _CalendarFooter2 = _interopRequireDefault(_CalendarFooter);
 	
-	var _CommonMixin = __webpack_require__(451);
+	var _CalendarMixin = __webpack_require__(446);
 	
-	var _CommonMixin2 = _interopRequireDefault(_CommonMixin);
+	var _CommonMixin = __webpack_require__(447);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var _DateInput = __webpack_require__(439);
 	
-	var MonthCalendar = (0, _createReactClass2['default'])({
-	  displayName: 'MonthCalendar',
+	var _DateInput2 = _interopRequireDefault(_DateInput);
 	
-	  propTypes: {
-	    monthCellRender: _propTypes2['default'].func,
-	    dateCellRender: _propTypes2['default'].func
-	  },
-	  mixins: [_CommonMixin2['default'], _CalendarMixin2['default']],
+	var _moment = __webpack_require__(303);
 	
-	  onKeyDown: function onKeyDown(event) {
-	    var keyCode = event.keyCode;
-	    var ctrlKey = event.ctrlKey || event.metaKey;
-	    var stateValue = this.state.value;
-	    var disabledDate = this.props.disabledDate;
+	var _moment2 = _interopRequireDefault(_moment);
 	
-	    var value = stateValue;
-	    switch (keyCode) {
-	      case _KeyCode2['default'].DOWN:
-	        value = stateValue.clone();
-	        value.add(3, 'months');
-	        break;
-	      case _KeyCode2['default'].UP:
-	        value = stateValue.clone();
-	        value.add(-3, 'months');
-	        break;
-	      case _KeyCode2['default'].LEFT:
-	        value = stateValue.clone();
-	        if (ctrlKey) {
-	          value.add(-1, 'years');
-	        } else {
-	          value.add(-1, 'months');
-	        }
-	        break;
-	      case _KeyCode2['default'].RIGHT:
-	        value = stateValue.clone();
-	        if (ctrlKey) {
-	          value.add(1, 'years');
-	        } else {
-	          value.add(1, 'months');
-	        }
-	        break;
-	      case _KeyCode2['default'].ENTER:
-	        if (!disabledDate || !disabledDate(stateValue)) {
-	          this.onSelect(stateValue);
-	        }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+	
+	var MonthCalendar = function (_React$Component) {
+	  _inherits(MonthCalendar, _React$Component);
+	
+	  function MonthCalendar(props) {
+	    _classCallCheck(this, MonthCalendar);
+	
+	    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+	
+	    _this.onKeyDown = function (event) {
+	      var keyCode = event.keyCode;
+	      var ctrlKey = event.ctrlKey || event.metaKey;
+	      var stateValue = _this.state.value;
+	      var disabledDate = _this.props.disabledDate;
+	
+	      var value = stateValue;
+	      switch (keyCode) {
+	        case _KeyCode2["default"].DOWN:
+	          value = stateValue.clone();
+	          value.add(3, 'months');
+	          break;
+	        case _KeyCode2["default"].UP:
+	          value = stateValue.clone();
+	          value.add(-3, 'months');
+	          break;
+	        case _KeyCode2["default"].LEFT:
+	          value = stateValue.clone();
+	          if (ctrlKey) {
+	            value.add(-1, 'years');
+	          } else {
+	            value.add(-1, 'months');
+	          }
+	          break;
+	        case _KeyCode2["default"].RIGHT:
+	          value = stateValue.clone();
+	          if (ctrlKey) {
+	            value.add(1, 'years');
+	          } else {
+	            value.add(1, 'months');
+	          }
+	          break;
+	        case _KeyCode2["default"].ENTER:
+	          if (!disabledDate || !disabledDate(stateValue)) {
+	            _this.onSelect(stateValue);
+	          }
+	          event.preventDefault();
+	          return 1;
+	        default:
+	          return undefined;
+	      }
+	      if (value !== stateValue) {
+	        _this.setValue(value);
 	        event.preventDefault();
 	        return 1;
-	      default:
-	        return undefined;
-	    }
-	    if (value !== stateValue) {
-	      this.setValue(value);
-	      event.preventDefault();
-	      return 1;
-	    }
-	  },
-	  render: function render() {
-	    var props = this.props;
-	    var children = _react2['default'].createElement(_MonthPanel2['default'], {
-	      locale: props.locale,
-	      disabledDate: props.disabledDate,
-	      style: { position: 'relative' },
-	      value: this.state.value,
-	      cellRender: props.monthCellRender,
-	      contentRender: props.monthCellContentRender,
-	      rootPrefixCls: props.prefixCls,
-	      onChange: this.setValue,
-	      onSelect: this.onSelect
-	    });
+	      }
+	    };
+	
+	    _this.handlePanelChange = function (_, mode) {
+	      if (mode !== 'date') {
+	        _this.setState({ mode: mode });
+	      }
+	    };
+	
+	    _this.onInputChange = function (value) {
+	      var _this$props = _this.props,
+	          onChange = _this$props.onChange,
+	          format = _this$props.format;
+	
+	      _this.setState({
+	        value: value ? value : (0, _moment2["default"])()
+	      });
+	      _this.setValue(value);
+	      onChange && onChange(value);
+	    };
+	
+	    _this.onClear = function () {
+	      var _this$props2 = _this.props,
+	          onChange = _this$props2.onChange,
+	          format = _this$props2.format,
+	          onClear = _this$props2.onClear;
+	
+	      _this.setState({
+	        value: (0, _moment2["default"])()
+	      });
+	      _this.setValue((0, _moment2["default"])());
+	      onChange && onChange('', '');
+	      onClear && onClear('', '');
+	    };
+	
+	    _this.state = {
+	      mode: 'month',
+	      value: props.value || props.defaultValue || (0, _moment2["default"])(),
+	      selectedValue: props.selectedValue || props.defaultSelectedValue
+	    };
+	    return _this;
+	  }
+	
+	  MonthCalendar.prototype.render = function render() {
+	    var props = this.props,
+	        state = this.state;
+	    var mode = state.mode,
+	        value = state.value;
+	
+	    console.log(props);
+	    var prefixCls = props.prefixCls,
+	        locale = props.locale,
+	        format = props.format,
+	        showDateInput = props.showDateInput,
+	        onChange = props.onChange,
+	        onSelect = props.onSelect,
+	        onClear = props.onClear,
+	        showMonthInput = props.showMonthInput;
+	
+	    var children = _react2["default"].createElement(
+	      'div',
+	      { className: props.prefixCls + '-month-calendar-content' },
+	      _react2["default"].createElement(
+	        'div',
+	        { className: props.prefixCls + '-month-header-wrap' },
+	        showDateInput && showMonthInput ? _react2["default"].createElement(_DateInput2["default"], {
+	          value: value,
+	          prefixCls: prefixCls,
+	          showClear: true,
+	          locale: locale,
+	          format: format,
+	          onChange: this.onInputChange,
+	          selectedValue: value,
+	          onClear: this.onClear
+	        }) : '',
+	        _react2["default"].createElement(_CalendarHeader2["default"], {
+	          prefixCls: props.prefixCls,
+	          mode: mode,
+	          value: value,
+	          locale: props.locale,
+	          disabledMonth: props.disabledDate,
+	          monthCellRender: props.monthCellRender,
+	          monthCellContentRender: props.monthCellContentRender,
+	          onMonthSelect: this.onSelect,
+	          onValueChange: this.setValue,
+	          onPanelChange: this.handlePanelChange
+	          // onChange={onChange}
+	          , onClear: onClear
+	        })
+	      ),
+	      _react2["default"].createElement(_CalendarFooter2["default"], {
+	        prefixCls: props.prefixCls,
+	        renderFooter: props.renderFooter
+	      })
+	    );
 	    return this.renderRoot({
+	      className: props.prefixCls + '-month-calendar',
 	      children: children
 	    });
-	  }
-	});
+	  };
 	
-	exports['default'] = MonthCalendar;
+	  return MonthCalendar;
+	}(_react2["default"].Component);
+	
+	MonthCalendar.propTypes = _extends({}, _CalendarMixin.calendarMixinPropTypes, _CommonMixin.propType, {
+	  monthCellRender: _propTypes2["default"].func,
+	  dateCellRender: _propTypes2["default"].func,
+	  value: _propTypes2["default"].object,
+	  defaultValue: _propTypes2["default"].object,
+	  selectedValue: _propTypes2["default"].object,
+	  defaultSelectedValue: _propTypes2["default"].object,
+	  disabledDate: _propTypes2["default"].func
+	});
+	MonthCalendar.defaultProps = _extends({
+	  showDateInput: false
+	}, _CommonMixin.defaultProp, _CalendarMixin.calendarMixinDefaultProps);
+	exports["default"] = (0, _CalendarMixin.calendarMixinWrapper)((0, _CommonMixin.commonMixinWrapper)(MonthCalendar));
 	module.exports = exports['default'];
 
 /***/ }),
-/* 462 */
+/* 459 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -52865,7 +52902,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _RangeCalendar = __webpack_require__(463);
+	var _RangeCalendar = __webpack_require__(460);
 	
 	var _RangeCalendar2 = _interopRequireDefault(_RangeCalendar);
 	
@@ -52873,11 +52910,11 @@
 	
 	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 	
-	var _Picker = __webpack_require__(454);
+	var _Picker = __webpack_require__(450);
 	
 	var _Picker2 = _interopRequireDefault(_Picker);
 	
-	var _beeInputGroup = __webpack_require__(296);
+	var _beeInputGroup = __webpack_require__(291);
 	
 	var _beeInputGroup2 = _interopRequireDefault(_beeInputGroup);
 	
@@ -52885,19 +52922,19 @@
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _zh_CN = __webpack_require__(133);
+	var _classnames = __webpack_require__(3);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	var _zh_CN = __webpack_require__(456);
 	
 	var _zh_CN2 = _interopRequireDefault(_zh_CN);
 	
-	var _en_US = __webpack_require__(452);
-	
-	var _en_US2 = _interopRequireDefault(_en_US);
-	
-	var _moment = __webpack_require__(308);
+	var _moment = __webpack_require__(303);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
-	__webpack_require__(435);
+	__webpack_require__(430);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -52913,8 +52950,6 @@
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by chief on 17/4/6.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 	
-	
-	var classNames = __webpack_require__(3);
 	
 	function format(v, f) {
 	    return v ? v.format && v.format(f) : '';
@@ -52991,7 +53026,7 @@
 	            _Picker2["default"],
 	            {
 	                value: this.state.value,
-	                animation: "slide-up",
+	                animation: 'animation' in props ? props.animation : "slide-up",
 	                calendar: calendar
 	            },
 	            function (_ref) {
@@ -52999,12 +53034,21 @@
 	
 	                return _react2["default"].createElement(
 	                    "div",
-	                    { className: classNames('calendar-picker', 'u-input-group', 'simple', props.className) },
+	                    { className: (0, _classnames2["default"])('calendar-picker', 'u-input-group', 'simple', props.className),
+	                        onMouseEnter: _this2.onMouseEnter,
+	                        onMouseLeave: _this2.onMouseLeave
+	                    },
 	                    _react2["default"].createElement(_beeFormControl2["default"], {
 	                        placeholder: _this2.props.placeholder ? _this2.props.placeholder : 'start ~ end',
-	                        value: isValidRange(value) && format(value[0], formatStr) + " ~ " + format(value[1], formatStr) || ''
+	                        value: isValidRange(value) && format(value[0], formatStr) + " ~ " + format(value[1], formatStr) || '',
+	                        disabled: props.disabled
 	                    }),
-	                    _react2["default"].createElement(
+	                    _this2.state.value && _this2.state.showClose && !props.disabled ? _react2["default"].createElement(
+	                        _beeInputGroup2["default"].Button,
+	                        { shape: "border",
+	                            onClick: _this2.clear },
+	                        _react2["default"].createElement("i", { className: "uf uf-close-c" })
+	                    ) : _react2["default"].createElement(
 	                        _beeInputGroup2["default"].Button,
 	                        { shape: "border" },
 	                        props.renderIcon()
@@ -53021,7 +53065,6 @@
 	    var _this3 = this;
 	
 	    this.onChange = function (value) {
-	        //console.log('onChange', value);
 	        var props = _this3.props;
 	        var formatStr = props.format || 'YYYY-MM-DD';
 	        _this3.setState({
@@ -53043,24 +53086,44 @@
 	    };
 	
 	    this.remove = function (e) {
-	        console.log(e);
 	        _this3.setState({ value: '' });
 	    };
 	
 	    this.handleCalendarChange = function (value) {};
+	
+	    this.onMouseLeave = function (e) {
+	        _this3.setState({
+	            showClose: false
+	        });
+	    };
+	
+	    this.onMouseEnter = function (e) {
+	        _this3.setState({
+	            showClose: true
+	        });
+	    };
+	
+	    this.clear = function (e) {
+	        e.stopPropagation();
+	        _this3.setState({
+	            value: ''
+	        });
+	        _this3.props.onChange && _this3.props.onChange('', '');
+	    };
 	};
 	
 	Picker.defaultProps = {
 	    renderIcon: function renderIcon() {
 	        return _react2["default"].createElement(_beeIcon2["default"], { type: "uf-calendar" });
-	    }
+	    },
+	    locale: _zh_CN2["default"]
 	};
 	
 	exports["default"] = Picker;
 	module.exports = exports["default"];
 
 /***/ }),
-/* 463 */
+/* 460 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53069,35 +53132,19 @@
 	  value: true
 	});
 	
-	var _extends2 = __webpack_require__(144);
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _extends3 = _interopRequireDefault(_extends2);
-	
-	var _defineProperty2 = __webpack_require__(262);
-	
-	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
-	
-	var _toConsumableArray2 = __webpack_require__(464);
-	
-	var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
-	
-	var _slicedToArray2 = __webpack_require__(474);
-	
-	var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 	
 	var _react = __webpack_require__(4);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _createReactClass = __webpack_require__(245);
-	
-	var _createReactClass2 = _interopRequireDefault(_createReactClass);
-	
 	var _propTypes = __webpack_require__(5);
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _moment = __webpack_require__(308);
+	var _moment = __webpack_require__(303);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
@@ -53105,29 +53152,47 @@
 	
 	var _classnames3 = _interopRequireDefault(_classnames2);
 	
-	var _CalendarPart = __webpack_require__(481);
+	var _reactLifecyclesCompat = __webpack_require__(141);
+	
+	var _KeyCode = __webpack_require__(237);
+	
+	var _KeyCode2 = _interopRequireDefault(_KeyCode);
+	
+	var _CalendarPart = __webpack_require__(461);
 	
 	var _CalendarPart2 = _interopRequireDefault(_CalendarPart);
 	
-	var _TodayButton = __webpack_require__(447);
+	var _TodayButton = __webpack_require__(443);
 	
 	var _TodayButton2 = _interopRequireDefault(_TodayButton);
 	
-	var _OkButton = __webpack_require__(448);
+	var _OkButton = __webpack_require__(444);
 	
 	var _OkButton2 = _interopRequireDefault(_OkButton);
 	
-	var _TimePickerButton = __webpack_require__(449);
+	var _TimePickerButton = __webpack_require__(445);
 	
 	var _TimePickerButton2 = _interopRequireDefault(_TimePickerButton);
 	
-	var _CommonMixin = __webpack_require__(451);
+	var _CommonMixin = __webpack_require__(447);
 	
-	var _CommonMixin2 = _interopRequireDefault(_CommonMixin);
+	var _util = __webpack_require__(434);
 	
-	var _util = __webpack_require__(439);
+	var _toTime = __webpack_require__(449);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 	
 	function noop() {}
 	
@@ -53137,8 +53202,21 @@
 	  }));
 	}
 	
+	function isArraysEqual(a, b) {
+	  if (a === b) return true;
+	  if (a === null || typeof a === 'undefined' || b === null || typeof b === 'undefined') {
+	    return false;
+	  }
+	  if (a.length !== b.length) return false;
+	
+	  for (var i = 0; i < a.length; ++i) {
+	    if (a[i] !== b[i]) return false;
+	  }
+	  return true;
+	}
+	
 	function getValueFromSelectedValue(selectedValue) {
-	  var _selectedValue = (0, _slicedToArray3['default'])(selectedValue, 2),
+	  var _selectedValue = _slicedToArray(selectedValue, 2),
 	      start = _selectedValue[0],
 	      end = _selectedValue[1];
 	
@@ -53150,18 +53228,20 @@
 	  var selectedValue = props.selectedValue || init && props.defaultSelectedValue;
 	  var value = props.value || init && props.defaultValue;
 	  var normalizedValue = value ? getValueFromSelectedValue(value) : getValueFromSelectedValue(selectedValue);
-	  return !isEmptyArray(normalizedValue) ? normalizedValue : init && [(0, _moment2['default'])(), (0, _moment2['default'])().add(1, 'months')];
+	  return !isEmptyArray(normalizedValue) ? normalizedValue : init && [(0, _moment2["default"])(), (0, _moment2["default"])().add(1, 'months')];
 	}
 	
-	function generateOptions(length) {
-	  var arr = [];
+	function generateOptions(length, extraOptionGen) {
+	  var arr = extraOptionGen ? extraOptionGen().concat() : [];
 	  for (var value = 0; value < length; value++) {
-	    arr.push(value);
+	    if (arr.indexOf(value) === -1) {
+	      arr.push(value);
+	    }
 	  }
 	  return arr;
 	}
 	
-	function onInputSelect(direction, value) {
+	function onInputSelect(direction, value, cause) {
 	  if (!value) {
 	    return;
 	  }
@@ -53172,391 +53252,77 @@
 	  if (selectedValue[0] && this.compare(selectedValue[0], selectedValue[1]) > 0) {
 	    selectedValue[1 - index] = this.state.showTimePicker ? selectedValue[index] : undefined;
 	  }
-	  this.fireSelectValueChange(selectedValue);
+	  this.props.onInputSelect(selectedValue);
+	  this.fireSelectValueChange(selectedValue, null, cause || { source: 'dateInput' });
 	}
 	
-	var RangeCalendar = (0, _createReactClass2['default'])({
-	  displayName: 'RangeCalendar',
+	var RangeCalendar = function (_React$Component) {
+	  _inherits(RangeCalendar, _React$Component);
 	
-	  propTypes: {
-	    prefixCls: _propTypes2['default'].string,
-	    dateInputPlaceholder: _propTypes2['default'].any,
-	    defaultValue: _propTypes2['default'].any,
-	    value: _propTypes2['default'].any,
-	    hoverValue: _propTypes2['default'].any,
-	    timePicker: _propTypes2['default'].any,
-	    showOk: _propTypes2['default'].bool,
-	    showToday: _propTypes2['default'].bool,
-	    defaultSelectedValue: _propTypes2['default'].array,
-	    selectedValue: _propTypes2['default'].array,
-	    onOk: _propTypes2['default'].func,
-	    showClear: _propTypes2['default'].bool,
-	    locale: _propTypes2['default'].object,
-	    onChange: _propTypes2['default'].func,
-	    onSelect: _propTypes2['default'].func,
-	    onValueChange: _propTypes2['default'].func,
-	    onHoverChange: _propTypes2['default'].func,
-	    format: _propTypes2['default'].oneOfType([_propTypes2['default'].object, _propTypes2['default'].string]),
-	    onClear: _propTypes2['default'].func,
-	    type: _propTypes2['default'].any,
-	    disabledDate: _propTypes2['default'].func,
-	    disabledTime: _propTypes2['default'].func
-	  },
+	  function RangeCalendar(props) {
+	    _classCallCheck(this, RangeCalendar);
 	
-	  mixins: [_CommonMixin2['default']],
+	    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
 	
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      type: 'both',
-	      defaultSelectedValue: [],
-	      onValueChange: noop,
-	      onHoverChange: noop,
-	      disabledTime: noop,
-	      showToday: true
-	    };
-	  },
-	  getInitialState: function getInitialState() {
-	    var props = this.props;
+	    _initialiseProps.call(_this);
+	
 	    var selectedValue = props.selectedValue || props.defaultSelectedValue;
 	    var value = normalizeAnchor(props, 1);
-	    return {
+	    _this.state = {
 	      selectedValue: selectedValue,
 	      prevSelectedValue: selectedValue,
 	      firstSelectedValue: null,
 	      hoverValue: props.hoverValue || [],
 	      value: value,
 	      showTimePicker: false,
-	      isStartMonthYearPanelShow: false,
-	      isEndMonthYearPanelShow: false
+	      mode: props.mode || ['date', 'date']
 	    };
-	  },
-	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    return _this;
+	  }
+	
+	  RangeCalendar.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps, state) {
 	    var newState = {};
 	    if ('value' in nextProps) {
-	      if (nextProps.value) {
-	        newState.value = nextProps.value;
-	      } else {
-	        newState.value = normalizeAnchor(nextProps, 0);
-	      }
-	      this.setState(newState);
+	      newState.value = normalizeAnchor(nextProps, 0);
 	    }
-	    if ('hoverValue' in nextProps) {
-	      this.setState({ hoverValue: nextProps.hoverValue });
+	    if ('hoverValue' in nextProps && !isArraysEqual(state.hoverValue, nextProps.hoverValue)) {
+	      newState.hoverValue = nextProps.hoverValue;
 	    }
 	    if ('selectedValue' in nextProps) {
 	      newState.selectedValue = nextProps.selectedValue;
 	      newState.prevSelectedValue = nextProps.selectedValue;
-	      this.setState(newState);
 	    }
-	  },
-	  onDatePanelEnter: function onDatePanelEnter() {
-	    if (this.hasSelectedValue()) {
-	      this.fireHoverValueChange(this.state.selectedValue.concat());
+	    if ('mode' in nextProps && !isArraysEqual(state.mode, nextProps.mode)) {
+	      newState = { mode: nextProps.mode };
 	    }
-	  },
-	  onDatePanelLeave: function onDatePanelLeave() {
-	    if (this.hasSelectedValue()) {
-	      this.fireHoverValueChange([]);
-	    }
-	  },
-	  onSelect: function onSelect(value) {
-	    var type = this.props.type;
-	    var _state = this.state,
-	        selectedValue = _state.selectedValue,
-	        prevSelectedValue = _state.prevSelectedValue,
-	        firstSelectedValue = _state.firstSelectedValue;
-	
-	    var nextSelectedValue = void 0;
-	    if (type === 'both') {
-	      if (!firstSelectedValue) {
-	        (0, _util.syncTime)(prevSelectedValue[0], value);
-	        nextSelectedValue = [value];
-	      } else if (this.compare(firstSelectedValue, value) < 0) {
-	        (0, _util.syncTime)(prevSelectedValue[1], value);
-	        nextSelectedValue = [firstSelectedValue, value];
-	      } else {
-	        (0, _util.syncTime)(prevSelectedValue[0], value);
-	        (0, _util.syncTime)(prevSelectedValue[1], firstSelectedValue);
-	        nextSelectedValue = [value, firstSelectedValue];
-	      }
-	    } else if (type === 'start') {
-	      (0, _util.syncTime)(prevSelectedValue[0], value);
-	      var endValue = selectedValue[1];
-	      nextSelectedValue = endValue && this.compare(endValue, value) > 0 ? [value, endValue] : [value];
-	    } else {
-	      // type === 'end'
-	      var startValue = selectedValue[0];
-	      if (startValue && this.compare(startValue, value) <= 0) {
-	        (0, _util.syncTime)(prevSelectedValue[1], value);
-	        nextSelectedValue = [startValue, value];
-	      } else {
-	        (0, _util.syncTime)(prevSelectedValue[0], value);
-	        nextSelectedValue = [value];
-	      }
-	    }
-	
-	    this.fireSelectValueChange(nextSelectedValue);
-	  },
-	  onDayHover: function onDayHover(value) {
-	    var hoverValue = [];
-	    var _state2 = this.state,
-	        selectedValue = _state2.selectedValue,
-	        firstSelectedValue = _state2.firstSelectedValue;
-	    var type = this.props.type;
-	
-	    if (type === 'start' && selectedValue[1]) {
-	      hoverValue = this.compare(value, selectedValue[1]) < 0 ? [value, selectedValue[1]] : [value];
-	    } else if (type === 'end' && selectedValue[0]) {
-	      hoverValue = this.compare(value, selectedValue[0]) > 0 ? [selectedValue[0], value] : [];
-	    } else {
-	      if (!firstSelectedValue) {
-	        return;
-	      }
-	      hoverValue = this.compare(value, firstSelectedValue) < 0 ? [value, firstSelectedValue] : [firstSelectedValue, value];
-	    }
-	    this.fireHoverValueChange(hoverValue);
-	  },
-	  onToday: function onToday() {
-	    var startValue = (0, _util.getTodayTime)(this.state.value[0]);
-	    var endValue = startValue.clone().add(1, 'months');
-	    this.setState({ value: [startValue, endValue] });
-	  },
-	  onOpenTimePicker: function onOpenTimePicker() {
-	    this.setState({
-	      showTimePicker: true
-	    });
-	  },
-	  onCloseTimePicker: function onCloseTimePicker() {
-	    this.setState({
-	      showTimePicker: false
-	    });
-	  },
-	  onOk: function onOk() {
-	    var selectedValue = this.state.selectedValue;
-	
-	    if (this.isAllowedDateAndTime(selectedValue)) {
-	      this.props.onOk(this.state.selectedValue);
-	    }
-	  },
-	  onStartInputSelect: function onStartInputSelect() {
-	    for (var _len = arguments.length, oargs = Array(_len), _key = 0; _key < _len; _key++) {
-	      oargs[_key] = arguments[_key];
-	    }
-	
-	    var args = ['left'].concat(oargs);
-	    return onInputSelect.apply(this, args);
-	  },
-	  onEndInputSelect: function onEndInputSelect() {
-	    for (var _len2 = arguments.length, oargs = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-	      oargs[_key2] = arguments[_key2];
-	    }
-	
-	    var args = ['right'].concat(oargs);
-	    return onInputSelect.apply(this, args);
-	  },
-	  onStartValueChange: function onStartValueChange(leftValue) {
-	    var value = [].concat((0, _toConsumableArray3['default'])(this.state.value));
-	    value[0] = leftValue;
-	    return this.fireValueChange(value);
-	  },
-	  onEndValueChange: function onEndValueChange(rightValue) {
-	    var value = [].concat((0, _toConsumableArray3['default'])(this.state.value));
-	    value[1] = rightValue;
-	    return this.fireValueChange(value);
-	  },
-	  onStartPanelChange: function onStartPanelChange(_ref) {
-	    var showMonthPanel = _ref.showMonthPanel,
-	        showYearPanel = _ref.showYearPanel;
-	
-	    this.setState({ isStartMonthYearPanelShow: showMonthPanel || showYearPanel });
-	  },
-	  onEndPanelChange: function onEndPanelChange(_ref2) {
-	    var showMonthPanel = _ref2.showMonthPanel,
-	        showYearPanel = _ref2.showYearPanel;
-	
-	    this.setState({ isEndMonthYearPanelShow: showMonthPanel || showYearPanel });
-	  },
-	  getStartValue: function getStartValue() {
-	    var value = this.state.value[0];
-	    var selectedValue = this.state.selectedValue;
-	    // keep selectedTime when select date
-	    if (selectedValue[0] && this.props.timePicker) {
-	      value = value.clone();
-	      (0, _util.syncTime)(selectedValue[0], value);
-	    }
-	    if (this.state.showTimePicker && selectedValue[0]) {
-	      return selectedValue[0];
-	    }
-	    return value;
-	  },
-	  getEndValue: function getEndValue() {
-	    var _state3 = this.state,
-	        value = _state3.value,
-	        selectedValue = _state3.selectedValue,
-	        showTimePicker = _state3.showTimePicker;
-	
-	    var endValue = value[1] ? value[1].clone() : value[0].clone().add(1, 'month');
-	    // keep selectedTime when select date
-	    if (selectedValue[1] && this.props.timePicker) {
-	      (0, _util.syncTime)(selectedValue[1], endValue);
-	    }
-	    if (showTimePicker) {
-	      return selectedValue[1] ? selectedValue[1] : this.getStartValue();
-	    }
-	    return endValue;
-	  },
+	    return newState;
+	  };
 	
 	  // get disabled hours for second picker
-	  getEndDisableTime: function getEndDisableTime() {
-	    var _state4 = this.state,
-	        selectedValue = _state4.selectedValue,
-	        value = _state4.value;
 	
-	    var startValue = selectedValue && selectedValue[0] || value[0].clone();
-	    // if startTime and endTime is same day..
-	    // the second time picker will not able to pick time before first time picker
-	    if (!selectedValue[1] || startValue.isSame(selectedValue[1], 'day')) {
-	      var hours = startValue.hour();
-	      var minutes = startValue.minute();
-	      var second = startValue.second();
-	      var _disabledHours = generateOptions(hours);
-	      var _disabledMinutes = generateOptions(minutes);
-	      var _disabledSeconds = generateOptions(second);
-	      return {
-	        disabledHours: function disabledHours() {
-	          return _disabledHours;
-	        },
-	        disabledMinutes: function disabledMinutes(hour) {
-	          if (hour === hours) {
-	            return _disabledMinutes;
-	          }
-	          return [];
-	        },
-	        disabledSeconds: function disabledSeconds(hour, minute) {
-	          if (hour === hours && minute === minutes) {
-	            return _disabledSeconds;
-	          }
-	          return [];
-	        }
-	      };
-	    }
-	    return null;
-	  },
-	  isAllowedDateAndTime: function isAllowedDateAndTime(selectedValue) {
-	    return (0, _util.isAllowedDate)(selectedValue[0], this.props.disabledDate, this.disabledStartTime) && (0, _util.isAllowedDate)(selectedValue[1], this.props.disabledDate, this.disabledEndTime);
-	  },
-	  hasSelectedValue: function hasSelectedValue() {
-	    var selectedValue = this.state.selectedValue;
 	
-	    return !!selectedValue[1] && !!selectedValue[0];
-	  },
-	  compare: function compare(v1, v2) {
-	    if (this.props.timePicker) {
-	      return v1.diff(v2);
-	    }
-	    return v1.diff(v2, 'days');
-	  },
-	  fireSelectValueChange: function fireSelectValueChange(selectedValue, direct) {
-	    var timePicker = this.props.timePicker;
-	    var prevSelectedValue = this.state.prevSelectedValue;
-	
-	    if (timePicker && timePicker.props.defaultValue) {
-	      var timePickerDefaultValue = timePicker.props.defaultValue;
-	      if (!prevSelectedValue[0] && selectedValue[0]) {
-	        (0, _util.syncTime)(timePickerDefaultValue[0], selectedValue[0]);
-	      }
-	      if (!prevSelectedValue[1] && selectedValue[1]) {
-	        (0, _util.syncTime)(timePickerDefaultValue[1], selectedValue[1]);
-	      }
-	    }
-	
-	    if (!('selectedValue' in this.props)) {
-	      this.setState({
-	        selectedValue: selectedValue
-	      });
-	    }
-	
-	    // 尚未选择过时间，直接输入的话
-	    if (!this.state.selectedValue[0] || !this.state.selectedValue[1]) {
-	      var startValue = selectedValue[0] || (0, _moment2['default'])();
-	      var endValue = selectedValue[1] || startValue.clone().add(1, 'months');
-	      this.setState({
-	        selectedValue: selectedValue,
-	        value: getValueFromSelectedValue([startValue, endValue])
-	      });
-	    }
-	
-	    if (selectedValue[0] && !selectedValue[1]) {
-	      this.setState({ firstSelectedValue: selectedValue[0] });
-	      this.fireHoverValueChange(selectedValue.concat());
-	    }
-	    this.props.onChange(selectedValue);
-	    if (direct || selectedValue[0] && selectedValue[1]) {
-	      this.setState({
-	        prevSelectedValue: selectedValue,
-	        firstSelectedValue: null
-	      });
-	      this.fireHoverValueChange([]);
-	      this.props.onSelect(selectedValue);
-	    }
-	  },
-	  fireValueChange: function fireValueChange(value) {
-	    var props = this.props;
-	    if (!('value' in props)) {
-	      this.setState({
-	        value: value
-	      });
-	    }
-	    props.onValueChange(value);
-	  },
-	  fireHoverValueChange: function fireHoverValueChange(hoverValue) {
-	    var props = this.props;
-	    if (!('hoverValue' in props)) {
-	      this.setState({ hoverValue: hoverValue });
-	    }
-	    props.onHoverChange(hoverValue);
-	  },
-	  clear: function clear() {
-	    this.fireSelectValueChange([], true);
-	    this.props.onClear();
-	  },
-	  disabledStartTime: function disabledStartTime(time) {
-	    return this.props.disabledTime(time, 'start');
-	  },
-	  disabledEndTime: function disabledEndTime(time) {
-	    return this.props.disabledTime(time, 'end');
-	  },
-	  disabledStartMonth: function disabledStartMonth(month) {
-	    var value = this.state.value;
-	
-	    return month.isSameOrAfter(value[1], 'month');
-	  },
-	  disabledEndMonth: function disabledEndMonth(month) {
-	    var value = this.state.value;
-	
-	    return month.isSameOrBefore(value[0], 'month');
-	  },
-	  render: function render() {
+	  RangeCalendar.prototype.render = function render() {
 	    var _className, _classnames;
 	
-	    var props = this.props;
-	    var state = this.state;
-	    var showTimePicker = state.showTimePicker,
-	        isStartMonthYearPanelShow = state.isStartMonthYearPanelShow,
-	        isEndMonthYearPanelShow = state.isEndMonthYearPanelShow;
+	    var props = this.props,
+	        state = this.state;
 	    var prefixCls = props.prefixCls,
 	        dateInputPlaceholder = props.dateInputPlaceholder,
+	        seperator = props.seperator,
 	        timePicker = props.timePicker,
 	        showOk = props.showOk,
 	        locale = props.locale,
 	        showClear = props.showClear,
 	        showToday = props.showToday,
-	        type = props.type;
+	        type = props.type,
+	        clearIcon = props.clearIcon;
 	    var hoverValue = state.hoverValue,
-	        selectedValue = state.selectedValue;
+	        selectedValue = state.selectedValue,
+	        mode = state.mode,
+	        showTimePicker = state.showTimePicker;
 	
-	    var className = (_className = {}, (0, _defineProperty3['default'])(_className, props.className, !!props.className), (0, _defineProperty3['default'])(_className, prefixCls, 1), (0, _defineProperty3['default'])(_className, prefixCls + '-hidden', !props.visible), (0, _defineProperty3['default'])(_className, prefixCls + '-range', 1), (0, _defineProperty3['default'])(_className, prefixCls + '-show-time-picker', showTimePicker), (0, _defineProperty3['default'])(_className, prefixCls + '-week-number', props.showWeekNumber), _className);
-	    var classes = (0, _classnames3['default'])(className);
+	    var className = (_className = {}, _defineProperty(_className, props.className, !!props.className), _defineProperty(_className, prefixCls, 1), _defineProperty(_className, prefixCls + '-hidden', !props.visible), _defineProperty(_className, prefixCls + '-range', 1), _defineProperty(_className, prefixCls + '-show-time-picker', showTimePicker), _defineProperty(_className, prefixCls + '-week-number', props.showWeekNumber), _className);
+	    var classes = (0, _classnames3["default"])(className);
 	    var newProps = {
 	      selectedValue: state.selectedValue,
 	      onSelect: this.onSelect,
@@ -53568,7 +53334,7 @@
 	
 	    if (dateInputPlaceholder) {
 	      if (Array.isArray(dateInputPlaceholder)) {
-	        var _dateInputPlaceholder = (0, _slicedToArray3['default'])(dateInputPlaceholder, 2);
+	        var _dateInputPlaceholder = _slicedToArray(dateInputPlaceholder, 2);
 	
 	        placeholder1 = _dateInputPlaceholder[0];
 	        placeholder2 = _dateInputPlaceholder[1];
@@ -53577,7 +53343,7 @@
 	      }
 	    }
 	    var showOkButton = showOk === true || showOk !== false && !!timePicker;
-	    var cls = (0, _classnames3['default'])((_classnames = {}, (0, _defineProperty3['default'])(_classnames, prefixCls + '-footer', true), (0, _defineProperty3['default'])(_classnames, prefixCls + '-range-bottom', true), (0, _defineProperty3['default'])(_classnames, prefixCls + '-footer-show-ok', showOkButton), _classnames));
+	    var cls = (0, _classnames3["default"])((_classnames = {}, _defineProperty(_classnames, prefixCls + '-footer', true), _defineProperty(_classnames, prefixCls + '-range-bottom', true), _defineProperty(_classnames, prefixCls + '-footer-show-ok', showOkButton), _classnames));
 	
 	    var startValue = this.getStartValue();
 	    var endValue = this.getEndValue();
@@ -53587,90 +53353,109 @@
 	    var isTodayInView = startValue.year() === thisYear && startValue.month() === thisMonth || endValue.year() === thisYear && endValue.month() === thisMonth;
 	    var nextMonthOfStart = startValue.clone().add(1, 'months');
 	    var isClosestMonths = nextMonthOfStart.year() === endValue.year() && nextMonthOfStart.month() === endValue.month();
-	    return _react2['default'].createElement(
+	
+	    // console.warn('Render:', selectedValue.map(t => t.format('YYYY-MM-DD')).join(', '));
+	    // console.log('start:', startValue.format('YYYY-MM-DD'));
+	    // console.log('end:', endValue.format('YYYY-MM-DD'));
+	
+	    var extraFooter = props.renderFooter();
+	
+	    return _react2["default"].createElement(
 	      'div',
 	      {
-	        ref: 'root',
+	        ref: this.saveRoot,
 	        className: classes,
 	        style: props.style,
-	        tabIndex: '0'
+	        tabIndex: '0',
+	        onKeyDown: this.onKeyDown
 	      },
 	      props.renderSidebar(),
-	      _react2['default'].createElement(
+	      _react2["default"].createElement(
 	        'div',
 	        { className: prefixCls + '-panel' },
-	        showClear && selectedValue[0] && selectedValue[1] ? _react2['default'].createElement('a', {
-	          className: prefixCls + '-clear-btn',
-	          role: 'button',
-	          title: locale.clear,
-	          onClick: this.clear
-	        }) : null,
-	        _react2['default'].createElement(
+	        showClear && selectedValue[0] && selectedValue[1] ? _react2["default"].createElement(
+	          'a',
+	          {
+	            role: 'button',
+	            title: locale.clear,
+	            onClick: this.clear
+	          },
+	          clearIcon || _react2["default"].createElement('span', { className: prefixCls + '-clear-btn uf uf-close-c' })
+	        ) : null,
+	        _react2["default"].createElement(
 	          'div',
 	          {
 	            className: prefixCls + '-date-panel',
 	            onMouseLeave: type !== 'both' ? this.onDatePanelLeave : undefined,
 	            onMouseEnter: type !== 'both' ? this.onDatePanelEnter : undefined
 	          },
-	          _react2['default'].createElement(_CalendarPart2['default'], (0, _extends3['default'])({}, props, newProps, {
+	          _react2["default"].createElement(_CalendarPart2["default"], _extends({}, props, newProps, {
 	            hoverValue: hoverValue,
 	            direction: 'left',
 	            disabledTime: this.disabledStartTime,
 	            disabledMonth: this.disabledStartMonth,
 	            format: this.getFormat(),
 	            value: startValue,
+	            mode: mode[0],
 	            placeholder: placeholder1,
+	            onInputChange: this.onStartInputChange,
 	            onInputSelect: this.onStartInputSelect,
 	            onValueChange: this.onStartValueChange,
 	            onPanelChange: this.onStartPanelChange,
+	            showDateInput: this.props.showDateInput,
 	            timePicker: timePicker,
 	            showTimePicker: showTimePicker,
 	            enablePrev: true,
-	            enableNext: !isClosestMonths || isEndMonthYearPanelShow
+	            enableNext: !isClosestMonths || this.isMonthYearPanelShow(mode[1]),
+	            clearIcon: clearIcon
 	          })),
-	          _react2['default'].createElement(
+	          _react2["default"].createElement(
 	            'span',
 	            { className: prefixCls + '-range-middle' },
-	            '~'
+	            seperator
 	          ),
-	          _react2['default'].createElement(_CalendarPart2['default'], (0, _extends3['default'])({}, props, newProps, {
+	          _react2["default"].createElement(_CalendarPart2["default"], _extends({}, props, newProps, {
 	            hoverValue: hoverValue,
 	            direction: 'right',
 	            format: this.getFormat(),
 	            timePickerDisabledTime: this.getEndDisableTime(),
 	            placeholder: placeholder2,
 	            value: endValue,
+	            mode: mode[1],
+	            onInputChange: this.onEndInputChange,
 	            onInputSelect: this.onEndInputSelect,
 	            onValueChange: this.onEndValueChange,
 	            onPanelChange: this.onEndPanelChange,
+	            showDateInput: this.props.showDateInput,
 	            timePicker: timePicker,
 	            showTimePicker: showTimePicker,
 	            disabledTime: this.disabledEndTime,
 	            disabledMonth: this.disabledEndMonth,
-	            enablePrev: !isClosestMonths || isStartMonthYearPanelShow,
-	            enableNext: true
+	            enablePrev: !isClosestMonths || this.isMonthYearPanelShow(mode[0]),
+	            enableNext: true,
+	            clearIcon: clearIcon
 	          }))
 	        ),
-	        _react2['default'].createElement(
+	        _react2["default"].createElement(
 	          'div',
 	          { className: cls },
-	          props.renderFooter(),
-	          showToday || props.timePicker || showOkButton ? _react2['default'].createElement(
+	          showToday || props.timePicker || showOkButton || extraFooter ? _react2["default"].createElement(
 	            'div',
 	            { className: prefixCls + '-footer-btn' },
-	            showToday ? _react2['default'].createElement(_TodayButton2['default'], (0, _extends3['default'])({}, props, {
+	            extraFooter,
+	            showToday ? _react2["default"].createElement(_TodayButton2["default"], _extends({}, props, {
 	              disabled: isTodayInView,
 	              value: state.value[0],
 	              onToday: this.onToday,
 	              text: locale.backToToday
 	            })) : null,
-	            props.timePicker ? _react2['default'].createElement(_TimePickerButton2['default'], (0, _extends3['default'])({}, props, {
+	            props.timePicker ? _react2["default"].createElement(_TimePickerButton2["default"], _extends({}, props, {
 	              showTimePicker: showTimePicker,
 	              onOpenTimePicker: this.onOpenTimePicker,
 	              onCloseTimePicker: this.onCloseTimePicker,
 	              timePickerDisabled: !this.hasSelectedValue() || hoverValue.length
 	            })) : null,
-	            showOkButton ? _react2['default'].createElement(_OkButton2['default'], (0, _extends3['default'])({}, props, {
+	            showOkButton ? _react2["default"].createElement(_OkButton2["default"], _extends({}, props, {
 	              onOk: this.onOk,
 	              okDisabled: !this.isAllowedDateAndTime(selectedValue) || !this.hasSelectedValue() || hoverValue.length
 	            })) : null
@@ -53678,330 +53463,575 @@
 	        )
 	      )
 	    );
-	  }
+	  };
+	
+	  return RangeCalendar;
+	}(_react2["default"].Component);
+	
+	RangeCalendar.propTypes = _extends({}, _CommonMixin.propType, {
+	  prefixCls: _propTypes2["default"].string,
+	  dateInputPlaceholder: _propTypes2["default"].any,
+	  seperator: _propTypes2["default"].string,
+	  defaultValue: _propTypes2["default"].any,
+	  value: _propTypes2["default"].any,
+	  hoverValue: _propTypes2["default"].any,
+	  mode: _propTypes2["default"].arrayOf(_propTypes2["default"].oneOf(['date', 'month', 'year', 'decade'])),
+	  showDateInput: _propTypes2["default"].bool,
+	  timePicker: _propTypes2["default"].any,
+	  showOk: _propTypes2["default"].bool,
+	  showToday: _propTypes2["default"].bool,
+	  defaultSelectedValue: _propTypes2["default"].array,
+	  selectedValue: _propTypes2["default"].array,
+	  onOk: _propTypes2["default"].func,
+	  showClear: _propTypes2["default"].bool,
+	  locale: _propTypes2["default"].object,
+	  onChange: _propTypes2["default"].func,
+	  onSelect: _propTypes2["default"].func,
+	  onValueChange: _propTypes2["default"].func,
+	  onHoverChange: _propTypes2["default"].func,
+	  onPanelChange: _propTypes2["default"].func,
+	  format: _propTypes2["default"].oneOfType([_propTypes2["default"].object, _propTypes2["default"].string]),
+	  onClear: _propTypes2["default"].func,
+	  type: _propTypes2["default"].any,
+	  disabledDate: _propTypes2["default"].func,
+	  disabledTime: _propTypes2["default"].func,
+	  clearIcon: _propTypes2["default"].node,
+	  onKeyDown: _propTypes2["default"].func
+	});
+	RangeCalendar.defaultProps = _extends({}, _CommonMixin.defaultProp, {
+	  type: 'both',
+	  seperator: '~',
+	  defaultSelectedValue: [],
+	  onValueChange: noop,
+	  onHoverChange: noop,
+	  onPanelChange: noop,
+	  disabledTime: noop,
+	  onInputSelect: noop,
+	  showToday: true,
+	  showDateInput: true
 	});
 	
-	exports['default'] = RangeCalendar;
+	var _initialiseProps = function _initialiseProps() {
+	  var _this2 = this;
+	
+	  this.onDatePanelEnter = function () {
+	    if (_this2.hasSelectedValue()) {
+	      _this2.fireHoverValueChange(_this2.state.selectedValue.concat());
+	    }
+	  };
+	
+	  this.onDatePanelLeave = function () {
+	    if (_this2.hasSelectedValue()) {
+	      _this2.fireHoverValueChange([]);
+	    }
+	  };
+	
+	  this.onSelect = function (value) {
+	    var type = _this2.props.type;
+	    var _state = _this2.state,
+	        selectedValue = _state.selectedValue,
+	        prevSelectedValue = _state.prevSelectedValue,
+	        firstSelectedValue = _state.firstSelectedValue;
+	
+	    var nextSelectedValue = void 0;
+	    if (type === 'both') {
+	      if (!firstSelectedValue) {
+	        (0, _util.syncTime)(prevSelectedValue[0], value);
+	        nextSelectedValue = [value];
+	      } else if (_this2.compare(firstSelectedValue, value) < 0) {
+	        (0, _util.syncTime)(prevSelectedValue[1], value);
+	        nextSelectedValue = [firstSelectedValue, value];
+	      } else {
+	        (0, _util.syncTime)(prevSelectedValue[0], value);
+	        (0, _util.syncTime)(prevSelectedValue[1], firstSelectedValue);
+	        nextSelectedValue = [value, firstSelectedValue];
+	      }
+	    } else if (type === 'start') {
+	      (0, _util.syncTime)(prevSelectedValue[0], value);
+	      var endValue = selectedValue[1];
+	      nextSelectedValue = endValue && _this2.compare(endValue, value) > 0 ? [value, endValue] : [value];
+	    } else {
+	      // type === 'end'
+	      var startValue = selectedValue[0];
+	      if (startValue && _this2.compare(startValue, value) <= 0) {
+	        (0, _util.syncTime)(prevSelectedValue[1], value);
+	        nextSelectedValue = [startValue, value];
+	      } else {
+	        (0, _util.syncTime)(prevSelectedValue[0], value);
+	        nextSelectedValue = [value];
+	      }
+	    }
+	
+	    _this2.fireSelectValueChange(nextSelectedValue);
+	  };
+	
+	  this.onKeyDown = function (event) {
+	    if (event.target.nodeName.toLowerCase() === 'input') {
+	      return;
+	    }
+	
+	    var keyCode = event.keyCode;
+	
+	    var ctrlKey = event.ctrlKey || event.metaKey;
+	
+	    var _state2 = _this2.state,
+	        selectedValue = _state2.selectedValue,
+	        hoverValue = _state2.hoverValue,
+	        firstSelectedValue = _state2.firstSelectedValue,
+	        value = _state2.value;
+	    var _props = _this2.props,
+	        onKeyDown = _props.onKeyDown,
+	        disabledDate = _props.disabledDate;
+	
+	    // Update last time of the picker
+	
+	    var updateHoverPoint = function updateHoverPoint(func) {
+	      // Change hover to make focus in UI
+	      var currentHoverTime = void 0;
+	      var nextHoverTime = void 0;
+	      var nextHoverValue = void 0;
+	
+	      if (!firstSelectedValue) {
+	        currentHoverTime = hoverValue[0] || selectedValue[0] || value[0] || (0, _moment2["default"])();
+	        nextHoverTime = func(currentHoverTime);
+	        nextHoverValue = [nextHoverTime];
+	        _this2.fireHoverValueChange(nextHoverValue);
+	      } else {
+	        if (hoverValue.length === 1) {
+	          currentHoverTime = hoverValue[0].clone();
+	          nextHoverTime = func(currentHoverTime);
+	          nextHoverValue = _this2.onDayHover(nextHoverTime);
+	        } else {
+	          currentHoverTime = hoverValue[0].isSame(firstSelectedValue, 'day') ? hoverValue[1] : hoverValue[0];
+	          nextHoverTime = func(currentHoverTime);
+	          nextHoverValue = _this2.onDayHover(nextHoverTime);
+	        }
+	      }
+	
+	      // Find origin hover time on value index
+	      if (nextHoverValue.length >= 2) {
+	        var miss = nextHoverValue.some(function (ht) {
+	          return !(0, _toTime.includesTime)(value, ht, 'month');
+	        });
+	        if (miss) {
+	          var newValue = nextHoverValue.slice().sort(function (t1, t2) {
+	            return t1.valueOf() - t2.valueOf();
+	          });
+	          if (newValue[0].isSame(newValue[1], 'month')) {
+	            newValue[1] = newValue[0].clone().add(1, 'month');
+	          }
+	          _this2.fireValueChange(newValue);
+	        }
+	      } else if (nextHoverValue.length === 1) {
+	        // If only one value, let's keep the origin panel
+	        var oriValueIndex = value.findIndex(function (time) {
+	          return time.isSame(currentHoverTime, 'month');
+	        });
+	        if (oriValueIndex === -1) oriValueIndex = 0;
+	
+	        if (value.every(function (time) {
+	          return !time.isSame(nextHoverTime, 'month');
+	        })) {
+	          var _newValue = value.slice();
+	          _newValue[oriValueIndex] = nextHoverTime.clone();
+	          _this2.fireValueChange(_newValue);
+	        }
+	      }
+	
+	      event.preventDefault();
+	
+	      return nextHoverTime;
+	    };
+	
+	    switch (keyCode) {
+	      case _KeyCode2["default"].DOWN:
+	        updateHoverPoint(function (time) {
+	          return (0, _toTime.goTime)(time, 1, 'weeks');
+	        });
+	        return;
+	      case _KeyCode2["default"].UP:
+	        updateHoverPoint(function (time) {
+	          return (0, _toTime.goTime)(time, -1, 'weeks');
+	        });
+	        return;
+	      case _KeyCode2["default"].LEFT:
+	        if (ctrlKey) {
+	          updateHoverPoint(function (time) {
+	            return (0, _toTime.goTime)(time, -1, 'years');
+	          });
+	        } else {
+	          updateHoverPoint(function (time) {
+	            return (0, _toTime.goTime)(time, -1, 'days');
+	          });
+	        }
+	        return;
+	      case _KeyCode2["default"].RIGHT:
+	        if (ctrlKey) {
+	          updateHoverPoint(function (time) {
+	            return (0, _toTime.goTime)(time, 1, 'years');
+	          });
+	        } else {
+	          updateHoverPoint(function (time) {
+	            return (0, _toTime.goTime)(time, 1, 'days');
+	          });
+	        }
+	        return;
+	      case _KeyCode2["default"].HOME:
+	        updateHoverPoint(function (time) {
+	          return (0, _toTime.goStartMonth)(time);
+	        });
+	        return;
+	      case _KeyCode2["default"].END:
+	        updateHoverPoint(function (time) {
+	          return (0, _toTime.goEndMonth)(time);
+	        });
+	        return;
+	      case _KeyCode2["default"].PAGE_DOWN:
+	        updateHoverPoint(function (time) {
+	          return (0, _toTime.goTime)(time, 1, 'month');
+	        });
+	        return;
+	      case _KeyCode2["default"].PAGE_UP:
+	        updateHoverPoint(function (time) {
+	          return (0, _toTime.goTime)(time, -1, 'month');
+	        });
+	        return;
+	      case _KeyCode2["default"].ENTER:
+	        {
+	          var lastValue = void 0;
+	          if (hoverValue.length === 0) {
+	            lastValue = updateHoverPoint(function (time) {
+	              return time;
+	            });
+	          } else if (hoverValue.length === 1) {
+	            lastValue = hoverValue[0];
+	          } else {
+	            lastValue = hoverValue[0].isSame(firstSelectedValue, 'day') ? hoverValue[1] : hoverValue[0];
+	          }
+	          if (lastValue && (!disabledDate || !disabledDate(lastValue))) {
+	            _this2.onSelect(lastValue);
+	          }
+	          event.preventDefault();
+	          return;
+	        }
+	      default:
+	        if (onKeyDown) {
+	          onKeyDown(event);
+	        }
+	    }
+	  };
+	
+	  this.onDayHover = function (value) {
+	    var hoverValue = [];
+	    var _state3 = _this2.state,
+	        selectedValue = _state3.selectedValue,
+	        firstSelectedValue = _state3.firstSelectedValue;
+	    var type = _this2.props.type;
+	
+	    if (type === 'start' && selectedValue[1]) {
+	      hoverValue = _this2.compare(value, selectedValue[1]) < 0 ? [value, selectedValue[1]] : [value];
+	    } else if (type === 'end' && selectedValue[0]) {
+	      hoverValue = _this2.compare(value, selectedValue[0]) > 0 ? [selectedValue[0], value] : [];
+	    } else {
+	      if (!firstSelectedValue) {
+	        if (_this2.state.hoverValue.length) {
+	          _this2.setState({ hoverValue: [] });
+	        }
+	        return hoverValue;
+	      }
+	      hoverValue = _this2.compare(value, firstSelectedValue) < 0 ? [value, firstSelectedValue] : [firstSelectedValue, value];
+	    }
+	    _this2.fireHoverValueChange(hoverValue);
+	
+	    return hoverValue;
+	  };
+	
+	  this.onToday = function () {
+	    var startValue = (0, _util.getTodayTime)(_this2.state.value[0]);
+	    var endValue = startValue.clone().add(1, 'months');
+	    _this2.setState({ value: [startValue, endValue] });
+	  };
+	
+	  this.onOpenTimePicker = function () {
+	    _this2.setState({
+	      showTimePicker: true
+	    });
+	  };
+	
+	  this.onCloseTimePicker = function () {
+	    _this2.setState({
+	      showTimePicker: false
+	    });
+	  };
+	
+	  this.onOk = function () {
+	    var selectedValue = _this2.state.selectedValue;
+	
+	    if (_this2.isAllowedDateAndTime(selectedValue)) {
+	      _this2.props.onOk(_this2.state.selectedValue);
+	    }
+	  };
+	
+	  this.onStartInputChange = function () {
+	    for (var _len = arguments.length, oargs = Array(_len), _key = 0; _key < _len; _key++) {
+	      oargs[_key] = arguments[_key];
+	    }
+	
+	    var args = ['left'].concat(oargs);
+	    return onInputSelect.apply(_this2, args);
+	  };
+	
+	  this.onEndInputChange = function () {
+	    for (var _len2 = arguments.length, oargs = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+	      oargs[_key2] = arguments[_key2];
+	    }
+	
+	    var args = ['right'].concat(oargs);
+	    return onInputSelect.apply(_this2, args);
+	  };
+	
+	  this.onStartInputSelect = function (value) {
+	    var args = ['left', value, { source: 'dateInputSelect' }];
+	    return onInputSelect.apply(_this2, args);
+	  };
+	
+	  this.onEndInputSelect = function (value) {
+	    var args = ['right', value, { source: 'dateInputSelect' }];
+	    return onInputSelect.apply(_this2, args);
+	  };
+	
+	  this.onStartValueChange = function (leftValue) {
+	    var value = [].concat(_toConsumableArray(_this2.state.value));
+	    value[0] = leftValue;
+	    return _this2.fireValueChange(value);
+	  };
+	
+	  this.onEndValueChange = function (rightValue) {
+	    var value = [].concat(_toConsumableArray(_this2.state.value));
+	    value[1] = rightValue;
+	    return _this2.fireValueChange(value);
+	  };
+	
+	  this.onStartPanelChange = function (value, mode) {
+	    var props = _this2.props,
+	        state = _this2.state;
+	
+	    var newMode = [mode, state.mode[1]];
+	    if (!('mode' in props)) {
+	      _this2.setState({
+	        mode: newMode
+	      });
+	    }
+	    var newValue = [value || state.value[0], state.value[1]];
+	    props.onPanelChange(newValue, newMode);
+	  };
+	
+	  this.onEndPanelChange = function (value, mode) {
+	    var props = _this2.props,
+	        state = _this2.state;
+	
+	    var newMode = [state.mode[0], mode];
+	    if (!('mode' in props)) {
+	      _this2.setState({
+	        mode: newMode
+	      });
+	    }
+	    var newValue = [state.value[0], value || state.value[1]];
+	    props.onPanelChange(newValue, newMode);
+	  };
+	
+	  this.getStartValue = function () {
+	    var value = _this2.state.value[0];
+	    var selectedValue = _this2.state.selectedValue;
+	    // keep selectedTime when select date
+	    if (selectedValue[0] && _this2.props.timePicker) {
+	      value = value.clone();
+	      (0, _util.syncTime)(selectedValue[0], value);
+	    }
+	    if (_this2.state.showTimePicker && selectedValue[0]) {
+	      return selectedValue[0];
+	    }
+	    return value;
+	  };
+	
+	  this.getEndValue = function () {
+	    var _state4 = _this2.state,
+	        value = _state4.value,
+	        selectedValue = _state4.selectedValue,
+	        showTimePicker = _state4.showTimePicker;
+	
+	    var endValue = value[1] ? value[1].clone() : value[0].clone().add(1, 'month');
+	    // keep selectedTime when select date
+	    if (selectedValue[1] && _this2.props.timePicker) {
+	      (0, _util.syncTime)(selectedValue[1], endValue);
+	    }
+	    if (showTimePicker) {
+	      return selectedValue[1] ? selectedValue[1] : _this2.getStartValue();
+	    }
+	    return endValue;
+	  };
+	
+	  this.getEndDisableTime = function () {
+	    var _state5 = _this2.state,
+	        selectedValue = _state5.selectedValue,
+	        value = _state5.value;
+	    var disabledTime = _this2.props.disabledTime;
+	
+	    var userSettingDisabledTime = disabledTime(selectedValue, 'end') || {};
+	    var startValue = selectedValue && selectedValue[0] || value[0].clone();
+	    // if startTime and endTime is same day..
+	    // the second time picker will not able to pick time before first time picker
+	    if (!selectedValue[1] || startValue.isSame(selectedValue[1], 'day')) {
+	      var hours = startValue.hour();
+	      var minutes = startValue.minute();
+	      var second = startValue.second();
+	      var _disabledHours = userSettingDisabledTime.disabledHours,
+	          _disabledMinutes = userSettingDisabledTime.disabledMinutes,
+	          _disabledSeconds = userSettingDisabledTime.disabledSeconds;
+	
+	      var oldDisabledMinutes = _disabledMinutes ? _disabledMinutes() : [];
+	      var olddisabledSeconds = _disabledSeconds ? _disabledSeconds() : [];
+	      _disabledHours = generateOptions(hours, _disabledHours);
+	      _disabledMinutes = generateOptions(minutes, _disabledMinutes);
+	      _disabledSeconds = generateOptions(second, _disabledSeconds);
+	      return {
+	        disabledHours: function disabledHours() {
+	          return _disabledHours;
+	        },
+	        disabledMinutes: function disabledMinutes(hour) {
+	          if (hour === hours) {
+	            return _disabledMinutes;
+	          }
+	          return oldDisabledMinutes;
+	        },
+	        disabledSeconds: function disabledSeconds(hour, minute) {
+	          if (hour === hours && minute === minutes) {
+	            return _disabledSeconds;
+	          }
+	          return olddisabledSeconds;
+	        }
+	      };
+	    }
+	    return userSettingDisabledTime;
+	  };
+	
+	  this.isAllowedDateAndTime = function (selectedValue) {
+	    return (0, _util.isAllowedDate)(selectedValue[0], _this2.props.disabledDate, _this2.disabledStartTime) && (0, _util.isAllowedDate)(selectedValue[1], _this2.props.disabledDate, _this2.disabledEndTime);
+	  };
+	
+	  this.isMonthYearPanelShow = function (mode) {
+	    return ['month', 'year', 'decade'].indexOf(mode) > -1;
+	  };
+	
+	  this.hasSelectedValue = function () {
+	    var selectedValue = _this2.state.selectedValue;
+	
+	    return !!selectedValue[1] && !!selectedValue[0];
+	  };
+	
+	  this.compare = function (v1, v2) {
+	    if (_this2.props.timePicker) {
+	      return v1.diff(v2);
+	    }
+	    return v1.diff(v2, 'days');
+	  };
+	
+	  this.fireSelectValueChange = function (selectedValue, direct, cause) {
+	    var timePicker = _this2.props.timePicker;
+	    var prevSelectedValue = _this2.state.prevSelectedValue;
+	
+	    if (timePicker && timePicker.props.defaultValue) {
+	      var timePickerDefaultValue = timePicker.props.defaultValue;
+	      if (!prevSelectedValue[0] && selectedValue[0]) {
+	        (0, _util.syncTime)(timePickerDefaultValue[0], selectedValue[0]);
+	      }
+	      if (!prevSelectedValue[1] && selectedValue[1]) {
+	        (0, _util.syncTime)(timePickerDefaultValue[1], selectedValue[1]);
+	      }
+	    }
+	
+	    if (!('selectedValue' in _this2.props)) {
+	      _this2.setState({
+	        selectedValue: selectedValue
+	      });
+	    }
+	
+	    // 尚未选择过时间，直接输入的话
+	    if (!_this2.state.selectedValue[0] || !_this2.state.selectedValue[1]) {
+	      var startValue = selectedValue[0] || (0, _moment2["default"])();
+	      var endValue = selectedValue[1] || startValue.clone().add(1, 'months');
+	      _this2.setState({
+	        selectedValue: selectedValue,
+	        value: getValueFromSelectedValue([startValue, endValue])
+	      });
+	    }
+	
+	    if (selectedValue[0] && !selectedValue[1]) {
+	      _this2.setState({ firstSelectedValue: selectedValue[0] });
+	      _this2.fireHoverValueChange(selectedValue.concat());
+	    }
+	    _this2.props.onChange(selectedValue);
+	    if (direct || selectedValue[0] && selectedValue[1]) {
+	      _this2.setState({
+	        prevSelectedValue: selectedValue,
+	        firstSelectedValue: null
+	      });
+	      _this2.fireHoverValueChange([]);
+	      _this2.props.onSelect(selectedValue, cause);
+	    }
+	  };
+	
+	  this.fireValueChange = function (value) {
+	    var props = _this2.props;
+	    if (!('value' in props)) {
+	      _this2.setState({
+	        value: value
+	      });
+	    }
+	    props.onValueChange(value);
+	  };
+	
+	  this.fireHoverValueChange = function (hoverValue) {
+	    var props = _this2.props;
+	    if (!('hoverValue' in props)) {
+	      _this2.setState({ hoverValue: hoverValue });
+	    }
+	    props.onHoverChange(hoverValue);
+	  };
+	
+	  this.clear = function () {
+	    _this2.fireSelectValueChange([], true);
+	    _this2.props.onClear();
+	  };
+	
+	  this.disabledStartTime = function (time) {
+	    return _this2.props.disabledTime(time, 'start');
+	  };
+	
+	  this.disabledEndTime = function (time) {
+	    return _this2.props.disabledTime(time, 'end');
+	  };
+	
+	  this.disabledStartMonth = function (month) {
+	    var value = _this2.state.value;
+	
+	    return month.isSameOrAfter(value[1], 'month');
+	  };
+	
+	  this.disabledEndMonth = function (month) {
+	    var value = _this2.state.value;
+	
+	    return month.isSameOrBefore(value[0], 'month');
+	  };
+	};
+	
+	(0, _reactLifecyclesCompat.polyfill)(RangeCalendar);
+	
+	exports["default"] = (0, _CommonMixin.commonMixinWrapper)(RangeCalendar);
 	module.exports = exports['default'];
 
 /***/ }),
-/* 464 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	exports.__esModule = true;
-	
-	var _from = __webpack_require__(465);
-	
-	var _from2 = _interopRequireDefault(_from);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = function (arr) {
-	  if (Array.isArray(arr)) {
-	    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-	      arr2[i] = arr[i];
-	    }
-	
-	    return arr2;
-	  } else {
-	    return (0, _from2.default)(arr);
-	  }
-	};
-
-/***/ }),
-/* 465 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	module.exports = { "default": __webpack_require__(466), __esModule: true };
-
-/***/ }),
-/* 466 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	__webpack_require__(189);
-	__webpack_require__(467);
-	module.exports = __webpack_require__(150).Array.from;
-
-
-/***/ }),
-/* 467 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	var ctx = __webpack_require__(151);
-	var $export = __webpack_require__(148);
-	var toObject = __webpack_require__(182);
-	var call = __webpack_require__(468);
-	var isArrayIter = __webpack_require__(469);
-	var toLength = __webpack_require__(172);
-	var createProperty = __webpack_require__(470);
-	var getIterFn = __webpack_require__(471);
-	
-	$export($export.S + $export.F * !__webpack_require__(473)(function (iter) { Array.from(iter); }), 'Array', {
-	  // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
-	  from: function from(arrayLike /* , mapfn = undefined, thisArg = undefined */) {
-	    var O = toObject(arrayLike);
-	    var C = typeof this == 'function' ? this : Array;
-	    var aLen = arguments.length;
-	    var mapfn = aLen > 1 ? arguments[1] : undefined;
-	    var mapping = mapfn !== undefined;
-	    var index = 0;
-	    var iterFn = getIterFn(O);
-	    var length, result, step, iterator;
-	    if (mapping) mapfn = ctx(mapfn, aLen > 2 ? arguments[2] : undefined, 2);
-	    // if object isn't iterable or it's array with default iterator - use simple case
-	    if (iterFn != undefined && !(C == Array && isArrayIter(iterFn))) {
-	      for (iterator = iterFn.call(O), result = new C(); !(step = iterator.next()).done; index++) {
-	        createProperty(result, index, mapping ? call(iterator, mapfn, [step.value, index], true) : step.value);
-	      }
-	    } else {
-	      length = toLength(O.length);
-	      for (result = new C(length); length > index; index++) {
-	        createProperty(result, index, mapping ? mapfn(O[index], index) : O[index]);
-	      }
-	    }
-	    result.length = index;
-	    return result;
-	  }
-	});
-
-
-/***/ }),
-/* 468 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	// call something on iterator step with safe closing on error
-	var anObject = __webpack_require__(155);
-	module.exports = function (iterator, fn, value, entries) {
-	  try {
-	    return entries ? fn(anObject(value)[0], value[1]) : fn(value);
-	  // 7.4.6 IteratorClose(iterator, completion)
-	  } catch (e) {
-	    var ret = iterator['return'];
-	    if (ret !== undefined) anObject(ret.call(iterator));
-	    throw e;
-	  }
-	};
-
-
-/***/ }),
-/* 469 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	// check on default Array iterator
-	var Iterators = __webpack_require__(193);
-	var ITERATOR = __webpack_require__(199)('iterator');
-	var ArrayProto = Array.prototype;
-	
-	module.exports = function (it) {
-	  return it !== undefined && (Iterators.Array === it || ArrayProto[ITERATOR] === it);
-	};
-
-
-/***/ }),
-/* 470 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	var $defineProperty = __webpack_require__(154);
-	var createDesc = __webpack_require__(162);
-	
-	module.exports = function (object, index, value) {
-	  if (index in object) $defineProperty.f(object, index, createDesc(0, value));
-	  else object[index] = value;
-	};
-
-
-/***/ }),
-/* 471 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var classof = __webpack_require__(472);
-	var ITERATOR = __webpack_require__(199)('iterator');
-	var Iterators = __webpack_require__(193);
-	module.exports = __webpack_require__(150).getIteratorMethod = function (it) {
-	  if (it != undefined) return it[ITERATOR]
-	    || it['@@iterator']
-	    || Iterators[classof(it)];
-	};
-
-
-/***/ }),
-/* 472 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	// getting tag from 19.1.3.6 Object.prototype.toString()
-	var cof = __webpack_require__(169);
-	var TAG = __webpack_require__(199)('toStringTag');
-	// ES3 wrong here
-	var ARG = cof(function () { return arguments; }()) == 'Arguments';
-	
-	// fallback for IE11 Script Access Denied error
-	var tryGet = function (it, key) {
-	  try {
-	    return it[key];
-	  } catch (e) { /* empty */ }
-	};
-	
-	module.exports = function (it) {
-	  var O, T, B;
-	  return it === undefined ? 'Undefined' : it === null ? 'Null'
-	    // @@toStringTag case
-	    : typeof (T = tryGet(O = Object(it), TAG)) == 'string' ? T
-	    // builtinTag case
-	    : ARG ? cof(O)
-	    // ES3 arguments fallback
-	    : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
-	};
-
-
-/***/ }),
-/* 473 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var ITERATOR = __webpack_require__(199)('iterator');
-	var SAFE_CLOSING = false;
-	
-	try {
-	  var riter = [7][ITERATOR]();
-	  riter['return'] = function () { SAFE_CLOSING = true; };
-	  // eslint-disable-next-line no-throw-literal
-	  Array.from(riter, function () { throw 2; });
-	} catch (e) { /* empty */ }
-	
-	module.exports = function (exec, skipClosing) {
-	  if (!skipClosing && !SAFE_CLOSING) return false;
-	  var safe = false;
-	  try {
-	    var arr = [7];
-	    var iter = arr[ITERATOR]();
-	    iter.next = function () { return { done: safe = true }; };
-	    arr[ITERATOR] = function () { return iter; };
-	    exec(arr);
-	  } catch (e) { /* empty */ }
-	  return safe;
-	};
-
-
-/***/ }),
-/* 474 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	exports.__esModule = true;
-	
-	var _isIterable2 = __webpack_require__(475);
-	
-	var _isIterable3 = _interopRequireDefault(_isIterable2);
-	
-	var _getIterator2 = __webpack_require__(478);
-	
-	var _getIterator3 = _interopRequireDefault(_getIterator2);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = function () {
-	  function sliceIterator(arr, i) {
-	    var _arr = [];
-	    var _n = true;
-	    var _d = false;
-	    var _e = undefined;
-	
-	    try {
-	      for (var _i = (0, _getIterator3.default)(arr), _s; !(_n = (_s = _i.next()).done); _n = true) {
-	        _arr.push(_s.value);
-	
-	        if (i && _arr.length === i) break;
-	      }
-	    } catch (err) {
-	      _d = true;
-	      _e = err;
-	    } finally {
-	      try {
-	        if (!_n && _i["return"]) _i["return"]();
-	      } finally {
-	        if (_d) throw _e;
-	      }
-	    }
-	
-	    return _arr;
-	  }
-	
-	  return function (arr, i) {
-	    if (Array.isArray(arr)) {
-	      return arr;
-	    } else if ((0, _isIterable3.default)(Object(arr))) {
-	      return sliceIterator(arr, i);
-	    } else {
-	      throw new TypeError("Invalid attempt to destructure non-iterable instance");
-	    }
-	  };
-	}();
-
-/***/ }),
-/* 475 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	module.exports = { "default": __webpack_require__(476), __esModule: true };
-
-/***/ }),
-/* 476 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	__webpack_require__(201);
-	__webpack_require__(189);
-	module.exports = __webpack_require__(477);
-
-
-/***/ }),
-/* 477 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var classof = __webpack_require__(472);
-	var ITERATOR = __webpack_require__(199)('iterator');
-	var Iterators = __webpack_require__(193);
-	module.exports = __webpack_require__(150).isIterable = function (it) {
-	  var O = Object(it);
-	  return O[ITERATOR] !== undefined
-	    || '@@iterator' in O
-	    // eslint-disable-next-line no-prototype-builtins
-	    || Iterators.hasOwnProperty(classof(O));
-	};
-
-
-/***/ }),
-/* 478 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	module.exports = { "default": __webpack_require__(479), __esModule: true };
-
-/***/ }),
-/* 479 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	__webpack_require__(201);
-	__webpack_require__(189);
-	module.exports = __webpack_require__(480);
-
-
-/***/ }),
-/* 480 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var anObject = __webpack_require__(155);
-	var get = __webpack_require__(471);
-	module.exports = __webpack_require__(150).getIterator = function (it) {
-	  var iterFn = get(it);
-	  if (typeof iterFn != 'function') throw TypeError(it + ' is not iterable!');
-	  return anObject(iterFn.call(it));
-	};
-
-
-/***/ }),
-/* 481 */
+/* 461 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54010,65 +54040,56 @@
 	  value: true
 	});
 	
-	var _extends2 = __webpack_require__(144);
-	
-	var _extends3 = _interopRequireDefault(_extends2);
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
 	var _react = __webpack_require__(4);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _createReactClass = __webpack_require__(245);
-	
-	var _createReactClass2 = _interopRequireDefault(_createReactClass);
-	
 	var _propTypes = __webpack_require__(5);
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _CalendarHeader = __webpack_require__(440);
+	var _CalendarHeader = __webpack_require__(435);
 	
 	var _CalendarHeader2 = _interopRequireDefault(_CalendarHeader);
 	
-	var _DateTable = __webpack_require__(305);
+	var _DateTable = __webpack_require__(300);
 	
 	var _DateTable2 = _interopRequireDefault(_DateTable);
 	
-	var _DateInput = __webpack_require__(453);
+	var _DateInput = __webpack_require__(439);
 	
 	var _DateInput2 = _interopRequireDefault(_DateInput);
 	
-	var _index = __webpack_require__(439);
+	var _index = __webpack_require__(434);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
-	var CalendarPart = (0, _createReactClass2['default'])({
-	  displayName: 'CalendarPart',
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
 	
-	  propTypes: {
-	    prefixCls: _propTypes2['default'].string,
-	    value: _propTypes2['default'].any,
-	    hoverValue: _propTypes2['default'].any,
-	    selectedValue: _propTypes2['default'].any,
-	    direction: _propTypes2['default'].any,
-	    locale: _propTypes2['default'].any,
-	    showTimePicker: _propTypes2['default'].bool,
-	    format: _propTypes2['default'].any,
-	    placeholder: _propTypes2['default'].any,
-	    disabledDate: _propTypes2['default'].any,
-	    timePicker: _propTypes2['default'].any,
-	    disabledTime: _propTypes2['default'].any,
-	    onInputSelect: _propTypes2['default'].func,
-	    timePickerDisabledTime: _propTypes2['default'].object,
-	    enableNext: _propTypes2['default'].any,
-	    enablePrev: _propTypes2['default'].any
-	  },
-	  render: function render() {
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+	
+	var CalendarPart = function (_React$Component) {
+	  _inherits(CalendarPart, _React$Component);
+	
+	  function CalendarPart() {
+	    _classCallCheck(this, CalendarPart);
+	
+	    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
+	  }
+	
+	  CalendarPart.prototype.render = function render() {
 	    var props = this.props;
 	    var prefixCls = props.prefixCls,
 	        value = props.value,
 	        hoverValue = props.hoverValue,
 	        selectedValue = props.selectedValue,
+	        mode = props.mode,
 	        direction = props.direction,
 	        locale = props.locale,
 	        format = props.format,
@@ -54078,9 +54099,11 @@
 	        disabledTime = props.disabledTime,
 	        timePickerDisabledTime = props.timePickerDisabledTime,
 	        showTimePicker = props.showTimePicker,
+	        onInputChange = props.onInputChange,
 	        onInputSelect = props.onInputSelect,
 	        enablePrev = props.enablePrev,
-	        enableNext = props.enableNext;
+	        enableNext = props.enableNext,
+	        clearIcon = props.clearIcon;
 	
 	    var shouldShowTimePicker = showTimePicker && timePicker;
 	    var disabledTimeConfig = shouldShowTimePicker && disabledTime ? (0, _index.getTimeConfig)(selectedValue, disabledTime) : null;
@@ -54092,54 +54115,62 @@
 	      showTimePicker: showTimePicker
 	    };
 	    var index = direction === 'left' ? 0 : 1;
-	    var timePickerEle = shouldShowTimePicker && _react2['default'].cloneElement(timePicker, (0, _extends3['default'])({
+	    var timePickerEle = shouldShowTimePicker && _react2["default"].cloneElement(timePicker, _extends({
 	      showHour: true,
 	      showMinute: true,
 	      showSecond: true
 	    }, timePicker.props, disabledTimeConfig, timePickerDisabledTime, {
-	      onChange: onInputSelect,
+	      onChange: onInputChange,
 	      defaultOpenValue: value,
 	      value: selectedValue[index]
 	    }));
-	    return _react2['default'].createElement(
+	
+	    var dateInputElement = props.showDateInput && _react2["default"].createElement(_DateInput2["default"], {
+	      format: format,
+	      locale: locale,
+	      prefixCls: prefixCls,
+	      timePicker: timePicker,
+	      disabledDate: disabledDate,
+	      placeholder: placeholder,
+	      disabledTime: disabledTime,
+	      value: value,
+	      showClear: false,
+	      selectedValue: selectedValue[index],
+	      onChange: onInputChange,
+	      onSelect: onInputSelect,
+	      clearIcon: clearIcon
+	    });
+	
+	    return _react2["default"].createElement(
 	      'div',
-	      { className: rangeClassName + '-part ' + rangeClassName + '-' + direction },
-	      _react2['default'].createElement(_DateInput2['default'], {
-	        format: format,
-	        locale: locale,
-	        prefixCls: prefixCls,
-	        timePicker: timePicker,
-	        disabledDate: disabledDate,
-	        placeholder: placeholder,
-	        disabledTime: disabledTime,
-	        value: value,
-	        showClear: false,
-	        selectedValue: selectedValue[index],
-	        onChange: onInputSelect
-	      }),
-	      _react2['default'].createElement(
+	      {
+	        className: rangeClassName + '-part ' + rangeClassName + '-' + direction
+	      },
+	      dateInputElement,
+	      _react2["default"].createElement(
 	        'div',
 	        { style: { outline: 'none' } },
-	        _react2['default'].createElement(_CalendarHeader2['default'], (0, _extends3['default'])({}, newProps, {
+	        _react2["default"].createElement(_CalendarHeader2["default"], _extends({}, newProps, {
+	          mode: mode,
 	          enableNext: enableNext,
 	          enablePrev: enablePrev,
 	          onValueChange: props.onValueChange,
 	          onPanelChange: props.onPanelChange,
 	          disabledMonth: props.disabledMonth
 	        })),
-	        showTimePicker ? _react2['default'].createElement(
+	        showTimePicker ? _react2["default"].createElement(
 	          'div',
 	          { className: prefixCls + '-time-picker' },
-	          _react2['default'].createElement(
+	          _react2["default"].createElement(
 	            'div',
 	            { className: prefixCls + '-time-picker-panel' },
 	            timePickerEle
 	          )
 	        ) : null,
-	        _react2['default'].createElement(
+	        _react2["default"].createElement(
 	          'div',
 	          { className: prefixCls + '-body' },
-	          _react2['default'].createElement(_DateTable2['default'], (0, _extends3['default'])({}, newProps, {
+	          _react2["default"].createElement(_DateTable2["default"], _extends({}, newProps, {
 	            hoverValue: hoverValue,
 	            selectedValue: selectedValue,
 	            dateRender: props.dateRender,
@@ -54151,14 +54182,37 @@
 	        )
 	      )
 	    );
-	  }
-	});
+	  };
 	
-	exports['default'] = CalendarPart;
+	  return CalendarPart;
+	}(_react2["default"].Component);
+	
+	CalendarPart.propTypes = {
+	  prefixCls: _propTypes2["default"].string,
+	  value: _propTypes2["default"].any,
+	  hoverValue: _propTypes2["default"].any,
+	  selectedValue: _propTypes2["default"].any,
+	  direction: _propTypes2["default"].any,
+	  locale: _propTypes2["default"].any,
+	  showDateInput: _propTypes2["default"].bool,
+	  showTimePicker: _propTypes2["default"].bool,
+	  format: _propTypes2["default"].any,
+	  placeholder: _propTypes2["default"].any,
+	  disabledDate: _propTypes2["default"].any,
+	  timePicker: _propTypes2["default"].any,
+	  disabledTime: _propTypes2["default"].any,
+	  onInputChange: _propTypes2["default"].func,
+	  onInputSelect: _propTypes2["default"].func,
+	  timePickerDisabledTime: _propTypes2["default"].object,
+	  enableNext: _propTypes2["default"].any,
+	  enablePrev: _propTypes2["default"].any,
+	  clearIcon: _propTypes2["default"].node
+	};
+	exports["default"] = CalendarPart;
 	module.exports = exports['default'];
 
 /***/ }),
-/* 482 */
+/* 462 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -54169,7 +54223,7 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _rcCalendar = __webpack_require__(303);
+	var _rcCalendar = __webpack_require__(298);
 	
 	var _rcCalendar2 = _interopRequireDefault(_rcCalendar);
 	
@@ -54177,7 +54231,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Picker = __webpack_require__(454);
+	var _Picker = __webpack_require__(450);
 	
 	var _Picker2 = _interopRequireDefault(_Picker);
 	
@@ -54185,11 +54239,11 @@
 	
 	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 	
-	var _zh_CN = __webpack_require__(133);
+	var _zh_CN = __webpack_require__(456);
 	
 	var _zh_CN2 = _interopRequireDefault(_zh_CN);
 	
-	var _en_US = __webpack_require__(452);
+	var _en_US = __webpack_require__(448);
 	
 	var _en_US2 = _interopRequireDefault(_en_US);
 	
@@ -54197,21 +54251,17 @@
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _beeInputGroup = __webpack_require__(296);
+	var _beeInputGroup = __webpack_require__(291);
 	
 	var _beeInputGroup2 = _interopRequireDefault(_beeInputGroup);
 	
-	var _moment = __webpack_require__(308);
+	var _moment = __webpack_require__(303);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
-	__webpack_require__(435);
+	__webpack_require__(430);
 	
-	__webpack_require__(340);
-	
-	var _YearPicker = __webpack_require__(483);
-	
-	var _YearPicker2 = _interopRequireDefault(_YearPicker);
+	__webpack_require__(335);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -54238,7 +54288,7 @@
 	
 	var format = "YYYY-Wo";
 	
-	var style = "\n.week-calendar {\n  width: 386px;\n}\n.week-calendar .rc-calendar-tbody > tr:hover\n.rc-calendar-date {\n  background: #ebfaff;\n}\n\n.week-calendar .rc-calendar-tbody > tr:hover\n.rc-calendar-selected-day .rc-calendar-date {\n    background: #3fc7fa;\n}\n\n.week-calendar .week-calendar-sidebar {\n  position:absolute;\n  top:0;\n  left:0;\n  bottom:0;\n  width:100px;\n  border-right: 1px solid #ccc;\n}\n.week-calendar .rc-calendar-panel {\n  margin-left: 100px;\n}\n";
+	var style = "\n.week-calendar .rc-calendar-tbody > tr:hover\n.rc-calendar-date {\n  background: #ebfaff;\n}\n\n.week-calendar .rc-calendar-tbody > tr:hover\n.rc-calendar-selected-day .rc-calendar-date {\n    background: #3fc7fa;\n}\n.week-calendar .week-calendar-footer {\n  position:absolute;\n  top:0;\n  left:0;\n  bottom:0;\n  width:100%;\n  border-right: 1px solid #ccc;\n}\n";
 	
 	var WeekPicker = function (_Component) {
 	  _inherits(WeekPicker, _Component);
@@ -54298,27 +54348,43 @@
 	      });
 	    };
 	
-	    _this.renderSidebar = function () {
+	    _this.nowWeek = function () {
+	      var value = now;
+	      _this.setState({
+	        value: value,
+	        open: false
+	      });
+	    };
+	
+	    _this.renderFooter = function () {
 	      return _react2["default"].createElement(
 	        "div",
-	        { className: "week-calendar-sidebar", key: "sidebar" },
+	        { className: "week-calendar-footer", key: "footer" },
 	        _react2["default"].createElement(
-	          "button",
+	          "span",
 	          {
-	            className: "week-calendar-sidebar-button",
+	            className: "week-calendar-footer-button",
 	            onClick: _this.lastWeek.bind(_this),
-	            style: { margin: 8 }
+	            style: { 'float': 'left' }
 	          },
-	          "\u4E0A\u4E00\u5468"
+	          _this.props.locale.lastWeek
 	        ),
 	        _react2["default"].createElement(
-	          "button",
+	          "span",
 	          {
-	            className: "week-calendar-sidebar-button",
-	            onClick: _this.nextWeek.bind(_this),
-	            style: { margin: 8 }
+	            className: "week-calendar-footer-button",
+	            onClick: _this.nowWeek.bind(_this)
 	          },
-	          "\u4E0B\u4E00\u5468"
+	          _this.props.locale.nowWeek
+	        ),
+	        _react2["default"].createElement(
+	          "span",
+	          {
+	            className: "week-calendar-footer-button",
+	            onClick: _this.nextWeek.bind(_this),
+	            style: { 'float': 'right' }
+	          },
+	          _this.props.locale.nextWeek
 	        )
 	      );
 	    };
@@ -54333,9 +54399,30 @@
 	      _this.setState({ value: value });
 	    };
 	
+	    _this.onMouseLeave = function (e) {
+	      _this.setState({
+	        showClose: false
+	      });
+	    };
+	
+	    _this.onMouseEnter = function (e) {
+	      _this.setState({
+	        showClose: true
+	      });
+	    };
+	
+	    _this.onClear = function (e) {
+	      e.stopPropagation();
+	      _this.setState({
+	        value: ''
+	      });
+	      _this.props.onChange && _this.props.onChange('', '');
+	    };
+	
 	    _this.state = {
 	      value: props.value || props.defaultValue,
-	      open: false
+	      open: false,
+	      showClose: false
 	    };
 	    return _this;
 	  }
@@ -54349,25 +54436,28 @@
 	    var calendar = _react2["default"].createElement(_rcCalendar2["default"], {
 	      className: "week-calendar",
 	      showWeekNumber: true,
-	      renderSidebar: this.renderSidebar,
+	      showMonthInput: false,
+	      renderFooter: this.renderFooter,
 	      dateRender: this.dateRender,
 	      locale: cn ? _zh_CN2["default"] : _en_US2["default"],
 	      format: format,
 	      dateInputPlaceholder: this.props.placeholder,
 	      defaultValue: now,
 	      showDateInput: true,
-	      onChange: this.handleCalendarChange
+	      onChange: this.handleCalendarChange,
+	      showToday: false,
+	      onClear: this.onClear
 	    });
 	    return _react2["default"].createElement(
 	      "div",
 	      null,
-	      _react2["default"].createElement("style", { dangerouslySetInnerHTML: { __html: style } }),
 	      _react2["default"].createElement(
 	        _Picker2["default"],
-	        _extends({}, props, {
+	        _extends({
+	          animation: "slide-up"
+	        }, props, {
 	          onOpenChange: this.onOpenChange,
 	          open: this.state.open,
-	          animation: "slide-up",
 	          calendar: calendar,
 	          value: state.value
 	        }),
@@ -54376,16 +54466,24 @@
 	
 	          return _react2["default"].createElement(
 	            _beeInputGroup2["default"],
-	            { simple: true, className: "datepicker-input-group" },
+	            { simple: true, className: "datepicker-input-group",
+	              onMouseEnter: _this2.onMouseEnter,
+	              onMouseLeave: _this2.onMouseLeave
+	            },
 	            _react2["default"].createElement(_beeFormControl2["default"], {
 	              placeholder: _this2.props.placeholder,
-	              disabled: state.disabled,
+	              disabled: props.disabled,
 	              readOnly: true,
 	              tabIndex: "-1",
 	              className: _this2.props.className,
 	              value: value && value.format(format) || ""
 	            }),
-	            _react2["default"].createElement(
+	            _this2.state.value && _this2.state.showClose && !props.disabled ? _react2["default"].createElement(
+	              _beeInputGroup2["default"].Button,
+	              { shape: "border",
+	                onClick: _this2.onClear },
+	              _react2["default"].createElement("i", { className: "uf uf-close-c" })
+	            ) : _react2["default"].createElement(
 	              _beeInputGroup2["default"].Button,
 	              { shape: "border" },
 	              props.renderIcon()
@@ -54402,14 +54500,15 @@
 	WeekPicker.defaultProps = {
 	  renderIcon: function renderIcon() {
 	    return _react2["default"].createElement(_beeIcon2["default"], { type: "uf-calendar" });
-	  }
+	  },
+	  locale: _zh_CN2["default"]
 	};
 	
 	exports["default"] = WeekPicker;
 	module.exports = exports["default"];
 
 /***/ }),
-/* 483 */
+/* 463 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -54420,7 +54519,7 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _YearPanel = __webpack_require__(442);
+	var _YearPanel = __webpack_require__(440);
 	
 	var _YearPanel2 = _interopRequireDefault(_YearPanel);
 	
@@ -54428,7 +54527,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Picker = __webpack_require__(454);
+	var _Picker = __webpack_require__(450);
 	
 	var _Picker2 = _interopRequireDefault(_Picker);
 	
@@ -54436,7 +54535,7 @@
 	
 	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 	
-	var _beeInputGroup = __webpack_require__(296);
+	var _beeInputGroup = __webpack_require__(291);
 	
 	var _beeInputGroup2 = _interopRequireDefault(_beeInputGroup);
 	
@@ -54444,7 +54543,7 @@
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _moment = __webpack_require__(308);
+	var _moment = __webpack_require__(303);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
@@ -54478,7 +54577,8 @@
 	        _this.state = {
 	            type: "year",
 	            value: props.value || props.defaultValue || '',
-	            open: props.open || false
+	            open: props.open || false,
+	            showClose: false
 	        };
 	        return _this;
 	    }
@@ -54503,17 +54603,23 @@
 	        var props = this.props;
 	        var value = state.value;
 	
-	        var Calendar = _react2["default"].createElement(_YearPanel2["default"], _extends({ prefixCls: 'rc-calendar-picker', rootPrefixCls: 'rc-calendar' }, props, { focus: function focus() {} }));
+	        var Calendar = _react2["default"].createElement(_YearPanel2["default"], _extends({
+	            prefixCls: 'rc-calendar-picker',
+	            rootPrefixCls: 'rc-calendar'
+	        }, props, { focus: function focus() {},
+	            showDateInput: true
+	        }));
 	
 	        return _react2["default"].createElement(
 	            "div",
 	            null,
 	            _react2["default"].createElement(
 	                _Picker2["default"],
-	                _extends({}, props, {
+	                _extends({
+	                    animation: "slide-up"
+	                }, props, {
 	                    onOpenChange: this.onOpenChange,
 	                    onChange: this.handleChange,
-	                    animation: "slide-up",
 	                    calendar: Calendar,
 	                    prefixCls: 'rc-calendar',
 	                    value: state.value || (0, _moment2["default"])()
@@ -54523,7 +54629,10 @@
 	
 	                    return _react2["default"].createElement(
 	                        _beeInputGroup2["default"],
-	                        { simple: true, className: "datepicker-input-group" },
+	                        { simple: true, className: "datepicker-input-group",
+	                            onMouseEnter: _this2.onMouseEnter,
+	                            onMouseLeave: _this2.onMouseLeave
+	                        },
 	                        _react2["default"].createElement(_beeFormControl2["default"], {
 	                            placeholder: _this2.props.placeholder,
 	                            className: _this2.props.className,
@@ -54531,7 +54640,12 @@
 	                            readOnly: true,
 	                            value: value && value.format(props.format) || ""
 	                        }),
-	                        _react2["default"].createElement(
+	                        _this2.state.value && _this2.state.showClose && !props.disabled ? _react2["default"].createElement(
+	                            _beeInputGroup2["default"].Button,
+	                            { shape: "border",
+	                                onClick: _this2.clear },
+	                            _react2["default"].createElement("i", { className: "uf uf-close-c" })
+	                        ) : _react2["default"].createElement(
 	                            _beeInputGroup2["default"].Button,
 	                            { shape: "border" },
 	                            props.renderIcon()
@@ -54560,16 +54674,30 @@
 	        });
 	    };
 	
-	    this.onTypeChange = function (type) {
-	        _this3.setState({
-	            type: type
-	        });
-	    };
-	
 	    this.handleChange = function (value) {
 	        var props = _this3.props;
 	        _this3.setState({ value: value });
 	        props.onChange(value, value && value.format(props.format) || '');
+	    };
+	
+	    this.onMouseLeave = function (e) {
+	        _this3.setState({
+	            showClose: false
+	        });
+	    };
+	
+	    this.onMouseEnter = function (e) {
+	        _this3.setState({
+	            showClose: true
+	        });
+	    };
+	
+	    this.clear = function (e) {
+	        e.stopPropagation();
+	        _this3.setState({
+	            value: ''
+	        });
+	        _this3.props.onChange && _this3.props.onChange('', '');
 	    };
 	};
 	
@@ -54584,7 +54712,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 484 */
+/* 464 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54601,11 +54729,11 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _beeDropdown = __webpack_require__(485);
+	var _beeDropdown = __webpack_require__(465);
 	
 	var _beeDropdown2 = _interopRequireDefault(_beeDropdown);
 	
-	var _beeMenus = __webpack_require__(488);
+	var _beeMenus = __webpack_require__(468);
 	
 	var _beeMenus2 = _interopRequireDefault(_beeMenus);
 	
@@ -54617,11 +54745,11 @@
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _i18n = __webpack_require__(503);
+	var _i18n = __webpack_require__(483);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
-	var _tool = __webpack_require__(504);
+	var _tool = __webpack_require__(484);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -54906,7 +55034,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 485 */
+/* 465 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54915,7 +55043,7 @@
 	  value: true
 	});
 	
-	var _Dropdown = __webpack_require__(486);
+	var _Dropdown = __webpack_require__(466);
 	
 	var _Dropdown2 = _interopRequireDefault(_Dropdown);
 	
@@ -54925,7 +55053,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 486 */
+/* 466 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54944,11 +55072,11 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _trigger = __webpack_require__(283);
+	var _trigger = __webpack_require__(278);
 	
 	var _trigger2 = _interopRequireDefault(_trigger);
 	
-	var _placement = __webpack_require__(487);
+	var _placement = __webpack_require__(467);
 	
 	var _placement2 = _interopRequireDefault(_placement);
 	
@@ -55139,7 +55267,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 487 */
+/* 467 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -55196,7 +55324,7 @@
 	exports["default"] = placements;
 
 /***/ }),
-/* 488 */
+/* 468 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55205,7 +55333,7 @@
 	  value: true
 	});
 	
-	var _VerticalMenu = __webpack_require__(489);
+	var _VerticalMenu = __webpack_require__(469);
 	
 	var _VerticalMenu2 = _interopRequireDefault(_VerticalMenu);
 	
@@ -55215,7 +55343,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 489 */
+/* 469 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55230,15 +55358,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _ExportMenu = __webpack_require__(490);
+	var _ExportMenu = __webpack_require__(470);
 	
 	var _ExportMenu2 = _interopRequireDefault(_ExportMenu);
 	
-	var _openAnimation = __webpack_require__(501);
+	var _openAnimation = __webpack_require__(481);
 	
 	var _openAnimation2 = _interopRequireDefault(_openAnimation);
 	
-	var _warning = __webpack_require__(502);
+	var _warning = __webpack_require__(482);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
@@ -55371,7 +55499,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 490 */
+/* 470 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55381,31 +55509,31 @@
 	});
 	exports.MenuToggle = exports.SideContainer = exports.Divider = exports.ItemGroup = exports.MenuItemGroup = exports.MenuItem = exports.Item = exports.SubMenu = undefined;
 	
-	var _Menu = __webpack_require__(491);
+	var _Menu = __webpack_require__(471);
 	
 	var _Menu2 = _interopRequireDefault(_Menu);
 	
-	var _SubMenu = __webpack_require__(494);
+	var _SubMenu = __webpack_require__(474);
 	
 	var _SubMenu2 = _interopRequireDefault(_SubMenu);
 	
-	var _MenuItem = __webpack_require__(496);
+	var _MenuItem = __webpack_require__(476);
 	
 	var _MenuItem2 = _interopRequireDefault(_MenuItem);
 	
-	var _MenuItemGroup = __webpack_require__(497);
+	var _MenuItemGroup = __webpack_require__(477);
 	
 	var _MenuItemGroup2 = _interopRequireDefault(_MenuItemGroup);
 	
-	var _Divider = __webpack_require__(498);
+	var _Divider = __webpack_require__(478);
 	
 	var _Divider2 = _interopRequireDefault(_Divider);
 	
-	var _SideContainer = __webpack_require__(499);
+	var _SideContainer = __webpack_require__(479);
 	
 	var _SideContainer2 = _interopRequireDefault(_SideContainer);
 	
-	var _MenuToggle = __webpack_require__(500);
+	var _MenuToggle = __webpack_require__(480);
 	
 	var _MenuToggle2 = _interopRequireDefault(_MenuToggle);
 	
@@ -55422,7 +55550,7 @@
 	exports["default"] = _Menu2["default"];
 
 /***/ }),
-/* 491 */
+/* 471 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55441,13 +55569,13 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _util = __webpack_require__(492);
+	var _util = __webpack_require__(472);
 	
 	var _classnames = __webpack_require__(3);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _DOMWrap = __webpack_require__(493);
+	var _DOMWrap = __webpack_require__(473);
 	
 	var _DOMWrap2 = _interopRequireDefault(_DOMWrap);
 	
@@ -56010,7 +56138,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 492 */
+/* 472 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56074,7 +56202,7 @@
 	}
 
 /***/ }),
-/* 493 */
+/* 473 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56146,7 +56274,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 494 */
+/* 474 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56157,7 +56285,7 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _SubPopupMenu = __webpack_require__(495);
+	var _SubPopupMenu = __webpack_require__(475);
 	
 	var _SubPopupMenu2 = _interopRequireDefault(_SubPopupMenu);
 	
@@ -56177,7 +56305,7 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _util = __webpack_require__(492);
+	var _util = __webpack_require__(472);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -56685,7 +56813,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 495 */
+/* 475 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56718,9 +56846,9 @@
 	
 	var _createChainedFunction2 = _interopRequireDefault(_createChainedFunction);
 	
-	var _util = __webpack_require__(492);
+	var _util = __webpack_require__(472);
 	
-	var _DOMWrap = __webpack_require__(493);
+	var _DOMWrap = __webpack_require__(473);
 	
 	var _DOMWrap2 = _interopRequireDefault(_DOMWrap);
 	
@@ -57058,7 +57186,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 496 */
+/* 476 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57085,7 +57213,7 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _util = __webpack_require__(492);
+	var _util = __webpack_require__(472);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -57321,7 +57449,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 497 */
+/* 477 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57418,7 +57546,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 498 */
+/* 478 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57478,7 +57606,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 499 */
+/* 479 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57552,7 +57680,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 500 */
+/* 480 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57710,7 +57838,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 501 */
+/* 481 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57758,7 +57886,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 502 */
+/* 482 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57785,7 +57913,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 503 */
+/* 483 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -57838,7 +57966,7 @@
 	};
 
 /***/ }),
-/* 504 */
+/* 484 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -57881,7 +58009,7 @@
 	}
 
 /***/ }),
-/* 505 */
+/* 485 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57896,11 +58024,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Column = __webpack_require__(506);
+	var _Column = __webpack_require__(486);
 	
 	var _Column2 = _interopRequireDefault(_Column);
 	
-	var _ColumnGroup = __webpack_require__(507);
+	var _ColumnGroup = __webpack_require__(487);
 	
 	var _ColumnGroup2 = _interopRequireDefault(_ColumnGroup);
 	
@@ -58129,7 +58257,7 @@
 	        if (column.fixed === 'left' || column.fixed === true) {
 	          var width = column.width;
 	          if (typeof width == 'string' && width.includes('%')) {
-	            width = contentWidth * parseInt(col.width) / 100;
+	            width = contentWidth * parseInt(column.width) / 100;
 	          }
 	          leftColumnsWidth += parseInt(width);
 	        }
@@ -58149,7 +58277,7 @@
 	        if (column.fixed === 'right') {
 	          var width = column.width;
 	          if (typeof width == 'string' && width.includes('%')) {
-	            width = contentWidth * parseInt(col.width) / 100;
+	            width = contentWidth * parseInt(column.width) / 100;
 	          }
 	          rightColumnsWidth += parseInt(width);
 	        }
@@ -58199,7 +58327,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 506 */
+/* 486 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58259,7 +58387,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 507 */
+/* 487 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58303,7 +58431,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 508 */
+/* 488 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -58348,7 +58476,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 509 */
+/* 489 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58357,7 +58485,7 @@
 	  value: true
 	});
 	
-	var _Loading = __webpack_require__(510);
+	var _Loading = __webpack_require__(490);
 	
 	var _Loading2 = _interopRequireDefault(_Loading);
 	
@@ -58367,7 +58495,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 510 */
+/* 490 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -58391,6 +58519,10 @@
 	var _Portal = __webpack_require__(89);
 	
 	var _Portal2 = _interopRequireDefault(_Portal);
+	
+	var _beeIcon = __webpack_require__(136);
+	
+	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -58506,7 +58638,11 @@
 	        _react2["default"].createElement(
 	          "div",
 	          { className: classes },
-	          _react2["default"].createElement("div", null)
+	          _react2["default"].createElement(
+	            "div",
+	            null,
+	            _react2["default"].createElement(_beeIcon2["default"], { type: "uf-loadingstate" })
+	          )
 	        ),
 	        children && _react2["default"].createElement(
 	          "div",
@@ -58563,7 +58699,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 511 */
+/* 491 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -58596,7 +58732,7 @@
 	
 	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 	
-	var _beePopconfirm = __webpack_require__(512);
+	var _beePopconfirm = __webpack_require__(492);
 	
 	var _beePopconfirm2 = _interopRequireDefault(_beePopconfirm);
 	
@@ -58829,7 +58965,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 512 */
+/* 492 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58838,7 +58974,7 @@
 	  value: true
 	});
 	
-	var _Popconfirm = __webpack_require__(513);
+	var _Popconfirm = __webpack_require__(493);
 	
 	var _Popconfirm2 = _interopRequireDefault(_Popconfirm);
 	
@@ -58848,7 +58984,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 513 */
+/* 493 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58891,7 +59027,7 @@
 	
 	var _Portal2 = _interopRequireDefault(_Portal);
 	
-	var _Confirm = __webpack_require__(514);
+	var _Confirm = __webpack_require__(494);
 	
 	var _Confirm2 = _interopRequireDefault(_Confirm);
 	
@@ -59147,7 +59283,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 514 */
+/* 494 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59166,7 +59302,7 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _i18n = __webpack_require__(515);
+	var _i18n = __webpack_require__(495);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
@@ -59180,7 +59316,7 @@
 	
 	var _tinperBeeCore = __webpack_require__(27);
 	
-	var _tool = __webpack_require__(504);
+	var _tool = __webpack_require__(484);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -59405,7 +59541,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 515 */
+/* 495 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -59422,7 +59558,7 @@
 	};
 
 /***/ }),
-/* 516 */
+/* 496 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -59563,7 +59699,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 517 */
+/* 497 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59708,7 +59844,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 518 */
+/* 498 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59790,7 +59926,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 519 */
+/* 499 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59807,7 +59943,7 @@
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _dragColumn = __webpack_require__(520);
+	var _dragColumn = __webpack_require__(500);
 	
 	var _dragColumn2 = _interopRequireDefault(_dragColumn);
 	
@@ -59898,13 +60034,13 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 520 */
+/* 500 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -59917,7 +60053,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _util = __webpack_require__(521);
+	var _util = __webpack_require__(501);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -59931,7 +60067,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 	
-	var cloneDeep = __webpack_require__(522);
+	var cloneDeep = __webpack_require__(502);
 	/**
 	 * 参数: 列拖拽
 	 * @param {*} Table
@@ -59939,149 +60075,149 @@
 	
 	function dragColumn(Table) {
 	
-	    return function (_Component) {
-	        _inherits(DragColumn, _Component);
+	  return function (_Component) {
+	    _inherits(DragColumn, _Component);
 	
-	        function DragColumn(props) {
-	            _classCallCheck(this, DragColumn);
+	    function DragColumn(props) {
+	      _classCallCheck(this, DragColumn);
 	
-	            var _this = _possibleConstructorReturn(this, _Component.call(this, props));
+	      var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 	
-	            _this.setColumOrderByIndex = function (_column) {
-	                _column.forEach(function (da, i) {
-	                    da.dragIndex = i;
-	                    da.drgHover = false;
-	                });
-	                return _column;
-	            };
-	
-	            _this.onDrop = function (event, data) {
-	                var dragSource = data.dragSource,
-	                    dragTarg = data.dragTarg;
-	                var columns = _this.state.columns;
-	
-	                var sourceIndex = -1,
-	                    targetIndex = -1;
-	
-	                sourceIndex = columns.findIndex(function (da, i) {
-	                    return da.key == dragSource.key;
-	                });
-	                targetIndex = columns.findIndex(function (da, i) {
-	                    return da.key == dragTarg.key;
-	                });
-	                // for (let index = 0; index < columns.length; index++) {
-	                //   const da = columns[index];
-	                //   if(da.key === dragSource.key){
-	                //     columns[index] = dragTargColum; 
-	                //   }
-	                //   if(da.key === dragTarg.key){
-	                //     columns[index] = dragSourceColum;
-	                //   }
-	                // }
-	                // 向前移动
-	                if (targetIndex < sourceIndex) {
-	                    targetIndex = targetIndex + 1;
-	                }
-	                columns.splice(targetIndex, 0, columns.splice(sourceIndex, 1)[0]);
-	                _this.setState({
-	                    columns: cloneDeep(columns)
-	                });
-	                if (_this.props.onDrop) {
-	                    _this.props.onDrop(event, data, columns);
-	                }
-	            };
-	
-	            _this.getTarget = function (evt) {
-	                return evt.target || evt.srcElement;
-	            };
-	
-	            _this.state = {
-	                columns: _this.setColumOrderByIndex(props.columns)
-	            };
-	            return _this;
-	        }
-	
-	        DragColumn.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-	            if (nextProps.columns != this.props.columns) {
-	                this.setState({
-	                    columns: this.setColumOrderByIndex(nextProps.columns)
-	                });
-	            }
-	        };
-	
-	        DragColumn.prototype.cloneDeep = function cloneDeep(obj) {
-	            if ((typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) !== 'object' || Object.keys(obj).length === 0) {
-	                return obj;
-	            }
-	            var resultData = {};
-	            return this.recursion(obj, resultData);
-	        };
-	
-	        DragColumn.prototype.recursion = function (_recursion) {
-	            function recursion(_x) {
-	                return _recursion.apply(this, arguments);
-	            }
-	
-	            recursion.toString = function () {
-	                return _recursion.toString();
-	            };
-	
-	            return recursion;
-	        }(function (obj) {
-	            var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-	
-	            for (key in obj) {
-	                if (_typeof(obj[key]) == 'object' && Object.keys(obj[key].length > 0)) {
-	                    data[key] = recursion(obj[key]);
-	                } else {
-	                    data[key] = obj[key];
-	                }
-	            }
-	            return data;
+	      _this.setColumOrderByIndex = function (_column) {
+	        _column.forEach(function (da, i) {
+	          da.dragIndex = i;
+	          da.drgHover = false;
 	        });
+	        return _column;
+	      };
 	
-	        DragColumn.prototype.render = function render() {
-	            var _props = this.props,
-	                data = _props.data,
-	                dragborder = _props.dragborder,
-	                draggable = _props.draggable,
-	                className = _props.className,
-	                columns = _props.columns,
-	                onDragStart = _props.onDragStart,
-	                onDragEnter = _props.onDragEnter,
-	                onDragOver = _props.onDragOver,
-	                onDrop = _props.onDrop,
-	                others = _objectWithoutProperties(_props, ['data', 'dragborder', 'draggable', 'className', 'columns', 'onDragStart', 'onDragEnter', 'onDragOver', 'onDrop']);
+	      _this.onDrop = function (event, data) {
+	        var dragSource = data.dragSource,
+	            dragTarg = data.dragTarg;
+	        var columns = _this.state.columns;
 	
-	            var key = new Date().getTime();
-	            return _react2['default'].createElement(Table, _extends({}, others, {
-	                columns: this.state.columns,
-	                data: data,
-	                className: className + ' u-table-drag-border',
-	                onDragStart: this.onDragStart,
-	                onDragOver: this.onDragOver,
-	                onDrop: this.onDrop,
-	                onDragEnter: this.onDragEnter,
-	                draggable: draggable,
-	                dragborder: dragborder
-	                // dragborder={false}
-	                , dragborderKey: key
-	            }));
-	        };
+	        var sourceIndex = -1,
+	            targetIndex = -1;
 	
-	        return DragColumn;
-	    }(_react.Component);
+	        sourceIndex = columns.findIndex(function (da, i) {
+	          return da.key == dragSource.key;
+	        });
+	        targetIndex = columns.findIndex(function (da, i) {
+	          return da.key == dragTarg.key;
+	        });
+	        // for (let index = 0; index < columns.length; index++) {
+	        //   const da = columns[index];
+	        //   if(da.key === dragSource.key){
+	        //     columns[index] = dragTargColum; 
+	        //   }
+	        //   if(da.key === dragTarg.key){
+	        //     columns[index] = dragSourceColum;
+	        //   }
+	        // }
+	        // 向前移动
+	        if (targetIndex < sourceIndex) {
+	          targetIndex = targetIndex + 1;
+	        }
+	        columns.splice(targetIndex, 0, columns.splice(sourceIndex, 1)[0]);
+	        _this.setState({
+	          columns: cloneDeep(columns)
+	        });
+	        if (_this.props.onDrop) {
+	          _this.props.onDrop(event, data, columns);
+	        }
+	      };
+	
+	      _this.getTarget = function (evt) {
+	        return evt.target || evt.srcElement;
+	      };
+	
+	      _this.state = {
+	        columns: _this.setColumOrderByIndex(props.columns)
+	      };
+	      return _this;
+	    }
+	
+	    DragColumn.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+	      if (nextProps.columns != this.props.columns) {
+	        this.setState({
+	          columns: this.setColumOrderByIndex(nextProps.columns)
+	        });
+	      }
+	    };
+	
+	    DragColumn.prototype.cloneDeep = function cloneDeep(obj) {
+	      if ((typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) !== 'object' || Object.keys(obj).length === 0) {
+	        return obj;
+	      }
+	      var resultData = {};
+	      return this.recursion(obj, resultData);
+	    };
+	
+	    DragColumn.prototype.recursion = function (_recursion) {
+	      function recursion(_x) {
+	        return _recursion.apply(this, arguments);
+	      }
+	
+	      recursion.toString = function () {
+	        return _recursion.toString();
+	      };
+	
+	      return recursion;
+	    }(function (obj) {
+	      var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+	
+	      for (key in obj) {
+	        if (_typeof(obj[key]) == 'object' && Object.keys(obj[key].length > 0)) {
+	          data[key] = recursion(obj[key]);
+	        } else {
+	          data[key] = obj[key];
+	        }
+	      }
+	      return data;
+	    });
+	
+	    DragColumn.prototype.render = function render() {
+	      var _props = this.props,
+	          data = _props.data,
+	          dragborder = _props.dragborder,
+	          draggable = _props.draggable,
+	          className = _props.className,
+	          columns = _props.columns,
+	          onDragStart = _props.onDragStart,
+	          onDragEnter = _props.onDragEnter,
+	          onDragOver = _props.onDragOver,
+	          onDrop = _props.onDrop,
+	          others = _objectWithoutProperties(_props, ['data', 'dragborder', 'draggable', 'className', 'columns', 'onDragStart', 'onDragEnter', 'onDragOver', 'onDrop']);
+	
+	      var key = new Date().getTime();
+	      return _react2['default'].createElement(Table, _extends({}, others, {
+	        columns: this.state.columns,
+	        data: data,
+	        className: className + ' u-table-drag-border',
+	        onDragStart: this.onDragStart,
+	        onDragOver: this.onDragOver,
+	        onDrop: this.onDrop,
+	        onDragEnter: this.onDragEnter,
+	        draggable: draggable,
+	        dragborder: dragborder
+	        // dragborder={false}
+	        , dragborderKey: key
+	      }));
+	    };
+	
+	    return DragColumn;
+	  }(_react.Component);
 	}
 	module.exports = exports['default'];
 
 /***/ }),
-/* 521 */
+/* 501 */
 /***/ (function(module, exports) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -60100,29 +60236,29 @@
 	*/
 	
 	function sortBy(arr, prop, desc) {
-	  var props = [],
-	      ret = [],
-	      i = 0,
-	      len = arr.length;
-	  if (typeof prop == 'string') {
-	    for (; i < len; i++) {
-	      var oI = arr[i];
-	      (props[i] = new String(oI && oI[prop] || ''))._obj = oI;
+	    var props = [],
+	        ret = [],
+	        i = 0,
+	        len = arr.length;
+	    if (typeof prop == 'string') {
+	        for (; i < len; i++) {
+	            var oI = arr[i];
+	            (props[i] = new String(oI && oI[prop] || ''))._obj = oI;
+	        }
+	    } else if (typeof prop == 'function') {
+	        for (; i < len; i++) {
+	            var _oI = arr[i];
+	            (props[i] = new String(_oI && prop(_oI) || ''))._obj = _oI;
+	        }
+	    } else {
+	        throw '参数类型错误';
 	    }
-	  } else if (typeof prop == 'function') {
-	    for (; i < len; i++) {
-	      var _oI = arr[i];
-	      (props[i] = new String(_oI && prop(_oI) || ''))._obj = _oI;
+	    props.sort();
+	    for (i = 0; i < len; i++) {
+	        ret[i] = props[i]._obj;
 	    }
-	  } else {
-	    throw '参数类型错误';
-	  }
-	  props.sort();
-	  for (i = 0; i < len; i++) {
-	    ret[i] = props[i]._obj;
-	  }
-	  if (desc) ret.reverse();
-	  return ret;
+	    if (desc) ret.reverse();
+	    return ret;
 	};
 	
 	/**
@@ -60131,11 +60267,11 @@
 	 * @param {} property 
 	 */
 	function compare(property) {
-	  return function (a, b) {
-	    var value1 = a[property];
-	    var value2 = b[property];
-	    return value1 - value2;
-	  };
+	    return function (a, b) {
+	        var value1 = a[property];
+	        var value2 = b[property];
+	        return value1 - value2;
+	    };
 	}
 	
 	/**
@@ -60143,23 +60279,23 @@
 	 * @param {*} obj 要拷贝的对象 
 	 */
 	function ObjectAssign(obj) {
-	  var b = obj instanceof Array;
-	  var tagObj = b ? [] : {};
-	  if (b) {
-	    //数组
-	    obj.forEach(function (da) {
-	      var _da = {};
-	      _extends(_da, da);
-	      tagObj.push(_da);
-	    });
-	  } else {
-	    _extends(tagObj, obj);
-	  }
-	  return tagObj;
+	    var b = obj instanceof Array;
+	    var tagObj = b ? [] : {};
+	    if (b) {
+	        //数组
+	        obj.forEach(function (da) {
+	            var _da = {};
+	            _extends(_da, da);
+	            tagObj.push(_da);
+	        });
+	    } else {
+	        _extends(tagObj, obj);
+	    }
+	    return tagObj;
 	}
 
 /***/ }),
-/* 522 */
+/* 502 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, module) {/**
@@ -61911,10 +62047,10 @@
 	
 	module.exports = cloneDeep;
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(309)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(304)(module)))
 
 /***/ }),
-/* 523 */
+/* 503 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -62024,7 +62160,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 524 */
+/* 504 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -62041,7 +62177,7 @@
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _beePagination = __webpack_require__(525);
+	var _beePagination = __webpack_require__(505);
 	
 	var _beePagination2 = _interopRequireDefault(_beePagination);
 	
@@ -62121,7 +62257,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 525 */
+/* 505 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62130,7 +62266,7 @@
 	  value: true
 	});
 	
-	var _Pagination = __webpack_require__(526);
+	var _Pagination = __webpack_require__(506);
 	
 	var _Pagination2 = _interopRequireDefault(_Pagination);
 	
@@ -62140,7 +62276,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 526 */
+/* 506 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -62159,7 +62295,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _PaginationButton = __webpack_require__(527);
+	var _PaginationButton = __webpack_require__(507);
 	
 	var _PaginationButton2 = _interopRequireDefault(_PaginationButton);
 	
@@ -62183,11 +62319,11 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _i18n = __webpack_require__(528);
+	var _i18n = __webpack_require__(508);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
-	var _tool = __webpack_require__(504);
+	var _tool = __webpack_require__(484);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -62708,7 +62844,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 527 */
+/* 507 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62822,7 +62958,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 528 */
+/* 508 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -62852,7 +62988,7 @@
 	};
 
 /***/ }),
-/* 529 */
+/* 509 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -62873,7 +63009,7 @@
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _beeInputGroup = __webpack_require__(296);
+	var _beeInputGroup = __webpack_require__(291);
 	
 	var _beeInputGroup2 = _interopRequireDefault(_beeInputGroup);
 	
@@ -63066,7 +63202,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 530 */
+/* 510 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63145,7 +63281,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 531 */
+/* 511 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63166,7 +63302,7 @@
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _sort = __webpack_require__(532);
+	var _sort = __webpack_require__(512);
 	
 	var _sort2 = _interopRequireDefault(_sort);
 	
@@ -63244,7 +63380,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 532 */
+/* 512 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63616,7 +63752,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 533 */
+/* 513 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63633,11 +63769,11 @@
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _multiSelect = __webpack_require__(534);
+	var _multiSelect = __webpack_require__(514);
 	
 	var _multiSelect2 = _interopRequireDefault(_multiSelect);
 	
-	var _beeCheckbox = __webpack_require__(535);
+	var _beeCheckbox = __webpack_require__(515);
 	
 	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
 	
@@ -63720,7 +63856,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 534 */
+/* 514 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63737,11 +63873,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _beeCheckbox = __webpack_require__(535);
+	var _beeCheckbox = __webpack_require__(515);
 	
 	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
 	
-	var _util = __webpack_require__(521);
+	var _util = __webpack_require__(501);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -63972,7 +64108,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 535 */
+/* 515 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63981,11 +64117,11 @@
 	  value: true
 	});
 	
-	var _Checkbox = __webpack_require__(536);
+	var _Checkbox = __webpack_require__(516);
 	
 	var _Checkbox2 = _interopRequireDefault(_Checkbox);
 	
-	var _CheckboxGroup = __webpack_require__(537);
+	var _CheckboxGroup = __webpack_require__(517);
 	
 	var _CheckboxGroup2 = _interopRequireDefault(_CheckboxGroup);
 	
@@ -63996,7 +64132,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 536 */
+/* 516 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -64184,7 +64320,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 537 */
+/* 517 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -64205,11 +64341,11 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _Checkbox = __webpack_require__(536);
+	var _Checkbox = __webpack_require__(516);
 	
 	var _Checkbox2 = _interopRequireDefault(_Checkbox);
 	
-	var _lodash = __webpack_require__(538);
+	var _lodash = __webpack_require__(518);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
@@ -64303,7 +64439,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 538 */
+/* 518 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, module) {/**
@@ -66155,10 +66291,10 @@
 	
 	module.exports = isEqual;
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(309)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(304)(module)))
 
 /***/ }),
-/* 539 */
+/* 519 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -66175,7 +66311,7 @@
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _beeCheckbox = __webpack_require__(535);
+	var _beeCheckbox = __webpack_require__(515);
 	
 	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
 	
@@ -66187,15 +66323,15 @@
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _multiSelect = __webpack_require__(534);
+	var _multiSelect = __webpack_require__(514);
 	
 	var _multiSelect2 = _interopRequireDefault(_multiSelect);
 	
-	var _sort = __webpack_require__(532);
+	var _sort = __webpack_require__(512);
 	
 	var _sort2 = _interopRequireDefault(_sort);
 	
-	var _sum = __webpack_require__(540);
+	var _sum = __webpack_require__(520);
 	
 	var _sum2 = _interopRequireDefault(_sum);
 	
@@ -66346,7 +66482,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 540 */
+/* 520 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -66477,7 +66613,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 541 */
+/* 521 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -66506,7 +66642,7 @@
 	
 	var _beeButton2 = _interopRequireDefault(_beeButton);
 	
-	var _beeForm = __webpack_require__(542);
+	var _beeForm = __webpack_require__(522);
 	
 	var _beeForm2 = _interopRequireDefault(_beeForm);
 	
@@ -66518,11 +66654,11 @@
 	
 	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 	
-	var _beeCheckbox = __webpack_require__(535);
+	var _beeCheckbox = __webpack_require__(515);
 	
 	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
 	
-	var _beeDatepicker = __webpack_require__(301);
+	var _beeDatepicker = __webpack_require__(296);
 	
 	var _beeDatepicker2 = _interopRequireDefault(_beeDatepicker);
 	
@@ -66530,15 +66666,15 @@
 	
 	var _beeSelect2 = _interopRequireDefault(_beeSelect);
 	
-	var _InputRender = __webpack_require__(547);
+	var _InputRender = __webpack_require__(527);
 	
 	var _InputRender2 = _interopRequireDefault(_InputRender);
 	
-	var _DateRender = __webpack_require__(548);
+	var _DateRender = __webpack_require__(528);
 	
 	var _DateRender2 = _interopRequireDefault(_DateRender);
 	
-	var _SelectRender = __webpack_require__(549);
+	var _SelectRender = __webpack_require__(529);
 	
 	var _SelectRender2 = _interopRequireDefault(_SelectRender);
 	
@@ -66874,7 +67010,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 542 */
+/* 522 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -66883,11 +67019,11 @@
 	  value: true
 	});
 	
-	var _Form = __webpack_require__(543);
+	var _Form = __webpack_require__(523);
 	
 	var _Form2 = _interopRequireDefault(_Form);
 	
-	var _FormItem = __webpack_require__(546);
+	var _FormItem = __webpack_require__(526);
 	
 	var _FormItem2 = _interopRequireDefault(_FormItem);
 	
@@ -66898,7 +67034,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 543 */
+/* 523 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -66921,7 +67057,7 @@
 	
 	var _beeLayout = __webpack_require__(1);
 	
-	var _beeLabel = __webpack_require__(544);
+	var _beeLabel = __webpack_require__(524);
 	
 	var _beeLabel2 = _interopRequireDefault(_beeLabel);
 	
@@ -67200,7 +67336,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 544 */
+/* 524 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67209,7 +67345,7 @@
 	  value: true
 	});
 	
-	var _Label = __webpack_require__(545);
+	var _Label = __webpack_require__(525);
 	
 	var _Label2 = _interopRequireDefault(_Label);
 	
@@ -67219,7 +67355,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 545 */
+/* 525 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67298,7 +67434,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 546 */
+/* 526 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67323,15 +67459,15 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _beeInputGroup = __webpack_require__(296);
+	var _beeInputGroup = __webpack_require__(291);
 	
 	var _beeInputGroup2 = _interopRequireDefault(_beeInputGroup);
 	
-	var _beeLabel = __webpack_require__(544);
+	var _beeLabel = __webpack_require__(524);
 	
 	var _beeLabel2 = _interopRequireDefault(_beeLabel);
 	
-	var _lodash = __webpack_require__(538);
+	var _lodash = __webpack_require__(518);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
@@ -67755,7 +67891,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 547 */
+/* 527 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -67954,7 +68090,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 548 */
+/* 528 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -67971,7 +68107,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _moment = __webpack_require__(308);
+	var _moment = __webpack_require__(303);
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
@@ -68113,7 +68249,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 549 */
+/* 529 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -68288,7 +68424,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 550 */
+/* 530 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -68450,7 +68586,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 551 */
+/* 531 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -68469,7 +68605,7 @@
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _dragColumn = __webpack_require__(520);
+	var _dragColumn = __webpack_require__(500);
 	
 	var _dragColumn2 = _interopRequireDefault(_dragColumn);
 	
@@ -68612,7 +68748,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 552 */
+/* 532 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -68731,7 +68867,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 553 */
+/* 533 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -68752,7 +68888,7 @@
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _sum = __webpack_require__(540);
+	var _sum = __webpack_require__(520);
 	
 	var _sum2 = _interopRequireDefault(_sum);
 	
@@ -68905,7 +69041,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 554 */
+/* 534 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -68942,7 +69078,7 @@
 	
 	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 	
-	var _beeForm = __webpack_require__(542);
+	var _beeForm = __webpack_require__(522);
 	
 	var _beeForm2 = _interopRequireDefault(_beeForm);
 	
@@ -68950,11 +69086,11 @@
 	
 	var _beeSelect2 = _interopRequireDefault(_beeSelect);
 	
-	var _InputRender = __webpack_require__(547);
+	var _InputRender = __webpack_require__(527);
 	
 	var _InputRender2 = _interopRequireDefault(_InputRender);
 	
-	var _SelectRender = __webpack_require__(549);
+	var _SelectRender = __webpack_require__(529);
 	
 	var _SelectRender2 = _interopRequireDefault(_SelectRender);
 	
@@ -69212,7 +69348,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 555 */
+/* 535 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -69312,7 +69448,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 556 */
+/* 536 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -69329,11 +69465,11 @@
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _filterColumn = __webpack_require__(557);
+	var _filterColumn = __webpack_require__(537);
 	
 	var _filterColumn2 = _interopRequireDefault(_filterColumn);
 	
-	var _sum = __webpack_require__(540);
+	var _sum = __webpack_require__(520);
 	
 	var _sum2 = _interopRequireDefault(_sum);
 	
@@ -69341,11 +69477,11 @@
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _beeCheckbox = __webpack_require__(535);
+	var _beeCheckbox = __webpack_require__(515);
 	
 	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
 	
-	var _beePopover = __webpack_require__(558);
+	var _beePopover = __webpack_require__(538);
 	
 	var _beePopover2 = _interopRequireDefault(_beePopover);
 	
@@ -69462,7 +69598,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 557 */
+/* 537 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -69479,7 +69615,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _beeCheckbox = __webpack_require__(535);
+	var _beeCheckbox = __webpack_require__(515);
 	
 	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
 	
@@ -69487,13 +69623,13 @@
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _util = __webpack_require__(521);
+	var _util = __webpack_require__(501);
 	
-	var _i18n = __webpack_require__(503);
+	var _i18n = __webpack_require__(483);
 	
 	var _i18n2 = _interopRequireDefault(_i18n);
 	
-	var _tool = __webpack_require__(504);
+	var _tool = __webpack_require__(484);
 	
 	var _propTypes = __webpack_require__(5);
 	
@@ -69741,7 +69877,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 558 */
+/* 538 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -69750,7 +69886,7 @@
 	  value: true
 	});
 	
-	var _Popover = __webpack_require__(559);
+	var _Popover = __webpack_require__(539);
 	
 	var _Popover2 = _interopRequireDefault(_Popover);
 	
@@ -69760,7 +69896,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 559 */
+/* 539 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -69801,7 +69937,7 @@
 	
 	var _Portal2 = _interopRequireDefault(_Portal);
 	
-	var _Content = __webpack_require__(560);
+	var _Content = __webpack_require__(540);
 	
 	var _Content2 = _interopRequireDefault(_Content);
 	
@@ -70158,7 +70294,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 560 */
+/* 540 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -70336,7 +70472,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 561 */
+/* 541 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -70353,7 +70489,7 @@
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _dragColumn = __webpack_require__(520);
+	var _dragColumn = __webpack_require__(500);
 	
 	var _dragColumn2 = _interopRequireDefault(_dragColumn);
 	
@@ -70435,7 +70571,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 562 */
+/* 542 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -70452,7 +70588,7 @@
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _dragColumn = __webpack_require__(520);
+	var _dragColumn = __webpack_require__(500);
 	
 	var _dragColumn2 = _interopRequireDefault(_dragColumn);
 	
@@ -70539,7 +70675,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 563 */
+/* 543 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -70562,11 +70698,11 @@
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _beeMenus = __webpack_require__(488);
+	var _beeMenus = __webpack_require__(468);
 	
 	var _beeMenus2 = _interopRequireDefault(_beeMenus);
 	
-	var _beeDropdown = __webpack_require__(485);
+	var _beeDropdown = __webpack_require__(465);
 	
 	var _beeDropdown2 = _interopRequireDefault(_beeDropdown);
 	
@@ -70765,13 +70901,13 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 564 */
+/* 544 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 	
 	var _react = __webpack_require__(4);
@@ -70782,19 +70918,19 @@
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _multiSelect = __webpack_require__(534);
+	var _multiSelect = __webpack_require__(514);
 	
 	var _multiSelect2 = _interopRequireDefault(_multiSelect);
 	
-	var _filterColumn = __webpack_require__(557);
+	var _filterColumn = __webpack_require__(537);
 	
 	var _filterColumn2 = _interopRequireDefault(_filterColumn);
 	
-	var _dragColumn = __webpack_require__(520);
+	var _dragColumn = __webpack_require__(500);
 	
 	var _dragColumn2 = _interopRequireDefault(_dragColumn);
 	
-	var _sum = __webpack_require__(540);
+	var _sum = __webpack_require__(520);
 	
 	var _sum2 = _interopRequireDefault(_sum);
 	
@@ -70802,11 +70938,11 @@
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _beeCheckbox = __webpack_require__(535);
+	var _beeCheckbox = __webpack_require__(515);
 	
 	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
 	
-	var _beePopover = __webpack_require__(558);
+	var _beePopover = __webpack_require__(538);
 	
 	var _beePopover2 = _interopRequireDefault(_beePopover);
 	
@@ -70831,193 +70967,193 @@
 	
 	//Cloumns1
 	function getCloumns() {
-	  var column = [{
-	    title: "序号",
-	    dataIndex: "index",
-	    key: "index",
-	    width: 100
-	  }, {
-	    title: "订单编号",
-	    dataIndex: "orderCode",
-	    key: "orderCode",
-	    width: 100
-	  }, {
-	    title: "供应商名称",
-	    dataIndex: "supplierName",
-	    key: "supplierName",
-	    width: 100
-	  }, {
-	    title: "类型",
-	    dataIndex: "type_name",
-	    key: "type_name",
-	    width: 100
-	  }, {
-	    title: "采购组织",
-	    dataIndex: "purchasing",
-	    key: "purchasing",
-	    width: 100
-	  }, {
-	    title: "采购组",
-	    dataIndex: "purchasingGroup",
-	    key: "purchasingGroup",
-	    width: 300
-	  }, {
-	    title: "凭证日期",
-	    dataIndex: "voucherDate",
-	    key: "voucherDate",
-	    width: 100
+	    var column = [{
+	        title: "序号",
+	        dataIndex: "index",
+	        key: "index",
+	        width: 100
+	    }, {
+	        title: "订单编号",
+	        dataIndex: "orderCode",
+	        key: "orderCode",
+	        width: 100
+	    }, {
+	        title: "供应商名称",
+	        dataIndex: "supplierName",
+	        key: "supplierName",
+	        width: 100
+	    }, {
+	        title: "类型",
+	        dataIndex: "type_name",
+	        key: "type_name",
+	        width: 100
+	    }, {
+	        title: "采购组织",
+	        dataIndex: "purchasing",
+	        key: "purchasing",
+	        width: 100
+	    }, {
+	        title: "采购组",
+	        dataIndex: "purchasingGroup",
+	        key: "purchasingGroup",
+	        width: 300
+	    }, {
+	        title: "凭证日期",
+	        dataIndex: "voucherDate",
+	        key: "voucherDate",
+	        width: 100
 	
-	  }, {
-	    title: "审批状态",
-	    dataIndex: "approvalState_name",
-	    key: "approvalState_name",
-	    width: 100
-	  }, {
-	    title: "确认状态",
-	    dataIndex: "confirmState_name",
-	    key: "confirmState_name",
-	    width: 100
-	  }, {
-	    title: "关闭状态",
-	    dataIndex: "closeState_name",
-	    key: "closeState_name",
-	    width: 100
-	  }, {
-	    title: "操作",
-	    dataIndex: "d",
-	    key: "d",
-	    width: 100,
-	    fixed: "right",
-	    render: function render(text, record, index) {
-	      return _react2['default'].createElement(
-	        'div',
-	        { className: 'operation-btn' },
-	        _react2['default'].createElement(
-	          'a',
-	          { href: '#',
-	            tooltip: text,
-	            onClick: function onClick() {
-	              alert('这是第' + index + '列，内容为:' + text);
-	            }
-	          },
-	          '\u4E00\u4E9B\u64CD\u4F5C'
-	        )
-	      );
-	    }
-	  }];
-	  return column;
+	    }, {
+	        title: "审批状态",
+	        dataIndex: "approvalState_name",
+	        key: "approvalState_name",
+	        width: 100
+	    }, {
+	        title: "确认状态",
+	        dataIndex: "confirmState_name",
+	        key: "confirmState_name",
+	        width: 100
+	    }, {
+	        title: "关闭状态",
+	        dataIndex: "closeState_name",
+	        key: "closeState_name",
+	        width: 100
+	    }, {
+	        title: "操作",
+	        dataIndex: "d",
+	        key: "d",
+	        width: 100,
+	        fixed: "right",
+	        render: function render(text, record, index) {
+	            return _react2['default'].createElement(
+	                'div',
+	                { className: 'operation-btn' },
+	                _react2['default'].createElement(
+	                    'a',
+	                    { href: '#',
+	                        tooltip: text,
+	                        onClick: function onClick() {
+	                            alert('这是第' + index + '列，内容为:' + text);
+	                        }
+	                    },
+	                    '\u4E00\u4E9B\u64CD\u4F5C'
+	                )
+	            );
+	        }
+	    }];
+	    return column;
 	}
 	
 	var dataList = [{
-	  index: 1,
-	  orderCode: "2343",
-	  supplierName: "xxx",
-	  type_name: "123",
-	  purchasing: '内行',
-	  purchasingGroup: "323",
-	  voucherDate: "kkkk",
-	  approvalState_name: "vvvv",
-	  confirmState_name: "aaaa",
-	  closeState_name: "vnnnnn",
-	  d: "操作",
-	  key: "1"
+	    index: 1,
+	    orderCode: "2343",
+	    supplierName: "xxx",
+	    type_name: "123",
+	    purchasing: '内行',
+	    purchasingGroup: "323",
+	    voucherDate: "kkkk",
+	    approvalState_name: "vvvv",
+	    confirmState_name: "aaaa",
+	    closeState_name: "vnnnnn",
+	    d: "操作",
+	    key: "1"
 	}, {
-	  index: 2,
-	  _checked: true,
-	  orderCode: "222",
-	  supplierName: "22xxx",
-	  type_name: "1223",
-	  purchasing: '内行2',
-	  purchasingGroup: "3223",
-	  voucherDate: "222kk",
-	  approvalState_name: "22vvvv",
-	  confirmState_name: "2aaaa",
-	  closeState_name: "2vnnnnn",
-	  d: "2操作",
-	  key: "2"
+	    index: 2,
+	    _checked: true,
+	    orderCode: "222",
+	    supplierName: "22xxx",
+	    type_name: "1223",
+	    purchasing: '内行2',
+	    purchasingGroup: "3223",
+	    voucherDate: "222kk",
+	    approvalState_name: "22vvvv",
+	    confirmState_name: "2aaaa",
+	    closeState_name: "2vnnnnn",
+	    d: "2操作",
+	    key: "2"
 	}, {
-	  index: 3,
-	  orderCode: "222",
-	  supplierName: "22xxx",
-	  _disabled: true,
-	  type_name: "1223",
-	  purchasing: '内行2',
-	  purchasingGroup: "3223",
-	  voucherDate: "222kk",
-	  approvalState_name: "22vvvv",
-	  confirmState_name: "2aaaa",
-	  closeState_name: "2vnnnnn",
-	  d: "3操作",
-	  key: "3"
+	    index: 3,
+	    orderCode: "222",
+	    supplierName: "22xxx",
+	    _disabled: true,
+	    type_name: "1223",
+	    purchasing: '内行2',
+	    purchasingGroup: "3223",
+	    voucherDate: "222kk",
+	    approvalState_name: "22vvvv",
+	    confirmState_name: "2aaaa",
+	    closeState_name: "2vnnnnn",
+	    d: "3操作",
+	    key: "3"
 	}, {
-	  index: 4,
-	  orderCode: "222",
-	  supplierName: "22xxx",
-	  type_name: "1223",
-	  purchasing: '内行2',
-	  purchasingGroup: "3223",
-	  voucherDate: "222kk",
-	  approvalState_name: "22vvvv",
-	  confirmState_name: "2aaaa",
-	  closeState_name: "2vnnnnn",
-	  d: "4操作",
-	  key: "4"
+	    index: 4,
+	    orderCode: "222",
+	    supplierName: "22xxx",
+	    type_name: "1223",
+	    purchasing: '内行2',
+	    purchasingGroup: "3223",
+	    voucherDate: "222kk",
+	    approvalState_name: "22vvvv",
+	    confirmState_name: "2aaaa",
+	    closeState_name: "2vnnnnn",
+	    d: "4操作",
+	    key: "4"
 	}];
 	
 	var DragColumnTable = (0, _filterColumn2['default'])((0, _dragColumn2['default'])((0, _multiSelect2['default'])(_src2['default'], _beeCheckbox2['default'])), _beePopover2['default']);
 	
 	var defaultProps25 = {
-	  prefixCls: "bee-table"
+	    prefixCls: "bee-table"
 	};
 	
 	var Demo25 = function (_Component) {
-	  _inherits(Demo25, _Component);
+	    _inherits(Demo25, _Component);
 	
-	  function Demo25(props) {
-	    _classCallCheck(this, Demo25);
+	    function Demo25(props) {
+	        _classCallCheck(this, Demo25);
 	
-	    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
+	        var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 	
-	    _this.getSelectedDataFunc = function (data) {
-	      console.log("data", data);
+	        _this.getSelectedDataFunc = function (data) {
+	            console.log("data", data);
+	        };
+	
+	        _this.getCloumnsScroll = function (columns) {
+	            var sum = 0;
+	            columns.forEach(function (da) {
+	                sum += da.width;
+	            });
+	            console.log("sum", sum);
+	            return sum;
+	        };
+	
+	        _this.selectedRow = function (record, index) {};
+	
+	        return _this;
+	    }
+	
+	    Demo25.prototype.render = function render() {
+	        var columns = getCloumns();
+	
+	        return _react2['default'].createElement(
+	            'div',
+	            { className: 'demo25' },
+	            _react2['default'].createElement(DragColumnTable, {
+	                columns: columns,
+	                data: dataList,
+	                getSelectedDataFunc: this.getSelectedDataFunc,
+	
+	                checkMinSize: 7,
+	                draggable: true,
+	                multiSelect: { type: "checkbox" },
+	                scroll: { x: true, y: 100 },
+	                selectedRow: this.selectedRow
+	                // scroll={{x:this.getCloumnsScroll(columns), y: 150}}
+	            })
+	        );
 	    };
 	
-	    _this.getCloumnsScroll = function (columns) {
-	      var sum = 0;
-	      columns.forEach(function (da) {
-	        sum += da.width;
-	      });
-	      console.log("sum", sum);
-	      return sum;
-	    };
-	
-	    _this.selectedRow = function (record, index) {};
-	
-	    return _this;
-	  }
-	
-	  Demo25.prototype.render = function render() {
-	    var columns = getCloumns();
-	
-	    return _react2['default'].createElement(
-	      'div',
-	      { className: 'demo25' },
-	      _react2['default'].createElement(DragColumnTable, {
-	        columns: columns,
-	        data: dataList,
-	        getSelectedDataFunc: this.getSelectedDataFunc,
-	
-	        checkMinSize: 7,
-	        draggable: true,
-	        multiSelect: { type: "checkbox" },
-	        scroll: { x: true, y: 100 },
-	        selectedRow: this.selectedRow
-	        // scroll={{x:this.getCloumnsScroll(columns), y: 150}}
-	      })
-	    );
-	  };
-	
-	  return Demo25;
+	    return Demo25;
 	}(_react.Component);
 	
 	Demo25.defaultProps = defaultProps25;
@@ -71026,7 +71162,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 565 */
+/* 545 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -71155,7 +71291,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 566 */
+/* 546 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -71172,15 +71308,15 @@
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _multiSelect = __webpack_require__(534);
+	var _multiSelect = __webpack_require__(514);
 	
 	var _multiSelect2 = _interopRequireDefault(_multiSelect);
 	
-	var _sort = __webpack_require__(532);
+	var _sort = __webpack_require__(512);
 	
 	var _sort2 = _interopRequireDefault(_sort);
 	
-	var _beeCheckbox = __webpack_require__(535);
+	var _beeCheckbox = __webpack_require__(515);
 	
 	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
 	
@@ -71188,11 +71324,11 @@
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _beeMenus = __webpack_require__(488);
+	var _beeMenus = __webpack_require__(468);
 	
 	var _beeMenus2 = _interopRequireDefault(_beeMenus);
 	
-	var _beeDropdown = __webpack_require__(485);
+	var _beeDropdown = __webpack_require__(465);
 	
 	var _beeDropdown2 = _interopRequireDefault(_beeDropdown);
 	
@@ -71433,7 +71569,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 567 */
+/* 547 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -71454,7 +71590,7 @@
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _sort = __webpack_require__(532);
+	var _sort = __webpack_require__(512);
 	
 	var _sort2 = _interopRequireDefault(_sort);
 	
@@ -71552,7 +71688,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 568 */
+/* 548 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -71569,7 +71705,7 @@
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _beeModal = __webpack_require__(569);
+	var _beeModal = __webpack_require__(549);
 	
 	var _beeModal2 = _interopRequireDefault(_beeModal);
 	
@@ -71768,7 +71904,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 569 */
+/* 549 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -71777,7 +71913,7 @@
 	  value: true
 	});
 	
-	var _Modal = __webpack_require__(570);
+	var _Modal = __webpack_require__(550);
 	
 	var _Modal2 = _interopRequireDefault(_Modal);
 	
@@ -71787,7 +71923,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 570 */
+/* 550 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -71804,7 +71940,7 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _events = __webpack_require__(571);
+	var _events = __webpack_require__(551);
 	
 	var _events2 = _interopRequireDefault(_events);
 	
@@ -71816,7 +71952,7 @@
 	
 	var _inDOM2 = _interopRequireDefault(_inDOM);
 	
-	var _scrollbarSize = __webpack_require__(575);
+	var _scrollbarSize = __webpack_require__(555);
 	
 	var _scrollbarSize2 = _interopRequireDefault(_scrollbarSize);
 	
@@ -71828,11 +71964,11 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _Modal = __webpack_require__(576);
+	var _Modal = __webpack_require__(556);
 	
 	var _Modal2 = _interopRequireDefault(_Modal);
 	
-	var _isOverflowing = __webpack_require__(582);
+	var _isOverflowing = __webpack_require__(562);
 	
 	var _isOverflowing2 = _interopRequireDefault(_isOverflowing);
 	
@@ -71840,23 +71976,23 @@
 	
 	var _beeTransition = __webpack_require__(10);
 	
-	var _ModalBody = __webpack_require__(586);
+	var _ModalBody = __webpack_require__(566);
 	
 	var _ModalBody2 = _interopRequireDefault(_ModalBody);
 	
-	var _ModalDialog = __webpack_require__(587);
+	var _ModalDialog = __webpack_require__(567);
 	
 	var _ModalDialog2 = _interopRequireDefault(_ModalDialog);
 	
-	var _ModalFooter = __webpack_require__(588);
+	var _ModalFooter = __webpack_require__(568);
 	
 	var _ModalFooter2 = _interopRequireDefault(_ModalFooter);
 	
-	var _ModalHeader = __webpack_require__(589);
+	var _ModalHeader = __webpack_require__(569);
 	
 	var _ModalHeader2 = _interopRequireDefault(_ModalHeader);
 	
-	var _ModalTitle = __webpack_require__(590);
+	var _ModalTitle = __webpack_require__(570);
 	
 	var _ModalTitle2 = _interopRequireDefault(_ModalTitle);
 	
@@ -72124,7 +72260,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 571 */
+/* 551 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -72142,11 +72278,11 @@
 	
 	exports.off = _off.default;
 	
-	var _filter = _interopRequireDefault(__webpack_require__(572));
+	var _filter = _interopRequireDefault(__webpack_require__(552));
 	
 	exports.filter = _filter.default;
 	
-	var _listen = _interopRequireDefault(__webpack_require__(574));
+	var _listen = _interopRequireDefault(__webpack_require__(554));
 	
 	exports.listen = _listen.default;
 	var _default = {
@@ -72158,7 +72294,7 @@
 	exports.default = _default;
 
 /***/ }),
-/* 572 */
+/* 552 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -72170,7 +72306,7 @@
 	
 	var _contains = _interopRequireDefault(__webpack_require__(88));
 	
-	var _querySelectorAll = _interopRequireDefault(__webpack_require__(573));
+	var _querySelectorAll = _interopRequireDefault(__webpack_require__(553));
 	
 	function filterEvents(selector, handler) {
 	  return function filterHandler(e) {
@@ -72186,7 +72322,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 573 */
+/* 553 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -72222,7 +72358,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 574 */
+/* 554 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -72254,7 +72390,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 575 */
+/* 555 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -72289,7 +72425,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 576 */
+/* 556 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -72319,7 +72455,7 @@
 	
 	var _Portal2 = _interopRequireDefault(_Portal);
 	
-	var _ModalManager = __webpack_require__(577);
+	var _ModalManager = __webpack_require__(557);
 	
 	var _ModalManager2 = _interopRequireDefault(_ModalManager);
 	
@@ -72331,7 +72467,7 @@
 	
 	var _addEventListener2 = _interopRequireDefault(_addEventListener);
 	
-	var _addFocusListener = __webpack_require__(584);
+	var _addFocusListener = __webpack_require__(564);
 	
 	var _addFocusListener2 = _interopRequireDefault(_addFocusListener);
 	
@@ -72339,7 +72475,7 @@
 	
 	var _inDOM2 = _interopRequireDefault(_inDOM);
 	
-	var _activeElement = __webpack_require__(585);
+	var _activeElement = __webpack_require__(565);
 	
 	var _activeElement2 = _interopRequireDefault(_activeElement);
 	
@@ -72833,7 +72969,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 577 */
+/* 557 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -72846,19 +72982,19 @@
 	
 	var _style2 = _interopRequireDefault(_style);
 	
-	var _class = __webpack_require__(578);
+	var _class = __webpack_require__(558);
 	
 	var _class2 = _interopRequireDefault(_class);
 	
-	var _scrollbarSize = __webpack_require__(575);
+	var _scrollbarSize = __webpack_require__(555);
 	
 	var _scrollbarSize2 = _interopRequireDefault(_scrollbarSize);
 	
-	var _isOverflowing = __webpack_require__(582);
+	var _isOverflowing = __webpack_require__(562);
 	
 	var _isOverflowing2 = _interopRequireDefault(_isOverflowing);
 	
-	var _manageAriaHidden = __webpack_require__(583);
+	var _manageAriaHidden = __webpack_require__(563);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -73014,7 +73150,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 578 */
+/* 558 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -73024,15 +73160,15 @@
 	exports.__esModule = true;
 	exports.default = void 0;
 	
-	var _addClass = _interopRequireDefault(__webpack_require__(579));
+	var _addClass = _interopRequireDefault(__webpack_require__(559));
 	
 	exports.addClass = _addClass.default;
 	
-	var _removeClass = _interopRequireDefault(__webpack_require__(581));
+	var _removeClass = _interopRequireDefault(__webpack_require__(561));
 	
 	exports.removeClass = _removeClass.default;
 	
-	var _hasClass = _interopRequireDefault(__webpack_require__(580));
+	var _hasClass = _interopRequireDefault(__webpack_require__(560));
 	
 	exports.hasClass = _hasClass.default;
 	var _default = {
@@ -73043,7 +73179,7 @@
 	exports.default = _default;
 
 /***/ }),
-/* 579 */
+/* 559 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -73053,7 +73189,7 @@
 	exports.__esModule = true;
 	exports.default = addClass;
 	
-	var _hasClass = _interopRequireDefault(__webpack_require__(580));
+	var _hasClass = _interopRequireDefault(__webpack_require__(560));
 	
 	function addClass(element, className) {
 	  if (element.classList) element.classList.add(className);else if (!(0, _hasClass.default)(element, className)) if (typeof element.className === 'string') element.className = element.className + ' ' + className;else element.setAttribute('class', (element.className && element.className.baseVal || '') + ' ' + className);
@@ -73062,7 +73198,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 580 */
+/* 560 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -73077,7 +73213,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 581 */
+/* 561 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -73091,7 +73227,7 @@
 	};
 
 /***/ }),
-/* 582 */
+/* 562 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -73137,7 +73273,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 583 */
+/* 563 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -73191,7 +73327,7 @@
 	}
 
 /***/ }),
-/* 584 */
+/* 564 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -73227,7 +73363,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 585 */
+/* 565 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -73254,7 +73390,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 586 */
+/* 566 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -73330,7 +73466,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 587 */
+/* 567 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -73444,7 +73580,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 588 */
+/* 568 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -73520,7 +73656,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 589 */
+/* 569 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -73640,7 +73776,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 590 */
+/* 570 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -73716,7 +73852,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 591 */
+/* 571 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -73737,7 +73873,7 @@
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _bigData = __webpack_require__(592);
+	var _bigData = __webpack_require__(572);
 	
 	var _bigData2 = _interopRequireDefault(_bigData);
 	
@@ -73830,7 +73966,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 592 */
+/* 572 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -74347,7 +74483,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 593 */
+/* 573 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -74366,7 +74502,7 @@
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _bigData = __webpack_require__(592);
+	var _bigData = __webpack_require__(572);
 	
 	var _bigData2 = _interopRequireDefault(_bigData);
 	
@@ -74518,7 +74654,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 594 */
+/* 574 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -74535,7 +74671,7 @@
 	
 	var _beeTooltip2 = _interopRequireDefault(_beeTooltip);
 	
-	var _beeCheckbox = __webpack_require__(535);
+	var _beeCheckbox = __webpack_require__(515);
 	
 	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
 	
@@ -74543,7 +74679,7 @@
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _beePopover = __webpack_require__(558);
+	var _beePopover = __webpack_require__(538);
 	
 	var _beePopover2 = _interopRequireDefault(_beePopover);
 	
@@ -74551,15 +74687,15 @@
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _bigData = __webpack_require__(592);
+	var _bigData = __webpack_require__(572);
 	
 	var _bigData2 = _interopRequireDefault(_bigData);
 	
-	var _multiSelect = __webpack_require__(534);
+	var _multiSelect = __webpack_require__(514);
 	
 	var _multiSelect2 = _interopRequireDefault(_multiSelect);
 	
-	var _filterColumn = __webpack_require__(557);
+	var _filterColumn = __webpack_require__(537);
 	
 	var _filterColumn2 = _interopRequireDefault(_filterColumn);
 	
@@ -74663,7 +74799,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 595 */
+/* 575 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -74684,7 +74820,7 @@
 	
 	var _src2 = _interopRequireDefault(_src);
 	
-	var _bigData = __webpack_require__(592);
+	var _bigData = __webpack_require__(572);
 	
 	var _bigData2 = _interopRequireDefault(_bigData);
 	
@@ -74795,7 +74931,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 596 */
+/* 576 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
