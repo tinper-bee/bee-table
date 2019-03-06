@@ -243,7 +243,7 @@ var ColumnManager = function () {
         if (column.fixed === 'left' || column.fixed === true) {
           var width = column.width;
           if (typeof width == 'string' && width.includes('%')) {
-            width = contentWidth * parseInt(col.width) / 100;
+            width = contentWidth * parseInt(column.width) / 100;
           }
           leftColumnsWidth += parseInt(width);
         }
@@ -263,7 +263,7 @@ var ColumnManager = function () {
         if (column.fixed === 'right') {
           var width = column.width;
           if (typeof width == 'string' && width.includes('%')) {
-            width = contentWidth * parseInt(col.width) / 100;
+            width = contentWidth * parseInt(column.width) / 100;
           }
           rightColumnsWidth += parseInt(width);
         }
