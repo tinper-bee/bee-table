@@ -109,9 +109,9 @@ $checkbox-height:16px;
     }
   }
   &-row-hover {
-    background: $hover-bg-color-base;
+    background:unquote("rgb(#{$table-row-hover-bg-color})");
   }
-
+ 
   &-scroll {
     overflow: auto;
   }
