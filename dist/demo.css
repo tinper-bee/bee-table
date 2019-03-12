@@ -8428,7 +8428,7 @@ ul {
   .u-table td {
     border-bottom: 1px solid rgb(233,233,233); }
     .u-table td a {
-      color: rgb(245, 60, 50); }
+      color: #2196F3; }
       .u-table td a:hover {
         color: rgb(230, 0, 18); }
       .u-table td a:active {
@@ -8812,7 +8812,8 @@ ul {
   display: none; }
 
 .editable-cell-input-wrapper .u-input-group .u-form-control {
-  height: 26px; }
+  height: 26px;
+  font-size: 12px; }
 
 .editable-cell-text-wrapper {
   padding: 5px 24px 5px 5px;
@@ -10488,6 +10489,13 @@ th:hover .uf {
   padding-bottom: 0px; }
 
 
+.opt-btns .u-button {
+  background-color: #505F79;
+  border-color: #505F79;
+  color: #fff; }
+  .opt-btns .u-button:hover, .opt-btns .u-button:active {
+    background-color: #344563;
+    border-color: #344563; }
 
 .demo8 .u-table {
   margin-bottom: 11px; }

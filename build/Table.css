@@ -187,7 +187,7 @@
   .u-table td {
     border-bottom: 1px solid rgb(233,233,233); }
     .u-table td a {
-      color: rgb(245, 60, 50); }
+      color: #2196F3; }
       .u-table td a:hover {
         color: rgb(230, 0, 18); }
       .u-table td a:active {
@@ -569,7 +569,8 @@
   display: none; }
 
 .editable-cell-input-wrapper .u-input-group .u-form-control {
-  height: 26px; }
+  height: 26px;
+  font-size: 12px; }
 
 .editable-cell-text-wrapper {
   padding: 5px 24px 5px 5px;
