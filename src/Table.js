@@ -320,6 +320,10 @@ class Table extends Component {
     if (index !== -1) {
       expandedRows.splice(index, 1);
     }
+    //
+    if(this.currentHoverKey == rowKey && this.hoverDom){
+      this.hoverDom.style.display = 'none';
+    }
     this.onExpandedRowsChange(expandedRows);
   }
 
@@ -1114,20 +1118,23 @@ class Table extends Component {
         currentHoverKey: isHover ? key : null,
       });
     }
-    if(this.hoverDom && isHover){
-      this.currentHoverKey = key;
-      const td = closest(event.target,'td');
-      if(td){
-        const scrollTop = this.lastScrollTop ?this.lastScrollTop:0
-        let top = td.offsetTop -  scrollTop;
-        if(this.refs.headTable){
-          top = top + this.refs.headTable.clientHeight; 
+    if(this.hoverDom){
+      if(isHover){
+        this.currentHoverKey = key;
+        const td = closest(event.target,'td');
+        if(td){
+          const scrollTop = this.lastScrollTop ?this.lastScrollTop:0
+          let top = td.offsetTop -  scrollTop;
+          if(this.refs.headTable){
+            top = top + this.refs.headTable.clientHeight; 
+          }
+          this.hoverDom.style.top = top + 'px';
+          this.hoverDom.style.height = td.offsetHeight + 'px';
+          this.hoverDom.style.lineHeight = td.offsetHeight + 'px';
+          this.hoverDom.style.display = 'block';
         }
-        this.hoverDom.style.top = top + 'px';
-        this.hoverDom.style.height = td.offsetHeight + 'px';
-        this.hoverDom.style.lineHeight = td.offsetHeight + 'px';
-        this.hoverDom.style.display = 'block';
       }
+      
     }
 
     onRowHover && onRowHover(currentIndex,record);

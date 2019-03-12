@@ -430,6 +430,10 @@ var Table = function (_Component) {
     if (index !== -1) {
       expandedRows.splice(index, 1);
     }
+    //
+    if (this.currentHoverKey == rowKey && this.hoverDom) {
+      this.hoverDom.style.display = 'none';
+    }
     this.onExpandedRowsChange(expandedRows);
   };
 
@@ -1278,19 +1282,21 @@ var Table = function (_Component) {
         currentHoverKey: isHover ? key : null
       });
     }
-    if (this.hoverDom && isHover) {
-      this.currentHoverKey = key;
-      var td = (0, _utils.closest)(event.target, 'td');
-      if (td) {
-        var scrollTop = this.lastScrollTop ? this.lastScrollTop : 0;
-        var top = td.offsetTop - scrollTop;
-        if (this.refs.headTable) {
-          top = top + this.refs.headTable.clientHeight;
+    if (this.hoverDom) {
+      if (isHover) {
+        this.currentHoverKey = key;
+        var td = (0, _utils.closest)(event.target, 'td');
+        if (td) {
+          var scrollTop = this.lastScrollTop ? this.lastScrollTop : 0;
+          var top = td.offsetTop - scrollTop;
+          if (this.refs.headTable) {
+            top = top + this.refs.headTable.clientHeight;
+          }
+          this.hoverDom.style.top = top + 'px';
+          this.hoverDom.style.height = td.offsetHeight + 'px';
+          this.hoverDom.style.lineHeight = td.offsetHeight + 'px';
+          this.hoverDom.style.display = 'block';
         }
-        this.hoverDom.style.top = top + 'px';
-        this.hoverDom.style.height = td.offsetHeight + 'px';
-        this.hoverDom.style.lineHeight = td.offsetHeight + 'px';
-        this.hoverDom.style.display = 'block';
       }
     }
 

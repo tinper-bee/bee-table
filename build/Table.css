@@ -673,7 +673,7 @@
   display: none;
   align-items: center;
   justify-content: center;
-  background: #E7F2FC; }
+  background: transparent; }
 
 .u-row-hover2 {
   position: absolute;
