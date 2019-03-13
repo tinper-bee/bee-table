@@ -95,7 +95,7 @@ class Table extends Component {
     let rows = [...props.data];
     this.columnManager = new ColumnManager(props.columns, props.children, props.originWidth);
     this.store = createStore({ currentHoverKey: null });
-
+    this.firstDid = true;
     if (props.defaultExpandAllRows) {
       for (let i = 0; i < rows.length; i++) {
         const row = rows[i];
