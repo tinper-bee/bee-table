@@ -1,8 +1,11 @@
 .opt-btns{
-    button{
-      background: #505F79 ;
-      height: 26px;
-      color:#FFFFFF;
-      line-height: 26px;
+    .u-button{
+        background-color: #505F79;
+        border-color: #505F79;
+        color: #fff;
+        &:hover, &:active{
+            background-color: #344563;
+            border-color: #344563;
+        }
     }
-  }
+}

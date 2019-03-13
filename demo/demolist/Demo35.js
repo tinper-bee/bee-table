@@ -81,7 +81,7 @@ class Demo35 extends Component {
   this.currentRecord = record;
  }
   getHoverContent=()=>{
-    return <div className="opt-btns"><button  onClick={this.delFun}>删除</button> </div>
+    return <div className="opt-btns"><Button size="sm" onClick={this.delFun}>删除</Button> </div>
   }
   render() {
     return (

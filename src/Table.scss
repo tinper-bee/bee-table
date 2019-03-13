@@ -58,7 +58,7 @@ $checkbox-height:16px;
   td {
     border-bottom: 1px solid $table-border-color;
     a{
-      color: $brand-primary;
+      color: #2196F3;
       &:hover{
         color: $brand-primary-hover;
       }
@@ -642,6 +642,7 @@ $checkbox-height:16px;
   }
   .u-input-group .u-form-control{
     height: 26px;
+    font-size: 12px;
   }
 }
 
@@ -787,7 +788,7 @@ $checkbox-height:16px;
   display: none;
   align-items: center;
   justify-content: center;
-  background: $table-hover-color
+  background: transparent;
 }
 
 .u-row-hover2{
