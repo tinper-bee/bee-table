@@ -132,7 +132,8 @@ function multiSelect(Table, Checkbox) {
 
     return NewMultiSelect;
   }(_react.Component), _class.defaultProps = {
-    prefixCls: "u-table-mult-select"
+    prefixCls: "u-table-mult-select",
+    getSelectedDataFunc: function getSelectedDataFunc() {}
   }, _initialiseProps = function _initialiseProps() {
     var _this2 = this;
 

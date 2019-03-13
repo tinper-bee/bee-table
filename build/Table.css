@@ -179,7 +179,8 @@
     border-collapse: collapse;
     text-align: left; }
   .u-table th {
-    font-weight: bold; }
+    font-weight: bold;
+    text-align: left; }
     .u-table th[colspan] {
       text-align: center; }
     .u-table th ::last-child {
@@ -189,17 +190,17 @@
     .u-table td a {
       color: #2196F3; }
       .u-table td a:hover {
-        color: rgb(230, 0, 18); }
+        color: #1565c0; }
       .u-table td a:active {
-        color: rgb(230, 0, 18); }
+        color: #1565c0; }
   .u-table tr:hover td .uf-eye {
     visibility: visible !important; }
   .u-table tr tr a {
-    color: rgb(245, 60, 50); }
+    color: #2196F3; }
     .u-table tr tr a:hover {
-      color: rgb(230, 0, 18); }
+      color: #1565c0; }
     .u-table tr tr a:active {
-      color: rgb(230, 0, 18); }
+      color: #1565c0; }
   .u-table tr.tr-row-hover {
     background: rgb(235, 236, 240); }
   .u-table th,

@@ -64335,7 +64335,8 @@
 	
 	    return NewMultiSelect;
 	  }(_react.Component), _class.defaultProps = {
-	    prefixCls: "u-table-mult-select"
+	    prefixCls: "u-table-mult-select",
+	    getSelectedDataFunc: function getSelectedDataFunc() {}
 	  }, _initialiseProps = function _initialiseProps() {
 	    var _this2 = this;
 	
@@ -64511,12 +64512,15 @@
 	
 	    colors: _propTypes2["default"].oneOf(['', 'dark', 'success', 'info', 'warning', 'danger', 'primary']),
 	
-	    disabled: _propTypes2["default"].bool
+	    disabled: _propTypes2["default"].bool,
+	
+	    inverse: _propTypes2["default"].bool
 	
 	};
 	
 	var defaultProps = {
 	    disabled: false,
+	    inverse: false,
 	    colors: 'primary',
 	    clsPrefix: 'u-checkbox',
 	    defaultChecked: false,
@@ -64552,6 +64556,7 @@
 	    Checkbox.prototype.render = function render() {
 	        var _props = this.props,
 	            disabled = _props.disabled,
+	            inverse = _props.inverse,
 	            colors = _props.colors,
 	            size = _props.size,
 	            className = _props.className,
@@ -64562,7 +64567,7 @@
 	            clsPrefix = _props.clsPrefix,
 	            onDoubleClick = _props.onDoubleClick,
 	            onChange = _props.onChange,
-	            others = _objectWithoutProperties(_props, ['disabled', 'colors', 'size', 'className', 'indeterminate', 'onClick', 'children', 'checked', 'clsPrefix', 'onDoubleClick', 'onChange']);
+	            others = _objectWithoutProperties(_props, ['disabled', 'inverse', 'colors', 'size', 'className', 'indeterminate', 'onClick', 'children', 'checked', 'clsPrefix', 'onDoubleClick', 'onChange']);
 	
 	        var input = _react2["default"].createElement('input', _extends({}, others, {
 	            type: 'checkbox',
@@ -64573,6 +64578,10 @@
 	            'is-checked': this.state.checked,
 	            disabled: disabled
 	        };
+	
+	        if (inverse) {
+	            classes[clsPrefix + '-inverse'] = true;
+	        }
 	
 	        if (colors) {
 	            classes[clsPrefix + '-' + colors] = true;
@@ -64702,13 +64711,15 @@
 	var propTypes = {
 	    clsPrefix: _propTypes2["default"].string,
 	    value: _propTypes2["default"].array,
-	    onChange: _propTypes2["default"].func
+	    onChange: _propTypes2["default"].func,
+	    disabled: _propTypes2["default"].bool
 	};
 	
 	var defaultProps = {
 	    clsPrefix: 'u-checkbox-group',
 	    value: [],
-	    onChange: function onChange() {}
+	    onChange: function onChange() {},
+	    disabled: false
 	};
 	
 	var CheckboxGroup = function (_React$Component) {
@@ -64751,7 +64762,8 @@
 	
 	        var _props = this.props,
 	            clsPrefix = _props.clsPrefix,
-	            className = _props.className;
+	            className = _props.className,
+	            disabled = _props.disabled;
 	
 	        var classes = clsPrefix;
 	        if (className) classes += ' ' + className;
@@ -64763,7 +64775,8 @@
 	                    onChange: function onChange() {
 	                        _this2.changeHandle(child.props.value);
 	                    },
-	                    checked: _this2.state.values.indexOf(child.props.value) != -1
+	                    checked: _this2.state.values.indexOf(child.props.value) != -1,
+	                    disabled: disabled
 	                });
 	            })
 	        );
