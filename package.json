@@ -47,7 +47,7 @@
  },
  "dependencies": {
   "bee-button": "latest",
-  "bee-datepicker": "^2.0.6",
+  "bee-datepicker": "latest",
   "bee-dnd": "^1.0.2",
   "bee-dropdown": "latest",
   "bee-form-control": "latest",
