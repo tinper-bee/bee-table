@@ -91,7 +91,7 @@ class FilterDropDown extends Component {
             switch (filterDropdownType) {
                 case 'string':
                     return <Menu
-                        onSelect={this.onSelectDropdown}
+                        onClick={this.onSelectDropdown}
                         selectedKeys={selectValue}
                     >
                         {
@@ -102,7 +102,7 @@ class FilterDropDown extends Component {
                     </Menu>
                 case 'number':
                     return <Menu
-                        onSelect={this.onSelectDropdown}
+                         onClick={this.onSelectDropdown}
                         selectedKeys={selectNumberValue}
                     >
                         {
@@ -118,7 +118,7 @@ class FilterDropDown extends Component {
             switch (filterDropdownType) {
                 case 'string':
                     return <Menu
-                        onSelect={this.onSelectDropdown}
+                        onClick={this.onSelectDropdown}
                         selectedKeys={selectValue}
                     >
                         <Item key="LIKE">{locale['include']}</Item>
@@ -130,7 +130,7 @@ class FilterDropDown extends Component {
                     </Menu>
                 case 'number':
                     return <Menu
-                        onSelect={this.onSelectDropdown}
+                        onClick={this.onSelectDropdown}
                         selectedKeys={selectNumberValue}
                     >
                         <Item key="GT">{locale['greater_than']}</Item>
