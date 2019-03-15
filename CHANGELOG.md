@@ -1,3 +1,13 @@
+<a name="2.0.6"></a>
+## [2.0.6](https://github.com/tinper-bee/bee-table/compare/v2.0.5...v2.0.6) (2019-03-15)
+
+
+### Bug Fixes
+
+* **行过滤、checkbox样式:** 1、行过滤点击已选的无效2、checkbox在Table中的样式 ([1a628a4](https://github.com/tinper-bee/bee-table/commit/1a628a4))
+
+
+
 <a name="2.0.5"></a>
 ## [2.0.5](https://github.com/tinper-bee/bee-table/compare/v2.0.4...v2.0.5) (2019-03-14)
 
