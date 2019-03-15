@@ -1,15 +1,21 @@
 # Table
 
+## 何时使用
 表格是以结构化的方式来展示大量的信息最佳方法，使信息更易于阅读与理解。
 表格轻易就能用简洁和易读的方式来组织数据。它们可用于保存和展示大量的数据，小量的信息，静态数据以及不断地变动的数据。
 
+## 如何使用
+```
+import { Table } from 'tinper-bee';
+
+or
+
+import Table from 'bee-table';
+import bee-table/build/Table.css;
+
+```
+
 ## 代码演示
-
-## 引入机制
-
-import Table from "bee-table";
-import 'bee-table/build/Table.css';
-
 
 ## API
 
@@ -367,7 +373,7 @@ const CheckboxRender = renderCheckbox(Checkbox, Icon);
 
 ```
 
-### 使用注意
+## 注意事项
 
 - 如果使用了固定列，请给固定的列设定固定宽度既width属性。
 
@@ -376,3 +382,5 @@ const CheckboxRender = renderCheckbox(Checkbox, Icon);
 
 
 > 当表格场景比较复杂时，可以使用[复杂表格ComplexGrid](http://bee.tinper.org/bee-complex-grid#bee-complex-grid)。ComplexGrid将常用的过滤、多选、分页、列交换、列拖拽等功能集成在一起。使用起来超级方便。
+
+## 更新日志
