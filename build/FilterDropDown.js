@@ -125,7 +125,7 @@ var FilterDropDown = function (_Component) {
                         return _react2["default"].createElement(
                             _beeMenus2["default"],
                             {
-                                onSelect: _this.onSelectDropdown,
+                                onClick: _this.onSelectDropdown,
                                 selectedKeys: selectValue
                             },
                             filterDropdownIncludeKeys.map(function (item) {
@@ -140,7 +140,7 @@ var FilterDropDown = function (_Component) {
                         return _react2["default"].createElement(
                             _beeMenus2["default"],
                             {
-                                onSelect: _this.onSelectDropdown,
+                                onClick: _this.onSelectDropdown,
                                 selectedKeys: selectNumberValue
                             },
                             filterDropdownIncludeKeys.map(function (item) {
@@ -160,7 +160,7 @@ var FilterDropDown = function (_Component) {
                         return _react2["default"].createElement(
                             _beeMenus2["default"],
                             {
-                                onSelect: _this.onSelectDropdown,
+                                onClick: _this.onSelectDropdown,
                                 selectedKeys: selectValue
                             },
                             _react2["default"].createElement(
@@ -198,7 +198,7 @@ var FilterDropDown = function (_Component) {
                         return _react2["default"].createElement(
                             _beeMenus2["default"],
                             {
-                                onSelect: _this.onSelectDropdown,
+                                onClick: _this.onSelectDropdown,
                                 selectedKeys: selectNumberValue
                             },
                             _react2["default"].createElement(
