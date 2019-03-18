@@ -183,6 +183,7 @@ class Demo2 extends React.Component {
     return (
       <div>
         <Button
+          colors="secondary"
           className="editable-add-btn"
           type="ghost"
           onClick={this.handleAdd}

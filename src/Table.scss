@@ -45,6 +45,7 @@ $checkbox-height:16px;
   th {
     // background: $table-head-background-color;
     font-weight: bold;
+    text-align: left;
     // transition: background 0.3s ease;
     &[colspan] {
       text-align: center;
@@ -57,12 +58,12 @@ $checkbox-height:16px;
   td {
     border-bottom: 1px solid $table-border-color;
     a{
-      color: $brand-primary;
+      color: #2196F3;
       &:hover{
-        color: $brand-primary-hover;
+        color: #1565c0;
       }
       &:active{
-        color: $brand-primary-active;
+        color: #1565c0;
       }
     }
   }
@@ -78,12 +79,12 @@ $checkbox-height:16px;
       }
     }
     tr a{
-      color: $brand-primary;
+      color: #2196F3;
       &:hover{
-        color: $brand-primary-hover;
+        color: #1565c0;
       }
       &:active{
-        color: $brand-primary-active;
+        color: #1565c0;
       }
     }
   }
@@ -521,6 +522,7 @@ $checkbox-height:16px;
   .u-checkbox {
     height: $checkbox-height;
     line-height:  $checkbox-height;
+    margin:0px;
   }
 }
 .u-table:focus{
@@ -641,6 +643,7 @@ $checkbox-height:16px;
   }
   .u-input-group .u-form-control{
     height: 26px;
+    font-size: 12px;
   }
 }
 

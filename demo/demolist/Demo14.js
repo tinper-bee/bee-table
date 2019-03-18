@@ -161,6 +161,7 @@ class Demo14 extends React.Component {
               isclickTrigger={true}
               value={text}
               onChange={this.onSelectChange(index, "address")}
+              size="sm"
             >
               <Option value="jack">boyuzhou</Option>
               <Option value="lucy">renhualiu</Option>

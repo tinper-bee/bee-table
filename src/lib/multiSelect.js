@@ -13,7 +13,8 @@ export default function multiSelect(Table, Checkbox) {
 
   return class NewMultiSelect extends Component {
     static defaultProps = {
-      prefixCls: "u-table-mult-select"
+      prefixCls: "u-table-mult-select",
+      getSelectedDataFunc:()=>{}
     }
 
     constructor(props) {

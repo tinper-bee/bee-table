@@ -1,10 +1,46 @@
-<a name="2.0.2"></a>
-## [2.0.2](https://github.com/tinper-bee/bee-table/compare/v2.0.0...v2.0.2) (2019-03-02)
+<a name="2.0.6"></a>
+## [2.0.6](https://github.com/tinper-bee/bee-table/compare/v2.0.5...v2.0.6) (2019-03-15)
+
+
+### Bug Fixes
+
+* **行过滤、checkbox样式:** 1、行过滤点击已选的无效2、checkbox在Table中的样式 ([1a628a4](https://github.com/tinper-bee/bee-table/commit/1a628a4))
+
+
+
+<a name="2.0.5"></a>
+## [2.0.5](https://github.com/tinper-bee/bee-table/compare/v2.0.4...v2.0.5) (2019-03-14)
+
+
+### Bug Fixes
+
+* 参照场景中表格首次渲染最后一列没有撑开bug ([c705539](https://github.com/tinper-bee/bee-table/commit/c705539))
+* **Table.js:** 参照场景中第一次加载表格不撑满问题 ([a9530a4](https://github.com/tinper-bee/bee-table/commit/a9530a4))
+
+
+
+<a name="2.0.4"></a>
+## [2.0.4](https://github.com/tinper-bee/bee-table/compare/v2.0.3...v2.0.4) (2019-03-07)
+
+
+### Bug Fixes
+
+* 含有右侧固定列场景中，内容过少不需要滚动条bug ([37b9806](https://github.com/tinper-bee/bee-table/commit/37b9806))
+
+
+
+<a name="2.0.3"></a>
+## [2.0.3](https://github.com/tinper-bee/bee-table/compare/v2.0.0...v2.0.3) (2019-03-05)
 
 
 
 <a name="2.0.0"></a>
-# [2.0.0](https://github.com/tinper-bee/bee-table/compare/v1.6.43...v2.0.0) (2019-03-01)
+# [2.0.0](https://github.com/tinper-bee/bee-table/compare/v1.6.44...v2.0.0) (2019-03-01)
+
+
+
+<a name="1.6.44"></a>
+## [1.6.44](https://github.com/tinper-bee/bee-table/compare/v1.6.43...v1.6.44) (2019-02-26)
 
 
 
@@ -299,7 +335,7 @@
 
 
 <a name="1.5.1"></a>
-## [1.5.1](https://github.com/tinper-bee/bee-table/compare/v1.5.0...v1.5.1) (2018-11-18)
+## [1.5.1](https://github.com/tinper-bee/bee-table/compare/v1.5.0...v1.5.1) (2018-11-19)
 
 
 

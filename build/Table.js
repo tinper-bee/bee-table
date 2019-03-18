@@ -207,7 +207,7 @@ var Table = function (_Component) {
     var rows = [].concat(_toConsumableArray(props.data));
     _this.columnManager = new _ColumnManager2["default"](props.columns, props.children, props.originWidth);
     _this.store = (0, _createStore2["default"])({ currentHoverKey: null });
-
+    _this.firstDid = true;
     if (props.defaultExpandAllRows) {
       for (var i = 0; i < rows.length; i++) {
         var row = rows[i];

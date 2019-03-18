@@ -121,6 +121,7 @@ class Demo19 extends React.Component {
               onChange={this.onSelectChange(index, "address")}
               onFocus={this.handFocus}
               onBlur={this.onBlur}
+              size="sm"
               autofocus
             >
               <Option value="jack">boyuzhou</Option>
