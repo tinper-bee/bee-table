@@ -132,6 +132,7 @@ class TableHeader extends Component {
    * @memberof TableHeader
    */
   initTable(){
+    const {contentTable} = this.props;
     if(!this.props.dragborder && !this.props.draggable)return;
     // let el = ReactDOM.findDOMNode(this);
     let tableDome = this._thead.parentNode;
@@ -141,11 +142,19 @@ class TableHeader extends Component {
       table.cols = tableDome.getElementsByTagName("col");
       table.ths = tableDome.getElementsByTagName("th");
     }
+
+    table.fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header') ;
+    table.fixedRighHeadertTable = contentTable.querySelector('.u-table-fixed-right .u-table-header');
+    table.contentTableHeader  = contentTable.querySelector('.u-table-scroll .u-table-header');
+    table.fixedLeftBodyTable = contentTable.querySelector('.u-table-fixed-left .u-table-body-outer') ;
+    table.fixedRightBodyTable = contentTable.querySelector('.u-table-fixed-right .u-table-body-outer') ;
+    table.innerTableBody= contentTable.querySelector('.u-table-scroll .u-table-body table');
+    
+  
     this.table = table;
 
     if(!this.props.dragborder)return;
     if(document.getElementById("u-table-drag-thead-" + this.theadKey)){
-        //hao 固定列table
       this.fixedTable = {};
       let _fixedParentContext =  document.getElementById("u-table-drag-thead-" + this.theadKey).parentNode;
       let siblingDom = _fixedParentContext.parentNode.nextElementSibling;
@@ -206,43 +215,37 @@ class TableHeader extends Component {
         if(this.fixedTable.cols){
             this.fixedTable.cols[this.drag.currIndex].style.width = newWidth + "px";
         }
-        let oldTableWidth = parseInt(this.table.table.style.width ?this.table.table.style.width:this.table.table.scrollWidth);
-        const newTableWidth = oldTableWidth + diff ;
+        const newTableWidth = this.drag.tableWidth + diff +'px';
         this.table.table.style.width  = newTableWidth;//改变table的width
-
+        this.table.innerTableBody.style.width  = newTableWidth ;
         let showScroll =  contentDomWidth - newTableWidth - scrollbarWidth ;
-        const fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header') ;
-        const fixedRighHeadertTable = contentTable.querySelector('.u-table-fixed-right .u-table-header');
-        const contentTableHeader  = contentTable.querySelector('.u-table-scroll .u-table-header');
-        const fixedLeftBodyTable = contentTable.querySelector('.u-table-fixed-left .u-table-body-outer') ;
-        const fixedRightBodyTable = contentTable.querySelector('.u-table-fixed-right .u-table-body-outer') ;
-       
+   
         //表头滚动条处理
         if(headerScroll){
             if(showScroll < 0){
                 //找到固定列表格，设置表头的marginBottom值为scrollbarWidth;
-                contentTableHeader.style.overflowX = 'scroll';
-               this.optTableMargin(fixedLeftHeaderTable,scrollbarWidth);
-               this.optTableMargin(fixedRighHeadertTable,scrollbarWidth);
+                this.table.contentTableHeader.style.overflowX = 'scroll';
+               this.optTableMargin( this.table.fixedLeftHeaderTable,scrollbarWidth);
+               this.optTableMargin( this.table.fixedRighHeadertTable,scrollbarWidth);
                 // fixedLeftHeaderTable && (fixedLeftHeaderTable.style.marginBottom = scrollbarWidth + "px");
                 // fixedRighHeadertTable && (fixedRighHeadertTable.style.marginBottom = scrollbarWidth + "px");
               //todo inner scroll-x去掉；outer marginbottom 设置成-15px】
               }else{
-                contentTableHeader.style.overflowX = 'hidden';
-                this.optTableMargin(fixedLeftHeaderTable,0);
-               this.optTableMargin(fixedRighHeadertTable,0);
+                this.table.contentTableHeader.style.overflowX = 'hidden';
+                this.optTableMargin( this.table.fixedLeftHeaderTable,0);
+               this.optTableMargin( this.table.fixedRighHeadertTable,0);
             }
         }else{
           if(showScroll < 0){
-               this.optTableMargin(fixedLeftBodyTable,'-'+scrollbarWidth);
-               this.optTableMargin(fixedRightBodyTable,'-'+scrollbarWidth);
-               this.optTableScroll(fixedLeftBodyTable,{x:'scroll'});
-               this.optTableScroll(fixedRightBodyTable,{x:'scroll'});
+               this.optTableMargin( this.table.fixedLeftBodyTable,'-'+scrollbarWidth);
+               this.optTableMargin( this.table.fixedRightBodyTable,'-'+scrollbarWidth);
+               this.optTableScroll( this.table.fixedLeftBodyTable,{x:'scroll'});
+               this.optTableScroll( this.table.fixedRightBodyTable,{x:'scroll'});
           }else{
-            this.optTableMargin(fixedLeftBodyTable,0);
-            this.optTableMargin(fixedRightBodyTable,0);
-            this.optTableScroll(fixedLeftBodyTable,{x:'auto'});
-               this.optTableScroll(fixedRightBodyTable,{x:'auto'});
+            this.optTableMargin( this.table.fixedLeftBodyTable,0);
+            this.optTableMargin( this.table.fixedRightBodyTable,0);
+            this.optTableScroll( this.table.fixedLeftBodyTable,{x:'auto'});
+               this.optTableScroll( this.table.fixedRightBodyTable,{x:'auto'});
           }
         }
         
@@ -266,6 +269,7 @@ class TableHeader extends Component {
     this.drag.oldLeft = event.x;
     this.drag.oldWidth = parseInt((currentObj).style.width);
     this.drag.minWidth = currentObj.style.minWidth != ""?parseInt(currentObj.style.minWidth):defaultWidth;
+    this.drag.tableWidth = parseInt(this.table.table.style.width ?this.table.table.style.width:this.table.table.scrollWidth);
   };
 
   /**
