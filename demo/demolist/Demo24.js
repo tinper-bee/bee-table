@@ -101,9 +101,6 @@ class Demo24 extends Component {
 
   constructor(props) {
     super(props);
-    // let columns = [];
-    // Object.assign(columns,columns24);
-    // columns.forEach(da=>da.onHeadCellClick=this.onHeadCellClick);
     this.state = {
       columns:columns24
     }

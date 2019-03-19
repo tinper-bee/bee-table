@@ -6,10 +6,8 @@
  */
 
 import React, { Component } from "react";
-import Table from "../../src";
-import Checkbox from "bee-checkbox";
-import Button from "bee-button";
-import Icon from "bee-icon";
+import {Checkbox,Button,Icon} from "tinper-bee";
+import ComplexTable from "../../src";
 import multiSelect from "../../src/lib/multiSelect.js";
 import sort from "../../src/lib/sort.js";
 import sum from "../../src/lib/sum.js";
@@ -72,7 +70,7 @@ const data13 = [
 
 
 //拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常
-let ComplexTable = multiSelect(sum(sort(Table, Icon)), Checkbox);
+// let ComplexTable = multiSelect(sum(sort(Table, Icon)), Checkbox);
 
 class Demo13 extends Component {
   constructor(props) {
