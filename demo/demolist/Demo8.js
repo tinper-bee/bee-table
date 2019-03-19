@@ -5,9 +5,9 @@
  */
 
 import React, { Component } from "react";
+import {Pagination} from "tinper-bee";
 
 import Table from "../../src";
-import Pagination from "bee-pagination";
 
 const columns8 = [
   { title: "姓名", dataIndex: "a", key: "a", width: 100 },

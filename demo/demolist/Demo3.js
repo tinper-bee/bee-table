@@ -6,9 +6,9 @@
  *
  */
 
-import Button from "bee-button";
 import React, { Component } from "react";
 import Table from "../../src";
+import {Button} from "tinper-bee";
 
 const { ColumnGroup, Column } = Table;
 

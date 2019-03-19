@@ -7,7 +7,7 @@
 
 import React, { Component } from "react";
 import Table from "../../src";
-import Button from "bee-button";
+import {Button} from "tinper-bee";
 
 const columns17 = [
   { title: "用户名", dataIndex: "a", key: "a", width: 100 },

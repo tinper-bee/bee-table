@@ -8,15 +8,13 @@
  *  必须有个别列不设置width属性，即可避免此问题。
  */
 import React, { Component } from 'react';
+import {Icon,Checkbox,Popover} from "tinper-bee";
+
 import Table from '../../src';
 import multiSelect from '../../src/lib/multiSelect';
 import filterColumn from '../../src/lib/filterColumn';
 import dragColumn from "../../src/lib/dragColumn";
-
 import sum from '../../src/lib/sum';
-import Icon from "bee-icon";
-import Checkbox from 'bee-checkbox';
-import Popover from 'bee-popover';
 
  //Cloumns1
 function getCloumns(){

@@ -6,10 +6,11 @@
 
 
 import React, { Component } from 'react';
+import {Icon} from "tinper-bee";
 import Table from '../../src';
-import Icon from "bee-icon";
 import sort from "../../src/lib/sort.js";
 let ComplexTable = sort(Table, Icon);
+
 const columns11 = [
   {
     title: "名字",

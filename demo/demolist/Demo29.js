@@ -7,10 +7,8 @@
 
 
 import React, { Component } from 'react';
+import {Modal,Button} from "tinper-bee";
 import Table from '../../src';
-import Modal from 'bee-modal';
-import Button from 'bee-button';
-
 
 const columns29 = [
   {

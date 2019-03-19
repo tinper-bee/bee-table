@@ -6,7 +6,7 @@
  */
 
 import React, { Component } from "react";
-import Button from "bee-button";
+import {Button} from "tinper-bee";
 import Table from "../../src"; 
 import sum from "../../src/lib/sum.js";
  

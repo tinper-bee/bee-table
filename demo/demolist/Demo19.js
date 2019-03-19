@@ -4,16 +4,9 @@
 * @description 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）
 *
 */
-
-import Button from "bee-button";
 import React from "react";
+import {Button,Animate,FormControl as Input,Tooltip,Icon,Form,Select} from "tinper-bee";
 import Table from "../../src";
-import Animate from "bee-animate";
-import Tooltip from "bee-tooltip";
-import Icon from "bee-icon";
-import Input from "bee-form-control";
-import Form from "bee-form";
-import Select from "bee-select";
 import renderInput from "../../build/render/InputRender.js";
 import renderSelect from "../../build/render/SelectRender.js";
 

@@ -8,11 +8,9 @@
  */
 
 import React, { Component } from "react";
+import {Icon,FormControl,InputGroup} from "tinper-bee";
 
 import Table from "../../src";
-import Icon from "bee-icon";
-import InputGroup from "bee-input-group";
-import FormControl from "bee-form-control";
 
 class Search extends Component {
   state = {

@@ -5,8 +5,7 @@
 */
 
 import React, { Component } from "react";
-import Button from "bee-button";
-import Tooltip from "bee-tooltip";
+import {Tooltip,Button} from "tinper-bee";
 import Table from "../../src";
 
 const columns = [

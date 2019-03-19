@@ -6,10 +6,7 @@
 */
 
 import React, { Component } from "react";
-import Tooltip from "bee-tooltip";
-import Checkbox from 'bee-checkbox';
-import Icon from 'bee-icon';
-import Popover from 'bee-popover';
+import {Tooltip,Checkbox,Icon,Popover} from "tinper-bee";
 import Table from "../../src";
 import BigData from "../../src/lib/bigData";
 import multiSelect from '../../src/lib/multiSelect';

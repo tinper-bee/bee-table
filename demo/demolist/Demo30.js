@@ -6,7 +6,7 @@
 */
 
 import React, { Component } from "react";
-import Tooltip from "bee-tooltip";
+import {Tooltip} from "tinper-bee";
 import Table from "../../src";
 import BigData from "../../src/lib/bigData";
 const BigDataTable = BigData(Table);

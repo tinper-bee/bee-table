@@ -10,14 +10,11 @@
  */
 
 import React, { Component } from 'react';
+import {Icon,Checkbox,Dropdown,Menu} from "tinper-bee";
+
 import Table from '../../src';
 import multiSelect from '../../src/lib/multiSelect';
 import sort from '../../src/lib/sort';
-import Checkbox from 'bee-checkbox';
-import Icon from 'bee-icon';
-import Menu from 'bee-menus';
-import Dropdown from 'bee-dropdown';
-
 
 const { Item } = Menu;
 const SubMenu = Menu.SubMenu;

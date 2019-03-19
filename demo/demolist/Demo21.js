@@ -7,12 +7,11 @@
 
 
 import React, { Component } from 'react';
+import {Icon,Checkbox,Popover} from "tinper-bee";
+
 import Table from '../../src';
 import filterColumn from '../../src/lib/filterColumn';
 import sum from '../../src/lib/sum';
-import Icon from "bee-icon";
-import Checkbox from 'bee-checkbox';
-import Popover from 'bee-popover';
 
 const data21 = [
   { a: "杨过", b: "男", c: 30,d:'内行',e: "操作", key: "2" },

@@ -4,10 +4,10 @@
 * @description 点击列的表头，进行左右拖拽
 */
 import React, { Component } from 'react';
+import {Icon} from "tinper-bee";
+
 import Table from '../../src'; 
 import dragColumn from '../../src/lib/dragColumn';
-
-import Icon from "bee-icon";
 
 const columns22 = [
   {

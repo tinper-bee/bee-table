@@ -4,10 +4,10 @@
 * @description 注：不支持tree结构的表头、合并表头的table【目前支持表头拖拽宽度、交互列一起使用】
 */
 import React, { Component } from 'react';
+import {Icon} from "tinper-bee";
+
 import Table from '../../src'; 
 import dragColumn from '../../src/lib/dragColumn';
-
-import Icon from "bee-icon";
 
 const columns23 = [
   {

@@ -7,9 +7,10 @@
 
 
 import React, { Component } from 'react';
+import {Checkbox} from "tinper-bee";
+
 import Table from '../../src';
 import multiSelect from "../../src/lib/multiSelect.js";
-import Checkbox from 'bee-checkbox';
 
 const columns12 = [
   {
