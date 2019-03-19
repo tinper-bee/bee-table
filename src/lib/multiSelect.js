@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import Checkbox from 'bee-checkbox';
 import {ObjectAssign} from './util';
 /**
  * 参数: 过滤表头
@@ -11,7 +10,7 @@ import {ObjectAssign} from './util';
 
 export default function multiSelect(Table, Checkbox) {
 
-  return class NewMultiSelect extends Component {
+  return class MultiSelect extends Component {
     static defaultProps = {
       prefixCls: "u-table-mult-select",
       getSelectedDataFunc:()=>{}

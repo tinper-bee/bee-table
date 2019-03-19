@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import Checkbox from 'bee-checkbox';
 import {ObjectAssign} from './util';
 /**
  * 参数: 过滤表头

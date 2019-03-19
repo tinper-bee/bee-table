@@ -168,7 +168,6 @@ class TableRow extends Component{
     } = this.props;
     let showSum = false;
     let { className } = this.props;
-
     if (this.state.hovered) {
       className += ` ${clsPrefix}-hover`;
     }
@@ -196,7 +195,7 @@ class TableRow extends Component{
         cells.push(
           <td
             className={`${clsPrefix}-expand-icon-cell`}
-            key="rc-table-expand-icon-cell"
+            key={`rc-table-expand-icon-cell-${i}`}
           >
             {expandIcon}
           </td>
@@ -212,7 +211,7 @@ class TableRow extends Component{
           indent={indent}
           index={index}
           column={columns[i]}
-          key={columns[i].key || columns[i].dataIndex || i}
+          key={index + "_"+(columns[i].key || columns[i].dataIndex || i)}
           fixed= {fixed}
           showSum={showSum}
           expandIcon={(isColumnHaveExpandIcon) ? expandIcon : null}

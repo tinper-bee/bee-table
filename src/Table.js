@@ -637,7 +637,7 @@ class Table extends Component {
           height={height}
           isHiddenExpandIcon={isHiddenExpandIcon}
           {...onHoverProps}
-          key={key}
+          key={"table_row_"+key+"_"+index}
           hoverKey={key}
           ref={rowRef}
           store={this.store}
