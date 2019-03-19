@@ -548,7 +548,7 @@ class Table extends Component {
     const expandIconColumnIndex = fixed !== 'right' ? props.expandIconColumnIndex : -1;
     if(props.lazyLoad && props.lazyLoad.preHeight && indent == 0){
       rst.push(
-        <TableRow height={props.lazyLoad.preHeight} columns={[]} className='' store={this.store} visible = {true}/>
+        <TableRow height={props.lazyLoad.preHeight} columns={[]} className='' key={'table_row_first'} store={this.store} visible = {true}/>
       )
     }
     const lazyCurrentIndex =  props.lazyLoad && props.lazyLoad.startIndex ?props.lazyLoad.startIndex :0;
@@ -669,7 +669,7 @@ class Table extends Component {
 
     if(props.lazyLoad && props.lazyLoad.sufHeight && indent == 0){
       rst.push(
-        <TableRow height={props.lazyLoad.sufHeight} columns={[]} className='' store={this.store} visible = {true}/>
+        <TableRow height={props.lazyLoad.sufHeight} key={'table_row_end'} columns={[]} className='' store={this.store} visible = {true}/>
       )
     }
     return rst;
@@ -678,7 +678,8 @@ class Table extends Component {
   getRows(columns, fixed) {
     //统计index，只有含有鼠表结构才有用，因为数表结构时，固定列的索引取值有问题
     this.treeRowIndex = 0;
-    return this.getRowsByData(this.state.data, true, 0, columns, fixed);
+    let rs = this.getRowsByData(this.state.data, true, 0, columns, fixed);
+    return rs;
   }
 
   getColGroup(columns, fixed) {
