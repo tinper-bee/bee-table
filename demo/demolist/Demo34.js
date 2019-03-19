@@ -59,7 +59,7 @@ const data = [ ...new Array(1000) ].map((e, i) => {
    })
 
 
-class Demo30 extends Component {
+class Demo34 extends Component {
 
   constructor(props) {
     super(props);
@@ -92,4 +92,4 @@ class Demo30 extends Component {
   }
 }
 
-export default Demo30;
+export default Demo34;
