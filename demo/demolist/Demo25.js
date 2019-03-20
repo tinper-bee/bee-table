@@ -1,219 +1,161 @@
 /**
-* @title 根据列进行过滤、拖拽交换列综合使用案例
-* @description 新增属性【checkMinSize 当前表格显示最少列数 】 1. 当所有列都设置了width属性后，需要给table增加checkMinSize属性 2. 所有列不设置width。
-*/
-
-/**注：
- *  在使用过滤列的时候，如果每一列都设置了width属性，勾选的时候回出现重复列问题。当表格的宽度小于合计宽度的时候，就会出现此问题。 
- *  必须有个别列不设置width属性，即可避免此问题。
+ *
+ * @title 表格+搜索
+ * @description 搜索刷新表格数据
+ *
+ *
+ * import {Table} from 'tinper-bee';
  */
-import React, { Component } from 'react';
-import {Icon,Checkbox,Popover} from "tinper-bee";
 
-import Table from '../../src';
-import multiSelect from '../../src/lib/multiSelect';
-import filterColumn from '../../src/lib/filterColumn';
-import dragColumn from "../../src/lib/dragColumn";
-import sum from '../../src/lib/sum';
+import React, { Component } from "react";
+import {Icon,FormControl,InputGroup} from "tinper-bee";
 
- //Cloumns1
-function getCloumns(){
-  const column = [
-      {
-          title: "序号",
-          dataIndex: "index",
-          key: "index",
-          width: 100, 
-      },
-      {
-          title: "订单编号",
-          dataIndex: "orderCode",
-          key: "orderCode",
-          width: 100, 
-      },
-      {
-          title: "供应商名称",
-          dataIndex: "supplierName",
-          key: "supplierName",
-          width: 100
-      },
-      {
-          title: "类型",
-          dataIndex: "type_name",
-          key: "type_name",
-          width: 100
-      },
-      {
-          title: "采购组织",
-          dataIndex: "purchasing",
-          key: "purchasing",
-          width: 100
-      },
-      {
-          title: "采购组",
-          dataIndex: "purchasingGroup",
-          key: "purchasingGroup",
-           width: 300
-      },
-      {
-          title: "凭证日期",
-          dataIndex: "voucherDate",
-          key: "voucherDate",
-          width: 100,
-          
-      },
-      {
-          title: "审批状态",
-          dataIndex: "approvalState_name",
-          key: "approvalState_name",
-          width: 100
-      },
-      {
-          title: "确认状态",
-          dataIndex: "confirmState_name",
-          key: "confirmState_name",
-           width: 100
-      }, 
-      {
-          title: "关闭状态",
-          dataIndex: "closeState_name",
-          key: "closeState_name",
-          width: 100
-      },
-      {
-          title: "操作",
-          dataIndex: "d",
-          key: "d",
-          width:100,
-          fixed: "right",
-          render(text, record, index) {
-              return (
-                  <div className='operation-btn'>
-                    <a href="#"
-                      tooltip={text}
-                      onClick={() => {
-                        alert('这是第'+index+'列，内容为:'+text);
-                      }}
-                    >
-                      一些操作
-                    </a>
-                  </div>
-              )
-          }
-      }
-  ];
-  return column;
-}
+import Table from "../../src";
 
-const dataList = [ 
-  { 
-      index: 1, 
-      orderCode:"2343", 
-      supplierName: "xxx",
-      type_name: "123",
-      purchasing:'内行', 
-      purchasingGroup:"323",
-      voucherDate:"kkkk",
-      approvalState_name:"vvvv",
-      confirmState_name:"aaaa",
-      closeState_name:"vnnnnn",
-      d:"操作",
-      key: "1"
-  }, 
-  { 
-    index: 2, 
-    _checked:true,
-    orderCode:"222", 
-    supplierName: "22xxx",
-    type_name: "1223",
-    purchasing:'内行2', 
-    purchasingGroup:"3223",
-    voucherDate:"222kk",
-    approvalState_name:"22vvvv",
-    confirmState_name:"2aaaa",
-    closeState_name:"2vnnnnn",
-    d:"2操作",
-    key: "2"
-  },
-  { 
-    index: 3, 
-    orderCode:"222", 
-    supplierName: "22xxx",
-    _disabled:true,
-    type_name: "1223",
-    purchasing:'内行2', 
-    purchasingGroup:"3223",
-    voucherDate:"222kk",
-    approvalState_name:"22vvvv",
-    confirmState_name:"2aaaa",
-    closeState_name:"2vnnnnn",
-    d:"3操作",
-    key: "3"
-  },
-  { 
-    index: 4, 
-    orderCode:"222", 
-    supplierName: "22xxx",
-    type_name: "1223",
-    purchasing:'内行2', 
-    purchasingGroup:"3223",
-    voucherDate:"222kk",
-    approvalState_name:"22vvvv",
-    confirmState_name:"2aaaa",
-    closeState_name:"2vnnnnn",
-    d:"4操作",
-    key: "4"
-  },
-]
+class Search extends Component {
+  state = {
+    searchValue: "",
+    empty: false
+  };
 
-const DragColumnTable = filterColumn(dragColumn(multiSelect(Table, Checkbox)),Popover);
+  /**
+     * 搜索
+     */
+  handleSearch = () => {
+    let { onSearch } = this.props;
+    this.setState({
+      empty: true
+    });
+    onSearch && onSearch(this.state.searchValue);
+  };
 
-const defaultProps25 = {
-  prefixCls: "bee-table"
-};
+  /**
+     * 捕获回车
+     * @param e
+     */
+  handleKeyDown = e => {
+    if (e.keyCode === 13) {
+      this.handleSearch();
+    }
+  };
 
-class Demo25 extends Component {
-  constructor(props) {
-    super(props);
-  }
+  /**
+     * 输入框改变
+     * @param e
+     */
+  handleChange = (e) => {
+    this.setState({
+      searchValue: e
+    });
+  };
 
-  getSelectedDataFunc=(data)=>{
-      console.log("data",data);
-  }
- 
-  getCloumnsScroll=(columns)=>{
-    let sum = 0;
-    columns.forEach((da)=>{
-        sum += da.width;
-    })
-    console.log("sum",sum);
-    return (sum);
-  }
-
-  selectedRow=(record, index)=>{
-
-  }
+  /**
+     * 清空输入框
+     */
+  emptySearch = () => {
+    let { onEmpty } = this.props;
+    this.setState({
+      searchValue: "",
+      empty: false
+    });
+    onEmpty && onEmpty();
+  };
 
   render() {
-    let columns = getCloumns();
-    
-    return <div className="demo25">
-            <DragColumnTable 
-                columns={columns}
-                data={dataList} 
-                getSelectedDataFunc={this.getSelectedDataFunc}
-                
-                checkMinSize={7}
-                draggable={true}
-                multiSelect={{type: "checkbox"}}
-                scroll={{x:true, y: 100}}
-                selectedRow={this.selectedRow}
-                // scroll={{x:this.getCloumnsScroll(columns), y: 150}}
-                />
-            </div>
+    return (
+      <InputGroup simple className="search-component">
+        <FormControl
+          onChange={this.handleChange}
+          value={this.state.searchValue}
+          onKeyDown={this.handleKeyDown}
+          placeholder="请输入用户名"
+          type="text"
+        />
+        {this.state.empty ? (
+          <Icon
+            type="uf-close-c"
+            onClick={this.emptySearch}
+            className="empty-search"
+          />
+        ) : null}
+
+        <InputGroup.Button onClick={this.handleSearch} shape="border">
+          <Icon type="uf-search" />
+        </InputGroup.Button>
+      </InputGroup>
+    );
   }
 }
-Demo25.defaultProps = defaultProps25;
 
+const columns9 = [
+  {
+    title: "姓名",
+    dataIndex: "a",
+    key: "a",
+    width: 100
+  },
+  {
+    title: "性别",
+    dataIndex: "b",
+    key: "b",
+    width: 100
+  },
+  {
+    title: "年龄",
+    dataIndex: "c",
+    key: "c",
+    width: 200
+  },
+  {
+    title: "武功级别",
+    dataIndex: "d",
+    key: "d"
+  }
+];
 
-export default Demo25;
+const userData = [
+  { a: "杨过", b: "男", c: 30, d: "内行", key: "2" },
+  { a: "令狐冲", b: "男", c: 41, d: "大侠", key: "1" },
+  { a: "郭靖", b: "男", c: 25, d: "大侠", key: "3" }
+];
+
+class Demo9 extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: userData
+    };
+  }
+
+  handleSearch = value => {
+    if (value === "") {
+      return this.setState({
+        data: userData
+      });
+    }
+    let regExp = new RegExp(value, "ig");
+    let data = userData.filter(item => regExp.test(item.a));
+    this.setState({
+      data
+    });
+  };
+
+  handleEmpty = () => {
+    this.setState({
+      data: userData
+    });
+  };
+
+  render() {
+    return (
+      <div>
+        <div className="clearfix">
+          <Search onSearch={this.handleSearch} onEmpty={this.handleEmpty} />
+        </div>
+        <Table columns={columns9} data={this.state.data} />
+      </div>
+    );
+  }
+}
+
+export default Demo9;

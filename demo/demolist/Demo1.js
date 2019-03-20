@@ -1,6 +1,6 @@
 /**
 *
-* @title 简单表格、文字过长，两种tip
+* @title 基本用法
 * 【Tooltip】
 * @description
 */

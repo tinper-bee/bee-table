@@ -1,58 +1,133 @@
 /**
-*
-* @title 简单表格选中行的背景色、表头表尾
-* @description
-*/
+ *
+ * @title 多功能表格
+ * @description 多列排序、全选功能、合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）新增回调函数(sorterClick)
+ *
+ */
 
 import React, { Component } from "react";
-import {Button,Tooltip,} from "tinper-bee";
-
+import {Checkbox,Button,Icon} from "tinper-bee";
 import Table from "../../src";
+import multiSelect from "../../src/lib/multiSelect.js";
+import sort from "../../src/lib/sort.js";
+import sum from "../../src/lib/sum.js";
 
-const columns = [
-  { title: "用户名", dataIndex: "a", key: "a", width:80 , className:"rowClassName"},
-  { id: "123", title: "性别", dataIndex: "b", key: "b", width: 100 },
-  { title: "年龄", dataIndex: "c", key: "c", width: 200 },
-];
-
-const data = [
-  { a: "令狐冲", b: "男", c: 41, key: "1" },
-  { a: "杨过叔叔的女儿黄蓉", b: "男", c: 67, key: "2" },
-  { a: "郭靖", b: "男", c: 25, key: "3" }
-];
-
-class Demo26 extends Component {
-
-  constructor(props){
-      super(props);
-      this.state = {
-        data: data,
-        selectedRowIndex: 0
-      }
+const columns13 = [
+  {
+    title: "名字",
+    dataIndex: "a",
+    key: "a",
+    className:'dfasd',
+    width: 200
+  },
+  {
+    title: "功力指数",
+    dataIndex: "b",
+    key: "b",
+    width: 200,
+    sumCol: true,
+    sorter: (a, b) => a.c - b.c,
+    sorterClick:(data,type)=>{//排序的回调函数
+      //type value is up or down
+      console.log("data",data);
+    }
+  },
+  {
+    title: "年龄",
+    dataIndex: "c",
+    key: "c",
+    width: 200,
+    sumCol: true,
+    sorter: (a, b) => a.c - b.c,
+    sorterClick:(data,type)=>{//排序的回调函数
+      //type value is up or down
+      console.log("data",data);
+    }
+  },
+  {
+    title: "成绩",
+    dataIndex: "e",
+    key: "e",
+    width: 200,
+    sumCol: true,
+    sorter: (a, b) => a.c - b.c,
+  },
+  {
+    title: "武功级别",
+    dataIndex: "d",
+    key: "d",
+    width: 200
   }
+];
+
+const data13 = [
+  { a: "杨过", b: 675, c: 30, d: "内行",e:100, key: "2" },
+  { a: "令狐冲", b: 43, c: 41, d: "大侠",e:90, key: "1" },
+  { a: "令狐冲1", b: 43, c: 81, d: "大侠", e:120,key: "4" },
+  { a: "令狐冲2", b: 43, c: 81, d: "大侠", e:130,key: "5" },
+  { a: "郭靖", b: 153, c: 25, d: "大侠",e:90, key: "3" }
+];
+
+
+//拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常
+let ComplexTable = multiSelect(sum(sort(Table, Icon)), Checkbox);
+
+class Demo13 extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data13: data13,
+      selectedRow: this.selectedRow,
+      selectDisabled: this.selectDisabled
+    };
+  }
+  getSelectedDataFunc = data => {
+    console.log(data);
+  };
+  selectDisabled = (record, index) => {
+    // console.log(record);
+    if (index === 1) {
+      return true;
+    }
+    return false;
+  };
+  selectedRow = (record, index) => {
+    // console.log(record);
+    if (index === 0) {
+      return true;
+    }
+    return false;
+  };
+  onClick = () => {
+    this.setState({
+      selectedRow: function() {}
+    });
+  };
 
   render() {
+    let multiObj = {
+      type: "checkbox"
+    };
+    let sortObj = {
+      mode:'multiple'
+    }
+   
     return (
-      <Table
-        columns={columns}
-        data={data}
-        rowClassName={(record,index,indent)=>{
-          if (this.state.selectedRowIndex == index) {
-              return 'selected';
-          } else {
-              return '';
-          }
-        }}
-        onRowClick={(record,index,indent)=>{
-          this.setState({ 
-              selectedRowIndex: index
-          });
-        }}
-        title={currentData => <div>标题: 这是一个标题</div>}
-        footer={currentData => <div>表尾: 我是小尾巴</div>}
-      /> 
+      <div>
+        <Button className="editable-add-btn" onClick={this.onClick}>
+          change selectedRow
+        </Button>
+        <ComplexTable
+          selectDisabled={this.state.selectDisabled}
+          selectedRow={this.state.selectedRow}
+          columns={columns13}
+          data={this.state.data13}
+          multiSelect={multiObj}
+          sort={sortObj}
+          getSelectedDataFunc={this.getSelectedDataFunc}
+        />
+      </div>
     );
   }
 }
-
-export default Demo26;
+export default Demo13;

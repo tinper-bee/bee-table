@@ -1,83 +1,146 @@
 /**
 *
-* @title 列排序,后端排序
+* @title 嵌套子表格滚动加载
+* @description 通过expandedRowRender参数来实现子表格
 *
 */
 
-
-import React, { Component } from 'react';
-import {Icon} from "tinper-bee";
-import Table from '../../src';
-import sort from "../../src/lib/sort.js";
-let ComplexTable = sort(Table, Icon);
-
-const columns11 = [
+import React, { Component } from "react";
+import Table from "../../src";
+import BigData from "../../src/lib/bigData";
+const BigDataTable = BigData(Table);
+const outColumns = [
   {
-    title: "名字",
-    dataIndex: "a",
-    key: "a",
-    width: 100
-  },
-  {
-    title: "性别",
-    dataIndex: "b",
-    key: "b",
-    width: 100
-  },
-  {
-    title: "年龄",
-    dataIndex: "c",
-    key: "c",
-    width: 200,
-    sorter: (a, b) => a.c - b.c
-  },
-  {
-    title: "武功级别",
+    title: "操作",
     dataIndex: "d",
-    key: "d"
+    key: "d", 
+    width:200,
+    render(text, record, index) {
+      return (
+        <a
+          href="#"
+          onClick={() => {
+            alert("这是第" + index + "列，内容为:" + text);
+          }}
+        >
+          一些操作
+        </a>
+      );
+    }
   },
+  { title: "用户名", dataIndex: "a", key: "a", width: 250 },
+  { id: "123", title: "性别", dataIndex: "b", key: "b", width: 100 },
+  { title: "年龄", dataIndex: "c", key: "c", width: 200 },
+  
+];
+const innerColumns = [
   {
-    title: "分数",
-    dataIndex: "e",
-    key: "e",
-    sorter: (a, b) => a.c - b.c
+    title: "操作",
+    dataIndex: "d",
+    key: "d",
+    width:200,
+    render(text, record, index) {
+      return (
+        <a
+          href="#"
+          onClick={() => {
+            alert("这是第" + index + "列，内容为:" + text);
+          }}
+        >
+          {'一些操作'+index}
+        </a>
+      );
+    }
   },
+  { title: "用户名", dataIndex: "a", key: "a", width: 100 },
+  { id: "123", title: "性别", dataIndex: "b", key: "b", width: 100 },
+  { title: "年龄", dataIndex: "c", key: "c", width: 200 },
+  
 ];
 
-const data11 = [
-  { a: "杨过", b: "男", c: 30,d:'内行', e:139,key: "2" },
-  { a: "令狐冲", b: "男", c: 41,d:'大侠', e:109, key: "1" },
-  { a: "郭靖", b: "男", c: 25,d:'大侠', e:159, key: "3" }
-];
+const data16 = [ ...new Array(10000) ].map((e, i) => {
+    return { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };
+   })
 
-const defaultProps = {
-  prefixCls: "bee-table"
-};
-class Demo28 extends Component {
-  constructor(props) {
+
+
+
+
+class Demo31 extends Component {
+  constructor(props){
     super(props);
-    this.state = {
-      sortOrder: "",
-      data: data11
-    };
+    this.state={
+      data_obj:{
+        0:[
+          { a: "令狐冲", b: "男", c: 41, d: "操作", key: "1" },
+          { a: "杨过", b: "男", c: 67, d: "操作", key: "2" }
+        ],
+        1: [
+          { a: "令狐冲", b: "男", c: 41, d: "操作", key: "1" },
+          { a: "菲菲", b: "nv", c: 67, d: "操作", key: "2" }
+        ],
+      }
+    }
   }
-  /**
-   * 后端获取数据
-   */
-  sortFun = (sortParam)=>{
-    console.info(sortParam);
-    //将参数传递给后端排序
+  expandedRowRender = (record, index, indent) => {
+    let height = 200;
+    let innderData = [ ...new Array(100) ].map((e, i) => {
+      return { a: index+"-"+ i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key:  index+"-"+ i };
+     })
+    return (
+      <Table
+        
+        columns={innerColumns}
+        scroll={{y:height}}
+        data={innderData} 
+
+      />
+    );
+  };
+  getData=(expanded, record)=>{
+    //当点击展开的时候才去请求数据
+    let new_obj = Object.assign({},this.state.data_obj);
+    if(expanded){
+      if(record.key==='1'){
+        new_obj[record.key] = [
+          { a: "令狐冲", b: "男", c: 41, d: "操作", key: "1" },
+          { a: "杨过", b: "男", c: 67, d: "操作", key: "2" }
+        ]
+        this.setState({
+          data_obj:new_obj
+        })
+      }else{
+        new_obj[record.key] = [
+          { a: "令狐冲", b: "男", c: 41, d: "操作", key: "1" },
+          { a: "菲菲", b: "nv", c: 67, d: "操作", key: "2" }
+        ]
+        this.setState({
+          data_obj:new_obj
+        })
+      }
+    }
+  }
+  haveExpandIcon=(record, index)=>{
+    //控制是否显示行展开icon，该参数只有在和expandedRowRender同时使用才生效
+    if(index == 0){
+      return true;
+    }
+    return false;
   }
   render() {
-    let sortObj = {
-      mode:'multiple',
-      backSource:true,
-      sortFun:this.sortFun
-    }
-    return <ComplexTable columns={columns11} data={this.state.data} sort={sortObj}/>;
+    return (
+      <BigDataTable
+        columns={outColumns}
+        data={data16}
+        onExpand={this.getData}
+        expandedRowRender={this.expandedRowRender}
+        scroll={{y:350}}
+        // defaultExpandedRowKeys={[0,1]}
+        title={currentData => <div>标题: 这是一个标题</div>}
+        footer={currentData => <div>表尾: 我是小尾巴</div>}
+      />
+    );
   }
 }
-Demo28.defaultProps = defaultProps;
 
-
-export default Demo28;
+export default Demo31;

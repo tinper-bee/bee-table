@@ -1,221 +1,122 @@
 /**
 *
-* @title 编辑态表格
-* @description 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）
+* @title 表格行、列合并
+* @description 表头只支持列合并，使用 column 里的 colSpan 进行设置。表格支持行/列合并，使用 render 里的单元格属性 colSpan 或者 rowSpan 设值为 0 时，设置的表格不会渲染。
 *
 */
-import React from "react";
-import {Button,Animate,FormControl as Input,Tooltip,Icon,Form,Select} from "tinper-bee";
+
+import React, { Component } from "react";
 import Table from "../../src";
-import renderInput from "../../build/render/InputRender.js";
-import renderSelect from "../../build/render/SelectRender.js";
 
-const InputRender = renderInput(Form, Input, Icon);
-const SelectRender = renderSelect(Select, Icon);
-
-const Option = Select.Option;
-
-const dataSource = [
-  {
-    key: "boyuzhou",
-    value: "jack"
-  },
-  {
-    key: "renhualiu",
-    value: "lucy"
-  },
-  {
-    key: "yuzhao",
-    value: "yiminghe"
+const renderContent = (value, row, index) => {
+  const obj = {
+    children: value,
+    props: {},
+  };
+  if (index === 4) {
+    obj.props.colSpan = 0;
   }
-];
-class Demo19 extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dataSource: [
-        {
-          key: "0",
-          name: "沉鱼",
-          number: "10",
-          age: "y",
-          address: "jack",
-          datepicker: "2017-06-12",
-          MonthPicker: "2017-02"
-        },
-        {
-          key: "1",
-          name: "落雁",
-          number: "100",
-          age: "y",
-          address: "lucy",
-          datepicker: "2017-06-12",
-          MonthPicker: "2017-02"
-        },
-        {
-          key: "2",
-          name: "闭月",
-          number: "1000",
-          age: "n",
-          address: "lucy",
-          datepicker: "2017-06-12",
-          MonthPicker: "2017-02"
-        },
-        {
-          key: "3",
-          name: "羞花",
-          number: "9999",
-          age: "y",
-          address: "lucy",
-          datepicker: "2017-06-12",
-          MonthPicker: "2017-02"
-        }
-      ],
-      count: 4
-    };
-    this.columns = [ 
-      {
-        title: "货币输入",
-        dataIndex: "number",
-        key: "number",
-        width: "150px",
-        render: (text, record, index) => (
-          <InputRender
-            format="Currency"
-            name="name"
-            placeholder="请输入姓名"
-            value={text}
-            isclickTrigger={true}
-            check={this.check}
-            onChange={this.onInputChange(index, "name")}
-            isRequire={true}
-            method="blur"
-            errorMessage={
-              <Tooltip overlay={"错误提示"}>
-                <Icon type="uf-exc-c" className="" />
-              </Tooltip>
-            }
-            reg={/^[0-9]+$/}
-          />
-        )
+  return obj;
+};
+
+const columns = [{
+  title: 'Name',
+  key: "name",
+  dataIndex: 'name',
+  render: (text, row, index) => {
+    if (index < 4) {
+      return <a href="#">{text}</a>;
+    }
+    return {
+      children: <a href="#">{text}</a>,
+      props: {
+        colSpan: 5,
       },
-       
-      {
-        title:(<div>下拉框的div</div>),
-        dataIndex: "address",
-        key: "address",
-        width: "200px",
-        render: (text, record, index) => {
-          return (
-            <SelectRender
-              dataSource={dataSource}
-              isclickTrigger={true}
-              value={text}
-              onChange={this.onSelectChange(index, "address")}
-              onFocus={this.handFocus}
-              onBlur={this.onBlur}
-              size="sm"
-              autofocus
-            >
-              <Option value="jack">boyuzhou</Option>
-              <Option value="lucy">renhualiu</Option>
-              <Option value="disabled" disabled>
-                Disabled
-              </Option>
-              <Option value="yiminghe">yuzhao</Option>
-            </SelectRender>
-          );
-        }
-      }
-    ];
-  }
-  check = (flag, obj) => {
-    console.log(flag);
-    console.log(obj);
-  };
-
-  handFocus = (value,e) => {
-    console.log(value+` 获取焦点事件`);
-  };
-  onBlur = (value,e) => {
-    console.log(value+` onBlur`);
-  };
-
-  onInputChange = (index, key) => {
-    return value => {
-      const dataSource = [...this.state.dataSource];
-      dataSource[index][key] = value;
-      this.setState({ dataSource });
     };
-  };
-
-  onSelectChange = (index, key) => {
-    return value => {
-      console.log(`selected ${value}`);
-      const dataSource = [...this.state.dataSource];
-      dataSource[index][key] = value;
-      this.setState({ dataSource });
+  },
+}, {
+  title: 'Age',
+  key: "Age",
+  dataIndex: 'age',
+  render: renderContent,
+}, {
+  title: 'Home phone',
+  colSpan: 2,
+  key: "tel",
+  dataIndex: 'tel',
+  render: (value, row, index) => {
+    const obj = {
+      children: value,
+      props: {},
     };
-  };
+    if (index === 2) {
+      obj.props.rowSpan = 2;
+    }
+    if (index === 3) {
+      obj.props.rowSpan = 0;
+    }
+    if (index === 4) {
+      obj.props.colSpan = 0;
+    }
+    return obj;
+  },
+}, {
+  title: 'Phone',
+  colSpan: 0,
+  key: "phone",
+  dataIndex: 'phone',
+  render: renderContent,
+}, {
+  title: 'Address',
+  key: "address",
+  dataIndex: 'address',
+  render: renderContent,
+}];
 
-  handleAdd = () => {
-    const { count, dataSource } = this.state;
-    const newData = {
-      key: count,
-      name: `凤姐 ${count}`,
-      age: 32,
-      address: "jack",
-      datepicker: "2017-06-12",
-      MonthPicker: "2017-02"
-    };
-    this.setState({
-      dataSource: [...dataSource, newData],
-      count: count + 1
-    });
-  };
+const data = [{
+  key: '1',
+  name: 'John Brown',
+  age: 32,
+  tel: '0571-22098909',
+  phone: 18889898989,
+  address: 'New York No. 1 Lake Park',
+}, {
+  key: '2',
+  name: 'Jim Green',
+  tel: '0571-22098333',
+  phone: 18889898888,
+  age: 42,
+  address: 'London No. 1 Lake Park',
+}, {
+  key: '3',
+  name: 'Joe Black',
+  age: 32,
+  tel: '0575-22098909',
+  phone: 18900010002,
+  address: 'Sidney No. 1 Lake Park',
+}, {
+  key: '4',
+  name: 'Jim Red',
+  age: 18,
+  tel: '0575-22098909',
+  phone: 18900010002,
+  address: 'London No. 2 Lake Park',
+}, {
+  key: '5',
+  name: 'Jake White',
+  age: 18,
+  tel: '0575-22098909',
+  phone: 18900010002,
+  address: 'Dublin No. 2 Lake Park',
+}];
 
-  getBodyWrapper = body => {
-    return (
-      <Animate
-        transitionName="move"
-        component="tbody"
-        className={body.props.className}
-      >
-        {body.props.children}
-      </Animate>
-    );
-  };
-  getData = () => {
-    console.log(this.state.dataSource);
-  };
+class Demo15 extends Component {
   render() {
-    const { dataSource } = this.state;
-    const columns = this.columns;
     return (
-      <div>
-        <Button
-          className="editable-add-btn"
-          type="ghost"
-          onClick={this.handleAdd}
-        >
-          添加一行
-        </Button>
-        <Button
-          style={{marginLeft:"5px"}}
-          className="editable-add-btn"
-          type="ghost"
-          onClick={this.getData}
-        >
-          获取数据
-        </Button>
-        <Table
-          data={dataSource}
-          columns={columns}
-          getBodyWrapper={this.getBodyWrapper}
-        />
-      </div>
+       <Table columns={columns} data={data}/>
     );
   }
 }
 
-export default Demo19;
+
+export default Demo15;

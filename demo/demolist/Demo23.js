@@ -1,77 +1,85 @@
 /**
-*
-* @title 拖拽调整列的宽度
-* @description 注：不支持tree结构的表头、合并表头的table【目前支持表头拖拽宽度、交互列一起使用】
-*/
-import React, { Component } from 'react';
-import {Icon} from "tinper-bee";
+ *
+ * @title 主子表
+ * @description 主表点击子表联动
+ *
+ */
 
-import Table from '../../src'; 
-import dragColumn from '../../src/lib/dragColumn';
+import React, { Component } from "react";
+import Table from "../../src";
 
-const columns23 = [
-  {
-    title: "名字",
-    dataIndex: "a",
-    key: "a",
-    width: '200',
-    fixed:'left'
-  },
-  {
-    title: "性别",
-    dataIndex: "b",
-    key: "b",
-    width: '600'
-  },
-  {
-    title: "年龄",
-    dataIndex: "c",
-    key: "c",
-    width: '200',
-    sumCol: true,
-    sorter: (a, b) => a.c - b.c
-  }, 
+const columns7 = [
+  { title: "班级", dataIndex: "a", key: "a" },
+  { title: "人数", dataIndex: "b", key: "b" },
+  { title: "班主任", dataIndex: "c", key: "c" },
   {
     title: "武功级别",
     dataIndex: "d",
-    key: "d",
-    width: 500,
+    key: "d"
   }
 ];
 
-const data23 = [
-  { a: "杨过", b: "男", c: 30,d:'内行', key: "2" },
-  { a: "令狐冲", b: "男", c: 41,d:'大侠', key: "1" },
-  { a: "郭靖", b: "男", c: 25,d:'大侠', key: "31" } , { a: "杨过", b: "男", c: 30,d:'内行', key: "21" },
-  { a: "令狐冲", b: "男", c: 41,d:'大侠', key: "11" },
-  { a: "郭靖", b: "男", c: 25,d:'大侠', key: "32" } , { a: "杨过", b: "男", c: 30,d:'内行', key: "22" },
-  { a: "令狐冲", b: "男", c: 41,d:'大侠', key: "12" },
-  { a: "郭靖", b: "男", c: 25,d:'大侠', key: "3" }
+const data7 = [
+  { a: "02级一班", b: "2", c: "欧阳锋", d: "大侠", key: "1" },
+  { a: "03级二班", b: "3", c: "归海一刀", d: "大侠", key: "2" },
+  { a: "05级三班", b: "1", c: "一拳超人", d: "愣头青", key: "3" }
 ];
 
-const DragColumnTable = dragColumn(Table);
+const columns7_1 = [
+  { title: "姓名", dataIndex: "a", key: "a" },
+  { title: "班级", dataIndex: "b", key: "b" },
+  { title: "系别", dataIndex: "c", key: "c" }
+];
 
-const defaultProps23 = {
-  prefixCls: "bee-table"
-};
-
-class Demo23 extends Component {
+class Demo7 extends Component {
   constructor(props) {
-    super(props); 
+    super(props);
+    this.state = {
+      children_data: []
+    };
   }
+
+  rowclick = (record, index) => {
+    if (record.a === "02级一班") {
+      this.setState({
+        children_data: [
+          { a: "郭靖", b: "02级一班", c: "文学系", key: "1" },
+          { a: "黄蓉", b: "02级一班", c: "文学系", key: "2" }
+        ]
+      });
+    } else if (record.a === "03级二班") {
+      this.setState({
+        children_data: [
+          { a: "杨过", b: "03级二班", c: "外语系", key: "1" },
+          { a: "小龙女", b: "03级二班", c: "外语系", key: "2" },
+          { a: "傻姑", b: "03级二班", c: "外语系", key: "3" }
+        ]
+      });
+    } else if (record.a === "05级三班") {
+      this.setState({
+        children_data: [{ a: "金圣叹", b: "05级三班", c: "美术系", key: "1" }]
+      });
+    }
+  };
 
   render() {
-    return <DragColumnTable columns={columns23} data={data23} bordered
-    dragborder={true} 
-    draggable={true} 
-    scroll={{y:200}}
-    onDropBorder ={(e,width)=>{
-      console.log(width+"--调整列宽后触发事件",e.target);
-    }}
-    />;
+    return (
+      <div>
+        <Table
+          columns={columns7}
+          data={data7}
+          onRowClick={this.rowclick}
+          title={currentData => <div>标题: 我是主表</div>}
+        />
+        <Table
+          style={{ marginTop: 40 }}
+          columns={columns7_1}
+          data={this.state.children_data}
+          title={currentData => <div>标题: 我是子表</div>}
+        />
+      </div>
+    );
   }
 }
-Demo23.defaultProps = defaultProps23;
 
-
-export default Demo23;
+export default Demo7;

@@ -1,68 +1,58 @@
 /**
 *
-* @title 列的拖拽，交换表头的顺序
-* @description 点击列的表头，进行左右拖拽
+* @title 选中行颜色、表头表体
+* @description
 */
-import React, { Component } from 'react';
-import {Icon} from "tinper-bee";
 
-import Table from '../../src'; 
-import dragColumn from '../../src/lib/dragColumn';
+import React, { Component } from "react";
+import {Button,Tooltip,} from "tinper-bee";
 
-const columns22 = [
-  {
-    title: "名字",
-    dataIndex: "a",
-    key: "a",
-    width: 100
-  },
-  {
-    title: "性别",
-    dataIndex: "b",
-    key: "b",
-    width: 200
-  },
-  {
-    title: "年龄",
-    dataIndex: "c",
-    key: "c",
-    width: 200,
-    sumCol: true,
-    sorter: (a, b) => a.c - b.c
-  },
-  {
-    title: "武功级别",
-    dataIndex: "d",
-    key: "d",
-    width: 200,
-  }
+import Table from "../../src";
+
+const columns = [
+  { title: "用户名", dataIndex: "a", key: "a", width:80 , className:"rowClassName"},
+  { id: "123", title: "性别", dataIndex: "b", key: "b", width: 100 },
+  { title: "年龄", dataIndex: "c", key: "c", width: 200 },
 ];
 
-const data22 = [
-  { a: "杨过", b: "男", c: 30,d:'内行', key: "2" },
-  { a: "令狐冲", b: "男", c: 41,d:'大侠', key: "1" },
-  { a: "郭靖", b: "男", c: 25,d:'大侠', key: "3" }
+const data = [
+  { a: "令狐冲", b: "男", c: 41, key: "1" },
+  { a: "杨过叔叔的女儿黄蓉", b: "男", c: 67, key: "2" },
+  { a: "郭靖", b: "男", c: 25, key: "3" }
 ];
 
-const DragColumnTable = dragColumn(Table);
+class Demo26 extends Component {
 
-const defaultProps22 = {
-  prefixCls: "bee-table"
-};
-
-class Demo22 extends Component {
-  constructor(props) {
-    super(props); 
+  constructor(props){
+      super(props);
+      this.state = {
+        data: data,
+        selectedRowIndex: 0
+      }
   }
- 
+
   render() {
-    return <DragColumnTable columns={columns22} data={data22} bordered
-    
-    draggable={true} 
-    />;
+    return (
+      <Table
+        columns={columns}
+        data={data}
+        rowClassName={(record,index,indent)=>{
+          if (this.state.selectedRowIndex == index) {
+              return 'selected';
+          } else {
+              return '';
+          }
+        }}
+        onRowClick={(record,index,indent)=>{
+          this.setState({ 
+              selectedRowIndex: index
+          });
+        }}
+        title={currentData => <div>标题: 这是一个标题</div>}
+        footer={currentData => <div>表尾: 我是小尾巴</div>}
+      /> 
+    );
   }
 }
-Demo22.defaultProps = defaultProps22;
 
-
-export default Demo22;
+export default Demo26;

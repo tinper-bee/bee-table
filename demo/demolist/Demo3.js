@@ -1,120 +1,108 @@
 /**
- *
- * @title 表头分组并自定义表头高度
- * @description columns[n] 可以内嵌 children，以渲染分组表头。
- * 自定义表头高度需要传headerHeight，注：修改th的padding top和bottom置为0，否则会有影响
- *
- */
+*
+* @title 列过滤
+* @description 点击表格右侧按钮，进行表格列的数据过滤。可以自定义设置显示某列，通过ifshow属性控制，默认为true都显示。afterFilter为过滤之后的回调函数
+*
+*/
 
-import React, { Component } from "react";
-import Table from "../../src";
-import {Button} from "tinper-bee";
 
-const { ColumnGroup, Column } = Table;
+import React, { Component } from 'react';
+import {Icon,Checkbox,Popover} from "tinper-bee";
 
-const columns = [
-  {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    width: 100,
-    fixed: "left"
-  },
-  {
-    title: "Other",
-    width:600,
-    children: [
-      {
-        title: "Age",
-        dataIndex: "age",
-        key: "age",
-        width: 200
-      },
-      {
-        title: "Address",
-        children: [
-          {
-            title: "Street",
-            dataIndex: "street",
-            key: "street",
-            width: 200
-          },
-          {
-            title: "Block",
-            children: [
-              {
-                title: "Building",
-                dataIndex: "building",
-                key: "building",
-                width: 100
-              },
-              {
-                title: "Door No.",
-                dataIndex: "number",
-                key: "number",
-                width: 100
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    title: "Company",
-    width:400,
-    children: [
-      {
-        title: "Company Address",
-        dataIndex: "companyAddress",
-        key: "companyAddress",
-        width:200,
-      },
-      {
-        title: "Company Name",
-        dataIndex: "companyName",
-        key: "companyName",
-        width:200,
-      }
-    ]
-  },
-  {
-    title: "Gender",
-    dataIndex: "gender",
-    key: "gender",
-    width: 60,
-    fixed: "right"
-  }
+import Table from '../../src';
+import filterColumn from '../../src/lib/filterColumn';
+import sum from '../../src/lib/sum';
+
+const data21 = [
+  { a: "杨过", b: "男", c: 30,d:'内行',e: "操作", key: "2" },
+  { a: "令狐冲", b: "男", c: 41,d:'大侠',e: "操作", key: "1" },
+  { a: "郭靖", b: "男", c: 25,d:'大侠',e: "操作", key: "3" }
 ];
 
-const data = [];
-for (let i = 0; i < 20; i++) {
-  data.push({
-    key: i,
-    name: "John Brown",
-    age: i + 1,
-    street: "Lake Park",
-    building: "C",
-    number: 2035,
-    companyAddress: "Lake Street 42",
-    companyName: "SoftLake Co",
-    gender: "M"
-  });
-}
+const FilterColumnTable = filterColumn(Table, Popover, Icon);
 
-class Demo3 extends Component {
+const defaultProps21 = {
+  prefixCls: "bee-table"
+};
+
+class Demo21 extends Component {
+  constructor(props) {
+    super(props);
+    this.state ={
+              columns21: [
+                {
+                  title: "名字",
+                  dataIndex: "a",
+                  key: "a"
+                  // width: 100
+                },
+                {
+                  title: "性别",
+                  dataIndex: "b",
+                  key: "b",
+                  // width: 100
+                },
+                {
+                  title: "年龄",
+                  dataIndex: "c",
+                  key: "c",
+                  ifshow:false,
+                  // width: 200,
+                  // sumCol: true,
+                  sorter: (a, b) => a.c - b.c
+                },
+                {
+                  title: "武功级别",
+                  dataIndex: "d",
+                  key: "d"
+                },
+                {
+                  title: "操作",
+                  dataIndex: "e",
+                  key: "e",
+                  render(text, record, index){
+                    return (
+                      <div  title={text} >
+                          <a href="#"
+                              tooltip={text}
+                              onClick={() => {
+                                alert('这是第'+index+'列，内容为:'+text);
+                              }}
+                              // style={{
+                              //     position: 'absolute',
+                              //     top: 5,
+                              //     left: 0
+                              // }}
+                            >
+                              一些操作
+                            </a>
+                      </div>
+                    );
+                  }
+                }
+              ]};
+  }
+  afterFilter = (optData,columns)=>{
+    if(optData.key == 'b'){
+        if(optData.ifshow){
+          columns[2].ifshow = false;
+        }else{
+          columns[2].ifshow = true;
+        }
+        this.setState({
+          columns21 :columns,
+          showFilterPopover:true
+        });
+    }
+    
+  }
+ 
   render() {
-    return (
-      <Table
-        className={'demo3'}
-        columns={columns}
-        data={data}
-        headerHeight={40} //自定义表头高度
-        bordered
-        scroll={{ y: 240 }}
-      />
-    );
+    
+    return <FilterColumnTable columns={this.state.columns21} data={data21} afterFilter={this.afterFilter} showFilterPopover={this.state.showFilterPopover}/>;
   }
 }
+Demo21.defaultProps = defaultProps21;
 
-export default Demo3;
+
+export default Demo21;

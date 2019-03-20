@@ -1,85 +1,82 @@
 /**
- *
- * @title 主子表
- * @description 主表点击子表联动
- *
- */
+* @title 后端列排序
+*
+*/
 
-import React, { Component } from "react";
-import Table from "../../src";
 
-const columns7 = [
-  { title: "班级", dataIndex: "a", key: "a" },
-  { title: "人数", dataIndex: "b", key: "b" },
-  { title: "班主任", dataIndex: "c", key: "c" },
+import React, { Component } from 'react';
+import {Icon} from "tinper-bee";
+import Table from '../../src';
+import sort from "../../src/lib/sort.js";
+let ComplexTable = sort(Table, Icon);
+
+const columns11 = [
+  {
+    title: "名字",
+    dataIndex: "a",
+    key: "a",
+    width: 100
+  },
+  {
+    title: "性别",
+    dataIndex: "b",
+    key: "b",
+    width: 100
+  },
+  {
+    title: "年龄",
+    dataIndex: "c",
+    key: "c",
+    width: 200,
+    sorter: (a, b) => a.c - b.c
+  },
   {
     title: "武功级别",
     dataIndex: "d",
     key: "d"
-  }
+  },
+  {
+    title: "分数",
+    dataIndex: "e",
+    key: "e",
+    sorter: (a, b) => a.c - b.c
+  },
 ];
 
-const data7 = [
-  { a: "02级一班", b: "2", c: "欧阳锋", d: "大侠", key: "1" },
-  { a: "03级二班", b: "3", c: "归海一刀", d: "大侠", key: "2" },
-  { a: "05级三班", b: "1", c: "一拳超人", d: "愣头青", key: "3" }
+const data11 = [
+  { a: "杨过", b: "男", c: 30,d:'内行', e:139,key: "2" },
+  { a: "令狐冲", b: "男", c: 41,d:'大侠', e:109, key: "1" },
+  { a: "郭靖", b: "男", c: 25,d:'大侠', e:159, key: "3" }
 ];
 
-const columns7_1 = [
-  { title: "姓名", dataIndex: "a", key: "a" },
-  { title: "班级", dataIndex: "b", key: "b" },
-  { title: "系别", dataIndex: "c", key: "c" }
-];
-
-class Demo7 extends Component {
+const defaultProps = {
+  prefixCls: "bee-table"
+};
+class Demo28 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      children_data: []
+      sortOrder: "",
+      data: data11
     };
   }
-
-  rowclick = (record, index) => {
-    if (record.a === "02级一班") {
-      this.setState({
-        children_data: [
-          { a: "郭靖", b: "02级一班", c: "文学系", key: "1" },
-          { a: "黄蓉", b: "02级一班", c: "文学系", key: "2" }
-        ]
-      });
-    } else if (record.a === "03级二班") {
-      this.setState({
-        children_data: [
-          { a: "杨过", b: "03级二班", c: "外语系", key: "1" },
-          { a: "小龙女", b: "03级二班", c: "外语系", key: "2" },
-          { a: "傻姑", b: "03级二班", c: "外语系", key: "3" }
-        ]
-      });
-    } else if (record.a === "05级三班") {
-      this.setState({
-        children_data: [{ a: "金圣叹", b: "05级三班", c: "美术系", key: "1" }]
-      });
-    }
-  };
-
+  /**
+   * 后端获取数据
+   */
+  sortFun = (sortParam)=>{
+    console.info(sortParam);
+    //将参数传递给后端排序
+  }
   render() {
-    return (
-      <div>
-        <Table
-          columns={columns7}
-          data={data7}
-          onRowClick={this.rowclick}
-          title={currentData => <div>标题: 我是主表</div>}
-        />
-        <Table
-          style={{ marginTop: 40 }}
-          columns={columns7_1}
-          data={this.state.children_data}
-          title={currentData => <div>标题: 我是子表</div>}
-        />
-      </div>
-    );
+    let sortObj = {
+      mode:'multiple',
+      backSource:true,
+      sortFun:this.sortFun
+    }
+    return <ComplexTable columns={columns11} data={this.state.data} sort={sortObj}/>;
   }
 }
+Demo28.defaultProps = defaultProps;
 
-export default Demo7;
+
+export default Demo28;

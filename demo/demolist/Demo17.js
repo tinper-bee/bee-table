@@ -1,6 +1,6 @@
 /**
 *
-* @title loading属性指定表格是否加载中
+* @title loading表格
 * @description  loading可以传boolean或者obj对象，obj为bee-loading组件的参数类型
 *
 */

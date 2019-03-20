@@ -1,81 +1,66 @@
 /**
-*
-* @title 固定表头
-* @description 方便一页内展示大量数据。需要指定 column 的 width 属性，否则列头和内容可能不对齐。(还可以设置scroll来支持横向或纵向滚动)
+* @title 列排序
+* @description  column中增加sorter: (a, b) => a.c - b.c 这里的a,b代表前后两个数据，c代表比较当前对象的字段名称
 *
 */
 
 
 import React, { Component } from 'react';
+import {Icon} from "tinper-bee";
 import Table from '../../src';
-import dragColumn from "../../src/lib/dragColumn";;
-const DragColumnTable = dragColumn(Table);
+import sort from "../../src/lib/sort.js";
 
-const columns6 = [
+let ComplexTable = sort(Table, Icon);
+const columns11 = [
   {
-    title: "Full Name",
-    width: 100,
-    dataIndex: "name",
-    key: "name"
-  },
-  { title: "Age", width: 100, dataIndex: "age", key: "age"},
-  { title: "Address", dataIndex: "address", key: "1" }
-];
-
-const data6 = [
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York Park"
+    title: "名字",
+    dataIndex: "a",
+    key: "a",
+    width: 100
   },
   {
-    key: "2",
-    name: "Jim Green",
-    age: 40,
-    address: "London Park"
+    title: "性别",
+    dataIndex: "b",
+    key: "b",
+    width: 100
   },
   {
-    key: "3",
-    name: "Jim Green",
-    age: 40,
-    address: "London Park"
+    title: "年龄",
+    dataIndex: "c",
+    key: "c",
+    width: 200,
+    sorter: (a, b) => a.c - b.c
   },
   {
-    key: "4",
-    name: "Jim Green",
-    age: 40,
-    address: "London Park"
-  },{
-    key: "11",
-    name: "John Brown",
-    age: 32,
-    address: "New York Park"
-  },
-  {
-    key: "12",
-    name: "Jim Green",
-    age: 40,
-    address: "London Park"
-  },
-  {
-    key: "13",
-    name: "Jim Green",
-    age: 40,
-    address: "London Park"
-  },
-  {
-    key: "14",
-    name: "Jim Green",
-    age: 40,
-    address: "London Park"
+    title: "武功级别",
+    dataIndex: "d",
+    key: "d"
   }
 ];
 
-class Demo6 extends Component {
+const data11 = [
+  { a: "杨过", b: "男", c: 30,d:'内行', key: "2" },
+  { a: "令狐冲", b: "男", c: 41,d:'大侠', key: "1" },
+  { a: "郭靖", b: "男", c: 25,d:'大侠', key: "3" }
+];
+
+const defaultProps11 = {
+  prefixCls: "bee-table"
+};
+class Demo11 extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      sortOrder: "",
+      data: data11
+    };
+  }
   render() {
-    return <DragColumnTable columns={columns6} data={data6} scroll={{y: 150 }} dragborder={true}  />;
+
+    return <ComplexTable columns={columns11} data={this.state.data} />;
   }
 }
+Demo11.defaultProps = defaultProps11;
 
-export default Demo6; 
+
+export default Demo11;

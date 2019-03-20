@@ -1,308 +1,200 @@
 /**
 *
-* @title 编辑态表格
-* @description 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）
+* @title 复杂表格中行过滤
+* @description 在过滤数据行的基础上增加列拖拽、动态菜单显示、下拉条件动态传入自定义等
 *
 */
 
-import React from "react";
-import {Animate,Tooltip,FormControl,Button,Form,Icon,Checkbox,Select} from "tinper-bee";
-import Table from "../../src";
-import Datepicker from "bee-datepicker";
-import renderInput from "../../build/render/InputRender.js";
-import renderDate from "../../build/render/DateRender.js";
-import renderSelect from "../../build/render/SelectRender.js";
+/**
+ * @description 
+ */
 
-const InputRender = renderInput(Form, FormControl, Icon);
-const DateRender = renderDate(Datepicker, Icon);
-const SelectRender = renderSelect(Select, Icon);
+import React, { Component } from 'react';
+import {Icon,Checkbox,Dropdown,Menu} from "tinper-bee";
 
-const format = "YYYY-MM-DD";
-const format2 = "YYYY-MM";
-const format3 = "YYYY-MM-DD HH:mm:ss";
+import Table from '../../src';
+import multiSelect from '../../src/lib/multiSelect';
+import sort from '../../src/lib/sort';
 
-const dateInputPlaceholder = "选择日期";
-const dateInputPlaceholder2 = "选择年月";
-const dataSource = [
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
+
+const data27 = [
   {
-    key: "boyuzhou",
-    value: "jack"
+    key: "1",
+    name: "John Brown",
+    age: 32,
+    date: "2018-09-19",
+    address: "朝阳区",
+    mark: "无"
   },
   {
-    key: "renhualiu",
-    value: "lucy"
+    key: "2",
+    name: "Jim Green",
+    age: 40,
+    date: "2018-09-18",
+    address: "朝阳区",
+    mark: "无"
   },
   {
-    key: "yuzhao",
-    value: "yiminghe"
+    key: "3",
+    name: "Jim Green",
+    age: 40,
+    date: "2018-09-18",
+    address: "东城区",
+    mark: "无"
+  },
+  {
+    key: "4",
+    name: "Jim Green",
+    age: 40,
+    date: "2018-09-18",
+    address: "东城区",
+    mark: "无"
+  }, {
+    key: "5",
+    name: "John Brown",
+    age: 32,
+    date: "2018-09-18",
+    address: "海淀区",
+    mark: "无"
+  },
+  {
+    key: "6",
+    name: "Jim Green",
+    age: 48,
+    date: "2018-09-18",
+    address: "海淀区",
+    mark: "无"
+  },
+  {
+    key: "7",
+    name: "Jim Green",
+    age: 40,
+    date: "2018-09-18",
+    address: "海淀区",
+    mark: "无"
+  },
+  {
+    key: "8",
+    name: "Jim Green",
+    age: 38,
+    date: "2018-09-18",
+    address: "海淀区",
+    mark: "无"
   }
 ];
-class Demo14 extends React.Component {
+
+
+const MultiSelectTable = multiSelect(Table, Checkbox);
+const ComplexTable = sort(MultiSelectTable, Icon);
+class Demo27 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataSource: [
-        {
-          key: "0",
-          name: "沉鱼",
-          number: "10",
-          age: "y",
-          address: "jack",
-          datepicker: "2017-06-12",
-          MonthPicker: "2017-02"
-        },
-        {
-          key: "1",
-          name: "落雁",
-          number: "100",
-          age: "y",
-          address: "lucy",
-          datepicker: "2017-06-12",
-          MonthPicker: "2017-02"
-        },
-        {
-          key: "2",
-          name: "闭月",
-          number: "1000",
-          age: "n",
-          address: "lucy",
-          datepicker: "2017-06-12",
-          MonthPicker: "2017-02"
-        },
-        {
-          key: "3",
-          name: "羞花",
-          number: "9999",
-          age: "y",
-          address: "lucy",
-          datepicker: "2017-06-12",
-          MonthPicker: "2017-02"
-        }
-      ],
-      count: 4
+      dropdownvalue: []
+    }
+  }
+  handlerFilterChange = (key, val, condition) => {
+    console.log('参数：key=', key, ' value=', val, 'condition=', condition);
+  }
+
+  handlerFilterClear = (key) => {
+    console.log('清除条件', key);
+  }
+  getSelectedDataFunc = data => {
+    console.log(data);
+  }
+  onClick = (item) => {
+    console.log(item);
+  }
+
+  render() {
+    const menu1 = (
+      <Menu onClick={this.onClick} style={{ width: 240 }} mode="vertical" >
+        <SubMenu key="sub1" title={<span><span>组织 1</span></span>}>
+          <MenuItemGroup title="Item 1">
+            <Menu.Item key="1">选项 1</Menu.Item>
+            <Menu.Item key="2">选项 2</Menu.Item>
+          </MenuItemGroup>
+          <MenuItemGroup title="Iteom 2">
+            <Menu.Item key="3">选项 3</Menu.Item>
+            <Menu.Item key="4">选项 4</Menu.Item>
+          </MenuItemGroup>
+        </SubMenu>
+      </Menu>)
+    let multiObj = {
+      type: "checkbox"
     };
-    this.columns = [
+    let columns27 = [
       {
-        title: "普通输入",
+        title: "", width: 40, dataIndex: "key", key: "key", render: (text, record, index) => {
+          return <Dropdown
+            trigger={['click']}
+            overlay={menu1}
+            animation="slide-up"
+          >
+            <Icon style={{ "visibility": "hidden" }} type="uf-eye" />
+          </Dropdown>
+        }
+      },
+      {
+        title: "姓名",
+        width: 180,
         dataIndex: "name",
         key: "name",
-        width: "150px",
-        render: (text, record, index) => (
-          <InputRender
-            name="name"
-            placeholder="请输入姓名"
-            value={text}
-            isclickTrigger={true}
-            check={this.check}
-            onChange={this.onInputChange(index, "name")}
-            isRequire={true}
-            method="blur"
-            errorMessage={
-              <Tooltip overlay={"错误提示"}>
-                <Icon type="uf-exc-c" className="" />
-              </Tooltip>
-            }
-          />
-        )
+        filterType: "text",//输入框类型
+        filterDropdown: "show",//显示条件
+        filterDropdownType: "string"//字符条件
       },
       {
-        title: "货币输入",
-        dataIndex: "number",
-        key: "number",
-        width: "150px",
-        render: (text, record, index) => (
-          <InputRender
-            format="Currency"
-            name="number"
-            placeholder="请输入货币"
-            value={text}
-            isclickTrigger={true}
-            check={this.check}
-            onChange={this.onInputChange(index, "number")}
-            isRequire={true}
-            method="blur"
-            errorMessage={
-              <Tooltip overlay={"错误提示"}>
-                <Icon type="uf-exc-c" className="" />
-              </Tooltip>
-            }
-            reg={/^[0-9]+$/}
-          />
-        )
-      },
-      {
-        title: "复选",
+        title: "年龄",
+        width: 180,
         dataIndex: "age",
         key: "age",
-        width: "100px",
-        render: (text, record, index) => (
-          <Checkbox
-            checked={record.age}
-            onChange={this.onCheckChange(index, "age")}
-          />
-        )
+        filterType: "number",//输入框类型
+        filterDropdown: "show",//显示条件
+        filterDropdownType: "number"//字符条件
       },
       {
-        title: "下拉框",
+        title: "日期",
+        width: 190,
+        dataIndex: "date",
+        key: "date",
+        filterType: "date",//输入框类型
+        filterDropdown: "show",//显示条件
+        filterDropdownType: "string"//字符条件
+      },
+      {
+        title: "时间范围",
+        width: 290,
+        dataIndex: "mark",
+        key: "mark",
+        filterType: "daterange",//输入框类型
+        filterDropdown: "show",//显示条件
+        filterDropdownType: "number"//字符条件
+      },
+      {
+        title: "地址",
+        width: 100,
         dataIndex: "address",
         key: "address",
-        width: "200px",
-        render: (text, record, index) => {
-          return (
-            <SelectRender
-              dataSource={dataSource}
-              isclickTrigger={true}
-              value={text}
-              onChange={this.onSelectChange(index, "address")}
-              size="sm"
-            >
-              <Option value="jack">boyuzhou</Option>
-              <Option value="lucy">renhualiu</Option>
-              <Option value="disabled" disabled>
-                Disabled
-              </Option>
-              <Option value="yiminghe">yuzhao</Option>
-            </SelectRender>
-          );
-        }
-      },
-      {
-        title: "年月日",
-        dataIndex: "datepicker",
-        key: "datepicker",
-        width: "200px",
-        render: (text, record, index) => {
-          return (
-            <DateRender
-              value={text}
-              isclickTrigger={true}
-              format={format}
-              onSelect={this.onDateSelect}
-              onChange={this.onDateChange}
-              placeholder={dateInputPlaceholder}
-            />
-          );
-        }
-      },
-      {
-        title: "年月",
-        dataIndex: "MonthPicker",
-        key: "MonthPicker",
-        width: "200px",
-        render: (text, record, index) => {
-          return (
-            <DateRender
-              value={text}
-              type="MonthPicker"
-              isclickTrigger={true}
-              format={format2}
-              onSelect={this.onSelect}
-              onChange={this.onChange}
-              placeholder={dateInputPlaceholder2}
-            />
-          );
-        }
+        filterType: "dropdown",//输入框类型
+        filterDropdown: "show",//显示条件
+        filterDropdownType: "number"//字符条件
       }
     ];
-  }
-  check = (flag, obj) => {
-    console.log(flag);
-    console.log(obj);
-  };
-
-  onInputChange = (index, key) => {
-    return value => {
-      const dataSource = [...this.state.dataSource];
-      dataSource[index][key] = value;
-      this.setState({ dataSource });
-    };
-  };
-  onCheckChange = (index, key) => {
-    return value => {
-      const dataSource = [...this.state.dataSource];
-      dataSource[index][key] = value;
-      this.setState({ dataSource });
-    };
-  };
-  onSelectChange = (index, key) => {
-    return value => {
-      console.log(`selected ${value}`);
-      const dataSource = [...this.state.dataSource];
-      dataSource[index][key] = value;
-      this.setState({ dataSource });
-    };
-  };
-  onDateChange = d => {
-    console.log(d);
-  };
-  onDateSelect = d => {
-    console.log(d);
-  };
-  onDelete = index => {
-    return () => {
-      const dataSource = [...this.state.dataSource];
-      dataSource.splice(index, 1);
-      this.setState({ dataSource });
-    };
-  };
-  handleAdd = () => {
-    const { count, dataSource } = this.state;
-    const newData = {
-      key: count,
-      name: `凤姐 ${count}`,
-      age: 32,
-      address: "jack",
-      datepicker: "2017-06-12",
-      MonthPicker: "2017-02"
-    };
-    this.setState({
-      dataSource: [...dataSource, newData],
-      count: count + 1
-    });
-  };
-
-  getBodyWrapper = body => {
-    return (
-      <Animate
-        transitionName="move"
-        component="tbody"
-        className={body.props.className}
-      >
-        {body.props.children}
-      </Animate>
-    );
-  };
-  getData = () => {
-    console.log(this.state.dataSource);
-  };
-  render() {
-    const { dataSource } = this.state;
-    const columns = this.columns;
-    return (
-      <div>
-        <Button
-          className="editable-add-btn"
-          type="ghost"
-          onClick={this.handleAdd}
-        >
-          添加一行
-        </Button>
-        <Button
-          style={{marginLeft:"5px"}}
-          className="editable-add-btn"
-          type="ghost"
-          onClick={this.getData}
-        >
-          获取数据
-        </Button>
-        <Table
-          data={dataSource}
-          columns={columns}
-          getBodyWrapper={this.getBodyWrapper}
-        />
-      </div>
-    );
+    return <ComplexTable
+      onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()
+      onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()
+      filterDelay={500}//输入文本多少ms触发回调函数，默认500ms
+      filterable={true}//是否开启过滤数据功能
+      getSelectedDataFunc={this.getSelectedDataFunc}
+      bordered
+      multiSelect={multiObj}
+      columns={columns27}
+      data={data27} />;
   }
 }
 
-export default Demo14;
+export default Demo27;

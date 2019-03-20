@@ -1,133 +1,107 @@
 /**
- *
- * @title 多列排序、全选功能、合计
- * @description 多列排序、全选功能、合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）新增回调函数(sorterClick)
- *
- */
+*
+* @title 按条件、值过滤
+* @description 可以根据输入项目以及判断条件对表格内的数据进行过滤
+*
+*/
 
-import React, { Component } from "react";
-import {Checkbox,Button,Icon} from "tinper-bee";
-import ComplexTable from "../../src";
-import multiSelect from "../../src/lib/multiSelect.js";
-import sort from "../../src/lib/sort.js";
-import sum from "../../src/lib/sum.js";
 
-const columns13 = [
+import React, { Component } from 'react';
+import Table from '../../src';
+
+
+const columns26 = [
+  { title: "姓名", width: 180, dataIndex: "name", key: "name", filterType: "text", filterDropdown: "show" },
+  { title: "年龄", width: 150, dataIndex: "age", key: "age", filterType: "dropdown", filterDropdown: "show" },
+  { title: "日期", width: 200, dataIndex: "date", key: "date", filterType: "date", filterDropdown: "show", format: "YYYY-MM-DD" },
+  { title: "居住地址", width: 150, dataIndex: "address", key: "address", filterType: "dropdown", filterDropdown: "show" },
+  { title: "备注", dataIndex: "mark", key: "mark" }
+];
+
+const data26 = [
   {
-    title: "名字",
-    dataIndex: "a",
-    key: "a",
-    className:'dfasd',
-    width: 200
+    key: "1",
+    name: "John Brown",
+    age: 32,
+    date: "2018-09-19",
+    address: "朝阳区",
+    mark: "无"
   },
   {
-    title: "功力指数",
-    dataIndex: "b",
-    key: "b",
-    width: 200,
-    sumCol: true,
-    sorter: (a, b) => a.c - b.c,
-    sorterClick:(data,type)=>{//排序的回调函数
-      //type value is up or down
-      console.log("data",data);
-    }
+    key: "2",
+    name: "Jim Green",
+    age: 40,
+    date: "2018-09-18",
+    address: "朝阳区",
+    mark: "无"
   },
   {
-    title: "年龄",
-    dataIndex: "c",
-    key: "c",
-    width: 200,
-    sumCol: true,
-    sorter: (a, b) => a.c - b.c,
-    sorterClick:(data,type)=>{//排序的回调函数
-      //type value is up or down
-      console.log("data",data);
-    }
+    key: "3",
+    name: "Jim Green",
+    age: 40,
+    date: "2018-09-18",
+    address: "东城区",
+    mark: "无"
   },
   {
-    title: "成绩",
-    dataIndex: "e",
-    key: "e",
-    width: 200,
-    sumCol: true,
-    sorter: (a, b) => a.c - b.c,
+    key: "4",
+    name: "Jim Green",
+    age: 40,
+    date: "2018-09-18",
+    address: "东城区",
+    mark: "无"
+  }, {
+    key: "5",
+    name: "John Brown",
+    age: 32,
+    date: "2018-09-18",
+    address: "海淀区",
+    mark: "无"
   },
   {
-    title: "武功级别",
-    dataIndex: "d",
-    key: "d",
-    width: 200
+    key: "6",
+    name: "Jim Green",
+    age: 48,
+    date: "2018-09-18",
+    address: "海淀区",
+    mark: "无"
+  },
+  {
+    key: "7",
+    name: "Jim Green",
+    age: 40,
+    date: "2018-09-18",
+    address: "海淀区",
+    mark: "无"
+  },
+  {
+    key: "8",
+    name: "Jim Green",
+    age: 38,
+    date: "2018-09-18",
+    address: "海淀区",
+    mark: "无"
   }
 ];
 
-const data13 = [
-  { a: "杨过", b: 675, c: 30, d: "内行",e:100, key: "2" },
-  { a: "令狐冲", b: 43, c: 41, d: "大侠",e:90, key: "1" },
-  { a: "令狐冲1", b: 43, c: 81, d: "大侠", e:120,key: "4" },
-  { a: "令狐冲2", b: 43, c: 81, d: "大侠", e:130,key: "5" },
-  { a: "郭靖", b: 153, c: 25, d: "大侠",e:90, key: "3" }
-];
-
-
-//拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常
-// let ComplexTable = multiSelect(sum(sort(Table, Icon)), Checkbox);
-
-class Demo13 extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data13: data13,
-      selectedRow: this.selectedRow,
-      selectDisabled: this.selectDisabled
-    };
+class Demo26 extends Component {
+  handlerFilterChange = (key, val, condition) => {
+    console.log('参数：key=', key, ' value=', val, 'condition=', condition);
   }
-  getSelectedDataFunc = data => {
-    console.log(data);
-  };
-  selectDisabled = (record, index) => {
-    // console.log(record);
-    if (index === 1) {
-      return true;
-    }
-    return false;
-  };
-  selectedRow = (record, index) => {
-    // console.log(record);
-    if (index === 0) {
-      return true;
-    }
-    return false;
-  };
-  onClick = () => {
-    this.setState({
-      selectedRow: function() {}
-    });
-  };
 
+  handlerFilterClear = (key) => {
+    console.log('清除条件', key);
+  }
   render() {
-    let multiObj = {
-      type: "checkbox"
-    };
-    let sortObj = {
-      mode:'multiple'
-    }
-   
-    return (
-      <div>
-        <Button className="editable-add-btn" onClick={this.onClick}>
-          change selectedRow
-        </Button>
-        <ComplexTable
-          selectDisabled={this.state.selectDisabled}
-          selectedRow={this.state.selectedRow}
-          columns={columns13}
-          data={this.state.data13}
-          multiSelect={multiObj}
-          sort={sortObj}
-          getSelectedDataFunc={this.getSelectedDataFunc}
-        />
-      </div>
-    );
+    return <Table
+      onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()
+      onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()
+      filterDelay={500}//输入文本多少ms触发回调函数，默认300ms
+      filterable={true}//是否开启过滤数据功能
+      bordered
+      columns={columns26}
+      data={data26} />;
   }
 }
-export default Demo13;
+
+export default Demo26;

@@ -1,168 +1,89 @@
 /**
 *
-* @title 从弹出框内显示过滤行并且设置可选下拉条件
-* @description 通过Modal组件来展示表格的过滤相关能力，并且通过filterDropdownIncludeKeys设置可选条件
-*
+* @title 多功能表格滚动加载
+* @description
 */
 
+import React, { Component } from "react";
+import {Tooltip,Checkbox,Icon,Popover} from "tinper-bee";
+import Table from "../../src";
+import BigData from "../../src/lib/bigData";
+import multiSelect from '../../src/lib/multiSelect';
+import filterColumn from '../../src/lib/filterColumn';
 
-import React, { Component } from 'react';
-import {Modal,Button} from "tinper-bee";
-import Table from '../../src';
+let  ComplexTable = filterColumn(multiSelect(BigData(Table), Checkbox), Popover, Icon);
 
-const columns29 = [
-  {
-    title: "姓名",
-    width: 180,
-    dataIndex: "name",
-    key: "name",
-    filterType: "text",
-    filterDropdown: "show",
-    filterDropdownIncludeKeys: ['LIKE', 'EQ']
-  },
-  {
-    title: "年龄",
-    width: 170,
-    dataIndex: "age",
-    key: "age",
-    filterType: "number",
-    filterDropdown: "show",
-    filterDropdownType: "number",
-    filterDropdownIncludeKeys: ['EQ'],
-    filterInputNumberOptions: {
-      max: 200,
-      min: 0,
-      step: 1,
-      precision: 0
+const columns = [
+    {
+        title:'序号',
+        dataIndex:'index',
+        width:'50',
+        key:'index',
+        render:(text,record,index)=>{
+            return index
+        }
+    },
+    {
+    title: "用户名", dataIndex: "a", key: "a", width: 580, className: "rowClassName",
+    render: (text, record, index) => {
+      return (
+        <Tooltip inverse overlay={text}>
+          <span tootip={text} style={{
+            display: "inline-block",
+            width: "80px",
+            textOverflow: "ellipsis",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            verticalAlign: "middle",
+          }}>{text}</span>
+        </Tooltip>
+      );
     }
   },
-  {
-    title: "日期",
-    width: 200,
-    dataIndex: "date",
-    key: "date",
-    filterType: "date",
-    filterDropdown: "show",
-    format: "YYYY-MM-DD"
-  }
+  { id: "123", title: "性别", dataIndex: "b", key: "b", width: 80},
+  { title: "年龄", dataIndex: "c", key: "c", width: 200 }
 ];
 
-const data29 = [
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    date: "2018-09-19",
-    address: "朝阳区",
-    mark: "无"
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    age: 40,
-    date: "2018-09-18",
-    address: "朝阳区",
-    mark: "无"
-  },
-  {
-    key: "3",
-    name: "Jim Green",
-    age: 40,
-    date: "2018-09-18",
-    address: "东城区",
-    mark: "无"
-  },
-  {
-    key: "4",
-    name: "Jim Green",
-    age: 40,
-    date: "2018-09-18",
-    address: "东城区",
-    mark: "无"
-  }, {
-    key: "5",
-    name: "John Brown",
-    age: 32,
-    date: "2018-09-18",
-    address: "海淀区",
-    mark: "无"
-  },
-  {
-    key: "6",
-    name: "Jim Green",
-    age: 48,
-    date: "2018-09-18",
-    address: "海淀区",
-    mark: "无"
-  },
-  {
-    key: "7",
-    name: "Jim Green",
-    age: 40,
-    date: "2018-09-18",
-    address: "海淀区",
-    mark: "无"
-  },
-  {
-    key: "8",
-    name: "Jim Green",
-    age: 38,
-    date: "2018-09-18",
-    address: "海淀区",
-    mark: "无"
-  }
-];
+const data = [ ...new Array(10000) ].map((e, i) => {
+    const rs = { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };
+    if(i%3==0){
+        rs.b = '女';
+    }
+    return rs;
+   })
 
-class Demo29 extends Component {
-  constructor() {
-    super();
+
+class Demo32 extends Component {
+
+  constructor(props) {
+    super(props);
     this.state = {
-      show: false
+      data: data,
+      selectedRowIndex: 0
     }
-    this.close = this.close.bind(this);
-    this.open = this.open.bind(this);
   }
-  handlerFilterChange = (key, val, condition) => {
-    console.log('参数：key=', key, ' value=', val, 'condition=', condition);
-  }
+  getSelectedDataFunc = data => {
+    console.log(data);
+  };
 
-  handlerFilterClear = (key) => {
-    console.log('清除条件', key);
-  }
-  close() {
-    this.setState({
-      show: false
-    });
-  }
-  open() {
-    this.setState({
-      show: true
-    });
-  }
   render() {
-    return (<div><Modal
-      show={this.state.show}
-      onHide={this.close}
-      autoFocus={false}
-      enforceFocus={false}
-    >
-      <Modal.Header closeButton>
-        <Modal.Title>过滤行</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Table
-          onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()
-          onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()
-          filterDelay={500}//输入文本多少ms触发回调函数，默认300ms
-          filterable={true}//是否开启过滤数据功能
+    return (
+        <ComplexTable
+          columns={columns}
+          data={data}
+          parentNodeId='parent'
+          scroll={{y:300}}
+          height={40}
           bordered
-          columns={columns29}
-          data={data29} />
-      </Modal.Body>
-    </Modal>
-      <Button colors="primary" onClick={this.open}>显示表格</Button>
-    </div>)
+          onRowClick={(record, index, indent) => {
+            this.setState({
+              selectedRowIndex: index
+            });
+          }}
+          getSelectedDataFunc={this.getSelectedDataFunc}/>
+
+    );
   }
 }
 
-export default Demo29;
+export default Demo32;

@@ -1,122 +1,168 @@
 /**
 *
-* @title 表格行/列合并
-* @description 表头只支持列合并，使用 column 里的 colSpan 进行设置。表格支持行/列合并，使用 render 里的单元格属性 colSpan 或者 rowSpan 设值为 0 时，设置的表格不会渲染。
+* @title 模态框中行过滤
+* @description 通过Modal组件来展示表格的过滤相关能力，并且通过filterDropdownIncludeKeys设置可选条件
 *
 */
 
-import React, { Component } from "react";
-import Table from "../../src";
 
-const renderContent = (value, row, index) => {
-  const obj = {
-    children: value,
-    props: {},
-  };
-  if (index === 4) {
-    obj.props.colSpan = 0;
+import React, { Component } from 'react';
+import {Modal,Button} from "tinper-bee";
+import Table from '../../src';
+
+const columns29 = [
+  {
+    title: "姓名",
+    width: 180,
+    dataIndex: "name",
+    key: "name",
+    filterType: "text",
+    filterDropdown: "show",
+    filterDropdownIncludeKeys: ['LIKE', 'EQ']
+  },
+  {
+    title: "年龄",
+    width: 170,
+    dataIndex: "age",
+    key: "age",
+    filterType: "number",
+    filterDropdown: "show",
+    filterDropdownType: "number",
+    filterDropdownIncludeKeys: ['EQ'],
+    filterInputNumberOptions: {
+      max: 200,
+      min: 0,
+      step: 1,
+      precision: 0
+    }
+  },
+  {
+    title: "日期",
+    width: 200,
+    dataIndex: "date",
+    key: "date",
+    filterType: "date",
+    filterDropdown: "show",
+    format: "YYYY-MM-DD"
   }
-  return obj;
-};
+];
 
-const columns = [{
-  title: 'Name',
-  key: "name",
-  dataIndex: 'name',
-  render: (text, row, index) => {
-    if (index < 4) {
-      return <a href="#">{text}</a>;
-    }
-    return {
-      children: <a href="#">{text}</a>,
-      props: {
-        colSpan: 5,
-      },
-    };
+const data29 = [
+  {
+    key: "1",
+    name: "John Brown",
+    age: 32,
+    date: "2018-09-19",
+    address: "朝阳区",
+    mark: "无"
   },
-}, {
-  title: 'Age',
-  key: "Age",
-  dataIndex: 'age',
-  render: renderContent,
-}, {
-  title: 'Home phone',
-  colSpan: 2,
-  key: "tel",
-  dataIndex: 'tel',
-  render: (value, row, index) => {
-    const obj = {
-      children: value,
-      props: {},
-    };
-    if (index === 2) {
-      obj.props.rowSpan = 2;
-    }
-    if (index === 3) {
-      obj.props.rowSpan = 0;
-    }
-    if (index === 4) {
-      obj.props.colSpan = 0;
-    }
-    return obj;
+  {
+    key: "2",
+    name: "Jim Green",
+    age: 40,
+    date: "2018-09-18",
+    address: "朝阳区",
+    mark: "无"
   },
-}, {
-  title: 'Phone',
-  colSpan: 0,
-  key: "phone",
-  dataIndex: 'phone',
-  render: renderContent,
-}, {
-  title: 'Address',
-  key: "address",
-  dataIndex: 'address',
-  render: renderContent,
-}];
+  {
+    key: "3",
+    name: "Jim Green",
+    age: 40,
+    date: "2018-09-18",
+    address: "东城区",
+    mark: "无"
+  },
+  {
+    key: "4",
+    name: "Jim Green",
+    age: 40,
+    date: "2018-09-18",
+    address: "东城区",
+    mark: "无"
+  }, {
+    key: "5",
+    name: "John Brown",
+    age: 32,
+    date: "2018-09-18",
+    address: "海淀区",
+    mark: "无"
+  },
+  {
+    key: "6",
+    name: "Jim Green",
+    age: 48,
+    date: "2018-09-18",
+    address: "海淀区",
+    mark: "无"
+  },
+  {
+    key: "7",
+    name: "Jim Green",
+    age: 40,
+    date: "2018-09-18",
+    address: "海淀区",
+    mark: "无"
+  },
+  {
+    key: "8",
+    name: "Jim Green",
+    age: 38,
+    date: "2018-09-18",
+    address: "海淀区",
+    mark: "无"
+  }
+];
 
-const data = [{
-  key: '1',
-  name: 'John Brown',
-  age: 32,
-  tel: '0571-22098909',
-  phone: 18889898989,
-  address: 'New York No. 1 Lake Park',
-}, {
-  key: '2',
-  name: 'Jim Green',
-  tel: '0571-22098333',
-  phone: 18889898888,
-  age: 42,
-  address: 'London No. 1 Lake Park',
-}, {
-  key: '3',
-  name: 'Joe Black',
-  age: 32,
-  tel: '0575-22098909',
-  phone: 18900010002,
-  address: 'Sidney No. 1 Lake Park',
-}, {
-  key: '4',
-  name: 'Jim Red',
-  age: 18,
-  tel: '0575-22098909',
-  phone: 18900010002,
-  address: 'London No. 2 Lake Park',
-}, {
-  key: '5',
-  name: 'Jake White',
-  age: 18,
-  tel: '0575-22098909',
-  phone: 18900010002,
-  address: 'Dublin No. 2 Lake Park',
-}];
+class Demo29 extends Component {
+  constructor() {
+    super();
+    this.state = {
+      show: false
+    }
+    this.close = this.close.bind(this);
+    this.open = this.open.bind(this);
+  }
+  handlerFilterChange = (key, val, condition) => {
+    console.log('参数：key=', key, ' value=', val, 'condition=', condition);
+  }
 
-class Demo15 extends Component {
+  handlerFilterClear = (key) => {
+    console.log('清除条件', key);
+  }
+  close() {
+    this.setState({
+      show: false
+    });
+  }
+  open() {
+    this.setState({
+      show: true
+    });
+  }
   render() {
-    return (
-       <Table columns={columns} data={data}/>
-    );
+    return (<div><Modal
+      show={this.state.show}
+      onHide={this.close}
+      autoFocus={false}
+      enforceFocus={false}
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>过滤行</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Table
+          onFilterChange={this.handlerFilterChange}//下拉条件的回调(key,val)=>()
+          onFilterClear={this.handlerFilterClear}//触发输入操作以及其他的回调(key,val)=>()
+          filterDelay={500}//输入文本多少ms触发回调函数，默认300ms
+          filterable={true}//是否开启过滤数据功能
+          bordered
+          columns={columns29}
+          data={data29} />
+      </Modal.Body>
+    </Modal>
+      <Button colors="primary" onClick={this.open}>显示表格</Button>
+    </div>)
   }
 }
 
-
-export default Demo15;
+export default Demo29;

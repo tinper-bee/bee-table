@@ -1,12 +1,13 @@
 /**
 *
-* @title 大数据加载
+* @title 树状表滚动加载
 * 【Tooltip】
 * @description
 */
 
 import React, { Component } from "react";
 import {Tooltip} from "tinper-bee";
+
 import Table from "../../src";
 import BigData from "../../src/lib/bigData";
 const BigDataTable = BigData(Table);
@@ -14,7 +15,7 @@ const columns = [
     {
         title:'序号',
         dataIndex:'index',
-        width:'50',
+        width:'150',
         key:'index',
         render:(text,record,index)=>{
             return index
@@ -39,19 +40,27 @@ const columns = [
   },
   { id: "123", title: "性别", dataIndex: "b", key: "b", width: 80},
   { title: "年龄", dataIndex: "c", key: "c", width: 200 }
-
 ];
 
-const data = [ ...new Array(10000) ].map((e, i) => {
+const data = [ ...new Array(1000) ].map((e, i) => {
     const rs = { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };
     if(i%3==0){
         rs.b = '女';
+        rs.children = [];
+        for(let subi=0;subi<3;subi++){
+          rs.children.push({a: i +subi + 'asub', b: i +subi + 'bsub', c: i + subi +'csub', d: i + subi +'dsub', key: i+ `${subi} sub`});
+        }
+    }else{
+      rs.children = [];
+        for(let subi=0;subi<3;subi++){
+          rs.children.push({a: i +subi + 'asub', b: i +subi + 'bsub', c: i + subi +'csub', d: i + subi +'dsub', key: i+ `${subi} sub`});
+        }
     }
     return rs;
    })
 
 
-class Demo30 extends Component {
+class Demo34 extends Component {
 
   constructor(props) {
     super(props);
@@ -60,12 +69,18 @@ class Demo30 extends Component {
       selectedRowIndex: 0
     }
   }
-
+  onExpandedRowsChange = (params)=>{
+    console.log(params);
+  }
+  onExpand = (expandKeys)=>{
+    console.log('expand---'+expandKeys);
+  }
   render() {
     return (
         <BigDataTable
           columns={columns}
           data={data}
+          parentNodeId='parent'
           scroll={{y:300}}
           height={40}
           onRowClick={(record, index, indent) => {
@@ -78,4 +93,4 @@ class Demo30 extends Component {
   }
 }
 
-export default Demo30;
+export default Demo34;

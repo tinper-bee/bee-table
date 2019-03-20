@@ -1,18 +1,10 @@
-th{
-    .drop-menu{
-        .uf{
-            font-size: 12px;
-            visibility: hidden;
-            margin-left: 15px;
-        }
-        
-    
+.demo8{
+    .u-table {
+        margin-bottom: 11px;
     }
-    &:hover{
-        .uf{
-                visibility: visible;
-        }
+    .u-pagination{
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-
 }
-

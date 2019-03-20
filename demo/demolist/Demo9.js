@@ -1,161 +1,131 @@
 /**
- *
- * @title 表格+搜索
- * @description 搜索刷新表格数据
- *
- *
- * import {Table} from 'tinper-bee';
- */
+*
+* @title 树形表格
+* @description 通过在data中配置children数据，来自动生成树形表格
+*
+*/
 
-import React, { Component } from "react";
-import {Icon,FormControl,InputGroup} from "tinper-bee";
 
-import Table from "../../src";
+import React, { Component } from 'react';
+import Table from '../../src';
 
-class Search extends Component {
-  state = {
-    searchValue: "",
-    empty: false
-  };
 
-  /**
-     * 搜索
-     */
-  handleSearch = () => {
-    let { onSearch } = this.props;
-    this.setState({
-      empty: true
-    });
-    onSearch && onSearch(this.state.searchValue);
-  };
+const columns4 = [
+  {
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
+    width: "40%"
+  },
+  {
+    title: "Age",
+    dataIndex: "age",
+    key: "age",
+    width: "30%"
+  },
+  {
+    title: "Address",
+    dataIndex: "address",
+    key: "address"
+  }
+];
 
-  /**
-     * 捕获回车
-     * @param e
-     */
-  handleKeyDown = e => {
-    if (e.keyCode === 13) {
-      this.handleSearch();
-    }
-  };
+const data4 = [
+  {
+    key: 1,
+    name: "John Brown sr.",
+    age: 60,
+    address: "New York No. 1 Lake Park",
+    children: [
+      {
+        key: 11,
+        name: "John Brown",
+        age: 42,
+        address: "New York No. 2 Lake Park"
+      },
+      {
+        key: 12,
+        name: "John Brown jr.",
+        age: 30,
+        address: "New York No. 3 Lake Park",
+        children: [
+          {
+            key: 121,
+            name: "Jimmy Brown",
+            age: 16,
+            address: "New York No. 3 Lake Park"
+          }
+        ]
+      },
+      {
+        key: 13,
+        name: "Jim Green sr.",
+        age: 72,
+        address: "London No. 1 Lake Park",
+        children: [
+          {
+            key: 131,
+            name: "Jim Green",
+            age: 42,
+            address: "London No. 2 Lake Park",
+            children: [
+              {
+                key: 1311,
+                name: "Jim Green jr.",
+                age: 25,
+                address: "London No. 3 Lake Park"
+              },
+              {
+                key: 1312,
+                name: "Jimmy Green sr.",
+                age: 18,
+                address: "London No. 4 Lake Park"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    key: 2,
+    name: "Joe Black",
+    age: 32,
+    address: "Sidney No. 1 Lake Park"
+  }
+];
+class Demo4 extends Component {
 
-  /**
-     * 输入框改变
-     * @param e
-     */
-  handleChange = (e) => {
-    this.setState({
-      searchValue: e
-    });
-  };
-
-  /**
-     * 清空输入框
-     */
-  emptySearch = () => {
-    let { onEmpty } = this.props;
-    this.setState({
-      searchValue: "",
-      empty: false
-    });
-    onEmpty && onEmpty();
-  };
+  constructor(props){
+      super(props);
+      this.state = {
+        data: data4,
+        factoryValue: 0,
+        selectedRow: new Array(data4.length)//状态同步
+      }
+  }
 
   render() {
-    return (
-      <InputGroup simple className="search-component">
-        <FormControl
-          onChange={this.handleChange}
-          value={this.state.searchValue}
-          onKeyDown={this.handleKeyDown}
-          placeholder="请输入用户名"
-          type="text"
-        />
-        {this.state.empty ? (
-          <Icon
-            type="uf-close-c"
-            onClick={this.emptySearch}
-            className="empty-search"
-          />
-        ) : null}
-
-        <InputGroup.Button onClick={this.handleSearch} shape="border">
-          <Icon type="uf-search" />
-        </InputGroup.Button>
-      </InputGroup>
-    );
-  }
-}
-
-const columns9 = [
-  {
-    title: "姓名",
-    dataIndex: "a",
-    key: "a",
-    width: 100
-  },
-  {
-    title: "性别",
-    dataIndex: "b",
-    key: "b",
-    width: 100
-  },
-  {
-    title: "年龄",
-    dataIndex: "c",
-    key: "c",
-    width: 200
-  },
-  {
-    title: "武功级别",
-    dataIndex: "d",
-    key: "d"
-  }
-];
-
-const userData = [
-  { a: "杨过", b: "男", c: 30, d: "内行", key: "2" },
-  { a: "令狐冲", b: "男", c: 41, d: "大侠", key: "1" },
-  { a: "郭靖", b: "男", c: 25, d: "大侠", key: "3" }
-];
-
-class Demo9 extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: userData
-    };
-  }
-
-  handleSearch = value => {
-    if (value === "") {
-      return this.setState({
-        data: userData
+    return <Table 
+    rowClassName={(record,index,indent)=>{
+      if (this.state.selectedRow[index]) {
+          return 'selected';
+      } else {
+          return '';
+      }
+    }}
+    onRowClick={(record,index,indent)=>{
+      let selectedRow = new Array(this.state.data.length);
+      selectedRow[index] = true;
+      this.setState({
+          factoryValue: record,
+          selectedRow: selectedRow
       });
-    }
-    let regExp = new RegExp(value, "ig");
-    let data = userData.filter(item => regExp.test(item.a));
-    this.setState({
-      data
-    });
-  };
-
-  handleEmpty = () => {
-    this.setState({
-      data: userData
-    });
-  };
-
-  render() {
-    return (
-      <div>
-        <div className="clearfix">
-          <Search onSearch={this.handleSearch} onEmpty={this.handleEmpty} />
-        </div>
-        <Table columns={columns9} data={this.state.data} />
-      </div>
-    );
+    }}
+    
+    columns={columns4} data={data4} />;
   }
 }
 
-export default Demo9;
+
+export default Demo4;

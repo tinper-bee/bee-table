@@ -714,15 +714,6 @@ th:hover .uf {
   padding-top: 0px;
   padding-bottom: 0px; }
 
-
-.opt-btns .u-button {
-  background-color: #505F79;
-  border-color: #505F79;
-  color: #fff; }
-  .opt-btns .u-button:hover, .opt-btns .u-button:active {
-    background-color: #344563;
-    border-color: #344563; }
-
 .demo8 .u-table {
   margin-bottom: 11px; }
 
@@ -733,5 +724,14 @@ th:hover .uf {
   align-items: center;
   -ms-flex-pack: center;
   justify-content: center; }
+
+
+.opt-btns .u-button {
+  background-color: #505F79;
+  border-color: #505F79;
+  color: #fff; }
+  .opt-btns .u-button:hover, .opt-btns .u-button:active {
+    background-color: #344563;
+    border-color: #344563; }
 
 /*# sourceMappingURL=demo.css.map */

@@ -1,90 +1,215 @@
 /**
-*
-* @title 大数据加载下的复杂Table
-*
-* @description
+* @title 多功能表格
+* @description  根据列进行过滤、拖拽交换列综合使用案例
 */
 
-import React, { Component } from "react";
-import {Tooltip,Checkbox,Icon,Popover} from "tinper-bee";
-import Table from "../../src";
-import BigData from "../../src/lib/bigData";
+import React, { Component } from 'react';
+import {Icon,Checkbox,Popover} from "tinper-bee";
+
+import Table from '../../src';
 import multiSelect from '../../src/lib/multiSelect';
 import filterColumn from '../../src/lib/filterColumn';
+import dragColumn from "../../src/lib/dragColumn";
+import sum from '../../src/lib/sum';
 
-let  ComplexTable = filterColumn(multiSelect(BigData(Table), Checkbox), Popover, Icon);
-
-const columns = [
-    {
-        title:'序号',
-        dataIndex:'index',
-        width:'50',
-        key:'index',
-        render:(text,record,index)=>{
-            return index
-        }
-    },
-    {
-    title: "用户名", dataIndex: "a", key: "a", width: 580, className: "rowClassName",
-    render: (text, record, index) => {
-      return (
-        <Tooltip inverse overlay={text}>
-          <span tootip={text} style={{
-            display: "inline-block",
-            width: "80px",
-            textOverflow: "ellipsis",
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-            verticalAlign: "middle",
-          }}>{text}</span>
-        </Tooltip>
-      );
-    }
-  },
-  { id: "123", title: "性别", dataIndex: "b", key: "b", width: 80},
-  { title: "年龄", dataIndex: "c", key: "c", width: 200 }
-];
-
-const data = [ ...new Array(10000) ].map((e, i) => {
-    const rs = { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };
-    if(i%3==0){
-        rs.b = '女';
-    }
-    return rs;
-   })
-
-
-class Demo32 extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: data,
-      selectedRowIndex: 0
-    }
-  }
-  getSelectedDataFunc = data => {
-    console.log(data);
-  };
-
-  render() {
-    return (
-        <ComplexTable
-          columns={columns}
-          data={data}
-          parentNodeId='parent'
-          scroll={{y:300}}
-          height={40}
-          bordered
-          onRowClick={(record, index, indent) => {
-            this.setState({
-              selectedRowIndex: index
-            });
-          }}
-          getSelectedDataFunc={this.getSelectedDataFunc}/>
-
-    );
-  }
+ //Cloumns1
+function getCloumns(){
+  const column = [
+      {
+          title: "序号",
+          dataIndex: "index",
+          key: "index",
+          width: 100, 
+      },
+      {
+          title: "订单编号",
+          dataIndex: "orderCode",
+          key: "orderCode",
+          width: 100, 
+      },
+      {
+          title: "供应商名称",
+          dataIndex: "supplierName",
+          key: "supplierName",
+          width: 100
+      },
+      {
+          title: "类型",
+          dataIndex: "type_name",
+          key: "type_name",
+          width: 100
+      },
+      {
+          title: "采购组织",
+          dataIndex: "purchasing",
+          key: "purchasing",
+          width: 100
+      },
+      {
+          title: "采购组",
+          dataIndex: "purchasingGroup",
+          key: "purchasingGroup",
+           width: 300
+      },
+      {
+          title: "凭证日期",
+          dataIndex: "voucherDate",
+          key: "voucherDate",
+          width: 100,
+          
+      },
+      {
+          title: "审批状态",
+          dataIndex: "approvalState_name",
+          key: "approvalState_name",
+          width: 100
+      },
+      {
+          title: "确认状态",
+          dataIndex: "confirmState_name",
+          key: "confirmState_name",
+           width: 100
+      }, 
+      {
+          title: "关闭状态",
+          dataIndex: "closeState_name",
+          key: "closeState_name",
+          width: 100
+      },
+      {
+          title: "操作",
+          dataIndex: "d",
+          key: "d",
+          width:100,
+          fixed: "right",
+          render(text, record, index) {
+              return (
+                  <div className='operation-btn'>
+                    <a href="#"
+                      tooltip={text}
+                      onClick={() => {
+                        alert('这是第'+index+'列，内容为:'+text);
+                      }}
+                    >
+                      一些操作
+                    </a>
+                  </div>
+              )
+          }
+      }
+  ];
+  return column;
 }
 
-export default Demo32;
+const dataList = [ 
+  { 
+      index: 1, 
+      orderCode:"2343", 
+      supplierName: "xxx",
+      type_name: "123",
+      purchasing:'内行', 
+      purchasingGroup:"323",
+      voucherDate:"kkkk",
+      approvalState_name:"vvvv",
+      confirmState_name:"aaaa",
+      closeState_name:"vnnnnn",
+      d:"操作",
+      key: "1"
+  }, 
+  { 
+    index: 2, 
+    _checked:true,
+    orderCode:"222", 
+    supplierName: "22xxx",
+    type_name: "1223",
+    purchasing:'内行2', 
+    purchasingGroup:"3223",
+    voucherDate:"222kk",
+    approvalState_name:"22vvvv",
+    confirmState_name:"2aaaa",
+    closeState_name:"2vnnnnn",
+    d:"2操作",
+    key: "2"
+  },
+  { 
+    index: 3, 
+    orderCode:"222", 
+    supplierName: "22xxx",
+    _disabled:true,
+    type_name: "1223",
+    purchasing:'内行2', 
+    purchasingGroup:"3223",
+    voucherDate:"222kk",
+    approvalState_name:"22vvvv",
+    confirmState_name:"2aaaa",
+    closeState_name:"2vnnnnn",
+    d:"3操作",
+    key: "3"
+  },
+  { 
+    index: 4, 
+    orderCode:"222", 
+    supplierName: "22xxx",
+    type_name: "1223",
+    purchasing:'内行2', 
+    purchasingGroup:"3223",
+    voucherDate:"222kk",
+    approvalState_name:"22vvvv",
+    confirmState_name:"2aaaa",
+    closeState_name:"2vnnnnn",
+    d:"4操作",
+    key: "4"
+  },
+]
+
+const DragColumnTable = filterColumn(dragColumn(multiSelect(Table, Checkbox)),Popover);
+
+const defaultProps25 = {
+  prefixCls: "bee-table"
+};
+
+class Demo25 extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  getSelectedDataFunc=(data)=>{
+      console.log("data",data);
+  }
+ 
+  getCloumnsScroll=(columns)=>{
+    let sum = 0;
+    columns.forEach((da)=>{
+        sum += da.width;
+    })
+    console.log("sum",sum);
+    return (sum);
+  }
+
+  selectedRow=(record, index)=>{
+
+  }
+
+  render() {
+    let columns = getCloumns();
+    
+    return <div className="demo25">
+            <DragColumnTable 
+                columns={columns}
+                data={dataList} 
+                getSelectedDataFunc={this.getSelectedDataFunc}
+                
+                checkMinSize={7}
+                draggable={true}
+                multiSelect={{type: "checkbox"}}
+                scroll={{x:true, y: 100}}
+                selectedRow={this.selectedRow}
+                // scroll={{x:this.getCloumnsScroll(columns), y: 150}}
+                />
+            </div>
+  }
+}
+Demo25.defaultProps = defaultProps25;
+
+
+export default Demo25;
