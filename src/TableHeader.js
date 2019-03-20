@@ -86,6 +86,12 @@ class TableHeader extends Component {
     this.initEvent();
   }
 
+
+  componentWillUnmount(){
+      this.removeDragAbleEvent();
+      this.removeDragBorderEvent();
+  }
+
   // componentDidMount(){
     // this.initTable();
     // this.initEvent();
