@@ -691,7 +691,7 @@ var Table = function (_Component) {
     var expandIconAsCell = fixed !== 'right' ? props.expandIconAsCell : false;
     var expandIconColumnIndex = fixed !== 'right' ? props.expandIconColumnIndex : -1;
     if (props.lazyLoad && props.lazyLoad.preHeight && indent == 0) {
-      rst.push(_react2["default"].createElement(_TableRow2["default"], { height: props.lazyLoad.preHeight, columns: [], className: '', store: this.store, visible: true }));
+      rst.push(_react2["default"].createElement(_TableRow2["default"], { height: props.lazyLoad.preHeight, columns: [], className: '', key: 'table_row_first', store: this.store, visible: true }));
     }
     var lazyCurrentIndex = props.lazyLoad && props.lazyLoad.startIndex ? props.lazyLoad.startIndex : 0;
     var lazyParentIndex = props.lazyLoad && props.lazyLoad.startParentIndex ? props.lazyLoad.startParentIndex : 0;
@@ -775,7 +775,7 @@ var Table = function (_Component) {
         height: height,
         isHiddenExpandIcon: isHiddenExpandIcon
       }, onHoverProps, {
-        key: key,
+        key: "table_row_" + key + "_" + index,
         hoverKey: key,
         ref: rowRef,
         store: this.store,
@@ -801,7 +801,7 @@ var Table = function (_Component) {
     }
 
     if (props.lazyLoad && props.lazyLoad.sufHeight && indent == 0) {
-      rst.push(_react2["default"].createElement(_TableRow2["default"], { height: props.lazyLoad.sufHeight, columns: [], className: '', store: this.store, visible: true }));
+      rst.push(_react2["default"].createElement(_TableRow2["default"], { height: props.lazyLoad.sufHeight, key: 'table_row_end', columns: [], className: '', store: this.store, visible: true }));
     }
     return rst;
   };
@@ -809,7 +809,8 @@ var Table = function (_Component) {
   Table.prototype.getRows = function getRows(columns, fixed) {
     //统计index，只有含有鼠表结构才有用，因为数表结构时，固定列的索引取值有问题
     this.treeRowIndex = 0;
-    return this.getRowsByData(this.state.data, true, 0, columns, fixed);
+    var rs = this.getRowsByData(this.state.data, true, 0, columns, fixed);
+    return rs;
   };
 
   Table.prototype.getColGroup = function getColGroup(columns, fixed) {
