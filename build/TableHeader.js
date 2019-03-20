@@ -416,8 +416,12 @@ var TableHeader = function (_Component) {
   };
 
   TableHeader.prototype.componentWillUnmount = function componentWillUnmount() {
-    this.removeDragAbleEvent();
-    this.removeDragBorderEvent();
+    if (this.props.draggable) {
+      this.removeDragAbleEvent();
+    }
+    if (this.props.dragborder) {
+      this.removeDragBorderEvent();
+    }
   };
 
   // componentDidMount(){
