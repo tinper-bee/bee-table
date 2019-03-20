@@ -95,43 +95,37 @@ var TableHeader = function (_Component) {
         if (_this.fixedTable.cols) {
           _this.fixedTable.cols[_this.drag.currIndex].style.width = newWidth + "px";
         }
-        var oldTableWidth = parseInt(_this.table.table.style.width ? _this.table.table.style.width : _this.table.table.scrollWidth);
-        var newTableWidth = oldTableWidth + diff;
+        var newTableWidth = _this.drag.tableWidth + diff + 'px';
         _this.table.table.style.width = newTableWidth; //改变table的width
-
+        _this.table.innerTableBody.style.width = newTableWidth;
         var showScroll = contentDomWidth - newTableWidth - scrollbarWidth;
-        var fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header');
-        var fixedRighHeadertTable = contentTable.querySelector('.u-table-fixed-right .u-table-header');
-        var contentTableHeader = contentTable.querySelector('.u-table-scroll .u-table-header');
-        var fixedLeftBodyTable = contentTable.querySelector('.u-table-fixed-left .u-table-body-outer');
-        var fixedRightBodyTable = contentTable.querySelector('.u-table-fixed-right .u-table-body-outer');
 
         //表头滚动条处理
         if (headerScroll) {
           if (showScroll < 0) {
             //找到固定列表格，设置表头的marginBottom值为scrollbarWidth;
-            contentTableHeader.style.overflowX = 'scroll';
-            _this.optTableMargin(fixedLeftHeaderTable, scrollbarWidth);
-            _this.optTableMargin(fixedRighHeadertTable, scrollbarWidth);
+            _this.table.contentTableHeader.style.overflowX = 'scroll';
+            _this.optTableMargin(_this.table.fixedLeftHeaderTable, scrollbarWidth);
+            _this.optTableMargin(_this.table.fixedRighHeadertTable, scrollbarWidth);
             // fixedLeftHeaderTable && (fixedLeftHeaderTable.style.marginBottom = scrollbarWidth + "px");
             // fixedRighHeadertTable && (fixedRighHeadertTable.style.marginBottom = scrollbarWidth + "px");
             //todo inner scroll-x去掉；outer marginbottom 设置成-15px】
           } else {
-            contentTableHeader.style.overflowX = 'hidden';
-            _this.optTableMargin(fixedLeftHeaderTable, 0);
-            _this.optTableMargin(fixedRighHeadertTable, 0);
+            _this.table.contentTableHeader.style.overflowX = 'hidden';
+            _this.optTableMargin(_this.table.fixedLeftHeaderTable, 0);
+            _this.optTableMargin(_this.table.fixedRighHeadertTable, 0);
           }
         } else {
           if (showScroll < 0) {
-            _this.optTableMargin(fixedLeftBodyTable, '-' + scrollbarWidth);
-            _this.optTableMargin(fixedRightBodyTable, '-' + scrollbarWidth);
-            _this.optTableScroll(fixedLeftBodyTable, { x: 'scroll' });
-            _this.optTableScroll(fixedRightBodyTable, { x: 'scroll' });
+            _this.optTableMargin(_this.table.fixedLeftBodyTable, '-' + scrollbarWidth);
+            _this.optTableMargin(_this.table.fixedRightBodyTable, '-' + scrollbarWidth);
+            _this.optTableScroll(_this.table.fixedLeftBodyTable, { x: 'scroll' });
+            _this.optTableScroll(_this.table.fixedRightBodyTable, { x: 'scroll' });
           } else {
-            _this.optTableMargin(fixedLeftBodyTable, 0);
-            _this.optTableMargin(fixedRightBodyTable, 0);
-            _this.optTableScroll(fixedLeftBodyTable, { x: 'auto' });
-            _this.optTableScroll(fixedRightBodyTable, { x: 'auto' });
+            _this.optTableMargin(_this.table.fixedLeftBodyTable, 0);
+            _this.optTableMargin(_this.table.fixedRightBodyTable, 0);
+            _this.optTableScroll(_this.table.fixedLeftBodyTable, { x: 'auto' });
+            _this.optTableScroll(_this.table.fixedRightBodyTable, { x: 'auto' });
           }
         }
       }
@@ -153,6 +147,7 @@ var TableHeader = function (_Component) {
       _this.drag.oldLeft = event.x;
       _this.drag.oldWidth = parseInt(currentObj.style.width);
       _this.drag.minWidth = currentObj.style.minWidth != "" ? parseInt(currentObj.style.minWidth) : defaultWidth;
+      _this.drag.tableWidth = parseInt(_this.table.table.style.width ? _this.table.table.style.width : _this.table.table.scrollWidth);
     };
 
     _this.onLineMouseUp = function (event) {
@@ -420,6 +415,11 @@ var TableHeader = function (_Component) {
     this.initEvent();
   };
 
+  TableHeader.prototype.componentWillUnmount = function componentWillUnmount() {
+    this.removeDragAbleEvent();
+    this.removeDragBorderEvent();
+  };
+
   // componentDidMount(){
   // this.initTable();
   // this.initEvent();
@@ -466,6 +466,8 @@ var TableHeader = function (_Component) {
 
 
   TableHeader.prototype.initTable = function initTable() {
+    var contentTable = this.props.contentTable;
+
     if (!this.props.dragborder && !this.props.draggable) return;
     // let el = ReactDOM.findDOMNode(this);
     var tableDome = this._thead.parentNode;
@@ -475,11 +477,18 @@ var TableHeader = function (_Component) {
       table.cols = tableDome.getElementsByTagName("col");
       table.ths = tableDome.getElementsByTagName("th");
     }
+
+    table.fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header');
+    table.fixedRighHeadertTable = contentTable.querySelector('.u-table-fixed-right .u-table-header');
+    table.contentTableHeader = contentTable.querySelector('.u-table-scroll .u-table-header');
+    table.fixedLeftBodyTable = contentTable.querySelector('.u-table-fixed-left .u-table-body-outer');
+    table.fixedRightBodyTable = contentTable.querySelector('.u-table-fixed-right .u-table-body-outer');
+    table.innerTableBody = contentTable.querySelector('.u-table-scroll .u-table-body table');
+
     this.table = table;
 
     if (!this.props.dragborder) return;
     if (document.getElementById("u-table-drag-thead-" + this.theadKey)) {
-      //hao 固定列table
       this.fixedTable = {};
       var _fixedParentContext = document.getElementById("u-table-drag-thead-" + this.theadKey).parentNode;
       var siblingDom = _fixedParentContext.parentNode.nextElementSibling;

@@ -246,7 +246,6 @@ var TableRow = function (_Component) {
     var showSum = false;
     var className = this.props.className;
 
-
     if (this.state.hovered) {
       className += ' ' + clsPrefix + '-hover';
     }
@@ -273,7 +272,7 @@ var TableRow = function (_Component) {
           'td',
           {
             className: clsPrefix + '-expand-icon-cell',
-            key: 'rc-table-expand-icon-cell'
+            key: 'rc-table-expand-icon-cell-' + i
           },
           expandIcon
         ));
@@ -286,7 +285,7 @@ var TableRow = function (_Component) {
         indent: indent,
         index: index,
         column: columns[i],
-        key: columns[i].key || columns[i].dataIndex || i,
+        key: index + "_" + (columns[i].key || columns[i].dataIndex || i),
         fixed: fixed,
         showSum: showSum,
         expandIcon: isColumnHaveExpandIcon ? expandIcon : null
