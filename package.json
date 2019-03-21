@@ -73,9 +73,10 @@
  },
  "devDependencies": {
   "babel-jest": "^22.0.4",
-  "bee-panel": "latest",
+  "bee-clipboard": "^2.0.0",
+  "bee-drawer": "0.0.2",
   "bee-layout": "latest",
-  "tinper-bee": "latest",
+  "bee-panel": "latest",
   "chai": "^3.5.0",
   "console-polyfill": "~0.2.1",
   "cz-conventional-changelog": "^2.1.0",
@@ -84,6 +85,7 @@
   "jest": "^22.0.4",
   "react": "^16.6.3",
   "react-addons-test-utils": "^15.5.0",
-  "react-dom": "^16.6.3"
+  "react-dom": "^16.6.3",
+  "tinper-bee": "latest"
  }
 }
