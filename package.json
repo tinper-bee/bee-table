@@ -64,8 +64,7 @@
     "shallowequal": "^1.0.2",
     "throttle-debounce": "^2.0.1",
     "tinper-bee-core": "latest",
-    "warning": "^3.0.0",
-    "bee-clipboard": "^2.0.0"
+    "warning": "^3.0.0"
   },
   "peerDependencies": {
     "react": "^15.3.0 || ^16.0",
