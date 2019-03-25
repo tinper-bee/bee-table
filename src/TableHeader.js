@@ -88,6 +88,7 @@ class TableHeader extends Component {
 
 
   componentWillUnmount(){
+    if(!this.table)return;
     if (this.props.draggable){
       this.removeDragAbleEvent();
     }
