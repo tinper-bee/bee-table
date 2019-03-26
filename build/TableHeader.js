@@ -416,6 +416,7 @@ var TableHeader = function (_Component) {
   };
 
   TableHeader.prototype.componentWillUnmount = function componentWillUnmount() {
+    if (!this.table) return;
     if (this.props.draggable) {
       this.removeDragAbleEvent();
     }

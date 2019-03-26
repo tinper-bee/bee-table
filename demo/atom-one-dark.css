@@ -158,10 +158,10 @@ hue-6-2: #e6c07b
 }
 /* 抽屉组件样式覆盖 */
 .component-drawerc{
-  position: fixed;
+  /* position: fixed; */
   top: 0;
   left: 0;
-  z-index: 100000;
+  z-index: 1!important;
   width: 0;
   height: 100%;
 }
@@ -173,6 +173,7 @@ hue-6-2: #e6c07b
   top: 0;
   left: 0;
   transition: transform 300ms ease-in-out, opacity 300ms ease-in-out;
+  z-index: 2;
 }
 .component-drawerc .drawer-close{
   position: absolute;
@@ -196,6 +197,7 @@ hue-6-2: #e6c07b
   top: 0;
   right: 0;
   height: 100%;
+  z-index: 3;
 }
 .component-drawerc .drawer-top{
   top: 0;
