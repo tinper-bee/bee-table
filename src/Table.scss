@@ -1,6 +1,6 @@
 @import "../node_modules/tinper-bee-core/scss/minxin-variables";
 @import "../node_modules/tinper-bee-core/scss/minxin-mixins";
-@import "../node_modules/bee-loading/src/Loading";
+// @import "../node_modules/bee-loading/src/Loading";
 
 $text-color: #666;
 $font-size-base: 12px;
@@ -490,7 +490,7 @@ $checkbox-height:16px;
       height: 25px;
       line-height: 25px;
       z-index: 2;
-      background: #f7f7f7;
+      background: $table-head-background-color;
       &i.uf{
         padding: 0px;
       }
