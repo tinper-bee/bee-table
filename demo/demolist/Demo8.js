@@ -6,6 +6,7 @@
 */
 
 import React, { Component } from "react";
+import { Popconfirm } from 'tinper-bee';
 import Table from "../../src";
 import dragColumn from '../../src/lib/dragColumn';
 const DragColumnTable = dragColumn(Table);
@@ -17,14 +18,11 @@ const columns16 = [
     width:200,
     render(text, record, index) {
       return (
-        <a
-          href="#"
-          onClick={() => {
-            alert("这是第" + index + "列，内容为:" + text);
-          }}
-        >
+        <Popconfirm trigger="click" placement="right" content={'这是第' + index + '行，内容为:' + text}>
+          <a href="javascript:;" tooltip={text} >
           一些操作
-        </a>
+          </a>
+        </Popconfirm>
       );
     }
   },
@@ -41,14 +39,11 @@ const columns17 = [
     width:200,
     render(text, record, index) {
       return (
-        <a
-          href="#"
-          onClick={() => {
-            alert("这是第" + index + "列，内容为:" + text);
-          }}
-        >
+        <Popconfirm trigger="click" placement="right" content={'这是第' + index + '行，内容为:' + text}>
+          <a href="javascript:;" tooltip={text} >
           一些操作
-        </a>
+          </a>
+        </Popconfirm>
       );
     }
   },
