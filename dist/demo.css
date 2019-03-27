@@ -172,7 +172,7 @@
     .u-table th ::last-child {
       overflow: hidden; }
   .u-table td {
-    border-bottom: 1px solid rgb(233,233,233); }
+    border-bottom: 1px solid rgb(193, 199, 208); }
     .u-table td a {
       color: #2196F3; }
       .u-table td a:hover {
@@ -203,21 +203,21 @@
   .u-table-scroll {
     overflow: auto; }
   .u-table-bordered table {
-    border: 1px solid rgb(233,233,233);
+    border: 1px solid rgb(193, 199, 208);
     box-sizing: border-box;
     table-layout: fixed; }
   .u-table-bordered th {
-    border-bottom: 1px solid rgb(233,233,233);
+    border-bottom: 1px solid rgb(193, 199, 208);
     box-sizing: border-box; }
   .u-table-bordered th,
   .u-table-bordered td {
-    border-right: 1px solid rgb(233,233,233);
+    border-right: 1px solid rgb(193, 199, 208);
     box-sizing: border-box; }
   .u-table-drag-border tr th.th-can-not-drag {
     overflow: hidden; }
   .u-table-header {
     overflow: hidden;
-    background: rgb(247,247,247);
+    background: rgb(223, 225, 230);
     color: rgb(102, 102, 102); }
   .u-table.fixed-height td {
     padding: 0px 8px; }
@@ -240,12 +240,12 @@
     box-sizing: border-box; }
   .u-table-title {
     padding: 12px 8px;
-    border-top: 1px solid rgb(233,233,233); }
+    border-top: 1px solid rgb(193, 199, 208); }
   .u-table-content {
     position: relative; }
   .u-table-footer {
     padding: 12px 8px;
-    border-bottom: 1px solid rgb(233,233,233); }
+    border-bottom: 1px solid rgb(193, 199, 208); }
     .u-table-footer .u-table-scroll {
       overflow-x: hidden; }
   .u-table-footer .u-table {
@@ -253,7 +253,7 @@
   .u-table-placeholder {
     padding: 12px 8px;
     background: #fff;
-    border-bottom: 1px solid rgb(233,233,233);
+    border-bottom: 1px solid rgb(193, 199, 208);
     text-align: center;
     position: relative; }
   .u-table-expand-icon-col {
@@ -266,7 +266,7 @@
     height: 16px;
     text-align: center;
     line-height: 16px;
-    border: 1px solid rgb(233,233,233);
+    border: 1px solid rgb(193, 199, 208);
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -348,7 +348,7 @@
     .u-table-thead .filter-wrap .filter-btns {
       min-width: 58px; }
   .u-table-thead th {
-    background: rgb(247,247,247);
+    background: rgb(223, 225, 230);
     color: rgb(102, 102, 102);
     background-clip: padding-box;
     -moz-user-select: -moz-none;
@@ -424,36 +424,39 @@
   .u-table-thead-th:last-child-drag-gap {
     border: none; }
   .u-table-filter-column-pop-cont {
-    margin: 10px;
-    margin-top: 0px;
-    height: 300px;
+    margin: 0px;
+    max-height: 300px;
     overflow-y: scroll; }
   .u-table-filter-column-clear-setting {
-    border-bottom: 1px solid #ccc;
-    cursor: pointer; }
+    margin-bottom: 4px; }
   .u-table-filter-column-cont {
     position: relative; }
   .u-table-filter-column-filter-icon {
     position: absolute;
-    top: 3px;
+    top: 8px;
     right: 18px;
     width: 22px;
     height: 25px;
     line-height: 25px;
     z-index: 2;
-    background: #f7f7f7; }
-    .u-table-filter-column-filter-iconi.uf {
+    background: rgb(223, 225, 230);
+    text-align: center;
+    cursor: pointer; }
+    .u-table-filter-column-filter-icon i.uf {
       padding: 0px; }
   .u-table-filter-column-pop-cont-item {
-    margin-top: 10px;
-    line-height: 30px;
+    margin-top: 8px;
     cursor: pointer; }
+    .u-table-filter-column-pop-cont-item .u-checkbox {
+      margin: 0px; }
   .u-table-filter-column-pop-cont-item > span {
-    margin-left: 5px;
-    width: 100px;
+    margin-left: -3px;
+    width: 132px;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap; }
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle; }
   .u-table-filter-column-pop .u-modal-dialog {
     border: 1px solid #ccc;
     background: #fff; }
@@ -477,7 +480,7 @@
 
 .u-table.bordered th,
 .u-table.bordered td {
-  border: 1px solid rgb(233,233,233); }
+  border: 1px solid rgb(193, 199, 208); }
 
 .move-enter,
 .move-appear {

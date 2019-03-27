@@ -470,42 +470,50 @@ $checkbox-height:16px;
   &-filter-column{
     
     &-pop-cont{
-      margin: 10px;
-      margin-top: 0px;
-      height: 300px;
+      margin: 0px;
+      max-height: 300px;
       overflow-y: scroll;
     }
     &-clear-setting{ 
-      border-bottom: 1px solid #ccc;
-      cursor: pointer;
+      // border-bottom: 1px solid #ccc;
+      // cursor: pointer;
+      margin-bottom: 4px;
     }
     &-cont{
       position: relative;
     }
     &-filter-icon{
       position: absolute;
-      top: 3px;
+      top: 8px;
       right: 18px;
       width: 22px;
       height: 25px;
       line-height: 25px;
       z-index: 2;
-      background: #f7f7f7;
-      &i.uf{
+      background: $table-head-background-color;
+      text-align: center;
+      cursor: pointer;
+      i.uf{
         padding: 0px;
       }
     }
     &-pop-cont-item{
-      margin-top: 10px;
-      line-height: 30px;
+      margin-top: 8px;
+      // line-height: 30px;
       cursor: pointer;
+      .u-checkbox {
+        margin: 0px;
+
+      }
     }
     &-pop-cont-item>span{
-      margin-left: 5px;
-      width: 100px;
+      margin-left: -3px;
+      width: 132px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      display: inline-block;
+      vertical-align: middle;
     }
     &-pop .u-modal-dialog{
       border: 1px solid #ccc;
