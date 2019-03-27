@@ -4,7 +4,7 @@
 */
 
 import React, { Component } from 'react';
-import {Icon,Checkbox,Popover} from "tinper-bee";
+import {Icon,Checkbox,Popover,Popconfirm} from "tinper-bee";
 
 import Table from '../../src';
 import multiSelect from '../../src/lib/multiSelect';
@@ -85,14 +85,11 @@ function getCloumns(){
           render(text, record, index) {
               return (
                   <div className='operation-btn'>
-                    <a href="#"
-                      tooltip={text}
-                      onClick={() => {
-                        alert('这是第'+index+'列，内容为:'+text);
-                      }}
-                    >
-                      一些操作
-                    </a>
+                    <Popconfirm trigger="click" placement="right" content={'这是第' + index + '行，内容为:' + text}>
+                        <a href="javascript:;" tooltip={text} >
+                        一些操作
+                        </a>
+                    </Popconfirm>
                   </div>
               )
           }

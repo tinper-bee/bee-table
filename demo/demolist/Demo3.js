@@ -7,7 +7,7 @@
 
 
 import React, { Component } from 'react';
-import {Icon,Checkbox,Popover} from "tinper-bee";
+import {Icon,Checkbox,Popover,Popconfirm} from "tinper-bee";
 
 import Table from '../../src';
 import filterColumn from '../../src/lib/filterColumn';
@@ -63,19 +63,11 @@ class Demo21 extends Component {
                   render(text, record, index){
                     return (
                       <div  title={text} >
-                          <a href="#"
-                              tooltip={text}
-                              onClick={() => {
-                                alert('这是第'+index+'列，内容为:'+text);
-                              }}
-                              // style={{
-                              //     position: 'absolute',
-                              //     top: 5,
-                              //     left: 0
-                              // }}
-                            >
-                              一些操作
-                            </a>
+                        <Popconfirm trigger="click" placement="right" content={'这是第' + index + '行，内容为:' + text}>
+                          <a href="javascript:;" tooltip={text} >
+                            一些操作
+                          </a>
+                        </Popconfirm>
                       </div>
                     );
                   }

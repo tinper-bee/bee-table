@@ -1,8 +1,8 @@
 @import "../node_modules/tinper-bee-core/scss/minxin-variables";
 @import "../node_modules/tinper-bee-core/scss/minxin-mixins";
-@import "../node_modules/bee-loading/src/Loading";
+// @import "../node_modules/bee-loading/src/Loading";
 
-$text-color: #666;
+$text-color: $font-color-base;
 $font-size-base: 12px;
 $line-height: 1.5;
 // 主题定制border：
@@ -44,7 +44,7 @@ $checkbox-height:16px;
 
   th {
     // background: $table-head-background-color;
-    font-weight: bold;
+    font-weight: normal;
     text-align: left;
     // transition: background 0.3s ease;
     &[colspan] {

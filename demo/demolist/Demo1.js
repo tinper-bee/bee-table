@@ -6,7 +6,7 @@
 */
 
 import React, { Component } from "react";
-import {Button,Tooltip} from "tinper-bee";
+import {Button,Tooltip,Popconfirm} from "tinper-bee";
 import Table from "../../src";
 
 const columns = [
@@ -37,15 +37,11 @@ const columns = [
     render(text, record, index) {
       return (
         <div style={{ position: 'relative' }} title={text} >
-          <a
-            href="javascript:;"
-            tooltip={text}
-            onClick={() => {
-              alert('这是第' + index + '列，内容为:' + text);
-            }}
-          >
-            一些操作
-              </a>
+          <Popconfirm trigger="click" placement="right" content={'这是第' + index + '行，内容为:' + text}>
+            <a href="javascript:;" tooltip={text}>
+              一些操作
+            </a>
+          </Popconfirm>
         </div>
       );
     }
@@ -75,8 +71,8 @@ class Demo1 extends Component {
           columns={columns}
           data={data}
           parentNodeId='parent'
-          height={43}
-          headerHeight={42}
+          height={40}
+          headerHeight={40}
           onRowClick={(record, index, indent) => {
             this.setState({
               selectedRowIndex: index

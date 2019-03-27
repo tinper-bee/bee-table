@@ -6,6 +6,7 @@
 */
 
 import React, { Component } from "react";
+import {Popconfirm} from 'tinper-bee';
 import Table from "../../src";
 import BigData from "../../src/lib/bigData";
 const BigDataTable = BigData(Table);
@@ -17,14 +18,11 @@ const outColumns = [
     width:200,
     render(text, record, index) {
       return (
-        <a
-          href="#"
-          onClick={() => {
-            alert("这是第" + index + "列，内容为:" + text);
-          }}
-        >
-          一些操作
-        </a>
+        <Popconfirm trigger="click" placement="right" content={'这是第' + index + '行，内容为:' + text}>
+          <a href="javascript:;">
+            一些操作
+          </a>
+        </Popconfirm>
       );
     }
   },
@@ -41,14 +39,11 @@ const innerColumns = [
     width:200,
     render(text, record, index) {
       return (
-        <a
-          href="#"
-          onClick={() => {
-            alert("这是第" + index + "列，内容为:" + text);
-          }}
-        >
-          {'一些操作'+index}
-        </a>
+        <Popconfirm trigger="click" placement="right" content={'这是第' + index + '行，内容为:' + text}>
+          <a href="javascript:;">
+            一些操作
+          </a>
+        </Popconfirm>
       );
     }
   },

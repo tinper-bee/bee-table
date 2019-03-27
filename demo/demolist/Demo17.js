@@ -7,7 +7,7 @@
 
 import React, { Component } from "react";
 import Table from "../../src";
-import {Button} from "tinper-bee";
+import {Button,Popconfirm} from "tinper-bee";
 
 const columns17 = [
   { title: "用户名", dataIndex: "a", key: "a", width: 100 },
@@ -19,14 +19,11 @@ const columns17 = [
     key: "d",
     render(text, record, index) {
       return (
-        <a
-          href="#"
-          onClick={() => {
-            alert('这是第'+index+'列，内容为:'+text);
-          }}
-        >
-          一些操作
-        </a>
+        <Popconfirm trigger="click" placement="right" content={'这是第' + index + '行，内容为:' + text}>
+          <a href="javascript:;">
+            一些操作
+          </a>
+        </Popconfirm>
       );
     }
   }
