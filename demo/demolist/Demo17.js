@@ -63,7 +63,7 @@ class Demo17 extends Component {
           title={currentData => <div>标题: 这是一个标题</div>}
           footer={currentData => <div>表尾: 我是小尾巴</div>}
           // loading={this.state.loading}或者是boolean
-          loading={{show:this.state.loading,loadingType:"line"}}
+          loading={{show:this.state.loading}}
         />
       </div>
     );
