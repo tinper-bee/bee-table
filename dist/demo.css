@@ -71,8 +71,8 @@
     overflow: hidden; }
   .u-table-header {
     overflow: hidden;
-    background: rgb(223, 225, 230);
-    color: rgb(102, 102, 102); }
+    background: rgb(241, 242, 245);
+    color: rgb(33, 33, 33); }
   .u-table.fixed-height td {
     padding: 0px 8px; }
   .u-table-fixed-header .u-table-body {
@@ -202,8 +202,8 @@
     .u-table-thead .filter-wrap .filter-btns {
       min-width: 58px; }
   .u-table-thead th {
-    background: rgb(223, 225, 230);
-    color: rgb(102, 102, 102);
+    background: rgb(241, 242, 245);
+    color: rgb(33, 33, 33);
     background-clip: padding-box;
     -moz-user-select: -moz-none;
     -webkit-user-select: none;
@@ -280,7 +280,8 @@
   .u-table-filter-column-pop-cont {
     margin: 0px;
     max-height: 300px;
-    overflow-y: scroll; }
+    overflow-y: scroll;
+    color: #212121; }
   .u-table-filter-column-clear-setting {
     margin-bottom: 4px; }
   .u-table-filter-column-cont {
@@ -293,7 +294,7 @@
     height: 25px;
     line-height: 25px;
     z-index: 2;
-    background: rgb(223, 225, 230);
+    background: rgb(241, 242, 245);
     text-align: center;
     cursor: pointer; }
     .u-table-filter-column-filter-icon i.uf {

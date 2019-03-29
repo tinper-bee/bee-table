@@ -1125,7 +1125,7 @@ var Table = function (_Component) {
         columns = _props7.columns,
         heightConsistent = _props7.heightConsistent;
 
-    var headRows = this.refs.headTable ? this.refs.headTable.querySelectorAll('thead') : this.refs.bodyTable.querySelectorAll('thead');
+    var headRows = this.refs.headTable ? this.refs.headTable.querySelectorAll('thead') : this.refs.headTable.querySelectorAll('thead');
     var bodyRows = this.refs.bodyTable.querySelectorAll('.' + clsPrefix + '-row') || [];
     var leftBodyRows = this.refs.fixedColumnsBodyLeft && this.refs.fixedColumnsBodyLeft.querySelectorAll('.' + clsPrefix + '-row') || [];
     var rightBodyRows = this.refs.fixedColumnsBodyRight && this.refs.fixedColumnsBodyRight.querySelectorAll('.' + clsPrefix + '-row') || [];

@@ -71,13 +71,8 @@
     overflow: hidden; }
   .u-table-header {
     overflow: hidden;
-<<<<<<< HEAD
-    background: rgb(223, 225, 230);
-    color: rgb(102, 102, 102); }
-=======
     background: rgb(241, 242, 245);
     color: rgb(33, 33, 33); }
->>>>>>> d22d3eedc74d2580946a0e615dff0a862b240889
   .u-table.fixed-height td {
     padding: 0px 8px; }
   .u-table-fixed-header .u-table-body {
@@ -201,13 +196,8 @@
     .u-table-thead .filter-wrap .filter-btns {
       min-width: 58px; }
   .u-table-thead th {
-<<<<<<< HEAD
-    background: rgb(223, 225, 230);
-    color: rgb(102, 102, 102);
-=======
     background: rgb(241, 242, 245);
     color: rgb(33, 33, 33);
->>>>>>> d22d3eedc74d2580946a0e615dff0a862b240889
     background-clip: padding-box;
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
@@ -286,36 +276,39 @@
   .u-table-thead-th:last-child-drag-gap {
     border: none; }
   .u-table-filter-column-pop-cont {
-    margin: 10px;
-    margin-top: 0px;
-    height: 300px;
+    margin: 0px;
+    max-height: 300px;
     overflow-y: scroll; }
   .u-table-filter-column-clear-setting {
-    border-bottom: 1px solid #ccc;
-    cursor: pointer; }
+    margin-bottom: 4px; }
   .u-table-filter-column-cont {
     position: relative; }
   .u-table-filter-column-filter-icon {
     position: absolute;
-    top: 3px;
+    top: 8px;
     right: 18px;
     width: 22px;
     height: 25px;
     line-height: 25px;
     z-index: 2;
-    background: rgb(241, 242, 245); }
-    .u-table-filter-column-filter-iconi.uf {
+    background: rgb(241, 242, 245);
+    text-align: center;
+    cursor: pointer; }
+    .u-table-filter-column-filter-icon i.uf {
       padding: 0px; }
   .u-table-filter-column-pop-cont-item {
-    margin-top: 10px;
-    line-height: 30px;
+    margin-top: 8px;
     cursor: pointer; }
+    .u-table-filter-column-pop-cont-item .u-checkbox {
+      margin: 0px; }
   .u-table-filter-column-pop-cont-item > span {
-    margin-left: 5px;
-    width: 100px;
+    margin-left: -3px;
+    width: 132px;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap; }
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle; }
   .u-table-filter-column-pop .u-modal-dialog {
     border: 1px solid #ccc;
     background: #fff; }
