@@ -796,7 +796,7 @@ class Table extends Component {
       
            if(this.domWidthDiff <= 0){
               headStyle.marginBottom = `${scrollbarWidth}px`;
-              bodyStyle.marginBottom = `-${scrollbarWidth}px`;
+              // bodyStyle.marginBottom = `-${scrollbarWidth}px`;
             }else{
               innerBodyStyle.overflowX = 'auto';
             }
@@ -813,7 +813,7 @@ class Table extends Component {
               headStyle.overflow = 'hidden';
               innerBodyStyle.overflowX = 'auto'; //兼容expand场景、子表格含有固定列的场景
             }else{
-              bodyStyle.marginBottom = `-${scrollbarWidth}px`;
+              // bodyStyle.marginBottom = `-${scrollbarWidth}px`;
             }
             
           }else{
@@ -908,6 +908,7 @@ class Table extends Component {
             onScroll={this.handleBodyScroll}
           >
             {renderTable(!useFixedHeader)}
+            <div className="scroll-dom" style={{height:`${this.scrollbarWidth}px`}}></div>
           </div>
         </div>
       );

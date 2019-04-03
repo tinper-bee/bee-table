@@ -933,7 +933,7 @@ var Table = function (_Component) {
 
             if (this.domWidthDiff <= 0) {
               headStyle.marginBottom = scrollbarWidth + 'px';
-              bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
+              // bodyStyle.marginBottom = `-${scrollbarWidth}px`;
             } else {
               innerBodyStyle.overflowX = 'auto';
             }
@@ -950,8 +950,8 @@ var Table = function (_Component) {
               headStyle.overflow = 'hidden';
               innerBodyStyle.overflowX = 'auto'; //兼容expand场景、子表格含有固定列的场景
             } else {
-              bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
-            }
+                // bodyStyle.marginBottom = `-${scrollbarWidth}px`;
+              }
           } else {
             headStyle.marginBottom = '-' + scrollbarWidth + 'px';
           }
@@ -1047,7 +1047,8 @@ var Table = function (_Component) {
             onTouchStart: this.detectScrollTarget,
             onScroll: this.handleBodyScroll
           },
-          renderTable(!useFixedHeader)
+          renderTable(!useFixedHeader),
+          _react2["default"].createElement('div', { className: 'scroll-dom', style: { height: this.scrollbarWidth + 'px' } })
         )
       );
     }
