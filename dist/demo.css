@@ -19,7 +19,7 @@
     border-collapse: collapse;
     text-align: left; }
   .u-table th {
-    font-weight: normal;
+    font-weight: bold;
     text-align: left; }
     .u-table th[colspan] {
       text-align: center; }
@@ -33,6 +33,8 @@
         color: #1565c0; }
       .u-table td a:active {
         color: #1565c0; }
+  .u-table thead tr:last-child {
+    border-bottom: 1px solid #C1C7D0; }
   .u-table tr:hover td .uf-eye {
     visibility: visible !important; }
   .u-table tr tr a {
@@ -48,8 +50,8 @@
     padding: 12px 8px;
     word-break: break-all; }
   .u-table tr.filterable th {
-    padding-top: 4px;
-    padding-bottom: 4px; }
+    padding-top: 5px !important;
+    padding-bottom: 5px !important; }
     .u-table tr.filterable th .filterContext {
       height: 35px; }
   .u-table-row-hover {
@@ -60,6 +62,10 @@
     border: 1px solid rgb(193, 199, 208);
     box-sizing: border-box;
     table-layout: fixed; }
+  .u-table-bordered .u-table-header > table {
+    border-bottom: 0; }
+  .u-table-bordered .u-table-header ~ .u-table-body table, .u-table-bordered .u-table-header ~ .u-table-body-outer table {
+    border-top: 0px; }
   .u-table-bordered th {
     border-bottom: 1px solid rgb(193, 199, 208);
     box-sizing: border-box; }
@@ -283,6 +289,7 @@
     overflow-y: scroll;
     color: #212121; }
   .u-table-filter-column-clear-setting {
+    cursor: pointer;
     margin-bottom: 4px; }
   .u-table-filter-column-cont {
     position: relative; }
@@ -306,7 +313,9 @@
       margin: 0px; }
   .u-table-filter-column-pop-cont-item > span {
     margin-left: -3px;
-    width: 132px;
+    max-width: 132px;
+    width: auto !important;
+    min-width: 56px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -511,10 +520,16 @@
 .u-filter-dropdown-menu-wrap {
   z-index: 1800; }
   .u-filter-dropdown-menu-wrap .u-dropdown-menu li.u-dropdown-menu-item {
-    line-height: 32px;
-    height: 32px;
+    line-height: 28px;
+    height: 28px;
     padding: 0px 16px 0 16px;
     cursor: pointer; }
+
+.filter-wrap .u-form-control {
+  height: 28px; }
+
+.filter-wrap .u-input-number.u-input-group.simple .u-input-group-btn .icon-group {
+  height: 28px; }
 
 .u-row-hover {
   position: absolute;
