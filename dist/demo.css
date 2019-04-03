@@ -142,7 +142,7 @@
   .u-table-row-collapsed:after, .u-table-expanded-row-collapsed:after {
     content: "+"; }
   .u-table-row.selected {
-    background: rgb(235, 236, 240); }
+    background: #FFF7E7; }
   .u-table tr.u-table-expanded-row {
     background: #f7f7f7; }
     .u-table tr.u-table-expanded-row:hover {
@@ -568,7 +568,7 @@
   display: none; }
 
 .selected {
-  background: #e3f2fd; }
+  background: #FFF7E7; }
 
 .demo25 {
   height: 100%; }

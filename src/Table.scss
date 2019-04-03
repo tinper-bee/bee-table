@@ -19,6 +19,7 @@ $checkbox-height:16px;
 $table-th-bottom-border:#C1C7D0;
 
 $filter-form-control-height:28px;
+$table-head-font-weight: bold;
 .u-table {
   font-size: $font-size-base;
   color: $text-color;
@@ -47,7 +48,7 @@ $filter-form-control-height:28px;
 
   th {
     // background: $table-head-background-color;
-    font-weight: bold;
+    font-weight: $table-head-font-weight;
     text-align: left;
     // transition: background 0.3s ease;
     &[colspan] {
@@ -258,7 +259,7 @@ $filter-form-control-height:28px;
   }
   &-row{
     &.selected{
-      background: $hover-bg-color-base;
+      background: #FFF7E7;
     }
   }
   tr.u-table-expanded-row {
