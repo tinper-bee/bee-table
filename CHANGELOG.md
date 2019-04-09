@@ -1,3 +1,15 @@
+<a name="2.0.11"></a>
+## [2.0.11](https://github.com/tinper-bee/bee-table/compare/v2.0.10...v2.0.11) (2019-04-09)
+
+
+### Bug Fixes
+
+* headerScrol=true数据量大时，表头和表体滚动条长度不一致 ([4198316](https://github.com/tinper-bee/bee-table/commit/4198316))
+* table表头字体加粗、固定表头border粗问题、过滤列弹出框宽度自适应超出8个字显示省略号、表头下增加border下划线 ([3a6c718](https://github.com/tinper-bee/bee-table/commit/3a6c718))
+* **Table.js:** 表头样式调整，修改多选实例，增加回调函数说明，headerScrol=true数据量大时，表头和表体滚动条长度不一致 ([8d33036](https://github.com/tinper-bee/bee-table/commit/8d33036))
+
+
+
 <a name="2.0.10"></a>
 ## [2.0.10](https://github.com/tinper-bee/bee-table/compare/v2.0.9...v2.0.10) (2019-03-29)
 
