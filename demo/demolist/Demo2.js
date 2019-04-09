@@ -54,8 +54,26 @@ class Demo12 extends Component {
       data: data12
     };
   }
-  getSelectedDataFunc = data => {
-    console.log(data);
+  /**
+   *@param selectedList:当前选中的行数据
+   *@param record 当前操作行数据
+   *@param index 当前操作行索引
+   * @memberof Demo12
+   */
+  getSelectedDataFunc = (selectedList,record,index) => {
+    console.log("selectedList", selectedList,"index",index);
+    // 如果在回调中增加setState逻辑，需要同步data中的_checked属性。即下面的代码
+    const allChecked = selectedList.length == 0?false:true;
+    // record为undefind则为全选或者全不选
+    // if(!record){
+    //   data12.forEach(item=>{
+    //     item._checked = allChecked;
+    //   })
+    // }else{
+    //   data12[index]['_checked'] = record._checked;
+    // } 
+
+    
   };
   
   render() {
