@@ -63,7 +63,7 @@ class Demo12 extends Component {
   getSelectedDataFunc = (selectedList,record,index) => {
     console.log("selectedList", selectedList,"index",index);
     // 如果在回调中增加setState逻辑，需要同步data中的_checked属性。即下面的代码
-    const allChecked = selectedList.length == 0?false:true;
+    // const allChecked = selectedList.length == 0?false:true;
     // record为undefind则为全选或者全不选
     // if(!record){
     //   data12.forEach(item=>{

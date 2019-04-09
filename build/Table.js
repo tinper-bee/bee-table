@@ -387,11 +387,10 @@ var Table = function (_Component) {
       var bodyH = this.refs.bodyTable.clientHeight;
       var bodyContentH = this.refs.bodyTable.querySelector('table').clientHeight;
       var rightBodyTable = this.refs.fixedColumnsBodyRight;
-      if (bodyContentH <= bodyH) {
-        this.refs.bodyTable.style.overflowY = 'auto';
-        this.refs.headTable.style.overflowY = 'auto';
-        rightBodyTable && (rightBodyTable.style.overflowY = 'auto');
-      }
+      var overflowy = bodyContentH <= bodyH ? 'auto' : 'scroll';
+      this.refs.bodyTable.style.overflowY = overflowy;
+      this.refs.headTable.style.overflowY = overflowy;
+      rightBodyTable && (rightBodyTable.style.overflowY = overflowy);
     }
   };
 

@@ -277,12 +277,11 @@ class Table extends Component {
       const bodyH = this.refs.bodyTable.clientHeight;
       const bodyContentH = this.refs.bodyTable.querySelector('table').clientHeight;
       const rightBodyTable = this.refs.fixedColumnsBodyRight;
-      if(bodyContentH <= bodyH){
-        this.refs.bodyTable.style.overflowY='auto';
-        this.refs.headTable.style.overflowY='auto';
-        rightBodyTable && (rightBodyTable.style.overflowY='auto');
-
-      }
+      const overflowy = bodyContentH <= bodyH ? 'auto':'scroll';
+      this.refs.bodyTable.style.overflowY = overflowy;
+      this.refs.headTable.style.overflowY = overflowy;
+      rightBodyTable && (rightBodyTable.style.overflowY = overflowy);
+      
     }
   }
   onExpandedRowsChange(expandedRowKeys) {
