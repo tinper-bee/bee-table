@@ -229,7 +229,7 @@ class TableHeader extends Component {
         const newTableWidth = this.drag.tableWidth + diff +'px';
         this.table.table.style.width  = newTableWidth;//改变table的width
         this.table.innerTableBody.style.width  = newTableWidth ;
-        let showScroll =  contentDomWidth - newTableWidth - scrollbarWidth ;
+        let showScroll =  contentDomWidth - (this.drag.tableWidth + diff) - scrollbarWidth ;
    
         //表头滚动条处理
         if(headerScroll){
