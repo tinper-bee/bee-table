@@ -229,6 +229,14 @@ $table-head-font-weight: bold;
   }
   &-row,
   &-expanded-row {
+    .u-table{
+      tr{
+        background: #fff;
+      }
+      tr.u-table-row-hover{
+        background:unquote("rgb(#{$table-row-hover-bg-color})");
+      }
+    }
     &-expand-icon {
       cursor: pointer;
       display: inline-block;

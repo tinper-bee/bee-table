@@ -117,6 +117,10 @@
     position: relative; }
   .u-table-expand-icon-col {
     width: 10px; }
+  .u-table-row .u-table tr, .u-table-expanded-row .u-table tr {
+    background: #fff; }
+  .u-table-row .u-table tr.u-table-row-hover, .u-table-expanded-row .u-table tr.u-table-row-hover {
+    background: rgb(235, 236, 240); }
   .u-table-row-expand-icon, .u-table-expanded-row-expand-icon {
     cursor: pointer;
     display: inline-block;

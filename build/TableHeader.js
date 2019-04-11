@@ -98,7 +98,7 @@ var TableHeader = function (_Component) {
         var newTableWidth = _this.drag.tableWidth + diff + 'px';
         _this.table.table.style.width = newTableWidth; //改变table的width
         _this.table.innerTableBody.style.width = newTableWidth;
-        var showScroll = contentDomWidth - newTableWidth - scrollbarWidth;
+        var showScroll = contentDomWidth - (_this.drag.tableWidth + diff) - scrollbarWidth;
 
         //表头滚动条处理
         if (headerScroll) {
