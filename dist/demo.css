@@ -578,6 +578,15 @@
   .demo25 .u-table-filter-column-filter-icon {
     right: 15px; }
 
+.demo02 .u-table-placeholder i {
+  font-size: 40px; }
+
+.demo04.u-table tr:nth-child(2n) {
+  background: #f7f9fb; }
+
+.demo04.u-table tr.u-table-row-hover, .demo04 .u-table tr:hover {
+  background: #ebecf0; }
+
 th .drop-menu .uf {
   font-size: 12px;
   visibility: hidden;
