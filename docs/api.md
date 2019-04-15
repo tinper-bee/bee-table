@@ -11,7 +11,7 @@ import { Table } from 'tinper-bee';
 or
 
 import Table from 'bee-table';
-import bee-table/build/Table.css;
+import 'bee-table/build/Table.css';
 
 ```
 
