@@ -579,7 +579,7 @@
     right: 15px; }
 
 .demo02 .u-table-placeholder i {
-  font-size: 40px; }
+  font-size: 60px; }
 
 .demo04.u-table tr:nth-child(2n) {
   background: #f7f9fb; }
@@ -587,17 +587,6 @@
 .demo04.u-table tr.u-table-row-hover, .demo04 .u-table tr:hover {
   background: #ebecf0; }
 
-th .drop-menu .uf {
-  font-size: 12px;
-  visibility: hidden;
-  margin-left: 15px; }
-
-th:hover .uf {
-  visibility: visible; }
-
-.demo3 .u-table-thead th {
-  padding-top: 0px;
-  padding-bottom: 0px; }
 
 .demo8 .u-table {
   margin-bottom: 11px; }
@@ -610,13 +599,16 @@ th:hover .uf {
   -ms-flex-pack: center;
   justify-content: center; }
 
+.demo32 .u-table-thead th {
+  padding-top: 0px;
+  padding-bottom: 0px; }
 
-.opt-btns .u-button {
-  background-color: #505F79;
-  border-color: #505F79;
-  color: #fff; }
-  .opt-btns .u-button:hover, .opt-btns .u-button:active {
-    background-color: #344563;
-    border-color: #344563; }
+th .drop-menu .uf {
+  font-size: 12px;
+  visibility: hidden;
+  margin-left: 15px; }
+
+th:hover .uf {
+  visibility: visible; }
 
 /*# sourceMappingURL=demo.css.map */

@@ -2,7 +2,7 @@
 *
 * @title 基本表格
 * 【Tooltip】
-* @description
+* @description 鼠标hover行时呼出操作按钮
 */
 
 import React, { Component } from "react";
@@ -38,13 +38,12 @@ const data = [
   { a: "郭靖", b: "男", c: 25, key: "3" }
 ];
 
-class Demo1 extends Component {
+class Demo01 extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      data: data,
-      selectedRowIndex: 0
+      data: data
     }
   }
   handleClick = () => {
@@ -63,7 +62,6 @@ class Demo1 extends Component {
 
   render() {
     return (
-   
         <Table
           columns={columns}
           data={data}
@@ -72,16 +70,9 @@ class Demo1 extends Component {
           headerHeight={40}
           hoverContent={this.getHoverContent}
           onRowHover={this.onRowHover}
-          onRowClick={(record, index, indent) => {
-            this.setState({
-              selectedRowIndex: index
-            });
-          }}
         />
-
-     
     );
   }
 }
 
-export default Demo1;
+export default Demo01;

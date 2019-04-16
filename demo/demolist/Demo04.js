@@ -9,7 +9,7 @@
 import React, { Component } from 'react';
 import Table from '../../src';
 
-const columns6 = [
+const columns04 = [
   {
     title: "Full Name",
     width: 100,
@@ -20,7 +20,7 @@ const columns6 = [
   { title: "Address", dataIndex: "address", key: "1" }
 ];
 
-const data6 = [
+const data04 = [
   {
     key: "1",
     name: "John Brown",
@@ -72,7 +72,7 @@ const data6 = [
 
 class Demo04 extends Component {
   render() {
-    return <Table className="demo04" columns={columns6} data={data6} />;
+    return <Table className="demo04" columns={columns04} data={data04} />;
   }
 }
 

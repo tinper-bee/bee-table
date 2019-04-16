@@ -1,17 +1,13 @@
 /**
 *
 * @title 固定表头
-* @description 当滚动纵向滚动条时，表头固定。还可以设置scroll来支持横向或纵向滚动
-*
+* @description 设置`scroll.y`指定滚动区域的高度，添加纵向滚动条，达到固定表头效果
 */
-
 
 import React, { Component } from 'react';
 import Table from '../../src';
-import dragColumn from "../../src/lib/dragColumn";;
-const DragColumnTable = dragColumn(Table);
 
-const columns6 = [
+const columns03 = [
   {
     title: "Full Name",
     width: 100,
@@ -22,7 +18,7 @@ const columns6 = [
   { title: "Address", dataIndex: "address", key: "1" }
 ];
 
-const data6 = [
+const data03 = [
   {
     key: "1",
     name: "John Brown",
@@ -72,10 +68,10 @@ const data6 = [
   }
 ];
 
-class Demo6 extends Component {
+class Demo03 extends Component {
   render() {
-    return <DragColumnTable columns={columns6} data={data6} scroll={{y: 150 }} dragborder={true}  />;
+    return <Table columns={columns03} data={data03} scroll={{y: 150 }} />;
   }
 }
 
-export default Demo6; 
+export default Demo03; 
