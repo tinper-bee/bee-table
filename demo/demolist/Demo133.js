@@ -17,7 +17,7 @@ const columns = [
     {
         title:'序号',
         dataIndex:'index',
-        width:'50',
+        width:'80',
         key:'index',
         render:(text,record,index)=>{
             return index
