@@ -67,7 +67,7 @@ export default function multiSelect(Table, Checkbox) {
       let count = 0;
       let disabledCount = 0;
       data.forEach(da=>{
-        if(da._checked){
+        if(da._checked && !da._disabled){
           count ++;
         }
         if(da._disabled){
