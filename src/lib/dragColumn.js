@@ -77,9 +77,21 @@ export default function dragColumn(Table) {
         0,
        columns.splice(sourceIndex, 1)[0]
       );
-      this.setState({
-        columns:cloneDeep(columns)
+      // this.setState({
+      //   columns:cloneDeep(columns)
+      // });
+      let _newColumns = [];
+      columns.forEach((da,i)=>{
+        let newDate = Object.assign(da,{});
+        newDate.title = da.title;
+        _newColumns.push(newDate);
       });
+      // console.log(" onDrop-------columns--- ",columns);
+      this.setState({
+        columns:_newColumns//cloneDeep(columns)
+      });
+      // console.log(" onDrop-------columns--- ",_newColumns);
+      console.log(columns === _newColumns);
       if(this.props.onDrop){
         this.props.onDrop(event,data,columns);
       }
