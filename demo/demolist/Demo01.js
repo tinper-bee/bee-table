@@ -28,8 +28,8 @@ const columns = [
       );
     }
   },
-  { id: "123", title: "性别", dataIndex: "b", key: "b", width: 500, "textAlign":"center"},
-  { title: "年龄", dataIndex: "c", key: "c", width: 200, "textAlign":"center"}
+  { id: "123", title: "性别", dataIndex: "b", key: "b", width: 500,"textAlign":'center'},
+  { title: "年龄", dataIndex: "c", key: "c", width: 200,"textAlign":'center' }
 ];
 
 const data = [
@@ -68,6 +68,7 @@ class Demo01 extends Component {
           parentNodeId='parent'
           height={40}
           headerHeight={40}
+          bordered = {true}
           hoverContent={this.getHoverContent}
           onRowHover={this.onRowHover}
         />

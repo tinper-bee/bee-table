@@ -49,6 +49,12 @@
   .u-table td {
     padding: 12px 16px;
     word-break: break-all; }
+    .u-table th.text-center,
+    .u-table td.text-center {
+      text-align: center; }
+    .u-table th.text-right,
+    .u-table td.text-right {
+      text-align: right; }
   .u-table tr.filterable th {
     padding-top: 5px !important;
     padding-bottom: 5px !important; }
@@ -343,7 +349,8 @@
     line-height: 14px;
     margin: 0px; }
     .u-table .u-checkbox .u-checkbox-label {
-      line-height: 14px; }
+      line-height: 14px;
+      padding-left: 16px; }
       .u-table .u-checkbox .u-checkbox-label:before, .u-table .u-checkbox .u-checkbox-label:after {
         width: 14px;
         height: 14px; }
