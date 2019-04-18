@@ -1,7 +1,7 @@
 /**
 *
 * @title 基本表格
-* 【Tooltip】
+* @parent 基础 Basic
 * @description 鼠标hover行时呼出操作按钮
 */
 

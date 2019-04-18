@@ -591,6 +591,11 @@
   .demo25 .u-table-filter-column-filter-icon {
     right: 15px; }
 
+.opt-btns .u-button {
+  background: #505F79; }
+  .opt-btns .u-button:hover, .opt-btns .u-button:active {
+    background: #344563; }
+
 .demo02 .u-table-placeholder i {
   font-size: 60px; }
 

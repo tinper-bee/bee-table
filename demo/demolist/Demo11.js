@@ -1,6 +1,7 @@
 /**
 *
 * @title 横向滚动条
+* @parent 滚动 Scroll View
 * @description 设置`scroll`属性支持横向或纵向滚动，x/y的取值可以是正整数、百分比、布尔值
 */
 

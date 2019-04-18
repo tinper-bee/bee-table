@@ -1,6 +1,6 @@
 /**
- *
  * @title 表格+分页
+ * @parent 分页 Pagination
  * @description 点击分页联动表格
  */
 

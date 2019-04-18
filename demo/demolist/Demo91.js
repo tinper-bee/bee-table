@@ -1,6 +1,7 @@
 /**
 *
 * @title 拖拽改变列顺序
+* @parent 列操作-拖拽 Drag
 * @description 点击列的表头，进行左右拖拽，注意：固定列不可以交换
 */
 import React, { Component } from 'react';

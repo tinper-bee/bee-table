@@ -1,6 +1,7 @@
 /**
 *
 * @title 自定义行高
+* @parent 扩展行 Expanded Row
 * @description 设置`height`属性自定义表格行高，设置`headerHeight`属性自定义表头高度。
 */
 

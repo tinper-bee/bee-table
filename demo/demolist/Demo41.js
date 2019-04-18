@@ -1,6 +1,7 @@
 /**
 *
 * @title 编辑态表格
+* @parent 编辑 Editor
 * @description 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）
 *
 */
