@@ -106,6 +106,12 @@ $icon-color:#505F79;
   td {
     padding: $vertical-padding $horizontal-padding;
     word-break: break-all;
+    &.text-center{
+      text-align: center;
+    }
+    &.text-right{
+      text-align: right;
+    }
   }
   tr {
     
@@ -575,6 +581,7 @@ $icon-color:#505F79;
     margin:0px;
     .u-checkbox-label{
       line-height:  $checkbox-height;
+      padding-left: 16px;
       &:before,&:after {
         width:  $checkbox-height;
         height:  $checkbox-height;
