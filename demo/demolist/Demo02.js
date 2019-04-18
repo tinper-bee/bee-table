@@ -11,30 +11,29 @@ import React, { Component } from 'react';
 import Table from '../../src';
 import Icon from 'bee-icon';
 
-
 const columns02 = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "员工编号",
+      dataIndex: "num",
+      key: "num",
       width: "40%"
     },
     {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
+      title: "员工姓名",
+      dataIndex: "name",
+      key: "name",
       width: "30%"
     },
     {
-      title: "Address",
-      dataIndex: "address",
-      key: "address"
+      title: "部门",
+      dataIndex: "department",
+      key: "department"
     }
-  ];
+];
   
-  const data02 = [];
+const data02 = [];
 
-  const emptyFunc = () => <Icon type="uf-nodata"></Icon>
+const emptyFunc = () => <Icon type="uf-nodata"></Icon>
   
 class Demo02 extends Component {
   render() {

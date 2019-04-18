@@ -625,6 +625,9 @@
   -ms-flex-pack: center;
   justify-content: center; }
 
+.demo22 .opt-btns {
+  margin-bottom: 8px; }
+
 .demo32 .u-table-thead th {
   padding-top: 0px;
   padding-bottom: 0px; }

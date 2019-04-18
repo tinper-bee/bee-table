@@ -8,12 +8,15 @@
 import React, { Component } from "react";
 import Table from "../../src";
 
-const columns11 = [
+const columns = [
     {
         title: "序号",
         dataIndex: "index",
         key: "index",
         width: 200, 
+        render(text, record, index) {
+            return index + 1;
+        }
     },
     {
         title: "订单编号",
@@ -43,14 +46,13 @@ const columns11 = [
         title: "采购组",
         dataIndex: "purchasingGroup",
         key: "purchasingGroup",
-         width: 300
+        width: 300
     },
     {
         title: "凭证日期",
         dataIndex: "voucherDate",
         key: "voucherDate",
         width: 200,
-        
     },
     {
         title: "审批状态",
@@ -72,9 +74,8 @@ const columns11 = [
     }
 ];
 
-const data11 = [
+const data = [
     { 
-        index: 1, 
         orderCode:"2343", 
         supplierName: "xxx",
         type_name: "123",
@@ -87,52 +88,47 @@ const data11 = [
         key: "1"
     }, 
     { 
-      index: 2, 
-      _checked:true,
-      orderCode:"222", 
-      supplierName: "22xxx",
-      type_name: "1223",
-      purchasing:'内行2', 
-      purchasingGroup:"3223",
-      voucherDate:"222kk",
-      approvalState_name:"22vvvv",
-      confirmState_name:"2aaaa",
-      closeState_name:"2vnnnnn",
-      key: "2"
+        orderCode:"222", 
+        supplierName: "22xxx",
+        type_name: "1223",
+        purchasing:'内行2', 
+        purchasingGroup:"3223",
+        voucherDate:"222kk",
+        approvalState_name:"22vvvv",
+        confirmState_name:"2aaaa",
+        closeState_name:"2vnnnnn",
+        key: "2"
     },
     { 
-      index: 3, 
-      orderCode:"222", 
-      supplierName: "22xxx",
-      _disabled:true,
-      type_name: "1223",
-      purchasing:'内行2', 
-      purchasingGroup:"3223",
-      voucherDate:"222kk",
-      approvalState_name:"22vvvv",
-      confirmState_name:"2aaaa",
-      closeState_name:"2vnnnnn",
-      key: "3"
+        orderCode:"222", 
+        supplierName: "22xxx",
+        type_name: "1223",
+        purchasing:'内行2', 
+        purchasingGroup:"3223",
+        voucherDate:"222kk",
+        approvalState_name:"22vvvv",
+        confirmState_name:"2aaaa",
+        closeState_name:"2vnnnnn",
+        key: "3"
     },
     { 
-      index: 4, 
-      orderCode:"222", 
-      supplierName: "22xxx",
-      type_name: "1223",
-      purchasing:'内行2', 
-      purchasingGroup:"3223",
-      voucherDate:"222kk",
-      approvalState_name:"22vvvv",
-      confirmState_name:"2aaaa",
-      closeState_name:"2vnnnnn",
-      key: "4"
+        orderCode:"222", 
+        supplierName: "22xxx",
+        type_name: "1223",
+        purchasing:'内行2', 
+        purchasingGroup:"3223",
+        voucherDate:"222kk",
+        approvalState_name:"22vvvv",
+        confirmState_name:"2aaaa",
+        closeState_name:"2vnnnnn",
+        key: "4"
     },
 ];
 
 class Demo11 extends Component {
   render() {
     return (
-        <Table columns={columns11} data={data11} scroll={{x:true}} />
+        <Table columns={columns} data={data} scroll={{x:true}} />
     );
   }
 }
