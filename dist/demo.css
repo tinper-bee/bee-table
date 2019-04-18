@@ -592,6 +592,7 @@
     right: 15px; }
 
 .opt-btns .u-button {
+  color: #fff;
   background: #505F79; }
   .opt-btns .u-button:hover, .opt-btns .u-button:active {
     background: #344563; }

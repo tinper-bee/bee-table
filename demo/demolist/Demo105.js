@@ -1,8 +1,8 @@
 /**
 *
-* @title 根据内容自动撑开行高
+* @title 图片在表格中的展示
 * @parent 扩展行 Expanded Row
-* @description 表格行含有图片时的展示
+* @description 根据图片高度自动撑开行高，可结合图片查看器使用 http://design.yonyoucloud.com/tinper-bee/bee-viewer
 */
 
 import React, { Component } from "react";
@@ -15,7 +15,7 @@ const columns = [
         dataIndex: "index",
         key: "index",
         width: 80,
-        render(record, text, index) {
+        render(text, record, index) {
             return index + 1;
         }
     },
@@ -47,38 +47,28 @@ const columns = [
         title: "首次发现时间",
         dataIndex: "discoveryTime",
         key: "discoveryTime",
-        width: 100,
+        width: 150,
     },
     {
         title: "实际修复时间",
         dataIndex: "repairTime",
         key: "repairTime",
-        width: 100,
+        width: 150,
     },
     {
         title: "图样",
         dataIndex: "picture",
         key: "picture",
-        width: 100,
-    },
-    {
-        title: "申请单号",
-        dataIndex: "billcode",
-        key: "billcode",
-        width: 100,
-    },
-    {
-        title: "设施名称",
-        dataIndex: "facilityName",
-        key: "facilityName",
-        width: 100,
+        render(text, record, index) {
+            return <img style={{height:'50px'}} src={text} alt="Picture"/>
+        }
     }
 ];
 
 const data = [
-  { orgDept: "", facilityManageUnit: "", docketnum: 41, num: "1", discoveryTime: "", repairTime: "", picture: "", billcode: "", facilityName:""},
-  { orgDept: "", facilityManageUnit: "", docketnum: 41, num: "1", discoveryTime: "", repairTime: "", picture: "", billcode: "", facilityName:""},
-  { orgDept: "", facilityManageUnit: "", docketnum: 41, num: "1", discoveryTime: "", repairTime: "", picture: "", billcode: "", facilityName:""}
+  { key: "1", orgDept: "组织1", facilityManageUnit: "部门1", docketnum: 41, num: "1", discoveryTime: "2018-10-17", repairTime: "2018-10-30", picture: "http://design.yonyoucloud.com/static/bee.tinper.org-demo/swiper-demo-1-min.jpg"},
+  { key: "2", orgDept: "组织2", facilityManageUnit: "部门2", docketnum: 30, num: "2", discoveryTime: "2019-01-15", repairTime: "2019-01-20", picture: "http://design.yonyoucloud.com/static/bee.tinper.org-demo/swiper-demo-2-min.jpg"},
+  { key: "3", orgDept: "组织3", facilityManageUnit: "部门3", docketnum: 35, num: "3", discoveryTime: "2019-04-10", repairTime: "2019-04-17", picture: "http://design.yonyoucloud.com/static/bee.tinper.org-demo/swiper-demo-3-min.jpg"}
 ];
 
 class Demo105 extends Component {
