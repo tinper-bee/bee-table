@@ -28,8 +28,8 @@ const columns = [
       );
     }
   },
-  { id: "123", title: "性别", dataIndex: "b", key: "b", width: 500},
-  { title: "年龄", dataIndex: "c", key: "c", width: 200 }
+  { id: "123", title: "性别", dataIndex: "b", key: "b", width: 500, "textAlign":"center"},
+  { title: "年龄", dataIndex: "c", key: "c", width: 200, "textAlign":"center"}
 ];
 
 const data = [

@@ -1,6 +1,6 @@
 /**
 *
-* @title 滚动加载
+* @title 无限滚动 Infinite Scroll
 * @description 万行数据渲染
 */
 
