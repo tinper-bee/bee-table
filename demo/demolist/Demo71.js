@@ -1,6 +1,7 @@
 /**
 *
 * @title 列过滤面板
+* @parent 列操作-隐藏 Hide
 * @description 点击表格右侧按钮，进行表格列的数据过滤。可以自定义设置显示某列，通过ifshow属性控制，默认为true都显示。afterFilter为过滤之后的回调函数
 *
 */

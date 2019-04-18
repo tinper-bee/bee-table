@@ -33,3 +33,9 @@
   }
 
 }
+.opt-btns .u-button{
+  background: #505F79;
+  &:hover, &:active{
+    background: #344563;
+  }
+}

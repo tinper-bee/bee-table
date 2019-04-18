@@ -1,6 +1,7 @@
 /**
 *
 * @title 固定表头
+* @parent 基础 Basic
 * @description 设置`scroll.y`指定滚动区域的高度，添加纵向滚动条，达到固定表头效果
 */
 

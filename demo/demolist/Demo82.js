@@ -1,6 +1,7 @@
 /**
 * @title 后端列排序
-*
+* @parent 列操作-排序 Sort
+* @description 将控制台打印的参数传递给后端即可进行列排序
 */
 
 

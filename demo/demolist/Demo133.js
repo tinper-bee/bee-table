@@ -1,6 +1,7 @@
 /**
 *
 * @title 多功能表格滚动加载
+* @parent 无限滚动 Infinite-scroll
 * @description
 */
 

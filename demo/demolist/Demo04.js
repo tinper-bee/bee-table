@@ -1,6 +1,7 @@
 /**
 *
 * @title 隔行换色
+* @parent 基础 Basic
 * @description 可自定义斑马线颜色
 *
 */

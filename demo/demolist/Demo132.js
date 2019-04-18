@@ -1,6 +1,7 @@
 /**
 *
 * @title 嵌套子表格滚动加载
+* @parent 无限滚动 Infinite-scroll
 * @description 通过expandedRowRender参数来实现子表格
 *
 */

@@ -349,7 +349,8 @@
     line-height: 14px;
     margin: 0px; }
     .u-table .u-checkbox .u-checkbox-label {
-      line-height: 14px; }
+      line-height: 14px;
+      padding-left: 16px; }
       .u-table .u-checkbox .u-checkbox-label:before, .u-table .u-checkbox .u-checkbox-label:after {
         width: 14px;
         height: 14px; }
@@ -596,6 +597,11 @@
   height: 100%; }
   .demo25 .u-table-filter-column-filter-icon {
     right: 15px; }
+
+.opt-btns .u-button {
+  background: #505F79; }
+  .opt-btns .u-button:hover, .opt-btns .u-button:active {
+    background: #344563; }
 
 .demo02 .u-table-placeholder i {
   font-size: 60px; }
