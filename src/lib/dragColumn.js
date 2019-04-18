@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {compare,ObjectAssign} from './util';
-let cloneDeep = require('lodash.clonedeep');
 /**
  * 参数: 列拖拽
  * @param {*} Table
@@ -33,14 +32,6 @@ export default function dragColumn(Table) {
       return _column; 
     }
 
-   cloneDeep(obj){
-        if( typeof obj !== 'object' || Object.keys(obj).length === 0 ){
-            return obj
-        }
-        let resultData = {}
-        return this.recursion(obj, resultData)
-    }
-
     recursion(obj, data={}){
         for(key in obj){
             if( typeof obj[key] == 'object' && Object.keys(obj[key].length>0 )){
@@ -58,16 +49,7 @@ export default function dragColumn(Table) {
       let sourceIndex = -1,targetIndex = -1;
        
       sourceIndex =  columns.findIndex((da,i)=>da.key == dragSource.key);
-      targetIndex = columns.findIndex((da,i)=>da.key == dragTarg.key);
-      // for (let index = 0; index < columns.length; index++) {
-      //   const da = columns[index];
-      //   if(da.key === dragSource.key){
-      //     columns[index] = dragTargColum; 
-      //   }
-      //   if(da.key === dragTarg.key){
-      //     columns[index] = dragSourceColum;
-      //   }
-      // }
+      targetIndex = columns.findIndex((da,i)=>da.key == dragTarg.key); 
       // 向前移动
      if(targetIndex < sourceIndex){
       targetIndex = targetIndex + 1;
@@ -77,9 +59,6 @@ export default function dragColumn(Table) {
         0,
        columns.splice(sourceIndex, 1)[0]
       );
-      // this.setState({
-      //   columns:cloneDeep(columns)
-      // });
       let _newColumns = [];
       columns.forEach((da,i)=>{
         let newDate = Object.assign(da,{});
@@ -114,7 +93,6 @@ export default function dragColumn(Table) {
           onDrop,
           ...others
       } = this.props;
-      let key = new Date().getTime();
       return (
           <Table
               {...others}
@@ -128,7 +106,6 @@ export default function dragColumn(Table) {
               draggable={draggable}
               dragborder={dragborder}
               // dragborder={false}
-              dragborderKey={key}
           />)
     }
   };

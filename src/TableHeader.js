@@ -152,6 +152,7 @@ class TableHeader extends Component {
       table.table = tableDome;
       table.cols = tableDome.getElementsByTagName("col");
       table.ths = tableDome.getElementsByTagName("th");
+      table.tr = tableDome.getElementsByTagName("tr");
     }
 
     table.fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header') ;
@@ -289,6 +290,10 @@ class TableHeader extends Component {
    */
   onLineMouseUp = (event) => {
     let width = this.drag.newWidth;
+    // const newTableWidth = this.drag.tableWidth + diff +'px';
+    // this.table.table.style.width  = newTableWidth;//同步table的width
+    // this.table.innerTableBody.style.width  = newTableWidth ;//同步改变table body 的width
+    // console.log(" --onLineMouseUp--- ");
     this.clearDragBorder(event);
     this.props.onDropBorder && this.props.onDropBorder(event,width);
   };
@@ -300,7 +305,7 @@ class TableHeader extends Component {
     this.clearDragBorder(event);
   };
 
-  clearDragBorder(){
+  clearDragBorder(){ 
     if(!this.drag || !this.drag.option)return;
     let {rows} = this.props;
     let data = {rows:rows[0],cols:this.table.cols,currIndex:this.drag.currIndex};
@@ -593,8 +598,9 @@ class TableHeader extends Component {
     let attr = dragborder ? { id: `u-table-drag-thead-${this.theadKey}` } : {};
     return (
       <thead className={`${clsPrefix}-thead`} {...attr} data-theader-fixed='scroll' ref={_thead=>this._thead = _thead} >
-        {rows.map((row, index) => (
-          <tr key={index} style={rowStyle} className={(filterable && index == rows.length - 1)?'filterable':''}>
+        {rows.map((row, index) => {
+          let _rowLeng = (row.length-1);
+          return(<tr key={index} style={rowStyle} className={(filterable && index == rows.length - 1)?'filterable':''}>
             {row.map((da, columIndex, arr) => {
               let thHover = da.drgHover
                 ? ` ${clsPrefix}-thead th-drag-hover`
@@ -642,11 +648,10 @@ class TableHeader extends Component {
                     thClassName += ` ${clsPrefix}-thead-th ${canDotDrag}`;
                   }
                   thClassName += ` ${fixedStyle}`;
-                 
-                if(!da.fixed){
+                if(!da.fixed && columIndex != _rowLeng){
              
                   return (<th {...da}  {...keyTemp} className={thClassName} data-th-fixed={da.fixed} 
-                        data-line-key={da.key} data-line-index={columIndex} data-th-width={da.width} >
+                        data-line-key={da.key} data-line-index={columIndex} data-th-width={da.width} data-row-leng="1111111111111" >
                               {da.children}
                               {
                                 dragborder ? <div ref={el => (this.gap = el)} data-line-key={da.key} 
@@ -665,7 +670,7 @@ class TableHeader extends Component {
               }
             })}
           </tr>
-        ))}
+        )})}
       </thead>
     );
   }
