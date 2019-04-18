@@ -390,7 +390,7 @@ export default function bigData(Table) {
       if(!_this.props.expandedRowKeys){
         if(expandState){
           expandedRowKeys.push(rowKey);
-          
+          this.setState({ needRender: !needRender });
          }else{
            let index = -1;
            expandedRowKeys.forEach((r, i) => {

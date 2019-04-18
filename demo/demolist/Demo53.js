@@ -74,7 +74,7 @@ const columns24 = [
     title: "武功类型",
     dataIndex: "g",
     key: "g",
-    width: 100 
+    width: 150 
   },
   {
     title: "师傅",
