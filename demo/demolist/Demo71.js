@@ -56,22 +56,6 @@ class Demo21 extends Component {
                   title: "武功级别",
                   dataIndex: "d",
                   key: "d"
-                },
-                {
-                  title: "操作",
-                  dataIndex: "e",
-                  key: "e",
-                  render(text, record, index){
-                    return (
-                      <div  title={text} >
-                        <Popconfirm trigger="click" placement="right" content={'这是第' + index + '行，内容为:' + text}>
-                          <a href="javascript:;" tooltip={text} >
-                            一些操作
-                          </a>
-                        </Popconfirm>
-                      </div>
-                    );
-                  }
                 }
               ]};
   }

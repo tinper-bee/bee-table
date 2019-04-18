@@ -8857,6 +8857,7 @@ ul {
     right: 15px; }
 
 .opt-btns .u-button {
+  color: #fff;
   background: #505F79; }
   .opt-btns .u-button:hover, .opt-btns .u-button:active {
     background: #344563; }
@@ -8881,6 +8882,9 @@ ul {
   align-items: center;
   -ms-flex-pack: center;
   justify-content: center; }
+
+.demo22 .opt-btns {
+  margin-bottom: 8px; }
 
 .demo32 .u-table-thead th {
   padding-top: 0px;

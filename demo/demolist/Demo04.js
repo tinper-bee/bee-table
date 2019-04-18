@@ -12,13 +12,13 @@ import Table from '../../src';
 
 const columns04 = [
   {
-    title: "Full Name",
+    title: "员工姓名",
     width: 100,
     dataIndex: "name",
     key: "name"
   },
-  { title: "Age", width: 100, dataIndex: "age", key: "age"},
-  { title: "Address", dataIndex: "address", key: "1" }
+  { title: "年龄", width: 100, dataIndex: "age", key: "age"},
+  { title: "住址", dataIndex: "address", key: "1" }
 ];
 
 const data04 = [
@@ -73,7 +73,12 @@ const data04 = [
 
 class Demo04 extends Component {
   render() {
-    return <Table className="demo04" columns={columns04} data={data04} />;
+    return <Table 
+            className="demo04" 
+            columns={columns04} 
+            data={data04} 
+            height={40}
+            headerHeight={40}/>
   }
 }
 
