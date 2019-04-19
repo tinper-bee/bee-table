@@ -28,114 +28,12 @@ class TableHeader extends Component {
     contentWidthDiff: 0
   };
 
-  /**
-   *
-   * 动态绑定th line 事件方法
-   * @param {*} events
-   * @param {*} type  type 为false 为增加事件
-   * @param {*} eventSource 为false 给 th 内部的div增加事件
-   * @memberof TableHeader
-   */
-  thEventListen(events,type,eventSource){
-    let {ths,cols} = this.table;
-    for (let index = 0; index < ths.length; index++) {
-      const element = ths[index];//.getAttribute('data-type');
-      if(!element.getAttribute('data-th-fixed')){
-        let colLine =  null;
-        if(element.children.length === 0){
-          colLine = element;
-        }else if(element.children.length > 0){
-          colLine = element.lastElementChild;
-        }else if(element.children.length === 1){
-          colLine = element.children[0];
-        }
-        // const colLine =  element.children.length > 1?element.lastElementChild:element.children[0];
-        for (let i = 0; i < events.length; i++) {
-          const _event = events[i];
-          let _dataSource = eventSource?element:colLine;
-          if(type === "remove"){
-            EventUtil.removeHandler(_dataSource,_event.key,_event.fun);
-          }else{
-            EventUtil.addHandler(_dataSource,_event.key,_event.fun);
-          }
-        }
-      }
-    }
-  }
-
- 
-  /**
-   * 当前对象上绑定全局事件，用于拖拽区域以外时的事件处理
-   * @param {*} events
-   * @param {*} type
-   * @memberof TableHeader
-   */
-  bodyEventListen(events,type){
-    for (let i = 0; i < events.length; i++) {
-      const _event = events[i];
-      if(type == "remove"){
-        EventUtil.removeHandler(document.body,_event.key,_event.fun);
-      }else{
-        EventUtil.addHandler(document.body,_event.key,_event.fun);
-      }
-    }
-  }
 
   componentDidUpdate(){
-    this.initTable(); 
+    this.initTable();
     this.initEvent();
   }
 
-
-  componentWillUnmount(){
-    if(!this.table)return;
-    if (this.props.draggable){
-      this.removeDragAbleEvent();
-    }
-    if(this.props.dragborder){
-      this.removeDragBorderEvent();
-    }
-  }
-
-  // componentDidMount(){
-    // this.initTable();
-    // this.initEvent();
-  // } 
-  
-  /**
-   * 初始化拖拽列宽的事件处理
-   * @returns
-   * @memberof TableHeader
-   */
-  initEvent(){
-    let  events = [
-      {key:'mouseup', fun:this.onLineMouseUp},
-      {key:'mousemove', fun:this.onLineMouseMove}
-    ];
-
-    if(this.props.dragborder){
-      this.thEventListen(events,'',true);//表示把事件添加到th元素上
-      this.thEventListen([{key:'mousedown',fun:this.onLineMouseDown}]);//表示把事件添加到竖线
-      this.bodyEventListen([{key:'mouseup',fun:this.bodyonLineMouseMove}]);
-    }
-    if(!this.props.draggable)return;
-    //拖拽交换列事件
-    this.thEventListen([{key:'mousedown',fun:this.dragAbleMouseDown}],'',true);//表示把事件添加到th元素上
-  }
-
-  /**
-   * 移除当前全局事件对象
-   * @memberof TableHeader
-   */
-  removeDragBorderEvent(){
-    let  events = [
-      {key:'mouseup', fun:this.onLineMouseUp},
-      {key:'mousemove', fun:this.onLineMouseMove}
-    ];
-    this.thEventListen(events,'remove',true);//表示把事件添加到th元素上
-    this.thEventListen([{key:'mousedown',fun:this.onLineMouseDown}],'remove');//表示把事件添加到竖线
-    this.bodyEventListen([{key:'mouseup',fun:this.bodyonLineMouseMove}],'remove');
-  }
 
   /**
    * 获取table的属性存放在this.table 中。(公用方法)
@@ -152,6 +50,7 @@ class TableHeader extends Component {
       table.table = tableDome;
       table.cols = tableDome.getElementsByTagName("col");
       table.ths = tableDome.getElementsByTagName("th");
+      table.tr = tableDome.getElementsByTagName("tr");
     }
 
     table.fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header') ;
@@ -177,6 +76,185 @@ class TableHeader extends Component {
       }
     }
   }
+
+
+  initEvent(){
+    let  events = [
+      {key:'mouseup', fun:this.onTrMouseUp},
+      {key:'mousemove', fun:this.onTrMouseMove},
+      {key:'mousedown', fun:this.onTrMouseDown}
+    ];
+    this.eventListen(events,'',this.table.tr[0]);//表示把事件添加到th元素上
+    this.eventListen([{key:'mouseup',fun:this.bodyonLineMouseUp}],'',document.body);//body mouseup
+  }
+
+
+  eventListen(events,type,eventSource){
+    let {tr} = this.table;
+    for (let i = 0; i < events.length; i++) {
+      const _event = events[i];
+      if(type === "remove"){
+        EventUtil.removeHandler(eventSource,_event.key,_event.fun);
+      }else{
+        EventUtil.addHandler(eventSource,_event.key,_event.fun);
+      }
+    }
+  }
+
+  /**
+   *
+   *根据 data-type 来获取当前拖拽的对象的Object，如果为null表示拖动的对象并非是online
+   * @memberof TableHeader
+   */
+  getOnLineObject = (_element) =>{
+    let type = _element.getAttribute('data-type'),elementObj = null;
+    if(!type){
+      let element = _element.parentElement||parentNode;//兼容写法。
+      if(element.getAttribute('data-type')){
+        elementObj = element;
+      }
+    }else{
+      elementObj = _element;
+    }
+    return elementObj;
+  }
+
+    /**
+   * 调整列宽的down事件
+   * @memberof TableHeader
+   */
+  onTrMouseDown = (e) => {
+    Event.stopPropagation(e); 
+    let event = Event.getEvent(e) ,
+    targetEvent = Event.getTarget(event);
+    const { clsPrefix, contentTable } = this.props;
+    console.log(" ------------------onTrMouseDown------------------ ");
+    let currentElement = this.getOnLineObject(targetEvent);
+    if(!currentElement)return;
+    let type = currentElement.getAttribute('data-type');
+    console.log("type : ",type);
+    if(!this.props.dragborder && !this.props.draggable)return;
+    if(type == 'online' && this.props.dragborder){
+
+      let currentIndex = parseInt(currentElement.getAttribute("data-line-index"));
+      let defaultWidth = currentElement.getAttribute("data-th-width");
+      let currentObj = this.table.cols[currentIndex];
+      this.drag.option = "border";//拖拽操作
+      this.drag.currIndex = currentIndex;
+      this.drag.oldLeft = event.x;
+      this.drag.oldWidth = parseInt((currentObj).style.width);
+      this.drag.minWidth = currentObj.style.minWidth != ""?parseInt(currentObj.style.minWidth):defaultWidth;
+      this.drag.tableWidth = parseInt(this.table.table.style.width ?this.table.table.style.width:this.table.table.scrollWidth);
+      console.log("====================",this.drag);
+    }else if(type != 'online' &&  this.props.draggable){
+
+    }else{
+      console.log("onTrMouseDown dragborder or draggable is all false !");
+      return ;
+    }
+  };
+
+
+  /**
+   * 调整列宽的move事件
+   * @memberof TableHeader
+   */
+  onTrMouseMove = (e) => {
+    const { clsPrefix ,dragborder,contentDomWidth,scrollbarWidth,contentTable,headerScroll} = this.props;
+    Event.stopPropagation(e); 
+    let event = Event.getEvent(e);  
+    if(this.props.dragborder && this.drag.option == "border"){
+      console.log(" --onTrMouseMove--border- ",this.drag.option);
+      //移动改变宽度
+      let currentCols = this.table.cols[this.drag.currIndex];
+      let diff = (event.x - this.drag.oldLeft); 
+      let newWidth = this.drag.oldWidth + diff;
+      this.drag.newWidth = newWidth;
+       // if(newWidth > this.drag.minWidth){
+      if(newWidth > this.minWidth){
+        currentCols.style.width = newWidth +'px';
+        //hao 支持固定表头拖拽 修改表体的width
+        if(this.fixedTable.cols){
+            this.fixedTable.cols[this.drag.currIndex].style.width = newWidth + "px";
+        }
+        const newTableWidth = this.drag.tableWidth + diff +'px';
+        this.table.table.style.width  = newTableWidth;//改变table的width
+        this.table.innerTableBody.style.width  = newTableWidth ;
+        let showScroll =  contentDomWidth - (this.drag.tableWidth + diff) - scrollbarWidth ;
+    
+        //表头滚动条处理
+        if(headerScroll){
+            if(showScroll < 0){
+                //找到固定列表格，设置表头的marginBottom值为scrollbarWidth;
+                this.table.contentTableHeader.style.overflowX = 'scroll';
+                this.optTableMargin( this.table.fixedLeftHeaderTable,scrollbarWidth);
+                this.optTableMargin( this.table.fixedRighHeadertTable,scrollbarWidth);
+                // fixedLeftHeaderTable && (fixedLeftHeaderTable.style.marginBottom = scrollbarWidth + "px");
+                // fixedRighHeadertTable && (fixedRighHeadertTable.style.marginBottom = scrollbarWidth + "px");
+              //todo inner scroll-x去掉；outer marginbottom 设置成-15px】
+              }else{
+                this.table.contentTableHeader.style.overflowX = 'hidden';
+                this.optTableMargin( this.table.fixedLeftHeaderTable,0);
+                this.optTableMargin( this.table.fixedRighHeadertTable,0);
+            }
+        }else{
+          if(showScroll < 0){
+                this.optTableMargin( this.table.fixedLeftBodyTable,'-'+scrollbarWidth);
+                this.optTableMargin( this.table.fixedRightBodyTable,'-'+scrollbarWidth);
+                this.optTableScroll( this.table.fixedLeftBodyTable,{x:'scroll'});
+                this.optTableScroll( this.table.fixedRightBodyTable,{x:'scroll'});
+          }else{
+            this.optTableMargin( this.table.fixedLeftBodyTable,0);
+            this.optTableMargin( this.table.fixedRightBodyTable,0);
+            this.optTableScroll( this.table.fixedLeftBodyTable,{x:'auto'});
+                this.optTableScroll( this.table.fixedRightBodyTable,{x:'auto'});
+          }
+        }
+      } 
+    }else if(this.props.draggable && this.drag.option == "draggable"){
+      console.log(" --onTrMouseMove--draggable- ",this.drag.option);
+    }else{
+      // console.log("onTrMouseMove dragborder or draggable is all false !");
+      // return ;
+    }
+  }
+
+    /**
+   * 调整列宽的up事件
+   * @memberof TableHeader
+   */
+  onTrMouseUp = (e) => {
+    let event = Event.getEvent(e);  
+    let width = this.drag.newWidth;
+    this.mouseClear();
+    this.props.onDropBorder && this.props.onDropBorder(event,width);
+  };
+
+
+  mouseClear(){ 
+    if(!this.drag || !this.drag.option)return;
+    let {rows} = this.props;
+    this.drag = {
+      option:""
+    };
+    let data = {rows:rows[0],cols:this.table.cols,currIndex:this.drag.currIndex};
+    this.props.afterDragColWidth && this.props.afterDragColWidth(data);
+  }
+
+
+    /**
+   * 当前对象上绑定全局事件，用于拖拽区域以外时的事件处理
+   * @param {*} events
+   * @param {*} type
+   * @memberof TableHeader
+   */
+  bodyonLineMouseUp = (events,type) =>{
+    if(!this.drag || !this.drag.option)return;
+    console.log("----bodyEventListen",this.drag);
+    this.mouseClear();
+  }
+
+
   /**
    *相关滚动条联动操作
    *
@@ -202,117 +280,27 @@ class TableHeader extends Component {
 
 
 
-  /**
-   * 调整列宽的move事件
-   * @memberof TableHeader
-   */
-  onLineMouseMove = (e) => {
-      const { clsPrefix ,dragborder,contentDomWidth,scrollbarWidth,contentTable,headerScroll} = this.props;
-      Event.stopPropagation(e); 
-      let event = Event.getEvent(e);
-      if (!this.props.dragborder) return;
-      if(this.drag.option != "border"){
-        return false;
-      }
-      //移动改变宽度
-      let currentCols = this.table.cols[this.drag.currIndex];
-      let diff = (event.x - this.drag.oldLeft); 
-      let newWidth = this.drag.oldWidth + diff;
-      this.drag.newWidth = newWidth;
-      // if(newWidth > this.drag.minWidth){
-      if(newWidth > this.minWidth){
-        currentCols.style.width = newWidth +'px';
-        //hao 支持固定表头拖拽 修改表体的width
-        if(this.fixedTable.cols){
-            this.fixedTable.cols[this.drag.currIndex].style.width = newWidth + "px";
-        }
-        const newTableWidth = this.drag.tableWidth + diff +'px';
-        this.table.table.style.width  = newTableWidth;//改变table的width
-        this.table.innerTableBody.style.width  = newTableWidth ;
-        let showScroll =  contentDomWidth - (this.drag.tableWidth + diff) - scrollbarWidth ;
-   
-        //表头滚动条处理
-        if(headerScroll){
-            if(showScroll < 0){
-                //找到固定列表格，设置表头的marginBottom值为scrollbarWidth;
-                this.table.contentTableHeader.style.overflowX = 'scroll';
-               this.optTableMargin( this.table.fixedLeftHeaderTable,scrollbarWidth);
-               this.optTableMargin( this.table.fixedRighHeadertTable,scrollbarWidth);
-                // fixedLeftHeaderTable && (fixedLeftHeaderTable.style.marginBottom = scrollbarWidth + "px");
-                // fixedRighHeadertTable && (fixedRighHeadertTable.style.marginBottom = scrollbarWidth + "px");
-              //todo inner scroll-x去掉；outer marginbottom 设置成-15px】
-              }else{
-                this.table.contentTableHeader.style.overflowX = 'hidden';
-                this.optTableMargin( this.table.fixedLeftHeaderTable,0);
-               this.optTableMargin( this.table.fixedRighHeadertTable,0);
-            }
-        }else{
-          if(showScroll < 0){
-               this.optTableMargin( this.table.fixedLeftBodyTable,'-'+scrollbarWidth);
-               this.optTableMargin( this.table.fixedRightBodyTable,'-'+scrollbarWidth);
-               this.optTableScroll( this.table.fixedLeftBodyTable,{x:'scroll'});
-               this.optTableScroll( this.table.fixedRightBodyTable,{x:'scroll'});
-          }else{
-            this.optTableMargin( this.table.fixedLeftBodyTable,0);
-            this.optTableMargin( this.table.fixedRightBodyTable,0);
-            this.optTableScroll( this.table.fixedLeftBodyTable,{x:'auto'});
-               this.optTableScroll( this.table.fixedRightBodyTable,{x:'auto'});
-          }
-        }
-        
-      }
-  };
 
-  /**
-   * 调整列宽的down事件
-   * @memberof TableHeader
-   */
-  onLineMouseDown = (e) => {
-    Event.stopPropagation(e); 
-    let event = Event.getEvent(e);
-    const { clsPrefix, contentTable } = this.props;
-    if (!this.props.dragborder) return;
-    let currentIndex = parseInt(Event.getTarget(event).getAttribute("data-line-index"));
-    let defaultWidth = Event.getTarget(event).getAttribute("data-th-width");
-    let currentObj = this.table.cols[currentIndex];
-    this.drag.option = "border";//拖拽操作
-    this.drag.currIndex = currentIndex;
-    this.drag.oldLeft = event.x;
-    this.drag.oldWidth = parseInt((currentObj).style.width);
-    this.drag.minWidth = currentObj.style.minWidth != ""?parseInt(currentObj.style.minWidth):defaultWidth;
-    this.drag.tableWidth = parseInt(this.table.table.style.width ?this.table.table.style.width:this.table.table.scrollWidth);
-  };
 
-  /**
-   * 调整列宽的up事件
-   * @memberof TableHeader
-   */
-  onLineMouseUp = (event) => {
-    let width = this.drag.newWidth;
-    this.clearDragBorder(event);
-    this.props.onDropBorder && this.props.onDropBorder(event,width);
-  };
 
-  /**
-   * 调整列宽到区域以外的up事件
-   */
-  bodyonLineMouseMove = (event) => {
-    this.clearDragBorder(event);
-  };
 
-  clearDragBorder(){
-    if(!this.drag || !this.drag.option)return;
-    let {rows} = this.props;
-    let data = {rows:rows[0],cols:this.table.cols,currIndex:this.drag.currIndex};
-    this.props.afterDragColWidth && this.props.afterDragColWidth(data);
-    this.drag = {
-      option:""
-    };
-    if (this.props.draggable){
-      this.removeDragAbleEvent();
-    }
-  }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
   //---拖拽列宽代码逻辑----start-----
  
   /**
@@ -593,8 +581,9 @@ class TableHeader extends Component {
     let attr = dragborder ? { id: `u-table-drag-thead-${this.theadKey}` } : {};
     return (
       <thead className={`${clsPrefix}-thead`} {...attr} data-theader-fixed='scroll' ref={_thead=>this._thead = _thead} >
-        {rows.map((row, index) => (
-          <tr key={index} style={rowStyle} className={(filterable && index == rows.length - 1)?'filterable':''}>
+        {rows.map((row, index) => {
+          let _rowLeng = (row.length-1);
+          return(<tr key={index} style={rowStyle} className={(filterable && index == rows.length - 1)?'filterable':''}>
             {row.map((da, columIndex, arr) => {
               let thHover = da.drgHover
                 ? ` ${clsPrefix}-thead th-drag-hover`
@@ -642,17 +631,16 @@ class TableHeader extends Component {
                     thClassName += ` ${clsPrefix}-thead-th ${canDotDrag}`;
                   }
                   thClassName += ` ${fixedStyle}`;
-                 
-                if(!da.fixed){
+                if(!da.fixed && columIndex != _rowLeng){
              
                   return (<th {...da}  {...keyTemp} className={thClassName} data-th-fixed={da.fixed} 
-                        data-line-key={da.key} data-line-index={columIndex} data-th-width={da.width} >
+                        data-line-key={da.key} data-line-index={columIndex} data-th-width={da.width} data-row-leng="1111111111111" >
                               {da.children}
                               {
                                 dragborder ? <div ref={el => (this.gap = el)} data-line-key={da.key} 
                                 data-line-index={columIndex} data-th-width={da.width}
                                 data-type="online" className = {`${clsPrefix}-thead-th-drag-gap`}>
-                                <div id='th-online' className='online' data-line-key={da.key} data-line-index={columIndex} data-th-width={da.width} /></div>:""
+                                <div className='online' /></div>:""
                               }
                         </th>)
               }else{
@@ -665,7 +653,7 @@ class TableHeader extends Component {
               }
             })}
           </tr>
-        ))}
+        )})}
       </thead>
     );
   }
