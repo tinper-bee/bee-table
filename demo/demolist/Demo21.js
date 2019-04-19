@@ -13,7 +13,6 @@ const columns = [
   {
     title: "员工编号", dataIndex: "a", key: "a", width: 300, className: "rowClassName",
     fixed:'left',
-    textAlign:'center',
     render: (text, record, index) => {
       return (
         <Tooltip inverse overlay={text}>
@@ -29,9 +28,9 @@ const columns = [
       );
     }
   },
-  { title: "员工姓名", dataIndex: "b", key: "b", width: 500,textAlign:'center'},
-  { title: "性别", dataIndex: "c", key: "c", width: 500,textAlign:'center'},
-  { title: "部门", dataIndex: "d", key: "d", width: 200,textAlign:'center' }
+  { title: "员工姓名", dataIndex: "b", key: "b", width: 500 },
+  { title: "性别", dataIndex: "c", key: "c", width: 500 },
+  { title: "部门", dataIndex: "d", key: "d", width: 200 }
 ];
 
 const data = [
@@ -53,8 +52,6 @@ class Demo21 extends Component {
         <Table
           columns={columns}
           data={data}
-          height={40}
-          headerHeight={40}
           title={currentData => <div>员工信息统计表</div>}
           footer={currentData => <div>合计: 共{data.length}条数据</div>}
         />

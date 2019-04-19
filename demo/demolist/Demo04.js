@@ -76,9 +76,7 @@ class Demo04 extends Component {
     return <Table 
             className="demo04" 
             columns={columns04} 
-            data={data04} 
-            height={40}
-            headerHeight={40}/>
+            data={data04} />
   }
 }
 

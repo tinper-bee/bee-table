@@ -117,6 +117,7 @@ class Demo extends Component {
 | loadBuffer       | 使用BigData高阶组件实现大数据加载时，上下加载的缓存 | number| 5
 | height | 自定义表格行高 | number | - |
 | headerHeight | 自定义表头行高 | number | - |
+| size | 表格大小 | `sm | md | lg` | 'md' |
 
 > 快捷键部分参考示例 (快捷键在table中的简单使用应用)
 

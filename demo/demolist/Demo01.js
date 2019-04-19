@@ -68,8 +68,6 @@ class Demo01 extends Component {
           columns={columns}
           data={data}
           parentNodeId='parent'
-          height={40}
-          headerHeight={40}
           bordered = {true}
           hoverContent={this.getHoverContent}
           onRowHover={this.onRowHover}

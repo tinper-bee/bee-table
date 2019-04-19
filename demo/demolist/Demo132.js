@@ -132,8 +132,6 @@ class Demo31 extends Component {
         expandedRowRender={this.expandedRowRender}
         scroll={{y:350}}
         // defaultExpandedRowKeys={[0,1]}
-        title={currentData => <div>标题: 这是一个标题</div>}
-        footer={currentData => <div>表尾: 我是小尾巴</div>}
       />
     );
   }

@@ -68,6 +68,7 @@ import 'bee-table/build/Table.css';
 | heightConsistent       | 当固定列内容高度超出非固定列时，内容互错行，当此属性为true会将高度同步，当行过多时会有性能影响，所以建议非固定高度如果过高时，超出内容可以显示成省略号 | bool|false 
 | height | 自定义表格行高 | number | - |
 | headerHeight | 自定义表头行高 | number | - |
+| size | 表格大小 | `sm | md | lg` | 'md' |
 
 > 快捷键部分参考示例 (快捷键在table中的简单使用应用)
 

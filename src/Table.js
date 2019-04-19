@@ -51,7 +51,8 @@ const propTypes = {
   onFilterClear: PropTypes.func,
   syncHover: PropTypes.bool,
   tabIndex:PropTypes.string,
-  hoverContent:PropTypes.func
+  hoverContent:PropTypes.func,
+  size: PropTypes.oneOf(['sm', 'md', 'lg']),
 };
 
 const defaultProps = {
@@ -85,7 +86,8 @@ const defaultProps = {
   setRowHeight:()=>{},
   setRowParentIndex:()=>{},
   tabIndex:'0',
-  heightConsistent:false
+  heightConsistent:false,
+  size: 'md'
 };
 
 class Table extends Component {
@@ -1197,6 +1199,9 @@ class Table extends Component {
       loading = {
         show: loading,
       };
+    }
+    if (props.size) {
+      className += ` ${clsPrefix}-${props.size}`;
     }
 
     return (

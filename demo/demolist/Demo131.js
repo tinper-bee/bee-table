@@ -67,7 +67,6 @@ class Demo30 extends Component {
           columns={columns}
           data={data}
           scroll={{y:300}}
-          height={40}
           onRowClick={(record, index, indent) => {
             console.log('currentIndex--'+index);
           }}

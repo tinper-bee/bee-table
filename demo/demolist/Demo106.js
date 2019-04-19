@@ -1,123 +1,110 @@
 /**
 *
-* @title 自定义行、列合并
+* @title 图片在表格中的展示
 * @parent 扩展行 Expanded Row
-* @description 表头只支持列合并，使用 column 里的 colSpan 进行设置。表格支持行/列合并，使用 render 里的单元格属性 colSpan 或者 rowSpan 设值为 0 时，设置的表格不会渲染。
-*
+* @description 根据图片高度自动撑开行高，可结合图片查看器使用 http://design.yonyoucloud.com/tinper-bee/bee-viewer
 */
 
 import React, { Component } from "react";
+import {Button,Tooltip} from "tinper-bee";
 import Table from "../../src";
 
-const renderContent = (value, row, index) => {
-  const obj = {
-    children: value,
-    props: {},
-  };
-  if (index === 4) {
-    obj.props.colSpan = 0;
+const columns = [
+    {
+        title: "序号",
+        dataIndex: "index",
+        key: "index",
+        width: 80,
+        render(text, record, index) {
+            return index + 1;
+        }
+    },
+    {
+        title: "组织部门",
+        dataIndex: "orgDept",
+        key: "orgDept",
+        width: 100,
+    },
+    {
+        title: "设施管理部门",
+        dataIndex: "facilityManageUnit",
+        key: "facilityManageUnit",
+        width: 150,
+    },
+    {
+        title: "案卷编号",
+        dataIndex: "docketnum",
+        key: "docketnum",
+        width: 100,
+    },
+    {
+        title: "数量",
+        dataIndex: "num",
+        key: "num",
+        width: 100,
+    },
+    {
+        title: "首次发现时间",
+        dataIndex: "discoveryTime",
+        key: "discoveryTime",
+        width: 150,
+    },
+    {
+        title: "实际修复时间",
+        dataIndex: "repairTime",
+        key: "repairTime",
+        width: 150,
+    },
+    {
+        title: "图样",
+        dataIndex: "picture",
+        key: "picture",
+        render(text, record, index) {
+            return <img style={{height:'50px'}} src={text} alt="Picture"/>
+        }
+    }
+];
+
+const data = [
+  { key: "1", orgDept: "组织1", facilityManageUnit: "部门1", docketnum: 41, num: "1", discoveryTime: "2018-10-17", repairTime: "2018-10-30", picture: "http://design.yonyoucloud.com/static/bee.tinper.org-demo/swiper-demo-1-min.jpg"},
+  { key: "2", orgDept: "组织2", facilityManageUnit: "部门2", docketnum: 30, num: "2", discoveryTime: "2019-01-15", repairTime: "2019-01-20", picture: "http://design.yonyoucloud.com/static/bee.tinper.org-demo/swiper-demo-2-min.jpg"},
+  { key: "3", orgDept: "组织3", facilityManageUnit: "部门3", docketnum: 35, num: "3", discoveryTime: "2019-04-10", repairTime: "2019-04-17", picture: "http://design.yonyoucloud.com/static/bee.tinper.org-demo/swiper-demo-3-min.jpg"}
+];
+
+class Demo105 extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: data,
+      selectedRowIndex: 0
+    }
   }
-  return obj;
-};
+  handleClick = () => {
+    console.log('这是第' , this.currentIndex , '行');
+    console.log('内容：' , this.currentRecord);
+  }
 
-const columns = [{
-  title: 'Name',
-  key: "name",
-  dataIndex: 'name',
-  render: (text, row, index) => {
-    if (index < 4) {
-      return <a href="#">{text}</a>;
-    }
-    return {
-      children: <a href="#">{text}</a>,
-      props: {
-        colSpan: 5,
-      },
-    };
-  },
-}, {
-  title: 'Age',
-  key: "Age",
-  dataIndex: 'age',
-  render: renderContent,
-}, {
-  title: 'Home phone',
-  colSpan: 2,
-  key: "tel",
-  dataIndex: 'tel',
-  render: (value, row, index) => {
-    const obj = {
-      children: value,
-      props: {},
-    };
-    if (index === 2) {
-      obj.props.rowSpan = 2;
-    }
-    if (index === 3) {
-      obj.props.rowSpan = 0;
-    }
-    if (index === 4) {
-      obj.props.colSpan = 0;
-    }
-    return obj;
-  },
-}, {
-  title: 'Phone',
-  colSpan: 0,
-  key: "phone",
-  dataIndex: 'phone',
-  render: renderContent,
-}, {
-  title: 'Address',
-  key: "address",
-  dataIndex: 'address',
-  render: renderContent,
-}];
+  onRowHover=(index,record)=>{
+    this.currentIndex = index;
+    this.currentRecord = record;
+  }
 
-const data = [{
-  key: '1',
-  name: 'John Brown',
-  age: 32,
-  tel: '0571-22098909',
-  phone: 18889898989,
-  address: 'New York No. 1 Lake Park',
-}, {
-  key: '2',
-  name: 'Jim Green',
-  tel: '0571-22098333',
-  phone: 18889898888,
-  age: 42,
-  address: 'London No. 1 Lake Park',
-}, {
-  key: '3',
-  name: 'Joe Black',
-  age: 32,
-  tel: '0575-22098909',
-  phone: 18900010002,
-  address: 'Sidney No. 1 Lake Park',
-}, {
-  key: '4',
-  name: 'Jim Red',
-  age: 18,
-  tel: '0575-22098909',
-  phone: 18900010002,
-  address: 'London No. 2 Lake Park',
-}, {
-  key: '5',
-  name: 'Jake White',
-  age: 18,
-  tel: '0575-22098909',
-  phone: 18900010002,
-  address: 'Dublin No. 2 Lake Park',
-}];
+  getHoverContent=()=>{
+    return <div className="opt-btns"><Button size="sm" onClick={this.handleClick}>一些操作</Button> </div>
+  }
 
-class Demo15 extends Component {
   render() {
     return (
-       <Table columns={columns} data={data}/>
+        <Table
+          columns={columns}
+          data={data}
+          parentNodeId='parent'
+          hoverContent={this.getHoverContent}
+          onRowHover={this.onRowHover}
+        />
     );
   }
 }
 
-
-export default Demo15;
+export default Demo105;

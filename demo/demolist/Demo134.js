@@ -80,7 +80,6 @@ class Demo34 extends Component {
           data={data}
           parentNodeId='parent'
           scroll={{y:300}}
-          height={40}
           onExpand={this.onExpand}
           onRowClick={(record, index, indent) => {
             console.log('currentIndex--'+index);

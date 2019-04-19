@@ -1,8 +1,8 @@
 /**
 *
-* @title 图片在表格中的展示
+* @title 自定义行高
 * @parent 扩展行 Expanded Row
-* @description 根据图片高度自动撑开行高，可结合图片查看器使用 http://design.yonyoucloud.com/tinper-bee/bee-viewer
+* @description 设置`height`属性自定义表格行高，设置`headerHeight`属性自定义表头高度。
 */
 
 import React, { Component } from "react";
@@ -10,68 +10,35 @@ import {Button,Tooltip} from "tinper-bee";
 import Table from "../../src";
 
 const columns = [
-    {
-        title: "序号",
-        dataIndex: "index",
-        key: "index",
-        width: 80,
-        render(text, record, index) {
-            return index + 1;
-        }
-    },
-    {
-        title: "组织部门",
-        dataIndex: "orgDept",
-        key: "orgDept",
-        width: 100,
-    },
-    {
-        title: "设施管理部门",
-        dataIndex: "facilityManageUnit",
-        key: "facilityManageUnit",
-        width: 100,
-    },
-    {
-        title: "案卷编号",
-        dataIndex: "docketnum",
-        key: "docketnum",
-        width: 100,
-    },
-    {
-        title: "数量",
-        dataIndex: "num",
-        key: "num",
-        width: 100,
-    },
-    {
-        title: "首次发现时间",
-        dataIndex: "discoveryTime",
-        key: "discoveryTime",
-        width: 150,
-    },
-    {
-        title: "实际修复时间",
-        dataIndex: "repairTime",
-        key: "repairTime",
-        width: 150,
-    },
-    {
-        title: "图样",
-        dataIndex: "picture",
-        key: "picture",
-        render(text, record, index) {
-            return <img style={{height:'50px'}} src={text} alt="Picture"/>
-        }
+  {
+    title: "用户名", dataIndex: "a", key: "a", width: 300, className: "rowClassName",
+    fixed:'left',
+    render: (text, record, index) => {
+      return (
+        <Tooltip inverse overlay={text}>
+          <span tootip={text} style={{
+            display: "inline-block",
+            width: "60px",
+            textOverflow: "ellipsis",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            verticalAlign: "middle",
+          }}>{text}</span>
+        </Tooltip>
+      );
     }
+  },
+  { id: "123", title: "性别", dataIndex: "b", key: "b", width: 500},
+  { title: "年龄", dataIndex: "c", key: "c", width: 200 }
 ];
 
 const data = [
-  { key: "1", orgDept: "组织1", facilityManageUnit: "部门1", docketnum: 41, num: "1", discoveryTime: "2018-10-17", repairTime: "2018-10-30", picture: "http://design.yonyoucloud.com/static/bee.tinper.org-demo/swiper-demo-1-min.jpg"},
-  { key: "2", orgDept: "组织2", facilityManageUnit: "部门2", docketnum: 30, num: "2", discoveryTime: "2019-01-15", repairTime: "2019-01-20", picture: "http://design.yonyoucloud.com/static/bee.tinper.org-demo/swiper-demo-2-min.jpg"},
-  { key: "3", orgDept: "组织3", facilityManageUnit: "部门3", docketnum: 35, num: "3", discoveryTime: "2019-04-10", repairTime: "2019-04-17", picture: "http://design.yonyoucloud.com/static/bee.tinper.org-demo/swiper-demo-3-min.jpg"}
+  { a: "令狐冲", b: "男", c: 41, key: "1" },
+  { a: "杨过叔叔的女儿黄蓉", b: "男", c: 67, key: "2" },
+  { a: "郭靖", b: "男", c: 25, key: "3" }
 ];
 
-class Demo105 extends Component {
+class Demo1 extends Component {
 
   constructor(props) {
     super(props);
@@ -96,15 +63,25 @@ class Demo105 extends Component {
 
   render() {
     return (
+   
         <Table
           columns={columns}
           data={data}
           parentNodeId='parent'
+          height={40}
+          headerHeight={40}
           hoverContent={this.getHoverContent}
           onRowHover={this.onRowHover}
+          onRowClick={(record, index, indent) => {
+            this.setState({
+              selectedRowIndex: index
+            });
+          }}
         />
+
+     
     );
   }
 }
 
-export default Demo105;
+export default Demo1;
