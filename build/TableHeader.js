@@ -50,6 +50,108 @@ var TableHeader = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
+    _this.onTrMouseDown = function (e) {
+      _utils.Event.stopPropagation(e);
+      var event = _utils.Event.getEvent(e);
+      var _this$props = _this.props,
+          clsPrefix = _this$props.clsPrefix,
+          contentTable = _this$props.contentTable;
+
+
+      var type = _utils.Event.getTarget(event).getAttribute('data-type');
+      if (!_this.props.dragborder && !_this.props.draggable) return;
+      if (type == 'online' && _this.props.dragborder) {
+
+        var currentIndex = parseInt(_utils.Event.getTarget(event).getAttribute("data-line-index"));
+        var defaultWidth = _utils.Event.getTarget(event).getAttribute("data-th-width");
+        var currentObj = _this.table.cols[currentIndex];
+        _this.drag.option = "border"; //拖拽操作
+        _this.drag.currIndex = currentIndex;
+        _this.drag.oldLeft = event.x;
+        _this.drag.oldWidth = parseInt(currentObj.style.width);
+        _this.drag.minWidth = currentObj.style.minWidth != "" ? parseInt(currentObj.style.minWidth) : defaultWidth;
+        _this.drag.tableWidth = parseInt(_this.table.table.style.width ? _this.table.table.style.width : _this.table.table.scrollWidth);
+      } else if (type != 'online' && _this.props.draggable) {} else {
+        console.log("onTrMouseDown dragborder or draggable is all false !");
+        return;
+      }
+    };
+
+    _this.onTrMouseMove = function (e) {
+      var _this$props2 = _this.props,
+          clsPrefix = _this$props2.clsPrefix,
+          dragborder = _this$props2.dragborder,
+          contentDomWidth = _this$props2.contentDomWidth,
+          scrollbarWidth = _this$props2.scrollbarWidth,
+          contentTable = _this$props2.contentTable,
+          headerScroll = _this$props2.headerScroll;
+
+      _utils.Event.stopPropagation(e);
+      var event = _utils.Event.getEvent(e);
+      if (_this.props.dragborder && _this.drag.option == "border") {
+        //移动改变宽度
+        var currentCols = _this.table.cols[_this.drag.currIndex];
+        var diff = event.x - _this.drag.oldLeft;
+        var newWidth = _this.drag.oldWidth + diff;
+        _this.drag.newWidth = newWidth;
+        // if(newWidth > this.drag.minWidth){
+        if (newWidth > _this.minWidth) {
+          currentCols.style.width = newWidth + 'px';
+          //hao 支持固定表头拖拽 修改表体的width
+          if (_this.fixedTable.cols) {
+            _this.fixedTable.cols[_this.drag.currIndex].style.width = newWidth + "px";
+          }
+          var newTableWidth = _this.drag.tableWidth + diff + 'px';
+          _this.table.table.style.width = newTableWidth; //改变table的width
+          _this.table.innerTableBody.style.width = newTableWidth;
+          var showScroll = contentDomWidth - (_this.drag.tableWidth + diff) - scrollbarWidth;
+
+          //表头滚动条处理
+          if (headerScroll) {
+            if (showScroll < 0) {
+              //找到固定列表格，设置表头的marginBottom值为scrollbarWidth;
+              _this.table.contentTableHeader.style.overflowX = 'scroll';
+              _this.optTableMargin(_this.table.fixedLeftHeaderTable, scrollbarWidth);
+              _this.optTableMargin(_this.table.fixedRighHeadertTable, scrollbarWidth);
+              // fixedLeftHeaderTable && (fixedLeftHeaderTable.style.marginBottom = scrollbarWidth + "px");
+              // fixedRighHeadertTable && (fixedRighHeadertTable.style.marginBottom = scrollbarWidth + "px");
+              //todo inner scroll-x去掉；outer marginbottom 设置成-15px】
+            } else {
+              _this.table.contentTableHeader.style.overflowX = 'hidden';
+              _this.optTableMargin(_this.table.fixedLeftHeaderTable, 0);
+              _this.optTableMargin(_this.table.fixedRighHeadertTable, 0);
+            }
+          } else {
+            if (showScroll < 0) {
+              _this.optTableMargin(_this.table.fixedLeftBodyTable, '-' + scrollbarWidth);
+              _this.optTableMargin(_this.table.fixedRightBodyTable, '-' + scrollbarWidth);
+              _this.optTableScroll(_this.table.fixedLeftBodyTable, { x: 'scroll' });
+              _this.optTableScroll(_this.table.fixedRightBodyTable, { x: 'scroll' });
+            } else {
+              _this.optTableMargin(_this.table.fixedLeftBodyTable, 0);
+              _this.optTableMargin(_this.table.fixedRightBodyTable, 0);
+              _this.optTableScroll(_this.table.fixedLeftBodyTable, { x: 'auto' });
+              _this.optTableScroll(_this.table.fixedRightBodyTable, { x: 'auto' });
+            }
+          }
+        }
+      } else if (_this.props.draggable && _this.drag.option == "draggable") {} else {
+        console.log("onTrMouseMove dragborder or draggable is all false !");
+        return;
+      }
+    };
+
+    _this.onTrMouseUp = function (event) {
+      var width = _this.drag.newWidth;
+      _this.mouseClear(event);
+      _this.props.onDropBorder && _this.props.onDropBorder(event, width);
+
+      var rows = _this.props.rows;
+
+      var data = { rows: rows[0], cols: _this.table.cols, currIndex: _this.drag.currIndex };
+      _this.props.afterDragColWidth && _this.props.afterDragColWidth(data);
+    };
+
     _this.optTableMargin = function (table, scrollbarWidth) {
       if (table) {
         table.style.marginBottom = scrollbarWidth + "px";
@@ -69,13 +171,13 @@ var TableHeader = function (_Component) {
     };
 
     _this.onLineMouseMove = function (e) {
-      var _this$props = _this.props,
-          clsPrefix = _this$props.clsPrefix,
-          dragborder = _this$props.dragborder,
-          contentDomWidth = _this$props.contentDomWidth,
-          scrollbarWidth = _this$props.scrollbarWidth,
-          contentTable = _this$props.contentTable,
-          headerScroll = _this$props.headerScroll;
+      var _this$props3 = _this.props,
+          clsPrefix = _this$props3.clsPrefix,
+          dragborder = _this$props3.dragborder,
+          contentDomWidth = _this$props3.contentDomWidth,
+          scrollbarWidth = _this$props3.scrollbarWidth,
+          contentTable = _this$props3.contentTable,
+          headerScroll = _this$props3.headerScroll;
 
       _utils.Event.stopPropagation(e);
       var event = _utils.Event.getEvent(e);
@@ -134,9 +236,9 @@ var TableHeader = function (_Component) {
     _this.onLineMouseDown = function (e) {
       _utils.Event.stopPropagation(e);
       var event = _utils.Event.getEvent(e);
-      var _this$props2 = _this.props,
-          clsPrefix = _this$props2.clsPrefix,
-          contentTable = _this$props2.contentTable;
+      var _this$props4 = _this.props,
+          clsPrefix = _this$props4.clsPrefix,
+          contentTable = _this$props4.contentTable;
 
       if (!_this.props.dragborder) return;
       var currentIndex = parseInt(_utils.Event.getTarget(event).getAttribute("data-line-index"));
@@ -152,6 +254,10 @@ var TableHeader = function (_Component) {
 
     _this.onLineMouseUp = function (event) {
       var width = _this.drag.newWidth;
+      // const newTableWidth = this.drag.tableWidth + diff +'px';
+      // this.table.table.style.width  = newTableWidth;//同步table的width
+      // this.table.innerTableBody.style.width  = newTableWidth ;//同步改变table body 的width
+      // console.log(" --onLineMouseUp--- ");
       _this.clearDragBorder(event);
       _this.props.onDropBorder && _this.props.onDropBorder(event, width);
     };
@@ -235,11 +341,11 @@ var TableHeader = function (_Component) {
     };
 
     _this.filterRenderType = function (type, dataIndex, index) {
-      var _this$props3 = _this.props,
-          clsPrefix = _this$props3.clsPrefix,
-          rows = _this$props3.rows,
-          filterDelay = _this$props3.filterDelay,
-          locale = _this$props3.locale;
+      var _this$props5 = _this.props,
+          clsPrefix = _this$props5.clsPrefix,
+          rows = _this$props5.rows,
+          filterDelay = _this$props5.filterDelay,
+          locale = _this$props5.locale;
 
       switch (type) {
         //文本输入
@@ -353,6 +459,111 @@ var TableHeader = function (_Component) {
     return _this;
   }
 
+  TableHeader.prototype.componentDidUpdate = function componentDidUpdate() {
+    this.initTable();
+    // this.initEvent();
+    this.initNewEvent();
+  };
+
+  /**
+   * 获取table的属性存放在this.table 中。(公用方法)
+   * @returns
+   * @memberof TableHeader
+   */
+
+
+  TableHeader.prototype.initTable = function initTable() {
+    var contentTable = this.props.contentTable;
+
+    if (!this.props.dragborder && !this.props.draggable) return;
+    // let el = ReactDOM.findDOMNode(this);
+    var tableDome = this._thead.parentNode;
+    var table = {};
+    if (tableDome && tableDome.nodeName && tableDome.nodeName.toUpperCase() == "TABLE") {
+      table.table = tableDome;
+      table.cols = tableDome.getElementsByTagName("col");
+      table.ths = tableDome.getElementsByTagName("th");
+      table.tr = tableDome.getElementsByTagName("tr");
+    }
+
+    table.fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header');
+    table.fixedRighHeadertTable = contentTable.querySelector('.u-table-fixed-right .u-table-header');
+    table.contentTableHeader = contentTable.querySelector('.u-table-scroll .u-table-header');
+    table.fixedLeftBodyTable = contentTable.querySelector('.u-table-fixed-left .u-table-body-outer');
+    table.fixedRightBodyTable = contentTable.querySelector('.u-table-fixed-right .u-table-body-outer');
+    table.innerTableBody = contentTable.querySelector('.u-table-scroll .u-table-body table');
+
+    this.table = table;
+
+    if (!this.props.dragborder) return;
+    if (document.getElementById("u-table-drag-thead-" + this.theadKey)) {
+      this.fixedTable = {};
+      var _fixedParentContext = document.getElementById("u-table-drag-thead-" + this.theadKey).parentNode;
+      var siblingDom = _fixedParentContext.parentNode.nextElementSibling;
+      if (siblingDom) {
+        var fixedTable = siblingDom.querySelector("table");
+        this.fixedTable.table = fixedTable;
+        this.fixedTable.cols = fixedTable.getElementsByTagName("col");
+        // this.fixedTable.ths = fixedTable.tableDome.getElementsByTagName("th");
+      }
+    }
+  };
+
+  TableHeader.prototype.initNewEvent = function initNewEvent() {
+    var events = [{ key: 'mouseup', fun: this.onTrMouseUp }, { key: 'mousemove', fun: this.onTrMouseMove }, { key: 'mousedown', fun: this.onTrMouseDown }];
+    this.eventListen(events, '', this.table.tr[0]); //表示把事件添加到th元素上
+
+    // if(this.props.dragborder){
+
+    // this.thEventListen([{key:'mousedown',fun:this.onLineMouseDown}]);//表示把事件添加到竖线
+    // this.bodyEventListen([{key:'mouseup',fun:this.bodyonLineMouseMove}]);
+    // }
+    // if(!this.props.draggable)return;
+    //拖拽交换列事件
+    // this.thEventListen([{key:'mousedown',fun:this.dragAbleMouseDown}],'',true);//表示把事件添加到th元素上
+  };
+
+  TableHeader.prototype.eventListen = function eventListen(events, type, eventSource) {
+    var tr = this.table.tr;
+
+    for (var i = 0; i < events.length; i++) {
+      var _event = events[i];
+      if (type === "remove") {
+        _utils.EventUtil.removeHandler(eventSource, _event.key, _event.fun);
+      } else {
+        _utils.EventUtil.addHandler(eventSource, _event.key, _event.fun);
+      }
+    }
+  };
+
+  /**
+  * 调整列宽的down事件
+  * @memberof TableHeader
+  */
+
+
+  /**
+   * 调整列宽的move事件
+   * @memberof TableHeader
+   */
+
+
+  /**
+  * 调整列宽的up事件
+  * @memberof TableHeader
+  */
+
+
+  TableHeader.prototype.mouseClear = function mouseClear() {
+    if (!this.drag || !this.drag.option) return;
+    // let {rows} = this.props;
+    // 
+    // 
+    this.drag = {
+      option: ""
+    };
+  };
+
   /**
    *
    * 动态绑定th line 事件方法
@@ -361,6 +572,8 @@ var TableHeader = function (_Component) {
    * @param {*} eventSource 为false 给 th 内部的div增加事件
    * @memberof TableHeader
    */
+
+
   TableHeader.prototype.thEventListen = function thEventListen(events, type, eventSource) {
     var _table = this.table,
         ths = _table.ths,
@@ -410,11 +623,6 @@ var TableHeader = function (_Component) {
     }
   };
 
-  TableHeader.prototype.componentDidUpdate = function componentDidUpdate() {
-    this.initTable();
-    this.initEvent();
-  };
-
   TableHeader.prototype.componentWillUnmount = function componentWillUnmount() {
     if (!this.table) return;
     if (this.props.draggable) {
@@ -424,11 +632,6 @@ var TableHeader = function (_Component) {
       this.removeDragBorderEvent();
     }
   };
-
-  // componentDidMount(){
-  // this.initTable();
-  // this.initEvent();
-  // } 
 
   /**
    * 初始化拖拽列宽的事件处理
@@ -463,48 +666,6 @@ var TableHeader = function (_Component) {
     this.bodyEventListen([{ key: 'mouseup', fun: this.bodyonLineMouseMove }], 'remove');
   };
 
-  /**
-   * 获取table的属性存放在this.table 中。(公用方法)
-   * @returns
-   * @memberof TableHeader
-   */
-
-
-  TableHeader.prototype.initTable = function initTable() {
-    var contentTable = this.props.contentTable;
-
-    if (!this.props.dragborder && !this.props.draggable) return;
-    // let el = ReactDOM.findDOMNode(this);
-    var tableDome = this._thead.parentNode;
-    var table = {};
-    if (tableDome && tableDome.nodeName && tableDome.nodeName.toUpperCase() == "TABLE") {
-      table.table = tableDome;
-      table.cols = tableDome.getElementsByTagName("col");
-      table.ths = tableDome.getElementsByTagName("th");
-    }
-
-    table.fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header');
-    table.fixedRighHeadertTable = contentTable.querySelector('.u-table-fixed-right .u-table-header');
-    table.contentTableHeader = contentTable.querySelector('.u-table-scroll .u-table-header');
-    table.fixedLeftBodyTable = contentTable.querySelector('.u-table-fixed-left .u-table-body-outer');
-    table.fixedRightBodyTable = contentTable.querySelector('.u-table-fixed-right .u-table-body-outer');
-    table.innerTableBody = contentTable.querySelector('.u-table-scroll .u-table-body table');
-
-    this.table = table;
-
-    if (!this.props.dragborder) return;
-    if (document.getElementById("u-table-drag-thead-" + this.theadKey)) {
-      this.fixedTable = {};
-      var _fixedParentContext = document.getElementById("u-table-drag-thead-" + this.theadKey).parentNode;
-      var siblingDom = _fixedParentContext.parentNode.nextElementSibling;
-      if (siblingDom) {
-        var fixedTable = siblingDom.querySelector("table");
-        this.fixedTable.table = fixedTable;
-        this.fixedTable.cols = fixedTable.getElementsByTagName("col");
-        // this.fixedTable.ths = fixedTable.tableDome.getElementsByTagName("th");
-      }
-    }
-  };
   /**
    *相关滚动条联动操作
    *
@@ -675,6 +836,7 @@ var TableHeader = function (_Component) {
           return _this2._thead = _thead;
         } }),
       rows.map(function (row, index) {
+        var _rowLeng = row.length - 1;
         return _react2["default"].createElement(
           "tr",
           { key: index, style: rowStyle, className: filterable && index == rows.length - 1 ? 'filterable' : '' },
@@ -719,13 +881,12 @@ var TableHeader = function (_Component) {
               thClassName += " " + clsPrefix + "-thead-th " + canDotDrag;
             }
             thClassName += " " + fixedStyle;
-
-            if (!da.fixed) {
+            if (!da.fixed && columIndex != _rowLeng) {
 
               return _react2["default"].createElement(
                 "th",
                 _extends({}, da, keyTemp, { className: thClassName, "data-th-fixed": da.fixed,
-                  "data-line-key": da.key, "data-line-index": columIndex, "data-th-width": da.width }),
+                  "data-line-key": da.key, "data-line-index": columIndex, "data-th-width": da.width, "data-row-leng": "1111111111111" }),
                 da.children,
                 dragborder ? _react2["default"].createElement(
                   "div",

@@ -159,14 +159,13 @@ var Table = function (_Component) {
     _this.renderDragHideTable = function () {
       var _this$props = _this.props,
           columns = _this$props.columns,
-          dragborder = _this$props.dragborder,
-          dragborderKey = _this$props.dragborderKey;
+          dragborder = _this$props.dragborder;
 
       if (!dragborder) return null;
       var sum = 0;
       return _react2["default"].createElement(
         'div',
-        { id: 'u-table-drag-hide-table-' + dragborderKey, className: _this.props.clsPrefix + '-hiden-drag' },
+        { className: _this.props.clsPrefix + '-hiden-drag' },
         columns.map(function (da, i) {
           sum += da.width ? da.width : 0;
           return _react2["default"].createElement('div', { className: _this.props.clsPrefix + '-hiden-drag-li', key: da + "_hiden_" + i, style: { left: sum + "px" } });
@@ -466,7 +465,6 @@ var Table = function (_Component) {
         onMouseUp = _props.onMouseUp,
         dragborder = _props.dragborder,
         onThMouseMove = _props.onThMouseMove,
-        dragborderKey = _props.dragborderKey,
         minColumnWidth = _props.minColumnWidth,
         headerHeight = _props.headerHeight,
         afterDragColWidth = _props.afterDragColWidth,
@@ -486,7 +484,7 @@ var Table = function (_Component) {
 
     var trStyle = headerHeight && !fixed ? { height: headerHeight } : fixed ? this.getHeaderRowStyle(columns, rows) : null;
     var drop = draggable ? { onDragStart: onDragStart, onDragOver: onDragOver, onDrop: onDrop, onDragEnter: onDragEnter, draggable: draggable } : {};
-    var dragBorder = dragborder ? { onMouseDown: onMouseDown, onMouseMove: onMouseMove, onMouseUp: onMouseUp, dragborder: dragborder, onThMouseMove: onThMouseMove, dragborderKey: dragborderKey, onDropBorder: onDropBorder } : {};
+    var dragBorder = dragborder ? { onMouseDown: onMouseDown, onMouseMove: onMouseMove, onMouseUp: onMouseUp, dragborder: dragborder, onThMouseMove: onThMouseMove, onDropBorder: onDropBorder } : {};
     var contentWidthDiff = 0;
     //非固定表格,宽度不够时自动扩充
     if (!fixed) {
@@ -648,8 +646,7 @@ var Table = function (_Component) {
       clsPrefix: clsPrefix + '-expanded-row',
       indent: 1,
       expandable: false,
-      store: this.store,
-      dragborderKey: this.props.dragborderKey
+      store: this.store
     });
   };
   /**

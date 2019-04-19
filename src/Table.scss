@@ -76,7 +76,9 @@ $icon-color:#505F79;
     tr:last-child{
       border-bottom: 1px solid $table-th-bottom-border;
     }
-   
+    tr>th:last-child{
+      border-right: none;
+    }
   }
   tr {
     // transition: all 0.3s ease;
