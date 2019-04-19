@@ -160,7 +160,7 @@ class Table extends Component {
     if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
       this.resizeEvent = addEventListener(
-        window, 'resize', debounce(this.syncFixedTableRowHeight, 150)
+        window, 'resize', this.resize
       );
     }
 
@@ -233,6 +233,10 @@ class Table extends Component {
     }
   }
 
+  resize(){
+    debounce(this.syncFixedTableRowHeight, 150);
+    this.computeTableWidth();
+  }
   computeTableWidth() {
     
     //如果用户传了scroll.x按用户传的为主
