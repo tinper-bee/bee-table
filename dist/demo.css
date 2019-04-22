@@ -9910,16 +9910,6 @@ ul {
 .tooltip-inner {
   border-color: #F44336 !important; }
 
-.demo502 .u-table-row-hover .editable-row-icon,
-.demo502 .u-table-row-hover .editable-row-icon-check {
-  display: block !important; }
-
-.demo502 .u-table-row {
-  height: 58px; }
-  .demo502 .u-table-row .editable-row-icon,
-  .demo502 .u-table-row .editable-row-icon-check {
-    display: none; }
-
 th .drop-menu .uf {
   font-size: 12px;
   visibility: hidden;
