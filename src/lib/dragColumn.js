@@ -70,7 +70,7 @@ export default function dragColumn(Table) {
         columns:_newColumns//cloneDeep(columns)
       });
       // console.log(" onDrop-------columns--- ",_newColumns);
-      console.log(columns === _newColumns);
+      // console.log(columns === _newColumns);
       if(this.props.onDrop){
         this.props.onDrop(event,data,columns);
       }

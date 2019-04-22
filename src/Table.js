@@ -51,7 +51,8 @@ const propTypes = {
   onFilterClear: PropTypes.func,
   syncHover: PropTypes.bool,
   tabIndex:PropTypes.string,
-  hoverContent:PropTypes.func
+  hoverContent:PropTypes.func,
+  size: PropTypes.oneOf(['sm', 'md', 'lg']),
 };
 
 const defaultProps = {
@@ -85,7 +86,8 @@ const defaultProps = {
   setRowHeight:()=>{},
   setRowParentIndex:()=>{},
   tabIndex:'0',
-  heightConsistent:false
+  heightConsistent:false,
+  size: 'md'
 };
 
 class Table extends Component {
@@ -158,7 +160,7 @@ class Table extends Component {
     if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
       this.resizeEvent = addEventListener(
-        window, 'resize', debounce(this.syncFixedTableRowHeight, 150)
+        window, 'resize', this.resize
       );
     }
 
@@ -231,6 +233,10 @@ class Table extends Component {
     }
   }
 
+  resize =()=>{
+    debounce(this.syncFixedTableRowHeight, 150);
+    this.computeTableWidth();
+  }
   computeTableWidth() {
     
     //如果用户传了scroll.x按用户传的为主
@@ -1197,6 +1203,9 @@ class Table extends Component {
       loading = {
         show: loading,
       };
+    }
+    if (props.size) {
+      className += ` ${clsPrefix}-${props.size}`;
     }
 
     return (

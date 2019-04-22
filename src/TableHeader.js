@@ -111,11 +111,13 @@ class TableHeader extends Component {
    * 拖拽列宽事件的监听
    */
   dragBorderEventInit (){
+    if(!this.props.dragborder )return;
     let  events = [
       {key:'mouseup', fun:this.onTrMouseUp},
       {key:'mousemove', fun:this.onTrMouseMove},
       {key:'mousedown', fun:this.onTrMouseDown}
     ];
+    // console.log(" ---- ",this.table.tr);
     this.eventListen(events,'',this.table.tr[0]);//表示把事件添加到th元素上
   }
 
@@ -134,6 +136,7 @@ class TableHeader extends Component {
 
 
   eventListen(events,type,eventSource){
+    if(!this.table)return;
     let {tr} = this.table;
     for (let i = 0; i < events.length; i++) {
       const _event = events[i];

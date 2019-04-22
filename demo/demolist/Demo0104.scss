@@ -1,0 +1,8 @@
+.demo04 {
+    &.u-table tr:nth-child(2n){
+        background: #f7f9fb;
+    }
+    &.u-table tr.u-table-row-hover, .u-table tr:hover{
+        background: #ebecf0;
+    }
+}

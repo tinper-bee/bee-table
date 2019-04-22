@@ -7410,11 +7410,12 @@ ul {
 
 .u-select-disabled {
   color: #909090; }
-  .u-select-disabled .u-select-selection {
-    background: #f7f7f7;
+  .u-select-disabled.u-select .u-select-selection {
+    background: #F7F9FB;
+    border-color: #DFE1E6;
     cursor: not-allowed; }
   .u-select-disabled .u-select-selection:hover, .u-select-disabled .u-select-selection:focus, .u-select-disabled .u-select-selection:active {
-    border-color: #d9d9d9;
+    border-color: #DFE1E6;
     box-shadow: none; }
   .u-select-disabled .u-select-selection-clear {
     display: none;
@@ -7748,7 +7749,7 @@ ul {
   display: none; }
 
 .u-select-dropdown.u-select-dropdown--multiple .u-select-dropdown-menu-item-selected:after, .u-select-dropdown.u-select-dropdown--multiple .u-select-dropdown-menu-item-selected:hover:after {
-  color: #108ee9;
+  color: rgb(245, 60, 50);
   display: inline-block; }
 
 :root .u-select-dropdown.u-select-dropdown--multiple .u-select-dropdown-menu-item:after {
@@ -8278,13 +8279,15 @@ ul {
     text-align: left; }
   .u-table th {
     font-weight: bold;
-    text-align: left; }
+    text-align: left;
+    line-height: 16px; }
     .u-table th[colspan] {
       text-align: center; }
     .u-table th ::last-child {
       overflow: hidden; }
   .u-table td {
-    border-bottom: 1px solid rgb(193, 199, 208); }
+    border-bottom: 1px solid rgb(193, 199, 208);
+    line-height: 1.33; }
     .u-table td a {
       color: #2196F3; }
       .u-table td a:hover {
@@ -8315,6 +8318,10 @@ ul {
     .u-table th.text-right,
     .u-table td.text-right {
       text-align: right; }
+  .u-table-sm td {
+    padding: 8px 16px; }
+  .u-table-lg td {
+    padding: 16px 16px; }
   .u-table tr.filterable th {
     padding-top: 5px !important;
     padding-bottom: 5px !important; }
@@ -8863,5 +8870,60 @@ ul {
   background: #505F79; }
   .opt-btns .u-button:hover, .opt-btns .u-button:active {
     background: #344563; }
+
+.demo02 .u-table-placeholder i {
+  font-size: 60px;
+  line-height: 60px; }
+
+.demo04.u-table tr:nth-child(2n) {
+  background: #f7f9fb; }
+
+.demo04.u-table tr.u-table-row-hover, .demo04 .u-table tr:hover {
+  background: #ebecf0; }
+
+.demo22 .opt-btns {
+  margin-bottom: 8px; }
+
+.demo32 .u-table-thead th {
+  padding-top: 0px;
+  padding-bottom: 0px; }
+
+.demo501 .editable-cell-text-wrapper:hover {
+  border: 1px dashed #A5ADBA; }
+
+.demo501 .require {
+  position: absolute;
+  top: 2px;
+  color: red;
+  font-size: 20px; }
+
+.help-tip {
+  color: #F44336; }
+
+.tooltip-arrow {
+  border-bottom-color: #F44336 !important; }
+
+.tooltip-inner {
+  border-color: #F44336 !important; }
+
+th .drop-menu .uf {
+  font-size: 12px;
+  visibility: hidden;
+  margin-left: 15px; }
+
+th:hover .uf {
+  visibility: visible; }
+
+
+.demo8 .u-table {
+  margin-bottom: 11px; }
+
+.demo8 .u-pagination {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center; }
 
 /*# sourceMappingURL=demo.css.map */

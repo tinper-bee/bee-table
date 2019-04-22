@@ -1,0 +1,22 @@
+.demo501 {
+  .editable-cell-text-wrapper {
+    &:hover {
+      border: 1px dashed #A5ADBA;
+    }
+  }
+  .require {
+    position: absolute;
+    top: 2px;
+    color: red;
+    font-size: 20px;
+  }
+}
+.help-tip {
+  color: #F44336;
+}
+.tooltip-arrow {
+  border-bottom-color: #F44336 !important;
+}
+.tooltip-inner {
+  border-color: #F44336 !important;
+}

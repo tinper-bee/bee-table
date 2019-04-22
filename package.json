@@ -56,7 +56,7 @@
   "bee-loading": "^1.0.6",
   "bee-locale": "0.0.11",
   "bee-menus": "^2.0.2",
-  "bee-select": "^2.0.4",
+  "bee-select": "^2.0.9",
   "classnames": "^2.2.5",
   "component-classes": "^1.2.6",
   "lodash.clonedeep": "^4.5.0",
@@ -88,6 +88,7 @@
   "react": "^16.6.3",
   "react-addons-test-utils": "^15.5.0",
   "react-dom": "^16.6.3",
+  "reqwest": "^2.0.5",
   "tinper-bee": "latest"
  }
 }

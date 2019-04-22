@@ -1,8 +1,9 @@
 # 表格 Table
 
 ## 何时使用
-表格是以结构化的方式来展示大量的信息最佳方法，使信息更易于阅读与理解。
-表格轻易就能用简洁和易读的方式来组织数据。它们可用于保存和展示大量的数据，小量的信息，静态数据以及不断地变动的数据。
+- 当有大量结构化的数据需要展现时；
+- Table组件拥有多种可自由组合使用的功能，包括：大数据渲染、拖拽列、过滤列、排序、多选、分页、自定义操作、合计、搜索等复杂行为；
+- 当需要复杂表格展示数据的时候，推荐使用开箱即用的[Grid组件](http://design.yonyoucloud.com/tinper-bee/bee-complex-grid)。
 
 ## 如何使用
 ```
@@ -62,12 +63,13 @@ import 'bee-table/build/Table.css';
 | sort       | 排序的属性 | object| {  mode:'single'//单列排序,  backSource:false //默认是前端排序，值为true为后端排序 } mode:multiple-多列排序
 | syncHover       | 是否同步Hover状态到左侧Checkbox，关闭此功能有助于提升性能 | bool| true
 | loadBuffer       | 使用BigData高阶组件实现大数据加载时，上下加载的缓存 | number| 5
-| resetScroll       | 将表格横向滚动条位置还原 | bool| false
+| resetScroll       | 将表格横向滚动条位置还原 | bool| false
 | hoverContent       | hover某行时，动态渲染行菜单元素，此方法需返回行菜单元素的内容 | Function| 
-| onRowHover       | 行hover时的回调函数 | Function| 
-| heightConsistent       | 当固定列内容高度超出非固定列时，内容互错行，当此属性为true会将高度同步，当行过多时会有性能影响，所以建议非固定高度如果过高时，超出内容可以显示成省略号 | bool|false 
+| onRowHover       | 行hover时的回调函数 | Function| 
+| heightConsistent       | 当固定列内容高度超出非固定列时，内容互错行，当此属性为true会将高度同步，当行过多时会有性能影响，所以建议非固定高度如果过高时，超出内容可以显示成省略号 | bool|false 
 | height | 自定义表格行高 | number | - |
 | headerHeight | 自定义表头行高 | number | - |
+| size | 表格大小 | `sm | md | lg` | 'md' |
 
 > 快捷键部分参考示例 (快捷键在table中的简单使用应用)
 
@@ -103,31 +105,25 @@ import 'bee-table/build/Table.css';
 | textAlign | 内容对齐方式，默认是左对齐（'left、right、center'） | string | 
 
 
-## 快捷键API
-
-| 快捷键  | 快捷键说明 | 类型 | 默认值 | 
-| --- | :--- | --- |--- |
-| focusable       | 是否开启快捷键功能 | bool | -
-| onKeyTab       | tab快捷键，可以处理默认选中第一条数据 | function| -
-| onKeyUp       |  ↑(上箭) 快捷键，可以处理table的上一条数据 | function| -
-| onKeyDown       | ↓(下箭)快捷键，可以处理table的下一条数据 | function| -
-| onTableKeyDown       | 触发table的所有快捷键 | function| -
-| tabIndex       | 设置焦点顺序 | number | 0
-
 ## mixin
 
 Table拓展功能方法。注：拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然在操作state会导致功能出现异常
 
-## 如何引用
+### 如何引用
 需要单独的去引用相应的js文件，目录在lib文件夹，示例如下：
 
 ```js
 import multiSelect from "tinper-bee/lib/multiSelect.js";
 ```
 
-### multiSelect 
+### multiSelect 多选功能
+#### multiSelect 新增API
 
- 选中功能组件
+| 参数                  | 说明                         | 类型       | 默认值      |
+| ------------------- | -------------------------- | -------- | -------- |
+| _checked         | 设置是否选中当前数据（设置在data数组中）           |  boolean      | true/false       |
+| _disabled   | 设置是否禁用当前数据（设置在data数组中）     |  boolean      | true/false     
+| getSelectedDataFunc | 返回当前选中的数据数组（设置在Table组件上）                | Function | 无        |
 
 <font color="#ccc">
 
@@ -144,17 +140,6 @@ import multiSelect from "tinper-bee/lib/multiSelect.js";
 
 </font>
 
-#### multiSelect 新增API
-
-data 数据中新增参数
-
-| 参数                  | 说明                         | 类型       | 默认值      |
-| ------------------- | -------------------------- | -------- | -------- |
-| _checked         | 设置当前数据是否选中           |  boolean      | true/false       |
-| _disabled   | 禁用当前选中数据     |  boolean      | true/false     
-| getSelectedDataFunc | 返回当前选中的数据数组                | Function | 无        |
-
-
 
 #### 使用
 
@@ -166,11 +151,9 @@ const MultiSelectTable = multiSelect(Table, Checkbox);
 
 ```
 
-### sort
+### sort 排序功能
 
-排序功能
-
-#### Column新增参数
+#### columns新增参数
 
 | 参数     | 说明         | 类型       | 默认值  |
 | ------ | ---------- | -------- | ---- |
@@ -187,11 +170,9 @@ const SortTable = sort(Table, Icon);
 
 ```
 
-### sum
+### sum 合计功能
 
-合计功能
-
-#### Column新增参数
+#### columns新增参数
  
 | 参数     | 说明         | 类型       | 默认值  |
 | ------ | ---------- | -------- | ---- |
@@ -207,9 +188,7 @@ const SumTable = sum(Table);
 
 ```
 
-### dragColumn
-
-拖拽列功能
+### dragColumn 拖拽列功能
 
 #### dragColumn新增参数
 
@@ -231,9 +210,7 @@ const DragColumnTable = dragColumn(Table);
 
 ```
 
-### filterColumn
-
-过滤功能
+### filterColumn 过滤功能
 
 #### filterColumn新增参数
 
@@ -254,7 +231,7 @@ const DragColumnTable = filterColumn(Table, Checkbox, Popover, Icon);
 ## rendertype
 在表格中提供了多种rendertype可以供选择，比如下拉框，输入框，日期等
 
-## 如何引用
+### 如何引用
 需要单独的去引用相应的js文件，目录在render文件夹，示例如下：
 
 ```js
@@ -375,6 +352,17 @@ const CheckboxRender = renderCheckbox(Checkbox, Icon);
 
 ```
 
+## 快捷键API
+
+| 快捷键  | 快捷键说明 | 类型 | 默认值 | 
+| --- | :--- | --- |--- |
+| focusable       | 是否开启快捷键功能 | bool | -
+| onKeyTab       | tab快捷键，可以处理默认选中第一条数据 | function| -
+| onKeyUp       |  ↑(上箭) 快捷键，可以处理table的上一条数据 | function| -
+| onKeyDown       | ↓(下箭)快捷键，可以处理table的下一条数据 | function| -
+| onTableKeyDown       | 触发table的所有快捷键 | function| -
+| tabIndex       | 设置焦点顺序 | number | 0
+
 ## 注意事项
 
 - 如果使用了固定列，请给固定的列设定固定宽度既width属性。
@@ -383,6 +371,6 @@ const CheckboxRender = renderCheckbox(Checkbox, Icon);
 需要给expandedRowRender中返回的对象添加`style=\{{height: xxx}\}`,来使扩展后的固定列扩展成一样高度。
 
 
-> 当表格场景比较复杂时，可以使用[复杂表格ComplexGrid](http://bee.tinper.org/bee-complex-grid#bee-complex-grid)。ComplexGrid将常用的过滤、多选、分页、列交换、列拖拽等功能集成在一起。使用起来超级方便。
+> 当表格场景比较复杂时，可以使用[复杂表格ComplexGrid](http://bee.tinper.org/bee-complex-grid#bee-complex-grid)。ComplexGrid将常用的过滤、多选、分页、列交换、列拖拽等功能集成在一起。使用起来超级方便。
 
 ## 更新日志
