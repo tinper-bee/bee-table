@@ -98,7 +98,7 @@ var TableHeader = function (_Component) {
         _this.drag.tableWidth = parseInt(_this.table.table.style.width ? _this.table.table.style.width : _this.table.table.scrollWidth);
         console.log("====================", _this.drag);
       } else if (type != 'online' && _this.props.draggable) {
-        if (!_this.props.draggable) return;
+        if (!_this.props.draggable || targetEvent.nodeName.toUpperCase() != "TH") return;
         targetEvent.setAttribute('draggable', true); //添加交换列效果
         _this.drag.option = 'dragAble';
         _this.currentDome = event.target;
@@ -232,8 +232,8 @@ var TableHeader = function (_Component) {
       console.log(" -------crt-------", crt);
       crt.style.backgroundColor = "#ebecf0";
       crt.style.width = _this.table.cols[currentIndex].style.width; //拖动后再交换列的时候，阴影效果可同步
-      crt.style.height = "44px";
-      // crt.style['line-height'] = "44px";
+      crt.style.height = "40px";
+      // crt.style['line-height'] = "40px";
       // document.body.appendChild(crt);
       document.getElementById(_this._table_none_cont_id).appendChild(crt);
 
@@ -255,12 +255,8 @@ var TableHeader = function (_Component) {
       }
       var event = _utils.Event.getEvent(e),
           target = _utils.Event.getTarget(event);
-      _this.currentDome.setAttribute('draggable', false); //添加交换列效果
-      var data = _this.getCurrentEventData(target);
-      if (!data) return;
-      if (!_this.currentObj || _this.currentObj.key == data.key) return;
-      if (!_this.props.onDrop) return;
-      _this.props.onDrop(event, { dragSource: _this.currentObj, dragTarg: data });
+      _this.currentDome.setAttribute('draggable', false); //添加交换列效果 
+      console.log("-onDrop--target---", target);
     };
 
     _this.onDragEnter = function (e) {
@@ -271,7 +267,9 @@ var TableHeader = function (_Component) {
       if (!currentIndex || parseInt(currentIndex) === _this.drag.currIndex) return;
       if (target.nodeName.toUpperCase() === "TH") {
         console.log("-onDragEnter-----", target);
-        target.style.border = "2px dashed #000";
+        target.style.border = "2px dashed rgba(5,0,0,0.25)";
+        // target.style.backgroundColor = 'rgb(235, 236, 240)';
+        // target.style['box-sizing'] = 'border-box';
       }
     };
 
@@ -283,6 +281,12 @@ var TableHeader = function (_Component) {
       // this.body.removeChild(document.getElementById(this._table_none_cont_id));
       console.log(_this.drag.newWidth + "--------------onDragEnd--target--", target);
       console.log("--------------onDragEnd----", _this._dragCurrent);
+
+      var data = _this.getCurrentEventData(_this._dragCurrent);
+      if (!data) return;
+      if (!_this.currentObj || _this.currentObj.key == data.key) return;
+      if (!_this.props.onDrop) return;
+      _this.props.onDrop(event, { dragSource: _this.currentObj, dragTarg: data });
     };
 
     _this.onDragLeave = function (e) {
@@ -552,12 +556,12 @@ var TableHeader = function (_Component) {
     if (!this.drag || !this.drag.option) return;
     var rows = this.props.rows;
 
+    var data = { rows: rows[0], cols: this.table.cols, currIndex: this.drag.currIndex };
+    this.props.afterDragColWidth && this.props.afterDragColWidth(data);
     this.drag = {
       option: ""
     };
     this.clearThsDr();
-    var data = { rows: rows[0], cols: this.table.cols, currIndex: this.drag.currIndex };
-    this.props.afterDragColWidth && this.props.afterDragColWidth(data);
   };
 
   /**
@@ -663,7 +667,7 @@ var TableHeader = function (_Component) {
         var _rowLeng = row.length - 1;
         return _react2["default"].createElement(
           "tr",
-          { key: index, style: rowStyle, className: filterable && index == rows.length - 1 ? 'filterable' : '' },
+          { key: index, style: rowStyle, aaaa: true, className: filterable && index == rows.length - 1 ? 'filterable' : '' },
           row.map(function (da, columIndex, arr) {
             var thHover = da.drgHover ? " " + clsPrefix + "-thead th-drag-hover" : "";
             delete da.drgHover;
