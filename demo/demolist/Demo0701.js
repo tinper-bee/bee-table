@@ -2,14 +2,12 @@
 *
 * @title 按条件、值过滤
 * @parent 列操作-过滤 Filter
-* @description 可以根据输入项目以及判断条件对表格内的数据进行过滤
+* @description 可以根据输入项目以及判断条件对表格内的数据进行过滤。可在控制台查看序列化后的参数字符串。
 *
 */
 
-
 import React, { Component } from 'react';
 import Table from '../../src';
-
 
 const columns26 = [
   { title: "姓名", width: 180, dataIndex: "name", key: "name", filterType: "text", filterDropdown: "show" },
