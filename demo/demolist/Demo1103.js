@@ -1,8 +1,8 @@
 /**
 *
-* @title 选中行颜色、自定义表格标题和表尾
+* @title 自定义表格标题、表尾、选中行颜色
 * @parent 扩展行 Expanded Row
-* @description 选中行的样式可自定义
+* @description 可根据业务场景设置不同的`title`和`footer`。选中行颜色可用rowClassName作为选择器自定义css样式。
 */
 
 import React, { Component } from "react";
@@ -11,15 +11,16 @@ import {Button,Tooltip,} from "tinper-bee";
 import Table from "../../src";
 
 const columns = [
-  { title: "用户名", dataIndex: "a", key: "a", width:80 , className:"rowClassName"},
-  { id: "123", title: "性别", dataIndex: "b", key: "b", width: 100 },
-  { title: "年龄", dataIndex: "c", key: "c", width: 200 },
+  { title: "员工编号", dataIndex: "a", key: "a", width: 300, className: "rowClassName"},
+  { title: "员工姓名", dataIndex: "b", key: "b", width: 500 },
+  { title: "性别", dataIndex: "c", key: "c", width: 500 },
+  { title: "部门", dataIndex: "d", key: "d", width: 200 }
 ];
 
 const data = [
-  { a: "令狐冲", b: "男", c: 41, key: "1" },
-  { a: "黄蓉", b: "男", c: 67, key: "2" },
-  { a: "郭靖", b: "男", c: 25, key: "3" }
+  { a: "ASVAL_201903280005", b: "小张", c: "男", d: "财务二科", key: "1" },
+  { a: "ASVAL_201903200004", b: "小明", c: "男", d: "财务一科", key: "2" },
+  { a: "ASVAL_201903120002", b: "小红", c: "女", d: "财务一科", key: "3" }
 ];
 
 class Demo26 extends Component {
@@ -49,8 +50,8 @@ class Demo26 extends Component {
               selectedRowIndex: index
           });
         }}
-        title={currentData => <div>标题: 这是一个标题</div>}
-        footer={currentData => <div>表尾: 我是小尾巴</div>}
+        title={currentData => <div>员工信息统计表</div>}
+        footer={currentData => <div>合计: 共{data.length}条数据</div>}
       /> 
     );
   }

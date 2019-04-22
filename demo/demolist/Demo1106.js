@@ -2,7 +2,7 @@
 *
 * @title 自定义行高
 * @parent 扩展行 Expanded Row
-* @description 设置`height`属性自定义表格行高，设置`headerHeight`属性自定义表头高度。
+* @description 设置`height`属性自定义表体行高，设置`headerHeight`属性自定义表头高度。
 */
 
 import React, { Component } from "react";
@@ -10,32 +10,16 @@ import {Button,Tooltip} from "tinper-bee";
 import Table from "../../src";
 
 const columns = [
-  {
-    title: "用户名", dataIndex: "a", key: "a", width: 300, className: "rowClassName",
-    fixed:'left',
-    render: (text, record, index) => {
-      return (
-        <Tooltip inverse overlay={text}>
-          <span tootip={text} style={{
-            display: "inline-block",
-            width: "60px",
-            textOverflow: "ellipsis",
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-            verticalAlign: "middle",
-          }}>{text}</span>
-        </Tooltip>
-      );
-    }
-  },
-  { id: "123", title: "性别", dataIndex: "b", key: "b", width: 500},
-  { title: "年龄", dataIndex: "c", key: "c", width: 200 }
+  { title: "员工编号", dataIndex: "a", key: "a", width: 300, className: "rowClassName"},
+  { title: "员工姓名", dataIndex: "b", key: "b", width: 500 },
+  { title: "性别", dataIndex: "c", key: "c", width: 500 },
+  { title: "部门", dataIndex: "d", key: "d", width: 200 }
 ];
 
 const data = [
-  { a: "令狐冲", b: "男", c: 41, key: "1" },
-  { a: "杨过叔叔的女儿黄蓉", b: "男", c: 67, key: "2" },
-  { a: "郭靖", b: "男", c: 25, key: "3" }
+  { a: "ASVAL_201903280005", b: "小张", c: "男", d: "财务二科", key: "1" },
+  { a: "ASVAL_201903200004", b: "小明", c: "男", d: "财务一科", key: "2" },
+  { a: "ASVAL_201903120002", b: "小红", c: "女", d: "财务一科", key: "3" }
 ];
 
 class Demo1 extends Component {
@@ -63,7 +47,6 @@ class Demo1 extends Component {
 
   render() {
     return (
-   
         <Table
           columns={columns}
           data={data}

@@ -2,7 +2,7 @@
  *
  * @title 多列排序
  * @parent 列操作-排序 Sort
- * @description 多列排序、全选功能、合计（通过使用的封装好的功能方法实现复杂功能，简单易用！）新增回调函数(sorterClick)
+ * @description 结合多列排序、全选功能、合计功能的表格示例。新增排序后触发的回调函数sorterClick。
  *
  */
 

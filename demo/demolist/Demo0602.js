@@ -12,12 +12,13 @@ import React, { Component } from 'react';
 import {Popconfirm} from 'tinper-bee';
 import Table from '../../src';
 
-const columns5 = [
+const columns = [
     {
         title: "序号",
         dataIndex: "index",
         key: "index",
-        width: 100, 
+        width: 80, 
+        render(text, record, index){return index + 1}
     },
     {
         title: "订单编号",
@@ -47,13 +48,13 @@ const columns5 = [
         title: "采购组",
         dataIndex: "purchasingGroup",
         key: "purchasingGroup",
-         width: 300
+         width: 100
     },
     {
         title: "凭证日期",
         dataIndex: "voucherDate",
         key: "voucherDate",
-        width: 100,
+        width: 200,
         
     },
     {
@@ -94,70 +95,48 @@ const columns5 = [
     }
 ];
 
-const data5 = [
+const data = [
     { 
-        index: 1, 
-        orderCode:"2343", 
-        supplierName: "xxx",
-        type_name: "123",
-        purchasing:'内行', 
-        purchasingGroup:"323",
-        voucherDate:"kkkk",
-        approvalState_name:"vvvv",
-        confirmState_name:"aaaa",
-        closeState_name:"vnnnnn",
-        d:"操作",
-        key: "1"
+      orderCode:"NU0391025", 
+      supplierName: "xx供应商",
+      type_name: "1",
+      purchasing:'组织c', 
+      purchasingGroup:"aa",
+      voucherDate:"2018年03月18日",
+      approvalState_name:"已审批",
+      confirmState_name:"执行中",
+      closeState_name:"未关闭",
+      key: "1"
     }, 
     { 
-      index: 2, 
-      _checked:true,
-      orderCode:"222", 
-      supplierName: "22xxx",
-      type_name: "1223",
-      purchasing:'内行2', 
-      purchasingGroup:"3223",
-      voucherDate:"222kk",
-      approvalState_name:"22vvvv",
-      confirmState_name:"2aaaa",
-      closeState_name:"2vnnnnn",
-      d:"2操作",
+      orderCode:"NU0391026", 
+      supplierName: "xx供应商",
+      type_name: "2",
+      purchasing:'组织a', 
+      purchasingGroup:"bb",
+      voucherDate:"2018年02月05日",
+      approvalState_name:"已审批",
+      confirmState_name:"待确认",
+      closeState_name:"未关闭",
       key: "2"
     },
     { 
-      index: 3, 
-      orderCode:"222", 
-      supplierName: "22xxx",
-      _disabled:true,
-      type_name: "1223",
-      purchasing:'内行2', 
-      purchasingGroup:"3223",
-      voucherDate:"222kk",
-      approvalState_name:"22vvvv",
-      confirmState_name:"2aaaa",
-      closeState_name:"2vnnnnn",
-      d:"3操作",
+      orderCode:"NU0391027", 
+      supplierName: "xx供应商",
+      type_name: "3",
+      purchasing:'组织b', 
+      purchasingGroup:"aa",
+      voucherDate:"2018年07月01日",
+      approvalState_name:"已审批",
+      confirmState_name:"终止",
+      closeState_name:"已关闭",
       key: "3"
-    },
-    { 
-      index: 4, 
-      orderCode:"222", 
-      supplierName: "22xxx",
-      type_name: "1223",
-      purchasing:'内行2', 
-      purchasingGroup:"3223",
-      voucherDate:"222kk",
-      approvalState_name:"22vvvv",
-      confirmState_name:"2aaaa",
-      closeState_name:"2vnnnnn",
-      d:"4操作",
-      key: "4"
-    },
+    }
 ];
 
 class Demo52 extends Component {
   render() {
-    return <Table columns={columns5} data={data5} scroll={{ x:true, y: 200 }}  />;
+    return <Table columns={columns} data={data} scroll={{ x:'110%', y: 200 }}  />;
   }
 }
 

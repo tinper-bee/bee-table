@@ -7,7 +7,6 @@
 @import url(../node_modules/bee-dropdown/build/Dropdown.css);
 @import url(../node_modules/bee-input-number/build/InputNumber.css);
 @import url(../node_modules/bee-modal/build/Modal.css);
-@import url(../node_modules/tinper-bee/assets/tinper-bee.css);
 .red {
   color: rgb(244,67,54) !important; }
 

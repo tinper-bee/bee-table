@@ -12,78 +12,118 @@ import Table from '../../src';
 
 const { Item } = Menu;
 
-const columns24 = [
+const columns = [
   {
-    title: "名字",
-    dataIndex: "a",
-    key: "a",
-    width: 100,
-    fixed: "left",
+      title: "序号",
+      dataIndex: "index",
+      key: "index",
+      width: 80, 
+      fixed: 'left',
+      render(text, record, index){return index + 1}
   },
   {
-    title: "性别",
-    dataIndex: "b",
-    key: "b",
-    width: 100,
-    fixed: "left",
+      title: "订单编号",
+      dataIndex: "orderCode",
+      key: "orderCode",
+      width: 100, 
+      fixed: 'left',
   },
   {
-    title: "年龄",
-    dataIndex: "c",
-    key: "c",
-    width: 100, 
+      title: "供应商名称",
+      dataIndex: "supplierName",
+      key: "supplierName",
+      width: 150
   },
   {
-    title: "武功级别",
-    dataIndex: "d",
-    key: "d",
-    width: 150 
+      title: "类型",
+      dataIndex: "type_name",
+      key: "type_name",
+      width: 100
   },
   {
-    title: "对手",
-    dataIndex: "e",
-    key: "e",
-    width: 100 
+      title: "采购组织",
+      dataIndex: "purchasing",
+      key: "purchasing",
+      width: 100
   },
   {
-    title: "帮派",
-    dataIndex: "f",
-    key: "f",
-    width: 100 
+      title: "采购组",
+      dataIndex: "purchasingGroup",
+      key: "purchasingGroup",
+       width: 100
   },
   {
-    title: "武功类型",
-    dataIndex: "g",
-    key: "g",
-    width: 150 
+      title: "凭证日期",
+      dataIndex: "voucherDate",
+      key: "voucherDate",
+      width: 200,
+      
   },
   {
-    title: "师傅",
-    dataIndex: "k",
-    key: "k",
-    // width: 100 
+      title: "审批状态",
+      dataIndex: "approvalState_name",
+      key: "approvalState_name",
+      width: 100
   },
   {
-    title: "攻击系数",
-    dataIndex: "h",
-    key: "h",
-    width: 100 
+      title: "确认状态",
+      dataIndex: "confirmState_name",
+      key: "confirmState_name",
+       width: 100
+  }, 
+  {
+      title: "关闭状态",
+      dataIndex: "closeState_name",
+      key: "closeState_name",
+      width: 100
   }
 ];
 
-
-const data24 = [
-  { a: "杨过", b: "男", c: 30,d:'内行',e:'黄荣',f:'古墓派',g:'剑术',k:'小龙女',h:'0.5', key: "1" },
-  { a: "令狐冲", b: "男", c: 41,d:'剑客',e:'自己',f:'无',g:'剑术',k:'无',h:'0.5', key: "2" },
-  { a: "郭靖", b: "男", c: 25,d:'大侠',e:'黄荣',f:'朝廷',g:'内容',k:'外侵势力',h:'0.6', key: "3" }
-]; 
+const data = [
+  { 
+    orderCode:"NU0391025", 
+    supplierName: "xx供应商",
+    type_name: "1",
+    purchasing:'组织c', 
+    purchasingGroup:"aa",
+    voucherDate:"2018年03月18日",
+    approvalState_name:"已审批",
+    confirmState_name:"执行中",
+    closeState_name:"未关闭",
+    key: "1"
+  }, 
+  { 
+    orderCode:"NU0391026", 
+    supplierName: "xx供应商",
+    type_name: "2",
+    purchasing:'组织a', 
+    purchasingGroup:"bb",
+    voucherDate:"2018年02月05日",
+    approvalState_name:"已审批",
+    confirmState_name:"待确认",
+    closeState_name:"未关闭",
+    key: "2"
+  },
+  { 
+    orderCode:"NU0391027", 
+    supplierName: "xx供应商",
+    type_name: "3",
+    purchasing:'组织b', 
+    purchasingGroup:"aa",
+    voucherDate:"2018年07月01日",
+    approvalState_name:"已审批",
+    confirmState_name:"终止",
+    closeState_name:"已关闭",
+    key: "3"
+  }
+];
  
 class Demo24 extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      columns:columns24
+      columns:columns
     }
   }
   
@@ -149,7 +189,7 @@ class Demo24 extends Component {
     columns = this.renderColumnsDropdown(columns);
     return(
       <div className="demo24">
-        <Table columns={columns} data={data24} scroll={{ x: "110%", y: 240 }}/>
+        <Table columns={columns} data={data} scroll={{ x: "110%", y: 240 }}/>
       </div>
     )
   }

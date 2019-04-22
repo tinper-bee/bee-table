@@ -2,7 +2,7 @@
 *
 * @title 拖拽改变列宽度
 * @parent 列操作-拖拽 Drag
-* @description 注：不支持tree结构的表头、合并表头的table
+* @description onDropBorder方法为调整列宽后触发的回调函数。注：不支持tree结构的表头、合并表头的table。
 */
 import React, { Component } from 'react';
 import {Icon} from "tinper-bee";
@@ -62,14 +62,17 @@ class Demo23 extends Component {
   }
 
   render() {
-    return <DragColumnTable columns={columns23} data={data23} bordered
-    dragborder={true} 
-    draggable={true} 
-    scroll={{y:200}}
-    onDropBorder ={(e,width)=>{
-      console.log(width+"--调整列宽后触发事件",e.target);
-    }}
-    />;
+    return <DragColumnTable 
+            columns={columns23} 
+            data={data23} 
+            bordered
+            dragborder={true} 
+            draggable={true} 
+            scroll={{y:200}}
+            onDropBorder ={(e,width)=>{
+              console.log(width+"--调整列宽后触发事件",e.target);
+            }}
+            />;
   }
 }
 Demo23.defaultProps = defaultProps23;
