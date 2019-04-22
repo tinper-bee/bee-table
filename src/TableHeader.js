@@ -35,11 +35,9 @@ class TableHeader extends Component {
     contentWidthDiff: 0
   };
 
-
   componentDidUpdate(){
     this.initTable();
     this.initEvent();
-    
   }
 
   componentDidMount(){
@@ -49,6 +47,15 @@ class TableHeader extends Component {
     document.querySelector("body").appendChild(div);
   }
 
+  componentWillUnmount(){
+    if(!this.table)return;
+    if (this.props.draggable){
+      this.removeDragAbleEvent();
+    }
+    if(this.props.dragborder){
+      this.removeDragBorderEvent();
+    }
+  }
 
   /**
    * 获取table的属性存放在this.table 中。(公用方法)
@@ -75,7 +82,6 @@ class TableHeader extends Component {
     table.fixedRightBodyTable = contentTable.querySelector('.u-table-fixed-right .u-table-body-outer') ;
     table.innerTableBody= contentTable.querySelector('.u-table-scroll .u-table-body table');
     
-  
     this.table = table;
 
     if(!this.props.dragborder)return;
@@ -112,6 +118,19 @@ class TableHeader extends Component {
     ];
     this.eventListen(events,'',this.table.tr[0]);//表示把事件添加到th元素上
   }
+
+  /**
+   * 删除拖动改变列宽的事件监听
+   */
+  removeDragBorderEvent(){
+    let  events = [
+      {key:'mouseup', fun:this.onTrMouseUp},
+      {key:'mousemove', fun:this.onTrMouseMove},
+      {key:'mousedown', fun:this.onTrMouseDown}
+    ];
+    this.eventListen(events,'remove',this.table.tr[0]);
+  }
+
 
 
   eventListen(events,type,eventSource){
@@ -333,6 +352,21 @@ class TableHeader extends Component {
       {key:'dragleave', fun:this.onDragLeave},
     ];
     this.eventListen(events,'',this.table.tr[0]);//表示把事件添加到th元素上
+  }
+
+  /**
+   * 删除换列的事件监听
+   */
+  removeDragAbleEvent(){
+    let  events = [
+      {key:'dragstart',fun:this.onDragStart},
+      {key:'dragover', fun:this.onDragOver},
+      {key:'drop', fun:this.onDrop},
+      {key:'dragenter', fun:this.onDragEnter},  
+      {key:'dragend', fun:this.onDragEnd},
+      {key:'dragleave', fun:this.onDragLeave},
+    ];
+    this.eventListen(events,'remove',this.table.tr[0]);
   }
 
   /**

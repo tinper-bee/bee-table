@@ -449,6 +449,16 @@ var TableHeader = function (_Component) {
     document.querySelector("body").appendChild(div);
   };
 
+  TableHeader.prototype.componentWillUnmount = function componentWillUnmount() {
+    if (!this.table) return;
+    if (this.props.draggable) {
+      this.removeDragAbleEvent();
+    }
+    if (this.props.dragborder) {
+      this.removeDragBorderEvent();
+    }
+  };
+
   /**
    * 获取table的属性存放在this.table 中。(公用方法)
    * @returns
@@ -512,6 +522,16 @@ var TableHeader = function (_Component) {
   TableHeader.prototype.dragBorderEventInit = function dragBorderEventInit() {
     var events = [{ key: 'mouseup', fun: this.onTrMouseUp }, { key: 'mousemove', fun: this.onTrMouseMove }, { key: 'mousedown', fun: this.onTrMouseDown }];
     this.eventListen(events, '', this.table.tr[0]); //表示把事件添加到th元素上
+  };
+
+  /**
+   * 删除拖动改变列宽的事件监听
+   */
+
+
+  TableHeader.prototype.removeDragBorderEvent = function removeDragBorderEvent() {
+    var events = [{ key: 'mouseup', fun: this.onTrMouseUp }, { key: 'mousemove', fun: this.onTrMouseMove }, { key: 'mousedown', fun: this.onTrMouseDown }];
+    this.eventListen(events, 'remove', this.table.tr[0]);
   };
 
   TableHeader.prototype.eventListen = function eventListen(events, type, eventSource) {
@@ -591,6 +611,16 @@ var TableHeader = function (_Component) {
 
     { key: 'dragenter', fun: this.onDragEnter }, { key: 'dragend', fun: this.onDragEnd }, { key: 'dragleave', fun: this.onDragLeave }];
     this.eventListen(events, '', this.table.tr[0]); //表示把事件添加到th元素上
+  };
+
+  /**
+   * 删除换列的事件监听
+   */
+
+
+  TableHeader.prototype.removeDragAbleEvent = function removeDragAbleEvent() {
+    var events = [{ key: 'dragstart', fun: this.onDragStart }, { key: 'dragover', fun: this.onDragOver }, { key: 'drop', fun: this.onDrop }, { key: 'dragenter', fun: this.onDragEnter }, { key: 'dragend', fun: this.onDragEnd }, { key: 'dragleave', fun: this.onDragLeave }];
+    this.eventListen(events, 'remove', this.table.tr[0]);
   };
 
   /**
