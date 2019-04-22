@@ -172,11 +172,11 @@ class TableHeader extends Component {
     let event = Event.getEvent(e) ,
     targetEvent = Event.getTarget(event);
     const { clsPrefix, contentTable } = this.props;
-    console.log(" ------------------onTrMouseDown------------------ ");
+    // console.log(" ------------------onTrMouseDown------------------ ");
     let currentElement = this.getOnLineObject(targetEvent);
     if(!currentElement)return;
     let type = currentElement.getAttribute('data-type');
-    console.log("type : ",type);
+    // console.log("type : ",type);
     if(!this.props.dragborder && !this.props.draggable)return;
     if(type == 'online' && this.props.dragborder){
       if(!this.props.dragborder)return;
@@ -190,7 +190,7 @@ class TableHeader extends Component {
       this.drag.oldWidth = parseInt((currentObj).style.width);
       this.drag.minWidth = currentObj.style.minWidth != ""?parseInt(currentObj.style.minWidth):defaultWidth;
       this.drag.tableWidth = parseInt(this.table.table.style.width ?this.table.table.style.width:this.table.table.scrollWidth);
-      console.log("====================",this.drag);
+      // console.log("====================",this.drag);
     }else if(type != 'online' &&  this.props.draggable){
         if (!this.props.draggable || targetEvent.nodeName.toUpperCase() != "TH") return; 
         targetEvent.setAttribute('draggable',true);//添加交换列效果
@@ -198,7 +198,7 @@ class TableHeader extends Component {
         this.currentDome = event.target;
         let currentIndex = parseInt(currentElement.getAttribute("data-line-index"));
         this.drag.currIndex = currentIndex;
-        console.log(" ------------------onTrMouseDown------this.drag------------ ",this.drag); 
+        // console.log(" ------------------onTrMouseDown------this.drag------------ ",this.drag); 
     }else{
       console.log("onTrMouseDown dragborder or draggable is all false !");
       return ;
@@ -215,7 +215,7 @@ class TableHeader extends Component {
     Event.stopPropagation(e); 
     let event = Event.getEvent(e);  
     if(this.props.dragborder && this.drag.option == "border"){
-      console.log(" --onTrMouseMove--border- ",this.drag.option);
+      // console.log(" --onTrMouseMove--border- ",this.drag.option);
       //移动改变宽度
       let currentCols = this.table.cols[this.drag.currIndex];
       let diff = (event.x - this.drag.oldLeft); 
@@ -264,7 +264,7 @@ class TableHeader extends Component {
         }
       } 
     }else if(this.props.draggable && this.drag.option == "draggable"){
-      console.log(" --onTrMouseMove--draggable- ",this.drag.option);
+      // console.log(" --onTrMouseMove--draggable- ",this.drag.option);
     }else{
       // console.log("onTrMouseMove dragborder or draggable is all false !");
       // return ;
@@ -309,7 +309,7 @@ class TableHeader extends Component {
    */
   bodyonLineMouseUp = (events,type) =>{
     if(!this.drag || !this.drag.option)return;
-    console.log("----bodyEventListen",this.drag);
+    // console.log("----bodyEventListen",this.drag);
     this.mouseClear();
   }
 
@@ -382,7 +382,7 @@ class TableHeader extends Component {
     let currentKey = target.getAttribute('data-line-key');
 
     var crt = target.cloneNode(true);
-    console.log(" -------crt-------",crt);
+    // console.log(" -------crt-------",crt);
     crt.style.backgroundColor = "#ebecf0";
     crt.style.width = this.table.cols[currentIndex].style.width;//拖动后再交换列的时候，阴影效果可同步
     crt.style.height = "40px";
@@ -411,7 +411,7 @@ class TableHeader extends Component {
     let event = Event.getEvent(e) ,
     target = Event.getTarget(event);
     this.currentDome.setAttribute('draggable',false);//添加交换列效果 
-    console.log("-onDrop--target---",target);
+    // console.log("-onDrop--target---",target);
   };
 
 
@@ -422,7 +422,7 @@ class TableHeader extends Component {
     let currentIndex = target.getAttribute("data-line-index");
     if(!currentIndex || parseInt(currentIndex) === this.drag.currIndex)return;
     if(target.nodeName.toUpperCase() === "TH"){
-      console.log("-onDragEnter-----",target);
+      // console.log("-onDragEnter-----",target);
       target.style.border = "2px dashed rgba(5,0,0,0.25)";
       // target.style.backgroundColor = 'rgb(235, 236, 240)';
       // target.style['box-sizing'] = 'border-box';
@@ -434,10 +434,7 @@ class TableHeader extends Component {
     target = Event.getTarget(event);
     this._dragCurrent.style = "";
     document.getElementById(this._table_none_cont_id).innerHTML = "";
-    // this.body.removeChild(document.getElementById(this._table_none_cont_id));
-    console.log(this.drag.newWidth+"--------------onDragEnd--target--",target);
-    console.log("--------------onDragEnd----",this._dragCurrent);
-
+    
     let data = this.getCurrentEventData(this._dragCurrent);
     if(!data)return;
     if (!this.currentObj || this.currentObj.key == data.key) return;
@@ -452,7 +449,7 @@ class TableHeader extends Component {
     let currentIndex = target.getAttribute("data-line-index");
     if(!currentIndex || parseInt(currentIndex) === this.drag.currIndex)return;
     if(target.nodeName.toUpperCase() === "TH"){
-      console.log("--onDragLeave----",target);
+      // console.log("--onDragLeave----",target);
       // console.log("--onDragLeave--this._dragCurrent--",this._dragCurrent);
       target.style = "";
       // this._dragCurrent.style = "";
