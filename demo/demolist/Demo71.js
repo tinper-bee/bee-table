@@ -1,6 +1,7 @@
 /**
 *
 * @title 列过滤面板
+* @parent 列操作-隐藏 Hide
 * @description 点击表格右侧按钮，进行表格列的数据过滤。可以自定义设置显示某列，通过ifshow属性控制，默认为true都显示。afterFilter为过滤之后的回调函数
 *
 */
@@ -55,22 +56,6 @@ class Demo21 extends Component {
                   title: "武功级别",
                   dataIndex: "d",
                   key: "d"
-                },
-                {
-                  title: "操作",
-                  dataIndex: "e",
-                  key: "e",
-                  render(text, record, index){
-                    return (
-                      <div  title={text} >
-                        <Popconfirm trigger="click" placement="right" content={'这是第' + index + '行，内容为:' + text}>
-                          <a href="javascript:;" tooltip={text} >
-                            一些操作
-                          </a>
-                        </Popconfirm>
-                      </div>
-                    );
-                  }
                 }
               ]};
   }

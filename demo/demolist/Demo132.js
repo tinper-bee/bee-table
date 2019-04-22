@@ -1,6 +1,7 @@
 /**
 *
 * @title 嵌套子表格滚动加载
+* @parent 无限滚动 Infinite-scroll
 * @description 通过expandedRowRender参数来实现子表格
 *
 */
@@ -131,8 +132,6 @@ class Demo31 extends Component {
         expandedRowRender={this.expandedRowRender}
         scroll={{y:350}}
         // defaultExpandedRowKeys={[0,1]}
-        title={currentData => <div>标题: 这是一个标题</div>}
-        footer={currentData => <div>表尾: 我是小尾巴</div>}
       />
     );
   }

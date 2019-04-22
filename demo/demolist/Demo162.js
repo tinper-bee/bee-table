@@ -1,6 +1,7 @@
 /**
  *
  * @title 表格+搜索
+ * @parent 搜索 search
  * @description 搜索刷新表格数据
  *
  */

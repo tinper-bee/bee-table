@@ -1,8 +1,8 @@
 /**
 *
 * @title 动态设置列锁定、解除锁定
-* @description 动态设置固、取消固定列
-* @description 动态固定列设置 一个table动态设置一个方向【fixed: "left"，fixed: "right"】。
+* @parent 列操作-锁定 Fixed
+* @description 动态设置columns中数据的fixed属性值【fixed: "left"，fixed: "right"】。
 *
 */
 import React, { Component } from 'react';
@@ -11,25 +11,6 @@ import {Icon,Menu,Dropdown} from "tinper-bee";
 import Table from '../../src';
 
 const { Item } = Menu;
-// const columns24 = [
-//   {
-//     title: "Full Name",
-//     width: 100,
-//     dataIndex: "name",
-//     key: "name",
-//     fixed: "left",
-//   },
-//   { title: "Age", width: 100, dataIndex: "age", key: "age", fixed: "left" },
-//   { title: "Column 1", dataIndex: "address", key: "1"  },
-//   { title: "Column 2", dataIndex: "address2", key: "2" },
-//   { title: "Column 3", dataIndex: "address", key: "3" },
-//   { title: "Column 4", dataIndex: "address", key: "4" },
-//   { title: "Column 24", dataIndex: "address", key: "24" },
-//   { title: "Column 6", dataIndex: "address", key: "6" },
-//   { title: "Column 7", dataIndex: "address", key: "7" },
-//   { title: "Column 8", dataIndex: "address", key: "8" }
-// ];
-
 
 const columns24 = [
   {
@@ -74,7 +55,7 @@ const columns24 = [
     title: "武功类型",
     dataIndex: "g",
     key: "g",
-    width: 100 
+    width: 150 
   },
   {
     title: "师傅",
@@ -105,27 +86,26 @@ class Demo24 extends Component {
       columns:columns24
     }
   }
-
   
-    onSelect = ({key,item})=>{ 
-      console.log(`${key} selected`); //获取key
-      let currentObject = item.props.data; //获取选中对象的数据
-      let {columns} = this.state;
-      let fixedCols = [];
-      let nonColums = [];
-      columns.find(da=>{
-        if(da.key == key){
-          da.fixed?delete da.fixed:da.fixed = 'left';
-        }
-        da.fixed?fixedCols.push(da):nonColums.push(da);
-      });
-    
-      columns = [...fixedCols,...nonColums]
+  onSelect = ({key,item})=>{ 
+    console.log(`${key} selected`); //获取key
+    let currentObject = item.props.data; //获取选中对象的数据
+    let {columns} = this.state;
+    let fixedCols = [];
+    let nonColums = [];
+    columns.find(da=>{
+      if(da.key == key){
+        da.fixed?delete da.fixed:da.fixed = 'left';
+      }
+      da.fixed?fixedCols.push(da):nonColums.push(da);
+    });
+  
+    columns = [...fixedCols,...nonColums]
 
-      this.setState({
-        columns
-      });
-    }
+    this.setState({
+      columns
+    });
+  }
   //表头增加下拉菜单
   renderColumnsDropdown(columns) {
     const icon ='uf-arrow-down';
@@ -166,10 +146,12 @@ class Demo24 extends Component {
 
   render() {
     let {columns} = this.state;
-     columns = this.renderColumnsDropdown(columns);
-    return <div className="demo24">
-            <Table columns={columns} data={data24} scroll={{ x: "110%", y: 240 }}/>
-          </div>;
+    columns = this.renderColumnsDropdown(columns);
+    return(
+      <div className="demo24">
+        <Table columns={columns} data={data24} scroll={{ x: "110%", y: 240 }}/>
+      </div>
+    )
   }
 }
 

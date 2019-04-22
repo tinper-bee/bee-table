@@ -1,10 +1,8 @@
 /**
-*
-* @title 树状表滚动加载
-* 【Tooltip】
+* @title 层级树大数据场景
+* @parent 无限滚动 Infinite-scroll
 * @description
 */
-
 import React, { Component } from "react";
 import {Tooltip} from "tinper-bee";
 
@@ -82,7 +80,7 @@ class Demo34 extends Component {
           data={data}
           parentNodeId='parent'
           scroll={{y:300}}
-          height={40}
+          onExpand={this.onExpand}
           onRowClick={(record, index, indent) => {
             console.log('currentIndex--'+index);
           }}

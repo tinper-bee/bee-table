@@ -1,6 +1,7 @@
 /**
 *
 * @title 右侧固定列
+* @parent 列操作-锁定 Fixed
 * @description 固定列到表格的右侧
 *
 */

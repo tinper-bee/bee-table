@@ -94,7 +94,7 @@ class Demo extends Component {
 | title                  | 表格标题                                     | Function                               | -               |
 | footer                 | 表格尾部                                     | Function                               | -               |
 | emptyText              | 无数据时显示的内容                                | Function                               | () => 'No Data' |
-| scroll                 | 横向或纵向支持滚动，也可用于指定滚动区域的宽高度：{ x: true, y: 300 } | object                                 | {}              |
+| scroll                 | 横向或纵向支持滚动，也可用于指定滚动区域的宽高度| `{ x: number | true | 百分比, y: number }`  | {}     |
 | rowRef                 | 获取行的ref                                  | Function(record, index, indent):string | () => null      |
 | getBodyWrapper         | 添加对table body的包装                         | Function(body)                         | body => body    |
 | expandedRowRender      | 额外的展开行                                   | Function(record, index, indent):node | -               |
@@ -115,6 +115,9 @@ class Demo extends Component {
 | onTableKeyDown       | 触发table的快捷键 | function| -
 | tabIndex       | 设置焦点顺序 | number | 0
 | loadBuffer       | 使用BigData高阶组件实现大数据加载时，上下加载的缓存 | number| 5
+| height | 自定义表格行高 | number | - |
+| headerHeight | 自定义表头行高 | number | - |
+| size | 表格大小 | `sm | md | lg` | 'md' |
 
 > 快捷键部分参考示例 (快捷键在table中的简单使用应用)
 

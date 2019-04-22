@@ -1,6 +1,7 @@
 /**
 *
 * @title 拖拽改变列宽度
+* @parent 列操作-拖拽 Drag
 * @description 注：不支持tree结构的表头、合并表头的table
 */
 import React, { Component } from 'react';

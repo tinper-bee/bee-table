@@ -1,6 +1,7 @@
 /**
  *
  * @title 合并列后合计
+ * @parent 列渲染 Custom Render
  * @description 合并标题后的合计,且支持多字段统计（通过使用的封装好的功能方法实现复杂功能，简单易用！）
  *
  */
@@ -17,7 +18,7 @@ const columns = [
     title: "Name",
     dataIndex: "name",
     key: "name",
-    width: 100,
+    width: 120,
     fixed: "left"
   },
   {

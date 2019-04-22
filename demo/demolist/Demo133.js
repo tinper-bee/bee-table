@@ -1,6 +1,7 @@
 /**
 *
 * @title 多功能表格滚动加载
+* @parent 无限滚动 Infinite-scroll
 * @description
 */
 
@@ -17,7 +18,7 @@ const columns = [
     {
         title:'序号',
         dataIndex:'index',
-        width:'50',
+        width:'80',
         key:'index',
         render:(text,record,index)=>{
             return index
@@ -73,7 +74,6 @@ class Demo32 extends Component {
           data={data}
           parentNodeId='parent'
           scroll={{y:300}}
-          height={40}
           bordered
           onRowClick={(record, index, indent) => {
             this.setState({

@@ -1,6 +1,7 @@
 /**
 *
 * @title 嵌套子表格
+* @parent 扩展行 Expanded Row
 * @description 通过expandedRowRender参数来实现子表格
 *
 */
@@ -118,8 +119,6 @@ class Demo16 extends Component {
         scroll={{x:true}}
         dragborder={true} 
         draggable={true} 
-        title={currentData => <div>标题: 这是一个标题</div>}
-        footer={currentData => <div>表尾: 我是小尾巴</div>}
       />
     );
   }

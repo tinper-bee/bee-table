@@ -4,7 +4,7 @@
   font-size: 12px;
   color: #212121;
   position: relative;
-  line-height: 1.5;
+  line-height: 1.33;
   overflow: hidden; }
   .u-table-body {
     position: relative; }
@@ -47,13 +47,21 @@
     background: rgb(235, 236, 240); }
   .u-table th,
   .u-table td {
-    padding: 12px 8px;
+    padding: 12px 16px;
     word-break: break-all; }
+    .u-table th.text-center,
+    .u-table td.text-center {
+      text-align: center; }
+    .u-table th.text-right,
+    .u-table td.text-right {
+      text-align: right; }
   .u-table tr.filterable th {
     padding-top: 5px !important;
     padding-bottom: 5px !important; }
     .u-table tr.filterable th .filterContext {
       height: 35px; }
+    .u-table tr.filterable th .u-select-selection--single {
+      height: 26px; }
   .u-table-row-hover {
     background: rgb(235, 236, 240); }
   .u-table-scroll {
@@ -80,7 +88,7 @@
     background: rgb(241, 242, 245);
     color: rgb(33, 33, 33); }
   .u-table.fixed-height td {
-    padding: 0px 8px; }
+    padding: 0px 16px; }
   .u-table-fixed-header .u-table-body {
     background: #fff;
     position: relative; }
@@ -98,17 +106,17 @@
     overflow-y: scroll;
     box-sizing: border-box; }
   .u-table-title {
-    padding: 12px 8px;
+    padding: 12px 16px;
     border-top: 1px solid rgb(193, 199, 208); }
   .u-table-content {
     position: relative; }
   .u-table-footer {
-    padding: 12px 8px;
+    padding: 12px 16px;
     border-bottom: 1px solid rgb(193, 199, 208); }
     .u-table-footer .u-table-scroll {
       overflow-x: hidden; }
   .u-table-footer .u-table {
-    margin: -12px -8px; }
+    margin: -12px -16px; }
   .u-table-placeholder {
     padding: 12px 8px;
     background: #fff;
@@ -219,13 +227,18 @@
     .u-table-thead th .bee-table-column-sorter {
       position: relative;
       margin-left: 4px;
-      height: 1em;
+      height: 16px;
       vertical-align: middle;
       text-align: center;
-      display: inline-block; }
+      display: inline-block;
+      margin-top: -3px; }
+      .u-table-thead th .bee-table-column-sorter i {
+        padding: 0px;
+        font-weight: 600;
+        color: #505F79; }
       .u-table-thead th .bee-table-column-sorter > .bee-table-column-sorter-down,
       .u-table-thead th .bee-table-column-sorter > .bee-table-column-sorter-up, .u-table-thead th .bee-table-column-sorter > .bee-table-column-sorter-flat {
-        line-height: 6px;
+        line-height: 16px;
         display: block;
         width: 34px;
         cursor: pointer; }
@@ -296,17 +309,18 @@
     position: relative; }
   .u-table-filter-column-filter-icon {
     position: absolute;
-    top: 8px;
-    right: 18px;
-    width: 22px;
-    height: 25px;
-    line-height: 25px;
+    width: 30px;
+    height: 38px;
+    line-height: 38px;
+    right: 12px;
+    top: 1px;
     z-index: 2;
     background: rgb(241, 242, 245);
     text-align: center;
     cursor: pointer; }
     .u-table-filter-column-filter-icon i.uf {
-      padding: 0px; }
+      padding: 0px;
+      color: #505F79; }
   .u-table-filter-column-pop-cont-item {
     margin-top: 8px;
     cursor: pointer; }
@@ -329,9 +343,15 @@
     display: none;
     pointer-events: none; }
   .u-table .u-checkbox {
-    height: 16px;
-    line-height: 16px;
+    height: 14px;
+    line-height: 14px;
     margin: 0px; }
+    .u-table .u-checkbox .u-checkbox-label {
+      line-height: 14px;
+      padding-left: 16px; }
+      .u-table .u-checkbox .u-checkbox-label:before, .u-table .u-checkbox .u-checkbox-label:after {
+        width: 14px;
+        height: 14px; }
 
 .u-table:focus {
   outline: none;
@@ -521,16 +541,16 @@
 .u-filter-dropdown-menu-wrap {
   z-index: 1800; }
   .u-filter-dropdown-menu-wrap .u-dropdown-menu li.u-dropdown-menu-item {
-    line-height: 28px;
-    height: 28px;
+    line-height: 26px;
+    height: 26px;
     padding: 0px 16px 0 16px;
     cursor: pointer; }
 
 .filter-wrap .u-form-control {
-  height: 28px; }
+  height: 26px; }
 
 .filter-wrap .u-input-number.u-input-group.simple .u-input-group-btn .icon-group {
-  height: 28px; }
+  height: 26px; }
 
 .u-row-hover {
   position: absolute;

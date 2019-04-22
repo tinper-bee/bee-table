@@ -1,6 +1,7 @@
 /**
 *
-* @title 滚动加载
+* @title 万行以上数据渲染
+* @parent 无限滚动 Infinite-scroll
 * @description 万行数据渲染
 */
 
@@ -13,7 +14,7 @@ const columns = [
     {
         title:'序号',
         dataIndex:'index',
-        width:'50',
+        width:'60',
         key:'index',
         render:(text,record,index)=>{
             return index
@@ -66,7 +67,6 @@ class Demo30 extends Component {
           columns={columns}
           data={data}
           scroll={{y:300}}
-          height={40}
           onRowClick={(record, index, indent) => {
             console.log('currentIndex--'+index);
           }}

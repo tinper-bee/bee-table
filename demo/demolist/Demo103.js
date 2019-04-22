@@ -1,7 +1,8 @@
 /**
 *
 * @title 选中行颜色、自定义表格标题和表尾
-* @description
+* @parent 扩展行 Expanded Row
+* @description 选中行的样式可自定义
 */
 
 import React, { Component } from "react";

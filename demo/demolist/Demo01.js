@@ -1,8 +1,8 @@
 /**
 *
 * @title 基本表格
-* 【Tooltip】
-* @description 鼠标hover行时呼出操作按钮
+* @parent 基础 Basic
+* @description 鼠标hover行时呼出操作按钮。单元格数据过长时，可结合Tooltip组件使用。
 */
 
 import React, { Component } from "react";
@@ -11,14 +11,15 @@ import Table from "../../src";
 
 const columns = [
   {
-    title: "用户名", dataIndex: "a", key: "a", width: 300, className: "rowClassName",
+    title: "员工编号", dataIndex: "a", key: "a", width: 300, className: "rowClassName",
     fixed:'left',
+    textAlign:'center',
     render: (text, record, index) => {
       return (
         <Tooltip inverse overlay={text}>
           <span tootip={text} style={{
             display: "inline-block",
-            width: "60px",
+            width: "80px",
             textOverflow: "ellipsis",
             overflow: "hidden",
             whiteSpace: "nowrap",
@@ -28,14 +29,15 @@ const columns = [
       );
     }
   },
-  { id: "123", title: "性别", dataIndex: "b", key: "b", width: 500},
-  { title: "年龄", dataIndex: "c", key: "c", width: 200 }
+  { title: "员工姓名", dataIndex: "b", key: "b", width: 500,textAlign:'center'},
+  { title: "性别", dataIndex: "c", key: "c", width: 500,textAlign:'center'},
+  { title: "部门", dataIndex: "d", key: "d", width: 200,textAlign:'center' }
 ];
 
 const data = [
-  { a: "令狐冲", b: "男", c: 41, key: "1" },
-  { a: "杨过叔叔的女儿黄蓉", b: "男", c: 67, key: "2" },
-  { a: "郭靖", b: "男", c: 25, key: "3" }
+  { a: "ASVAL_201903280005", b: "小张", c: "男", d: "财务二科", key: "1" },
+  { a: "ASVAL_201903200004", b: "小明", c: "男", d: "财务一科", key: "2" },
+  { a: "ASVAL_201903120002", b: "小红", c: "女", d: "财务一科", key: "3" }
 ];
 
 class Demo01 extends Component {
@@ -66,8 +68,7 @@ class Demo01 extends Component {
           columns={columns}
           data={data}
           parentNodeId='parent'
-          height={40}
-          headerHeight={40}
+          bordered = {true}
           hoverContent={this.getHoverContent}
           onRowHover={this.onRowHover}
         />

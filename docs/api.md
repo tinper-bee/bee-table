@@ -45,7 +45,7 @@ import 'bee-table/build/Table.css';
 | title                  | 表格标题                                     | Function                               | -               |
 | footer                 | 表格尾部                                     | Function                               | -               |
 | emptyText              | 无数据时显示的内容                                | Function                               | () => 'No Data' |
-| scroll                 | 横向或纵向支持滚动，也可用于指定滚动区域的宽高度：{ x: true, y: 300 } | object                                 | {}              |
+| scroll                 | 横向或纵向支持滚动，也可用于指定滚动区域的宽高度 | ` { x: number | true | 百分比 ,  y: number }` | {}     |
 | rowRef                 | 获取行的ref                                  | Function(record, index, indent):string | () => null      |
 | getBodyWrapper         | 添加对table body的包装                         | Function(body)                         | body => body    |
 | expandedRowRender      | 额外的展开行                                   | Function(record, index, indent):node | -               |
@@ -66,6 +66,9 @@ import 'bee-table/build/Table.css';
 | hoverContent       | hover某行时，动态渲染行菜单元素，此方法需返回行菜单元素的内容 | Function| 
 | onRowHover       | 行hover时的回调函数 | Function| 
 | heightConsistent       | 当固定列内容高度超出非固定列时，内容互错行，当此属性为true会将高度同步，当行过多时会有性能影响，所以建议非固定高度如果过高时，超出内容可以显示成省略号 | bool|false 
+| height | 自定义表格行高 | number | - |
+| headerHeight | 自定义表头行高 | number | - |
+| size | 表格大小 | `sm | md | lg` | 'md' |
 
 > 快捷键部分参考示例 (快捷键在table中的简单使用应用)
 
