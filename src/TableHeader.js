@@ -11,6 +11,13 @@ const propTypes = {
   rows: PropTypes.array
 };
 
+
+function getDiv(id){
+  let div = document.createElement("div");
+  div.id = id;
+  return div;
+}
+
 class TableHeader extends Component {
   constructor(props) {
     super(props);
@@ -32,6 +39,14 @@ class TableHeader extends Component {
   componentDidUpdate(){
     this.initTable();
     this.initEvent();
+    
+  }
+
+  componentDidMount(){
+    let uid = "_table_uid_"+new Date().getTime();
+    this._table_none_cont_id = uid;
+    let div = getDiv(uid);
+    document.querySelector("body").appendChild(div);
   }
 
 
@@ -77,15 +92,25 @@ class TableHeader extends Component {
     }
   }
 
-
+  /**
+   * 事件初始化
+   */
   initEvent(){
+    this.dragBorderEventInit();//列宽
+    this.dragAbleEventInit();//交换列
+    this.eventListen([{key:'mouseup',fun:this.bodyonLineMouseUp}],'',document.body);//body mouseup
+  }
+
+  /**
+   * 拖拽列宽事件的监听
+   */
+  dragBorderEventInit (){
     let  events = [
       {key:'mouseup', fun:this.onTrMouseUp},
       {key:'mousemove', fun:this.onTrMouseMove},
       {key:'mousedown', fun:this.onTrMouseDown}
     ];
     this.eventListen(events,'',this.table.tr[0]);//表示把事件添加到th元素上
-    this.eventListen([{key:'mouseup',fun:this.bodyonLineMouseUp}],'',document.body);//body mouseup
   }
 
 
@@ -135,7 +160,8 @@ class TableHeader extends Component {
     console.log("type : ",type);
     if(!this.props.dragborder && !this.props.draggable)return;
     if(type == 'online' && this.props.dragborder){
-
+      if(!this.props.dragborder)return;
+      targetEvent.setAttribute('draggable',false);//添加交换列效果
       let currentIndex = parseInt(currentElement.getAttribute("data-line-index"));
       let defaultWidth = currentElement.getAttribute("data-th-width");
       let currentObj = this.table.cols[currentIndex];
@@ -147,7 +173,13 @@ class TableHeader extends Component {
       this.drag.tableWidth = parseInt(this.table.table.style.width ?this.table.table.style.width:this.table.table.scrollWidth);
       console.log("====================",this.drag);
     }else if(type != 'online' &&  this.props.draggable){
-
+        if (!this.props.draggable) return; 
+        targetEvent.setAttribute('draggable',true);//添加交换列效果
+        this.drag.option = 'dragAble';
+        this.currentDome = event.target;
+        let currentIndex = parseInt(currentElement.getAttribute("data-line-index"));
+        this.drag.currIndex = currentIndex;
+        console.log(" ------------------onTrMouseDown------this.drag------------ ",this.drag); 
     }else{
       console.log("onTrMouseDown dragborder or draggable is all false !");
       return ;
@@ -170,6 +202,7 @@ class TableHeader extends Component {
       let diff = (event.x - this.drag.oldLeft); 
       let newWidth = this.drag.oldWidth + diff;
       this.drag.newWidth = newWidth;
+
        // if(newWidth > this.drag.minWidth){
       if(newWidth > this.minWidth){
         currentCols.style.width = newWidth +'px';
@@ -237,10 +270,17 @@ class TableHeader extends Component {
     this.drag = {
       option:""
     };
+    this.clearThsDr();
     let data = {rows:rows[0],cols:this.table.cols,currIndex:this.drag.currIndex};
     this.props.afterDragColWidth && this.props.afterDragColWidth(data);
   }
 
+  clearThsDr =()=>{
+    let ths = this.table.ths;
+    for (let index = 0; index < ths.length; index++) {
+      ths[index].setAttribute('draggable',false);//去掉交换列效果
+    }
+  }
 
     /**
    * 当前对象上绑定全局事件，用于拖拽区域以外时的事件处理
@@ -277,134 +317,119 @@ class TableHeader extends Component {
     }
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-  //---拖拽列宽代码逻辑----start-----
- 
-  /**
-   * 调整交换列down事件
-   * @memberof TableHeader
-   */
-  dragAbleMouseDown = (e) => {
-    // Event.stopPropagation(e); 
-    let event = Event.getEvent(e);
-    if (!this.props.draggable) return;
-    let th = this.getThDome(event.target);
-    if(!th)return;
-    event.target.setAttribute('draggable',true);//添加交换列效果
-    this.drag.option = 'dragAble';
-    this.currentDome = event.target;
-
-    this.thEventListen([{key:'mouseup',fun:this.dragAbleMouseUp}],'',true);//th
-    this.removeDragBorderEvent();//清理掉拖拽列宽的事件
-    this.addDragAbleEvent(); //添加拖拽交换列的事件
-  }
-  /**
-   * 调整交换列up事件
-   * @memberof TableHeader
-   */
-  dragAbleMouseUp = (e) => {
-    this.currentDome.setAttribute('draggable',false);//添加交换列效果
-    this.removeDragAbleEvent();
-    this.thEventListen([{key:'mouseup',fun:this.dragAbleMouseUp}],'remove',true);//th
-    //拖拽交换列事件
-    this.thEventListen([{key:'mousedown',fun:this.dragAbleMouseDown}],'remove',true);//表示把事件添加到th元素上
-    this.initEvent();
-  }
-
+  //---拖拽交换列代码----start-----
   /**
    * 添加换列的事件监听
    */
-  addDragAbleEvent (){
+  dragAbleEventInit (){
+    if (!this.props.draggable) return;
     let  events = [
       {key:'dragstart',fun:this.onDragStart},//用户开始拖动元素时触发
       {key:'dragover', fun:this.onDragOver},//当某被拖动的对象在另一对象容器范围内拖动时触发此事件
       {key:'drop', fun:this.onDrop},        //在一个拖动过程中，释放鼠标键时触发此事件 
+
+      {key:'dragenter', fun:this.onDragEnter},  
+      {key:'dragend', fun:this.onDragEnd},
+      {key:'dragleave', fun:this.onDragLeave},
     ];
-    this.thEventListen(events,'',true);
-  }
-  
-  /**
-   * 删除换列的事件监听
-   */
-  removeDragAbleEvent(){
-    let  events = [
-      {key:'dragstart',fun:this.onDragStart},
-      {key:'dragover', fun:this.onDragOver},
-      {key:'drop', fun:this.onDrop},
-      {key:'dragenter', fun:this.onDragEnter}
-    ];
-    this.thEventListen(events,'remove',true);
+    this.eventListen(events,'',this.table.tr[0]);//表示把事件添加到th元素上
   }
 
   /**
    * 开始调整交换列的事件
    */
   onDragStart = (e) => {
-    let event = Event.getEvent(e);
     if (!this.props.draggable) return;
-    if(this.drag.option === 'border'){return;}
-    let th = this.getThDome(event.target);
-    if(!th)return;
-    let currentIndex = parseInt(th.getAttribute("data-line-index"));
-     
-    let currentKey = event.target.getAttribute('data-line-key');
+    if(this.drag && this.drag.option != 'dragAble'){return;} 
+    let event = Event.getEvent(e) ,
+    target = Event.getTarget(event);
+
+    let currentIndex = parseInt(target.getAttribute("data-line-index"));
+    let currentKey = target.getAttribute('data-line-key');
+
+    var crt = target.cloneNode(true);
+    console.log(" -------crt-------",crt);
+    crt.style.backgroundColor = "#ebecf0";
+    crt.style.width = this.table.cols[currentIndex].style.width;//拖动后再交换列的时候，阴影效果可同步
+    crt.style.height = "44px";
+    // crt.style['line-height'] = "44px";
+    // document.body.appendChild(crt);
+    document.getElementById(this._table_none_cont_id).appendChild(crt);
+    
+    e.dataTransfer.setDragImage(crt, 0, 0);
+
     event.dataTransfer.effectAllowed = "move";
     event.dataTransfer.setData("Text", currentKey);
     this.currentObj = this.props.rows[0][currentIndex];
-    // event.dataTransfer.setDragImage(event.target, 0, 0);
   };
 
   onDragOver = (e) => {
     event.preventDefault();
   };
 
-  /**
+    /**
    * 在一个拖动过程中，释放鼠标键时触发此事件。【目标事件】
    * @memberof TableHeader
    */
   onDrop = (e) => {
     if (!this.props.draggable) return;
-    if(this.drag.option === 'border'){return;}
+    if(this.drag && this.drag.option != 'dragAble'){return;}
+    let event = Event.getEvent(e) ,
+    target = Event.getTarget(event);
     this.currentDome.setAttribute('draggable',false);//添加交换列效果
-    let data = this.getCurrentEventData(e);
+    let data = this.getCurrentEventData(target);
     if(!data)return;
     if (!this.currentObj || this.currentObj.key == data.key) return;
     if(!this.props.onDrop)return;
     this.props.onDrop(event,{dragSource:this.currentObj,dragTarg:data});
   };
 
+
+  onDragEnter = (e) => {
+    let event = Event.getEvent(e) ,
+    target = Event.getTarget(event);
+    this._dragCurrent = target;
+    let currentIndex = target.getAttribute("data-line-index");
+    if(!currentIndex || parseInt(currentIndex) === this.drag.currIndex)return;
+    if(target.nodeName.toUpperCase() === "TH"){
+      console.log("-onDragEnter-----",target);
+      target.style.border = "2px dashed #000";
+    }
+  }
+
+  onDragEnd = (e) => {
+    let event = Event.getEvent(e) ,
+    target = Event.getTarget(event);
+    this._dragCurrent.style = "";
+    document.getElementById(this._table_none_cont_id).innerHTML = "";
+    // this.body.removeChild(document.getElementById(this._table_none_cont_id));
+    console.log(this.drag.newWidth+"--------------onDragEnd--target--",target);
+    console.log("--------------onDragEnd----",this._dragCurrent);
+  }
+
+
+  onDragLeave = (e) => {
+    let event = Event.getEvent(e) ,
+    target = Event.getTarget(event);
+    let currentIndex = target.getAttribute("data-line-index");
+    if(!currentIndex || parseInt(currentIndex) === this.drag.currIndex)return;
+    if(target.nodeName.toUpperCase() === "TH"){
+      console.log("--onDragLeave----",target);
+      // console.log("--onDragLeave--this._dragCurrent--",this._dragCurrent);
+      target.style = "";
+      // this._dragCurrent.style = "";
+    }
+  }
+  
+
+ 
   /**
    * 获取当前th上的对象数据
    * @param {*} e
    * @returns
    * @memberof TableHeader
    */
-  getCurrentEventData(e){
-    let event = Event.getEvent(e);
-    let th = this.getThDome(event.target)
+  getCurrentEventData(th){
     if(!th){
       console.log(" event target is not th ! ");
       return null;
@@ -418,24 +443,6 @@ class TableHeader extends Component {
       return null;
     }
   }
-
-  /**
-   * 根据当前鼠标点击的节点，进行递归遍历，最终找到th
-   * @param {*} element
-   * @returns  <th />对象
-   * @memberof TableHeader
-   */
-  getThDome(element){
-    let _tagName = element.tagName.toLowerCase();
-    if(element.getAttribute('data-filter-type') === 'filterContext')return null;
-    if(_tagName === 'i')return null;
-    if(_tagName != 'th'){
-      return this.getThDome(element.parentElement);
-    }else{
-      return element;
-    }
-  }
-
 //---拖拽列交换----end----- 
 
   /**
@@ -624,25 +631,24 @@ class TableHeader extends Component {
 
               let thDefaultObj = {};
               
-                  if(draggable){
-                    thClassName += ` ${clsPrefix}-thead th-drag ${thHover} `;
-                  }
-                  if(dragborder){
-                    thClassName += ` ${clsPrefix}-thead-th ${canDotDrag}`;
-                  }
-                  thClassName += ` ${fixedStyle}`;
-                if(!da.fixed && columIndex != _rowLeng){
-             
-                  return (<th {...da}  {...keyTemp} className={thClassName} data-th-fixed={da.fixed} 
-                        data-line-key={da.key} data-line-index={columIndex} data-th-width={da.width} data-row-leng="1111111111111" >
-                              {da.children}
-                              {
-                                dragborder ? <div ref={el => (this.gap = el)} data-line-key={da.key} 
-                                data-line-index={columIndex} data-th-width={da.width}
-                                data-type="online" className = {`${clsPrefix}-thead-th-drag-gap`}>
-                                <div className='online' /></div>:""
-                              }
-                        </th>)
+              if(draggable){
+                thClassName += ` ${clsPrefix}-thead th-drag ${thHover} `;
+              }
+              if(dragborder){
+                thClassName += ` ${clsPrefix}-thead-th ${canDotDrag}`;
+              }
+              thClassName += ` ${fixedStyle}`;
+              if(!da.fixed ){
+                  return (<th {...da}  {...keyTemp} className={thClassName} data-th-fixed={da.fixed} data-line-key={da.key} 
+                  data-line-index={columIndex} data-th-width={da.width} data-type="draggable">
+                      {da.children}
+                      {
+                        dragborder && columIndex != _rowLeng? <div ref={el => (this.gap = el)} data-line-key={da.key}
+                        data-line-index={columIndex} data-th-width={da.width}
+                        data-type="online" className = {`${clsPrefix}-thead-th-drag-gap`}>
+                        <div className='online' /></div>:""
+                      }
+                </th>)
               }else{
                 thDefaultObj = {
                   ...da,
