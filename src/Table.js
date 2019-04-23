@@ -234,9 +234,13 @@ class Table extends Component {
     }
   }
 
-  resize(){
+  resize = ()=>{
     debounce(this.syncFixedTableRowHeight, 150);
     this.computeTableWidth();
+    let renderFlag = this.state.renderFlag;
+    this.setState({
+      renderFlag: !renderFlag
+    });
   }
   computeTableWidth() {
     
@@ -655,6 +659,7 @@ class Table extends Component {
           fixedIndex={fixedIndex+lazyCurrentIndex}
           rootIndex = {rootIndex}
           syncHover = {props.syncHover}
+          bodyDisplayInRow = {props.bodyDisplayInRow}
         />
       );
       this.treeRowIndex++;
@@ -1180,7 +1185,7 @@ class Table extends Component {
   render() {
     const props = this.props;
     const clsPrefix = props.clsPrefix;
-
+    const hasFixedLeft = this.columnManager.isAnyColumnsLeftFixed();
     let className = props.clsPrefix;
     if (props.className) {
       className += ` ${props.className}`;
@@ -1196,6 +1201,12 @@ class Table extends Component {
     if(props.height){
       className += ' fixed-height';
     }
+    if(props.bodyDisplayInRow){
+      className += ' body-dispaly-in-row'
+    }
+    if(props.headerDisplayInRow){
+      className += ' header-dispaly-in-row'
+    }
     const isTableScroll = this.columnManager.isAnyColumnsFixed() ||
       props.scroll.x ||
       props.scroll.y;
@@ -1207,6 +1218,9 @@ class Table extends Component {
     }
     if (props.size) {
       className += ` ${clsPrefix}-${props.size}`;
+    }
+    if(hasFixedLeft){
+      className += ` has-fixed-left`;
     }
 
     return (
@@ -1221,7 +1235,7 @@ class Table extends Component {
             {this.getFooter()}
           </div>
 
-          {this.columnManager.isAnyColumnsLeftFixed() &&
+          {hasFixedLeft &&
             <div className={`${clsPrefix}-fixed-left`}>
               {this.getLeftFixedTable()}
             </div>}

@@ -100,7 +100,8 @@ var propTypes = {
   onFilterClear: _propTypes2["default"].func,
   syncHover: _propTypes2["default"].bool,
   tabIndex: _propTypes2["default"].string,
-  hoverContent: _propTypes2["default"].func
+  hoverContent: _propTypes2["default"].func,
+  size: _propTypes2["default"].oneOf(['sm', 'md', 'lg'])
 };
 
 var defaultProps = {
@@ -145,7 +146,8 @@ var defaultProps = {
   setRowHeight: function setRowHeight() {},
   setRowParentIndex: function setRowParentIndex() {},
   tabIndex: '0',
-  heightConsistent: false
+  heightConsistent: false,
+  size: 'md'
 };
 
 var Table = function (_Component) {
@@ -155,6 +157,15 @@ var Table = function (_Component) {
     _classCallCheck(this, Table);
 
     var _this = _possibleConstructorReturn(this, _Component.call(this, props));
+
+    _this.resize = function () {
+      (0, _utils.debounce)(_this.syncFixedTableRowHeight, 150);
+      _this.computeTableWidth();
+      var renderFlag = _this.state.renderFlag;
+      _this.setState({
+        renderFlag: !renderFlag
+      });
+    };
 
     _this.renderDragHideTable = function () {
       var _this$props = _this.props,
@@ -270,7 +281,7 @@ var Table = function (_Component) {
     }
     if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
-      this.resizeEvent = (0, _addEventListener2["default"])(window, 'resize', (0, _utils.debounce)(this.syncFixedTableRowHeight, 150));
+      this.resizeEvent = (0, _addEventListener2["default"])(window, 'resize', this.resize);
     }
   };
 
@@ -785,7 +796,8 @@ var Table = function (_Component) {
         treeType: childrenColumn || this.treeType ? true : false,
         fixedIndex: fixedIndex + lazyCurrentIndex,
         rootIndex: rootIndex,
-        syncHover: props.syncHover
+        syncHover: props.syncHover,
+        bodyDisplayInRow: props.bodyDisplayInRow
       })));
       this.treeRowIndex++;
       var subVisible = visible && isRowExpanded;
@@ -1309,7 +1321,7 @@ var Table = function (_Component) {
 
     var props = this.props;
     var clsPrefix = props.clsPrefix;
-
+    var hasFixedLeft = this.columnManager.isAnyColumnsLeftFixed();
     var className = props.clsPrefix;
     if (props.className) {
       className += ' ' + props.className;
@@ -1325,12 +1337,24 @@ var Table = function (_Component) {
     if (props.height) {
       className += ' fixed-height';
     }
+    if (props.bodyDisplayInRow) {
+      className += ' body-dispaly-in-row';
+    }
+    if (props.headerDisplayInRow) {
+      className += ' header-dispaly-in-row';
+    }
     var isTableScroll = this.columnManager.isAnyColumnsFixed() || props.scroll.x || props.scroll.y;
     var loading = props.loading;
     if (typeof loading === 'boolean') {
       loading = {
         show: loading
       };
+    }
+    if (props.size) {
+      className += ' ' + clsPrefix + '-' + props.size;
+    }
+    if (hasFixedLeft) {
+      className += ' has-fixed-left';
     }
 
     return _react2["default"].createElement(
@@ -1350,7 +1374,7 @@ var Table = function (_Component) {
           this.getEmptyText(),
           this.getFooter()
         ),
-        this.columnManager.isAnyColumnsLeftFixed() && _react2["default"].createElement(
+        hasFixedLeft && _react2["default"].createElement(
           'div',
           { className: clsPrefix + '-fixed-left' },
           this.getLeftFixedTable()

@@ -5,7 +5,7 @@
  * demo0502
  */
 import React, { Component } from "react";
-import { Table } from "tinper-bee";
+import Table from "../../src";
 import { Icon, Select, Tooltip } from "tinper-bee";
 const Option = Select.Option;
 
@@ -58,6 +58,7 @@ class StringEditCell extends Component {
             {value === "" ? (
               <Tooltip
                 inverse
+                className="tp-501"
                 placement="bottom"
                 overlay={
                   <div className="help-tip">
@@ -79,7 +80,7 @@ class StringEditCell extends Component {
   }
 }
 
-const SELECT_SOURCE = ["普通", "精良", "稀有", "传奇", "远古传奇", "太古传奇"];
+const SELECT_SOURCE = ["xx供应商", "yy供应商", "zz供应商", "aa供应商", "bb供应商"];
 
 class SelectEditCell extends Component {
   constructor(props, context) {
@@ -136,11 +137,11 @@ class SelectEditCell extends Component {
 }
 
 const dataSource = [
-  { name: "全能法戒", quality: "远古传奇", level: 70.11 },
-  { name: "绝命", quality: "太古传奇", level: 70 },
-  { name: "蚀刻符印", quality: "太古传奇", level: 70 },
-  { name: "虹光", quality: "传奇", level: 70 },
-  { name: "复仇者护腕", quality: "传奇", level: 70 }
+  { name: "NU03910001", quality: "xx供应商", level: 70, key: "1" },
+  { name: "NU03910002", quality: "yy供应商", level: 75, key: "2" },
+  { name: "NU03910003", quality: "zz供应商", level: 50, key: "3" },
+  { name: "NU03910004", quality: "aa供应商", level: 70, key: "4" },
+  { name: "NU03910005", quality: "bb供应商", level: 60, key: "5" }
 ];
 
 class Demo501 extends Component {
@@ -148,19 +149,19 @@ class Demo501 extends Component {
     super(props);
     this.columns = [
       {
-        title: "装备名称",
+        title: "订单编号",
         dataIndex: "name",
         key: "name",
         render: (text, record, index) => (
           <StringEditCell
             value={text}
-            colName={"装备名称"}
+            colName={"订单编号"}
             onChange={this.onCellChange(index, "name")}
           />
         )
       },
       {
-        title: "品质",
+        title: "供应商名称",
         dataIndex: "quality",
         key: "quality",
         render: (text, record, index) => (
@@ -171,7 +172,7 @@ class Demo501 extends Component {
         )
       },
       {
-        title: "需求等级",
+        title: "采购数量",
         dataIndex: "level",
         key: "level"
       }

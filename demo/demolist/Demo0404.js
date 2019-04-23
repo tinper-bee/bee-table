@@ -9,7 +9,7 @@
 import React, { Component } from 'react';
 import {Icon,Checkbox,Dropdown,Menu} from 'tinper-bee';
 import Table from '../../src';
-import multiSelect from "../../src/lib/multiSelect";
+import multiSelect from "../../src/lib/newMultiSelect";
 import sort from "../../src/lib/sort";
 
 const { Item } = Menu;
