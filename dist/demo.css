@@ -8278,13 +8278,15 @@ ul {
     text-align: left; }
   .u-table th {
     font-weight: bold;
-    text-align: left; }
+    text-align: left;
+    line-height: 16px; }
     .u-table th[colspan] {
       text-align: center; }
     .u-table th ::last-child {
       overflow: hidden; }
   .u-table td {
-    border-bottom: 1px solid rgb(193, 199, 208); }
+    border-bottom: 1px solid rgb(193, 199, 208);
+    line-height: 1.33; }
     .u-table td a {
       color: #2196F3; }
       .u-table td a:hover {
@@ -8313,6 +8315,10 @@ ul {
     .u-table th.text-right,
     .u-table td.text-right {
       text-align: right; }
+  .u-table-sm td {
+    padding: 8px 8px; }
+  .u-table-lg td {
+    padding: 16px 8px; }
   .u-table tr.filterable th {
     padding-top: 5px !important;
     padding-bottom: 5px !important; }
@@ -8881,13 +8887,47 @@ ul {
     background: #344563; }
 
 .demo02 .u-table-placeholder i {
-  font-size: 60px; }
+  font-size: 60px;
+  line-height: 60px; }
 
 .demo04.u-table tr:nth-child(2n) {
   background: #f7f9fb; }
 
 .demo04.u-table tr.u-table-row-hover, .demo04 .u-table tr:hover {
   background: #ebecf0; }
+
+.demo22 .opt-btns {
+  margin-bottom: 8px; }
+
+.demo32 .u-table-thead th {
+  padding-top: 0px;
+  padding-bottom: 0px; }
+
+.demo501 .editable-cell-text-wrapper:hover {
+  border: 1px dashed #A5ADBA; }
+
+.demo501 .require {
+  position: absolute;
+  top: 2px;
+  color: red;
+  font-size: 20px; }
+
+.help-tip {
+  color: #F44336; }
+
+.tp-501 .tooltip-arrow {
+  border-bottom-color: #F44336 !important; }
+
+.tp-501 .tooltip-inner {
+  border-color: #F44336 !important; }
+
+th .drop-menu .uf {
+  font-size: 12px;
+  visibility: hidden;
+  margin-left: 15px; }
+
+th:hover .uf {
+  visibility: visible; }
 
 
 .demo8 .u-table {
@@ -8900,20 +8940,5 @@ ul {
   align-items: center;
   -ms-flex-pack: center;
   justify-content: center; }
-
-.demo22 .opt-btns {
-  margin-bottom: 8px; }
-
-.demo32 .u-table-thead th {
-  padding-top: 0px;
-  padding-bottom: 0px; }
-
-th .drop-menu .uf {
-  font-size: 12px;
-  visibility: hidden;
-  margin-left: 15px; }
-
-th:hover .uf {
-  visibility: visible; }
 
 /*# sourceMappingURL=demo.css.map */
