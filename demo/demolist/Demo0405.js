@@ -3,7 +3,7 @@
  * @title 列合计（总计）
  * @parent 列渲染 Custom Render
  * @description 给需要计算合计的列（columns），设置sumCol值为true即可，支持动态设置数据源。
- *
+ * demo0405
  */
 
 import React, { Component } from "react";

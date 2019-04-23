@@ -2,8 +2,8 @@
 *
 * @title 默认无数据展示
 * @parent 基础 Basic
-* @description 无数据时显示效果展示（可自定义）
-*
+* @description 无数据时默认展示图标，可在`emptyText`方法中自定义展示内容。
+* demo0102
 */
 
 
@@ -33,11 +33,18 @@ const columns02 = [
   
 const data02 = [];
 
-const emptyFunc = () => <Icon type="uf-nodata"></Icon>
+// 在此自定义无数据时的展示内容
+const emptyFunc = () => 'No Data';
   
 class Demo02 extends Component {
   render() {
-    return <Table className="demo02" columns={columns02} data={data02} emptyText={emptyFunc} />;
+    return (
+      <Table 
+      columns={columns02} 
+      data={data02} 
+      // emptyText={emptyFunc} 
+      />
+    )
   }
 }
 

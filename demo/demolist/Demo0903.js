@@ -3,7 +3,7 @@
  * @title 多列排序
  * @parent 列操作-排序 Sort
  * @description 结合多列排序、全选功能、合计功能的表格示例。新增排序后触发的回调函数sorterClick。
- *
+ * demo0903
  */
 
 import React, { Component } from "react";
@@ -15,14 +15,14 @@ import sum from "../../src/lib/sum.js";
 
 const columns13 = [
   {
-    title: "名字",
+    title: "订单编号",
     dataIndex: "a",
     key: "a",
     className:'dfasd',
     width: 200
   },
   {
-    title: "功力指数",
+    title: "金额",
     dataIndex: "b",
     key: "b",
     width: 200,
@@ -34,7 +34,7 @@ const columns13 = [
     }
   },
   {
-    title: "年龄",
+    title: "整单数量",
     dataIndex: "c",
     key: "c",
     width: 200,
@@ -46,7 +46,7 @@ const columns13 = [
     }
   },
   {
-    title: "成绩",
+    title: "日销售量",
     dataIndex: "e",
     key: "e",
     width: 200,
@@ -54,7 +54,7 @@ const columns13 = [
     sorter: (a, b) => a.c - b.c,
   },
   {
-    title: "武功级别",
+    title: "供应商",
     dataIndex: "d",
     key: "d",
     width: 200
@@ -62,11 +62,11 @@ const columns13 = [
 ];
 
 const data13 = [
-  { a: "杨过", b: 675, c: 30, d: "内行",e:100, key: "2" },
-  { a: "令狐冲", b: 43, c: 41, d: "大侠",e:90, key: "1" },
-  { a: "令狐冲1", b: 43, c: 81, d: "大侠", e:120,key: "4" },
-  { a: "令狐冲2", b: 43, c: 81, d: "大侠", e:130,key: "5" },
-  { a: "郭靖", b: 153, c: 25, d: "大侠",e:90, key: "3" }
+  { a: "NU0391001", b: 675, c: 30, d: "xx供应商",e:100, key: "2" },
+  { a: "NU0391002", b: 43, c: 41, d: "yy供应商",e:90, key: "1" },
+  { a: "NU0391003", b: 43, c: 81, d: "zz供应商", e:120,key: "4" },
+  { a: "NU0391004", b: 43, c: 81, d: "aa供应商", e:130,key: "5" },
+  { a: "NU0391005", b: 153, c: 25, d: "bb供应商",e:90, key: "3" }
 ];
 
 
