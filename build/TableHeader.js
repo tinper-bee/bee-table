@@ -77,12 +77,12 @@ var TableHeader = function (_Component) {
       var _this$props = _this.props,
           clsPrefix = _this$props.clsPrefix,
           contentTable = _this$props.contentTable;
+      // console.log(" ------------------onTrMouseDown------------------ ");
 
-      console.log(" ------------------onTrMouseDown------------------ ");
       var currentElement = _this.getOnLineObject(targetEvent);
       if (!currentElement) return;
       var type = currentElement.getAttribute('data-type');
-      console.log("type : ", type);
+      // console.log("type : ",type);
       if (!_this.props.dragborder && !_this.props.draggable) return;
       if (type == 'online' && _this.props.dragborder) {
         if (!_this.props.dragborder) return;
@@ -96,7 +96,7 @@ var TableHeader = function (_Component) {
         _this.drag.oldWidth = parseInt(currentObj.style.width);
         _this.drag.minWidth = currentObj.style.minWidth != "" ? parseInt(currentObj.style.minWidth) : defaultWidth;
         _this.drag.tableWidth = parseInt(_this.table.table.style.width ? _this.table.table.style.width : _this.table.table.scrollWidth);
-        console.log("====================", _this.drag);
+        // console.log("====================",this.drag);
       } else if (type != 'online' && _this.props.draggable) {
         if (!_this.props.draggable || targetEvent.nodeName.toUpperCase() != "TH") return;
         targetEvent.setAttribute('draggable', true); //添加交换列效果
@@ -104,9 +104,9 @@ var TableHeader = function (_Component) {
         _this.currentDome = event.target;
         var _currentIndex = parseInt(currentElement.getAttribute("data-line-index"));
         _this.drag.currIndex = _currentIndex;
-        console.log(" ------------------onTrMouseDown------this.drag------------ ", _this.drag);
+        // console.log(" ------------------onTrMouseDown------this.drag------------ ",this.drag); 
       } else {
-        console.log("onTrMouseDown dragborder or draggable is all false !");
+        // console.log("onTrMouseDown dragborder or draggable is all false !");
         return;
       }
     };
@@ -123,7 +123,7 @@ var TableHeader = function (_Component) {
       _utils.Event.stopPropagation(e);
       var event = _utils.Event.getEvent(e);
       if (_this.props.dragborder && _this.drag.option == "border") {
-        console.log(" --onTrMouseMove--border- ", _this.drag.option);
+        // console.log(" --onTrMouseMove--border- ",this.drag.option);
         //移动改变宽度
         var currentCols = _this.table.cols[_this.drag.currIndex];
         var diff = event.x - _this.drag.oldLeft;
@@ -139,7 +139,10 @@ var TableHeader = function (_Component) {
           }
           var newTableWidth = _this.drag.tableWidth + diff + 'px';
           _this.table.table.style.width = newTableWidth; //改变table的width
-          _this.table.innerTableBody.style.width = newTableWidth;
+          if (_this.table.innerTableBody) {
+            //TODO 后续需要处理此处
+            _this.table.innerTableBody.style.width = newTableWidth;
+          }
           var showScroll = contentDomWidth - (_this.drag.tableWidth + diff) - scrollbarWidth;
 
           //表头滚动条处理
@@ -172,11 +175,11 @@ var TableHeader = function (_Component) {
           }
         }
       } else if (_this.props.draggable && _this.drag.option == "draggable") {
-        console.log(" --onTrMouseMove--draggable- ", _this.drag.option);
+        // console.log(" --onTrMouseMove--draggable- ",this.drag.option);
       } else {
-        // console.log("onTrMouseMove dragborder or draggable is all false !");
-        // return ;
-      }
+          // console.log("onTrMouseMove dragborder or draggable is all false !");
+          // return ;
+        }
     };
 
     _this.onTrMouseUp = function (e) {
@@ -195,7 +198,7 @@ var TableHeader = function (_Component) {
 
     _this.bodyonLineMouseUp = function (events, type) {
       if (!_this.drag || !_this.drag.option) return;
-      console.log("----bodyEventListen", _this.drag);
+      // console.log("----bodyEventListen",this.drag);
       _this.mouseClear();
     };
 
@@ -228,16 +231,17 @@ var TableHeader = function (_Component) {
       var currentIndex = parseInt(target.getAttribute("data-line-index"));
       var currentKey = target.getAttribute('data-line-key');
 
-      var crt = target.cloneNode(true);
-      console.log(" -------crt-------", crt);
-      crt.style.backgroundColor = "#ebecf0";
-      crt.style.width = _this.table.cols[currentIndex].style.width; //拖动后再交换列的时候，阴影效果可同步
-      crt.style.height = "40px";
-      // crt.style['line-height'] = "40px";
-      // document.body.appendChild(crt);
-      document.getElementById(_this._table_none_cont_id).appendChild(crt);
-
-      e.dataTransfer.setDragImage(crt, 0, 0);
+      if (event.dataTransfer.setDragImage) {
+        var crt = target.cloneNode(true);
+        // console.log(" -------crt-------",crt);
+        crt.style.backgroundColor = "#ebecf0";
+        crt.style.width = _this.table.cols[currentIndex].style.width; //拖动后再交换列的时候，阴影效果可同步
+        crt.style.height = "40px";
+        // crt.style['line-height'] = "40px";
+        // document.body.appendChild(crt);
+        document.getElementById(_this._table_none_cont_id).appendChild(crt);
+        event.dataTransfer.setDragImage(crt, 0, 0);
+      }
 
       event.dataTransfer.effectAllowed = "move";
       event.dataTransfer.setData("Text", currentKey);
@@ -256,7 +260,7 @@ var TableHeader = function (_Component) {
       var event = _utils.Event.getEvent(e),
           target = _utils.Event.getTarget(event);
       _this.currentDome.setAttribute('draggable', false); //添加交换列效果 
-      console.log("-onDrop--target---", target);
+      // console.log("-onDrop--target---",target);
     };
 
     _this.onDragEnter = function (e) {
@@ -266,8 +270,9 @@ var TableHeader = function (_Component) {
       var currentIndex = target.getAttribute("data-line-index");
       if (!currentIndex || parseInt(currentIndex) === _this.drag.currIndex) return;
       if (target.nodeName.toUpperCase() === "TH") {
-        console.log("-onDragEnter-----", target);
-        target.style.border = "2px dashed rgba(5,0,0,0.25)";
+        // console.log("-onDragEnter-----",target);
+        // target.style.border = "2px dashed rgba(5,0,0,0.25)";
+        target.setAttribute("style", "border:2px dashed rgba(5,0,0,0.25)");
         // target.style.backgroundColor = 'rgb(235, 236, 240)';
         // target.style['box-sizing'] = 'border-box';
       }
@@ -276,11 +281,9 @@ var TableHeader = function (_Component) {
     _this.onDragEnd = function (e) {
       var event = _utils.Event.getEvent(e),
           target = _utils.Event.getTarget(event);
-      _this._dragCurrent.style = "";
+      _this._dragCurrent.setAttribute("style", "");
+      // this._dragCurrent.style = "";
       document.getElementById(_this._table_none_cont_id).innerHTML = "";
-      // this.body.removeChild(document.getElementById(this._table_none_cont_id));
-      console.log(_this.drag.newWidth + "--------------onDragEnd--target--", target);
-      console.log("--------------onDragEnd----", _this._dragCurrent);
 
       var data = _this.getCurrentEventData(_this._dragCurrent);
       if (!data) return;
@@ -295,9 +298,10 @@ var TableHeader = function (_Component) {
       var currentIndex = target.getAttribute("data-line-index");
       if (!currentIndex || parseInt(currentIndex) === _this.drag.currIndex) return;
       if (target.nodeName.toUpperCase() === "TH") {
-        console.log("--onDragLeave----", target);
+        // console.log("--onDragLeave----",target);
         // console.log("--onDragLeave--this._dragCurrent--",this._dragCurrent);
-        target.style = "";
+        // target.style = "";
+        target.setAttribute("style", "");
         // this._dragCurrent.style = "";
       }
     };
@@ -457,6 +461,7 @@ var TableHeader = function (_Component) {
     if (this.props.dragborder) {
       this.removeDragBorderEvent();
     }
+    this.eventListen([{ key: 'mousedown', fun: this.onTrMouseDown }], 'remove', this.table.tr[0]);
   };
 
   /**
@@ -511,6 +516,9 @@ var TableHeader = function (_Component) {
   TableHeader.prototype.initEvent = function initEvent() {
     this.dragBorderEventInit(); //列宽
     this.dragAbleEventInit(); //交换列
+    if (this.table && this.table.tr) {
+      this.eventListen([{ key: 'mousedown', fun: this.onTrMouseDown }], '', this.table.tr[0]); //body mouseup
+    }
     this.eventListen([{ key: 'mouseup', fun: this.bodyonLineMouseUp }], '', document.body); //body mouseup
   };
 
@@ -520,7 +528,9 @@ var TableHeader = function (_Component) {
 
 
   TableHeader.prototype.dragBorderEventInit = function dragBorderEventInit() {
-    var events = [{ key: 'mouseup', fun: this.onTrMouseUp }, { key: 'mousemove', fun: this.onTrMouseMove }, { key: 'mousedown', fun: this.onTrMouseDown }];
+    if (!this.props.dragborder) return;
+    var events = [{ key: 'mouseup', fun: this.onTrMouseUp }, { key: 'mousemove', fun: this.onTrMouseMove }];
+    // console.log(" ---- ",this.table.tr);
     this.eventListen(events, '', this.table.tr[0]); //表示把事件添加到th元素上
   };
 
@@ -530,11 +540,12 @@ var TableHeader = function (_Component) {
 
 
   TableHeader.prototype.removeDragBorderEvent = function removeDragBorderEvent() {
-    var events = [{ key: 'mouseup', fun: this.onTrMouseUp }, { key: 'mousemove', fun: this.onTrMouseMove }, { key: 'mousedown', fun: this.onTrMouseDown }];
+    var events = [{ key: 'mouseup', fun: this.onTrMouseUp }, { key: 'mousemove', fun: this.onTrMouseMove }];
     this.eventListen(events, 'remove', this.table.tr[0]);
   };
 
   TableHeader.prototype.eventListen = function eventListen(events, type, eventSource) {
+    if (!this.table) return;
     var tr = this.table.tr;
 
     for (var i = 0; i < events.length; i++) {
