@@ -100,7 +100,8 @@ var propTypes = {
   onFilterClear: _propTypes2["default"].func,
   syncHover: _propTypes2["default"].bool,
   tabIndex: _propTypes2["default"].string,
-  hoverContent: _propTypes2["default"].func
+  hoverContent: _propTypes2["default"].func,
+  size: _propTypes2["default"].oneOf(['sm', 'md', 'lg'])
 };
 
 var defaultProps = {
@@ -145,7 +146,8 @@ var defaultProps = {
   setRowHeight: function setRowHeight() {},
   setRowParentIndex: function setRowParentIndex() {},
   tabIndex: '0',
-  heightConsistent: false
+  heightConsistent: false,
+  size: 'md'
 };
 
 var Table = function (_Component) {
@@ -1319,7 +1321,7 @@ var Table = function (_Component) {
 
     var props = this.props;
     var clsPrefix = props.clsPrefix;
-
+    var hasFixedLeft = this.columnManager.isAnyColumnsLeftFixed();
     var className = props.clsPrefix;
     if (props.className) {
       className += ' ' + props.className;
@@ -1348,6 +1350,12 @@ var Table = function (_Component) {
         show: loading
       };
     }
+    if (props.size) {
+      className += ' ' + clsPrefix + '-' + props.size;
+    }
+    if (hasFixedLeft) {
+      className += ' has-fixed-left';
+    }
 
     return _react2["default"].createElement(
       'div',
@@ -1366,7 +1374,7 @@ var Table = function (_Component) {
           this.getEmptyText(),
           this.getFooter()
         ),
-        this.columnManager.isAnyColumnsLeftFixed() && _react2["default"].createElement(
+        hasFixedLeft && _react2["default"].createElement(
           'div',
           { className: clsPrefix + '-fixed-left' },
           this.getLeftFixedTable()

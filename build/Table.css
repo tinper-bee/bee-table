@@ -20,13 +20,15 @@
     text-align: left; }
   .u-table th {
     font-weight: bold;
-    text-align: left; }
+    text-align: left;
+    line-height: 16px; }
     .u-table th[colspan] {
       text-align: center; }
     .u-table th ::last-child {
       overflow: hidden; }
   .u-table td {
-    border-bottom: 1px solid rgb(193, 199, 208); }
+    border-bottom: 1px solid rgb(193, 199, 208);
+    line-height: 1.33; }
     .u-table td a {
       color: #2196F3; }
       .u-table td a:hover {
@@ -55,6 +57,10 @@
     .u-table th.text-right,
     .u-table td.text-right {
       text-align: right; }
+  .u-table-sm td {
+    padding: 8px 8px; }
+  .u-table-lg td {
+    padding: 16px 8px; }
   .u-table tr.filterable th {
     padding-top: 5px !important;
     padding-bottom: 5px !important; }
@@ -352,6 +358,10 @@
       .u-table .u-checkbox .u-checkbox-label:before, .u-table .u-checkbox .u-checkbox-label:after {
         width: 14px;
         height: 14px; }
+  .u-table .u-table-scroll tr td:first-child, .u-table .u-table-scroll tr th:first-child, .u-table .u-table-fixed-left tr td:first-child, .u-table .u-table-fixed-left tr th:first-child {
+    padding-left: 12px; }
+  .u-table.has-fixed-left .u-table-scroll tr td:first-child, .u-table.has-fixed-left .u-table-scroll tr th:first-child {
+    padding-left: 8px; }
 
 .u-table:focus {
   outline: none;

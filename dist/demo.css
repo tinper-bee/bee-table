@@ -8618,6 +8618,10 @@ ul {
       .u-table .u-checkbox .u-checkbox-label:before, .u-table .u-checkbox .u-checkbox-label:after {
         width: 14px;
         height: 14px; }
+  .u-table .u-table-scroll tr td:first-child, .u-table .u-table-scroll tr th:first-child, .u-table .u-table-fixed-left tr td:first-child, .u-table .u-table-fixed-left tr th:first-child {
+    padding-left: 12px; }
+  .u-table.has-fixed-left .u-table-scroll tr td:first-child, .u-table.has-fixed-left .u-table-scroll tr th:first-child {
+    padding-left: 8px; }
 
 .u-table:focus {
   outline: none;

@@ -1184,7 +1184,7 @@ class Table extends Component {
   render() {
     const props = this.props;
     const clsPrefix = props.clsPrefix;
-
+    const hasFixedLeft = this.columnManager.isAnyColumnsLeftFixed();
     let className = props.clsPrefix;
     if (props.className) {
       className += ` ${props.className}`;
@@ -1218,6 +1218,9 @@ class Table extends Component {
     if (props.size) {
       className += ` ${clsPrefix}-${props.size}`;
     }
+    if(hasFixedLeft){
+      className += ` has-fixed-left`;
+    }
 
     return (
       <div className={className} style={props.style} ref={el => this.contentTable = el} 
@@ -1231,7 +1234,7 @@ class Table extends Component {
             {this.getFooter()}
           </div>
 
-          {this.columnManager.isAnyColumnsLeftFixed() &&
+          {hasFixedLeft &&
             <div className={`${clsPrefix}-fixed-left`}>
               {this.getLeftFixedTable()}
             </div>}
