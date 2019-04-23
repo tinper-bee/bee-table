@@ -43,11 +43,11 @@ class EditableCell extends Component {
 }
 
 const dataSource = [
-  { name: "全能法戒", quality: "远古传奇", level: 70 },
-  { name: "绝命", quality: "太古传奇", level: 70 },
-  { name: "蚀刻符印", quality: "太古传奇", level: 70 },
-  { name: "虹光", quality: "传奇", level: 70 },
-  { name: "复仇者护腕", quality: "传奇", level: 70 }
+  { name: "全能法戒", quality: "远古传奇", level: 70, key: "1" },
+  { name: "绝命", quality: "太古传奇", level: 70, key: "2" },
+  { name: "蚀刻符印", quality: "太古传奇", level: 70, key: "3" },
+  { name: "虹光", quality: "传奇", level: 70, key: "4" },
+  { name: "复仇者护腕", quality: "传奇", level: 70, key: "5" }
 ];
 
 class Demo503 extends Component {

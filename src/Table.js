@@ -1207,6 +1207,7 @@ class Table extends Component {
     if (props.size) {
       className += ` ${clsPrefix}-${props.size}`;
     }
+    console.log("update");
 
     return (
       <div className={className} style={props.style} ref={el => this.contentTable = el} 

@@ -1,15 +1,15 @@
 .demo502 {
-  .u-table-row-hover {
-      .editable-row-icon,
-      .editable-row-icon-check {
-          display: block !important;
-      }
-  }
   .u-table-row {
     height: 58px;
-      .editable-row-icon,
-      .editable-row-icon-check {
-          display: none;
+  }
+  .u-row-hover {
+    .opt-btns {
+      button {
+        border-radius: 5px;
+        &:first-child {
+          margin-right: 10px;
+        }
       }
+    }
   }
 }
