@@ -9,6 +9,7 @@ import addEventListener from 'tinper-bee-core/lib/addEventListener';
 import ColumnManager from './ColumnManager';
 import createStore from './createStore';
 import Loading from 'bee-loading';
+import Icon from 'bee-icon';
 import { Event,EventUtil,closest} from "./utils";
 
 const propTypes = {
@@ -78,7 +79,7 @@ const defaultProps = {
   scroll: {},
   rowRef: () => null,
   getBodyWrapper: body => body,
-  emptyText: () => 'No Data',
+  emptyText: () => <Icon type="uf-nodata" className="table-nodata"></Icon>,
   columns:[],
   minColumnWidth: 80,
   locale:{},

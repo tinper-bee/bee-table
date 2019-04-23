@@ -2,8 +2,8 @@
 *
 * @title 多选表格
 * @parent 行操作-选择
-* @description 点击表格左列按钮即可选中，并且在选中的回调函数中能获取到选中的数据。支持多选、全选和禁止选择。
-*
+* @description 支持多选、全选和禁止选择。getSelectedDataFunc方法是选中行的回调函数，返回当前选中的数据数组。给data数据添加_checked参数可设置当前数据是否选中，添加_disabled参数可禁止选择当前数据。
+* demo1301
 */
 
 
@@ -13,39 +13,19 @@ import {Checkbox} from "tinper-bee";
 import Table from '../../src';
 import multiSelect from "../../src/lib/multiSelect.js";
 
-const columns12 = [
-  {
-    title: "名字",
-    dataIndex: "a",
-    key: "a",
-    width: 100
-  },
-  {
-    title: "性别",
-    dataIndex: "b",
-    key: "b",
-    width: 100
-  },
-  {
-    title: "年龄",
-    dataIndex: "c",
-    key: "c",
-    width: 200,
-    sorter: (a, b) => a.c - b.c
-  },
-  {
-    title: "武功级别",
-    dataIndex: "d",
-    key: "d"
-  }
+const columns = [
+  { title: "员工编号", dataIndex: "a", key: "a", width: 300, className: "rowClassName"},
+  { title: "员工姓名", dataIndex: "b", key: "b", width: 500 },
+  { title: "性别", dataIndex: "c", key: "c", width: 500 },
+  { title: "部门", dataIndex: "d", key: "d", width: 200 }
 ];
 
-const data12 = [
-  { a: "杨过", b: "男", c: 30,d:'内行', key: "2",_checked:true },
-  { a: "令狐冲", b: "男", c: 41,d:'大侠', key: "1" ,_checked:false},
-  { a: "郭靖", b: "男", c: 25,d:'大侠', key: "3" ,_checked:false},
-  { a: "郭靖1", b: "男", c: 25,d:'大侠', key: "4" ,_disabled:true},
-  { a: "郭靖2", b: "男", c: 25,d:'大侠', key: "5" ,_checked:false}
+const data = [
+  { a: "ASVAL_201903280005", b: "小张", c: "男", d: "财务二科", key: "1",_checked:true },
+  { a: "ASVAL_201903200004", b: "小明", c: "男", d: "财务一科", key: "2",_checked:false },
+  { a: "ASVAL_201903120002", b: "小红", c: "女", d: "财务一科", key: "3",_checked:false },
+  { a: "ASVAL_201903280010", b: "小王", c: "女", d: "财务二科", key: "4",_disabled:true },
+  { a: "ASVAL_201903200021", b: "小李", c: "男", d: "财务一科", key: "5",_checked:false}
 ];
 //拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常
 let MultiSelectTable  = multiSelect(Table, Checkbox);
@@ -54,7 +34,7 @@ class Demo12 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: data12
+      data: data
     };
   }
   /**
@@ -85,8 +65,8 @@ class Demo12 extends Component {
     };
     return (
       <MultiSelectTable 
-        columns={columns12} 
-        data={data12} 
+        columns={columns} 
+        data={data} 
         multiSelect={multiObj}
         rowClassName={(record,index,indent)=>{
           if (record._checked) {

@@ -8389,6 +8389,8 @@ ul {
     border-bottom: 1px solid rgb(193, 199, 208);
     text-align: center;
     position: relative; }
+    .u-table-placeholder .table-nodata {
+      font-size: 48px; }
   .u-table-expand-icon-col {
     width: 10px; }
   .u-table-row .u-table tr, .u-table-expanded-row .u-table tr {
@@ -8870,10 +8872,6 @@ ul {
   .opt-btns .u-button:hover, .opt-btns .u-button:active {
     background: #344563; }
 
-.demo02 .u-table-placeholder i {
-  font-size: 60px;
-  line-height: 60px; }
-
 .demo04.u-table tr:nth-child(2n) {
   background: #f7f9fb; }
 
@@ -8898,12 +8896,6 @@ ul {
 
 .help-tip {
   color: #F44336; }
-
-.tooltip-arrow {
-  border-bottom-color: #F44336 !important; }
-
-.tooltip-inner {
-  border-color: #F44336 !important; }
 
 th .drop-menu .uf {
   font-size: 12px;

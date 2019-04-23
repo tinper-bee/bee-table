@@ -244,6 +244,7 @@ $icon-color:#505F79;
     border-bottom: 1px solid $table-border-color;
     text-align: center;
     position: relative;
+    .table-nodata{ font-size:48px; }
   }
 
   &-expand-icon-col {

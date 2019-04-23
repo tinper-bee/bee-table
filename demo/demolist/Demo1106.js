@@ -2,7 +2,8 @@
 *
 * @title 自定义行高
 * @parent 扩展行 Expanded Row
-* @description 设置`height`属性自定义表体行高，设置`headerHeight`属性自定义表头高度。
+* @description 设置`height`属性自定义表体行高，设置`headerHeight`属性自定义表头高度。鼠标hover行时呼出操作按钮。
+* demo1106
 */
 
 import React, { Component } from "react";

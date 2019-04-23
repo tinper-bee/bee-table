@@ -2,7 +2,7 @@
  *
  * @title 单元格编辑
  * @description 可以对单元格进行编辑的表格，示例中给出输入框+必填校验、下拉框编辑模式，以及输入模式的必填校验。
- *
+ * demo0502
  */
 import React, { Component } from "react";
 import { Table } from "tinper-bee";

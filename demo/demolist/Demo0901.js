@@ -2,7 +2,7 @@
 * @title 列排序
 * @parent 列操作-排序 Sort
 * @description  column中增加sorter: (a, b) => a.c - b.c 这里的a,b代表前后两个数据，c代表比较当前对象的字段名称
-*
+* demo0901
 */
 
 
@@ -14,35 +14,42 @@ import sort from "../../src/lib/sort.js";
 let ComplexTable = sort(Table, Icon);
 const columns11 = [
   {
-    title: "名字",
-    dataIndex: "a",
-    key: "a",
-    width: 100
+    title: "单据编号",
+    dataIndex: "num",
+    key: "num",
+    width: 120,
+    fixed: "left"
   },
   {
-    title: "性别",
-    dataIndex: "b",
-    key: "b",
-    width: 100
-  },
-  {
-    title: "年龄",
-    dataIndex: "c",
-    key: "c",
+    title: "单据日期",
+    dataIndex: "date",
+    key: "date",
     width: 200,
-    sorter: (a, b) => a.c - b.c
   },
   {
-    title: "武功级别",
-    dataIndex: "d",
-    key: "d"
+    title: "供应商",
+    dataIndex: "supplier",
+    key: "supplier",
+    width: 100
+  },
+  {
+    title: "联系人",
+    dataIndex: "contact",
+    key: "contact",
+  },
+  {
+    title: "整单数量",
+    dataIndex: "total",
+    key: "total",
+    width: 150,
+    sorter: (a, b) => a.total - b.total
   }
 ];
 
 const data11 = [
-  { a: "杨过", b: "男", c: 30,d:'内行', key: "2" },
-  { a: "令狐冲", b: "男", c: 41,d:'大侠', key: "1" },
-  { a: "郭靖", b: "男", c: 25,d:'大侠', key: "3" }
+  { num: "NU0391001", date: "2019-03-01", supplier: 'xx供应商',contact:'Tom', total:30 ,key: "1" },
+  { num: "NU0391002", date: "2018-11-02", supplier: 'yy供应商',contact:'Jack', total:41 ,key: "2" },
+  { num: "NU0391003", date: "2019-05-03", supplier: 'zz供应商',contact:'Jane', total:25 ,key: "3" }
 ];
 
 const defaultProps11 = {

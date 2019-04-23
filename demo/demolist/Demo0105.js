@@ -3,7 +3,7 @@
 * @title 表格 Loading 加载
 * @parent 基础 Basic
 * @description loading可以传boolean或者object对象，object为bee-loading组件的参数类型
-*
+* demo0105
 */
 
 import React, { Component } from "react";

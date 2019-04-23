@@ -3,7 +3,7 @@
 * @title 左侧固定列
 * @parent 列操作-锁定 Fixed
 * @description 固定列到表格的左侧
-*
+* demo0601
 */
 
 
