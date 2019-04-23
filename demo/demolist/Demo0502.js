@@ -5,7 +5,7 @@
  *
  */
 import React, { Component } from "react";
-import { Table } from "tinper-bee";
+import Table from "../../src";
 import { Icon, Select, Tooltip } from "tinper-bee";
 const Option = Select.Option;
 
@@ -58,6 +58,7 @@ class StringEditCell extends Component {
             {value === "" ? (
               <Tooltip
                 inverse
+                className="tp-501"
                 placement="bottom"
                 overlay={
                   <div className="help-tip">
@@ -136,11 +137,11 @@ class SelectEditCell extends Component {
 }
 
 const dataSource = [
-  { name: "全能法戒", quality: "远古传奇", level: 70.11 },
-  { name: "绝命", quality: "太古传奇", level: 70 },
-  { name: "蚀刻符印", quality: "太古传奇", level: 70 },
-  { name: "虹光", quality: "传奇", level: 70 },
-  { name: "复仇者护腕", quality: "传奇", level: 70 }
+  { name: "全能法戒", quality: "远古传奇", level: 70, key: "1" },
+  { name: "绝命", quality: "太古传奇", level: 70, key: "2" },
+  { name: "蚀刻符印", quality: "太古传奇", level: 70, key: "3" },
+  { name: "虹光", quality: "传奇", level: 70, key: "4" },
+  { name: "复仇者护腕", quality: "传奇", level: 70, key: "5" }
 ];
 
 class Demo501 extends Component {

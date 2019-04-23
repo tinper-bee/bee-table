@@ -8899,12 +8899,23 @@ ul {
 .help-tip {
   color: #F44336; }
 
-.tooltip-arrow {
+.tp-501 .tooltip-arrow {
   border-bottom-color: #F44336 !important; }
 
-.tooltip-inner {
+.tp-501 .tooltip-inner {
   border-color: #F44336 !important; }
 
+<<<<<<< HEAD
+=======
+.demo502 .u-table-row {
+  height: 58px; }
+
+.demo502 .u-row-hover .opt-btns button {
+  border-radius: 5px; }
+  .demo502 .u-row-hover .opt-btns button:first-child {
+    margin-right: 10px; }
+
+>>>>>>> lcj-demo-50x
 th .drop-menu .uf {
   font-size: 12px;
   visibility: hidden;
