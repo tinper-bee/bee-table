@@ -6917,10 +6917,10 @@ input.u-button[type="submit"] {
 .u-checkbox {
   display: inline-block;
   position: relative;
-  margin: 0 8px;
+  margin-right: 24px;
   height: 16px;
   line-height: 16px;
-  font-size: 14px;
+  font-size: 12px;
   white-space: nowrap;
   cursor: pointer;
   outline: none;
@@ -7410,11 +7410,12 @@ ul {
 
 .u-select-disabled {
   color: #909090; }
-  .u-select-disabled .u-select-selection {
-    background: #f7f7f7;
+  .u-select-disabled.u-select .u-select-selection {
+    background: #F7F9FB;
+    border-color: #DFE1E6;
     cursor: not-allowed; }
   .u-select-disabled .u-select-selection:hover, .u-select-disabled .u-select-selection:focus, .u-select-disabled .u-select-selection:active {
-    border-color: #d9d9d9;
+    border-color: #DFE1E6;
     box-shadow: none; }
   .u-select-disabled .u-select-selection-clear {
     display: none;
@@ -7748,7 +7749,7 @@ ul {
   display: none; }
 
 .u-select-dropdown.u-select-dropdown--multiple .u-select-dropdown-menu-item-selected:after, .u-select-dropdown.u-select-dropdown--multiple .u-select-dropdown-menu-item-selected:hover:after {
-  color: #108ee9;
+  color: rgb(245, 60, 50);
   display: inline-block; }
 
 :root .u-select-dropdown.u-select-dropdown--multiple .u-select-dropdown-menu-item:after {
@@ -8295,6 +8296,8 @@ ul {
         color: #1565c0; }
   .u-table thead tr:last-child {
     border-bottom: 1px solid #C1C7D0; }
+  .u-table thead tr > th:last-child {
+    border-right: none; }
   .u-table tr:hover td .uf-eye {
     visibility: visible !important; }
   .u-table tr tr a {
@@ -8876,6 +8879,10 @@ ul {
   white-space: nowrap;
   vertical-align: middle;
   overflow: hidden; }
+
+.u-table-drag-hidden-cont {
+  position: absolute;
+  top: -1000px; }
 
 .selected {
   background: #FFF7E7; }
