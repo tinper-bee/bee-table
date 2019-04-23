@@ -8589,6 +8589,7 @@ ul {
       color: #505F79; }
   .u-table-filter-column-pop-cont-item {
     margin-top: 8px;
+    font-size: 12px;
     cursor: pointer; }
     .u-table-filter-column-pop-cont-item .u-checkbox {
       margin: 0px; }
