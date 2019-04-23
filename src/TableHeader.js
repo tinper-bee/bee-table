@@ -55,6 +55,7 @@ class TableHeader extends Component {
     if(this.props.dragborder){
       this.removeDragBorderEvent();
     }
+    this.eventListen([{key:'mousedown',fun:this.onTrMouseDown}],'remove',this.table.tr[0]);
   }
 
   /**
@@ -104,6 +105,9 @@ class TableHeader extends Component {
   initEvent(){
     this.dragBorderEventInit();//列宽
     this.dragAbleEventInit();//交换列
+    if(this.table && this.table.tr){
+      this.eventListen([{key:'mousedown',fun:this.onTrMouseDown}],'',this.table.tr[0]);//body mouseup
+    }
     this.eventListen([{key:'mouseup',fun:this.bodyonLineMouseUp}],'',document.body);//body mouseup
   }
 
@@ -115,7 +119,7 @@ class TableHeader extends Component {
     let  events = [
       {key:'mouseup', fun:this.onTrMouseUp},
       {key:'mousemove', fun:this.onTrMouseMove},
-      {key:'mousedown', fun:this.onTrMouseDown}
+      // {key:'mousedown', fun:this.onTrMouseDown}
     ];
     // console.log(" ---- ",this.table.tr);
     this.eventListen(events,'',this.table.tr[0]);//表示把事件添加到th元素上
@@ -128,7 +132,7 @@ class TableHeader extends Component {
     let  events = [
       {key:'mouseup', fun:this.onTrMouseUp},
       {key:'mousemove', fun:this.onTrMouseMove},
-      {key:'mousedown', fun:this.onTrMouseDown}
+      // {key:'mousedown', fun:this.onTrMouseDown}
     ];
     this.eventListen(events,'remove',this.table.tr[0]);
   }
@@ -203,7 +207,7 @@ class TableHeader extends Component {
         this.drag.currIndex = currentIndex;
         // console.log(" ------------------onTrMouseDown------this.drag------------ ",this.drag); 
     }else{
-      console.log("onTrMouseDown dragborder or draggable is all false !");
+      // console.log("onTrMouseDown dragborder or draggable is all false !");
       return ;
     }
   };
@@ -234,7 +238,9 @@ class TableHeader extends Component {
         }
         const newTableWidth = this.drag.tableWidth + diff +'px';
         this.table.table.style.width  = newTableWidth;//改变table的width
-        this.table.innerTableBody.style.width  = newTableWidth ;
+        if(this.table.innerTableBody){//TODO 后续需要处理此处
+          this.table.innerTableBody.style.width  = newTableWidth ;
+        }
         let showScroll =  contentDomWidth - (this.drag.tableWidth + diff) - scrollbarWidth ;
     
         //表头滚动条处理
@@ -384,16 +390,17 @@ class TableHeader extends Component {
     let currentIndex = parseInt(target.getAttribute("data-line-index"));
     let currentKey = target.getAttribute('data-line-key');
 
-    var crt = target.cloneNode(true);
-    // console.log(" -------crt-------",crt);
-    crt.style.backgroundColor = "#ebecf0";
-    crt.style.width = this.table.cols[currentIndex].style.width;//拖动后再交换列的时候，阴影效果可同步
-    crt.style.height = "40px";
-    // crt.style['line-height'] = "40px";
-    // document.body.appendChild(crt);
-    document.getElementById(this._table_none_cont_id).appendChild(crt);
-    
-    e.dataTransfer.setDragImage(crt, 0, 0);
+    if(event.dataTransfer.setDragImage){
+      var crt = target.cloneNode(true);
+      // console.log(" -------crt-------",crt);
+      crt.style.backgroundColor = "#ebecf0";
+      crt.style.width = this.table.cols[currentIndex].style.width;//拖动后再交换列的时候，阴影效果可同步
+      crt.style.height = "40px";
+      // crt.style['line-height'] = "40px";
+      // document.body.appendChild(crt);
+      document.getElementById(this._table_none_cont_id).appendChild(crt);
+      event.dataTransfer.setDragImage(crt, 0, 0);
+    }
 
     event.dataTransfer.effectAllowed = "move";
     event.dataTransfer.setData("Text", currentKey);
@@ -426,7 +433,8 @@ class TableHeader extends Component {
     if(!currentIndex || parseInt(currentIndex) === this.drag.currIndex)return;
     if(target.nodeName.toUpperCase() === "TH"){
       // console.log("-onDragEnter-----",target);
-      target.style.border = "2px dashed rgba(5,0,0,0.25)";
+      // target.style.border = "2px dashed rgba(5,0,0,0.25)";
+      target.setAttribute("style","border:2px dashed rgba(5,0,0,0.25)");
       // target.style.backgroundColor = 'rgb(235, 236, 240)';
       // target.style['box-sizing'] = 'border-box';
     }
@@ -435,7 +443,8 @@ class TableHeader extends Component {
   onDragEnd = (e) => {
     let event = Event.getEvent(e) ,
     target = Event.getTarget(event);
-    this._dragCurrent.style = "";
+    this._dragCurrent.setAttribute("style","");
+    // this._dragCurrent.style = "";
     document.getElementById(this._table_none_cont_id).innerHTML = "";
     
     let data = this.getCurrentEventData(this._dragCurrent);
@@ -454,7 +463,8 @@ class TableHeader extends Component {
     if(target.nodeName.toUpperCase() === "TH"){
       // console.log("--onDragLeave----",target);
       // console.log("--onDragLeave--this._dragCurrent--",this._dragCurrent);
-      target.style = "";
+      // target.style = "";
+      target.setAttribute("style","");
       // this._dragCurrent.style = "";
     }
   }
