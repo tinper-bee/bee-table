@@ -1,7 +1,7 @@
 /**
  *
  * @title 单元格编辑
- * @description 可以对单元格进行编辑的表格，示例中给出输入框+必填校验、下拉框编辑模式，以及输入模式的必填校验。
+ * @description 可以对单元格进行编辑的表格，示例中给出输入框+必填校验、下拉框编辑模式，以及输入模式的必填校验。通过对 coloums 配置 render 属性实现渲染不同格式的编辑态单元格
  *
  */
 import React, { Component } from "react";
