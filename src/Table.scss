@@ -907,3 +907,8 @@ $icon-color:#505F79;
 ::-webkit-scrollbar-track-piece {
   display: none;
 }
+
+.u-table-drag-hidden-cont{
+  position: absolute;
+  top:-1000px;
+}

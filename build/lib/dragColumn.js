@@ -81,7 +81,7 @@ function dragColumn(Table) {
           columns: _newColumns //cloneDeep(columns)
         });
         // console.log(" onDrop-------columns--- ",_newColumns);
-        console.log(columns === _newColumns);
+        // console.log(columns === _newColumns);
         if (_this.props.onDrop) {
           _this.props.onDrop(event, data, columns);
         }

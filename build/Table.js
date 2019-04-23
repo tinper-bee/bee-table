@@ -100,7 +100,8 @@ var propTypes = {
   onFilterClear: _propTypes2["default"].func,
   syncHover: _propTypes2["default"].bool,
   tabIndex: _propTypes2["default"].string,
-  hoverContent: _propTypes2["default"].func
+  hoverContent: _propTypes2["default"].func,
+  size: _propTypes2["default"].oneOf(['sm', 'md', 'lg'])
 };
 
 var defaultProps = {
@@ -145,7 +146,8 @@ var defaultProps = {
   setRowHeight: function setRowHeight() {},
   setRowParentIndex: function setRowParentIndex() {},
   tabIndex: '0',
-  heightConsistent: false
+  heightConsistent: false,
+  size: 'md'
 };
 
 var Table = function (_Component) {
@@ -155,6 +157,11 @@ var Table = function (_Component) {
     _classCallCheck(this, Table);
 
     var _this = _possibleConstructorReturn(this, _Component.call(this, props));
+
+    _this.resize = function () {
+      (0, _utils.debounce)(_this.syncFixedTableRowHeight, 150);
+      _this.computeTableWidth();
+    };
 
     _this.renderDragHideTable = function () {
       var _this$props = _this.props,
@@ -270,7 +277,7 @@ var Table = function (_Component) {
     }
     if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
-      this.resizeEvent = (0, _addEventListener2["default"])(window, 'resize', (0, _utils.debounce)(this.syncFixedTableRowHeight, 150));
+      this.resizeEvent = (0, _addEventListener2["default"])(window, 'resize', this.resize);
     }
   };
 
@@ -1331,6 +1338,9 @@ var Table = function (_Component) {
       loading = {
         show: loading
       };
+    }
+    if (props.size) {
+      className += ' ' + clsPrefix + '-' + props.size;
     }
 
     return _react2["default"].createElement(

@@ -8857,6 +8857,10 @@ ul {
 ::-webkit-scrollbar-track-piece {
   display: none; }
 
+.u-table-drag-hidden-cont {
+  position: absolute;
+  top: -1000px; }
+
 .selected {
   background: #FFF7E7; }
 
