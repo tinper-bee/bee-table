@@ -97,7 +97,7 @@ function multiSelect(Table, Checkbox) {
       var count = 0;
       var disabledCount = 0;
       data.forEach(function (da) {
-        if (da._checked) {
+        if (da._checked && !da._disabled) {
           count++;
         }
         if (da._disabled) {
@@ -223,7 +223,7 @@ function multiSelect(Table, Checkbox) {
         key: "checkbox",
         dataIndex: "checkbox",
         fixed: "left",
-        width: 50,
+        width: 60,
         render: function render(text, record, index) {
           var attr = {};
           record._disabled ? attr.disabled = record._disabled : "";

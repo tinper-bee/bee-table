@@ -10,7 +10,7 @@ $table-border-color: unquote("rgb(#{$table-border-color-base})");
 // $table-head-background-color: #f7f7f7;
 // $table-head-text-color: #666;
 $vertical-padding: 12px;
-$horizontal-padding: 16px;
+$horizontal-padding: 8px;
 // $table-border-color: #e9e9e9;
 
 $table-hover-color: #E7F2FC;
@@ -892,4 +892,33 @@ $icon-color:#505F79;
 
 ::-webkit-scrollbar-track-piece {
   display: none;
+}
+
+// 表格显示里面的内容显示在一行
+.header-dispaly-in-row{
+  &.u-table{
+    table{
+      table-layout: fixed;
+    }
+  }
+  th{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+    overflow: hidden;
+  }
+}
+.body-dispaly-in-row{
+  &.u-table{
+    table{
+      table-layout: fixed;
+    }
+    
+  }
+  td{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+    overflow: hidden;
+  }
 }

@@ -47,7 +47,7 @@
     background: rgb(235, 236, 240); }
   .u-table th,
   .u-table td {
-    padding: 12px 16px;
+    padding: 12px 8px;
     word-break: break-all; }
     .u-table th.text-center,
     .u-table td.text-center {
@@ -88,7 +88,7 @@
     background: rgb(241, 242, 245);
     color: rgb(33, 33, 33); }
   .u-table.fixed-height td {
-    padding: 0px 16px; }
+    padding: 0px 8px; }
   .u-table-fixed-header .u-table-body {
     background: #fff;
     position: relative; }
@@ -106,17 +106,17 @@
     overflow-y: scroll;
     box-sizing: border-box; }
   .u-table-title {
-    padding: 12px 16px;
+    padding: 12px 8px;
     border-top: 1px solid rgb(193, 199, 208); }
   .u-table-content {
     position: relative; }
   .u-table-footer {
-    padding: 12px 16px;
+    padding: 12px 8px;
     border-bottom: 1px solid rgb(193, 199, 208); }
     .u-table-footer .u-table-scroll {
       overflow-x: hidden; }
   .u-table-footer .u-table {
-    margin: -12px -16px; }
+    margin: -12px -8px; }
   .u-table-placeholder {
     padding: 12px 8px;
     background: #fff;
@@ -585,3 +585,21 @@
 
 ::-webkit-scrollbar-track-piece {
   display: none; }
+
+.header-dispaly-in-row.u-table table {
+  table-layout: fixed; }
+
+.header-dispaly-in-row th {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+  overflow: hidden; }
+
+.body-dispaly-in-row.u-table table {
+  table-layout: fixed; }
+
+.body-dispaly-in-row td {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+  overflow: hidden; }

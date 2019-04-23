@@ -231,9 +231,13 @@ class Table extends Component {
     }
   }
 
-  resize(){
+  resize = ()=>{
     debounce(this.syncFixedTableRowHeight, 150);
     this.computeTableWidth();
+    let renderFlag = this.state.renderFlag;
+    this.setState({
+      renderFlag: !renderFlag
+    });
   }
   computeTableWidth() {
     
@@ -652,6 +656,7 @@ class Table extends Component {
           fixedIndex={fixedIndex+lazyCurrentIndex}
           rootIndex = {rootIndex}
           syncHover = {props.syncHover}
+          bodyDisplayInRow = {props.bodyDisplayInRow}
         />
       );
       this.treeRowIndex++;
@@ -1192,6 +1197,12 @@ class Table extends Component {
     //如果传入height说明是固定高度
     if(props.height){
       className += ' fixed-height';
+    }
+    if(props.bodyDisplayInRow){
+      className += ' body-dispaly-in-row'
+    }
+    if(props.headerDisplayInRow){
+      className += ' header-dispaly-in-row'
     }
     const isTableScroll = this.columnManager.isAnyColumnsFixed() ||
       props.scroll.x ||

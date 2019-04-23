@@ -156,6 +156,15 @@ var Table = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
+    _this.resize = function () {
+      (0, _utils.debounce)(_this.syncFixedTableRowHeight, 150);
+      _this.computeTableWidth();
+      var renderFlag = _this.state.renderFlag;
+      _this.setState({
+        renderFlag: !renderFlag
+      });
+    };
+
     _this.renderDragHideTable = function () {
       var _this$props = _this.props,
           columns = _this$props.columns,
@@ -270,7 +279,7 @@ var Table = function (_Component) {
     }
     if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
-      this.resizeEvent = (0, _addEventListener2["default"])(window, 'resize', (0, _utils.debounce)(this.syncFixedTableRowHeight, 150));
+      this.resizeEvent = (0, _addEventListener2["default"])(window, 'resize', this.resize);
     }
   };
 
@@ -785,7 +794,8 @@ var Table = function (_Component) {
         treeType: childrenColumn || this.treeType ? true : false,
         fixedIndex: fixedIndex + lazyCurrentIndex,
         rootIndex: rootIndex,
-        syncHover: props.syncHover
+        syncHover: props.syncHover,
+        bodyDisplayInRow: props.bodyDisplayInRow
       })));
       this.treeRowIndex++;
       var subVisible = visible && isRowExpanded;
@@ -1324,6 +1334,12 @@ var Table = function (_Component) {
     //如果传入height说明是固定高度
     if (props.height) {
       className += ' fixed-height';
+    }
+    if (props.bodyDisplayInRow) {
+      className += ' body-dispaly-in-row';
+    }
+    if (props.headerDisplayInRow) {
+      className += ' header-dispaly-in-row';
     }
     var isTableScroll = this.columnManager.isAnyColumnsFixed() || props.scroll.x || props.scroll.y;
     var loading = props.loading;

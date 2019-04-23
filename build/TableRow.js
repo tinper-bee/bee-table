@@ -241,7 +241,8 @@ var TableRow = function (_Component) {
         indent = _props9.indent,
         indentSize = _props9.indentSize,
         isHiddenExpandIcon = _props9.isHiddenExpandIcon,
-        fixed = _props9.fixed;
+        fixed = _props9.fixed,
+        bodyDisplayInRow = _props9.bodyDisplayInRow;
 
     var showSum = false;
     var className = this.props.className;
@@ -288,7 +289,8 @@ var TableRow = function (_Component) {
         key: index + "_" + (columns[i].key || columns[i].dataIndex || i),
         fixed: fixed,
         showSum: showSum,
-        expandIcon: isColumnHaveExpandIcon ? expandIcon : null
+        expandIcon: isColumnHaveExpandIcon ? expandIcon : null,
+        bodyDisplayInRow: bodyDisplayInRow
       }));
     }
     var style = { height: height };

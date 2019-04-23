@@ -73,7 +73,8 @@ var TableCell = function (_Component) {
         expandIcon = _props2.expandIcon,
         column = _props2.column,
         fixed = _props2.fixed,
-        showSum = _props2.showSum;
+        showSum = _props2.showSum,
+        bodyDisplayInRow = _props2.bodyDisplayInRow;
     var dataIndex = column.dataIndex,
         render = column.render;
     var _column$className = column.className,
@@ -83,7 +84,8 @@ var TableCell = function (_Component) {
     var text = _objectPath2["default"].get(record, dataIndex);
     var tdProps = void 0;
     var colSpan = void 0;
-    var rowSpan = void 0;
+    var rowSpan = void 0,
+        title = void 0;
 
     if (render && !showSum) {
       text = render(text, record, index);
@@ -114,13 +116,17 @@ var TableCell = function (_Component) {
     if (column.textAlign) {
       className = className + (' text-' + column.textAlign);
     }
+    if (typeof text == 'string' && bodyDisplayInRow) {
+      title = text;
+    }
     return _react2["default"].createElement(
       'td',
       {
         colSpan: colSpan,
         rowSpan: rowSpan,
         className: className,
-        onClick: this.handleClick
+        onClick: this.handleClick,
+        title: title
       },
       indentText,
       expandIcon,
