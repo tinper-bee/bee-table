@@ -2,7 +2,7 @@
 *
 * @title 图片在表格中的展示
 * @parent 扩展行 Expanded Row
-* @description 根据图片高度自动撑开行高，可结合图片查看器使用 http://design.yonyoucloud.com/tinper-bee/bee-viewer
+* @description 根据图片高度自动撑开行高，可结合图片查看器使用 http://design.yonyoucloud.com/tinper-bee/bee-viewer,  注：如果图片在固定列中，可以使用heightConsistent属性，当此属性为true，就不会出现错行问题
 * demo1107
 */
 
@@ -60,6 +60,7 @@ const columns = [
         title: "图样",
         dataIndex: "picture",
         key: "picture",
+        fixed:'left',
         render(text, record, index) {
             return <img style={{height:'50px'}} src={text} alt="Picture"/>
         }
