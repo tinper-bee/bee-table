@@ -60,7 +60,6 @@ const columns = [
         title: "图样",
         dataIndex: "picture",
         key: "picture",
-        fixed:'left',
         render(text, record, index) {
             return <img style={{height:'50px'}} src={text} alt="Picture"/>
         }
