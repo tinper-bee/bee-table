@@ -131,6 +131,8 @@
     border-bottom: 1px solid rgb(193, 199, 208);
     text-align: center;
     position: relative; }
+    .u-table-placeholder .table-nodata {
+      font-size: 48px; }
   .u-table-expand-icon-col {
     width: 10px; }
   .u-table-row .u-table tr, .u-table-expanded-row .u-table tr {
@@ -320,7 +322,7 @@
     width: 30px;
     height: 38px;
     line-height: 38px;
-    right: 12px;
+    right: 0px;
     top: 1px;
     z-index: 2;
     background: rgb(241, 242, 245);
