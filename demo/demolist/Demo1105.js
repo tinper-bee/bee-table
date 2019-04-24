@@ -3,6 +3,7 @@
 * @title 紧凑型、宽松型
 * @parent 扩展行 Expanded Row
 * @description 设置`size`属性使用紧凑型表格(`sm`)或宽松型表格(`lg`)。
+* demo1105
 */
 
 import React, { Component } from "react";

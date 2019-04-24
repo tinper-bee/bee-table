@@ -3,7 +3,7 @@
 * @title 动态设置列锁定、解除锁定
 * @parent 列操作-锁定 Fixed
 * @description 动态设置columns中数据的fixed属性值【fixed: "left"，fixed: "right"】。
-*
+* demo0603
 */
 import React, { Component } from 'react';
 import {Icon,Menu,Dropdown} from "tinper-bee";

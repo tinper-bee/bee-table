@@ -164,7 +164,7 @@ class TableRow extends Component{
     const {
       clsPrefix, columns, record, height, visible, index,
       expandIconColumnIndex, expandIconAsCell, expanded, expandRowByClick,
-      expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed
+      expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed,bodyDisplayInRow
     } = this.props;
     let showSum = false;
     let { className } = this.props;
@@ -215,6 +215,7 @@ class TableRow extends Component{
           fixed= {fixed}
           showSum={showSum}
           expandIcon={(isColumnHaveExpandIcon) ? expandIcon : null}
+          bodyDisplayInRow =  {bodyDisplayInRow}
         />
       );
     }

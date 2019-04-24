@@ -3,7 +3,7 @@
 * @title 列过滤面板
 * @parent 列操作-隐藏 Hide
 * @description 点击表头右侧按钮，设置显示或隐藏表格列。可以自定义设置显示某列，通过ifshow属性控制，默认值为true（显示表格所有列）。afterFilter方法为列过滤后触发的回调函数。
-*
+* demo0802
 */
 
 

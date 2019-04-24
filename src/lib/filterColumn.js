@@ -108,9 +108,10 @@ export default function filterColumn(Table, Popover) {
               key={da.key + "_" + i}
               className={`${prefixCls}-pop-cont-item`}
             >
-            <Checkbox {...paramObj}/>
+            <Checkbox {...paramObj}>
             
               <span>{da.title}</span>
+            </Checkbox>
             </div>
           );
         

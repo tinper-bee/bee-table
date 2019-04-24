@@ -30,14 +30,14 @@ class TableCell extends Component{
   }
   render() {
     const { record, indentSize, clsPrefix, indent,
-            index, expandIcon, column ,fixed,showSum} = this.props;
+            index, expandIcon, column ,fixed,showSum, bodyDisplayInRow} = this.props;
     const { dataIndex, render } = column;
     let {className = ''} = column;
 
     let text = objectPath.get(record, dataIndex);
     let tdProps;
     let colSpan;
-    let rowSpan;
+    let rowSpan,title;
     
     if (render && !showSum) {
       text = render(text, record, index);
@@ -71,12 +71,16 @@ class TableCell extends Component{
     if(column.textAlign){
       className =  className+` text-${column.textAlign}`;
     }
+    if(typeof text == 'string' && bodyDisplayInRow){
+      title = text
+    }
     return (
       <td
         colSpan={colSpan}
         rowSpan={rowSpan}
         className={className}
         onClick={this.handleClick}
+        title = {title}
       >
         {indentText}
         {expandIcon}

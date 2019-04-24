@@ -3,12 +3,13 @@
 * @title 数据关联
 * @parent 列渲染 Custom Render
 * @description 数据行关联自定义菜单显示
+* demo0404
 */
 
 import React, { Component } from 'react';
 import {Icon,Checkbox,Dropdown,Menu} from 'tinper-bee';
 import Table from '../../src';
-import multiSelect from "../../src/lib/multiSelect";
+import multiSelect from "../../src/lib/newMultiSelect";
 import sort from "../../src/lib/sort";
 
 const { Item } = Menu;
