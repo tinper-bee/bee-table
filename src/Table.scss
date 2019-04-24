@@ -548,7 +548,7 @@ $icon-color:#505F79;
       width: 30px;
       height: 38px ;
       line-height: 38px;
-      right: 12px ;
+      right: 0px ;
       top:1px ;
       z-index: 2;
       background: $table-head-background-color;
@@ -569,7 +569,7 @@ $icon-color:#505F79;
 
       }
     }
-    &-pop-cont-item>span{
+    &-pop-cont-item span.drop-menu-title{
       margin-left: -3px;
       max-width: 132px;
       width: auto !important;
