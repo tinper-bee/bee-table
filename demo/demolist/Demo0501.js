@@ -1,307 +1,170 @@
 /**
-*
-* @title 编辑态表格
-* @parent 编辑 Editor
-* @description 这是带有多种不同格式的编辑态表格（编辑态是通过使用不同的render来达到不同编辑格式）
-*
-*/
-
-import React from "react";
-import {Animate,Tooltip,FormControl,Button,Form,Icon,Checkbox,Select} from "tinper-bee";
+ *
+ * @title 行编辑
+ * @description 可以对行进行编辑的表格
+ *
+ */
+import React, { Component } from "react";
 import Table from "../../src";
-import Datepicker from "bee-datepicker";
-import renderInput from "../../build/render/InputRender.js";
-import renderDate from "../../build/render/DateRender.js";
-import renderSelect from "../../build/render/SelectRender.js";
+import { Button, FormControl } from "tinper-bee";
 
-const InputRender = renderInput(Form, FormControl, Icon);
-const DateRender = renderDate(Datepicker, Icon);
-const SelectRender = renderSelect(Select, Icon);
-
-const format = "YYYY-MM-DD";
-const format2 = "YYYY-MM";
-const format3 = "YYYY-MM-DD HH:mm:ss";
-
-const dateInputPlaceholder = "选择日期";
-const dateInputPlaceholder2 = "选择年月";
-const dataSource = [
-  {
-    key: "boyuzhou",
-    value: "jack"
-  },
-  {
-    key: "renhualiu",
-    value: "lucy"
-  },
-  {
-    key: "yuzhao",
-    value: "yiminghe"
-  }
-];
-class Demo41 extends React.Component {
-  constructor(props) {
+class EditableCell extends Component {
+  constructor(props, context) {
     super(props);
     this.state = {
-      dataSource: [
-        {
-          key: "0",
-          name: "沉鱼",
-          number: "10",
-          age: "y",
-          address: "jack",
-          datepicker: "2017-06-12",
-          MonthPicker: "2017-02"
-        },
-        {
-          key: "1",
-          name: "落雁",
-          number: "100",
-          age: "y",
-          address: "lucy",
-          datepicker: "2017-06-12",
-          MonthPicker: "2017-02"
-        },
-        {
-          key: "2",
-          name: "闭月",
-          number: "1000",
-          age: "n",
-          address: "lucy",
-          datepicker: "2017-06-12",
-          MonthPicker: "2017-02"
-        },
-        {
-          key: "3",
-          name: "羞花",
-          number: "9999",
-          age: "y",
-          address: "lucy",
-          datepicker: "2017-06-12",
-          MonthPicker: "2017-02"
-        }
-      ],
-      count: 4
+      value: this.props.value,
+      editable: false
     };
+  }
+
+  handleChange = value => {
+    this.setState({ value });
+    if (this.props.onChange) {
+      this.props.onChange(value);
+    }
+  };
+
+  render() {
+    return (
+      <div className="editable-cell">
+        <div className="editable-cell-input-wrapper">
+          {this.props.editable ? (
+            <FormControl
+              value={this.state.value}
+              onChange={this.handleChange}
+            />
+          ) : (
+            this.state.value || " "
+          )}
+        </div>
+      </div>
+    );
+  }
+}
+
+let dataSource = [
+  { a: "ASVAL_201903280005", b: "小张", c: "男", d: "财务二科", key: "1" },
+  { a: "ASVAL_201903200004", b: "小明", c: "男", d: "财务一科", key: "2" },
+  { a: "ASVAL_201903120002", b: "小红", c: "女", d: "财务一科", key: "3" }
+];
+
+for (let i = 4; i < 10; i++) {
+  dataSource.push({
+    a: "ASVAL_201903120002",
+    b: "小红",
+    c: "女",
+    d: "财务一科",
+    key: i + ""
+  });
+}
+
+class Demo0501 extends Component {
+  constructor(props, context) {
+    super(props);
     this.columns = [
       {
-        title: "普通输入",
-        dataIndex: "name",
-        key: "name",
-        width: "150px",
+        title: "员工编号",
+        dataIndex: "a",
+        key: "a"
+      },
+      {
+        title: "名字",
+        dataIndex: "b",
+        key: "b",
         render: (text, record, index) => (
-          <InputRender
-            name="name"
-            placeholder="请输入姓名"
+          <EditableCell
+            editable={this.state.editingRows.indexOf(index) > -1}
             value={text}
-            isclickTrigger={true}
-            check={this.check}
-            onChange={this.onInputChange(index, "name")}
-            isRequire={true}
-            method="blur"
-            errorMessage={
-              <Tooltip overlay={"错误提示"}>
-                <Icon type="uf-exc-c" className="" />
-              </Tooltip>
-            }
+            onChange={this.onCellChange(index, "quality")}
           />
         )
       },
       {
-        title: "货币输入",
-        dataIndex: "number",
-        key: "number",
-        width: "150px",
+        title: "性别",
+        dataIndex: "c",
+        key: "c",
+        width: 100,
         render: (text, record, index) => (
-          <InputRender
-            format="Currency"
-            name="number"
-            placeholder="请输入货币"
+          <EditableCell
+            editable={this.state.editingRows.indexOf(index) > -1}
             value={text}
-            isclickTrigger={true}
-            check={this.check}
-            onChange={this.onInputChange(index, "number")}
-            isRequire={true}
-            method="blur"
-            errorMessage={
-              <Tooltip overlay={"错误提示"}>
-                <Icon type="uf-exc-c" className="" />
-              </Tooltip>
-            }
-            reg={/^[0-9]+$/}
+            onChange={this.onCellChange(index, "level")}
           />
         )
       },
       {
-        title: "复选",
-        dataIndex: "age",
-        key: "age",
-        width: "100px",
-        render: (text, record, index) => (
-          <Checkbox
-            checked={record.age}
-            onChange={this.onCheckChange(index, "age")}
-          />
-        )
-      },
-      {
-        title: "下拉框",
-        dataIndex: "address",
-        key: "address",
-        width: "200px",
-        render: (text, record, index) => {
-          return (
-            <SelectRender
-              dataSource={dataSource}
-              isclickTrigger={true}
-              value={text}
-              onChange={this.onSelectChange(index, "address")}
-              size="sm"
-            >
-              <Option value="jack">boyuzhou</Option>
-              <Option value="lucy">renhualiu</Option>
-              <Option value="disabled" disabled>
-                Disabled
-              </Option>
-              <Option value="yiminghe">yuzhao</Option>
-            </SelectRender>
-          );
-        }
-      },
-      {
-        title: "年月日",
-        dataIndex: "datepicker",
-        key: "datepicker",
-        width: "200px",
-        render: (text, record, index) => {
-          return (
-            <DateRender
-              value={text}
-              isclickTrigger={true}
-              format={format}
-              onSelect={this.onDateSelect}
-              onChange={this.onDateChange}
-              placeholder={dateInputPlaceholder}
-            />
-          );
-        }
-      },
-      {
-        title: "年月",
-        dataIndex: "MonthPicker",
-        key: "MonthPicker",
-        width: "200px",
-        render: (text, record, index) => {
-          return (
-            <DateRender
-              value={text}
-              type="MonthPicker"
-              isclickTrigger={true}
-              format={format2}
-              onSelect={this.onSelect}
-              onChange={this.onChange}
-              placeholder={dateInputPlaceholder2}
-            />
-          );
-        }
+        titile: "部门",
+        dataIndex: "d",
+        key: "d",
+        render: (text, record, index) => text
       }
     ];
+
+    this.state = {
+      dataSource: dataSource,
+      editingRows: []
+    };
+
+    this.dataBuffer = {};
+    this.currentIndex = null;
+    this.currentRecord = null;
+    this.__OPTS_BTN_GROUP__ = null;
   }
-  check = (flag, obj) => {
-    console.log(flag);
-    console.log(obj);
+
+  createBtn = (text, props, event) => {
+    let btn = document.createElement("button");
+    btn.innerText = text;
+    for (let pKey in props) {
+      btn.setAttribute(pKey, props[pKey]);
+    }
+    for (let eKey in event) {
+      btn.addEventListener(eKey, event[eKey]);
+    }
+    return btn;
   };
 
-  onInputChange = (index, key) => {
-    return value => {
-      const dataSource = [...this.state.dataSource];
-      dataSource[index][key] = value;
-      this.setState({ dataSource });
-    };
-  };
-  onCheckChange = (index, key) => {
-    return value => {
-      const dataSource = [...this.state.dataSource];
-      dataSource[index][key] = value;
-      this.setState({ dataSource });
-    };
-  };
-  onSelectChange = (index, key) => {
-    return value => {
-      console.log(`selected ${value}`);
-      const dataSource = [...this.state.dataSource];
-      dataSource[index][key] = value;
-      this.setState({ dataSource });
-    };
-  };
-  onDateChange = d => {
-    console.log(d);
-  };
-  onDateSelect = d => {
-    console.log(d);
-  };
-  onDelete = index => {
-    return () => {
-      const dataSource = [...this.state.dataSource];
-      dataSource.splice(index, 1);
-      this.setState({ dataSource });
-    };
-  };
-  handleAdd = () => {
-    const { count, dataSource } = this.state;
-    const newData = {
-      key: count,
-      name: `凤姐 ${count}`,
-      age: 32,
-      address: "jack",
-      datepicker: "2017-06-12",
-      MonthPicker: "2017-02"
-    };
-    this.setState({
-      dataSource: [...dataSource, newData],
-      count: count + 1
-    });
+  edit = index => () => {
+    if (index === null) return;
+    let editingRows = [...this.state.editingRows];
+    editingRows.push(index);
+    this.dataBuffer[index] = Object.assign({}, dataSource[index]);
+    this.setState({ editingRows });
   };
 
-  getBodyWrapper = body => {
-    return (
-      <Animate
-        transitionName="move"
-        component="tbody"
-        className={body.props.className}
-      >
-        {body.props.children}
-      </Animate>
-    );
+  abortEdit = () => {
+    let editingRows = [...this.state.editingRows];
+    editingRows.splice(index, 1);
+    delete this.dataBuffer[index];
+    this.setState({ editingRows });
   };
-  getData = () => {
-    console.log(this.state.dataSource);
+
+  commitChange = index => () => {
+    let editingRows = [...this.state.editingRows];
+    let dataSource = [...this.state.dataSource];
+    editingRows.splice(editingRows.indexOf(index), 1);
+    dataSource[index] = this.dataBuffer[index];
+    delete this.dataBuffer[index];
+    this.setState({ editingRows, dataSource });
   };
+
+  onCellChange = (index, key) => value => {
+    this.dataBuffer[index][key] = value;
+  };
+
   render() {
     const { dataSource } = this.state;
     const columns = this.columns;
     return (
-      <div>
-        <Button
-          className="editable-add-btn"
-          onClick={this.handleAdd}
-        >
-          添加一行
-        </Button>
-        <Button
-          style={{marginLeft:"5px"}}
-          className="editable-add-btn"
-          onClick={this.getData}
-        >
-          获取数据
-        </Button>
+      <div className="demo0501">
         <Table
           data={dataSource}
           columns={columns}
-          getBodyWrapper={this.getBodyWrapper}
+          onRowHover={this.handleRowHover}
+          hoverContent={this.renderRowHover}
         />
       </div>
     );
   }
 }
 
-export default Demo41;
+export default Demo0501;

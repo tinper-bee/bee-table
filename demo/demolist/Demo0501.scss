@@ -1,0 +1,16 @@
+
+.demo0501 {
+  .u-table-row {
+    height: 58px;
+  }
+  .u-row-hover {
+    .opt-btns {
+      button {
+        border-radius: 5px;
+        &:first-child {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}
