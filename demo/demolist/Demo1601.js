@@ -60,6 +60,7 @@ class Demo8 extends Component {
           onSelect={this.handleSelect.bind(this)}
           onDataNumSelect={this.dataNumSelect}
           showJump={true}
+          noBorder={true}
           total={100}
           dataNum={2}
         />

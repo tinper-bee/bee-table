@@ -30,6 +30,7 @@ class TableHeader extends Component {
     this.minWidth = 80;//确定最小宽度就是80
     this.table = null;
     this._thead = null;//当前对象
+    this.event = false;//避免多次绑定问题
   }
 
   static defaultProps = {
@@ -103,12 +104,20 @@ class TableHeader extends Component {
    * 事件初始化
    */
   initEvent(){
-    this.dragBorderEventInit();//列宽
-    this.dragAbleEventInit();//交换列
-    if(this.table && this.table.tr){
-      this.eventListen([{key:'mousedown',fun:this.onTrMouseDown}],'',this.table.tr[0]);//body mouseup
+    let {dragborder,draggable} = this.props;
+    if(!this.event){ //避免多次绑定问题。
+      this.event = true;
+      if(dragborder){
+        this.dragBorderEventInit();//列宽
+      }
+      if(dragborder){
+        this.dragAbleEventInit();//交换列
+      }
+      if(this.table && this.table.tr){
+        this.eventListen([{key:'mousedown',fun:this.onTrMouseDown}],'',this.table.tr[0]);//body mouseup
+      }
+      this.eventListen([{key:'mouseup',fun:this.bodyonLineMouseUp}],'',document.body);//body mouseup
     }
-    this.eventListen([{key:'mouseup',fun:this.bodyonLineMouseUp}],'',document.body);//body mouseup
   }
 
   /**
@@ -398,6 +407,7 @@ class TableHeader extends Component {
   };
 
   onDragOver = (e) => {
+    let event = Event.getEvent(e);
     event.preventDefault();
   };
 
@@ -622,7 +632,7 @@ class TableHeader extends Component {
       <thead className={`${clsPrefix}-thead`} {...attr} data-theader-fixed='scroll' ref={_thead=>this._thead = _thead} >
         {rows.map((row, index) => {
           let _rowLeng = (row.length-1);
-          return(<tr key={index} style={rowStyle} aaaa className={(filterable && index == rows.length - 1)?'filterable':''}>
+          return(<tr key={index} style={rowStyle} className={(filterable && index == rows.length - 1)?'filterable':''}>
             {row.map((da, columIndex, arr) => {
               let thHover = da.drgHover
                 ? ` ${clsPrefix}-thead th-drag-hover`

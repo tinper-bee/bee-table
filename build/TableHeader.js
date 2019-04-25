@@ -243,6 +243,7 @@ var TableHeader = function (_Component) {
     };
 
     _this.onDragOver = function (e) {
+      var event = _utils.Event.getEvent(e);
       event.preventDefault();
     };
 
@@ -426,6 +427,7 @@ var TableHeader = function (_Component) {
     _this.minWidth = 80; //确定最小宽度就是80
     _this.table = null;
     _this._thead = null; //当前对象
+    _this.event = false; //避免多次绑定问题
     return _this;
   }
 
@@ -501,12 +503,24 @@ var TableHeader = function (_Component) {
 
 
   TableHeader.prototype.initEvent = function initEvent() {
-    this.dragBorderEventInit(); //列宽
-    this.dragAbleEventInit(); //交换列
-    if (this.table && this.table.tr) {
-      this.eventListen([{ key: 'mousedown', fun: this.onTrMouseDown }], '', this.table.tr[0]); //body mouseup
+    var _props = this.props,
+        dragborder = _props.dragborder,
+        draggable = _props.draggable;
+
+    if (!this.event) {
+      //避免多次绑定问题。
+      this.event = true;
+      if (dragborder) {
+        this.dragBorderEventInit(); //列宽
+      }
+      if (dragborder) {
+        this.dragAbleEventInit(); //交换列
+      }
+      if (this.table && this.table.tr) {
+        this.eventListen([{ key: 'mousedown', fun: this.onTrMouseDown }], '', this.table.tr[0]); //body mouseup
+      }
+      this.eventListen([{ key: 'mouseup', fun: this.bodyonLineMouseUp }], '', document.body); //body mouseup
     }
-    this.eventListen([{ key: 'mouseup', fun: this.bodyonLineMouseUp }], '', document.body); //body mouseup
   };
 
   /**
@@ -673,15 +687,15 @@ var TableHeader = function (_Component) {
   TableHeader.prototype.render = function render() {
     var _this2 = this;
 
-    var _props = this.props,
-        clsPrefix = _props.clsPrefix,
-        rowStyle = _props.rowStyle,
-        draggable = _props.draggable,
-        dragborder = _props.dragborder,
-        rows = _props.rows,
-        filterable = _props.filterable,
-        fixed = _props.fixed,
-        lastShowIndex = _props.lastShowIndex;
+    var _props2 = this.props,
+        clsPrefix = _props2.clsPrefix,
+        rowStyle = _props2.rowStyle,
+        draggable = _props2.draggable,
+        dragborder = _props2.dragborder,
+        rows = _props2.rows,
+        filterable = _props2.filterable,
+        fixed = _props2.fixed,
+        lastShowIndex = _props2.lastShowIndex;
 
 
     var attr = dragborder ? { id: "u-table-drag-thead-" + this.theadKey } : {};
@@ -694,7 +708,7 @@ var TableHeader = function (_Component) {
         var _rowLeng = row.length - 1;
         return _react2["default"].createElement(
           "tr",
-          { key: index, style: rowStyle, aaaa: true, className: filterable && index == rows.length - 1 ? 'filterable' : '' },
+          { key: index, style: rowStyle, className: filterable && index == rows.length - 1 ? 'filterable' : '' },
           row.map(function (da, columIndex, arr) {
             var thHover = da.drgHover ? " " + clsPrefix + "-thead th-drag-hover" : "";
             delete da.drgHover;

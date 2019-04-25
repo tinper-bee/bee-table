@@ -14,9 +14,13 @@ const scrollbarMeasure = {
 };
 
 export function measureScrollbar(direction = 'vertical') {
+  
   if (typeof document === 'undefined' || typeof window === 'undefined') {
     return 0;
   }
+  const tableDom =document.querySelector('.u-table');
+  let currentDom = tableDom?tableDom:document.body;
+
   if (scrollbarSize) {
     return scrollbarSize;
   }
@@ -24,7 +28,7 @@ export function measureScrollbar(direction = 'vertical') {
   Object.keys(scrollbarMeasure).forEach(scrollProp => {
     scrollDiv.style[scrollProp] = scrollbarMeasure[scrollProp];
   });
-  document.body.appendChild(scrollDiv);
+  currentDom.appendChild(scrollDiv);
   let size = 0;
   if (direction === 'vertical') {
     size = scrollDiv.offsetWidth - scrollDiv.clientWidth;
@@ -32,7 +36,7 @@ export function measureScrollbar(direction = 'vertical') {
     size = scrollDiv.offsetHeight - scrollDiv.clientHeight;
   }
 
-  document.body.removeChild(scrollDiv);
+  currentDom.removeChild(scrollDiv);
   scrollbarSize = size;
   return scrollbarSize;
 }

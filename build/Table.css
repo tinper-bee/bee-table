@@ -146,7 +146,7 @@
     width: 16px;
     height: 16px;
     text-align: center;
-    line-height: 16px;
+    line-height: 14px;
     border: 1px solid rgb(193, 199, 208);
     user-select: none;
     background: #fff;
@@ -162,9 +162,9 @@
   .u-table-row.selected {
     background: #FFF7E7; }
   .u-table tr.u-table-expanded-row {
-    background: #f7f7f7; }
+    background: #DFE1E6; }
     .u-table tr.u-table-expanded-row:hover {
-      background: #f7f7f7; }
+      background: #DFE1E6; }
     .u-table tr.u-table-expanded-row .u-table {
       z-index: 1; }
   .u-table-column-hidden {
@@ -320,8 +320,8 @@
   .u-table-filter-column-filter-icon {
     position: absolute;
     width: 30px;
-    height: 38px;
-    line-height: 38px;
+    height: 39px;
+    line-height: 39px;
     right: 0px;
     top: 1px;
     z-index: 2;
@@ -337,7 +337,7 @@
     cursor: pointer; }
     .u-table-filter-column-pop-cont-item .u-checkbox {
       margin: 0px; }
-  .u-table-filter-column-pop-cont-item > span {
+  .u-table-filter-column-pop-cont-item span.drop-menu-title {
     margin-left: -3px;
     max-width: 132px;
     width: auto !important;
@@ -356,7 +356,8 @@
   .u-table .u-checkbox {
     height: 14px;
     line-height: 14px;
-    margin: 0px; }
+    margin: 0px;
+    display: block; }
     .u-table .u-checkbox .u-checkbox-label {
       line-height: 14px;
       padding-left: 16px; }
@@ -367,6 +368,22 @@
     padding-left: 12px; }
   .u-table.has-fixed-left .u-table-scroll tr td:first-child, .u-table.has-fixed-left .u-table-scroll tr th:first-child {
     padding-left: 8px; }
+  .u-table ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px; }
+  .u-table ::-webkit-scrollbar-button {
+    display: none; }
+  .u-table ::-webkit-scrollbar-thumb {
+    background: #d5d5d5 !important;
+    border-radius: 5px; }
+  .u-table ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: #d5d5d5;
+    position: absolute; }
+  .u-table ::-webkit-scrollbar-track {
+    display: none; }
+  .u-table ::-webkit-scrollbar-track-piece {
+    display: none; }
 
 .u-table:focus {
   outline: none;
@@ -578,28 +595,6 @@
 .u-row-hover2 {
   position: absolute;
   left: 100; }
-
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px; }
-
-::-webkit-scrollbar-button {
-  display: none; }
-
-::-webkit-scrollbar-thumb {
-  background: #d5d5d5 !important;
-  border-radius: 5px; }
-
-::-webkit-scrollbar-thumb {
-  border-radius: 4px;
-  background-color: #d5d5d5;
-  position: absolute; }
-
-::-webkit-scrollbar-track {
-  display: none; }
-
-::-webkit-scrollbar-track-piece {
-  display: none; }
 
 .header-dispaly-in-row.u-table table {
   table-layout: fixed; }

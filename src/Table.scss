@@ -270,7 +270,7 @@ $icon-color:#505F79;
       width: 16px;
       height: 16px;
       text-align: center;
-      line-height: 16px;
+      line-height: 14px;
       border: 1px solid $table-border-color;
       user-select: none;
       background: #fff;
@@ -297,9 +297,9 @@ $icon-color:#505F79;
     }
   }
   tr.u-table-expanded-row {
-    background: #f7f7f7;
+    background: #DFE1E6;
     &:hover {
-      background: #f7f7f7;
+      background: #DFE1E6;
     }
     .u-table {
       // padding: 0 40px 0 20px;
@@ -546,8 +546,8 @@ $icon-color:#505F79;
     &-filter-icon{
       position: absolute;
       width: 30px;
-      height: 38px ;
-      line-height: 38px;
+      height: 39px ;
+      line-height: 39px;
       right: 0px ;
       top:1px ;
       z-index: 2;
@@ -596,6 +596,7 @@ $icon-color:#505F79;
     height: $checkbox-height;
     line-height:  $checkbox-height;
     margin:0px;
+    display: block;
     .u-checkbox-label{
       line-height:  $checkbox-height;
       padding-left: 16px;
@@ -620,6 +621,31 @@ $icon-color:#505F79;
         }
       }
     }
+  }
+  // 滚动条样式复写
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #d5d5d5 !important;
+    border-radius: 5px;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: #d5d5d5;
+    position: absolute;
+  }
+
+  ::-webkit-scrollbar-track {
+    display: none;
+  }
+
+  ::-webkit-scrollbar-track-piece {
+    display: none;
   }
 }
 .u-table:focus{
@@ -901,31 +927,7 @@ $icon-color:#505F79;
   left: 100;
 }
 
-// 滚动条样式复写
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-::-webkit-scrollbar-button {
-  display: none;
-}
-::-webkit-scrollbar-thumb {
-  background: #d5d5d5 !important;
-  border-radius: 5px;
-}
-::-webkit-scrollbar-thumb {
-  border-radius: 4px;
-  background-color: #d5d5d5;
-  position: absolute;
-}
 
-::-webkit-scrollbar-track {
-  display: none;
-}
-
-::-webkit-scrollbar-track-piece {
-  display: none;
-}
 
 // 表格显示里面的内容显示在一行
 .header-dispaly-in-row{

@@ -8,7 +8,6 @@
 // @import "../node_modules/bee-pagination/src/Pagination.scss";
 // @import "../node_modules/bee-checkbox/src/Checkbox.scss";
 // @import "../node_modules/bee-select/src/Select.scss";
-// @import "../node_modules/bee-form/src/Form.scss";
 // @import "../node_modules/bee-popover/src/Popover.scss";
 // @import "../node_modules/bee-tooltip/src/Tooltip.scss";
 // @import "../node_modules/bee-message/build/Message.css";
@@ -34,9 +33,12 @@
 
 }
 .opt-btns .u-button{
+  margin: 0 4px;
   color: #fff;
   background: #505F79;
+  border-color: #505F79;
   &:hover, &:active{
     background: #344563;
+    border-color: #505F79;
   }
 }

@@ -13,19 +13,19 @@ import Table from '../../src';
 
 const columns4 = [
   {
-    title: "Name",
+    title: "订单编号",
     dataIndex: "name",
     key: "name",
     width: "40%"
   },
   {
-    title: "Age",
+    title: "单据日期",
     dataIndex: "age",
     key: "age",
     width: "30%"
   },
   {
-    title: "Address",
+    title: "供应商",
     dataIndex: "address",
     key: "address"
   }
@@ -34,53 +34,53 @@ const columns4 = [
 const data4 = [
   {
     key: 1,
-    name: "John Brown sr.",
-    age: 60,
-    address: "New York No. 1 Lake Park",
+    name: "NU0391001",
+    age: "2019-03-01",
+    address: "供应商1",
     children: [
       {
         key: 11,
-        name: "John Brown",
-        age: 42,
-        address: "New York No. 2 Lake Park"
+        name: "NU0391002",
+        age: "2019-03-02",
+        address: "供应商2"
       },
       {
         key: 12,
-        name: "John Brown jr.",
-        age: 30,
-        address: "New York No. 3 Lake Park",
+        name: "NU0391003",
+        age: "2019-03-03",
+        address: "供应商3",
         children: [
           {
             key: 121,
-            name: "Jimmy Brown",
-            age: 16,
-            address: "New York No. 3 Lake Park"
+            name: "NU0391004",
+            age: "2019-03-04",
+            address: "供应商4"
           }
         ]
       },
       {
         key: 13,
-        name: "Jim Green sr.",
-        age: 72,
-        address: "London No. 1 Lake Park",
+        name: "NU0391005",
+        age: "2019-03-05",
+        address: "供应商5",
         children: [
           {
             key: 131,
-            name: "Jim Green",
-            age: 42,
-            address: "London No. 2 Lake Park",
+            name: "NU0391006",
+            age: "2019-03-06",
+            address: "供应商6",
             children: [
               {
                 key: 1311,
-                name: "Jim Green jr.",
-                age: 25,
-                address: "London No. 3 Lake Park"
+                name: "NU0391007",
+                age: "2019-03-07",
+                address: "供应商7"
               },
               {
                 key: 1312,
-                name: "Jimmy Green sr.",
-                age: 18,
-                address: "London No. 4 Lake Park"
+                name: "NU0391008",
+                age: "2019-03-08",
+                address: "供应商8"
               }
             ]
           }
@@ -90,9 +90,9 @@ const data4 = [
   },
   {
     key: 2,
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park"
+    name: "NU0391009",
+    age: "2019-03-09",
+    address: "供应商9"
   }
 ];
 class Demo4 extends Component {

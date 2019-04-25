@@ -3,7 +3,7 @@
  * @title 单元格编辑
  * @parent 编辑 Editor
  * @description 可以对单元格进行编辑的表格，示例中给出输入框、下拉框、参照的编辑模式，以及两类校验。（通过对 coloums 配置 render 属性实现渲染不同格式的编辑态单元格）
- *
+ * demo0502
  */
 import React, { Component } from "react";
 import Table from "../../src";

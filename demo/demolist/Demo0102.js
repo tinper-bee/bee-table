@@ -9,9 +9,8 @@
 
 import React, { Component } from 'react';
 import Table from '../../src';
-import Icon from 'bee-icon';
 
-const columns02 = [
+const columns = [
     {
       title: "员工编号",
       dataIndex: "num",
@@ -31,7 +30,7 @@ const columns02 = [
     }
 ];
   
-const data02 = [];
+const data = [];
 
 // 在此自定义无数据时的展示内容
 const emptyFunc = () => 'No Data';
@@ -40,8 +39,8 @@ class Demo02 extends Component {
   render() {
     return (
       <Table 
-      columns={columns02} 
-      data={data02} 
+      columns={columns} 
+      data={data} 
       // emptyText={emptyFunc} 
       />
     )

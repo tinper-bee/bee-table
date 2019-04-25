@@ -1,6 +1,6 @@
 /**
 *
-* @title 多选表格
+* @title 多选功能
 * @parent 行操作-选择
 * @description 支持多选、全选和禁止选择。getSelectedDataFunc方法是选中行的回调函数，返回当前选中的数据数组。给data数据添加_checked参数可设置当前数据是否选中，添加_disabled参数可禁止选择当前数据。
 * demo1301

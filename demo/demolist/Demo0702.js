@@ -6,10 +6,6 @@
 * demo0702
 */
 
-/**
- * @description 
- */
-
 import React, { Component } from 'react';
 import {Icon,Checkbox,Dropdown,Menu} from "tinper-bee";
 
@@ -17,8 +13,7 @@ import Table from '../../src';
 import multiSelect from '../../src/lib/multiSelect';
 import sort from '../../src/lib/sort';
 
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
+const { Item } = Menu;
 
 const data27 = [
   {
@@ -106,38 +101,34 @@ class Demo27 extends Component {
   getSelectedDataFunc = data => {
     console.log(data);
   }
-  onClick = (item) => {
+  onSelect = (item) => {
     console.log(item);
   }
 
   render() {
     const menu1 = (
-      <Menu onClick={this.onClick} style={{ width: 240 }} mode="vertical" >
-        <SubMenu key="sub1" title={<span><span>组织 1</span></span>}>
-          <MenuItemGroup title="Item 1">
-            <Menu.Item key="1">选项 1</Menu.Item>
-            <Menu.Item key="2">选项 2</Menu.Item>
-          </MenuItemGroup>
-          <MenuItemGroup title="Iteom 2">
-            <Menu.Item key="3">选项 3</Menu.Item>
-            <Menu.Item key="4">选项 4</Menu.Item>
-          </MenuItemGroup>
-        </SubMenu>
-      </Menu>)
+      <Menu
+          onSelect={this.onSelect}>
+          <Item key="1">模态弹出</Item>
+          <Item key="2">链接跳转</Item>
+          <Item key="3">打开新页</Item>
+      </Menu>);
     let multiObj = {
       type: "checkbox"
     };
     let columns27 = [
-      {
-        title: "", width: 40, dataIndex: "key", key: "key", render: (text, record, index) => {
-          return <Dropdown
-            trigger={['click']}
-            overlay={menu1}
-            animation="slide-up"
-          >
-            <Icon style={{ "visibility": "hidden" }} type="uf-eye" />
-          </Dropdown>
-        }
+      { title: "关联",dataIndex: "link",key: "link",width: 80, 
+          render: (text, record, index) => {
+            return (
+              <Dropdown
+                  trigger={['click']}
+                  overlay={menu1}
+                  animation="slide-up"
+              >
+                  <Icon type="uf-link" style={{color:'rgb(0, 72, 152)',fontSize:'12px'}}></Icon>
+              </Dropdown>
+            )
+          }
       },
       {
         title: "姓名",
