@@ -70,6 +70,8 @@ import 'bee-table/build/Table.css';
 | height | 自定义表格行高 | number | - |
 | headerHeight | 自定义表头行高 | number | - |
 | size | 表格大小 | `sm | md | lg` | 'md' |
+| headerDisplayInRow | 设置表头的内容显示一行，超出显示省略号 | bool |
+| bodyDisplayInRow |  设置表体的内容显示一行，超出显示省略号 | bool | 
 
 > 快捷键部分参考示例 (快捷键在table中的简单使用应用)
 
@@ -103,8 +105,7 @@ import 'bee-table/build/Table.css';
 | filterDropdownIncludeKeys | 能够设置指定的下拉条件项，通过设置keys 其中string条件可设置:LIKE,ULIKE,EQ,UEQ,START,END.number条件可设置:GT,GTEQ,LT,LTEQ,EQ,UEQ | array | [] 不设置此属性为显示所有
 | filterInputNumberOptions | 数值框接收的props，具体属性参考bee-input-number | object | null
 | textAlign | 内容对齐方式，默认是左对齐（'left、right、center'） | string |
-| headerDisplayInRow | 设置表头的内容显示一行，超出显示省略号 | bool |
-| bodyDisplayInRow |  设置表体的内容显示一行，超出显示省略号 | bool | 
+
 
 ## mixin
 
