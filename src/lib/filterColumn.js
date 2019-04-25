@@ -102,11 +102,11 @@ export default function filterColumn(Table, Popover) {
               this.checkedColumItemClick(da);
             }
           }
-          
           return (
             <div
               key={da.key + "_" + i}
               className={`${prefixCls}-pop-cont-item`}
+              onClick={paramObj.onClick?paramObj.onClick:null}
             >
             <Checkbox {...paramObj}>
             
