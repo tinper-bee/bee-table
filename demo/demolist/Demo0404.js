@@ -77,7 +77,7 @@ class Demo33 extends Component {
                             overlay={menu1}
                             animation="slide-up"
                         >
-                            <Icon type="uf-link" style={{color:'rgb(0, 72, 152)'}}></Icon>
+                            <Icon type="uf-link" style={{color:'rgb(0, 72, 152)',fontSize:'12px'}}></Icon>
                         </Dropdown>
                     )
                 }

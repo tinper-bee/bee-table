@@ -92,7 +92,10 @@ class Demo105 extends Component {
   }
 
   getHoverContent=()=>{
-    return <div className="opt-btns"><Button size="sm" onClick={this.handleClick}>一些操作</Button> </div>
+    return <div className="opt-btns">
+            <Button size="sm" onClick={this.handleClick}>编辑</Button> 
+            <Button size="sm" onClick={this.handleClick}>删除</Button> 
+           </div>
   }
 
   render() {

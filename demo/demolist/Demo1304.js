@@ -1,8 +1,8 @@
 /**
 *
-* @title 表格单选，且选中行填充颜色
-* @parent 表格-单选-radio-行选中
-* @description 表格增加单选、radio 和背景色的示例。
+* @title 单选功能
+* @parent 行操作-选择
+* @description 表格支持单选行操作，可自定义选中行背景色。
 * Demo1304
 */
 
@@ -10,8 +10,6 @@ import React, { Component } from "react";
 import {Button,Tooltip,Radio} from "tinper-bee";
 
 import Table from "../../src";
-
-
 
 const data = [
   { check: "ASVAL_201903280005",a: "ASVAL_201903280005", b: "小张", c: "男", d: "财务二科", key: "1" },

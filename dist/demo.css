@@ -631,10 +631,13 @@
     right: 15px; }
 
 .opt-btns .u-button {
+  margin: 0 4px;
   color: #fff;
-  background: #505F79; }
+  background: #505F79;
+  border-color: #505F79; }
   .opt-btns .u-button:hover, .opt-btns .u-button:active {
-    background: #344563; }
+    background: #344563;
+    border-color: #505F79; }
 
 .demo04.u-table tr:nth-child(2n) {
   background: #f7f9fb; }
