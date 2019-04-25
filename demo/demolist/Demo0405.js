@@ -7,13 +7,13 @@
  */
 
 import React, { Component } from "react";
-import {Button,Checkbox} from "tinper-bee";
+import {Checkbox} from "tinper-bee";
 import Table from "../../src"; 
 import sum from "../../src/lib/sum.js";
 import multiSelect from "../../src/lib/multiSelect.js";
  
 let ComplexTable = multiSelect(sum(Table), Checkbox);
-
+let _sum = 0;
 const columns = [
   {
     title: "单据编号",
@@ -81,6 +81,8 @@ function getData(){
       total: i + Math.floor(Math.random()*10),
       money: 20 *  Math.floor(Math.random()*10)
     });
+    _sum += data[i].total;
+    _sum += data[i].money;
   }
   return data;
 }
@@ -90,32 +92,20 @@ class Demo35 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: getData()
+      data: getData(),
+      sum:_sum
     };
-  }
-
-  changeData = ()=>{
-    this.setState({
-      data: getData()
-    });
   }
 
   render() {
     const {data} = this.state;
     return (
       <div>
-        <Button 
-          className="editable-add-btn"
-          onClick={this.changeData}
-        >
-          动态设置数据源
-        </Button>
-
          <ComplexTable 
           columns={columns}
           data={data}
           bordered
-          // scroll={{ x: "130%", y: 140 }}
+          footer={currentData => <div>总计: {_sum}</div>}
         />
       </div>
     );

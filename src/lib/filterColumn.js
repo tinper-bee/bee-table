@@ -110,7 +110,7 @@ export default function filterColumn(Table, Popover) {
             >
             <Checkbox {...paramObj}>
             
-              <span>{da.title}</span>
+              {da.title}
             </Checkbox>
             </div>
           );
