@@ -54,6 +54,7 @@ const propTypes = {
   tabIndex:PropTypes.string,
   hoverContent:PropTypes.func,
   size: PropTypes.oneOf(['sm', 'md', 'lg']),
+  rowDraggAble: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -88,7 +89,8 @@ const defaultProps = {
   setRowParentIndex:()=>{},
   tabIndex:'0',
   heightConsistent:false,
-  size: 'md'
+  size: 'md',
+  rowDraggAble:false
 };
 
 class Table extends Component {
@@ -522,10 +524,25 @@ class Table extends Component {
         indent={1}
         expandable={false}
         store={this.store}
-        dragborderKey={this.props.dragborderKey}
+        dragborderKey={this.props.dragborderKey} 
+        rowDraggAble={props.rowDraggAble}
+        onDragRow={this.onDragRow}
       />
     );
   }
+
+  onDragRow = (currentIndex,targetIndex)=>{
+    let {data} = this.state,
+    currentObj = data[currentIndex],
+    targetObj = data[targetIndex];
+    console.log(currentIndex+" ----------onRowDragEnd-------- "+targetIndex);
+    data.splice(targetIndex, 0, data.splice(currentIndex, 1).shift());
+    console.log(" _data---- ",data);
+    this.setState({
+      data: data,
+    });
+  }
+
   /**
    *
    *
@@ -660,6 +677,9 @@ class Table extends Component {
           rootIndex = {rootIndex}
           syncHover = {props.syncHover}
           bodyDisplayInRow = {props.bodyDisplayInRow}
+          rowDraggAble={props.rowDraggAble}
+          onDragRow={this.onDragRow}
+          contentTable={this.contentTable}
         />
       );
       this.treeRowIndex++;

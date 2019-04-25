@@ -70,6 +70,8 @@ import 'bee-table/build/Table.css';
 | height | 自定义表格行高 | number | - |
 | headerHeight | 自定义表头行高 | number | - |
 | size | 表格大小 | `sm | md | lg` | 'md' |
+| rowDraggAble  | 是否增加行交换顺序功能 | boolean| false
+
 
 > 快捷键部分参考示例 (快捷键在table中的简单使用应用)
 
