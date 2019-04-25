@@ -1,9 +1,9 @@
 /**
 *
-* @title 基本表格
+* @title 带边框
 * @parent 基础 Basic
-* @description 单元格数据过长时，可结合Tooltip组件使用。
-* demo0101
+* @description 设置 `bordered` 属性可添加表格边框线。
+* demo0107
 */
 
 import React, { Component } from "react";
@@ -24,15 +24,16 @@ const data = [
   { a: "ASVAL_20190312", b: "小红", c: "女", d: "财务一科", e: "T2", key: "3" }
 ];
 
-class Demo0101 extends Component {
+class Demo06 extends Component {
   render() {
     return (
         <Table
           columns={columns}
           data={data}
+          bordered
         />
     );
   }
 }
 
-export default Demo0101;
+export default Demo06;

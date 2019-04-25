@@ -270,7 +270,7 @@ $icon-color:#505F79;
       width: 16px;
       height: 16px;
       text-align: center;
-      line-height: 16px;
+      line-height: 14px;
       border: 1px solid $table-border-color;
       user-select: none;
       background: #fff;
@@ -297,9 +297,9 @@ $icon-color:#505F79;
     }
   }
   tr.u-table-expanded-row {
-    background: #f7f7f7;
+    background: #DFE1E6;
     &:hover {
-      background: #f7f7f7;
+      background: #DFE1E6;
     }
     .u-table {
       // padding: 0 40px 0 20px;

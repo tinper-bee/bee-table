@@ -146,7 +146,7 @@
     width: 16px;
     height: 16px;
     text-align: center;
-    line-height: 16px;
+    line-height: 14px;
     border: 1px solid rgb(193, 199, 208);
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -165,9 +165,9 @@
   .u-table-row.selected {
     background: #FFF7E7; }
   .u-table tr.u-table-expanded-row {
-    background: #f7f7f7; }
+    background: #DFE1E6; }
     .u-table tr.u-table-expanded-row:hover {
-      background: #f7f7f7; }
+      background: #DFE1E6; }
     .u-table tr.u-table-expanded-row .u-table {
       z-index: 1; }
   .u-table-column-hidden {
