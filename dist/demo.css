@@ -8627,6 +8627,22 @@ ul {
     padding-left: 12px; }
   .u-table.has-fixed-left .u-table-scroll tr td:first-child, .u-table.has-fixed-left .u-table-scroll tr th:first-child {
     padding-left: 8px; }
+  .u-table ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px; }
+  .u-table ::-webkit-scrollbar-button {
+    display: none; }
+  .u-table ::-webkit-scrollbar-thumb {
+    background: #d5d5d5 !important;
+    border-radius: 5px; }
+  .u-table ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: #d5d5d5;
+    position: absolute; }
+  .u-table ::-webkit-scrollbar-track {
+    display: none; }
+  .u-table ::-webkit-scrollbar-track-piece {
+    display: none; }
 
 .u-table:focus {
   outline: none;
@@ -8840,28 +8856,6 @@ ul {
 .u-row-hover2 {
   position: absolute;
   left: 100; }
-
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px; }
-
-::-webkit-scrollbar-button {
-  display: none; }
-
-::-webkit-scrollbar-thumb {
-  background: #d5d5d5 !important;
-  border-radius: 5px; }
-
-::-webkit-scrollbar-thumb {
-  border-radius: 4px;
-  background-color: #d5d5d5;
-  position: absolute; }
-
-::-webkit-scrollbar-track {
-  display: none; }
-
-::-webkit-scrollbar-track-piece {
-  display: none; }
 
 .header-dispaly-in-row.u-table table {
   table-layout: fixed; }
