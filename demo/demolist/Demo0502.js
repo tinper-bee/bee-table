@@ -1,6 +1,7 @@
 /**
  *
  * @title 单元格编辑
+ * @parent 编辑 Editor
  * @description 可以对单元格进行编辑的表格，示例中给出输入框、下拉框、参照的编辑模式，以及两类校验。（通过对 coloums 配置 render 属性实现渲染不同格式的编辑态单元格）
  *
  */
@@ -17,6 +18,7 @@ class StringEditCell extends Component {
       value: this.props.value,
       editable: false
     };
+    this.editWarp = React.createRef();
   }
 
   commitChange = () => {
@@ -38,6 +40,7 @@ class StringEditCell extends Component {
   };
 
   handleChange = e => {
+    if (e.target.value === "") this.editWarp.className += " verify-cell";
     this.setState({ value: e.target.value });
   };
 
@@ -46,7 +49,7 @@ class StringEditCell extends Component {
     return (
       <div className="editable-cell">
         {editable ? (
-          <div className="editable-cell-input-wrapper">
+          <div ref={el => this.editWarp = el} className="editable-cell-input-wrapper">
             <input
               className={value ? "u-form-control" : "u-form-control error"}
               autoFocus
@@ -59,10 +62,10 @@ class StringEditCell extends Component {
             {value === "" ? (
               <Tooltip
                 inverse
-                className="tp-0502"
+                className="u-editable-table-tp"
                 placement="bottom"
                 overlay={
-                  <div className="help-tip">
+                  <div className="tp-content">
                     {"请输入" + this.props.colName}
                   </div>
                 }
@@ -489,7 +492,7 @@ class Demo0502 extends Component {
 
   render() {
     return (
-      <div className="demo0502">
+      <div className="demo0502 u-editable-table">
         <Table data={this.state.dataSource} columns={this.columns} />
       </div>
     );

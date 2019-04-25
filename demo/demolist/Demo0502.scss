@@ -1,21 +1,28 @@
-.demo0502 {
+.u-editable-table .u-table {
   .u-table-row {
     td {
       padding: 5px 8px;
 
-      input.error {
-        border-color: #F44336;
+      input {
+        padding-left: 5px;
+        font-size: 12px;
+
+        &.error {
+          border-color: #F44336;
+        }
       }
     }
+
     .editable-cell {
       height: 30px;
     }
+
     &-hover {
       .editable-cell-text-wrapper {
-        line-height: 18px;
-        border: 1px solid #c1c7d0;
+        line-height: 19px;
       }
     }
+
     .u-form-control,
     .u-select-selection {
       height: 30px;
@@ -26,11 +33,14 @@
     box-sizing: border-box;
     line-height: 20px;
     border-radius: 3px;
+  }
 
-    &:hover {
-      line-height: 18px;
-      border: 1px solid #a5adba;
-    }
+  .editable-cell-input-wrapper {
+    padding-right: 0;
+  }
+
+  .verify-cell {
+    padding-right: 25px !important;
   }
 
   .require {
@@ -41,16 +51,8 @@
   }
 }
 
-.help-tip {
-  color: #F44336;
-}
-
-.tp-0502 {
-  .tooltip-arrow {
-    border-bottom-color: #F44336 !important;
-  }
-
-  .tooltip-inner {
-    border-color: #F44336 !important;
+.u-editable-table-tp {
+  .tp-content {
+    color: #F44336;
   }
 }

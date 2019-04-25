@@ -959,3 +959,36 @@ $icon-color:#505F79;
   position: absolute;
   top:-1000px;
 }
+
+.u-editable-table .u-table {
+  .u-table-row-hover {
+    .editable-cell-text-wrapper {
+      padding-left: 4px;
+      border: 1px solid #c1c7d0;
+    }
+  }
+
+  .editable-cell-text-wrapper {
+    &:hover {
+      padding-left: 4px;
+      border: 1px solid #a5adba;
+    }
+  }
+
+  .editable-cell-input-wrapper {
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.u-editable-table-tp {
+  .tooltip-arrow {
+    top: 1px !important;
+    border-bottom-color: #F44336 !important;
+  }
+
+  .tooltip-inner {
+    border-color: #F44336 !important;
+  }
+}
