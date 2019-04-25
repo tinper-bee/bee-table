@@ -388,7 +388,7 @@ class TableRow extends Component{
         onMouseLeave={this.onMouseLeave}
         className={`${clsPrefix} ${className} ${clsPrefix}-level-${indent}`}
         style={style}
-        data-row-key={record.key}
+        data-row-key={record && record.key?record.key:"null"}
         // key={hoverKey}
         ref={this.bindElement}
       >
