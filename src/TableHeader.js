@@ -632,7 +632,7 @@ class TableHeader extends Component {
       <thead className={`${clsPrefix}-thead`} {...attr} data-theader-fixed='scroll' ref={_thead=>this._thead = _thead} >
         {rows.map((row, index) => {
           let _rowLeng = (row.length-1);
-          return(<tr key={index} style={rowStyle} aaaa className={(filterable && index == rows.length - 1)?'filterable':''}>
+          return(<tr key={index} style={rowStyle} className={(filterable && index == rows.length - 1)?'filterable':''}>
             {row.map((da, columIndex, arr) => {
               let thHover = da.drgHover
                 ? ` ${clsPrefix}-thead th-drag-hover`

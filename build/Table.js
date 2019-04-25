@@ -680,7 +680,7 @@ var Table = function (_Component) {
       expandable: false,
       store: this.store,
       dragborderKey: this.props.dragborderKey,
-      rowDraggAble: props.rowDraggAble,
+      rowDraggAble: this.props.rowDraggAble,
       onDragRow: this.onDragRow
     });
   };
@@ -818,7 +818,7 @@ var Table = function (_Component) {
         rootIndex: rootIndex,
         syncHover: props.syncHover,
         bodyDisplayInRow: props.bodyDisplayInRow,
-        rowDraggAble: props.rowDraggAble,
+        rowDraggAble: this.props.rowDraggAble,
         onDragRow: this.onDragRow,
         contentTable: this.contentTable
       })));
