@@ -337,7 +337,7 @@
     cursor: pointer; }
     .u-table-filter-column-pop-cont-item .u-checkbox {
       margin: 0px; }
-  .u-table-filter-column-pop-cont-item > span {
+  .u-table-filter-column-pop-cont-item span.drop-menu-title {
     margin-left: -3px;
     max-width: 132px;
     width: auto !important;
