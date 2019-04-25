@@ -12,6 +12,8 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
+var _utils = require('./utils');
+
 var _TableCell = require('./TableCell');
 
 var _TableCell2 = _interopRequireDefault(_TableCell);
@@ -52,7 +54,9 @@ var propTypes = {
   indentSize: _propTypes2["default"].number,
   expandIconAsCell: _propTypes2["default"].bool,
   expandRowByClick: _propTypes2["default"].bool,
-  store: _propTypes2["default"].object.isRequired
+  store: _propTypes2["default"].object.isRequired,
+  rowDraggAble: _propTypes2["default"].bool,
+  onDragRow: _propTypes2["default"].func
 };
 
 var defaultProps = {
@@ -65,7 +69,9 @@ var defaultProps = {
   onHover: function onHover() {},
 
   className: '',
-  setRowParentIndex: function setRowParentIndex() {}
+  setRowParentIndex: function setRowParentIndex() {},
+  rowDraggAble: false
+  // onDragRow:()=>{}
 };
 
 var TableRow = function (_Component) {
@@ -75,6 +81,112 @@ var TableRow = function (_Component) {
     _classCallCheck(this, TableRow);
 
     var _this = _possibleConstructorReturn(this, _Component.call(this, props));
+
+    _this.initEvent = function () {
+      var events = [{ key: 'dragstart', fun: _this.onDragStart }, //用户开始拖动元素时触发
+      { key: 'dragover', fun: _this.onDragOver }, //当某被拖动的对象在另一对象容器范围内拖动时触发此事件
+      { key: 'drop', fun: _this.onDrop }, //在一个拖动过程中，释放鼠标键时触发此事件 
+
+      { key: 'dragenter', fun: _this.onDragEnter }, { key: 'dragleave', fun: _this.onDragLeave }];
+      _this.eventListen(events, '', _this.element);
+    };
+
+    _this.removeDragAbleEvent = function () {
+      var events = [{ key: 'dragstart', fun: _this.onDragStart }, { key: 'dragover', fun: _this.onDragOver }, { key: 'drop', fun: _this.onDrop }, { key: 'dragenter', fun: _this.onDragEnter }, { key: 'dragleave', fun: _this.onDragLeave }];
+      _this.eventListen(events, 'remove', _this.element);
+    };
+
+    _this.onDragStart = function (e) {
+      if (!_this.props.rowDraggAble) return;
+      var event = _utils.Event.getEvent(e),
+          target = _utils.Event.getTarget(event);
+      _this.currentIndex = target.getAttribute("data-row-key");
+      _this._dragCurrent = target;
+      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.setData("Text", _this.currentIndex);
+    };
+
+    _this.onDragOver = function (e) {
+      var event = _utils.Event.getEvent(e);
+      event.preventDefault();
+    };
+
+    _this.onDrop = function (e) {
+      var _this$props = _this.props,
+          rowDraggAble = _this$props.rowDraggAble,
+          onDragRow = _this$props.onDragRow;
+
+      var event = _utils.Event.getEvent(e),
+          _target = _utils.Event.getTarget(event),
+          target = _target.parentNode;
+      var currentIndex = target.getAttribute("data-row-key");
+      if (!currentIndex || currentIndex === _this.currentIndex) return;
+      if (target.nodeName.toUpperCase() === "TR") {
+        _this.synchronizeTableTr(_this.currentIndex, null);
+        // target.setAttribute("style","");
+        // this.synchronizeTrStyle(this.currentIndex,false);
+      }
+      var _currentIndex = event.dataTransfer.getData("text");
+      onDragRow && onDragRow(parseInt(_this.currentIndex--), parseInt(currentIndex--));
+    };
+
+    _this.synchronizeTableTr = function (currentIndex, type) {
+      var contentTable = _this.props.contentTable;
+
+      var _table_trs = contentTable.querySelector('.u-table-scroll table tbody'),
+          _table_fixed_left_trs = contentTable.querySelector('.u-table-fixed-left table tbody'),
+          _table_fixed_right_trs = contentTable.querySelector('.u-table-fixed-right table tbody');
+
+      _this.synchronizeTrStyle(_table_trs, currentIndex, type);
+      if (_table_fixed_left_trs) {
+        _this.synchronizeTrStyle(_table_fixed_left_trs, currentIndex, type);
+      }
+      if (_table_fixed_right_trs) {
+        _this.synchronizeTrStyle(_table_fixed_right_trs, currentIndex, type);
+      }
+    };
+
+    _this.synchronizeTrStyle = function (_elementBody, id, type) {
+      var contentTable = _this.props.contentTable,
+          trs = _elementBody.getElementsByTagName("tr"),
+          currentObj = void 0;
+
+      for (var index = 0; index < trs.length; index++) {
+        var element = trs[index];
+        if (element.getAttribute("data-row-key") == id) {
+          currentObj = element;
+        }
+      }
+      if (type) {
+        currentObj && currentObj.setAttribute("style", "border-bottom:2px dashed rgba(5,0,0,0.25)");
+      } else {
+        currentObj && currentObj.setAttribute("style", "");
+      }
+    };
+
+    _this.onDragEnter = function (e) {
+      var event = _utils.Event.getEvent(e),
+          _target = _utils.Event.getTarget(event),
+          target = _target.parentNode;
+      var currentIndex = target.getAttribute("data-row-key");
+      if (!currentIndex || currentIndex === _this.currentIndex) return;
+      if (target.nodeName.toUpperCase() === "TR") {
+        _this.synchronizeTableTr(currentIndex, true);
+        // target.setAttribute("style","border-bottom:2px dashed rgba(5,0,0,0.25)");
+        // // target.style.backgroundColor = 'rgb(235, 236, 240)'; 
+      }
+    };
+
+    _this.onDragLeave = function (e) {
+      var event = _utils.Event.getEvent(e),
+          _target = _utils.Event.getTarget(event),
+          target = _target.parentNode;
+      var currentIndex = target.getAttribute("data-row-key");
+      if (!currentIndex || currentIndex === _this.currentIndex) return;
+      if (target.nodeName.toUpperCase() === "TR") {
+        _this.synchronizeTableTr(currentIndex, null);
+      }
+    };
 
     _this.set = function (fn) {
       _this.clear();
@@ -100,6 +212,7 @@ var TableRow = function (_Component) {
     _this.onMouseEnter = _this.onMouseEnter.bind(_this);
     _this.onMouseLeave = _this.onMouseLeave.bind(_this);
     _this.expandHeight = 0;
+    _this.event = false;
     return _this;
   }
 
@@ -109,7 +222,8 @@ var TableRow = function (_Component) {
     var _props = this.props,
         store = _props.store,
         hoverKey = _props.hoverKey,
-        treeType = _props.treeType;
+        treeType = _props.treeType,
+        rowDraggAble = _props.rowDraggAble;
 
     this.unsubscribe = store.subscribe(function () {
       if (store.getState().currentHoverKey === hoverKey) {
@@ -125,7 +239,61 @@ var TableRow = function (_Component) {
     }
   };
 
+  /**
+   * 事件初始化
+   */
+
+
+  /**
+   * 事件移除，提供性能以及内存泄漏等问题。
+   */
+
+
+  /**
+   * 事件绑定和移除函数
+   */
+  TableRow.prototype.eventListen = function eventListen(events, type, eventSource) {
+    for (var i = 0; i < events.length; i++) {
+      var _event = events[i];
+      if (type === "remove") {
+        _utils.EventUtil.removeHandler(eventSource, _event.key, _event.fun);
+      } else {
+        _utils.EventUtil.addHandler(eventSource, _event.key, _event.fun);
+      }
+    }
+  };
+
+  /**
+   * 开始调整交换列的事件
+   */
+
+
+  /**
+   * 在一个拖动过程中，释放鼠标键时触发此事件。【目标事件】
+   * @memberof TableHeader
+   */
+
+
+  /**
+   * 同步自己,也需要同步当前行的行显示
+   */
+
+
+  /**
+   * 设置同步的style
+   */
+
+
   TableRow.prototype.componentDidUpdate = function componentDidUpdate(prevProps) {
+    var rowDraggAble = this.props.rowDraggAble;
+
+    if (!this.event) {
+      this.event = true;
+      if (rowDraggAble) {
+        this.initEvent();
+      }
+    }
+
     if (this.props.treeType) {
       this.setRowParentIndex();
     }
@@ -136,11 +304,15 @@ var TableRow = function (_Component) {
     var _props2 = this.props,
         record = _props2.record,
         onDestroy = _props2.onDestroy,
-        index = _props2.index;
+        index = _props2.index,
+        rowDraggAble = _props2.rowDraggAble;
 
     onDestroy(record, index);
     if (this.unsubscribe) {
       this.unsubscribe();
+    }
+    if (rowDraggAble) {
+      this.removeDragAbleEvent();
     }
   };
 
@@ -162,7 +334,6 @@ var TableRow = function (_Component) {
         setRowParentIndex = _props4.setRowParentIndex,
         fixedIndex = _props4.fixedIndex,
         rootIndex = _props4.rootIndex;
-    // console.log('rootIndex',rootIndex<0?index:rootIndex,'index',fixedIndex);
 
     setRowParentIndex(rootIndex < 0 ? index : rootIndex, fixedIndex);
   };
@@ -235,6 +406,7 @@ var TableRow = function (_Component) {
         expandIconAsCell = _props9.expandIconAsCell,
         expanded = _props9.expanded,
         expandRowByClick = _props9.expandRowByClick,
+        rowDraggAble = _props9.rowDraggAble,
         expandable = _props9.expandable,
         onExpand = _props9.onExpand,
         needIndentSpaced = _props9.needIndentSpaced,
@@ -250,7 +422,6 @@ var TableRow = function (_Component) {
     if (this.state.hovered) {
       className += ' ' + clsPrefix + '-hover';
     }
-    // console.log('className--'+className,index);
     //判断是否为合计行
     if (className.indexOf('sumrow') > -1) {
       showSum = true;
@@ -297,15 +468,18 @@ var TableRow = function (_Component) {
     if (!visible) {
       style.display = 'none';
     }
+
     return _react2["default"].createElement(
       'tr',
       {
+        draggable: rowDraggAble,
         onClick: this.onRowClick,
         onDoubleClick: this.onRowDoubleClick,
         onMouseEnter: this.onMouseEnter,
         onMouseLeave: this.onMouseLeave,
         className: clsPrefix + ' ' + className + ' ' + clsPrefix + '-level-' + indent,
-        style: style
+        style: style,
+        'data-row-key': record && record.key ? record.key : "null"
         // key={hoverKey}
         , ref: this.bindElement
       },

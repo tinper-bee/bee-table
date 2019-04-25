@@ -146,7 +146,7 @@
     width: 16px;
     height: 16px;
     text-align: center;
-    line-height: 16px;
+    line-height: 14px;
     border: 1px solid rgb(193, 199, 208);
     user-select: none;
     background: #fff;
@@ -162,9 +162,9 @@
   .u-table-row.selected {
     background: #FFF7E7; }
   .u-table tr.u-table-expanded-row {
-    background: #f7f7f7; }
+    background: #DFE1E6; }
     .u-table tr.u-table-expanded-row:hover {
-      background: #f7f7f7; }
+      background: #DFE1E6; }
     .u-table tr.u-table-expanded-row .u-table {
       z-index: 1; }
   .u-table-column-hidden {
@@ -320,8 +320,8 @@
   .u-table-filter-column-filter-icon {
     position: absolute;
     width: 30px;
-    height: 38px;
-    line-height: 38px;
+    height: 39px;
+    line-height: 39px;
     right: 0px;
     top: 1px;
     z-index: 2;
@@ -356,7 +356,8 @@
   .u-table .u-checkbox {
     height: 14px;
     line-height: 14px;
-    margin: 0px; }
+    margin: 0px;
+    display: block; }
     .u-table .u-checkbox .u-checkbox-label {
       line-height: 14px;
       padding-left: 16px; }

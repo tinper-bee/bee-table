@@ -1,5 +1,49 @@
+<a name="2.0.14"></a>
+## [2.0.14](https://github.com/tinper-bee/bee-table/compare/v2.0.13...v2.0.14) (2019-04-25)
+
+
+### Bug Fixes
+
+* filterColumn内容超出8个字显示省略号 ([2878e39](https://github.com/tinper-bee/bee-table/commit/2878e39))
+* 过滤列遮挡行线 ([bc07ab3](https://github.com/tinper-bee/bee-table/commit/bc07ab3))
+
+
+### Features
+
+* 在固定列中使用图片时增加注意事项 ([6ac9f76](https://github.com/tinper-bee/bee-table/commit/6ac9f76))
+* **drag row:** drag row ([81bd1cc](https://github.com/tinper-bee/bee-table/commit/81bd1cc))
+
+
+### BREAKING CHANGES
+
+* **drag row:** drag row
+
+
+
+<a name="2.0.13"></a>
+## [2.0.13](https://github.com/tinper-bee/bee-table/compare/v2.0.12...v2.0.13) (2019-04-23)
+
+
+### Bug Fixes
+
+* 全选表格含有disabled状态并且是勾选状态bug ([162dec5](https://github.com/tinper-bee/bee-table/commit/162dec5))
+* 页面尺寸改变时，重新计算表格宽度 ([7e997b7](https://github.com/tinper-bee/bee-table/commit/7e997b7))
+
+
+### Features
+
+* filterColumn 中item字体为12px，点击文字checkbox也可以选中 ([f8f983f](https://github.com/tinper-bee/bee-table/commit/f8f983f))
+* 增加表格内容是否显示在一行 ([df755b9](https://github.com/tinper-bee/bee-table/commit/df755b9))
+
+
+
 <a name="2.0.12"></a>
-## [2.0.12](https://github.com/tinper-bee/bee-table/compare/v2.0.9...v2.0.12) (2019-04-11)
+## [2.0.12](https://github.com/tinper-bee/bee-table/compare/v2.0.11...v2.0.12) (2019-04-11)
+
+
+
+<a name="2.0.11"></a>
+## [2.0.11](https://github.com/tinper-bee/bee-table/compare/v2.0.10...v2.0.11) (2019-04-09)
 
 
 ### Bug Fixes
@@ -10,23 +54,75 @@
 
 
 
+<a name="2.0.10"></a>
+## [2.0.10](https://github.com/tinper-bee/bee-table/compare/v2.0.9...v2.0.10) (2019-03-29)
+
+
+
 <a name="2.0.9"></a>
-## [2.0.9](https://github.com/tinper-bee/bee-table/compare/v2.0.0...v2.0.9) (2019-03-27)
+## [2.0.9](https://github.com/tinper-bee/bee-table/compare/v2.0.8...v2.0.9) (2019-03-27)
+
+
+
+<a name="2.0.8"></a>
+## [2.0.8](https://github.com/tinper-bee/bee-table/compare/v2.0.7...v2.0.8) (2019-03-25)
+
+
+
+<a name="2.0.7"></a>
+## [2.0.7](https://github.com/tinper-bee/bee-table/compare/v2.0.6...v2.0.7) (2019-03-20)
 
 
 ### Bug Fixes
 
-* **Table.js:** 参照场景中第一次加载表格不撑满问题 ([a9530a4](https://github.com/tinper-bee/bee-table/commit/a9530a4))
-* **行过滤、checkbox样式:** 1、行过滤点击已选的无效2、checkbox在Table中的样式 ([1a628a4](https://github.com/tinper-bee/bee-table/commit/1a628a4))
 * Table 拖拽后同步表格整体宽度 ([ee40deb](https://github.com/tinper-bee/bee-table/commit/ee40deb))
-* 参照场景中表格首次渲染最后一列没有撑开bug ([c705539](https://github.com/tinper-bee/bee-table/commit/c705539))
-* 含有右侧固定列场景中，内容过少不需要滚动条bug ([37b9806](https://github.com/tinper-bee/bee-table/commit/37b9806))
 * 表格key警告问题 ([6977e2f](https://github.com/tinper-bee/bee-table/commit/6977e2f))
 
 
 
+<a name="2.0.6"></a>
+## [2.0.6](https://github.com/tinper-bee/bee-table/compare/v2.0.5...v2.0.6) (2019-03-15)
+
+
+### Bug Fixes
+
+* **行过滤、checkbox样式:** 1、行过滤点击已选的无效2、checkbox在Table中的样式 ([1a628a4](https://github.com/tinper-bee/bee-table/commit/1a628a4))
+
+
+
+<a name="2.0.5"></a>
+## [2.0.5](https://github.com/tinper-bee/bee-table/compare/v2.0.4...v2.0.5) (2019-03-14)
+
+
+### Bug Fixes
+
+* 参照场景中表格首次渲染最后一列没有撑开bug ([c705539](https://github.com/tinper-bee/bee-table/commit/c705539))
+* **Table.js:** 参照场景中第一次加载表格不撑满问题 ([a9530a4](https://github.com/tinper-bee/bee-table/commit/a9530a4))
+
+
+
+<a name="2.0.4"></a>
+## [2.0.4](https://github.com/tinper-bee/bee-table/compare/v2.0.3...v2.0.4) (2019-03-07)
+
+
+### Bug Fixes
+
+* 含有右侧固定列场景中，内容过少不需要滚动条bug ([37b9806](https://github.com/tinper-bee/bee-table/commit/37b9806))
+
+
+
+<a name="2.0.3"></a>
+## [2.0.3](https://github.com/tinper-bee/bee-table/compare/v2.0.0...v2.0.3) (2019-03-05)
+
+
+
 <a name="2.0.0"></a>
-# [2.0.0](https://github.com/tinper-bee/bee-table/compare/v1.6.43...v2.0.0) (2019-03-01)
+# [2.0.0](https://github.com/tinper-bee/bee-table/compare/v1.6.44...v2.0.0) (2019-03-01)
+
+
+
+<a name="1.6.44"></a>
+## [1.6.44](https://github.com/tinper-bee/bee-table/compare/v1.6.43...v1.6.44) (2019-02-26)
 
 
 
@@ -606,7 +702,12 @@
 
 
 <a name="1.2.9"></a>
-## [1.2.9](https://github.com/tinper-bee/bee-table/compare/v1.2.7...v1.2.9) (2018-07-16)
+## [1.2.9](https://github.com/tinper-bee/bee-table/compare/v1.2.8...v1.2.9) (2018-07-16)
+
+
+
+<a name="1.2.8"></a>
+## [1.2.8](https://github.com/tinper-bee/bee-table/compare/v1.2.7...v1.2.8) (2018-07-06)
 
 
 

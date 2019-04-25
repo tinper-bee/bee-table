@@ -72,6 +72,7 @@ import 'bee-table/build/Table.css';
 | size | 表格大小 | `sm | md | lg` | 'md' |
 | headerDisplayInRow | 设置表头的内容显示一行，超出显示省略号 | bool |
 | bodyDisplayInRow |  设置表体的内容显示一行，超出显示省略号 | bool | 
+| rowDraggAble  | 是否增加行交换顺序功能 | boolean| false
 
 > 快捷键部分参考示例 (快捷键在table中的简单使用应用)
 

@@ -105,7 +105,8 @@ var propTypes = {
   syncHover: _propTypes2["default"].bool,
   tabIndex: _propTypes2["default"].string,
   hoverContent: _propTypes2["default"].func,
-  size: _propTypes2["default"].oneOf(['sm', 'md', 'lg'])
+  size: _propTypes2["default"].oneOf(['sm', 'md', 'lg']),
+  rowDraggAble: _propTypes2["default"].bool
 };
 
 var defaultProps = {
@@ -151,7 +152,8 @@ var defaultProps = {
   setRowParentIndex: function setRowParentIndex() {},
   tabIndex: '0',
   heightConsistent: false,
-  size: 'md'
+  size: 'md',
+  rowDraggAble: false
 };
 
 var Table = function (_Component) {
@@ -168,6 +170,19 @@ var Table = function (_Component) {
       var renderFlag = _this.state.renderFlag;
       _this.setState({
         renderFlag: !renderFlag
+      });
+    };
+
+    _this.onDragRow = function (currentIndex, targetIndex) {
+      var data = _this.state.data,
+          currentObj = data[currentIndex],
+          targetObj = data[targetIndex];
+
+      console.log(currentIndex + " ----------onRowDragEnd-------- " + targetIndex);
+      data.splice(targetIndex, 0, data.splice(currentIndex, 1).shift());
+      console.log(" _data---- ", data);
+      _this.setState({
+        data: data
       });
     };
 
@@ -664,9 +679,12 @@ var Table = function (_Component) {
       indent: 1,
       expandable: false,
       store: this.store,
-      dragborderKey: this.props.dragborderKey
+      dragborderKey: this.props.dragborderKey,
+      rowDraggAble: this.props.rowDraggAble,
+      onDragRow: this.onDragRow
     });
   };
+
   /**
    *
    *
@@ -679,8 +697,6 @@ var Table = function (_Component) {
    * @returns
    * @memberof Table
    */
-
-
   Table.prototype.getRowsByData = function getRowsByData(data, visible, indent, columns, fixed) {
     var rootIndex = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : -1;
 
@@ -801,7 +817,10 @@ var Table = function (_Component) {
         fixedIndex: fixedIndex + lazyCurrentIndex,
         rootIndex: rootIndex,
         syncHover: props.syncHover,
-        bodyDisplayInRow: props.bodyDisplayInRow
+        bodyDisplayInRow: props.bodyDisplayInRow,
+        rowDraggAble: this.props.rowDraggAble,
+        onDragRow: this.onDragRow,
+        contentTable: this.contentTable
       })));
       this.treeRowIndex++;
       var subVisible = visible && isRowExpanded;
