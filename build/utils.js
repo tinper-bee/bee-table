@@ -44,9 +44,13 @@ var scrollbarMeasure = {
 function measureScrollbar() {
   var direction = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'vertical';
 
+
   if (typeof document === 'undefined' || typeof window === 'undefined') {
     return 0;
   }
+  var tableDom = document.querySelector('.u-table');
+  var currentDom = tableDom ? tableDom : document.body;
+
   if (scrollbarSize) {
     return scrollbarSize;
   }
@@ -54,7 +58,7 @@ function measureScrollbar() {
   Object.keys(scrollbarMeasure).forEach(function (scrollProp) {
     scrollDiv.style[scrollProp] = scrollbarMeasure[scrollProp];
   });
-  document.body.appendChild(scrollDiv);
+  currentDom.appendChild(scrollDiv);
   var size = 0;
   if (direction === 'vertical') {
     size = scrollDiv.offsetWidth - scrollDiv.clientWidth;
@@ -62,7 +66,7 @@ function measureScrollbar() {
     size = scrollDiv.offsetHeight - scrollDiv.clientHeight;
   }
 
-  document.body.removeChild(scrollDiv);
+  currentDom.removeChild(scrollDiv);
   scrollbarSize = size;
   return scrollbarSize;
 }

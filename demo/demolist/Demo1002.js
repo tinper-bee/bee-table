@@ -13,28 +13,26 @@ import dragColumn from '../../src/lib/dragColumn';
 
 const columns23 = [
   {
-    title: "名字",
+    title: "订单编号",
     dataIndex: "a",
     key: "a",
     width: '200',
     fixed:'left'
   },
   {
-    title: "性别",
+    title: "单据日期",
     dataIndex: "b",
     key: "b",
     width: '600'
   },
   {
-    title: "年龄",
+    title: "供应商",
     dataIndex: "c",
     key: "c",
     width: '200',
-    sumCol: true,
-    sorter: (a, b) => a.c - b.c
   }, 
   {
-    title: "武功级别",
+    title: "联系人",
     dataIndex: "d",
     key: "d",
     width: 500,
@@ -42,13 +40,9 @@ const columns23 = [
 ];
 
 const data23 = [
-  { a: "杨过", b: "男", c: 30,d:'内行', key: "2" },
-  { a: "令狐冲", b: "男", c: 41,d:'大侠', key: "1" },
-  { a: "郭靖", b: "男", c: 25,d:'大侠', key: "31" } , { a: "杨过", b: "男", c: 30,d:'内行', key: "21" },
-  { a: "令狐冲", b: "男", c: 41,d:'大侠', key: "11" },
-  { a: "郭靖", b: "男", c: 25,d:'大侠', key: "32" } , { a: "杨过", b: "男", c: 30,d:'内行', key: "22" },
-  { a: "令狐冲", b: "男", c: 41,d:'大侠', key: "12" },
-  { a: "郭靖", b: "男", c: 25,d:'大侠', key: "3" }
+  { a: "NU0391001", b: "2019-03-01", c: "xx供应商",d:'Tom', key: "2" },
+  { a: "NU0391002", b: "2018-11-02", c: "yy供应商",d:'Jack', key: "1" },
+  { a: "NU0391003", b: "2019-05-03", c: "zz供应商",d:'Jane', key: "3" }
 ];
 
 const DragColumnTable = dragColumn(Table);

@@ -239,11 +239,7 @@ function filterColumn(Table, Popover) {
           _react2["default"].createElement(
             _beeCheckbox2["default"],
             paramObj,
-            _react2["default"].createElement(
-              "span",
-              null,
-              da.title
-            )
+            da.title
           )
         );
       });

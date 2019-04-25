@@ -48,6 +48,10 @@ var _beeLoading = require('bee-loading');
 
 var _beeLoading2 = _interopRequireDefault(_beeLoading);
 
+var _beeIcon = require('bee-icon');
+
+var _beeIcon2 = _interopRequireDefault(_beeIcon);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
@@ -137,7 +141,7 @@ var defaultProps = {
     return body;
   },
   emptyText: function emptyText() {
-    return 'No Data';
+    return _react2["default"].createElement(_beeIcon2["default"], { type: 'uf-nodata', className: 'table-nodata' });
   },
   columns: [],
   minColumnWidth: 80,

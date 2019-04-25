@@ -569,7 +569,7 @@ $icon-color:#505F79;
 
       }
     }
-    &-pop-cont-item>span{
+    &-pop-cont-item span.drop-menu-title{
       margin-left: -3px;
       max-width: 132px;
       width: auto !important;
@@ -620,6 +620,31 @@ $icon-color:#505F79;
         }
       }
     }
+  }
+  // 滚动条样式复写
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #d5d5d5 !important;
+    border-radius: 5px;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: #d5d5d5;
+    position: absolute;
+  }
+
+  ::-webkit-scrollbar-track {
+    display: none;
+  }
+
+  ::-webkit-scrollbar-track-piece {
+    display: none;
   }
 }
 .u-table:focus{
@@ -901,31 +926,7 @@ $icon-color:#505F79;
   left: 100;
 }
 
-// 滚动条样式复写
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-::-webkit-scrollbar-button {
-  display: none;
-}
-::-webkit-scrollbar-thumb {
-  background: #d5d5d5 !important;
-  border-radius: 5px;
-}
-::-webkit-scrollbar-thumb {
-  border-radius: 4px;
-  background-color: #d5d5d5;
-  position: absolute;
-}
 
-::-webkit-scrollbar-track {
-  display: none;
-}
-
-::-webkit-scrollbar-track-piece {
-  display: none;
-}
 
 // 表格显示里面的内容显示在一行
 .header-dispaly-in-row{
