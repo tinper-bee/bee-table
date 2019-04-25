@@ -356,7 +356,8 @@
   .u-table .u-checkbox {
     height: 14px;
     line-height: 14px;
-    margin: 0px; }
+    margin: 0px;
+    display: block; }
     .u-table .u-checkbox .u-checkbox-label {
       line-height: 14px;
       padding-left: 16px; }
