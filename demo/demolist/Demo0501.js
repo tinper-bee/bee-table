@@ -497,7 +497,7 @@ class Demo0501 extends Component {
     const { dataSource } = this.state;
     const columns = this.columns;
     return (
-      <div className="demo0501">
+      <div className="demo0501 u-editable-table">
         <Table
           data={dataSource}
           columns={columns}

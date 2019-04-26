@@ -1,0 +1,54 @@
+.demo0503-m-b {
+  .u-form-group {
+    overflow: hidden;
+  }
+  .u-form-control {
+    font-size: 12px;
+  }
+
+  .u-modal-title {
+    text-align: center;
+  }
+
+  .editable-cell {
+    display: block;
+    float: left;
+    width: 220px;
+    padding-right: 25px;
+  }
+
+  .u-label {
+    display: block;
+    float: left;
+    text-align: right;
+    width: 110px;
+    box-sizing: border-box;
+    padding-right: 10px;
+    font-size: 12px;
+    height: 32px;
+    line-height: 32px;
+  }
+  .required {
+    &::before {
+      content: "*";
+      position: absolute;
+      top: 9px;
+      left: -9px;
+      color: red;
+      font-size: 18px;
+    }
+  }
+  .required-icon {
+    position: absolute;
+    top: 2px;
+    color: #F44336;
+    font-size: 20px;
+  }
+}
+
+.u-editable-table-tp {
+  z-index: 9999 !important;
+  .tp-content {
+    color: #F44336;
+  }
+}
