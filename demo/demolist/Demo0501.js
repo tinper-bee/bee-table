@@ -3,11 +3,11 @@
  * @title 行编辑 - 行内编辑
  * @parent 编辑 Editor
  * @description 可以对行进行编辑的表格
- *
+ * demo0501
  */
 import React, { Component, PureComponent } from "react";
 import Table from "../../src";
-import { Select,Form,FormControl,Button,Icon,Tooltip } from "tinper-bee";
+import { Select, Form, FormControl, Button, Icon, Tooltip } from "tinper-bee";
 const Option = Select.Option;
 import { RefTreeWithInput } from "ref-tree";
 
@@ -27,41 +27,40 @@ function PureStringEditCell(props) {
   const { value, editable, required } = props;
   let cls = "editable-cell-input-wrapper";
   if (required) cls += " required";
-  return (
+  if (getFieldError("value")) cls += " verify-cell";
+  return editable ? (
     <div className="editable-cell">
-      {editable ? (
-        <div className={cls}>
-          <FormControl
-            {...getFieldProps("value", {
-              initialValue: value,
-              validateTrigger: "onBlur",
-              rules: [
-                {
-                  required: true,
-                  message: (
-                    <Tooltip
-                      inverse
-                      className="u-editable-table-tp"
-                      placement="bottom"
-                      overlay={
-                        <div className="tp-content">
-                          {"请输入" + props.colName}
-                        </div>
-                      }
-                    >
-                      <Icon className="uf-exc-t required-icon" />
-                    </Tooltip>
-                  )
-                }
-              ]
-            })}
-          />
-          <span className="error">{getFieldError("value")}</span>
-        </div>
-      ) : (
-        <div className="editable-cell-text-wrapper">{value || " "}</div>
-      )}
+      <div className={cls}>
+        <FormControl
+          {...getFieldProps("value", {
+            initialValue: value,
+            validateTrigger: "onBlur",
+            rules: [
+              {
+                required: true,
+                message: (
+                  <Tooltip
+                    inverse
+                    className="u-editable-table-tp"
+                    placement="bottom"
+                    overlay={
+                      <div className="tp-content">
+                        {"请输入" + props.colName}
+                      </div>
+                    }
+                  >
+                    <Icon className="uf-exc-t required-icon" />
+                  </Tooltip>
+                )
+              }
+            ]
+          })}
+        />
+        <span className="error">{getFieldError("value")}</span>
+      </div>
     </div>
+  ) : (
+    value || " "
   );
 }
 
@@ -78,22 +77,20 @@ class SelectEditCell extends PureComponent {
 
   render() {
     const { value, editable } = this.props;
-    return (
+    return editable ? (
       <div className="editable-cell">
-        {editable ? (
-          <div className="editable-cell-input-wrapper">
-            <Select value={this.props.value} onSelect={this.handleSelect}>
-              {SELECT_SOURCE.map((item, index) => (
-                <Option key={index} value={item}>
-                  {item}
-                </Option>
-              ))}
-            </Select>
-          </div>
-        ) : (
-          <div className="editable-cell-text-wrapper">{value || " "}</div>
-        )}
+        <div className="editable-cell-input-wrapper">
+          <Select value={this.props.value} onSelect={this.handleSelect}>
+            {SELECT_SOURCE.map((item, index) => (
+              <Option key={index} value={item}>
+                {item}
+              </Option>
+            ))}
+          </Select>
+        </div>
       </div>
+    ) : (
+      value || " "
     );
   }
 }
@@ -269,6 +266,7 @@ const RefEditCell = Form.createForm()(
       const { value, editable, required } = this.props;
       let cls = "editable-cell-input-wrapper";
       if (required) cls += " required";
+      if (getFieldError("refValue")) cls += " verify-cell";
       return editable ? (
         <div className={cls}>
           <RefTreeWithInput
@@ -301,7 +299,7 @@ const RefEditCell = Form.createForm()(
           <span className="error">{getFieldError("refValue")}</span>
         </div>
       ) : (
-        <div className="editable-cell-text-wrapper">{value.name || " "}</div>
+        value.name || " "
       );
     }
   }
@@ -371,7 +369,7 @@ class Demo0501 extends Component {
       {
         title: "员工编号",
         dataIndex: "a",
-        key: "a",
+        key: "a"
       },
       {
         title: "名字",
@@ -497,10 +495,11 @@ class Demo0501 extends Component {
     const { dataSource } = this.state;
     const columns = this.columns;
     return (
-      <div className="demo0501">
+      <div className="demo0501 u-editable-table">
         <Table
           data={dataSource}
           columns={columns}
+          height={40}
           onRowHover={this.handleRowHover}
           hoverContent={this.renderRowHover}
         />

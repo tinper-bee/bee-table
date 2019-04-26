@@ -16,7 +16,12 @@ const columns = [
     { title: "供应商", dataIndex: "supplier", key: "supplier", width: 100 },
     { title: "订单日期", dataIndex: "orderDate", key: "orderDate", width: 150 },
     { title: "总数量", dataIndex: "quantity", key: "quantity", width: 100 },
-    { title: "单据状态", dataIndex: "status", key: "status", width: 100 },
+    { title: "单据状态", dataIndex: "status", key: "status", width: 100, 
+      render: (text, record, index) => {
+        return (
+          <Tag colors={text.type}>{text.desc}</Tag>
+        );
+    }},
     { title: "提交人", dataIndex: "submitter", key: "submitter", width: 100 },
     { title: "单位", dataIndex: "unit", key: "unit", width: 100 },
     { title: "总税价合计", dataIndex: "sum", key: "sum", width: 100 },
@@ -29,7 +34,7 @@ const data = [
         supplier: "xx供应商", 
         orderDate: '2018年03月18日', 
         quantity: '100.00', 
-        status: '错误', 
+        status: {type:'success' ,desc:'正常'}, 
         submitter: '小张', 
         unit: 'pc', 
         sum:'8,487.00', 
@@ -41,7 +46,7 @@ const data = [
         supplier: "xx供应商", 
         orderDate: '2018年02月05日', 
         quantity: '91.00', 
-        status: '正常', 
+        status: {type:'danger' ,desc:'异常'}, 
         submitter: '小红', 
         unit: 'pc', 
         sum:'675.00', 
@@ -53,7 +58,7 @@ const data = [
         supplier: "xx供应商", 
         orderDate: '2018年07月01日', 
         quantity: '98.00', 
-        status: '异常', 
+        status: {type:'success' ,desc:'正常'}, 
         submitter: '小李', 
         unit: 'pc', 
         sum:'1,531.00', 

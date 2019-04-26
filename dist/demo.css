@@ -670,16 +670,12 @@
   padding-top: 0px;
   padding-bottom: 0px; }
 
-<<<<<<< HEAD
 .demo0501 .u-table .u-row-hover .opt-btns button {
   border-radius: 5px; }
   .demo0501 .u-table .u-row-hover .opt-btns button:first-child {
     margin-right: 10px; }
 
 .demo0501 .u-table .u-table-row td {
-=======
-.demo0502 .u-table-row td {
->>>>>>> master
   padding: 5px 8px; }
   .demo0501 .u-table .u-table-row td input {
     font-size: 12px;
@@ -692,8 +688,7 @@
 .demo0501 .u-table .editable-cell-text-wrapper {
   box-sizing: border-box;
   line-height: 20px;
-  border-radius: 3px;
-  padding-left: 0; }
+  border-radius: 3px; }
 
 .demo0501 .u-table .required {
   margin-left: 10px;
@@ -708,6 +703,9 @@
     left: -8px; }
   .demo0501 .u-table .required span.u-input-group {
     display: block; }
+
+.demo0501 .u-table .verify-cell {
+  padding-right: 25px !important; }
 
 .demo0501 .u-table .required-icon {
   position: absolute;
@@ -758,6 +756,51 @@
 
 .u-editable-table-tp .tp-content {
   color: #F44336; }
+
+.demo0503-m-b .u-form-group {
+  overflow: hidden; }
+
+.demo0503-m-b .u-form-control {
+  font-size: 12px; }
+
+.demo0503-m-b .u-modal-title {
+  text-align: center; }
+
+.demo0503-m-b .editable-cell {
+  display: block;
+  float: left;
+  width: 220px;
+  padding-right: 25px; }
+
+.demo0503-m-b .u-label {
+  display: block;
+  float: left;
+  text-align: right;
+  width: 110px;
+  box-sizing: border-box;
+  padding-right: 10px;
+  font-size: 12px;
+  height: 32px;
+  line-height: 32px; }
+
+.demo0503-m-b .required::before {
+  content: "*";
+  position: absolute;
+  top: 9px;
+  left: -9px;
+  color: red;
+  font-size: 18px; }
+
+.demo0503-m-b .required-icon {
+  position: absolute;
+  top: 2px;
+  color: #F44336;
+  font-size: 20px; }
+
+.u-editable-table-tp {
+  z-index: 9999 !important; }
+  .u-editable-table-tp .tp-content {
+    color: #F44336; }
 
 th .drop-menu .uf {
   font-size: 12px;

@@ -54,24 +54,6 @@ const columns03 = [
       dataIndex: "voucherDate",
       key: "voucherDate",
       width: 200,
-  },
-  {
-      title: "审批状态",
-      dataIndex: "approvalState_name",
-      key: "approvalState_name",
-      width: 200
-  },
-  {
-      title: "确认状态",
-      dataIndex: "confirmState_name",
-      key: "confirmState_name",
-       width: 200
-  }, 
-  {
-      title: "关闭状态",
-      dataIndex: "closeState_name",
-      key: "closeState_name",
-      width: 100
   }
 ];
 
@@ -83,9 +65,6 @@ const data03 = [
     purchasing:'组织c', 
     purchasingGroup:"aa",
     voucherDate:"2018年03月18日",
-    approvalState_name:"已审批",
-    confirmState_name:"执行中",
-    closeState_name:"未关闭",
     key: "1"
   }, 
   { 
@@ -95,9 +74,6 @@ const data03 = [
     purchasing:'组织a', 
     purchasingGroup:"bb",
     voucherDate:"2018年02月05日",
-    approvalState_name:"已审批",
-    confirmState_name:"待确认",
-    closeState_name:"未关闭",
     key: "2"
   },
   { 
@@ -107,9 +83,6 @@ const data03 = [
     purchasing:'组织b', 
     purchasingGroup:"aa",
     voucherDate:"2018年07月01日",
-    approvalState_name:"已审批",
-    confirmState_name:"终止",
-    closeState_name:"已关闭",
     key: "3"
   },
   { 
@@ -119,9 +92,6 @@ const data03 = [
     purchasing:'组织c', 
     purchasingGroup:"cc",
     voucherDate:"2019年03月01日",
-    approvalState_name:"未审批",
-    confirmState_name:"待确认",
-    closeState_name:"未关闭",
     key: "4"
   },
   { 
@@ -131,9 +101,6 @@ const data03 = [
     purchasing:'组织d', 
     purchasingGroup:"ss",
     voucherDate:"2019年02月14日",
-    approvalState_name:"未审批",
-    confirmState_name:"待确认",
-    closeState_name:"未关闭",
     key: "5"
   },
   { 
@@ -143,9 +110,6 @@ const data03 = [
     purchasing:'组织e', 
     purchasingGroup:"zz",
     voucherDate:"2019年02月18日",
-    approvalState_name:"已审批",
-    confirmState_name:"终止",
-    closeState_name:"已关闭",
     key: "6"
   },
   { 
@@ -155,9 +119,6 @@ const data03 = [
     purchasing:'组织f', 
     purchasingGroup:"qq",
     voucherDate:"2019年01月01日",
-    approvalState_name:"已审批",
-    confirmState_name:"执行中",
-    closeState_name:"未关闭",
     key: "7"
   },
   { 
@@ -167,9 +128,6 @@ const data03 = [
     purchasing:'组织g', 
     purchasingGroup:"pp",
     voucherDate:"2019年01月31日",
-    approvalState_name:"未审批",
-    confirmState_name:"待确认",
-    closeState_name:"未关闭",
     key: "8"
   },
 ];

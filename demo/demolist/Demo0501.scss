@@ -31,7 +31,6 @@
     box-sizing: border-box;
     line-height: 20px;
     border-radius: 3px;
-    padding-left: 0
   }
 
   .required {
@@ -51,6 +50,9 @@
     span.u-input-group {
       display: block
     }
+  }
+  .verify-cell {
+    padding-right: 25px !important;
   }
 
   .required-icon {
