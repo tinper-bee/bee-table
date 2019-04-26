@@ -102,6 +102,11 @@ var TableRow = function (_Component) {
           target = _utils.Event.getTarget(event);
       _this.currentIndex = target.getAttribute("data-row-key");
       _this._dragCurrent = target;
+
+      //TODO 自定义图像后续需要增加。
+      //  let crt = this.synchronizeTableTrShadow(); 
+      //  document.getElementById(this.props.tableUid).appendChild(crt);
+      // event.dataTransfer.setDragImage(crt, 0, 0);
       event.dataTransfer.effectAllowed = "move";
       event.dataTransfer.setData("Text", _this.currentIndex);
     };
@@ -119,15 +124,37 @@ var TableRow = function (_Component) {
       var event = _utils.Event.getEvent(e),
           _target = _utils.Event.getTarget(event),
           target = _target.parentNode;
-      var currentIndex = target.getAttribute("data-row-key");
-      if (!currentIndex || currentIndex === _this.currentIndex) return;
+
+      var currentKey = event.dataTransfer.getData("text");
+      var targetKey = target.getAttribute("data-row-key");
+
+      if (!targetKey || targetKey === currentKey) return;
       if (target.nodeName.toUpperCase() === "TR") {
-        _this.synchronizeTableTr(_this.currentIndex, null);
+        _this.synchronizeTableTr(currentKey, null);
+        _this.synchronizeTableTr(targetKey, null);
         // target.setAttribute("style","");
         // this.synchronizeTrStyle(this.currentIndex,false);
       }
-      var _currentIndex = event.dataTransfer.getData("text");
-      onDragRow && onDragRow(parseInt(_this.currentIndex--), parseInt(currentIndex--));
+      onDragRow && onDragRow(currentKey, targetKey);
+    };
+
+    _this.synchronizeTableTrShadow = function () {
+      var _this$props2 = _this.props,
+          contentTable = _this$props2.contentTable,
+          index = _this$props2.index;
+
+
+      var _table_cont = contentTable.querySelector('.u-table-scroll table tbody').getElementsByTagName("tr")[index],
+          _table_trs = _table_cont.getBoundingClientRect(),
+          _table_fixed_left_trs = contentTable.querySelector('.u-table-fixed-left table tbody').getElementsByTagName("tr")[index].getBoundingClientRect(),
+          _table_fixed_right_trs = contentTable.querySelector('.u-table-fixed-right table tbody').getElementsByTagName("tr")[index].getBoundingClientRect();
+
+      var div = document.createElement("div");
+      var style = "wdith:" + (_table_trs.width + _table_fixed_left_trs.width + _table_fixed_right_trs.width) + "px";
+      style += "height:" + _table_trs.height + "px";
+      style += "classname:" + _table_cont.className;
+      div.setAttribute("style", style);
+      return div;
     };
 
     _this.synchronizeTableTr = function (currentIndex, type) {
@@ -271,6 +298,12 @@ var TableRow = function (_Component) {
   /**
    * 在一个拖动过程中，释放鼠标键时触发此事件。【目标事件】
    * @memberof TableHeader
+   */
+
+
+  /**
+   *同步当前拖拽到阴影
+   * @memberof TableRow
    */
 
 
