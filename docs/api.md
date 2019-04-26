@@ -3,7 +3,7 @@
 ## 何时使用
 - 当有大量结构化的数据需要展现时；
 - Table组件拥有多种可自由组合使用的功能，包括：大数据渲染、拖拽列、过滤列、排序、多选、分页、自定义操作、合计、搜索等复杂行为；
-- 当需要复杂表格展示数据的时候，推荐使用开箱即用的[Grid组件](https://design.yonyoucloud.com/tinper-bee/bee-complex-grid)。
+- 当需要复杂表格展示数据的时候，推荐使用开箱即用的[Grid组件](https://design.yonyoucloud.com/tinper-acs/bee-complex-grid)。
 
 ## 如何使用
 ```
@@ -374,6 +374,6 @@ const CheckboxRender = renderCheckbox(Checkbox, Icon);
 需要给expandedRowRender中返回的对象添加`style=\{{height: xxx}\}`,来使扩展后的固定列扩展成一样高度。
 
 
-> 当表格场景比较复杂时，可以使用[复杂表格ComplexGrid](http://bee.tinper.org/bee-complex-grid#bee-complex-grid)。ComplexGrid将常用的过滤、多选、分页、列交换、列拖拽等功能集成在一起。使用起来超级方便。
+> 当表格场景比较复杂时，可以使用[复杂表格ComplexGrid](https://design.yonyoucloud.com/tinper-acs/bee-complex-grid)。ComplexGrid将常用的过滤、多选、分页、列交换、列拖拽等功能集成在一起。使用起来超级方便。
 
 ## 更新日志
