@@ -670,16 +670,12 @@
   padding-top: 0px;
   padding-bottom: 0px; }
 
-<<<<<<< HEAD
 .demo0501 .u-table .u-row-hover .opt-btns button {
   border-radius: 5px; }
   .demo0501 .u-table .u-row-hover .opt-btns button:first-child {
     margin-right: 10px; }
 
 .demo0501 .u-table .u-table-row td {
-=======
-.demo0502 .u-table-row td {
->>>>>>> master
   padding: 5px 8px; }
   .demo0501 .u-table .u-table-row td input {
     font-size: 12px;
