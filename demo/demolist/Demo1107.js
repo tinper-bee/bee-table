@@ -21,6 +21,14 @@ const columns = [
         }
     },
     {
+        title: "图样",
+        dataIndex: "picture",
+        key: "picture",
+        render(text, record, index) {
+            return <img style={{height:'50px'}} src={text} alt="Picture"/>
+        }
+    },
+    {
         title: "组织部门",
         dataIndex: "orgDept",
         key: "orgDept",
@@ -55,14 +63,6 @@ const columns = [
         dataIndex: "repairTime",
         key: "repairTime",
         width: 150,
-    },
-    {
-        title: "图样",
-        dataIndex: "picture",
-        key: "picture",
-        render(text, record, index) {
-            return <img style={{height:'50px'}} src={text} alt="Picture"/>
-        }
     }
 ];
 
@@ -72,40 +72,15 @@ const data = [
   { key: "3", orgDept: "组织3", facilityManageUnit: "部门3", docketnum: 35, num: "3", discoveryTime: "2019-04-10", repairTime: "2019-04-17", picture: "http://design.yonyoucloud.com/static/bee.tinper.org-demo/swiper-demo-3-min.jpg"}
 ];
 
-class Demo105 extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: data,
-      selectedRowIndex: 0
-    }
-  }
-  handleClick = () => {
-    console.log('这是第' , this.currentIndex , '行');
-    console.log('内容：' , this.currentRecord);
-  }
-
-  onRowHover=(index,record)=>{
-    this.currentIndex = index;
-    this.currentRecord = record;
-  }
-
-  getHoverContent=()=>{
-    return <div className="opt-btns"><Button size="sm" onClick={this.handleClick}>一些操作</Button> </div>
-  }
-
+class Demo1107 extends Component {
   render() {
     return (
         <Table
           columns={columns}
           data={data}
-          parentNodeId='parent'
-          hoverContent={this.getHoverContent}
-          onRowHover={this.onRowHover}
         />
     );
   }
 }
 
-export default Demo105;
+export default Demo1107;

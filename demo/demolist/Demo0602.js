@@ -84,8 +84,8 @@ const columns = [
         render(text, record, index) {
             return (
                 <div className='operation-btn'>
-                  <Popconfirm trigger="click" placement="right" content={'这是第' + index + '行，内容为:' + text}>
-                      <a href="javascript:;" tooltip={text} >
+                  <Popconfirm trigger="click" placement="right" content={'这是第' + index + '行，订单编号为:' + record.orderCode}>
+                      <a href="javascript:;" >
                       一些操作
                       </a>
                   </Popconfirm>

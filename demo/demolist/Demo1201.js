@@ -1,7 +1,7 @@
 /**
 *
 * @title 拖拽改变行顺序
-* @parent 拖拽改变行顺序
+* @parent 行操作-拖拽
 * @description 拖拽改变行顺序
 * Demo1201
 */
@@ -18,7 +18,7 @@ const columns = [
       return (
         <Tooltip inverse overlay={text}>
           <span tootip={text} style={{
-            display: "inline-block",
+            display: "block",
             width: "80px",
             textOverflow: "ellipsis",
             overflow: "hidden",

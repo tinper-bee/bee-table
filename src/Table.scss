@@ -270,7 +270,7 @@ $icon-color:#505F79;
       width: 16px;
       height: 16px;
       text-align: center;
-      line-height: 16px;
+      line-height: 14px;
       border: 1px solid $table-border-color;
       user-select: none;
       background: #fff;
@@ -297,9 +297,9 @@ $icon-color:#505F79;
     }
   }
   tr.u-table-expanded-row {
-    background: #f7f7f7;
+    background: #DFE1E6;
     &:hover {
-      background: #f7f7f7;
+      background: #DFE1E6;
     }
     .u-table {
       // padding: 0 40px 0 20px;
@@ -532,7 +532,7 @@ $icon-color:#505F79;
     &-pop-cont{
       margin: 0px;
       max-height: 300px;
-      overflow-y: scroll;
+      overflow-y: auto;
       color:#212121;
     }
     &-clear-setting{ 
@@ -970,4 +970,37 @@ $icon-color:#505F79;
 .u-table-drag-hidden-cont{
   position: absolute;
   top:-1000px;
+}
+
+.u-editable-table .u-table {
+  .u-table-row-hover {
+    .editable-cell-text-wrapper {
+      padding-left: 4px;
+      border: 1px solid #c1c7d0;
+    }
+  }
+
+  .editable-cell-text-wrapper {
+    &:hover {
+      padding-left: 4px;
+      border: 1px solid #a5adba;
+    }
+  }
+
+  .editable-cell-input-wrapper {
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.u-editable-table-tp {
+  .tooltip-arrow {
+    top: 1px !important;
+    border-bottom-color: #F44336 !important;
+  }
+
+  .tooltip-inner {
+    border-color: #F44336 !important;
+  }
 }
