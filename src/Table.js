@@ -146,9 +146,11 @@ class Table extends Component {
     this.handleRowHover = this.handleRowHover.bind(this);
     this.computeTableWidth = this.computeTableWidth.bind(this);
     this.onBodyMouseLeave = this.onBodyMouseLeave.bind(this);
+    this.tableUid = null;
   }
 
   componentDidMount() {
+    this.getTableUID();
     EventUtil.addHandler(this.contentTable,'keydown',this.onKeyDown);
     EventUtil.addHandler(this.contentTable,'focus',this.onFocus);
     setTimeout(this.resetScrollX, 300);
@@ -244,6 +246,17 @@ class Table extends Component {
       renderFlag: !renderFlag
     });
   }
+
+  getTableUID =()=>{
+    let uid = "_table_uid_"+new Date().getTime();
+    this.tableUid = uid;
+    let div = document.createElement("div");
+    // div.className = "u-table-drag-hidden-cont";
+    div.className = "u-table-drag-hidden-cont";
+    div.id = uid;
+    this.contentTable.appendChild(div);
+  }
+
   computeTableWidth() {
     
     //如果用户传了scroll.x按用户传的为主
@@ -531,15 +544,23 @@ class Table extends Component {
     );
   }
 
-  onDragRow = (currentIndex,targetIndex)=>{
-    let {data} = this.state,
-    currentObj = data[currentIndex],
-    targetObj = data[targetIndex];
-    console.log(currentIndex+" ----------onRowDragEnd-------- "+targetIndex);
-    data.splice(targetIndex, 0, data.splice(currentIndex, 1).shift());
-    console.log(" _data---- ",data);
+  onDragRow = (currentKey,targetKey)=>{
+    let {data} = this.state,currentIndex,targetIndex;
+    data.forEach((da,i)=>{ 
+      if(da.key == currentKey){
+        currentIndex = i;
+      }
+      if(da.key == targetKey){
+        targetIndex = i;
+      }
+    });
+    if(currentIndex < targetIndex){
+      data.splice(targetIndex, 0, data.splice(currentIndex, 1).shift());
+    }else{
+      data.splice((targetIndex+1), 0, data.splice(currentIndex, 1).shift());
+    }
     this.setState({
-      data: data,
+      data,
     });
   }
 
@@ -645,7 +666,7 @@ class Table extends Component {
           indent={indent}
           indentSize={props.indentSize}
           needIndentSpaced={needIndentSpaced}
-          className={className}
+          className={`${className} ${this.props.rowDraggAble?' row-dragg-able ':''}`}
           record={record}
           expandIconAsCell={expandIconAsCell}
           onDestroy={this.onRowDestroy}
@@ -680,6 +701,7 @@ class Table extends Component {
           rowDraggAble={this.props.rowDraggAble}
           onDragRow={this.onDragRow}
           contentTable={this.contentTable}
+          tableUid = {this.tableUid}
         />
       );
       this.treeRowIndex++;

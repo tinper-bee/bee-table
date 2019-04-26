@@ -647,7 +647,17 @@ $icon-color:#505F79;
   ::-webkit-scrollbar-track-piece {
     display: none;
   }
+
+  .row-dragg-able{
+    cursor:move;
+  }
+  .u-table-drag-hidden-cont{
+    width: 100px;
+    height: 40px;
+  }
+
 }
+
 .u-table:focus{
   outline: none;
   // border-color: #9ecaed;
