@@ -532,7 +532,7 @@ $icon-color:#505F79;
     &-pop-cont{
       margin: 0px;
       max-height: 300px;
-      overflow-y: scroll;
+      overflow-y: auto;
       color:#212121;
     }
     &-clear-setting{ 
