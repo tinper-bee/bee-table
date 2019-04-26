@@ -3,7 +3,7 @@
 ## 何时使用
 - 当有大量结构化的数据需要展现时；
 - Table组件拥有多种可自由组合使用的功能，包括：大数据渲染、拖拽列、过滤列、排序、多选、分页、自定义操作、合计、搜索等复杂行为；
-- 当需要复杂表格展示数据的时候，推荐使用开箱即用的[Grid组件](https://design.yonyoucloud.com/tinper-acs/ac-complex-grid)。
+- 当需要复杂表格展示数据的时候，推荐使用开箱即用的[Grid组件](https://design.yonyoucloud.com/tinper-bee/bee-complex-grid)。
 
 ## 如何使用
 ```

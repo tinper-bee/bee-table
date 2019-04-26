@@ -312,7 +312,7 @@
   .u-table-filter-column-pop-cont {
     margin: 0px;
     max-height: 300px;
-    overflow-y: scroll;
+    overflow-y: auto;
     color: #212121; }
   .u-table-filter-column-clear-setting {
     cursor: pointer;
@@ -386,6 +386,11 @@
     display: none; }
   .u-table ::-webkit-scrollbar-track-piece {
     display: none; }
+  .u-table .row-dragg-able {
+    cursor: move; }
+  .u-table .u-table-drag-hidden-cont {
+    width: 100px;
+    height: 40px; }
 
 .u-table:focus {
   outline: none;
