@@ -704,6 +704,9 @@
   .demo0501 .u-table .required span.u-input-group {
     display: block; }
 
+.demo0501 .u-table .verify-cell {
+  padding-right: 25px !important; }
+
 .demo0501 .u-table .required-icon {
   position: absolute;
   top: 2px;
