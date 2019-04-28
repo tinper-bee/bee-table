@@ -2,7 +2,7 @@
 *
 * @title 拖拽改变行顺序
 * @parent 行操作-拖拽
-* @description 拖拽改变行顺序
+* @description `rowDraggAble`参数设置是否使用行交换顺序功能
 * Demo1201
 */
 

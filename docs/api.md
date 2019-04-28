@@ -108,11 +108,10 @@ import 'bee-table/build/Table.css';
 | textAlign | 内容对齐方式，默认是左对齐（'left、right、center'） | string |
 
 
-## mixin
+## 高阶函数
 
 Table拓展功能方法。注：拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然在操作state会导致功能出现异常
 
-### 如何引用
 需要单独的去引用相应的js文件，目录在lib文件夹，示例如下：
 
 ```js
@@ -120,29 +119,17 @@ import multiSelect from "tinper-bee/lib/multiSelect.js";
 ```
 
 ### multiSelect 多选功能
-#### multiSelect 新增API
-
+#### API
+Data 数组参数：
 | 参数                  | 说明                         | 类型       | 默认值      |
 | ------------------- | -------------------------- | -------- | -------- |
 | _checked         | 设置是否选中当前数据（设置在data数组中）           |  boolean      | true/false       |
 | _disabled   | 设置是否禁用当前数据（设置在data数组中）     |  boolean      | true/false     
-| getSelectedDataFunc | 返回当前选中的数据数组（设置在Table组件上）                | Function | 无        |
 
-<font color="#ccc">
-
-#### <font color="#ccc">multiSelect 废弃部分的API</font>
-
+Table 组件参数：
 | 参数                  | 说明                         | 类型       | 默认值      |
-| ------------------- | -------------------------- | -------- | -------- |
-| multiSelect         | 全选功能的配置对象，属性参见下面           | obj      | {}       |
-| multiSelect.type    | 全选功能的类型，多选或单选（暂时只支持多选）     | string   | checkbox |
-| multiSelect.param   | 通过设置该参数来设计获取的数据数组，默认返还所有数据 | string   | ''       |
-| getSelectedDataFunc | 返回当前选中的数据数组                | Function | 无        |
-| selectDisabled | 设置某一行数据无法被选中，使用类似于rowClassName       | Function(record, index):bool | 无        |
-| selectedRow | 设置某一行数据是否被选中，使用类似于rowClassName       | Function(record, index):bool | 无        |
-
-</font>
-
+| ------------------- | -------------------------- | -------- | -------- |   
+| getSelectedDataFunc | 返回当前选中的数据数组（设置在Table组件上）                | Function | 无        |
 
 #### 使用
 
@@ -156,7 +143,8 @@ const MultiSelectTable = multiSelect(Table, Checkbox);
 
 ### sort 排序功能
 
-#### columns新增参数
+#### API
+column 数组参数：
 
 | 参数     | 说明         | 类型       | 默认值  |
 | ------ | ---------- | -------- | ---- |
@@ -175,7 +163,8 @@ const SortTable = sort(Table, Icon);
 
 ### sum 合计功能
 
-#### columns新增参数
+#### API
+column 数组参数：
  
 | 参数     | 说明         | 类型       | 默认值  |
 | ------ | ---------- | -------- | ---- |
@@ -193,15 +182,14 @@ const SumTable = sum(Table);
 
 ### dragColumn 拖拽列功能
 
-#### dragColumn新增参数
-
+#### API
+Table 组件参数：
 | 参数     | 说明         | 类型       | 默认值  |
 | ------ | ---------- | -------- | ---- |
 | dragborder | 拖拽调整列宽度 | boolean | false |
 | draggable | 拖拽交换列 | boolean | false |
 | onDrop | 拖拽释放回调函数(交换列) | function | () => {} |
 | onDropBorder | 拖拽释放回调函数(调整列宽) | function | (e) => {} |
-
 
 #### 使用
 
@@ -215,7 +203,7 @@ const DragColumnTable = dragColumn(Table);
 
 ### filterColumn 过滤功能
 
-#### filterColumn新增参数
+#### API
 
 无
 
@@ -234,7 +222,6 @@ const DragColumnTable = filterColumn(Table, Checkbox, Popover, Icon);
 ## rendertype
 在表格中提供了多种rendertype可以供选择，比如下拉框，输入框，日期等
 
-### 如何引用
 需要单独的去引用相应的js文件，目录在render文件夹，示例如下：
 
 ```js
@@ -374,6 +361,6 @@ const CheckboxRender = renderCheckbox(Checkbox, Icon);
 需要给expandedRowRender中返回的对象添加`style=\{{height: xxx}\}`,来使扩展后的固定列扩展成一样高度。
 
 
-> 当表格场景比较复杂时，可以使用[复杂表格ComplexGrid](https://design.yonyoucloud.com/tinper-acs/bee-complex-grid)。ComplexGrid将常用的过滤、多选、分页、列交换、列拖拽等功能集成在一起。使用起来超级方便。
+> 当表格场景比较复杂时，可以使用[复杂表格ComplexGrid](http://bee.tinper.org/bee-complex-grid#bee-complex-grid)。ComplexGrid将常用的过滤、多选、分页、列交换、列拖拽等功能集成在一起。使用起来超级方便。
 
 ## 更新日志
