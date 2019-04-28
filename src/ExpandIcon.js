@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import shallowequal from 'shallowequal';
+import Icon from 'bee-icon';
 
 const propTypes = {
     record: PropTypes.object,
@@ -23,8 +24,9 @@ class ExpandIcon extends Component{
     if (expandable && !isHiddenExpandIcon) {
       const expandClassName = expanded ? 'expanded' : 'collapsed';
       return (
-        <span
+        <Icon
           className={`${clsPrefix}-expand-icon ${clsPrefix}-${expandClassName}`}
+          type={expanded ? 'uf-triangle-down' : 'uf-triangle-right'}
           onClick={(e) => onExpand(!expanded, record, e)}
         />
       );

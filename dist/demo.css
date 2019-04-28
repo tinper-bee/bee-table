@@ -143,25 +143,22 @@
     cursor: pointer;
     display: inline-block;
     margin-right: 0px;
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     text-align: center;
     line-height: 14px;
-    border: 1px solid rgb(193, 199, 208);
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    background: #fff;
     margin-right: 10px; }
+    .u-table-row-expand-icon.uf, .u-table-expanded-row-expand-icon.uf {
+      font-size: 12px;
+      padding: 0; }
   .u-table-row-spaced, .u-table-expanded-row-spaced {
     visibility: hidden; }
   .u-table-row-spaced:after, .u-table-expanded-row-spaced:after {
     content: "."; }
-  .u-table-row-expanded:after, .u-table-expanded-row-expanded:after {
-    content: "-"; }
-  .u-table-row-collapsed:after, .u-table-expanded-row-collapsed:after {
-    content: "+"; }
   .u-table-row.selected {
     background: #FFF7E7; }
   .u-table tr.u-table-expanded-row {

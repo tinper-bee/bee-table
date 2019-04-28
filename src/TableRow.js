@@ -199,6 +199,8 @@ class TableRow extends Component{
     let _table_trs = contentTable.querySelector('.u-table-scroll table tbody'),
      _table_fixed_left_trs = contentTable.querySelector('.u-table-fixed-left table tbody'),
     _table_fixed_right_trs = contentTable.querySelector('.u-table-fixed-right table tbody');
+    
+    _table_trs = _table_trs?_table_trs:contentTable.querySelector('.u-table table tbody');
 
     this.synchronizeTrStyle(_table_trs,currentIndex,type);
     if(_table_fixed_left_trs){
