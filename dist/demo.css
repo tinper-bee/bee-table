@@ -676,6 +676,11 @@
   border-radius: 5px; }
   .demo0501 .u-table .u-row-hover .opt-btns button:first-child {
     margin-right: 10px; }
+  .demo0501 .u-table .u-row-hover .opt-btns button.btn-abort {
+    background-color: #fff;
+    color: #465369; }
+    .demo0501 .u-table .u-row-hover .opt-btns button.btn-abort:hover {
+      background-color: #eff0f3; }
 
 .demo0501 .u-table .u-table-row td {
   padding: 5px 8px; }
@@ -759,6 +764,12 @@
 .u-editable-table-tp .tp-content {
   color: #F44336; }
 
+.demo0503-m-b button.btn-abort {
+  background-color: #fff;
+  color: #465369; }
+  .demo0503-m-b button.btn-abort:hover {
+    background-color: #eff0f3 !important; }
+
 .demo0503-m-b .u-form-group {
   overflow: hidden; }
 
@@ -803,6 +814,75 @@
   z-index: 9999 !important; }
   .u-editable-table-tp .tp-content {
     color: #F44336; }
+
+.demo0505 .opt-btns {
+  margin-bottom: 15px; }
+  .demo0505 .opt-btns button {
+    border-radius: 5px; }
+    .demo0505 .opt-btns button:first-child {
+      margin-right: 10px; }
+    .demo0505 .opt-btns button.btn-abort {
+      background-color: #fff;
+      color: #465369; }
+      .demo0505 .opt-btns button.btn-abort:hover {
+        background-color: #eff0f3; }
+
+.demo0505 .u-table .u-row-select {
+  background-color: #FFF7E7; }
+
+.demo0505 .u-table .u-table-row td {
+  padding: 5px 8px; }
+  .demo0505 .u-table .u-table-row td input {
+    font-size: 12px;
+    padding-left: 5px; }
+
+.demo0505 .u-table .u-table-row .u-form-control,
+.demo0505 .u-table .u-table-row .u-select-selection {
+  height: 30px; }
+
+.demo0505 .u-table .editable-cell-text-wrapper {
+  box-sizing: border-box;
+  line-height: 20px;
+  border-radius: 3px; }
+
+.demo0505 .u-table .required {
+  margin-left: 10px;
+  position: relative; }
+  .demo0505 .u-table .required::before {
+    content: " ";
+    border: 2px solid #F44336;
+    width: 0;
+    height: 12px;
+    position: absolute;
+    top: 9px;
+    left: -8px; }
+  .demo0505 .u-table .required span.u-input-group {
+    display: block; }
+
+.demo0505 .u-table .verify-cell {
+  padding-right: 25px !important; }
+
+.demo0505 .u-table .edited::after {
+  content: " ";
+  position: absolute;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #f44336 transparent transparent #f44336; }
+
+.demo0505 .u-table .required-icon {
+  position: absolute;
+  top: 2px;
+  color: #F44336;
+  font-size: 20px; }
+
+.demo0505 .u-table .ref-input-wrap {
+  width: 160px !important; }
+
+.u-editable-table-tp .tp-content {
+  color: #F44336; }
 
 th .drop-menu .uf {
   font-size: 12px;

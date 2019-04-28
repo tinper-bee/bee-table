@@ -435,6 +435,7 @@ class Demo0501 extends Component {
     if (index === null) return;
     let editingRowsMap = { ...this.state.editingRowsMap };
     editingRowsMap[index] = index.toString();
+    // 最好使用深复制
     this.originData[index] = { ...this.state.dataSource[index] };
     this.setState({ editingRowsMap });
   };
@@ -484,7 +485,11 @@ class Demo0501 extends Component {
     const { currentIndex } = this.state;
     return this.state.editingRowsMap[currentIndex] ? (
       <div className={"opt-btns"}>
-        <Button colors="dark" onClick={this.abortEdit(currentIndex)}>
+        <Button
+          colors="dark"
+          className="btn-abort"
+          onClick={this.abortEdit(currentIndex)}
+        >
           取消
         </Button>
         <Button colors="primary" onClick={this.commitChange(currentIndex)}>

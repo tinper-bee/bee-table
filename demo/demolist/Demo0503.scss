@@ -1,7 +1,18 @@
 .demo0503-m-b {
+  button {
+    &.btn-abort {
+      background-color: #fff;
+      color: rgb(70, 83, 105);
+      &:hover {
+        background-color: #eff0f3 !important;
+      }
+    }
+  }
+
   .u-form-group {
     overflow: hidden;
   }
+
   .u-form-control {
     font-size: 12px;
   }
@@ -28,6 +39,7 @@
     height: 32px;
     line-height: 32px;
   }
+
   .required {
     &::before {
       content: "*";
@@ -38,6 +50,7 @@
       font-size: 18px;
     }
   }
+
   .required-icon {
     position: absolute;
     top: 2px;
@@ -48,6 +61,7 @@
 
 .u-editable-table-tp {
   z-index: 9999 !important;
+
   .tp-content {
     color: #F44336;
   }
