@@ -11,9 +11,18 @@ import { Select, Form, FormControl, Button, Icon, Tooltip } from "tinper-bee";
 const Option = Select.Option;
 import { RefTreeWithInput } from "ref-tree";
 
-class StringEditCell extends PureComponent {
+class StringEditCell extends Component {
   constructor(props, context) {
     super(props);
+    this.state = {
+      value: props.value
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.editable) {
+      this.setState({ value: nextProps.value });
+    }
   }
 
   handleChange = value => {
@@ -23,11 +32,13 @@ class StringEditCell extends PureComponent {
     } else {
       throwError && throwError(false);
     }
+    this.setState({ value });
     onChange && onChange(value);
   };
 
   render() {
-    const { value, editable, required, colName, isEdited } = this.props;
+    const { editable, required, colName, isEdited } = this.props;
+    const { value } = this.state;
     let cls = "editable-cell-input-wrapper";
     if (required) cls += " required";
     if (value === "") cls += " verify-cell";
@@ -58,23 +69,34 @@ class StringEditCell extends PureComponent {
 
 const SELECT_SOURCE = ["男", "女"];
 
-class SelectEditCell extends PureComponent {
+class SelectEditCell extends Component {
   constructor(props, context) {
     super(props);
+    this.state = {
+      value: props.value
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.editable) {
+      this.setState({ value: nextProps.value });
+    }
   }
 
   handleSelect = value => {
+    this.setState({ value });
     this.props.onChange && this.props.onChange(value);
   };
 
   render() {
-    const { value, editable, isEdited } = this.props;
+    const { editable, isEdited } = this.props;
+    const { value } = this.state;
     let cls = "editable-cell-input-wrapper";
     if (isEdited) cls += " edited";
     return editable ? (
       <div className="editable-cell">
         <div className={cls}>
-          <Select value={this.props.value} onSelect={this.handleSelect}>
+          <Select value={value} onSelect={this.handleSelect}>
             {SELECT_SOURCE.map((item, index) => (
               <Option key={index} value={item}>
                 {item}
@@ -246,18 +268,29 @@ const option = {
 };
 
 const RefEditCell = Form.createForm()(
-  class RefComponentWarpper extends PureComponent {
+  class RefComponentWarpper extends Component {
     constructor(props, context) {
       super(props);
+      this.state = {
+        value: props.value
+      };
+    }
+
+    componentWillReceiveProps(nextProps) {
+      if (!nextProps.editable) {
+        this.setState({ value: nextProps.value });
+      }
     }
 
     handleSelect = values => {
+      this.setState({ value: values[0] });
       this.props.onChange && this.props.onChange(values[0]);
     };
 
     render() {
       const { getFieldProps, getFieldError } = this.props.form;
-      const { value, editable, required, isEdited } = this.props;
+      const { editable, required, isEdited } = this.props;
+      const { value } = this.state;
       let cls = "editable-cell-input-wrapper";
       if (required) cls += " required";
       if (getFieldError("refValue")) cls += " verify-cell";
@@ -420,7 +453,7 @@ class Demo0505 extends Component {
     ];
 
     // 用于记录数据是否被修改
-    dataSource.forEach(item => item.isEdited = {});
+    dataSource.forEach(item => (item.isEdited = {}));
     this.state = {
       dataSource: dataSource,
       isEditingAll: false,
@@ -429,47 +462,44 @@ class Demo0505 extends Component {
     };
 
     // 用于记录编辑前数据
-    this.originData = [];
+    this.dataBuffer = [];
   }
 
   edit = () => {
-    this.originData = [];
+    this.dataBuffer = [];
     // 最好使用深复制
-    this.state.dataSource.forEach(item => this.originData.push({ ...item }));
+    this.state.dataSource.forEach((item, index) => {
+      this.dataBuffer.push({ ...item });
+    });
     this.setState({ isEditingAll: true });
   };
 
   abortEdit = () => {
-    this.originData.forEach(item => item.isEdited = {});
+    let originData = [...this.state.dataSource];
+    originData.forEach(item => (item.isEdited = {}));
     this.setState({
       isEditingAll: false,
-      dataSource: [...this.originData]
+      dataSource: originData
     });
   };
 
   commitChange = () => {
     if (this.state.errorEditFlag) return;
-    let dataSource = [...this.state.dataSource];
-    dataSource.forEach(item => item.isEdited = {});
-    this.setState({ isEditingAll: false });
+    const newData = this.dataBuffer.map(item => {
+      return Object.assign({}, item, { isEdited: {} });
+    });
+    this.setState({ isEditingAll: false, dataSource: newData });
   };
 
   onCellChange = (index, key) => value => {
-    let dataSource = [...this.state.dataSource];
-    dataSource[index][key] = value;
-    dataSource[index].isEdited[key] = true;
-    this.setState({ dataSource }, () => console.table(this.originData));
+    this.dataBuffer[index][key] = value;
+    this.dataBuffer[index].isEdited[key] = true;
   };
 
   throwError = isError => {
     if (isError !== this.state.errorEditFlag)
       this.setState({ errorEditFlag: isError });
   };
-
-  setEditedRowClass = (record, index, indent) => {
-    if (Object.keys(record.isEdited).length > 0) return "u-row-select";
-    return "";
-  }
 
   render() {
     const { dataSource, isEditingAll } = this.state;
@@ -496,7 +526,7 @@ class Demo0505 extends Component {
             </Button>
           )}
         </div>
-        <Table data={dataSource} columns={columns} height={40} rowClassName={this.setEditedRowClass} />
+        <Table data={dataSource} columns={columns} height={40} />
       </div>
     );
   }
