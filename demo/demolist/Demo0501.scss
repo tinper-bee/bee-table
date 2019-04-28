@@ -7,6 +7,14 @@
         &:first-child {
           margin-right: 10px;
         }
+
+        &.btn-abort {
+          background-color: #fff;
+          color: rgb(70, 83, 105);
+          &:hover {
+            background-color: #eff0f3;
+          }
+        }
       }
     }
   }

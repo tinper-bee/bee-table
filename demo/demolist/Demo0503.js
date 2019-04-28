@@ -398,7 +398,8 @@ class EditModal extends Component {
         </Modal.Body>
         <Modal.Footer style={{textAlign: "center"}}>
           <Button
-            colors="secondary"
+            colors="dark"
+            className="btn-abort"
             style={{ marginRight: 15 }}
             onClick={onHide}
           >
