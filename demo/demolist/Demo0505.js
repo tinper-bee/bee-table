@@ -1,8 +1,8 @@
 /**
  *
- * @title 行编辑 - 行内编辑
+ * @title 全表编辑
  * @parent 编辑 Editor
- * @description 可以对行进行编辑的表格
+ * @description 以行内编辑形式对全表数据进行编辑
  * demo0505
  */
 import React, { Component, PureComponent } from "react";
