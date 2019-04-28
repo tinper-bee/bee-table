@@ -365,6 +365,13 @@ let dataSource = [
 class Demo0501 extends Component {
   constructor(props, context) {
     super(props);
+    this.state = {
+      dataSource: dataSource,
+      editingRowsMap: {},
+      currentIndex: null,
+      errorEditFlag: false
+    };
+
     this.columns = [
       {
         title: "员工编号",
@@ -421,13 +428,6 @@ class Demo0501 extends Component {
       }
     ];
 
-    this.state = {
-      dataSource: dataSource,
-      editingRowsMap: {},
-      currentIndex: null,
-      errorEditFlag: false
-    };
-
     this.originData = {};
   }
 
@@ -448,6 +448,15 @@ class Demo0501 extends Component {
     delete this.originData[index];
     this.setState({ editingRowsMap, dataSource });
   };
+
+  delete = index => () => {
+    if (index === null) return;
+    let { dataSource } = this.state;
+    dataSource.splice(index,1);
+    this.setState({
+      dataSource:dataSource
+    });
+  }
 
   commitChange = index => () => {
     if (this.state.errorEditFlag) return;
@@ -491,6 +500,9 @@ class Demo0501 extends Component {
       <div className={"opt-btns"}>
         <Button colors="dark" onClick={this.edit(currentIndex)}>
           编辑
+        </Button>
+        <Button colors="dark" onClick={this.delete(currentIndex)}>
+          删除
         </Button>
       </div>
     );

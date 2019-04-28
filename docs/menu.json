@@ -79,47 +79,18 @@
     "API": {
         "Table": "",
         "Column": "",
-        "高阶函数": "",
-        "multiSelect 多选功能": {
-            "multiSelect:API":"",
-            "multiSelect:使用":""
+        "高阶函数": {
+            "multiSelect 多选功能": "",
+            "sort 排序功能": "",
+            "sum 合计功能": "",
+            "dragColumn 拖拽列功能": "",
+            "filterColumn 过滤功能": ""
         },
-        "sort 排序功能": {
-            "sort:API":"",
-            "sort:使用":""
-        },
-        "sum 合计功能": {
-            "sum:API":"",
-            "sum:使用":""
-        },
-        "dragColumn 拖拽列功能": {
-            "dragColumn:API":"",
-            "dragColumn:使用":""
-        },
-        "filterColumn 过滤功能": {
-            "filterColumn:API":"",
-            "filterColumn:使用":""
-        },
-        "rendertype":"",
-        "InputRender": {
-            "InputRender:依赖的组件":"",
-            "InputRender:配置":"",
-            "InputRender:使用":""
-        },
-        "DateRender": {
-            "DateRender:依赖的组件":"",
-            "DateRender:配置":"",
-            "DateRender:使用":""
-        },
-        "SelectRender": {
-            "SelectRender:依赖的组件":"",
-            "SelectRender:配置":"",
-            "SelectRender:使用":""
-        },
-        "CheckboxRender": {
-            "CheckboxRender:依赖的组件":"",
-            "CheckboxRender:配置":"",
-            "CheckboxRender:使用":""
+        "rendertype":{
+            "InputRender": "",
+            "DateRender": "",
+            "SelectRender": "",
+            "CheckboxRender": ""
         },
         "快捷键API":""
     },
