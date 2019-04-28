@@ -133,6 +133,11 @@ class TableRow extends Component{
     target = Event.getTarget(event);
      this.currentIndex = target.getAttribute("data-row-key");
      this._dragCurrent = target;
+ 
+    //TODO 自定义图像后续需要增加。
+    //  let crt = this.synchronizeTableTrShadow(); 
+    //  document.getElementById(this.props.tableUid).appendChild(crt);
+    // event.dataTransfer.setDragImage(crt, 0, 0);
      event.dataTransfer.effectAllowed = "move";
      event.dataTransfer.setData("Text", this.currentIndex);
   }
@@ -150,16 +155,41 @@ class TableRow extends Component{
     let {rowDraggAble,onDragRow} = this.props;
     let event = Event.getEvent(e) ,
     _target = Event.getTarget(event),target = _target.parentNode;
-    let currentIndex = target.getAttribute("data-row-key");
-    if(!currentIndex || currentIndex === this.currentIndex)return;    
+    
+    let currentKey = event.dataTransfer.getData("text");
+    let targetKey = target.getAttribute("data-row-key");
+
+    if(!targetKey || targetKey === currentKey)return;    
     if(target.nodeName.toUpperCase() === "TR"){
-      this.synchronizeTableTr(this.currentIndex,null);
+      this.synchronizeTableTr(currentKey,null);
+      this.synchronizeTableTr(targetKey,null);
       // target.setAttribute("style","");
       // this.synchronizeTrStyle(this.currentIndex,false);
     }
-    let _currentIndex = event.dataTransfer.getData("text");
-    onDragRow && onDragRow(parseInt(this.currentIndex--),parseInt(currentIndex--));
+    onDragRow && onDragRow(currentKey,targetKey);
   };
+
+
+  /**
+   *同步当前拖拽到阴影
+   * @memberof TableRow
+   */
+  synchronizeTableTrShadow = ()=>{
+    let {contentTable,index} = this.props; 
+
+    let _table_cont = contentTable.querySelector('.u-table-scroll table tbody').getElementsByTagName("tr")[index],
+    _table_trs = _table_cont.getBoundingClientRect(),
+     _table_fixed_left_trs = contentTable.querySelector('.u-table-fixed-left table tbody').getElementsByTagName("tr")[index].getBoundingClientRect(),
+    _table_fixed_right_trs = contentTable.querySelector('.u-table-fixed-right table tbody').getElementsByTagName("tr")[index].getBoundingClientRect();
+
+    let div = document.createElement("div");
+    let style = "wdith:"+(_table_trs.width + _table_fixed_left_trs.width + _table_fixed_right_trs.width)+"px";
+    style += "height:"+ _table_trs.height+"px";
+    style += "classname:"+ _table_cont.className;
+    div.setAttribute("style",style);
+    return div;
+  }
+
 
   /**
    * 同步自己,也需要同步当前行的行显示

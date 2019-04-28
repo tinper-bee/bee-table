@@ -24,7 +24,7 @@ class Demo1304 extends Component {
       this.state = {
         data: data,
         selectedRowIndex: 0,
-        selectedValue:"ASVAL_201903200004"
+        selectedValue:"ASVAL_201903280005"
       }
   }
 
