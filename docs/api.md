@@ -1,11 +1,13 @@
 # 表格 Table
 
 ## 何时使用
+
 - 当有大量结构化的数据需要展现时；
 - Table组件拥有多种可自由组合使用的功能，包括：大数据渲染、拖拽列、过滤列、排序、多选、分页、自定义操作、合计、搜索等复杂行为；
 - 当需要复杂表格展示数据的时候，推荐使用开箱即用的[Grid组件](https://design.yonyoucloud.com/tinper-acs/bee-complex-grid)。
 
 ## 如何使用
+
 ```
 import { Table } from 'tinper-bee';
 
@@ -108,7 +110,7 @@ import 'bee-table/build/Table.css';
 | textAlign | 内容对齐方式，默认是左对齐（'left、right、center'） | string |
 
 
-## 高阶函数
+### 高阶函数
 
 Table拓展功能方法。注：拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然在操作state会导致功能出现异常
 
@@ -119,7 +121,9 @@ import multiSelect from "tinper-bee/lib/multiSelect.js";
 ```
 
 ### multiSelect 多选功能
-#### API
+
+#### multiSelect:API
+
 Data 数组参数：
 | 参数                  | 说明                         | 类型       | 默认值      |
 | ------------------- | -------------------------- | -------- | -------- |
@@ -131,7 +135,7 @@ Table 组件参数：
 | ------------------- | -------------------------- | -------- | -------- |   
 | getSelectedDataFunc | 返回当前选中的数据数组（设置在Table组件上）                | Function | 无        |
 
-#### 使用
+#### multiSelect:使用
 
 ```js
 import multiSelect from "tinper-bee/lib/multiSelect.js";
@@ -143,7 +147,8 @@ const MultiSelectTable = multiSelect(Table, Checkbox);
 
 ### sort 排序功能
 
-#### API
+#### sort:API
+
 column 数组参数：
 
 | 参数     | 说明         | 类型       | 默认值  |
@@ -151,7 +156,7 @@ column 数组参数：
 | sorter | 排序函数，可以自定义 | Function | 无    |
 | sorterClick | 排序钩子函数| Function | (coloum,type)    |
 
-#### 使用
+#### sort:使用
 
 ```js
 import sort from "tinper-bee/lib/sort.js";
@@ -163,14 +168,15 @@ const SortTable = sort(Table, Icon);
 
 ### sum 合计功能
 
-#### API
+#### sum:API
+
 column 数组参数：
  
 | 参数     | 说明         | 类型       | 默认值  |
 | ------ | ---------- | -------- | ---- |
 | sumCol | 该列设置为合计列，合计行中会显示合计数据 | boolean | false |
 
-#### 使用
+#### sum:使用
 
 ```js
 import sum from "tinper-bee/lib/sum.js";
@@ -182,7 +188,8 @@ const SumTable = sum(Table);
 
 ### dragColumn 拖拽列功能
 
-#### API
+#### dragColumn:API
+
 Table 组件参数：
 | 参数     | 说明         | 类型       | 默认值  |
 | ------ | ---------- | -------- | ---- |
@@ -191,7 +198,7 @@ Table 组件参数：
 | onDrop | 拖拽释放回调函数(交换列) | function | () => {} |
 | onDropBorder | 拖拽释放回调函数(调整列宽) | function | (e) => {} |
 
-#### 使用
+#### dragColumn:使用
 
 ```js
 import dragColumn from "tinper-bee/lib/dragColumn.js";
@@ -203,11 +210,11 @@ const DragColumnTable = dragColumn(Table);
 
 ### filterColumn 过滤功能
 
-#### API
+#### filterColumn:API
 
 无
 
-#### 使用
+#### filterColumn:使用
 
 ```js
 import filterColumn from "tinper-bee/lib/filterColumn.js";
@@ -217,9 +224,8 @@ const DragColumnTable = filterColumn(Table, Checkbox, Popover, Icon);
 
 ```
 
+### rendertype
 
-
-## rendertype
 在表格中提供了多种rendertype可以供选择，比如下拉框，输入框，日期等
 
 需要单独的去引用相应的js文件，目录在render文件夹，示例如下：
@@ -230,13 +236,16 @@ import renderInput from "tinper-bee/lib/InputRender.js";
 ```
 
 ### InputRender
+
 输入框类型render
 
-#### 依赖的组件
+#### InputRender:依赖的组件
+
 该render依赖于`Icon`,`FormControl`,`Form`,`Tooltip`。
 
 
-#### 配置
+#### InputRender:配置
+
 | 参数                | 说明                                       | 类型         | 默认值    |
 | ----------------- | ---------------------------------------- | ---------- | ------ |
 | name              | 该输入框获取数据时的key值，该值不能设置重复且必填               | string     | -      |
@@ -254,7 +263,7 @@ import renderInput from "tinper-bee/lib/InputRender.js";
 | htmlType          | 数值类型，目前支持 email/tel/IDCard/chinese/password'类型 | string     | -      |
 | reg               | 校验正则，注：设置 htmlType 后 reg 无效              | regExp     | -      |
 
-#### 使用
+#### InputRender:使用
 
 ```js
 import renderInput from "tinper-bee/lib/InputRender.js";
@@ -264,13 +273,14 @@ const InputRender = renderInput(Form, FormControl, Icon);
 ```
 
 ### DateRender
+
 日期类型render
 
-#### 依赖的组件
+#### DateRender:依赖的组件
 该render依赖于`moment`, `Datepicker`, `Icon`
 
 
-#### 配置
+#### DateRender:配置
 | 参数                | 说明                                       | 类型         | 默认值    |
 | ----------------- | ---------------------------------------- | ---------- | ------ |
 | isclickTrigger    | 是否使用点击触发编辑状态                             | boolean    | false |
@@ -279,7 +289,7 @@ const InputRender = renderInput(Form, FormControl, Icon);
 
 注:其他参数参见Datepicker组件参数配置
 
-#### 使用
+#### DateRender:使用
 
 ```js
 import renderDate from "tinper-bee/lib/DateRender.js";
@@ -291,23 +301,24 @@ const DateRender = renderDate(Datepicker, Icon);
 
 
 ### SelectRender
+
 下拉框类型render
 
-#### 依赖的组件
+#### SelectRender:依赖的组件
 该render依赖于`Icon`,`Select`
 
 
-#### 配置
+#### SelectRender:配置
+
 | 参数             | 说明                                       | 类型      | 默认值   |
 | -------------- | ---------------------------------------- | ------- | ----- |
 | isclickTrigger | 是否使用点击触发编辑状态                             | boolean | false |
 | dataSource     | 数据的键值对，在表格浏览态的时候能显示真实的key值。比如`[{key:"张三",value:"01"}]` | array   | -     |
 
 
-
 注:其他参数参见Select组件参数配置
 
-#### 使用
+#### SelectRender:使用
 
 ```js
 import renderSelect from "tinper-bee/lib/SelectRender.js";
@@ -317,13 +328,16 @@ const SelectRender = renderSelect(Select, Icon);
 ```
 
 ### CheckboxRender
+
 复选框类型render
 
-#### 依赖的组件
+#### CheckboxRender:依赖的组件
+
 该render依赖于`Icon`,`Checkbox`
 
 
-#### 配置
+#### CheckboxRender:配置
+
 | 参数             | 说明                                       | 类型      | 默认值   |
 | -------------- | ---------------------------------------- | ------- | ----- |
 | onChange | 修改后触发回调函数 | function | () => {} |
@@ -333,7 +347,7 @@ const SelectRender = renderSelect(Select, Icon);
 
 注:其他参数参见Checkbox组件参数配置
 
-#### 使用
+#### CheckboxRender:使用
 
 ```js
 import renderCheckbox from "tinper-bee/lib/CheckboxRender.js";
@@ -342,7 +356,7 @@ const CheckboxRender = renderCheckbox(Checkbox, Icon);
 
 ```
 
-## 快捷键API
+### 快捷键API
 
 | 快捷键  | 快捷键说明 | 类型 | 默认值 | 
 | --- | :--- | --- |--- |
