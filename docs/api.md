@@ -125,6 +125,7 @@ import multiSelect from "tinper-bee/lib/multiSelect.js";
 #### multiSelect:API
 
 Data 数组参数：
+
 | 参数                  | 说明                         | 类型       | 默认值      |
 | ------------------- | -------------------------- | -------- | -------- |
 | _checked         | 设置是否选中当前数据（设置在data数组中）           |  boolean      | true/false       |
@@ -191,6 +192,7 @@ const SumTable = sum(Table);
 #### dragColumn:API
 
 Table 组件参数：
+
 | 参数     | 说明         | 类型       | 默认值  |
 | ------ | ---------- | -------- | ---- |
 | dragborder | 拖拽调整列宽度 | boolean | false |
@@ -277,10 +279,12 @@ const InputRender = renderInput(Form, FormControl, Icon);
 日期类型render
 
 #### DateRender:依赖的组件
+
 该render依赖于`moment`, `Datepicker`, `Icon`
 
 
 #### DateRender:配置
+
 | 参数                | 说明                                       | 类型         | 默认值    |
 | ----------------- | ---------------------------------------- | ---------- | ------ |
 | isclickTrigger    | 是否使用点击触发编辑状态                             | boolean    | false |
