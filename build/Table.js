@@ -173,14 +173,33 @@ var Table = function (_Component) {
       });
     };
 
-    _this.onDragRow = function (currentIndex, targetIndex) {
-      var data = _this.state.data,
-          currentObj = data[currentIndex],
-          targetObj = data[targetIndex];
+    _this.getTableUID = function () {
+      var uid = "_table_uid_" + new Date().getTime();
+      _this.tableUid = uid;
+      var div = document.createElement("div");
+      // div.className = "u-table-drag-hidden-cont";
+      div.className = "u-table-drag-hidden-cont";
+      div.id = uid;
+      _this.contentTable.appendChild(div);
+    };
 
-      console.log(currentIndex + " ----------onRowDragEnd-------- " + targetIndex);
-      data.splice(targetIndex, 0, data.splice(currentIndex, 1).shift());
-      console.log(" _data---- ", data);
+    _this.onDragRow = function (currentKey, targetKey) {
+      var data = _this.state.data,
+          currentIndex = void 0,
+          targetIndex = void 0;
+      data.forEach(function (da, i) {
+        if (da.key == currentKey) {
+          currentIndex = i;
+        }
+        if (da.key == targetKey) {
+          targetIndex = i;
+        }
+      });
+      if (currentIndex < targetIndex) {
+        data.splice(targetIndex, 0, data.splice(currentIndex, 1).shift());
+      } else {
+        data.splice(targetIndex + 1, 0, data.splice(currentIndex, 1).shift());
+      }
       _this.setState({
         data: data
       });
@@ -283,10 +302,12 @@ var Table = function (_Component) {
     _this.handleRowHover = _this.handleRowHover.bind(_this);
     _this.computeTableWidth = _this.computeTableWidth.bind(_this);
     _this.onBodyMouseLeave = _this.onBodyMouseLeave.bind(_this);
+    _this.tableUid = null;
     return _this;
   }
 
   Table.prototype.componentDidMount = function componentDidMount() {
+    this.getTableUID();
     _utils.EventUtil.addHandler(this.contentTable, 'keydown', this.onKeyDown);
     _utils.EventUtil.addHandler(this.contentTable, 'focus', this.onFocus);
     setTimeout(this.resetScrollX, 300);
@@ -786,7 +807,7 @@ var Table = function (_Component) {
         indent: indent,
         indentSize: props.indentSize,
         needIndentSpaced: needIndentSpaced,
-        className: className,
+        className: className + ' ' + (this.props.rowDraggAble ? ' row-dragg-able ' : ''),
         record: record,
         expandIconAsCell: expandIconAsCell,
         onDestroy: this.onRowDestroy,
@@ -820,7 +841,8 @@ var Table = function (_Component) {
         bodyDisplayInRow: props.bodyDisplayInRow,
         rowDraggAble: this.props.rowDraggAble,
         onDragRow: this.onDragRow,
-        contentTable: this.contentTable
+        contentTable: this.contentTable,
+        tableUid: this.tableUid
       })));
       this.treeRowIndex++;
       var subVisible = visible && isRowExpanded;
