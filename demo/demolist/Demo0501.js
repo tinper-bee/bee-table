@@ -531,9 +531,6 @@ class Demo0501 extends Component {
         <Button colors="dark" onClick={this.edit(currentIndex)}>
           编辑
         </Button>
-        <Button colors="dark" onClick={this.delete(currentIndex)}>
-          删除
-        </Button>
       </div>
     );
   };
