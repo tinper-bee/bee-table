@@ -9,6 +9,10 @@
     }
   }
 
+  .u-modal .u-modal-body {
+    padding: 16px 0;
+  }
+
   .u-form-group {
     overflow: hidden;
   }
@@ -17,15 +21,15 @@
     font-size: 12px;
   }
 
-  .u-modal-title {
-    text-align: center;
-  }
-
   .editable-cell {
     display: block;
     float: left;
-    width: 220px;
+    width: 265px;
     padding-right: 25px;
+  }
+
+  .ref-input-wrap {
+    width: 240px !important;
   }
 
   .u-label {
@@ -47,7 +51,7 @@
       top: 9px;
       left: -9px;
       color: red;
-      font-size: 18px;
+      font-size: 14px;
     }
   }
 
