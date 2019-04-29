@@ -5,7 +5,7 @@
  * @description 可以对行进行编辑的表格
  * demo0505
  */
-import React, { Component, PureComponent } from "react";
+import React, { Component } from "react";
 import Table from "../../src";
 import { Select, Form, FormControl, Button, Icon, Tooltip } from "tinper-bee";
 const Option = Select.Option;

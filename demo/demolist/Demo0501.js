@@ -5,82 +5,96 @@
  * @description 可以对行进行编辑的表格
  * demo0501
  */
-import React, { Component, PureComponent } from "react";
+import React, { Component } from "react";
 import Table from "../../src";
 import { Select, Form, FormControl, Button, Icon, Tooltip } from "tinper-bee";
 const Option = Select.Option;
 import { RefTreeWithInput } from "ref-tree";
 
-function handleFormValueChange(WarpCompProps, field, allFields) {
-  const { onChange, throwError } = WarpCompProps;
-  if (field.value === "") return throwError && throwError(true);
-  throwError && throwError(false);
-  onChange && onChange(field.value);
-}
+class StringEditCell extends Component {
+  constructor(props, context) {
+    super(props);
+    this.state = {
+      value: props.value
+    };
+  }
 
-const StringEditCell = Form.createForm({
-  onValuesChange: handleFormValueChange
-})(PureStringEditCell);
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.editable) {
+      this.setState({ value: nextProps.value });
+    }
+  }
 
-function PureStringEditCell(props) {
-  const { getFieldProps, getFieldError } = props.form;
-  const { value, editable, required } = props;
-  let cls = "editable-cell-input-wrapper";
-  if (required) cls += " required";
-  if (getFieldError("value")) cls += " verify-cell";
-  return editable ? (
-    <div className="editable-cell">
-      <div className={cls}>
-        <FormControl
-          {...getFieldProps("value", {
-            initialValue: value,
-            validateTrigger: "onBlur",
-            rules: [
-              {
-                required: true,
-                message: (
-                  <Tooltip
-                    inverse
-                    className="u-editable-table-tp"
-                    placement="bottom"
-                    overlay={
-                      <div className="tp-content">
-                        {"请输入" + props.colName}
-                      </div>
-                    }
-                  >
-                    <Icon className="uf-exc-t required-icon" />
-                  </Tooltip>
-                )
-              }
-            ]
-          })}
-        />
-        <span className="error">{getFieldError("value")}</span>
+  handleChange = value => {
+    const { onChange, throwError } = this.props;
+    if (value === "") {
+      throwError && throwError(true);
+    } else {
+      throwError && throwError(false);
+    }
+    this.setState({ value });
+    onChange && onChange(value);
+  };
+
+  render() {
+    const { editable, required, colName } = this.props;
+    const { value } = this.state;
+    let cls = "editable-cell-input-wrapper";
+    if (required) cls += " required";
+    if (value === "") cls += " verify-cell";
+    return editable ? (
+      <div className="editable-cell">
+        <div className={cls}>
+          <FormControl value={value} onChange={this.handleChange} />
+          <span className="error">
+            {value === "" ? (
+              <Tooltip
+                inverse
+                className="u-editable-table-tp"
+                placement="bottom"
+                overlay={<div className="tp-content">{"请输入" + colName}</div>}
+              >
+                <Icon className="uf-exc-t required-icon" />
+              </Tooltip>
+            ) : null}
+          </span>
+        </div>
       </div>
-    </div>
-  ) : (
-    value || " "
-  );
+    ) : (
+      value || " "
+    );
+  }
 }
 
 const SELECT_SOURCE = ["男", "女"];
 
-class SelectEditCell extends PureComponent {
+class SelectEditCell extends Component {
   constructor(props, context) {
     super(props);
+    this.state = {
+      value: props.value
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.editable) {
+      this.setState({ value: nextProps.value });
+    }
   }
 
   handleSelect = value => {
+    this.setState({ value });
     this.props.onChange && this.props.onChange(value);
   };
 
   render() {
-    const { value, editable } = this.props;
+    const { editable } = this.props;
+    const { value } = this.state;
+    let cls = "editable-cell-input-wrapper";
     return editable ? (
       <div className="editable-cell">
-        <div className="editable-cell-input-wrapper">
-          <Select value={this.props.value} onSelect={this.handleSelect}>
+        <div className={cls}>
+          <Select value={value} onSelect={this.handleSelect}>
             {SELECT_SOURCE.map((item, index) => (
               <Option key={index} value={item}>
                 {item}
@@ -252,18 +266,29 @@ const option = {
 };
 
 const RefEditCell = Form.createForm()(
-  class RefComponentWarpper extends PureComponent {
+  class RefComponentWarpper extends Component {
     constructor(props, context) {
       super(props);
+      this.state = {
+        value: props.value
+      };
+    }
+
+    componentWillReceiveProps(nextProps) {
+      if (!nextProps.editable) {
+        this.setState({ value: nextProps.value });
+      }
     }
 
     handleSelect = values => {
+      this.setState({ value: values[0] });
       this.props.onChange && this.props.onChange(values[0]);
     };
 
     render() {
       const { getFieldProps, getFieldError } = this.props.form;
-      const { value, editable, required } = this.props;
+      const { editable, required } = this.props;
+      const { value } = this.state;
       let cls = "editable-cell-input-wrapper";
       if (required) cls += " required";
       if (getFieldError("refValue")) cls += " verify-cell";
@@ -362,6 +387,26 @@ let dataSource = [
   }
 ];
 
+for (let i = 3; i < 1000; i++) {
+  dataSource.push({
+    a: "ASVAL_201903280005",
+    b: "小张",
+    c: "男",
+    d: {
+      code: "dept1_2",
+      entityType: "subEntity",
+      organization_id: "a4cf0601-51e6-4012-9967-b7a64a4b2d47",
+      name: "财务二科",
+      pid: "95b60f35-ed0b-454e-b948-fb45ae30b911",
+      refcode: "dept1_2",
+      refpk: "55b7fff1-6579-4ca9-92b7-3271d288b9f3",
+      id: "55b7fff1-6579-4ca9-92b7-3271d288b9f3",
+      isLeaf: "true",
+      refname: "财务二科"
+    },
+    key: i+1+""
+  })
+}
 class Demo0501 extends Component {
   constructor(props, context) {
     super(props);
@@ -428,7 +473,7 @@ class Demo0501 extends Component {
       errorEditFlag: false
     };
 
-    this.originData = {};
+    this.dataBuffer = {};
   }
 
   edit = index => () => {
@@ -436,30 +481,28 @@ class Demo0501 extends Component {
     let editingRowsMap = { ...this.state.editingRowsMap };
     editingRowsMap[index] = index.toString();
     // 最好使用深复制
-    this.originData[index] = { ...this.state.dataSource[index] };
+    this.dataBuffer[index] = { ...this.state.dataSource[index] };
     this.setState({ editingRowsMap });
   };
 
   abortEdit = index => () => {
     let editingRowsMap = { ...this.state.editingRowsMap };
-    let dataSource = [...this.state.dataSource];
-    dataSource[index] = this.originData[index];
     delete editingRowsMap[index];
-    delete this.originData[index];
-    this.setState({ editingRowsMap, dataSource });
+    delete this.dataBuffer[index];
+    this.setState({ editingRowsMap });
   };
 
   commitChange = index => () => {
     if (this.state.errorEditFlag) return;
     let editingRowsMap = { ...this.state.editingRowsMap };
     delete editingRowsMap[index];
-    this.setState({ editingRowsMap });
+    let dataSource = [...this.state.dataSource];
+    dataSource[index] = { ...this.dataBuffer[index] };
+    this.setState({ editingRowsMap,  dataSource });
   };
 
   onCellChange = (index, key) => value => {
-    let dataSource = [...this.state.dataSource];
-    dataSource[index][key] = value;
-    this.setState({ dataSource });
+    this.dataBuffer[index][key] = value;
   };
 
   throwError = isError => {
