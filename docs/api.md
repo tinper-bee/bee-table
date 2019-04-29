@@ -48,7 +48,7 @@ import 'bee-table/build/Table.css';
 | title                  | 表格标题                                     | Function                               | -               |
 | footer                 | 表格尾部                                     | Function                               | -               |
 | emptyText              | 无数据时显示的内容                                | Function                               | () => 'No Data' |
-| scroll                 | 横向或纵向支持滚动，也可用于指定滚动区域的宽高度 | ` { x: number | true | 百分比 ,  y: number }` | {}     |
+| scroll                 | 横向或纵向支持滚动，也可用于指定滚动区域的宽高度 | `{ x: number / true / 百分比 ,  y: number }` | {}     |
 | rowRef                 | 获取行的ref                                  | Function(record, index, indent):string | () => null      |
 | getBodyWrapper         | 添加对table body的包装                         | Function(body)                         | body => body    |
 | expandedRowRender      | 额外的展开行                                   | Function(record, index, indent):node | -               |
@@ -71,7 +71,7 @@ import 'bee-table/build/Table.css';
 | heightConsistent       | 当固定列内容高度超出非固定列时，内容互错行，当此属性为true会将高度同步，当行过多时会有性能影响，所以建议非固定高度如果过高时，超出内容可以显示成省略号 | bool|false 
 | height | 自定义表格行高 | number | - |
 | headerHeight | 自定义表头行高 | number | - |
-| size | 表格大小 | `sm | md | lg` | 'md' |
+| size | 表格大小 | `sm / md / lg` | 'md' |
 | headerDisplayInRow | 设置表头的内容显示一行，超出显示省略号 | bool |
 | bodyDisplayInRow |  设置表体的内容显示一行，超出显示省略号 | bool | 
 | rowDraggAble  | 是否增加行交换顺序功能 | boolean| false
