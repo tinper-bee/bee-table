@@ -925,20 +925,23 @@
   .demo0503-m-b button.btn-abort:hover {
     background-color: #eff0f3 !important; }
 
+.demo0503-m-b .u-modal .u-modal-body {
+  padding: 16px 0; }
+
 .demo0503-m-b .u-form-group {
   overflow: hidden; }
 
 .demo0503-m-b .u-form-control {
   font-size: 12px; }
 
-.demo0503-m-b .u-modal-title {
-  text-align: center; }
-
 .demo0503-m-b .editable-cell {
   display: block;
   float: left;
-  width: 220px;
+  width: 265px;
   padding-right: 25px; }
+
+.demo0503-m-b .ref-input-wrap {
+  width: 240px !important; }
 
 .demo0503-m-b .u-label {
   display: block;
@@ -957,7 +960,7 @@
   top: 9px;
   left: -9px;
   color: red;
-  font-size: 18px; }
+  font-size: 14px; }
 
 .demo0503-m-b .required-icon {
   position: absolute;
