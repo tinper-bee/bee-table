@@ -16,6 +16,10 @@ var _shallowequal = require('shallowequal');
 
 var _shallowequal2 = _interopRequireDefault(_shallowequal);
 
+var _beeIcon = require('bee-icon');
+
+var _beeIcon2 = _interopRequireDefault(_beeIcon);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
@@ -60,8 +64,9 @@ var ExpandIcon = function (_Component) {
 
     if (expandable && !isHiddenExpandIcon) {
       var expandClassName = expanded ? 'expanded' : 'collapsed';
-      return _react2["default"].createElement('span', {
+      return _react2["default"].createElement(_beeIcon2["default"], {
         className: clsPrefix + '-expand-icon ' + clsPrefix + '-' + expandClassName,
+        type: expanded ? 'uf-triangle-down' : 'uf-triangle-right',
         onClick: function onClick(e) {
           return onExpand(!expanded, record, e);
         }

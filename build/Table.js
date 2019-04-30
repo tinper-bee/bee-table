@@ -142,7 +142,16 @@ var defaultProps = {
     return body;
   },
   emptyText: function emptyText() {
-    return _react2["default"].createElement(_beeIcon2["default"], { type: 'uf-nodata', className: 'table-nodata' });
+    return _react2["default"].createElement(
+      'div',
+      null,
+      _react2["default"].createElement(_beeIcon2["default"], { type: 'uf-nodata', className: 'table-nodata' }),
+      _react2["default"].createElement(
+        'span',
+        null,
+        '\u6682\u65E0\u6570\u636E'
+      )
+    );
   },
   columns: [],
   minColumnWidth: 80,

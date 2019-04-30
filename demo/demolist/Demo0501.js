@@ -1,6 +1,6 @@
 /**
  *
- * @title 行编辑 - 行内编辑
+ * @title 行内编辑
  * @parent 编辑 Editor
  * @description 可以对行进行编辑的表格
  * demo0501

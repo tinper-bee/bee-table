@@ -1,6 +1,6 @@
 /**
  *
- * @title 全表编辑
+ * @title 全表格编辑
  * @parent 编辑 Editor
  * @description 以行内编辑形式对全表数据进行编辑
  * demo0505

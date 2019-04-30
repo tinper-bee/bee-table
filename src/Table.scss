@@ -1,6 +1,6 @@
 @import "../node_modules/tinper-bee-core/scss/minxin-variables";
 @import "../node_modules/tinper-bee-core/scss/minxin-mixins";
-// @import "../node_modules/bee-loading/src/Loading";
+@import "../node_modules/bee-loading/src/Loading";
 
 $text-color: $font-color-base;
 $font-size-base: 12px;
@@ -247,7 +247,15 @@ $icon-color:#505F79;
     border-bottom: 1px solid $table-border-color;
     text-align: center;
     position: relative;
-    .table-nodata{ font-size:48px; }
+    .table-nodata{ 
+      font-size: 40px; 
+      line-height: 44px;
+      + span{
+        font-size: 12px;
+        line-height: 12px;
+        display: block;
+      }
+    }
   }
 
   &-expand-icon-col {

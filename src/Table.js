@@ -80,7 +80,7 @@ const defaultProps = {
   scroll: {},
   rowRef: () => null,
   getBodyWrapper: body => body,
-  emptyText: () => <Icon type="uf-nodata" className="table-nodata"></Icon>,
+  emptyText: () => <div><Icon type="uf-nodata" className="table-nodata"></Icon><span>暂无数据</span></div>,
   columns:[],
   minColumnWidth: 80,
   locale:{},
