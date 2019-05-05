@@ -184,15 +184,15 @@ class Table extends Component {
     }
     if (nextProps.columns && nextProps.columns !== this.props.columns) {
       this.columnManager.reset(nextProps.columns);
-      if(nextProps.columns.length !== this.props.columns.length && this.refs && this.refs.bodyTable){
-         this.scrollTop = this.refs.bodyTable.scrollTop;
+      if(nextProps.columns.length !== this.props.columns.length && this.refs && this.bodyTable){
+         this.scrollTop = this.bodyTable.scrollTop;
      }
     } else if (nextProps.children !== this.props.children) {
       this.columnManager.reset(null, nextProps.children);
     }
     //适配lazyload
     if(nextProps.scrollTop > -1){
-      // this.refs.bodyTable.scrollTop = nextProps.scrollTop;
+      // this.bodyTable.scrollTop = nextProps.scrollTop;
       this.scrollTop = nextProps.scrollTop;
     }
     if (!nextProps.originWidth) {
@@ -220,7 +220,7 @@ class Table extends Component {
     if(this.scrollTop > -1){
       this.refs.fixedColumnsBodyLeft && ( this.refs.fixedColumnsBodyLeft.scrollTop = this.scrollTop);
       this.refs.fixedColumnsBodyRight && ( this.refs.fixedColumnsBodyRight.scrollTop = this.scrollTop);
-      this.refs.bodyTable.scrollTop = this.scrollTop;
+      this.bodyTable.scrollTop = this.scrollTop;
       this.scrollTop = -1;
     }
     if (prevProps.data.length === 0  || this.props.data.length === 0 ) {
@@ -300,11 +300,11 @@ class Table extends Component {
     const props = this.props;
     const y = props.scroll && props.scroll.y;
     if(y){
-      const bodyH = this.refs.bodyTable.clientHeight;
-      const bodyContentH = this.refs.bodyTable.querySelector('table').clientHeight;
+      const bodyH = this.bodyTable.clientHeight;
+      const bodyContentH = this.bodyTable.querySelector('table').clientHeight;
       const rightBodyTable = this.refs.fixedColumnsBodyRight;
       const overflowy = bodyContentH <= bodyH ? 'auto':'scroll';
-      this.refs.bodyTable.style.overflowY = overflowy;
+      this.bodyTable.style.overflowY = overflowy;
       this.refs.headTable.style.overflowY = overflowy;
       rightBodyTable && (rightBodyTable.style.overflowY = overflowy);
       
@@ -927,7 +927,7 @@ class Table extends Component {
       <div
         className={`${clsPrefix}-body`}
         style={bodyStyle}
-        ref="bodyTable"
+        ref={(el)=>{this.bodyTable = el}}
         onMouseOver={this.detectScrollTarget}
         onTouchStart={this.detectScrollTarget}
         onScroll={this.handleBodyScroll}
@@ -1020,8 +1020,8 @@ class Table extends Component {
     const { clsPrefix, height, headerHeight,columns,heightConsistent } = this.props;
     const headRows = this.refs.headTable ?
       this.refs.headTable.querySelectorAll('thead') :
-      this.refs.bodyTable.querySelectorAll('thead');
-    const bodyRows = this.refs.bodyTable.querySelectorAll(`.${clsPrefix}-row`) || [];
+      this.bodyTable.querySelectorAll('thead');
+    const bodyRows = this.bodyTable.querySelectorAll(`.${clsPrefix}-row`) || [];
     const leftBodyRows = this.refs.fixedColumnsBodyLeft && this.refs.fixedColumnsBodyLeft.querySelectorAll(`.${clsPrefix}-row`) || [];
     const rightBodyRows = this.refs.fixedColumnsBodyRight && this.refs.fixedColumnsBodyRight.querySelectorAll(`.${clsPrefix}-row`) || [];
     const fixedColumnsHeadRowsHeight = [].map.call(
@@ -1069,8 +1069,8 @@ class Table extends Component {
     if (this.refs.headTable) {
       this.refs.headTable.scrollLeft = 0;
     }
-    if (this.refs.bodyTable) {
-      this.refs.bodyTable.scrollLeft = 0;
+    if (this.bodyTable) {
+      this.bodyTable.scrollLeft = 0;
     }
   }
 

@@ -347,15 +347,15 @@ var Table = function (_Component) {
     }
     if (nextProps.columns && nextProps.columns !== this.props.columns) {
       this.columnManager.reset(nextProps.columns);
-      if (nextProps.columns.length !== this.props.columns.length && this.refs && this.refs.bodyTable) {
-        this.scrollTop = this.refs.bodyTable.scrollTop;
+      if (nextProps.columns.length !== this.props.columns.length && this.refs && this.bodyTable) {
+        this.scrollTop = this.bodyTable.scrollTop;
       }
     } else if (nextProps.children !== this.props.children) {
       this.columnManager.reset(null, nextProps.children);
     }
     //适配lazyload
     if (nextProps.scrollTop > -1) {
-      // this.refs.bodyTable.scrollTop = nextProps.scrollTop;
+      // this.bodyTable.scrollTop = nextProps.scrollTop;
       this.scrollTop = nextProps.scrollTop;
     }
     if (!nextProps.originWidth) {
@@ -382,7 +382,7 @@ var Table = function (_Component) {
     if (this.scrollTop > -1) {
       this.refs.fixedColumnsBodyLeft && (this.refs.fixedColumnsBodyLeft.scrollTop = this.scrollTop);
       this.refs.fixedColumnsBodyRight && (this.refs.fixedColumnsBodyRight.scrollTop = this.scrollTop);
-      this.refs.bodyTable.scrollTop = this.scrollTop;
+      this.bodyTable.scrollTop = this.scrollTop;
       this.scrollTop = -1;
     }
     if (prevProps.data.length === 0 || this.props.data.length === 0) {
@@ -444,11 +444,11 @@ var Table = function (_Component) {
     var props = this.props;
     var y = props.scroll && props.scroll.y;
     if (y) {
-      var bodyH = this.refs.bodyTable.clientHeight;
-      var bodyContentH = this.refs.bodyTable.querySelector('table').clientHeight;
+      var bodyH = this.bodyTable.clientHeight;
+      var bodyContentH = this.bodyTable.querySelector('table').clientHeight;
       var rightBodyTable = this.refs.fixedColumnsBodyRight;
       var overflowy = bodyContentH <= bodyH ? 'auto' : 'scroll';
-      this.refs.bodyTable.style.overflowY = overflowy;
+      this.bodyTable.style.overflowY = overflowy;
       this.refs.headTable.style.overflowY = overflowy;
       rightBodyTable && (rightBodyTable.style.overflowY = overflowy);
     }
@@ -1077,7 +1077,9 @@ var Table = function (_Component) {
       {
         className: clsPrefix + '-body',
         style: bodyStyle,
-        ref: 'bodyTable',
+        ref: function ref(el) {
+          _this4.bodyTable = el;
+        },
         onMouseOver: this.detectScrollTarget,
         onTouchStart: this.detectScrollTarget,
         onScroll: this.handleBodyScroll,
@@ -1191,8 +1193,8 @@ var Table = function (_Component) {
         columns = _props7.columns,
         heightConsistent = _props7.heightConsistent;
 
-    var headRows = this.refs.headTable ? this.refs.headTable.querySelectorAll('thead') : this.refs.bodyTable.querySelectorAll('thead');
-    var bodyRows = this.refs.bodyTable.querySelectorAll('.' + clsPrefix + '-row') || [];
+    var headRows = this.refs.headTable ? this.refs.headTable.querySelectorAll('thead') : this.bodyTable.querySelectorAll('thead');
+    var bodyRows = this.bodyTable.querySelectorAll('.' + clsPrefix + '-row') || [];
     var leftBodyRows = this.refs.fixedColumnsBodyLeft && this.refs.fixedColumnsBodyLeft.querySelectorAll('.' + clsPrefix + '-row') || [];
     var rightBodyRows = this.refs.fixedColumnsBodyRight && this.refs.fixedColumnsBodyRight.querySelectorAll('.' + clsPrefix + '-row') || [];
     var fixedColumnsHeadRowsHeight = [].map.call(headRows, function (row) {
@@ -1237,8 +1239,8 @@ var Table = function (_Component) {
     if (this.refs.headTable) {
       this.refs.headTable.scrollLeft = 0;
     }
-    if (this.refs.bodyTable) {
-      this.refs.bodyTable.scrollLeft = 0;
+    if (this.bodyTable) {
+      this.bodyTable.scrollLeft = 0;
     }
   };
 
