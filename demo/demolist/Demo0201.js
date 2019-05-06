@@ -2,7 +2,7 @@
 *
 * @title 横向滚动条
 * @parent 滚动 Scroll View
-* @description 设置`scroll`属性支持横向或纵向滚动，x的取值可以是：正整数(自动转为相应的像素值)、百分比（相对于表格真实宽度的百分比，大于100%时会出现滚动条）、布尔值。y的取值是正整数。
+* @description `scroll.x`的值代表表体内容的实际宽度，默认情况下是根据各列宽度合计出来的。其值超过父元素的宽度时会自动出现滚动条。如设置 `scroll={{ x:1000 }}`，可以手动添加横向滚动条，也可以设置`scroll={{ x:"110%" }}`。
 * demo0201
 */
 
@@ -141,7 +141,7 @@ const data = [
 class Demo11 extends Component {
   render() {
     return (
-        <Table columns={columns} data={data} scroll={{ x:true }} />
+        <Table columns={columns} data={data} scroll={{ x: "110%" }} />
     );
   }
 }

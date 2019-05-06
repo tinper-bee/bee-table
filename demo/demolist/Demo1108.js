@@ -21,7 +21,7 @@ const renderContent = (value, row, index) => {
 };
 
 const columns = [{
-  title: 'Name',
+  title: '姓名',
   key: "name",
   dataIndex: 'name',
   render: (text, row, index) => {
@@ -36,12 +36,12 @@ const columns = [{
     };
   },
 }, {
-  title: 'Age',
-  key: "Age",
+  title: '年龄',
+  key: "age",
   dataIndex: 'age',
   render: renderContent,
 }, {
-  title: 'Home phone',
+  title: '联系方式',
   colSpan: 2,
   key: "tel",
   dataIndex: 'tel',
@@ -62,13 +62,13 @@ const columns = [{
     return obj;
   },
 }, {
-  title: 'Phone',
+  title: '手机号',
   colSpan: 0,
   key: "phone",
   dataIndex: 'phone',
   render: renderContent,
 }, {
-  title: 'Address',
+  title: '家庭住址',
   key: "address",
   dataIndex: 'address',
   render: renderContent,
@@ -76,39 +76,39 @@ const columns = [{
 
 const data = [{
   key: '1',
-  name: 'John Brown',
+  name: '小红',
   age: 32,
   tel: '0571-22098909',
   phone: 18889898989,
-  address: 'New York No. 1 Lake Park',
+  address: '北京海淀',
 }, {
   key: '2',
-  name: 'Jim Green',
+  name: '小明',
   tel: '0571-22098333',
   phone: 18889898888,
   age: 42,
-  address: 'London No. 1 Lake Park',
+  address: '河北张家口',
 }, {
   key: '3',
-  name: 'Joe Black',
+  name: '张三',
   age: 32,
   tel: '0575-22098909',
   phone: 18900010002,
-  address: 'Sidney No. 1 Lake Park',
+  address: '浙江杭州',
 }, {
   key: '4',
-  name: 'Jim Red',
+  name: '李四',
   age: 18,
   tel: '0575-22098909',
   phone: 18900010002,
-  address: 'London No. 2 Lake Park',
+  address: '广州深圳',
 }, {
   key: '5',
-  name: 'Jake White',
+  name: '王五',
   age: 18,
   tel: '0575-22098909',
   phone: 18900010002,
-  address: 'Dublin No. 2 Lake Park',
+  address: '北京昌平',
 }];
 
 class Demo15 extends Component {

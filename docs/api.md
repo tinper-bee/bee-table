@@ -58,7 +58,7 @@ import 'bee-table/build/Table.css';
 | title                  | 表格标题                                     | Function                               | -               |
 | footer                 | 表格尾部                                     | Function                               | -               |
 | emptyText              | 无数据时显示的内容                                | Function                               | () => 'No Data' |
-| scroll                 | 横向或纵向支持滚动，也可用于指定滚动区域的宽高度 | `{ x: number / true / 百分比 ,  y: number }` | {}     |
+| scroll                 | 横向或纵向支持滚动，也可用于指定滚动区域的宽高度 | `{ x: number / 百分比 ,  y: number }` | {}     |
 | rowRef                 | 获取行的ref                                  | Function(record, index, indent):string | () => null      |
 | getBodyWrapper         | 添加对table body的包装                         | Function(body)                         | body => body    |
 | expandedRowRender      | 额外的展开行                                   | Function(record, index, indent):node | -               |
@@ -121,10 +121,13 @@ import 'bee-table/build/Table.css';
 
 
 ### 高阶函数
+Table内部封装了六个高阶组件，接收基础 Table 组件作为输入，输出一个新的复杂 Table 组件。高阶组件让代码更具有复用性、逻辑性与抽象特征。
 
-Table拓展功能方法。注：拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然在操作state会导致功能出现异常
+![image](https://user-images.githubusercontent.com/33412781/57187761-88701d00-6f26-11e9-9b31-d57c85ae3e23.png)
 
-需要单独的去引用相应的js文件，目录在lib文件夹，示例如下：
+> 注：不要在render方法内部使用高阶组件。这样不仅会有性能问题 – 重新挂载一个组件还会导致这个组件的状态和他所有的子节点的状态丢失。 
+
+使用时需要单独引用相应的js文件，目录在lib文件夹，以多选功能（multiSelect）为例：
 
 ```js
 import multiSelect from "tinper-bee/lib/multiSelect.js";
@@ -132,22 +135,7 @@ import multiSelect from "tinper-bee/lib/multiSelect.js";
 
 ### multiSelect 多选功能
 
-#### API
-
-Data 数组参数：
-
-| 参数                  | 说明                         | 类型       | 默认值      |
-| ------------------- | -------------------------- | -------- | -------- |
-| _checked         | 设置是否选中当前数据           |  boolean      | true/false       |
-| _disabled   | 设置是否禁用当前数据     |  boolean      | true/false     |
-
-Table 组件参数：
-
-| 参数     | 说明         | 类型       | 默认值  |
-| ------ | ---------- | -------- | ---- |
-| getSelectedDataFunc | 返回当前选中的数据数组 | Function | 无    |
-
-#### 使用
+#### 如何使用
 
 ```js
 import multiSelect from "tinper-bee/lib/multiSelect.js";
@@ -157,8 +145,35 @@ const MultiSelectTable = multiSelect(Table, Checkbox);
 
 ```
 
+#### API
+
+Table 组件参数：
+
+| 参数     | 说明         | 类型       | 默认值  |
+| ------ | ---------- | -------- | ---- |
+| getSelectedDataFunc | 返回当前选中的数据数组 | Function | 无    |
+
+Data 数组参数：
+
+| 参数                  | 说明                         | 类型       | 默认值      |
+| ------------------- | -------------------------- | -------- | -------- |
+| _checked         | 设置是否选中当前数据           |  boolean      | true/false       |
+| _disabled   | 设置是否禁用当前数据     |  boolean      | true/false     |
+
+#### multiSelect 使用示例
+- [多选功能](http://design.yonyoucloud.com/tinper-bee/bee-table#%E5%A4%9A%E9%80%89%E5%8A%9F%E8%83%BD)
+
 ### sort 排序功能
 
+#### 如何使用
+
+```js
+import sort from "tinper-bee/lib/sort.js";
+import { Table, Icon } from 'tinper-bee';
+
+const SortTable = sort(Table, Icon);
+
+```
 #### API
 
 column 数组参数：
@@ -168,27 +183,14 @@ column 数组参数：
 | sorter | 排序函数，可以自定义 | Function | 无    |
 | sorterClick | 排序钩子函数| Function | (coloum,type)    |
 
-#### 使用
-
-```js
-import sort from "tinper-bee/lib/sort.js";
-import { Table, Icon } from 'tinper-bee';
-
-const SortTable = sort(Table, Icon);
-
-```
+#### sort 使用示例
+- [列排序](http://design.yonyoucloud.com/tinper-bee/bee-table#%E5%88%97%E6%8E%92%E5%BA%8F)
+- [后端列排序](http://design.yonyoucloud.com/tinper-bee/bee-table#%E5%90%8E%E7%AB%AF%E5%88%97%E6%8E%92%E5%BA%8F)
+- [多列排序](http://design.yonyoucloud.com/tinper-bee/bee-table#%E5%A4%9A%E5%88%97%E6%8E%92%E5%BA%8F)
 
 ### sum 合计功能
 
-#### API
-
-column 数组参数：
- 
-| 参数     | 说明         | 类型       | 默认值  |
-| ------ | ---------- | -------- | ---- |
-| sumCol | 该列设置为合计列，合计行中会显示合计数据 | boolean | false |
-
-#### 使用
+#### 如何使用
 
 ```js
 import sum from "tinper-bee/lib/sum.js";
@@ -198,7 +200,28 @@ const SumTable = sum(Table);
 
 ```
 
+#### API
+
+column 数组参数：
+ 
+| 参数     | 说明         | 类型       | 默认值  |
+| ------ | ---------- | -------- | ---- |
+| sumCol | 该列设置为合计列，合计行中会显示合计数据 | boolean | false |
+
+#### sum 使用示例
+- [列合计（总计）](http://design.yonyoucloud.com/tinper-bee/bee-table#%E5%88%97%E5%90%88%E8%AE%A1%EF%BC%88%E6%80%BB%E8%AE%A1%EF%BC%89)
+
 ### dragColumn 拖拽列功能
+
+#### 如何使用
+
+```js
+import dragColumn from "tinper-bee/lib/dragColumn.js";
+import { Table } from 'tinper-bee';
+
+const DragColumnTable = dragColumn(Table);
+
+```
 
 #### API
 
@@ -211,31 +234,51 @@ Table 组件参数：
 | onDrop | 拖拽释放回调函数(交换列) | function | () => {} |
 | onDropBorder | 拖拽释放回调函数(调整列宽) | function | (e) => {} |
 
-#### 使用
-
-```js
-import dragColumn from "tinper-bee/lib/dragColumn.js";
-import { Table } from 'tinper-bee';
-
-const DragColumnTable = dragColumn(Table);
-
-```
+#### dragColumn 使用示例
+- [拖拽改变列顺序](http://design.yonyoucloud.com/tinper-bee/bee-table#%E6%8B%96%E6%8B%BD%E6%94%B9%E5%8F%98%E5%88%97%E9%A1%BA%E5%BA%8F)
+- [拖拽改变列宽度](http://design.yonyoucloud.com/tinper-bee/bee-table#%E6%8B%96%E6%8B%BD%E6%94%B9%E5%8F%98%E5%88%97%E5%AE%BD%E5%BA%A6)
 
 ### filterColumn 过滤功能
 
-#### API
-
-无
-
-#### 使用
+#### 如何使用
 
 ```js
 import filterColumn from "tinper-bee/lib/filterColumn.js";
 import { Table, Checkbox, Popover, Icon } from 'tinper-bee';
 
-const DragColumnTable = filterColumn(Table, Checkbox, Popover, Icon);
+const FilterColumnTable = filterColumn(Table, Checkbox, Popover, Icon);
 
 ```
+
+#### API
+
+无
+
+#### filterColumn 示例
+- [按条件、值过滤](http://design.yonyoucloud.com/tinper-bee/bee-table#%E6%8C%89%E6%9D%A1%E4%BB%B6%E3%80%81%E5%80%BC%E8%BF%87%E6%BB%A4)
+- [复杂表格中行过滤](http://design.yonyoucloud.com/tinper-bee/bee-table#%E5%A4%8D%E6%9D%82%E8%A1%A8%E6%A0%BC%E4%B8%AD%E8%A1%8C%E8%BF%87%E6%BB%A4)
+
+### bigData 大数据渲染
+
+#### 如何使用
+
+```js
+import bigData from "tinper-bee/lib/bigData.js";
+import { Table } from 'tinper-bee';
+
+const BigDataTable = bigData(Table);
+
+```
+
+#### API
+
+无
+
+#### bigData 使用示例
+- [万行以上数据渲染](http://design.yonyoucloud.com/tinper-bee/bee-table#%E4%B8%87%E8%A1%8C%E4%BB%A5%E4%B8%8A%E6%95%B0%E6%8D%AE%E6%B8%B2%E6%9F%93)
+- [嵌套子表格滚动加载](http://design.yonyoucloud.com/tinper-bee/bee-table#%E5%B5%8C%E5%A5%97%E5%AD%90%E8%A1%A8%E6%A0%BC%E6%BB%9A%E5%8A%A8%E5%8A%A0%E8%BD%BD)
+- [多功能表格滚动加载](http://design.yonyoucloud.com/tinper-bee/bee-table#%E5%A4%9A%E5%8A%9F%E8%83%BD%E8%A1%A8%E6%A0%BC%E6%BB%9A%E5%8A%A8%E5%8A%A0%E8%BD%BD)
+- [层级树大数据场景](http://design.yonyoucloud.com/tinper-bee/bee-table#%E5%B1%82%E7%BA%A7%E6%A0%91%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%9C%BA%E6%99%AF)
 
 ### rendertype
 
@@ -304,7 +347,7 @@ const InputRender = renderInput(Form, FormControl, Icon);
 
 注:其他参数参见Datepicker组件参数配置
 
-#### DateRender:使用
+#### 使用
 
 ```js
 import renderDate from "tinper-bee/lib/DateRender.js";
@@ -333,7 +376,7 @@ const DateRender = renderDate(Datepicker, Icon);
 
 注:其他参数参见Select组件参数配置
 
-#### SelectRender:使用
+#### 使用
 
 ```js
 import renderSelect from "tinper-bee/lib/SelectRender.js";

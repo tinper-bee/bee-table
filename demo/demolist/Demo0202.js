@@ -2,7 +2,7 @@
 *
 * @title 纵向滚动条
 * @parent 滚动 Scroll View
-* @description 设置`scroll`属性支持横向或纵向滚动，x/y的取值可以是正整数、百分比、布尔值
+* @description 通过设置 `scroll.y` 可达到固定表头的效果。如设置 `scroll={{ y:200 }}` 表示表体高度超出 200px 后会显示滚动条。
 * demo0202
 */
 
@@ -100,7 +100,7 @@ const data = [
 class Demo12 extends Component {
   render() {
     return (
-        <Table columns={columns} data={data} scroll={{y:150 }} />
+        <Table columns={columns} data={data} scroll={{ y:150 }} />
     );
   }
 }

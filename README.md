@@ -94,7 +94,7 @@ class Demo extends Component {
 | title                  | 表格标题                                     | Function                               | -               |
 | footer                 | 表格尾部                                     | Function                               | -               |
 | emptyText              | 无数据时显示的内容                                | Function                               | () => 'No Data' |
-| scroll                 | 横向或纵向支持滚动，也可用于指定滚动区域的宽高度| `{ x: number | true | 百分比, y: number }`  | {}     |
+| scroll                 | 横向或纵向支持滚动，也可用于指定滚动区域的宽高度| `{ x: number / 百分比, y: number }`  | {}     |
 | rowRef                 | 获取行的ref                                  | Function(record, index, indent):string | () => null      |
 | getBodyWrapper         | 添加对table body的包装                         | Function(body)                         | body => body    |
 | expandedRowRender      | 额外的展开行                                   | Function(record, index, indent):node | -               |

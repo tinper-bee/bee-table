@@ -7,13 +7,11 @@
 */
 
 import React, { Component } from 'react';
-import {Icon,Checkbox,Dropdown,Menu} from "tinper-bee";
+import {Icon,Checkbox} from "tinper-bee";
 
 import Table from '../../src';
 import multiSelect from '../../src/lib/multiSelect';
 import sort from '../../src/lib/sort';
-
-const { Item } = Menu;
 
 const data27 = [
   {
@@ -106,30 +104,10 @@ class Demo27 extends Component {
   }
 
   render() {
-    const menu1 = (
-      <Menu
-          onSelect={this.onSelect}>
-          <Item key="1">模态弹出</Item>
-          <Item key="2">链接跳转</Item>
-          <Item key="3">打开新页</Item>
-      </Menu>);
     let multiObj = {
       type: "checkbox"
     };
     let columns27 = [
-      { title: "关联",dataIndex: "link",key: "link",width: 80, 
-          render: (text, record, index) => {
-            return (
-              <Dropdown
-                  trigger={['click']}
-                  overlay={menu1}
-                  animation="slide-up"
-              >
-                  <Icon type="uf-link" style={{color:'rgb(0, 72, 152)',fontSize:'12px'}}></Icon>
-              </Dropdown>
-            )
-          }
-      },
       {
         title: "姓名",
         width: 180,

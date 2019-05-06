@@ -84,7 +84,8 @@
             "sort 排序功能": "",
             "sum 合计功能": "",
             "dragColumn 拖拽列功能": "",
-            "filterColumn 过滤功能": ""
+            "filterColumn 过滤功能": "",
+            "bigData 大数据渲染": ""
         },
         "rendertype":{
             "InputRender": "",
