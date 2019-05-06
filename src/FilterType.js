@@ -209,6 +209,7 @@ class FilterType extends Component {
                 return <div className={`${clsPrefix} filter-wrap`}>
                     <Select
                         {...this.props}
+                        size="sm"
                         value={this.state.value}
                         onChange={this.changeSelect}
                     /><FilterDropDown

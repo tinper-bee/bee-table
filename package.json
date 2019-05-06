@@ -62,7 +62,6 @@
   "component-classes": "^1.2.6",
   "lodash.clonedeep": "^4.5.0",
   "object-path": "^0.11.3",
-  "ref-tree": "2.0.1-beta.1",
   "shallowequal": "^1.0.2",
   "throttle-debounce": "^2.0.1",
   "tinper-bee-core": "latest",
@@ -91,6 +90,7 @@
   "react-addons-test-utils": "^15.5.0",
   "react-dom": "^16.6.3",
   "reqwest": "^2.0.5",
-  "tinper-bee": "latest"
+  "tinper-bee": "latest",
+  "ref-tree": "2.0.1-beta.1"
  }
 }

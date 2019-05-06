@@ -248,6 +248,7 @@ var FilterType = function (_Component) {
                         'div',
                         { className: clsPrefix + ' filter-wrap' },
                         _react2["default"].createElement(_beeSelect2["default"], _extends({}, _this.props, {
+                            size: 'sm',
                             value: _this.state.value,
                             onChange: _this.changeSelect
                         })),

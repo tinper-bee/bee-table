@@ -157,7 +157,7 @@ class FilterDropDown extends Component {
             >
                 <Button
                     shape="border"
-                    style={{ marginLeft: "3px", minWidth: "0px", width: "24px", padding: 0 }}
+                    style={{ marginLeft: "2px", minWidth: "0px", width: "26px", lineHeight: "24px", padding: 0 }}
                 >
                     <Icon style={{ padding: 0, color: '#585858' }} type="uf-filter" />
                 </Button>
@@ -165,7 +165,7 @@ class FilterDropDown extends Component {
             <Button
                 onClick={this.onClickClear}
                 shape="border"
-                style={{ marginLeft: "1px", minWidth: "0px", width: "24px", padding: 0, "visibility": this.props.isShowClear || this.state.selectValue.length > 0 ? "visible" : "hidden" }}
+                style={{ marginLeft: "2px", minWidth: "0px", width: "26px", lineHeight: "24px", padding: 0, "visibility": this.props.isShowClear || this.state.selectValue.length > 0 ? "visible" : "hidden" }}
             >
                 <Icon style={{ padding: 0, color: '#585858', "visibility": this.props.isShowClear || this.state.selectValue.length > 0 ? "visible" : "hidden" }} type="uf-filterno" />
             </Button>
