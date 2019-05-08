@@ -702,6 +702,8 @@ class Table extends Component {
           onDragRow={this.onDragRow}
           contentTable={this.contentTable}
           tableUid = {this.tableUid}
+          expandedIcon={props.expandedIcon}
+          collapsedIcon={props.collapsedIcon}
         />
       );
       this.treeRowIndex++;

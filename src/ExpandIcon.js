@@ -20,16 +20,20 @@ class ExpandIcon extends Component{
     return !shallowequal(nextProps, this.props);
   }
   render() {
-    const { expandable, clsPrefix, onExpand, needIndentSpaced, expanded, record, isHiddenExpandIcon } = this.props;
+    const { expandable, clsPrefix, onExpand, needIndentSpaced, expanded, record, isHiddenExpandIcon,expandedIcon,collapsedIcon } = this.props;
     if (expandable && !isHiddenExpandIcon) {
       const expandClassName = expanded ? 'expanded' : 'collapsed';
-      return (
-        <Icon
-          className={`${clsPrefix}-expand-icon ${clsPrefix}-${expandClassName}`}
-          type={expanded ? 'uf-triangle-down' : 'uf-triangle-right'}
-          onClick={(e) => onExpand(!expanded, record, e)}
-        />
-      );
+      let currentIcon =  <Icon
+                          className={`${clsPrefix}-expand-icon ${clsPrefix}-${expandClassName}`}
+                          type={expanded ? 'uf-triangle-down' : 'uf-triangle-right'}
+                        
+                        />;
+      if(expanded && expandedIcon){
+        currentIcon = expandedIcon;
+      }else if(!expanded && collapsedIcon){
+        currentIcon = collapsedIcon;
+      }
+      return (<span onClick={(e) => onExpand(!expanded, record, e)} className='expand-icon-con'>{currentIcon}</span>);
     } else if (needIndentSpaced || isHiddenExpandIcon) {
       return <span className={`${clsPrefix}-expand-icon ${clsPrefix}-spaced`} />;
     }

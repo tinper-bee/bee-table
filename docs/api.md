@@ -85,7 +85,8 @@ import 'bee-table/build/Table.css';
 | headerDisplayInRow | 设置表头的内容显示一行，超出显示省略号 | bool |
 | bodyDisplayInRow |  设置表体的内容显示一行，超出显示省略号 | bool | 
 | rowDraggAble  | 是否增加行交换顺序功能 | boolean| false
-
+|expandedIcon|嵌套表格场景中展开子表时的展开图标|||
+|collapsedIcon|嵌套表格场景中关闭子表时的关闭图标|||
 > 快捷键部分参考示例 (快捷键在table中的简单使用应用)
 
 *注意: data参数中的key值必需，否则会导致部分功能出现问题！建议使用唯一的值，如id*

@@ -353,6 +353,7 @@ class TableRow extends Component{
       clsPrefix, columns, record, height, visible, index,
       expandIconColumnIndex, expandIconAsCell, expanded, expandRowByClick,rowDraggAble,
       expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed,bodyDisplayInRow
+      ,expandedIcon,collapsedIcon
     } = this.props;
     let showSum = false;
     let { className } = this.props;
@@ -373,6 +374,8 @@ class TableRow extends Component{
         needIndentSpaced={needIndentSpaced}
         expanded={expanded}
         record={record}
+        expandedIcon={expandedIcon}
+        collapsedIcon={collapsedIcon}
         isHiddenExpandIcon={isHiddenExpandIcon}
       />
     );
