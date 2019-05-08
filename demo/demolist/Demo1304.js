@@ -31,7 +31,7 @@ class Demo1304 extends Component {
   render() {
     let {selectedValue} = this.state;
     let columns = [
-      { title: "单选", dataIndex: "check", key: "check", width: 80,render(text, record, index){
+      { title: "单选", dataIndex: "check", key: "check", width: 50,render(text, record, index){
         return(
           <Radio.RadioGroup name="fruits"  selectedValue={selectedValue}>
           <Radio value={record.check} />
@@ -45,8 +45,11 @@ class Demo1304 extends Component {
 
     return (
       <Table
+        className="demo1304"
         columns={columns}
         data={data}
+        height={40}
+        headerheight={40}
         rowClassName={(record,index,indent)=>{
           if (this.state.selectedRowIndex == index) {
               return 'selected';
@@ -60,8 +63,6 @@ class Demo1304 extends Component {
               selectedValue:record.check
           });
         }}
-        title={currentData => <div>员工信息统计表</div>}
-        footer={currentData => <div>合计: 共{data.length}条数据</div>}
       /> 
     );
   }

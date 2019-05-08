@@ -1050,6 +1050,11 @@ th .drop-menu .uf {
 th:hover .uf {
   visibility: visible; }
 
+.demo1304 .u-table-tbody .u-radio-group {
+  width: 16px;
+  height: 16px;
+  display: block; }
+
 
 .demo8 .u-table {
   margin-bottom: 11px; }
