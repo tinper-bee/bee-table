@@ -31,7 +31,7 @@ class Demo1304 extends Component {
   render() {
     let {selectedValue} = this.state;
     let columns = [
-      { title: "单选", dataIndex: "check", key: "check", width: 50,render(text, record, index){
+      { title: "单选", dataIndex: "check", key: "check", width: 49, textAlign:'center',render(text, record, index){
         return(
           <Radio.RadioGroup name="fruits"  selectedValue={selectedValue}>
           <Radio value={record.check} />
@@ -48,6 +48,7 @@ class Demo1304 extends Component {
         className="demo1304"
         columns={columns}
         data={data}
+        bordered
         height={40}
         headerheight={40}
         rowClassName={(record,index,indent)=>{

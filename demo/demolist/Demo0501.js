@@ -514,24 +514,24 @@ class Demo0501 extends Component {
   renderRowHover = () => {
     const { currentIndex } = this.state;
     return this.state.editingRowsMap[currentIndex] ? (
-      <div className={"opt-btns"}>
+      <div className="cancel-btns">
         <Button
-          colors="dark"
-          className="btn-abort"
+          size="sm"
+          bordered
           onClick={this.abortEdit(currentIndex)}
         >
           取消
         </Button>
-        <Button colors="primary" onClick={this.commitChange(currentIndex)}>
+        <Button size="sm" colors="primary" onClick={this.commitChange(currentIndex)}>
           确认
         </Button>
       </div>
     ) : (
-      <div className={"opt-btns"}>
-        <Button colors="dark" onClick={this.edit(currentIndex)}>
+      <div className="opt-btns">
+        <Button size="sm" onClick={this.edit(currentIndex)}>
           编辑
         </Button>
-        <Button colors="dark" onClick={this.delete(currentIndex)}>
+        <Button size="sm" onClick={this.delete(currentIndex)}>
           删除
         </Button>
       </div>

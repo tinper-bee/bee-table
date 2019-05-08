@@ -1102,7 +1102,7 @@ class Table extends Component {
   handleBodyScroll(e) {
 
     const { scroll = {},clsPrefix,handleScrollY, handleScrollX} = this.props;
-    const { headTable, bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this.refs;
+    const { headTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this.refs;
     // Prevent scrollTop setter trigger onScroll event
     // http://stackoverflow.com/q/1386696
     if (e.currentTarget !== e.target) {
@@ -1110,10 +1110,10 @@ class Table extends Component {
     }
     if (e.target.scrollLeft !== this.lastScrollLeft) {
       let position = '';
-      if (e.target === bodyTable && headTable) {
+      if (e.target === this.bodyTable && headTable) {
         headTable.scrollLeft = e.target.scrollLeft;
-      } else if (e.target === headTable && bodyTable) {
-        bodyTable.scrollLeft = e.target.scrollLeft;
+      } else if (e.target === headTable && this.bodyTable) {
+        this.bodyTable.scrollLeft = e.target.scrollLeft;
       }
       if (e.target.scrollLeft === 0) {
         position='left';
@@ -1143,8 +1143,8 @@ class Table extends Component {
       if (fixedColumnsBodyRight && e.target !== fixedColumnsBodyRight) {
         fixedColumnsBodyRight.scrollTop = e.target.scrollTop;
       }
-      if (bodyTable && e.target !== bodyTable) {
-        bodyTable.scrollTop = e.target.scrollTop;
+      if (this.bodyTable && e.target !== this.bodyTable) {
+        this.bodyTable.scrollTop = e.target.scrollTop;
       }
       if(this.hoverDom){
         this.hoverDom.style.display = 'none'

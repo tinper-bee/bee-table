@@ -1,21 +1,11 @@
 .demo0505 {
 
-  .opt-btns {
-    margin-bottom: 15px;
+  .toolbar-btns {
+    margin-bottom: 8px;
 
-    button {
-      border-radius: 3px;
-
+    .u-button {
       &:first-child {
-        margin-right: 10px;
-      }
-
-      &.btn-abort {
-        background-color: #fff;
-        color: rgb(70, 83, 105);
-        &:hover {
-          background-color: #eff0f3;
-        }
+        margin-right: 8px;
       }
     }
   }
@@ -52,7 +42,7 @@
 
       &::before {
         content: " ";
-        border: 2px solid #F44336;
+        border: 1px solid #F44336;
         width: 0;
         height: 12px;
         position: absolute;

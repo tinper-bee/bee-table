@@ -119,6 +119,7 @@ class Demo13 extends Component {
           清空已选
         </Button>
         <ComplexTable
+          bordered
           selectDisabled={this.state.selectDisabled}
           selectedRow={this.state.selectedRow}
           columns={columns13}

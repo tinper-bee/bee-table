@@ -46,7 +46,7 @@ class StringEditCell extends Component {
     return editable ? (
       <div className="editable-cell">
         <div className={cls}>
-          <FormControl value={value} onChange={this.handleChange} />
+          <FormControl className={!value && "error"} value={value} onChange={this.handleChange} />
           <span className="error">
             {value === "" ? (
               <Tooltip
@@ -506,12 +506,11 @@ class Demo0505 extends Component {
     const columns = this.columns;
     return (
       <div className="demo0505 u-editable-table">
-        <div className="opt-btns">
+        <div className="toolbar-btns">
           {isEditingAll ? (
             <React.Fragment>
               <Button
-                colors="dark"
-                className="btn-abort"
+                bordered
                 onClick={this.abortEdit}
               >
                 取消
@@ -521,7 +520,7 @@ class Demo0505 extends Component {
               </Button>
             </React.Fragment>
           ) : (
-            <Button colors="dark" onClick={this.edit}>
+            <Button colors="secondary" onClick={this.edit}>
               编辑全表
             </Button>
           )}

@@ -37,6 +37,13 @@
 
   .editable-cell-input-wrapper {
     padding-right: 0;
+    .ref-input-wrap {
+      width: auto !important;
+      height: 30px;
+      .u-input-group{
+        display: inline-block;
+      }
+    }
   }
 
   .verify-cell {

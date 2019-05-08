@@ -1,16 +1,8 @@
 .demo0503-m-b {
-  button {
-    &.btn-abort {
-      background-color: #fff;
-      color: rgb(70, 83, 105);
-      &:hover {
-        background-color: #eff0f3 !important;
-      }
-    }
-  }
 
-  .u-modal .u-modal-body {
+  &.u-modal .u-modal-body {
     padding: 16px 0;
+    background: #f7f9fb;
   }
 
   .u-form-group {
@@ -42,16 +34,9 @@
     font-size: 12px;
     height: 32px;
     line-height: 32px;
-  }
-
-  .required {
-    &::before {
-      content: "*";
-      position: absolute;
-      top: 9px;
-      left: -9px;
+    .mast {
+      padding: 0;
       color: red;
-      font-size: 14px;
     }
   }
 
@@ -69,4 +54,7 @@
   .tp-content {
     color: #F44336;
   }
+}
+.ref-core-button .u-button:first-child{
+  margin-right: 8px;
 }

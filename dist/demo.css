@@ -511,7 +511,8 @@
     height: 14px;
     line-height: 14px;
     margin: 0px;
-    display: block; }
+    display: block;
+    margin-left: 5px; }
     .u-table .u-checkbox .u-checkbox-label {
       line-height: 14px;
       padding-left: 16px; }
@@ -743,6 +744,12 @@
 .filter-wrap .u-input-number.u-input-group.simple .u-input-group-btn .icon-group {
   height: 26px; }
 
+.filter-wrap .calendar-picker .u-input-group-btn {
+  line-height: 20px; }
+
+.filter-wrap .u-input-number.u-input-group.simple .u-input-group-btn .icon-group .uf {
+  line-height: 12px; }
+
 .u-row-hover {
   position: absolute;
   right: 24px;
@@ -827,15 +834,10 @@
   padding-top: 0px;
   padding-bottom: 0px; }
 
-.demo0501 .u-table .u-row-hover .opt-btns button {
-  border-radius: 3px; }
-  .demo0501 .u-table .u-row-hover .opt-btns button:first-child {
-    margin-right: 10px; }
-  .demo0501 .u-table .u-row-hover .opt-btns button.btn-abort {
-    background-color: #fff;
-    color: #465369; }
-    .demo0501 .u-table .u-row-hover .opt-btns button.btn-abort:hover {
-      background-color: #eff0f3; }
+.demo0501 .u-table .u-row-hover .opt-btns button, .demo0501 .u-table .u-row-hover .cancel-btns button {
+  margin: 0; }
+  .demo0501 .u-table .u-row-hover .opt-btns button:first-child, .demo0501 .u-table .u-row-hover .cancel-btns button:first-child {
+    margin-right: 8px; }
 
 .demo0501 .u-table .u-table-row td {
   padding: 5px 8px; }
@@ -857,7 +859,7 @@
   position: relative; }
   .demo0501 .u-table .required::before {
     content: " ";
-    border: 2px solid #F44336;
+    border: 1px solid #F44336;
     width: 0;
     height: 12px;
     position: absolute;
@@ -906,6 +908,11 @@
 
 .u-editable-table .u-table .editable-cell-input-wrapper {
   padding-right: 0; }
+  .u-editable-table .u-table .editable-cell-input-wrapper .ref-input-wrap {
+    width: auto !important;
+    height: 30px; }
+    .u-editable-table .u-table .editable-cell-input-wrapper .ref-input-wrap .u-input-group {
+      display: inline-block; }
 
 .u-editable-table .u-table .verify-cell {
   padding-right: 25px !important; }
@@ -919,14 +926,9 @@
 .u-editable-table-tp .tp-content {
   color: #F44336; }
 
-.demo0503-m-b button.btn-abort {
-  background-color: #fff;
-  color: #465369; }
-  .demo0503-m-b button.btn-abort:hover {
-    background-color: #eff0f3 !important; }
-
-.demo0503-m-b .u-modal .u-modal-body {
-  padding: 16px 0; }
+.demo0503-m-b.u-modal .u-modal-body {
+  padding: 16px 0;
+  background: #f7f9fb; }
 
 .demo0503-m-b .u-form-group {
   overflow: hidden; }
@@ -953,14 +955,9 @@
   font-size: 12px;
   height: 32px;
   line-height: 32px; }
-
-.demo0503-m-b .required::before {
-  content: "*";
-  position: absolute;
-  top: 9px;
-  left: -9px;
-  color: red;
-  font-size: 14px; }
+  .demo0503-m-b .u-label .mast {
+    padding: 0;
+    color: red; }
 
 .demo0503-m-b .required-icon {
   position: absolute;
@@ -973,17 +970,13 @@
   .u-editable-table-tp .tp-content {
     color: #F44336; }
 
-.demo0505 .opt-btns {
-  margin-bottom: 15px; }
-  .demo0505 .opt-btns button {
-    border-radius: 3px; }
-    .demo0505 .opt-btns button:first-child {
-      margin-right: 10px; }
-    .demo0505 .opt-btns button.btn-abort {
-      background-color: #fff;
-      color: #465369; }
-      .demo0505 .opt-btns button.btn-abort:hover {
-        background-color: #eff0f3; }
+.ref-core-button .u-button:first-child {
+  margin-right: 8px; }
+
+.demo0505 .toolbar-btns {
+  margin-bottom: 8px; }
+  .demo0505 .toolbar-btns .u-button:first-child {
+    margin-right: 8px; }
 
 .demo0505 .u-table .u-row-select {
   background-color: #FFF7E7; }
@@ -1008,7 +1001,7 @@
   position: relative; }
   .demo0505 .u-table .required::before {
     content: " ";
-    border: 2px solid #F44336;
+    border: 1px solid #F44336;
     width: 0;
     height: 12px;
     position: absolute;
@@ -1053,7 +1046,8 @@ th:hover .uf {
 .demo1304 .u-table-tbody .u-radio-group {
   width: 16px;
   height: 16px;
-  display: block; }
+  display: block;
+  margin-left: 8px; }
 
 
 .demo8 .u-table {

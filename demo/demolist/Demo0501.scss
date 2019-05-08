@@ -1,19 +1,10 @@
 .demo0501 .u-table {
   .u-row-hover {
-    .opt-btns {
+    .opt-btns,.cancel-btns {
       button {
-        border-radius: 3px;
-
+        margin: 0;
         &:first-child {
-          margin-right: 10px;
-        }
-
-        &.btn-abort {
-          background-color: #fff;
-          color: rgb(70, 83, 105);
-          &:hover {
-            background-color: #eff0f3;
-          }
+          margin-right: 8px;
         }
       }
     }
@@ -47,7 +38,7 @@
 
     &::before {
       content: " ";
-      border: 2px solid #F44336;
+      border: 1px solid #F44336;
       width: 0;
       height: 12px;
       position: absolute;

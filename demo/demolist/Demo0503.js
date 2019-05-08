@@ -369,13 +369,14 @@ class EditModal extends Component {
           <Modal.Title>编辑行</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <Form>
           <Row style={{ width: 770, margin: "0 auto" }}>
             {
               columns.map((item, index) => {
                 return (
                   <Col sm={6} md={6} lg={6} style={{ padding: "0 0 0 10px" }} key={index}>
                     <FormGroup>
-                      <Label>{item.title}</Label>
+                      <Label><Icon type="uf-mi" className='mast'></Icon>{item.title}</Label>
                       {this.renderElm[item.key] &&
                         this.renderElm[item.key](
                           data,
@@ -395,12 +396,12 @@ class EditModal extends Component {
               })
             }
           </Row>
+          </Form>
         </Modal.Body>
         <Modal.Footer style={{textAlign: "right"}}>
           <Button
-            colors="dark"
-            className="btn-abort"
-            style={{ marginRight: 15 }}
+            style={{ marginRight: 8 }}
+            bordered
             onClick={onHide}
           >
             取消
@@ -535,8 +536,8 @@ class Demo0503 extends Component {
 
   renderRowHover = () => {
     return (
-      <div className={"opt-btns"}>
-        <Button colors="dark" onClick={this.edit}>
+      <div className="opt-btns">
+        <Button size="sm" onClick={this.edit}>
           编辑
         </Button>
       </div>

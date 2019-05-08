@@ -493,7 +493,7 @@ class Demo0502 extends Component {
   render() {
     return (
       <div className="demo0502 u-editable-table">
-        <Table data={this.state.dataSource} columns={this.columns} />
+        <Table data={this.state.dataSource} columns={this.columns} height={40}/>
       </div>
     );
   }

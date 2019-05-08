@@ -1282,7 +1282,6 @@ var Table = function (_Component) {
         handleScrollX = _props8.handleScrollX;
     var _refs = this.refs,
         headTable = _refs.headTable,
-        bodyTable = _refs.bodyTable,
         fixedColumnsBodyLeft = _refs.fixedColumnsBodyLeft,
         fixedColumnsBodyRight = _refs.fixedColumnsBodyRight;
     // Prevent scrollTop setter trigger onScroll event
@@ -1293,10 +1292,10 @@ var Table = function (_Component) {
     }
     if (e.target.scrollLeft !== this.lastScrollLeft) {
       var position = '';
-      if (e.target === bodyTable && headTable) {
+      if (e.target === this.bodyTable && headTable) {
         headTable.scrollLeft = e.target.scrollLeft;
-      } else if (e.target === headTable && bodyTable) {
-        bodyTable.scrollLeft = e.target.scrollLeft;
+      } else if (e.target === headTable && this.bodyTable) {
+        this.bodyTable.scrollLeft = e.target.scrollLeft;
       }
       if (e.target.scrollLeft === 0) {
         position = 'left';
@@ -1320,8 +1319,8 @@ var Table = function (_Component) {
       if (fixedColumnsBodyRight && e.target !== fixedColumnsBodyRight) {
         fixedColumnsBodyRight.scrollTop = e.target.scrollTop;
       }
-      if (bodyTable && e.target !== bodyTable) {
-        bodyTable.scrollTop = e.target.scrollTop;
+      if (this.bodyTable && e.target !== this.bodyTable) {
+        this.bodyTable.scrollTop = e.target.scrollTop;
       }
       if (this.hoverDom) {
         this.hoverDom.style.display = 'none';

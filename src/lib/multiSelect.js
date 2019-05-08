@@ -175,7 +175,7 @@ export default function multiSelect(Table, Checkbox) {
           key: "checkbox",
           dataIndex: "checkbox",
          fixed:"left",
-          width: 40, 
+          width: 49, 
           render: (text, record, index) => {
             let attr = {};
             record._disabled?attr.disabled = record._disabled:"";

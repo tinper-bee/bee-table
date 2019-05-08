@@ -523,7 +523,8 @@
     height: 14px;
     line-height: 14px;
     margin: 0px;
-    display: block; }
+    display: block;
+    margin-left: 5px; }
     .u-table .u-checkbox .u-checkbox-label {
       line-height: 14px;
       padding-left: 16px; }
@@ -754,6 +755,12 @@
 
 .filter-wrap .u-input-number.u-input-group.simple .u-input-group-btn .icon-group {
   height: 26px; }
+
+.filter-wrap .calendar-picker .u-input-group-btn {
+  line-height: 20px; }
+
+.filter-wrap .u-input-number.u-input-group.simple .u-input-group-btn .icon-group .uf {
+  line-height: 12px; }
 
 .u-row-hover {
   position: absolute;
