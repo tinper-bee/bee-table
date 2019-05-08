@@ -1,3 +1,23 @@
+<a name="2.0.17"></a>
+## [2.0.17](https://github.com/tinper-bee/bee-table/compare/v2.0.16...v2.0.17) (2019-05-08)
+
+
+### Bug Fixes
+
+* Refs Must Have Owner Warning ([90853f0](https://github.com/tinper-bee/bee-table/commit/90853f0))
+
+
+
+<a name="2.0.16"></a>
+## [2.0.16](https://github.com/tinper-bee/bee-table/compare/v2.0.15...v2.0.16) (2019-04-26)
+
+
+
+<a name="2.0.15"></a>
+## [2.0.15](https://github.com/tinper-bee/bee-table/compare/v2.0.14...v2.0.15) (2019-04-25)
+
+
+
 <a name="2.0.14"></a>
 ## [2.0.14](https://github.com/tinper-bee/bee-table/compare/v2.0.13...v2.0.14) (2019-04-25)
 
@@ -702,12 +722,7 @@
 
 
 <a name="1.2.9"></a>
-## [1.2.9](https://github.com/tinper-bee/bee-table/compare/v1.2.8...v1.2.9) (2018-07-16)
-
-
-
-<a name="1.2.8"></a>
-## [1.2.8](https://github.com/tinper-bee/bee-table/compare/v1.2.7...v1.2.8) (2018-07-06)
+## [1.2.9](https://github.com/tinper-bee/bee-table/compare/v1.2.7...v1.2.9) (2018-07-16)
 
 
 
