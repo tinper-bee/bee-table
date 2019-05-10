@@ -223,6 +223,9 @@
     .u-table th.text-right,
     .u-table td.text-right {
       text-align: right; }
+    .u-table th .expand-icon-con,
+    .u-table td .expand-icon-con {
+      cursor: pointer; }
   .u-table-sm td {
     padding: 8px 8px; }
   .u-table-lg td {

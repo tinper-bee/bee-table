@@ -60,17 +60,29 @@ var ExpandIcon = function (_Component) {
         needIndentSpaced = _props.needIndentSpaced,
         expanded = _props.expanded,
         record = _props.record,
-        isHiddenExpandIcon = _props.isHiddenExpandIcon;
+        isHiddenExpandIcon = _props.isHiddenExpandIcon,
+        expandedIcon = _props.expandedIcon,
+        collapsedIcon = _props.collapsedIcon;
 
     if (expandable && !isHiddenExpandIcon) {
       var expandClassName = expanded ? 'expanded' : 'collapsed';
-      return _react2["default"].createElement(_beeIcon2["default"], {
+      var currentIcon = _react2["default"].createElement(_beeIcon2["default"], {
         className: clsPrefix + '-expand-icon ' + clsPrefix + '-' + expandClassName,
-        type: expanded ? 'uf-triangle-down' : 'uf-triangle-right',
-        onClick: function onClick(e) {
-          return onExpand(!expanded, record, e);
-        }
+        type: expanded ? 'uf-triangle-down' : 'uf-triangle-right'
+
       });
+      if (expanded && expandedIcon) {
+        currentIcon = expandedIcon;
+      } else if (!expanded && collapsedIcon) {
+        currentIcon = collapsedIcon;
+      }
+      return _react2["default"].createElement(
+        'span',
+        { onClick: function onClick(e) {
+            return onExpand(!expanded, record, e);
+          }, className: 'expand-icon-con' },
+        currentIcon
+      );
     } else if (needIndentSpaced || isHiddenExpandIcon) {
       return _react2["default"].createElement('span', { className: clsPrefix + '-expand-icon ' + clsPrefix + '-spaced' });
     }

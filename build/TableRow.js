@@ -449,7 +449,9 @@ var TableRow = function (_Component) {
         indentSize = _props9.indentSize,
         isHiddenExpandIcon = _props9.isHiddenExpandIcon,
         fixed = _props9.fixed,
-        bodyDisplayInRow = _props9.bodyDisplayInRow;
+        bodyDisplayInRow = _props9.bodyDisplayInRow,
+        expandedIcon = _props9.expandedIcon,
+        collapsedIcon = _props9.collapsedIcon;
 
     var showSum = false;
     var className = this.props.className;
@@ -470,6 +472,8 @@ var TableRow = function (_Component) {
       needIndentSpaced: needIndentSpaced,
       expanded: expanded,
       record: record,
+      expandedIcon: expandedIcon,
+      collapsedIcon: collapsedIcon,
       isHiddenExpandIcon: isHiddenExpandIcon
     });
 
