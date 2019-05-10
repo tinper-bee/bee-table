@@ -1116,8 +1116,7 @@ var Table = function (_Component) {
             onTouchStart: this.detectScrollTarget,
             onScroll: this.handleBodyScroll
           },
-          renderTable(!useFixedHeader),
-          _react2["default"].createElement('div', { className: 'scroll-dom', style: { height: this.scrollbarWidth + 'px' } })
+          renderTable(!useFixedHeader)
         )
       );
     }
