@@ -2,12 +2,12 @@
 *
 * @title 嵌套子表格
 * @parent 扩展行 Expanded Row
-* @description 通过expandedRowRender参数来实现子表格
+* @description 通过expandedRowRender参数来实现子表格。收起和展开的图标可自定义传入。
 * demo1101
 */
 
 import React, { Component } from "react";
-import { Popconfirm } from 'tinper-bee';
+import { Popconfirm,Icon } from 'tinper-bee';
 import Table from "../../src";
 import dragColumn from '../../src/lib/dragColumn';
 const DragColumnTable = dragColumn(Table);
@@ -119,6 +119,8 @@ class Demo16 extends Component {
         scroll={{x:true}}
         dragborder={true} 
         draggable={true} 
+        collapsedIcon={<Icon type='uf-anglearrowpointingtoright'/>}
+        expandedIcon={<Icon type='uf-treearrow-down'/>}
       />
     );
   }
