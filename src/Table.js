@@ -963,7 +963,7 @@ class Table extends Component {
             onScroll={this.handleBodyScroll}
           >
             {renderTable(!useFixedHeader)}
-            <div className="scroll-dom" style={{height:`${this.scrollbarWidth}px`}}></div>
+            {/* <div className="scroll-dom" style={{height:`${this.scrollbarWidth}px`}}></div> */}
           </div>
         </div>
       );
