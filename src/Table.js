@@ -303,10 +303,19 @@ class Table extends Component {
       const bodyH = this.bodyTable.clientHeight;
       const bodyContentH = this.bodyTable.querySelector('table').clientHeight;
       const rightBodyTable = this.refs.fixedColumnsBodyRight;
+      const leftBodyTable = this.refs.fixedColumnsBodyLeft;
       const overflowy = bodyContentH <= bodyH ? 'auto':'scroll';
       this.bodyTable.style.overflowY = overflowy;
+    
       this.refs.headTable.style.overflowY = overflowy;
       rightBodyTable && (rightBodyTable.style.overflowY = overflowy);
+      // 没有纵向滚动条时，表头横向滚动条根据内容动态显示 待验证
+      // if(overflowy == 'auto'){
+      //   this.refs.fixedHeadTable && (this.refs.fixedHeadTable.style.overflowX = 'auto');
+      //   rightBodyTable && (rightBodyTable.style.overflowX = 'auto');
+      //   leftBodyTable && (leftBodyTable.style.overflowX = 'auto');
+      // }
+     
       
     }
   }
@@ -915,7 +924,7 @@ class Table extends Component {
       headTable = (
         <div
           className={`${clsPrefix}-header`}
-          ref={fixed ? null : 'headTable'}
+          ref={fixed ? 'fixedHeadTable' : 'headTable'}
           style={headStyle}
           onMouseOver={this.detectScrollTarget}
           onTouchStart={this.detectScrollTarget}

@@ -447,9 +447,17 @@ var Table = function (_Component) {
       var bodyH = this.bodyTable.clientHeight;
       var bodyContentH = this.bodyTable.querySelector('table').clientHeight;
       var rightBodyTable = this.refs.fixedColumnsBodyRight;
+      var leftBodyTable = this.refs.fixedColumnsBodyLeft;
       var overflowy = bodyContentH <= bodyH ? 'auto' : 'scroll';
       this.bodyTable.style.overflowY = overflowy;
+
       this.refs.headTable.style.overflowY = overflowy;
+      // 没有纵向滚动条时，表头横向滚动条根据内容动态显示
+      if (overflowy == 'auto') {
+        this.refs.fixedHeadTable && (this.refs.fixedHeadTable.style.overflowX = 'auto');
+        rightBodyTable && (rightBodyTable.style.overflowX = 'auto');
+        leftBodyTable && (leftBodyTable.style.overflowX = 'auto');
+      }
       rightBodyTable && (rightBodyTable.style.overflowY = overflowy);
     }
   };
@@ -1065,7 +1073,7 @@ var Table = function (_Component) {
         'div',
         {
           className: clsPrefix + '-header',
-          ref: fixed ? null : 'headTable',
+          ref: fixed ? 'fixedHeadTable' : 'headTable',
           style: headStyle,
           onMouseOver: this.detectScrollTarget,
           onTouchStart: this.detectScrollTarget,
