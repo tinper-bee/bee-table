@@ -452,13 +452,14 @@ var Table = function (_Component) {
       this.bodyTable.style.overflowY = overflowy;
 
       this.refs.headTable.style.overflowY = overflowy;
-      // 没有纵向滚动条时，表头横向滚动条根据内容动态显示
-      if (overflowy == 'auto') {
-        this.refs.fixedHeadTable && (this.refs.fixedHeadTable.style.overflowX = 'auto');
-        rightBodyTable && (rightBodyTable.style.overflowX = 'auto');
-        leftBodyTable && (leftBodyTable.style.overflowX = 'auto');
-      }
       rightBodyTable && (rightBodyTable.style.overflowY = overflowy);
+      // 没有纵向滚动条时，表头横向滚动条根据内容动态显示 待验证
+      // if(overflowy == 'auto'){
+      //   this.refs.fixedHeadTable && (this.refs.fixedHeadTable.style.overflowX = 'auto');
+      //   rightBodyTable && (rightBodyTable.style.overflowX = 'auto');
+      //   leftBodyTable && (leftBodyTable.style.overflowX = 'auto');
+      // }
+
     }
   };
 
