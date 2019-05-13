@@ -1,5 +1,5 @@
-<a name="2.0.17"></a>
-## [2.0.17](https://github.com/tinper-bee/bee-table/compare/v2.0.16...v2.0.17) (2019-05-10)
+<a name="2.0.18"></a>
+## [2.0.18](https://github.com/tinper-bee/bee-table/compare/v2.0.16...v2.0.18) (2019-05-13)
 
 
 ### Bug Fixes
