@@ -2,7 +2,7 @@
 *
 * @title 嵌套子表格滚动加载
 * @parent 无限滚动 Infinite-scroll
-* @description 通过expandedRowRender参数来实现子表格
+* @description 通过expandedRowRender参数来实现子表格。注意事项：传入的表格数据必须有 key 值作为唯一标识，否则会导致表格的收起展开功能出现问题。
 * demo1402
 */
 

@@ -68,8 +68,8 @@ class Demo34 extends Component {
       selectedRowIndex: 0
     }
   }
-  onExpandedRowsChange = (params)=>{
-    console.log(params);
+  onExpandedRowsChange = (expandedRowKeys)=>{
+    console.log('expandedRowKeys',expandedRowKeys);
   }
   onExpand = (expandKeys)=>{
     console.log('expand---'+expandKeys);
@@ -85,6 +85,7 @@ class Demo34 extends Component {
           onRowClick={(record, index, indent) => {
             console.log('currentIndex--'+index);
           }}
+          onExpandedRowsChange={this.onExpandedRowsChange}
         />
 
      

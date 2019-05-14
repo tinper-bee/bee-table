@@ -32,7 +32,7 @@ import 'bee-table/build/Table.css';
 
 ## API
 
-### Table
+### Table props
 
 | 参数                     | 说明                                       | 类型                                     | 默认值             |
 | :--------------------- | :--------------------------------------- | :------------------------------------- | :-------------- |
@@ -45,13 +45,9 @@ import 'bee-table/build/Table.css';
 | bodyStyle              | 添加到tablebody上的style                      | object                                 | {}              |
 | style                  | 添加到table上的style                          | object                                 | {}              |
 | rowKey                 | 如果rowKey是字符串，`record [rowKey]`将被用作键。如果rowKey是function，`rowKey（record, index）`的返回值将被用作键。 | string or Function(record, index):string      | 'key'           |
-| rowClassName           | 获取行的classname                            | Function(record, index, indent):string | () => ''        |
-| expandedRowClassName   | 获取展开行的className                          | Function(recode, index, indent):string | () => ''        |
-| onExpand               | 展开行时的钩子函数                                | Function(expanded, record)             | () => ''        |
-| onExpandedRowsChange   | 函数在扩展行更改时调用                              | Function(expandedRows)                 | () => ''        |
+| rowClassName | 获取行的classname | Function(record, index, indent):string | () => '' |
+| expandedRowClassName | 获取展开行的className | Function(recode, index, indent):string | () => '' |
 | indentSize             | indentSize为每个级别的data.i.children，更好地使用column.width指定 | number                                 | 15              |
-| onRowClick             | 行的点击事件钩子函数                               | Function(record, index, event)         | () => ''        |
-| onRowDoubleClick       | 行的双击事件钩子函数                               | Function(record, index, event)         | () => ''        |
 | expandIconAsCell       | 是否将expandIcon作为单元格                       | bool                                   | false           |
 | expandIconColumnIndex  | expandIcon的索引，当expandIconAsCell为false时，将插入哪个列 | number                                 | 0               |
 | showHeader             | 是否显示表头                                   | bool                                   | true            |
@@ -69,15 +65,12 @@ import 'bee-table/build/Table.css';
 | haveExpandIcon       | 控制是否显示行展开icon.**注：该参数只有在和expandedRowRender同时使用才生效** | Function(record, index):bool   | () =>false |
 | filterable       | 是否开启根据条件来过滤数据 | bool | false
 | filterDelay       | 触发过滤输入的时候的ms延迟时间 | number | 300
-| onFilterChange       | 触发过滤输入操作以及下拉条件的回调 | function | (field,value,condition) => ()
-| onFilterClear       | 清除过滤条件的回调函数，回调参数为清空的字段 | function | (field) => ()
 | headerScroll       | 表头下是否显示滚动条 | bool| false
 | sort       | 排序的属性 | object| {  mode:'single'//单列排序,  backSource:false //默认是前端排序，值为true为后端排序 } mode:multiple-多列排序
 | syncHover       | 是否同步Hover状态到左侧Checkbox，关闭此功能有助于提升性能 | bool| true
 | loadBuffer       | 使用BigData高阶组件实现大数据加载时，上下加载的缓存 | number| 5
 | resetScroll       | 将表格横向滚动条位置还原 | bool| false
 | hoverContent       | hover某行时，动态渲染行菜单元素，此方法需返回行菜单元素的内容 | Function| 
-| onRowHover       | 行hover时的回调函数 | Function| 
 | heightConsistent       | 当固定列内容高度超出非固定列时，内容互错行，当此属性为true会将高度同步，当行过多时会有性能影响，所以建议非固定高度如果过高时，超出内容可以显示成省略号 | bool|false 
 | height | 自定义表格行高 | number | - |
 | headerHeight | 自定义表头行高 | number | - |
@@ -91,6 +84,17 @@ import 'bee-table/build/Table.css';
 
 *注意: data参数中的key值必需，否则会导致部分功能出现问题！建议使用唯一的值，如id*
 
+### Table events
+
+| 事件名 | 说明 | 类型 | 返回值 |
+| :--- | :--- | :--- | :--- |
+| onExpand | 展开行时的钩子函数 | Function(expanded, record) | `expanded` : 当前的状态<br>`record` :  当前行的数据 |
+| onExpandedRowsChange | 函数在扩展行更改时调用 | Function(expandedRowKeys) | `expandedRowKeys` : 展开行的keys数组 |
+| onRowClick | 行的点击事件钩子函数 | Function(record, index, event) | 当前行的数据<br>当前行的index<br>事件对象 |
+| onRowDoubleClick | 行的双击事件钩子函数 | Function(record, index, event) | 当前行的数据<br>当前行的index<br>事件对象 |
+| onFilterChange | 触发过滤输入操作以及下拉条件的回调 | function(field,value,condition) | 字段名称 <br> 字段值 <br> 判断条件 |
+| onFilterClear | 清除过滤条件的回调函数，回调参数为清空的字段 | function(field) | 字段名称 |
+| onRowHover | 行hover时的回调函数 | function(index,record) | 当前行的index<br>当前行的数据 |
 
 
 ### Column
