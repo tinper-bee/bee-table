@@ -230,11 +230,12 @@ function addHandler(element, type, handler) {
 }
 
 function removeHandler(element, type, handler) {
-  if (element.removeEventListener) {
+  if (element && element.removeEventListener) {
+    //element&& ie11报错兼容
     element.removeEventListener(type, handler, false);
-  } else if (element.detachEvent) {
+  } else if (element && element.detachEvent) {
     element.detachEvent("on" + type, handler);
-  } else {
+  } else if (element) {
     element["on" + type] = null;
   }
 }
@@ -278,11 +279,12 @@ var EventUtil = exports.EventUtil = {
   },
 
   removeHandler: function removeHandler(element, type, handler) {
-    if (element.removeEventListener) {
+    //element&& ie11报错兼容
+    if (element && element.removeEventListener) {
       element.removeEventListener(type, handler, false);
-    } else if (element.detachEvent) {
+    } else if (element && element.detachEvent) {
       element.detachEvent('on' + type, handler);
-    } else {
+    } else if (element) {
       element['on' + type] = null;
     }
   }
