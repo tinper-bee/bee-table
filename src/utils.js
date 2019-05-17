@@ -205,11 +205,11 @@ export function getColChildrenLength(columns,chilrenLen){
 }
 
  function removeHandler(element, type, handler){
-  if (element.removeEventListener){
+  if (element&&element.removeEventListener){//element&& ie11报错兼容
       element.removeEventListener(type, handler, false);
-  } else if (element.detachEvent){
+  } else if (element&&element.detachEvent){
       element.detachEvent("on" + type, handler);
-  } else {
+  } else if(element) {
       element["on" + type] = null;
   }
 }
@@ -255,15 +255,15 @@ export const EventUtil = {
       }
   },
 
-  removeHandler: function(element,type,handler) {
-      if (element.removeEventListener)
+  removeHandler: function(element,type,handler) {//element&& ie11报错兼容
+      if (element&&element.removeEventListener)
       {
           element.removeEventListener(type,handler,false);
       }
-      else if(element.detachEvent) {
+      else if(element&&element.detachEvent) {
           element.detachEvent('on' +type,handler);
       }
-      else {
+      else if(element){
           element['on'+type] = null;
       }
   }
