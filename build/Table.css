@@ -191,7 +191,7 @@
     .u-table th ::last-child {
       overflow: hidden; }
   .u-table td {
-    border-bottom: 1px solid rgb(233,233,233);
+    border-bottom: 1px solid rgb(193, 199, 208);
     line-height: 1.33; }
     .u-table td a {
       color: #2196F3; }
@@ -242,7 +242,7 @@
   .u-table-scroll {
     overflow: auto; }
   .u-table-bordered table {
-    border: 1px solid rgb(233,233,233);
+    border: 1px solid rgb(193, 199, 208);
     box-sizing: border-box;
     table-layout: fixed; }
   .u-table-bordered .u-table-header > table {
@@ -250,18 +250,18 @@
   .u-table-bordered .u-table-header ~ .u-table-body table, .u-table-bordered .u-table-header ~ .u-table-body-outer table {
     border-top: 0px; }
   .u-table-bordered th {
-    border-bottom: 1px solid rgb(233,233,233);
+    border-bottom: 1px solid rgb(193, 199, 208);
     box-sizing: border-box; }
   .u-table-bordered th,
   .u-table-bordered td {
-    border-right: 1px solid rgb(233,233,233);
+    border-right: 1px solid rgb(193, 199, 208);
     box-sizing: border-box; }
   .u-table-drag-border tr th.th-can-not-drag {
     overflow: hidden; }
   .u-table-header {
     overflow: hidden;
-    background: rgb(247,247,247);
-    color: rgb(102, 102, 102); }
+    background: rgb(241, 242, 245);
+    color: rgb(33, 33, 33); }
   .u-table.fixed-height td {
     padding: 0px 8px; }
   .u-table-fixed-header .u-table-body {
@@ -282,12 +282,12 @@
     box-sizing: border-box; }
   .u-table-title {
     padding: 12px 8px;
-    border-top: 1px solid rgb(233,233,233); }
+    border-top: 1px solid rgb(193, 199, 208); }
   .u-table-content {
     position: relative; }
   .u-table-footer {
     padding: 12px 8px;
-    border-bottom: 1px solid rgb(233,233,233); }
+    border-bottom: 1px solid rgb(193, 199, 208); }
     .u-table-footer .u-table-scroll {
       overflow-x: hidden; }
   .u-table-footer .u-table {
@@ -295,7 +295,7 @@
   .u-table-placeholder {
     padding: 12px 8px;
     background: #fff;
-    border-bottom: 1px solid rgb(233,233,233);
+    border-bottom: 1px solid rgb(193, 199, 208);
     text-align: center;
     position: relative; }
     .u-table-placeholder .table-nodata {
@@ -328,7 +328,7 @@
     visibility: hidden; }
   .u-table-row-spaced:after, .u-table-expanded-row-spaced:after {
     content: "."; }
-  .u-table-row-expanded:after:after, .u-table-expanded-row-expanded:after:after {
+  .u-table-row-expanded:after, .u-table-expanded-row-expanded:after {
     content: "\e639";
     font-family: "uf" !important; }
   .u-table-row-collapsed:after, .u-table-expanded-row-collapsed:after {
@@ -398,8 +398,8 @@
     .u-table-thead .filter-wrap .filter-btns {
       min-width: 58px; }
   .u-table-thead th {
-    background: rgb(247,247,247);
-    color: rgb(102, 102, 102);
+    background: rgb(241, 242, 245);
+    color: rgb(33, 33, 33);
     background-clip: padding-box;
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
@@ -500,7 +500,7 @@
     right: 0px;
     top: 1px;
     z-index: 2;
-    background: rgb(247,247,247);
+    background: rgb(241, 242, 245);
     text-align: center;
     cursor: pointer; }
     .u-table-filter-column-filter-icon i.uf {
@@ -578,7 +578,7 @@
 
 .u-table.bordered th,
 .u-table.bordered td {
-  border: 1px solid rgb(233,233,233); }
+  border: 1px solid rgb(193, 199, 208); }
 
 .move-enter,
 .move-appear {

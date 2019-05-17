@@ -295,7 +295,7 @@ $icon-color:#505F79;
     &-spaced:after {
       content: ".";
     }
-    &-expanded:after {
+    &-expanded {
       &:after {
         content: "\e639";
         font-family: "uf" !important;
