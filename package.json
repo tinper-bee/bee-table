@@ -89,8 +89,8 @@
   "react": "^16.6.3",
   "react-addons-test-utils": "^15.5.0",
   "react-dom": "^16.6.3",
+  "ref-tree": "2.0.1-beta.1",
   "reqwest": "^2.0.5",
-  "tinper-bee": "latest",
-  "ref-tree": "2.0.1-beta.1"
+  "tinper-bee": "latest"
  }
 }

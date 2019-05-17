@@ -28,7 +28,7 @@ const columns = [
         <Tooltip inverse overlay={text}>
           <span tootip={text} style={{
             display: "block",
-            width: "80px",
+            width: "40px",
             textOverflow: "ellipsis",
             overflow: "hidden",
             whiteSpace: "nowrap",

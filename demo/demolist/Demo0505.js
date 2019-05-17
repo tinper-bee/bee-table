@@ -509,14 +509,14 @@ class Demo0505 extends Component {
         <div className="toolbar-btns">
           {isEditingAll ? (
             <React.Fragment>
+              <Button colors="primary" onClick={this.commitChange}>
+                确认
+              </Button>
               <Button
                 bordered
                 onClick={this.abortEdit}
               >
                 取消
-              </Button>
-              <Button colors="primary" onClick={this.commitChange}>
-                确认
               </Button>
             </React.Fragment>
           ) : (

@@ -78,7 +78,8 @@
         }
     },
     "API": {
-        "Table": "",
+        "Table props": "",
+        "Table events": "",
         "Column": "",
         "高阶函数": {
             "multiSelect 多选功能": "",
