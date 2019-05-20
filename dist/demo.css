@@ -317,7 +317,7 @@
     visibility: hidden; }
   .u-table-row-spaced:after, .u-table-expanded-row-spaced:after {
     content: "."; }
-  .u-table-row-expanded:after:after, .u-table-expanded-row-expanded:after:after {
+  .u-table-row-expanded:after, .u-table-expanded-row-expanded:after {
     content: "\e639";
     font-family: "uf" !important; }
   .u-table-row-collapsed:after, .u-table-expanded-row-collapsed:after {
@@ -1051,12 +1051,6 @@ th .drop-menu .uf {
 
 th:hover .uf {
   visibility: visible; }
-
-.demo1304 .u-table-tbody .u-radio-group {
-  width: 16px;
-  height: 16px;
-  display: block;
-  margin-left: 8px; }
 
 
 .demo8 .u-table {

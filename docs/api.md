@@ -126,9 +126,9 @@ import 'bee-table/build/Table.css';
 
 
 ### 高阶函数
-Table内部封装了六个高阶组件，接收基础 Table 组件作为输入，输出一个新的复杂 Table 组件。高阶组件让代码更具有复用性、逻辑性与抽象特征。
+Table内部封装了七个高阶组件，接收基础 Table 组件作为输入，输出一个新的复杂 Table 组件。高阶组件让代码更具有复用性、逻辑性与抽象特征。
 
-![image](https://user-images.githubusercontent.com/33412781/57187761-88701d00-6f26-11e9-9b31-d57c85ae3e23.png)
+![image](https://user-images.githubusercontent.com/33412781/58004582-29a9c680-7b16-11e9-8608-192bde91a9f5.png)
 
 > 注：不要在render方法内部使用高阶组件。这样不仅会有性能问题 – 重新挂载一个组件还会导致这个组件的状态和他所有的子节点的状态丢失。 
 
@@ -137,6 +137,28 @@ Table内部封装了六个高阶组件，接收基础 Table 组件作为输入�
 ```js
 import multiSelect from "tinper-bee/lib/multiSelect.js";
 ```
+
+### singleSelect 单选功能
+
+#### 如何使用
+
+```js
+import singleSelect from "tinper-bee/lib/singleSelect.js";
+import { Table, Radio } from 'tinper-bee';
+
+const SingleSelectTable = singleSelect(Table, Radio);
+
+```
+
+#### API
+
+Table 组件参数：
+
+| 参数     | 说明         | 类型       | 默认值  |
+| ------ | ---------- | -------- | ---- |
+| getSelectedDataFunc | 返回当前选中的数据数组 | Function | 无    |
+| selectedRowIndex | 指定当前选中数据的 index | number | 无    |
+
 
 ### multiSelect 多选功能
 
