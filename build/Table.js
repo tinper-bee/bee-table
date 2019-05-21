@@ -52,6 +52,12 @@ var _beeIcon = require('bee-icon');
 
 var _beeIcon2 = _interopRequireDefault(_beeIcon);
 
+var _i18n = require('./lib/i18n');
+
+var _i18n2 = _interopRequireDefault(_i18n);
+
+var _tool = require('bee-locale/build/tool');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
@@ -141,18 +147,7 @@ var defaultProps = {
   getBodyWrapper: function getBodyWrapper(body) {
     return body;
   },
-  emptyText: function emptyText() {
-    return _react2["default"].createElement(
-      'div',
-      null,
-      _react2["default"].createElement(_beeIcon2["default"], { type: 'uf-nodata', className: 'table-nodata' }),
-      _react2["default"].createElement(
-        'span',
-        null,
-        '\u6682\u65E0\u6570\u636E'
-      )
-    );
-  },
+  // emptyText: () => <div><Icon type="uf-nodata" className="table-nodata"></Icon><span>{locale["no_data"]}</span></div>,
   columns: [],
   minColumnWidth: 80,
   locale: {},
@@ -1169,9 +1164,25 @@ var Table = function (_Component) {
 
   Table.prototype.getEmptyText = function getEmptyText() {
     var _props6 = this.props,
-        emptyText = _props6.emptyText,
+        defaultEmptyText = _props6.emptyText,
         clsPrefix = _props6.clsPrefix,
         data = _props6.data;
+
+    var locale = (0, _tool.getComponentLocale)(this.props, this.context, 'Table', function () {
+      return _i18n2["default"];
+    });
+    var emptyText = defaultEmptyText !== undefined ? defaultEmptyText() : function () {
+      return _react2["default"].createElement(
+        'div',
+        null,
+        _react2["default"].createElement(_beeIcon2["default"], { type: 'uf-nodata', className: 'table-nodata' }),
+        _react2["default"].createElement(
+          'span',
+          null,
+          locale["no_data"]
+        )
+      );
+    };
 
     return !data.length ? _react2["default"].createElement(
       'div',
@@ -1471,6 +1482,9 @@ var Table = function (_Component) {
 
 Table.propTypes = propTypes;
 Table.defaultProps = defaultProps;
+Table.contextTypes = {
+  beeLocale: _propTypes2["default"].object
+};
 
 exports["default"] = Table;
 module.exports = exports['default'];

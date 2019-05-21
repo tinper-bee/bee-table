@@ -11,6 +11,8 @@ import createStore from './createStore';
 import Loading from 'bee-loading';
 import Icon from 'bee-icon';
 import { Event,EventUtil,closest} from "./utils";
+import i18n from "./lib/i18n";
+import { getComponentLocale } from "bee-locale/build/tool";
 
 const propTypes = {
   data: PropTypes.array,
@@ -80,7 +82,7 @@ const defaultProps = {
   scroll: {},
   rowRef: () => null,
   getBodyWrapper: body => body,
-  emptyText: () => <div><Icon type="uf-nodata" className="table-nodata"></Icon><span>暂无数据</span></div>,
+  // emptyText: () => <div><Icon type="uf-nodata" className="table-nodata"></Icon><span>{locale["no_data"]}</span></div>,
   columns:[],
   minColumnWidth: 80,
   locale:{},
@@ -1005,7 +1007,10 @@ class Table extends Component {
   }
 
   getEmptyText() {
-    const { emptyText, clsPrefix, data } = this.props;
+    const { emptyText : defaultEmptyText, clsPrefix, data } = this.props;
+    let locale = getComponentLocale(this.props, this.context, 'Table', () => i18n);
+    let emptyText = defaultEmptyText !== undefined ? defaultEmptyText() : () => <div><Icon type="uf-nodata" className="table-nodata"></Icon><span>{locale["no_data"]}</span></div>;
+
     return !data.length ? (
       <div className={`${clsPrefix}-placeholder`}>
         {emptyText()}
@@ -1309,5 +1314,8 @@ class Table extends Component {
 
 Table.propTypes = propTypes;
 Table.defaultProps = defaultProps;
+Table.contextTypes = {
+  beeLocale: PropTypes.object
+};
 
 export default Table;
