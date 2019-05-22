@@ -27,7 +27,7 @@ const columns = [
         <Tooltip inverse overlay={text}>
           <span tootip={text} style={{
             display: "block",
-            width: "80px",
+            width: "40px",
             textOverflow: "ellipsis",
             overflow: "hidden",
             whiteSpace: "nowrap",
@@ -68,8 +68,8 @@ class Demo34 extends Component {
       selectedRowIndex: 0
     }
   }
-  onExpandedRowsChange = (params)=>{
-    console.log(params);
+  onExpandedRowsChange = (expandedRowKeys)=>{
+    console.log('expandedRowKeys',expandedRowKeys);
   }
   onExpand = (expandKeys)=>{
     console.log('expand---'+expandKeys);
@@ -85,6 +85,7 @@ class Demo34 extends Component {
           onRowClick={(record, index, indent) => {
             console.log('currentIndex--'+index);
           }}
+          onExpandedRowsChange={this.onExpandedRowsChange}
         />
 
      

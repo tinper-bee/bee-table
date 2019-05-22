@@ -1,6 +1,6 @@
 {
  "name": "bee-table",
- "version": "2.0.17",
+ "version": "2.0.20",
  "description": "Table ui component for react",
  "keywords": [
   "react",
@@ -54,7 +54,7 @@
   "bee-icon": "latest",
   "bee-input-number": "^2.0.7",
   "bee-loading": "^1.0.9",
-  "bee-locale": "0.0.13",
+  "bee-locale": "0.0.14",
   "bee-menus": "^2.0.6",
   "bee-radio": "^2.0.8",
   "bee-select": "^2.0.11",
@@ -89,8 +89,8 @@
   "react": "^16.6.3",
   "react-addons-test-utils": "^15.5.0",
   "react-dom": "^16.6.3",
+  "ref-tree": "2.0.1-beta.1",
   "reqwest": "^2.0.5",
-  "tinper-bee": "latest",
-  "ref-tree": "2.0.1-beta.1"
+  "tinper-bee": "latest"
  }
 }

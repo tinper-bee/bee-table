@@ -1,5 +1,20 @@
-<a name="2.0.17"></a>
-## [2.0.17](https://github.com/tinper-bee/bee-table/compare/v2.0.16...v2.0.17) (2019-05-10)
+<a name="2.0.20"></a>
+## [2.0.20](https://github.com/tinper-bee/bee-table/compare/v2.0.19...v2.0.20) (2019-05-21)
+
+
+
+<a name="2.0.19"></a>
+## [2.0.19](https://github.com/tinper-bee/bee-table/compare/v2.0.18...v2.0.19) (2019-05-15)
+
+
+### Bug Fixes
+
+* **bee-table:** ie11下removeEventListener报错bug ([59d03c3](https://github.com/tinper-bee/bee-table/commit/59d03c3))
+
+
+
+<a name="2.0.18"></a>
+## [2.0.18](https://github.com/tinper-bee/bee-table/compare/v2.0.16...v2.0.18) (2019-05-13)
 
 
 ### Bug Fixes
