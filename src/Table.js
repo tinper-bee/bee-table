@@ -226,6 +226,7 @@ class Table extends Component {
     if (prevProps.data.length === 0  || this.props.data.length === 0 ) {
       this.resetScrollX();
     }
+    
     // 是否传入 scroll中的y属性，如果传入判断是否是整数，如果是则进行比较 。bodyTable 的clientHeight进行判断
     this.isShowScrollY();
   }
@@ -307,11 +308,11 @@ class Table extends Component {
       const overflowy = bodyContentH <= bodyH ? 'auto':'scroll';
       this.bodyTable.style.overflowY = overflowy;
     
-      this.refs.headTable.style.overflowY = overflowy;
+      this.headTable.style.overflowY = overflowy;
       rightBodyTable && (rightBodyTable.style.overflowY = overflowy);
       // 没有纵向滚动条时，表头横向滚动条根据内容动态显示 待验证
       // if(overflowy == 'auto'){
-      //   this.refs.fixedHeadTable && (this.refs.fixedHeadTable.style.overflowX = 'auto');
+      //   this.fixedHeadTable && (this.fixedHeadTable.style.overflowX = 'auto');
       //   rightBodyTable && (rightBodyTable.style.overflowX = 'auto');
       //   leftBodyTable && (leftBodyTable.style.overflowX = 'auto');
       // }
@@ -819,7 +820,7 @@ class Table extends Component {
   getTable(options = {}) {
     const { columns, fixed } = options;
     const { clsPrefix, scroll = {}, getBodyWrapper, footerScroll,headerScroll } = this.props;
-    let { useFixedHeader } = this.props;
+    let { useFixedHeader,data } = this.props;
     const bodyStyle = { ...this.props.bodyStyle };
     const headStyle = {};
     const innerBodyStyle = {};
@@ -881,7 +882,13 @@ class Table extends Component {
             }
             
           }else{
-            headStyle.marginBottom = `-${scrollbarWidth}px`;
+              // 没有数据时，表头滚动条隐藏问题
+              if(data.length == 0 && this.domWidthDiff < 0){
+                headStyle.marginBottom = '0px';
+              }else{
+                headStyle.marginBottom = `-${scrollbarWidth}px`;
+              }
+            
           }
           
         }
@@ -924,7 +931,7 @@ class Table extends Component {
       headTable = (
         <div
           className={`${clsPrefix}-header`}
-          ref={fixed ? 'fixedHeadTable' : 'headTable'}
+          ref={(el)=>{fixed ? this.fixedHeadTable=el : this.headTable=el}}
           style={headStyle}
           onMouseOver={this.detectScrollTarget}
           onTouchStart={this.detectScrollTarget}
@@ -1029,8 +1036,8 @@ class Table extends Component {
   syncFixedTableRowHeight() {
     //this.props.height、headerHeight分别为用户传入的行高和表头高度，如果有值，所有行的高度都是固定的，主要为了避免在千行数据中有固定列时获取行高度有问题
     const { clsPrefix, height, headerHeight,columns,heightConsistent } = this.props;
-    const headRows = this.refs.headTable ?
-      this.refs.headTable.querySelectorAll('thead') :
+    const headRows = this.headTable ?
+      this.headTable.querySelectorAll('thead') :
       this.bodyTable.querySelectorAll('thead');
     const bodyRows = this.bodyTable.querySelectorAll(`.${clsPrefix}-row`) || [];
     const leftBodyRows = this.refs.fixedColumnsBodyLeft && this.refs.fixedColumnsBodyLeft.querySelectorAll(`.${clsPrefix}-row`) || [];
@@ -1077,8 +1084,8 @@ class Table extends Component {
   }
 
   resetScrollX() {
-    if (this.refs.headTable) {
-      this.refs.headTable.scrollLeft = 0;
+    if (this.headTable) {
+      this.headTable.scrollLeft = 0;
     }
     if (this.bodyTable) {
       this.bodyTable.scrollLeft = 0;
@@ -1111,9 +1118,9 @@ class Table extends Component {
   
 
   handleBodyScroll(e) {
-
+    const headTable = this.headTable;
     const { scroll = {},clsPrefix,handleScrollY, handleScrollX} = this.props;
-    const { headTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this.refs;
+    const {fixedColumnsBodyLeft, fixedColumnsBodyRight } = this.refs;
     // Prevent scrollTop setter trigger onScroll event
     // http://stackoverflow.com/q/1386696
     if (e.currentTarget !== e.target) {
@@ -1191,8 +1198,8 @@ class Table extends Component {
         if(td){
           const scrollTop = this.lastScrollTop ?this.lastScrollTop:0
           let top = td.offsetTop -  scrollTop;
-          if(this.refs.headTable){
-            top = top + this.refs.headTable.clientHeight; 
+          if(this.headTable){
+            top = top + this.headTable.clientHeight; 
           }
           this.hoverDom.style.top = top + 'px';
           this.hoverDom.style.height = td.offsetHeight + 'px';

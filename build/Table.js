@@ -388,6 +388,7 @@ var Table = function (_Component) {
     if (prevProps.data.length === 0 || this.props.data.length === 0) {
       this.resetScrollX();
     }
+
     // 是否传入 scroll中的y属性，如果传入判断是否是整数，如果是则进行比较 。bodyTable 的clientHeight进行判断
     this.isShowScrollY();
   };
@@ -451,14 +452,15 @@ var Table = function (_Component) {
       var overflowy = bodyContentH <= bodyH ? 'auto' : 'scroll';
       this.bodyTable.style.overflowY = overflowy;
 
-      this.refs.headTable.style.overflowY = overflowy;
-      // 没有纵向滚动条时，表头横向滚动条根据内容动态显示
-      if (overflowy == 'auto') {
-        this.refs.fixedHeadTable && (this.refs.fixedHeadTable.style.overflowX = 'auto');
-        rightBodyTable && (rightBodyTable.style.overflowX = 'auto');
-        leftBodyTable && (leftBodyTable.style.overflowX = 'auto');
-      }
+      this.headTable.style.overflowY = overflowy;
       rightBodyTable && (rightBodyTable.style.overflowY = overflowy);
+      // 没有纵向滚动条时，表头横向滚动条根据内容动态显示 待验证
+      // if(overflowy == 'auto'){
+      //   this.fixedHeadTable && (this.fixedHeadTable.style.overflowX = 'auto');
+      //   rightBodyTable && (rightBodyTable.style.overflowX = 'auto');
+      //   leftBodyTable && (leftBodyTable.style.overflowX = 'auto');
+      // }
+
     }
   };
 
@@ -966,7 +968,9 @@ var Table = function (_Component) {
         getBodyWrapper = _props3.getBodyWrapper,
         footerScroll = _props3.footerScroll,
         headerScroll = _props3.headerScroll;
-    var useFixedHeader = this.props.useFixedHeader;
+    var _props4 = this.props,
+        useFixedHeader = _props4.useFixedHeader,
+        data = _props4.data;
 
     var bodyStyle = _extends({}, this.props.bodyStyle);
     var headStyle = {};
@@ -1028,7 +1032,12 @@ var Table = function (_Component) {
                 // bodyStyle.marginBottom = `-${scrollbarWidth}px`;
               }
           } else {
-            headStyle.marginBottom = '-' + scrollbarWidth + 'px';
+            // 没有数据时，表头滚动条隐藏问题
+            if (data.length == 0 && this.domWidthDiff < 0) {
+              headStyle.marginBottom = '0px';
+            } else {
+              headStyle.marginBottom = '-' + scrollbarWidth + 'px';
+            }
           }
         }
       }
@@ -1073,7 +1082,9 @@ var Table = function (_Component) {
         'div',
         {
           className: clsPrefix + '-header',
-          ref: fixed ? 'fixedHeadTable' : 'headTable',
+          ref: function ref(el) {
+            fixed ? _this4.fixedHeadTable = el : _this4.headTable = el;
+          },
           style: headStyle,
           onMouseOver: this.detectScrollTarget,
           onTouchStart: this.detectScrollTarget,
@@ -1143,9 +1154,9 @@ var Table = function (_Component) {
   };
 
   Table.prototype.getTitle = function getTitle() {
-    var _props4 = this.props,
-        title = _props4.title,
-        clsPrefix = _props4.clsPrefix;
+    var _props5 = this.props,
+        title = _props5.title,
+        clsPrefix = _props5.clsPrefix;
 
     return title ? _react2["default"].createElement(
       'div',
@@ -1155,9 +1166,9 @@ var Table = function (_Component) {
   };
 
   Table.prototype.getFooter = function getFooter() {
-    var _props5 = this.props,
-        footer = _props5.footer,
-        clsPrefix = _props5.clsPrefix;
+    var _props6 = this.props,
+        footer = _props6.footer,
+        clsPrefix = _props6.clsPrefix;
 
     return footer ? _react2["default"].createElement(
       'div',
@@ -1167,10 +1178,10 @@ var Table = function (_Component) {
   };
 
   Table.prototype.getEmptyText = function getEmptyText() {
-    var _props6 = this.props,
-        emptyText = _props6.emptyText,
-        clsPrefix = _props6.clsPrefix,
-        data = _props6.data;
+    var _props7 = this.props,
+        emptyText = _props7.emptyText,
+        clsPrefix = _props7.clsPrefix,
+        data = _props7.data;
 
     return !data.length ? _react2["default"].createElement(
       'div',
@@ -1195,14 +1206,14 @@ var Table = function (_Component) {
 
   Table.prototype.syncFixedTableRowHeight = function syncFixedTableRowHeight() {
     //this.props.height、headerHeight分别为用户传入的行高和表头高度，如果有值，所有行的高度都是固定的，主要为了避免在千行数据中有固定列时获取行高度有问题
-    var _props7 = this.props,
-        clsPrefix = _props7.clsPrefix,
-        height = _props7.height,
-        headerHeight = _props7.headerHeight,
-        columns = _props7.columns,
-        heightConsistent = _props7.heightConsistent;
+    var _props8 = this.props,
+        clsPrefix = _props8.clsPrefix,
+        height = _props8.height,
+        headerHeight = _props8.headerHeight,
+        columns = _props8.columns,
+        heightConsistent = _props8.heightConsistent;
 
-    var headRows = this.refs.headTable ? this.refs.headTable.querySelectorAll('thead') : this.bodyTable.querySelectorAll('thead');
+    var headRows = this.headTable ? this.headTable.querySelectorAll('thead') : this.bodyTable.querySelectorAll('thead');
     var bodyRows = this.bodyTable.querySelectorAll('.' + clsPrefix + '-row') || [];
     var leftBodyRows = this.refs.fixedColumnsBodyLeft && this.refs.fixedColumnsBodyLeft.querySelectorAll('.' + clsPrefix + '-row') || [];
     var rightBodyRows = this.refs.fixedColumnsBodyRight && this.refs.fixedColumnsBodyRight.querySelectorAll('.' + clsPrefix + '-row') || [];
@@ -1245,8 +1256,8 @@ var Table = function (_Component) {
   };
 
   Table.prototype.resetScrollX = function resetScrollX() {
-    if (this.refs.headTable) {
-      this.refs.headTable.scrollLeft = 0;
+    if (this.headTable) {
+      this.headTable.scrollLeft = 0;
     }
     if (this.bodyTable) {
       this.bodyTable.scrollLeft = 0;
@@ -1283,14 +1294,14 @@ var Table = function (_Component) {
   };
 
   Table.prototype.handleBodyScroll = function handleBodyScroll(e) {
-    var _props8 = this.props,
-        _props8$scroll = _props8.scroll,
-        scroll = _props8$scroll === undefined ? {} : _props8$scroll,
-        clsPrefix = _props8.clsPrefix,
-        handleScrollY = _props8.handleScrollY,
-        handleScrollX = _props8.handleScrollX;
+    var headTable = this.headTable;
+    var _props9 = this.props,
+        _props9$scroll = _props9.scroll,
+        scroll = _props9$scroll === undefined ? {} : _props9$scroll,
+        clsPrefix = _props9.clsPrefix,
+        handleScrollY = _props9.handleScrollY,
+        handleScrollX = _props9.handleScrollX;
     var _refs = this.refs,
-        headTable = _refs.headTable,
         fixedColumnsBodyLeft = _refs.fixedColumnsBodyLeft,
         fixedColumnsBodyRight = _refs.fixedColumnsBodyRight;
     // Prevent scrollTop setter trigger onScroll event
@@ -1346,10 +1357,10 @@ var Table = function (_Component) {
 
   Table.prototype.handleRowHover = function handleRowHover(isHover, key, event, currentIndex) {
     //增加新的API，设置是否同步Hover状态，提高性能，避免无关的渲染
-    var _props9 = this.props,
-        syncHover = _props9.syncHover,
-        onRowHover = _props9.onRowHover,
-        data = _props9.data;
+    var _props10 = this.props,
+        syncHover = _props10.syncHover,
+        onRowHover = _props10.onRowHover,
+        data = _props10.data;
 
     var record = data[currentIndex];
     // 固定列、或者含有hoverdom时情况下同步hover状态
@@ -1366,8 +1377,8 @@ var Table = function (_Component) {
         if (td) {
           var scrollTop = this.lastScrollTop ? this.lastScrollTop : 0;
           var top = td.offsetTop - scrollTop;
-          if (this.refs.headTable) {
-            top = top + this.refs.headTable.clientHeight;
+          if (this.headTable) {
+            top = top + this.headTable.clientHeight;
           }
           this.hoverDom.style.top = top + 'px';
           this.hoverDom.style.height = td.offsetHeight + 'px';
