@@ -2,7 +2,7 @@
 *
 * @title 拖拽改变行顺序
 * @parent 行操作-拖拽
-* @description `rowDraggAble`参数设置是否使用行交换顺序功能
+* @description `rowDraggAble`参数设置是否使用行交换顺序功能，`onDropRow` 是拖拽行后的回调函数。注意：表格行数据必须有唯一标识，可以通过 `data.key` 或 `rowKey` 两种方式传入。
 * Demo1201
 */
 
@@ -43,12 +43,23 @@ class Demo1201 extends Component {
     console.log('内容：' , this.currentRecord);
   }
 
+  /**
+   * 行拖拽结束时触发
+   * @param data 拖拽改变顺序后的新data数组
+   * @param record 拖拽行的数据
+   */
+  onDropRow = (data, record) => {
+    console.log('重排序后的data： ', data);
+    console.log('拖拽的行数据： ', record);
+  }
+
   render() {
     return (
         <Table
           columns={columns}
           data={data}
           rowDraggAble={true}
+          onDropRow={this.onDropRow}
         />
     );
   }

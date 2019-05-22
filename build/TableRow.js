@@ -451,7 +451,8 @@ var TableRow = function (_Component) {
         fixed = _props9.fixed,
         bodyDisplayInRow = _props9.bodyDisplayInRow,
         expandedIcon = _props9.expandedIcon,
-        collapsedIcon = _props9.collapsedIcon;
+        collapsedIcon = _props9.collapsedIcon,
+        hoverKey = _props9.hoverKey;
 
     var showSum = false;
     var className = this.props.className;
@@ -518,7 +519,7 @@ var TableRow = function (_Component) {
         onMouseLeave: this.onMouseLeave,
         className: clsPrefix + ' ' + className + ' ' + clsPrefix + '-level-' + indent,
         style: style,
-        'data-row-key': record && record.key ? record.key : "null"
+        'data-row-key': record && record.key ? record.key : hoverKey
         // key={hoverKey}
         , ref: this.bindElement
       },

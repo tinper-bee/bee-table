@@ -57,6 +57,7 @@ const propTypes = {
   hoverContent:PropTypes.func,
   size: PropTypes.oneOf(['sm', 'md', 'lg']),
   rowDraggAble: PropTypes.bool,
+  onDropRow: PropTypes.func
 };
 
 const defaultProps = {
@@ -92,7 +93,8 @@ const defaultProps = {
   tabIndex:'0',
   heightConsistent:false,
   size: 'md',
-  rowDraggAble:false
+  rowDraggAble:false,
+  onDropRow: ()=>{}
 };
 
 class Table extends Component {
@@ -556,13 +558,21 @@ class Table extends Component {
     );
   }
 
+  /**
+   * 行拖拽结束时触发
+   * @param currentKey 当前拖拽目标的key
+   * @param targetKey 拖拽结束时，目标位置的key
+   */
   onDragRow = (currentKey,targetKey)=>{
-    let {data} = this.state,currentIndex,targetIndex;
+    let {data} = this.state,currentIndex,targetIndex,record;
     data.forEach((da,i)=>{ 
-      if(da.key == currentKey){
+      // tr 的唯一标识通过 data.key 或 rowKey 两种方式传进来
+      let trKey = da.key ? da.key : this.getRowKey(da, i);
+      if(trKey == currentKey){
         currentIndex = i;
+        record = da;
       }
-      if(da.key == targetKey){
+      if(trKey == targetKey){
         targetIndex = i;
       }
     });
@@ -571,6 +581,7 @@ class Table extends Component {
     }else{
       data.splice((targetIndex+1), 0, data.splice(currentIndex, 1).shift());
     }
+    this.props.onDropRow && this.props.onDropRow(data,record);
     this.setState({
       data,
     });

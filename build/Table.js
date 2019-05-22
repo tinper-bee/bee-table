@@ -112,7 +112,8 @@ var propTypes = {
   tabIndex: _propTypes2["default"].string,
   hoverContent: _propTypes2["default"].func,
   size: _propTypes2["default"].oneOf(['sm', 'md', 'lg']),
-  rowDraggAble: _propTypes2["default"].bool
+  rowDraggAble: _propTypes2["default"].bool,
+  onDropRow: _propTypes2["default"].func
 };
 
 var defaultProps = {
@@ -157,7 +158,8 @@ var defaultProps = {
   tabIndex: '0',
   heightConsistent: false,
   size: 'md',
-  rowDraggAble: false
+  rowDraggAble: false,
+  onDropRow: function onDropRow() {}
 };
 
 var Table = function (_Component) {
@@ -190,12 +192,16 @@ var Table = function (_Component) {
     _this.onDragRow = function (currentKey, targetKey) {
       var data = _this.state.data,
           currentIndex = void 0,
-          targetIndex = void 0;
+          targetIndex = void 0,
+          record = void 0;
       data.forEach(function (da, i) {
-        if (da.key == currentKey) {
+        // tr 的唯一标识通过 data.key 或 rowKey 两种方式传进来
+        var trKey = da.key ? da.key : _this.getRowKey(da, i);
+        if (trKey == currentKey) {
           currentIndex = i;
+          record = da;
         }
-        if (da.key == targetKey) {
+        if (trKey == targetKey) {
           targetIndex = i;
         }
       });
@@ -204,6 +210,7 @@ var Table = function (_Component) {
       } else {
         data.splice(targetIndex + 1, 0, data.splice(currentIndex, 1).shift());
       }
+      _this.props.onDropRow && _this.props.onDropRow(data, record);
       _this.setState({
         data: data
       });
@@ -719,6 +726,13 @@ var Table = function (_Component) {
       onDragRow: this.onDragRow
     });
   };
+
+  /**
+   * 行拖拽结束时触发
+   * @param currentKey 当前拖拽目标的key
+   * @param targetKey 拖拽结束时，目标位置的key
+   */
+
 
   /**
    *
