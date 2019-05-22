@@ -75,7 +75,7 @@ export default function multiSelect(Table, Checkbox) {
         }
       })
 
-      if(data.length == count + disabledCount){
+      if(data.length == count + disabledCount && count>0){
         return "all";
       }
       return count == 0?false:"indeter";

@@ -259,7 +259,8 @@
   .u-table-fixed-header .u-table-fixed-left .u-table-body-inner {
     padding-right: 0px; }
   .u-table-fixed-header .u-table-body-inner {
-    height: 100%; }
+    height: 100%;
+    overflow: scroll; }
   .u-table-fixed-header .u-table-scroll .u-table-header {
     overflow-x: scroll;
     padding-bottom: 20px;
