@@ -1,3 +1,13 @@
+<a name="2.0.21"></a>
+## [2.0.21](https://github.com/tinper-bee/bee-table/compare/v2.0.20...v2.0.21) (2019-05-22)
+
+
+### Bug Fixes
+
+* 数据没有时,表头列过多时,后面的列被隐藏 ([74f5400](https://github.com/tinper-bee/bee-table/commit/74f5400))
+
+
+
 <a name="2.0.20"></a>
 ## [2.0.20](https://github.com/tinper-bee/bee-table/compare/v2.0.19...v2.0.20) (2019-05-21)
 
