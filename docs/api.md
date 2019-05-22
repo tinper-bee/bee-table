@@ -37,49 +37,49 @@ import 'bee-table/build/Table.css';
 | 参数                     | 说明                                       | 类型                                     | 默认值             |
 | :--------------------- | :--------------------------------------- | :------------------------------------- | :-------------- |
 | data                   | 传入的表格数据（key值必需，否则会导致部分功能出现问题。建议使用唯一的值，如id）   | array                                  | []              |
-| bordered                | 是否展示外边框和列边框                            | boolean                                  | false               |
 | columns                | 列的配置表，具体配置见下表                            | array                                  | -               |
+| bordered                | 是否展示外边框和列边框                            | boolean                                  | false               |
 | defaultExpandAllRows   | 默认是否展开所有行                                | bool                                   | false           |
-| expandedRowKeys        | 展开的行，控制属性                                | array                                  | -               |
 | defaultExpandedRowKeys | 初始扩展行键                                   | array                                  | []              |
-| bodyStyle              | 添加到tablebody上的style                      | object                                 | {}              |
-| style                  | 添加到table上的style                          | object                                 | {}              |
+| rowRef                 | 获取行的ref                                  | Function(record, index, indent):string | () => null      |
 | rowKey                 | 如果rowKey是字符串，`record [rowKey]`将被用作键。如果rowKey是function，`rowKey（record, index）`的返回值将被用作键。 | string or Function(record, index):string      | 'key'           |
+| expandedRowKeys        | 展开的行，控制属性                                | array                                  | -               |
 | rowClassName | 获取行的classname | Function(record, index, indent):string | () => '' |
 | expandedRowClassName | 获取展开行的className | Function(recode, index, indent):string | () => '' |
 | indentSize             | indentSize为每个级别的data.i.children，更好地使用column.width指定 | number                                 | 15              |
 | expandIconAsCell       | 是否将expandIcon作为单元格                       | bool                                   | false           |
 | expandIconColumnIndex  | expandIcon的索引，当expandIconAsCell为false时，将插入哪个列 | number                                 | 0               |
+| expandedRowRender      | 额外的展开行                                   | Function(record, index, indent):node | -               |
+| haveExpandIcon       | 控制是否显示行展开icon.**注：该参数只有在和expandedRowRender同时使用才生效** | Function(record, index):bool   | () =>false |
+|expandedIcon|嵌套表格场景中展开子表时的展开图标|||
+|collapsedIcon|嵌套表格场景中关闭子表时的关闭图标|||
+| expandIconAsCell      | 展开按钮是否单独作为一个单元格                                   | bool                               | false               |
+| expandRowByClick       | 设置展开行是否通过点击行触发，此参数需要与上面参数搭配使用（默认是通过点击行前面的加号展开行 | bool                                   | false           |
+| rowDraggAble  | 是否增加行交换顺序功能 | boolean| false |
 | showHeader             | 是否显示表头                                   | bool                                   | true            |
 | title                  | 表格标题                                     | Function                               | -               |
 | footer                 | 表格尾部                                     | Function                               | -               |
 | emptyText              | 无数据时显示的内容                                | Function                               | () => 'No Data' |
-| scroll                 | 横向或纵向支持滚动，也可用于指定滚动区域的宽高度 | `{ x: number / 百分比 ,  y: number }` | {}     |
-| rowRef                 | 获取行的ref                                  | Function(record, index, indent):string | () => null      |
-| getBodyWrapper         | 添加对table body的包装                         | Function(body)                         | body => body    |
-| expandedRowRender      | 额外的展开行                                   | Function(record, index, indent):node | -               |
-| expandIconAsCell      | 展开按钮是否单独作为一个单元格                                   | bool                               | false               |
-| expandRowByClick       | 设置展开行是否通过点击行触发，此参数需要与上面参数搭配使用（默认是通过点击行前面的加号展开行 | bool                                   | false           |
-| footerScroll       | 表尾和body是否公用同一个横向滚动条。（ 如果footer中也是一个table组件，并且也具有滚动条，那么也需要加入footerScroll参数，内层表格的footerScroll设置成false。 ） | bool                                   | false           |
 | loading       | 表格是否加载中 | bool|object(详情可以参考上面示例)                                   | false           |
-| haveExpandIcon       | 控制是否显示行展开icon.**注：该参数只有在和expandedRowRender同时使用才生效** | Function(record, index):bool   | () =>false |
+| getBodyWrapper         | 添加对table body的包装                         | Function(body)                         | body => body    |
+| bodyStyle              | 添加到tablebody上的style                      | object                                 | {}              |
+| style                  | 添加到table上的style                          | object                                 | {}              |
+| scroll                 | 横向或纵向支持滚动，也可用于指定滚动区域的宽高度 | `{ x: number / 百分比 ,  y: number }` | {}     |
+| headerScroll       | 表头下是否显示滚动条 | bool| false |
+| footerScroll       | 表尾和body是否公用同一个横向滚动条。（ 如果footer中也是一个table组件，并且也具有滚动条，那么也需要加入footerScroll参数，内层表格的footerScroll设置成false。 ） | bool                                   | false           |
+| resetScroll       | 将表格横向滚动条位置还原 | bool| false
 | filterable       | 是否开启根据条件来过滤数据 | bool | false
 | filterDelay       | 触发过滤输入的时候的ms延迟时间 | number | 300
-| headerScroll       | 表头下是否显示滚动条 | bool| false
 | sort       | 排序的属性 | object| {  mode:'single'//单列排序,  backSource:false //默认是前端排序，值为true为后端排序 } mode:multiple-多列排序
 | syncHover       | 是否同步Hover状态到左侧Checkbox，关闭此功能有助于提升性能 | bool| true
 | loadBuffer       | 使用BigData高阶组件实现大数据加载时，上下加载的缓存 | number| 5
-| resetScroll       | 将表格横向滚动条位置还原 | bool| false
 | hoverContent       | hover某行时，动态渲染行菜单元素，此方法需返回行菜单元素的内容 | Function| 
 | heightConsistent       | 当固定列内容高度超出非固定列时，内容互错行，当此属性为true会将高度同步，当行过多时会有性能影响，所以建议非固定高度如果过高时，超出内容可以显示成省略号 | bool|false 
 | height | 自定义表格行高 | number | - |
 | headerHeight | 自定义表头行高 | number | - |
-| size | 表格大小 | `sm / md / lg` | 'md' |
 | headerDisplayInRow | 设置表头的内容显示一行，超出显示省略号 | bool |
 | bodyDisplayInRow |  设置表体的内容显示一行，超出显示省略号 | bool | 
-| rowDraggAble  | 是否增加行交换顺序功能 | boolean| false
-|expandedIcon|嵌套表格场景中展开子表时的展开图标|||
-|collapsedIcon|嵌套表格场景中关闭子表时的关闭图标|||
+| size | 表格大小 | `sm / md / lg` | 'md' |
 > 快捷键部分参考示例 (快捷键在table中的简单使用应用)
 
 *注意: data参数中的key值必需，否则会导致部分功能出现问题！建议使用唯一的值，如id*
@@ -90,11 +90,11 @@ import 'bee-table/build/Table.css';
 | :--- | :--- | :--- | :--- |
 | onExpand | 展开行时的钩子函数 | Function(expanded, record) | `expanded` : 当前的状态<br>`record` :  当前行的数据 |
 | onExpandedRowsChange | 函数在扩展行更改时调用 | Function(expandedRowKeys) | `expandedRowKeys` : 展开行的keys数组 |
-| onRowClick | 行的点击事件钩子函数 | Function(record, index, event) | 当前行的数据<br>当前行的index<br>事件对象 |
-| onRowDoubleClick | 行的双击事件钩子函数 | Function(record, index, event) | 当前行的数据<br>当前行的index<br>事件对象 |
-| onFilterChange | 触发过滤输入操作以及下拉条件的回调 | function(field,value,condition) | 字段名称 <br> 字段值 <br> 判断条件 |
-| onFilterClear | 清除过滤条件的回调函数，回调参数为清空的字段 | function(field) | 字段名称 |
-| onRowHover | 行hover时的回调函数 | function(index,record) | 当前行的index<br>当前行的数据 |
+| onRowClick | 行的点击事件钩子函数 | Function(record, index, event) | `record` : 当前行的数据<br> `index` : 当前行的index<br> `event` : 事件对象 |
+| onRowDoubleClick | 行的双击事件钩子函数 | Function(record, index, event) | `record` : 当前行的数据<br> `index` : 当前行的index<br> `event` : 事件对象 |
+| onFilterChange | 触发过滤输入操作以及下拉条件的回调 | function(field,value,condition) | `field` : 字段名称 <br> `value` : 字段值 <br> `condition` : 判断条件 |
+| onFilterClear | 清除过滤条件的回调函数，回调参数为清空的字段 | function(field) | `field` : 字段名称 |
+| onRowHover | 行hover时的回调函数 | function(index,record) | `index` : 当前行的index<br> `record` : 当前行的数据 |
 
 
 ### Column
