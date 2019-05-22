@@ -1,3 +1,8 @@
+<a name="2.0.22"></a>
+## [2.0.22](https://github.com/tinper-bee/bee-table/compare/v2.0.21...v2.0.22) (2019-05-22)
+
+
+
 <a name="2.0.21"></a>
 ## [2.0.21](https://github.com/tinper-bee/bee-table/compare/v2.0.20...v2.0.21) (2019-05-22)
 
