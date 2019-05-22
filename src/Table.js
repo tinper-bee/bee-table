@@ -1016,7 +1016,7 @@ class Table extends Component {
   getEmptyText() {
     const { emptyText : defaultEmptyText, clsPrefix, data } = this.props;
     let locale = getComponentLocale(this.props, this.context, 'Table', () => i18n);
-    let emptyText = defaultEmptyText !== undefined ? defaultEmptyText() : () => <div><Icon type="uf-nodata" className="table-nodata"></Icon><span>{locale["no_data"]}</span></div>;
+    let emptyText = defaultEmptyText !== undefined ? defaultEmptyText : () => <div><Icon type="uf-nodata" className="table-nodata"></Icon><span>{locale["no_data"]}</span></div>;
 
     return !data.length ? (
       <div className={`${clsPrefix}-placeholder`}>

@@ -1181,7 +1181,7 @@ var Table = function (_Component) {
     var locale = (0, _tool.getComponentLocale)(this.props, this.context, 'Table', function () {
       return _i18n2["default"];
     });
-    var emptyText = defaultEmptyText !== undefined ? defaultEmptyText() : function () {
+    var emptyText = defaultEmptyText !== undefined ? defaultEmptyText : function () {
       return _react2["default"].createElement(
         'div',
         null,
