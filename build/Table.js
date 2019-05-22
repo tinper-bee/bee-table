@@ -392,7 +392,7 @@ var Table = function (_Component) {
     }
 
     // 是否传入 scroll中的y属性，如果传入判断是否是整数，如果是则进行比较 。bodyTable 的clientHeight进行判断
-    this.isShowScrollY();
+    // this.isShowScrollY();
   };
 
   Table.prototype.componentWillUnmount = function componentWillUnmount() {
@@ -1021,7 +1021,7 @@ var Table = function (_Component) {
 
             if (this.domWidthDiff <= 0) {
               headStyle.marginBottom = scrollbarWidth + 'px';
-              // bodyStyle.marginBottom = `-${scrollbarWidth}px`;
+              bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
             } else {
               innerBodyStyle.overflowX = 'auto';
             }
@@ -1038,8 +1038,8 @@ var Table = function (_Component) {
               headStyle.overflow = 'hidden';
               innerBodyStyle.overflowX = 'auto'; //兼容expand场景、子表格含有固定列的场景
             } else {
-                // bodyStyle.marginBottom = `-${scrollbarWidth}px`;
-              }
+              bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
+            }
           } else {
             // 没有数据时，表头滚动条隐藏问题
             if (data.length == 0 && this.domWidthDiff < 0) {

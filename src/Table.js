@@ -232,7 +232,7 @@ class Table extends Component {
     }
     
     // 是否传入 scroll中的y属性，如果传入判断是否是整数，如果是则进行比较 。bodyTable 的clientHeight进行判断
-    this.isShowScrollY();
+    // this.isShowScrollY();
   }
 
   componentWillUnmount() {
@@ -874,7 +874,7 @@ class Table extends Component {
       
            if(this.domWidthDiff <= 0){
               headStyle.marginBottom = `${scrollbarWidth}px`;
-              // bodyStyle.marginBottom = `-${scrollbarWidth}px`;
+              bodyStyle.marginBottom = `-${scrollbarWidth}px`;
             }else{
               innerBodyStyle.overflowX = 'auto';
             }
@@ -891,7 +891,7 @@ class Table extends Component {
               headStyle.overflow = 'hidden';
               innerBodyStyle.overflowX = 'auto'; //兼容expand场景、子表格含有固定列的场景
             }else{
-              // bodyStyle.marginBottom = `-${scrollbarWidth}px`;
+              bodyStyle.marginBottom = `-${scrollbarWidth}px`;
             }
             
           }else{
