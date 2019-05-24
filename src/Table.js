@@ -581,15 +581,21 @@ class Table extends Component {
         targetIndex = i;
       }
     });
-    if(currentIndex < targetIndex){
-      data.splice(targetIndex, 0, data.splice(currentIndex, 1).shift());
-    }else{
-      data.splice((targetIndex+1), 0, data.splice(currentIndex, 1).shift());
-    }
+    data = this.swapArray(data,currentIndex,targetIndex);
     this.props.onDropRow && this.props.onDropRow(data,record);
     this.setState({
       data,
     });
+  }
+  /**
+  * 数组元素交换位置
+  * @param {array} arr 数组
+  * @param {number} index1 添加项目的位置
+  * @param {number} index2 删除项目的位置
+  */
+  swapArray = (arr, index1, index2) => {
+    arr[index1] = arr.splice(index2, 1, arr[index1])[0];
+     return arr;
   }
 
   /**

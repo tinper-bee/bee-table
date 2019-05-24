@@ -205,15 +205,16 @@ var Table = function (_Component) {
           targetIndex = i;
         }
       });
-      if (currentIndex < targetIndex) {
-        data.splice(targetIndex, 0, data.splice(currentIndex, 1).shift());
-      } else {
-        data.splice(targetIndex + 1, 0, data.splice(currentIndex, 1).shift());
-      }
+      data = _this.swapArray(data, currentIndex, targetIndex);
       _this.props.onDropRow && _this.props.onDropRow(data, record);
       _this.setState({
         data: data
       });
+    };
+
+    _this.swapArray = function (arr, index1, index2) {
+      arr[index1] = arr.splice(index2, 1, arr[index1])[0];
+      return arr;
     };
 
     _this.renderDragHideTable = function () {
@@ -366,6 +367,10 @@ var Table = function (_Component) {
     }
     if (nextProps.resetScroll) {
       this.resetScrollX();
+    }
+    // fix:模态框中使用table，计算的滚动条宽度为0的bug
+    if (this.scrollbarWidth <= 0 && this.props.scroll.y) {
+      this.scrollbarWidth = (0, _utils.measureScrollbar)();
     }
 
     // console.log('this.scrollTop**********',this.scrollTop);
@@ -732,6 +737,13 @@ var Table = function (_Component) {
    * @param currentKey 当前拖拽目标的key
    * @param targetKey 拖拽结束时，目标位置的key
    */
+
+  /**
+  * 数组元素交换位置
+  * @param {array} arr 数组
+  * @param {number} index1 添加项目的位置
+  * @param {number} index2 删除项目的位置
+  */
 
 
   /**
