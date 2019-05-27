@@ -367,6 +367,10 @@ var Table = function (_Component) {
     if (nextProps.resetScroll) {
       this.resetScrollX();
     }
+    // fix:模态框中使用table，计算的滚动条宽度为0的bug
+    if (this.scrollbarWidth <= 0 && this.props.scroll.y) {
+      this.scrollbarWidth = (0, _utils.measureScrollbar)();
+    }
 
     // console.log('this.scrollTop**********',this.scrollTop);
   };

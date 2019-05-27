@@ -237,7 +237,7 @@ class Table extends Component {
     }
     
     // 是否传入 scroll中的y属性，如果传入判断是否是整数，如果是则进行比较 。bodyTable 的clientHeight进行判断
-    // this.isShowScrollY();
+    this.isShowScrollY();
   }
 
   componentWillUnmount() {
@@ -313,7 +313,7 @@ class Table extends Component {
       const bodyH = this.bodyTable.clientHeight;
       const bodyContentH = this.bodyTable.querySelector('table').clientHeight;
       const rightBodyTable = this.refs.fixedColumnsBodyRight;
-      const leftBodyTable = this.refs.fixedColumnsBodyLeft;
+      // const leftBodyTable = this.refs.fixedColumnsBodyLeft;
       const overflowy = bodyContentH <= bodyH ? 'auto':'scroll';
       this.bodyTable.style.overflowY = overflowy;
     
