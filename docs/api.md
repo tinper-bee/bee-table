@@ -160,6 +160,9 @@ Table 组件参数：
 | getSelectedDataFunc | 返回当前选中的数据数组 | Function | 无    |
 | selectedRowIndex | 指定当前选中数据的 index | number | 无    |
 
+#### singleSelect 使用示例
+- [单选功能](http://design.yonyoucloud.com/tinper-bee/bee-table#%E5%8D%95%E9%80%89%E5%8A%9F%E8%83%BD)
+
 
 ### multiSelect 多选功能
 
