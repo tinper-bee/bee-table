@@ -7,7 +7,7 @@
 */
 
 import React, { Component } from "react";
-import { Radio } from "tinper-bee";
+import Radio from "bee-radio";
 
 import Table from "../../src";
 import singleSelect from "../../src/lib/singleSelect.js";
