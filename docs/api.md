@@ -449,11 +449,11 @@ const CheckboxRender = renderCheckbox(Checkbox, Icon);
 
 | 快捷键  | 快捷键说明 | 类型 | 默认值 | 
 | --- | :--- | --- |--- |
-| focusable       | 是否开启快捷键功能 | bool | -
-| onKeyTab       | tab快捷键，可以处理默认选中第一条数据 | function| -
-| onKeyUp       |  ↑(上箭) 快捷键，可以处理table的上一条数据 | function| -
-| onKeyDown       | ↓(下箭)快捷键，可以处理table的下一条数据 | function| -
-| onTableKeyDown       | 触发table的所有快捷键 | function| -
+| focusable       | 是否开启快捷键功能 | bool | false
+| onKeyTab       | tab快捷键，可以处理默认选中第一条数据 | function| () => {}
+| onKeyUp       |  ↑(上箭) 快捷键，可以处理table的上一条数据 | function| () => {}
+| onKeyDown       | ↓(下箭)快捷键，可以处理table的下一条数据 | function| () => {}
+| onTableKeyDown       | 触发table的所有快捷键 | function| () => {}
 | tabIndex       | 设置焦点顺序 | number | 0
 
 ## 注意事项
