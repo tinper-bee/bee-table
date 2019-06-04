@@ -161,6 +161,9 @@ Table 组件参数：
 | getSelectedDataFunc | 返回当前选中的数据数组 | Function | 无    |
 | selectedRowIndex | 指定当前选中数据的 index | number | 无    |
 
+#### singleSelect 使用示例
+- [单选功能](http://design.yonyoucloud.com/tinper-bee/bee-table#%E5%8D%95%E9%80%89%E5%8A%9F%E8%83%BD)
+
 
 ### multiSelect 多选功能
 
@@ -447,11 +450,11 @@ const CheckboxRender = renderCheckbox(Checkbox, Icon);
 
 | 快捷键  | 快捷键说明 | 类型 | 默认值 | 
 | --- | :--- | --- |--- |
-| focusable       | 是否开启快捷键功能 | bool | -
-| onKeyTab       | tab快捷键，可以处理默认选中第一条数据 | function| -
-| onKeyUp       |  ↑(上箭) 快捷键，可以处理table的上一条数据 | function| -
-| onKeyDown       | ↓(下箭)快捷键，可以处理table的下一条数据 | function| -
-| onTableKeyDown       | 触发table的所有快捷键 | function| -
+| focusable       | 是否开启快捷键功能 | bool | false
+| onKeyTab       | tab快捷键，可以处理默认选中第一条数据 | function| () => {}
+| onKeyUp       |  ↑(上箭) 快捷键，可以处理table的上一条数据 | function| () => {}
+| onKeyDown       | ↓(下箭)快捷键，可以处理table的下一条数据 | function| () => {}
+| onTableKeyDown       | 触发table的所有快捷键 | function| () => {}
 | tabIndex       | 设置焦点顺序 | number | 0
 
 ## 注意事项

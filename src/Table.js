@@ -940,7 +940,7 @@ class Table extends Component {
       ) : null;
       let _drag_class = this.props.dragborder ? "table-drag-bordered" : ""
       return (
-        <table id="bee-table-uid" className={` ${tableClassName}  table-bordered ${_drag_class} `} style={tableStyle}  >
+        <table className={` ${tableClassName}  table-bordered ${_drag_class} `} style={tableStyle}  >
           {/* {this.props.dragborder?null:this.getColGroup(columns, fixed)} */}
           {this.getColGroup(columns, fixed)}
           {hasHead ? this.getHeader(columns, fixed) : null}

@@ -7,6 +7,7 @@
 */
 
 import React, { Component } from "react";
+import Button from 'bee-button';
 import Table from "../../src";
 
 const renderContent = (value, row, index) => {
@@ -167,8 +168,8 @@ class Demo15 extends Component {
     let cols = this.state.colFlag?columns:columns1;
     return (
       <div>
-        <button onClick={this.onChange}>change列</button>
-         <Table columns={cols} data={data} bordered/>
+        <Button onClick={this.onChange} colors="secondary" style={{marginBottom:'8px'}}>change列</Button>
+        <Table columns={cols} data={data} bordered/>
       </div>
       
     );

@@ -1089,7 +1089,7 @@ var Table = function (_Component) {
       var _drag_class = _this4.props.dragborder ? "table-drag-bordered" : "";
       return _react2["default"].createElement(
         'table',
-        { id: 'bee-table-uid', className: ' ' + tableClassName + '  table-bordered ' + _drag_class + ' ', style: tableStyle },
+        { className: ' ' + tableClassName + '  table-bordered ' + _drag_class + ' ', style: tableStyle },
         _this4.getColGroup(columns, fixed),
         hasHead ? _this4.getHeader(columns, fixed) : null,
         tableBody
