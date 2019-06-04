@@ -113,6 +113,7 @@ import 'bee-table/build/Table.css';
 |sorterClick|排序的回调函数|function|-|
 |render|cell的render函数有三个参数：这个单元格的文本，这行的记录，这行的索引，它返回一个对象：{children：value，props：{colSpan：1，rowSpan：1}} ==>'children'是这个单元格的文本，props是这个单元格的一些设置，可以设置单元格行/列合并|-|
 |onCellClick|单击列的单元格时调用|Function(row, event)|-|
+|onHeadCellClick|单击表头的单元格时调用|Function(row, event)|row 当前行的数据|
 | order | 设置排序 | string（"descend"、"ascend"） | -|
 | filterType | 过滤下拉的类型.可选`text(文本框)`,`dropdown(下拉)`,`date(日期)`,`daterange(日期范围)`,`number(数值)` | string | text |
 | filterDropdown | 是否显示过滤下拉.可选`show`,`hide` | string | show |
