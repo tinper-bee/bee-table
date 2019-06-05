@@ -115,15 +115,20 @@ export default function sort(Table, Icon) {
      * orderType:升序、降序
      */
     _sortBy = (pre, after, orderCols, orderColslen, currentIndex) => {
-      const preKey = pre[orderCols[currentIndex].key];
-      const afterKey = after[orderCols[currentIndex].key];
+      const currentCol = orderCols[currentIndex];
+      const preKey = pre[currentCol.key];
+      const afterKey = after[currentCol.key];
+      let colSortFun = currentCol.sorter;
+      if(typeof colSortFun !== 'function'){
+        colSortFun = () => preKey - afterKey;
+      }
       if (preKey == afterKey && currentIndex + 1 <= orderColslen) {
         return this._sortBy(pre, after, orderCols, orderColslen, currentIndex + 1);
       }
-      if (orderCols[currentIndex].order == "ascend") {
-        return preKey - afterKey;
-      } else {
-        return afterKey - preKey;
+      if (currentCol.order == "ascend") {
+       return colSortFun(pre,after);
+      } else { 
+        return -colSortFun(pre,after);
       }
     };
     /**

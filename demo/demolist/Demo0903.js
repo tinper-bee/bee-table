@@ -19,7 +19,12 @@ const columns13 = [
     dataIndex: "a",
     key: "a",
     className:'dfasd',
-    width: 200
+    width: 200,
+    sorter: (pre, after) => {return pre.a.localeCompare(after.a)},
+    sorterClick:(data,type)=>{//排序的回调函数
+      //type value is up or down
+      console.log("data",data);
+    }
   },
   {
     title: "金额",
@@ -27,7 +32,7 @@ const columns13 = [
     key: "b",
     width: 200,
     sumCol: true,
-    sorter: (a, b) => a.c - b.c,
+    sorter: (pre, after) => pre.b - after.b,
     sorterClick:(data,type)=>{//排序的回调函数
       //type value is up or down
       console.log("data",data);
@@ -39,7 +44,7 @@ const columns13 = [
     key: "c",
     width: 200,
     sumCol: true,
-    sorter: (a, b) => a.c - b.c,
+    sorter: (pre, after) => pre.c - after.c,
     sorterClick:(data,type)=>{//排序的回调函数
       //type value is up or down
       console.log("data",data);
@@ -51,7 +56,7 @@ const columns13 = [
     key: "e",
     width: 200,
     sumCol: true,
-    sorter: (a, b) => a.c - b.c,
+    sorter: (pre, after) => pre.e - after.e,
   },
   {
     title: "供应商",
