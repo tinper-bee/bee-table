@@ -203,11 +203,13 @@ class TableHeader extends Component {
       this.drag.minWidth = currentObj.style.minWidth != ""?parseInt(currentObj.style.minWidth):defaultWidth;
       this.drag.tableWidth = parseInt(this.table.table.style.width ?this.table.table.style.width:this.table.table.scrollWidth);
     }else if(type != 'online' &&  this.props.draggable){
-        if (!this.props.draggable || targetEvent.nodeName.toUpperCase() != "TH") return; 
-        targetEvent.setAttribute('draggable',true);//添加交换列效果
+        // if (!this.props.draggable || targetEvent.nodeName.toUpperCase() != "TH") return; 
+        if (!this.props.draggable) return; 
+        let th = this.getTargetToTh(targetEvent);
+        th.setAttribute('draggable',true);//添加交换列效果
         this.drag.option = 'dragAble';
-        this.currentDome = event.target;
-        let currentIndex = parseInt(currentElement.getAttribute("data-line-index"));
+        this.currentDome = th;
+        let currentIndex = parseInt(th.getAttribute("data-line-index"));
         this.drag.currIndex = currentIndex;
     }else{
       // console.log("onTrMouseDown dragborder or draggable is all false !");
@@ -215,6 +217,18 @@ class TableHeader extends Component {
     }
   };
  
+  /**
+   * 判断当前的target 是否是 th，如果不是，直接递归查找。
+   * @memberof TableHeader
+   */
+  getTargetToTh = (targetEvent) => {
+    let th = targetEvent;
+    if(targetEvent.nodeName.toUpperCase() != "TH"){
+      th = this.getThDome(targetEvent);
+    }
+    console.log(" getTargetToTh: ", th);
+    return th;
+  }
   /**
    * 调整列宽的move事件
    * @memberof TableHeader
@@ -385,8 +399,8 @@ class TableHeader extends Component {
     if (!this.props.draggable) return;
     if(this.drag && this.drag.option != 'dragAble'){return;} 
     let event = Event.getEvent(e) ,
-    target = Event.getTarget(event);
-
+    // target = Event.getTarget(event);
+    target = this.getTargetToTh(Event.getTarget(event));
     let currentIndex = parseInt(target.getAttribute("data-line-index"));
     let currentKey = target.getAttribute('data-line-key');
 
@@ -485,6 +499,25 @@ class TableHeader extends Component {
       return null;
     }
   }
+
+    /**
+   * 根据当前鼠标点击的节点，进行递归遍历，最终找到th
+   * @param {*} element
+   * @returns  <th />对象
+   * @memberof TableHeader
+   */
+  getThDome(element){
+    let _tagName = element.tagName.toLowerCase();
+    if(element.getAttribute('data-filter-type') === 'filterContext')return null;
+    if(_tagName === 'i')return null;
+    if(_tagName != 'th'){
+      return this.getThDome(element.parentElement);
+    }else{
+      return element;
+    }
+  }
+
+  
 //---拖拽列交换----end----- 
 
   /**
