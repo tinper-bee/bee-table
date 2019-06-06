@@ -96,16 +96,27 @@ var TableHeader = function (_Component) {
         _this.drag.minWidth = currentObj.style.minWidth != "" ? parseInt(currentObj.style.minWidth) : defaultWidth;
         _this.drag.tableWidth = parseInt(_this.table.table.style.width ? _this.table.table.style.width : _this.table.table.scrollWidth);
       } else if (type != 'online' && _this.props.draggable) {
-        if (!_this.props.draggable || targetEvent.nodeName.toUpperCase() != "TH") return;
-        targetEvent.setAttribute('draggable', true); //添加交换列效果
+        // if (!this.props.draggable || targetEvent.nodeName.toUpperCase() != "TH") return; 
+        if (!_this.props.draggable) return;
+        var th = _this.getTargetToTh(targetEvent);
+        th.setAttribute('draggable', true); //添加交换列效果
         _this.drag.option = 'dragAble';
-        _this.currentDome = event.target;
-        var _currentIndex = parseInt(currentElement.getAttribute("data-line-index"));
+        _this.currentDome = th;
+        var _currentIndex = parseInt(th.getAttribute("data-line-index"));
         _this.drag.currIndex = _currentIndex;
       } else {
         // console.log("onTrMouseDown dragborder or draggable is all false !");
         return;
       }
+    };
+
+    _this.getTargetToTh = function (targetEvent) {
+      var th = targetEvent;
+      if (targetEvent.nodeName.toUpperCase() != "TH") {
+        th = _this.getThDome(targetEvent);
+      }
+      console.log(" getTargetToTh: ", th);
+      return th;
     };
 
     _this.onTrMouseMove = function (e) {
@@ -221,8 +232,9 @@ var TableHeader = function (_Component) {
         return;
       }
       var event = _utils.Event.getEvent(e),
-          target = _utils.Event.getTarget(event);
 
+      // target = Event.getTarget(event);
+      target = _this.getTargetToTh(_utils.Event.getTarget(event));
       var currentIndex = parseInt(target.getAttribute("data-line-index"));
       var currentKey = target.getAttribute('data-line-key');
 
@@ -572,6 +584,11 @@ var TableHeader = function (_Component) {
 
 
   /**
+   * 判断当前的target 是否是 th，如果不是，直接递归查找。
+   * @memberof TableHeader
+   */
+
+  /**
    * 调整列宽的move事件
    * @memberof TableHeader
    */
@@ -667,6 +684,26 @@ var TableHeader = function (_Component) {
       return null;
     }
   };
+
+  /**
+  * 根据当前鼠标点击的节点，进行递归遍历，最终找到th
+  * @param {*} element
+  * @returns  <th />对象
+  * @memberof TableHeader
+  */
+
+
+  TableHeader.prototype.getThDome = function getThDome(element) {
+    var _tagName = element.tagName.toLowerCase();
+    if (element.getAttribute('data-filter-type') === 'filterContext') return null;
+    if (_tagName === 'i') return null;
+    if (_tagName != 'th') {
+      return this.getThDome(element.parentElement);
+    } else {
+      return element;
+    }
+  };
+
   //---拖拽列交换----end----- 
 
   /**
