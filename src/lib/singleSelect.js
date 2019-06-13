@@ -45,8 +45,14 @@ export default function singleSelect(Table, Radio) {
     }
 
     onRadioChange = (value, record, index) => {
-      this.setState({selectedRowIndex: index});
-      this.props.getSelectedDataFunc(record,index);
+      let { selectedRowIndex } = this.state;
+      if(selectedRowIndex === index){
+        this.setState({selectedRowIndex: ''});
+        this.props.getSelectedDataFunc();
+      }else{
+        this.setState({selectedRowIndex: index});
+        this.props.getSelectedDataFunc(record,index);
+      }
     }
 
     getDefaultColumns=(columns)=>{
