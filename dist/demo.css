@@ -244,6 +244,8 @@
     box-sizing: border-box; }
   .u-table-drag-border tr th.th-can-not-drag {
     overflow: hidden; }
+    .u-table-drag-border tr th.th-can-not-drag .u-table-thead-th-drag-gap {
+      display: none; }
   .u-table-header {
     overflow: hidden;
     background: rgb(241, 242, 245);

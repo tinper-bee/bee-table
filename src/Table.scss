@@ -184,6 +184,9 @@ $icon-color:#505F79;
     tr {
       th.th-can-not-drag{ //拖拽tag影响了表格整体宽度
         overflow: hidden;
+        .u-table-thead-th-drag-gap{//最后一个非固定列不可以拖拽
+          display: none;
+        }
       }
     }
   }
