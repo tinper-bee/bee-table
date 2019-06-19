@@ -224,6 +224,10 @@
   .u-table td {
     padding: 12px 8px;
     word-break: break-all; }
+    .u-table th.drag-handle-column .uf,
+    .u-table td.drag-handle-column .uf {
+      font-size: 12px;
+      line-height: 12px; }
     .u-table th.text-center,
     .u-table td.text-center {
       text-align: center; }

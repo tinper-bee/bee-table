@@ -266,7 +266,7 @@ var Table = function (_Component) {
 
     var expandedRowKeys = [];
     var rows = [].concat(_toConsumableArray(props.data));
-    _this.columnManager = new _ColumnManager2["default"](props.columns, props.children, props.originWidth);
+    _this.columnManager = new _ColumnManager2["default"](props.columns, props.children, props.originWidth, props.rowDraggAble);
     _this.store = (0, _createStore2["default"])({ currentHoverKey: null });
     _this.firstDid = true;
     if (props.defaultExpandAllRows) {

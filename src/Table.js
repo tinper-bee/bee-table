@@ -102,7 +102,7 @@ class Table extends Component {
     super(props);
     let expandedRowKeys = [];
     let rows = [...props.data];
-    this.columnManager = new ColumnManager(props.columns, props.children, props.originWidth);
+    this.columnManager = new ColumnManager(props.columns, props.children, props.originWidth, props.rowDraggAble);
     this.store = createStore({ currentHoverKey: null });
     this.firstDid = true;
     if (props.defaultExpandAllRows) {
