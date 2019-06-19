@@ -60,6 +60,7 @@ class TableRow extends Component{
      this.onMouseLeave = this.onMouseLeave.bind(this);
      this.expandHeight = 0;
      this.event = false;
+     this.cacheCurrentIndex = null;
  }
 
 
@@ -84,10 +85,13 @@ class TableRow extends Component{
    */
   initEvent=()=>{
     let  events = [
+      {key:'touchstart', fun:this.onTouchStart},//手指触摸到一个 DOM 元素时触发
+      {key:'touchmove', fun:this.onTouchMove}, //手指在一个 DOM 元素上滑动时触发
+      {key:'touchend', fun:this.onTouchEnd}, //手指从一个 DOM 元素上移开时触发
+
       {key:'dragstart',fun:this.onDragStart},//用户开始拖动元素时触发
       {key:'dragover', fun:this.onDragOver},//当某被拖动的对象在另一对象容器范围内拖动时触发此事件
       {key:'drop', fun:this.onDrop},        //在一个拖动过程中，释放鼠标键时触发此事件 
-
       {key:'dragenter', fun:this.onDragEnter},
       {key:'dragleave', fun:this.onDragLeave},
     ];
@@ -99,10 +103,13 @@ class TableRow extends Component{
    */
   removeDragAbleEvent=()=>{
     let  events = [
-      {key:'dragstart',fun:this.onDragStart},
-      {key:'dragover', fun:this.onDragOver},
-      {key:'drop', fun:this.onDrop},
+      {key:'touchstart', fun:this.onTouchStart},//手指触摸到一个 DOM 元素时触发
+      {key:'touchmove', fun:this.onTouchMove}, //手指在一个 DOM 元素上滑动时触发
+      {key:'touchend', fun:this.onTouchEnd}, //手指从一个 DOM 元素上移开时触发
 
+      {key:'dragstart',fun:this.onDragStart},//用户开始拖动元素时触发
+      {key:'dragover', fun:this.onDragOver},//当某被拖动的对象在另一对象容器范围内拖动时触发此事件
+      {key:'drop', fun:this.onDrop},        //在一个拖动过程中，释放鼠标键时触发此事件 
       {key:'dragenter', fun:this.onDragEnter},
       {key:'dragleave', fun:this.onDragLeave},
     ];
@@ -154,14 +161,15 @@ class TableRow extends Component{
   onDrop = (e) => {
     let {rowDraggAble,onDragRow} = this.props;
     let event = Event.getEvent(e) ,
-    _target = Event.getTarget(event),target = _target.parentNode;
+        _target = Event.getTarget(event),
+        target = _target.parentNode;
     
     let currentKey = event.dataTransfer.getData("text");
     let targetKey = target.getAttribute("data-row-key");
 
     if(!targetKey || targetKey === currentKey)return;    
     if(target.nodeName.toUpperCase() === "TR"){
-      this.synchronizeTableTr(currentKey,null);
+      this.synchronizeTableTr(currentKey,null); 
       this.synchronizeTableTr(targetKey,null);
       // target.setAttribute("style","");
       // this.synchronizeTrStyle(this.currentIndex,false);
@@ -169,6 +177,58 @@ class TableRow extends Component{
     onDragRow && onDragRow(currentKey,targetKey);
   };
 
+  /**
+   * 获取当前触摸的Dom节点
+   */
+  getTouchDom = (event) => {
+    let currentLocation = event.changedTouches[0];
+    let realTarget = document.elementFromPoint(currentLocation.clientX, currentLocation.clientY);
+    return realTarget;
+  }
+
+  /**
+   * 开始调整交换行的事件
+   */
+  onTouchStart = (e) => {
+    let event = Event.getEvent(e) ,
+        _target = Event.getTarget(event),
+        target = _target.parentNode;
+    this.currentIndex = target.getAttribute("data-row-key");
+  }
+
+  onTouchMove = (e) => {
+    let event = Event.getEvent(e);
+    event.preventDefault();
+    let touchTarget = this.getTouchDom(event),
+        target = touchTarget.parentNode,
+        targetKey = target.getAttribute("data-row-key");
+    if(!targetKey || targetKey === this.currentIndex)return;
+    if(target.nodeName.toUpperCase() === "TR"){
+      if(this.cacheCurrentIndex !== targetKey){ //模拟 touchenter toucheleave 事件
+        this.cacheCurrentIndex && this.synchronizeTableTr(this.cacheCurrentIndex,null); //去掉虚线
+        this.synchronizeTableTr(targetKey,true); //添加虚线
+      }
+    }
+  }
+
+  /**
+   * 手指移开时触发
+   */
+  onTouchEnd = (e) => {
+    let {onDragRow} = this.props;
+    let event = Event.getEvent(e),
+        currentKey = this.currentIndex, //拖拽行的key
+        touchTarget = this.getTouchDom(event), //当前触摸的DOM节点
+        target = touchTarget.parentNode, //目标位置的行
+        targetKey = target.getAttribute("data-row-key"); //目标位置的行key
+    if(!targetKey || targetKey === currentKey)return;    
+    if(target.nodeName.toUpperCase() === "TR"){
+      this.synchronizeTableTr(currentKey,null);
+      this.synchronizeTableTr(targetKey,null);
+    }
+    
+    onDragRow && onDragRow(currentKey,targetKey);
+  }
 
   /**
    *同步当前拖拽到阴影
@@ -177,15 +237,17 @@ class TableRow extends Component{
   synchronizeTableTrShadow = ()=>{
     let {contentTable,index} = this.props; 
 
-    let _table_cont = contentTable.querySelector('.u-table-scroll table tbody').getElementsByTagName("tr")[index],
-    _table_trs = _table_cont.getBoundingClientRect(),
-     _table_fixed_left_trs = contentTable.querySelector('.u-table-fixed-left table tbody').getElementsByTagName("tr")[index].getBoundingClientRect(),
-    _table_fixed_right_trs = contentTable.querySelector('.u-table-fixed-right table tbody').getElementsByTagName("tr")[index].getBoundingClientRect();
-
+    let cont = contentTable.querySelector('.u-table-scroll table tbody').getElementsByTagName("tr")[index],
+        trs = cont.getBoundingClientRect(),
+        fixed_left_trs = contentTable.querySelector('.u-table-fixed-left table tbody'),
+        fixed_right_trs = contentTable.querySelector('.u-table-fixed-right table tbody');
+    fixed_left_trs = fixed_left_trs && fixed_left_trs.getElementsByTagName("tr")[index].getBoundingClientRect();
+    fixed_right_trs = fixed_right_trs && fixed_right_trs.getElementsByTagName("tr")[index].getBoundingClientRect()
+    
     let div = document.createElement("div");
-    let style = "wdith:"+(_table_trs.width + _table_fixed_left_trs.width + _table_fixed_right_trs.width)+"px";
-    style += "height:"+ _table_trs.height+"px";
-    style += "classname:"+ _table_cont.className;
+    let style = "wdith:"+(trs.width + (fixed_left_trs ? fixed_left_trs.width : 0) + (fixed_right_trs ? fixed_right_trs.width : 0))+"px";
+    style += ";height:"+ trs.height+"px";
+    style += ";classname:"+ cont.className;
     div.setAttribute("style",style);
     return div;
   }
@@ -195,6 +257,9 @@ class TableRow extends Component{
    * 同步自己,也需要同步当前行的行显示
    */
   synchronizeTableTr = (currentIndex,type)=>{
+    if(type){ //同步 this.cacheCurrentIndex
+      this.cacheCurrentIndex = currentIndex; 
+    } 
     let {contentTable} = this.props; 
     let _table_trs = contentTable.querySelector('.u-table-scroll table tbody'),
      _table_fixed_left_trs = contentTable.querySelector('.u-table-fixed-left table tbody'),

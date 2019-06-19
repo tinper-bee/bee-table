@@ -83,16 +83,26 @@ var TableRow = function (_Component) {
     var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
     _this.initEvent = function () {
-      var events = [{ key: 'dragstart', fun: _this.onDragStart }, //用户开始拖动元素时触发
+      var events = [{ key: 'touchstart', fun: _this.onTouchStart }, //手指触摸到一个 DOM 元素时触发
+      { key: 'touchmove', fun: _this.onTouchMove }, //手指在一个 DOM 元素上滑动时触发
+      { key: 'touchend', fun: _this.onTouchEnd }, //手指从一个 DOM 元素上移开时触发
+
+      { key: 'dragstart', fun: _this.onDragStart }, //用户开始拖动元素时触发
       { key: 'dragover', fun: _this.onDragOver }, //当某被拖动的对象在另一对象容器范围内拖动时触发此事件
       { key: 'drop', fun: _this.onDrop }, //在一个拖动过程中，释放鼠标键时触发此事件 
-
       { key: 'dragenter', fun: _this.onDragEnter }, { key: 'dragleave', fun: _this.onDragLeave }];
       _this.eventListen(events, '', _this.element);
     };
 
     _this.removeDragAbleEvent = function () {
-      var events = [{ key: 'dragstart', fun: _this.onDragStart }, { key: 'dragover', fun: _this.onDragOver }, { key: 'drop', fun: _this.onDrop }, { key: 'dragenter', fun: _this.onDragEnter }, { key: 'dragleave', fun: _this.onDragLeave }];
+      var events = [{ key: 'touchstart', fun: _this.onTouchStart }, //手指触摸到一个 DOM 元素时触发
+      { key: 'touchmove', fun: _this.onTouchMove }, //手指在一个 DOM 元素上滑动时触发
+      { key: 'touchend', fun: _this.onTouchEnd }, //手指从一个 DOM 元素上移开时触发
+
+      { key: 'dragstart', fun: _this.onDragStart }, //用户开始拖动元素时触发
+      { key: 'dragover', fun: _this.onDragOver }, //当某被拖动的对象在另一对象容器范围内拖动时触发此事件
+      { key: 'drop', fun: _this.onDrop }, //在一个拖动过程中，释放鼠标键时触发此事件 
+      { key: 'dragenter', fun: _this.onDragEnter }, { key: 'dragleave', fun: _this.onDragLeave }];
       _this.eventListen(events, 'remove', _this.element);
     };
 
@@ -138,26 +148,81 @@ var TableRow = function (_Component) {
       onDragRow && onDragRow(currentKey, targetKey);
     };
 
+    _this.getTouchDom = function (event) {
+      var currentLocation = event.changedTouches[0];
+      var realTarget = document.elementFromPoint(currentLocation.clientX, currentLocation.clientY);
+      return realTarget;
+    };
+
+    _this.onTouchStart = function (e) {
+      var event = _utils.Event.getEvent(e),
+          _target = _utils.Event.getTarget(event),
+          target = _target.parentNode;
+      _this.currentIndex = target.getAttribute("data-row-key");
+    };
+
+    _this.onTouchMove = function (e) {
+      var event = _utils.Event.getEvent(e);
+      event.preventDefault();
+      var touchTarget = _this.getTouchDom(event),
+          target = touchTarget.parentNode,
+          targetKey = target.getAttribute("data-row-key");
+      if (!targetKey || targetKey === _this.currentIndex) return;
+      if (target.nodeName.toUpperCase() === "TR") {
+        if (_this.cacheCurrentIndex !== targetKey) {
+          //模拟 touchenter toucheleave 事件
+          _this.cacheCurrentIndex && _this.synchronizeTableTr(_this.cacheCurrentIndex, null); //去掉虚线
+          _this.synchronizeTableTr(targetKey, true); //添加虚线
+        }
+      }
+    };
+
+    _this.onTouchEnd = function (e) {
+      var onDragRow = _this.props.onDragRow;
+
+      var event = _utils.Event.getEvent(e),
+          currentKey = _this.currentIndex,
+          //拖拽行的key
+      touchTarget = _this.getTouchDom(event),
+          //当前触摸的DOM节点
+      target = touchTarget.parentNode,
+          //目标位置的行
+      targetKey = target.getAttribute("data-row-key"); //目标位置的行key
+      if (!targetKey || targetKey === currentKey) return;
+      if (target.nodeName.toUpperCase() === "TR") {
+        _this.synchronizeTableTr(currentKey, null);
+        _this.synchronizeTableTr(targetKey, null);
+      }
+
+      onDragRow && onDragRow(currentKey, targetKey);
+    };
+
     _this.synchronizeTableTrShadow = function () {
       var _this$props2 = _this.props,
           contentTable = _this$props2.contentTable,
           index = _this$props2.index;
 
 
-      var _table_cont = contentTable.querySelector('.u-table-scroll table tbody').getElementsByTagName("tr")[index],
-          _table_trs = _table_cont.getBoundingClientRect(),
-          _table_fixed_left_trs = contentTable.querySelector('.u-table-fixed-left table tbody').getElementsByTagName("tr")[index].getBoundingClientRect(),
-          _table_fixed_right_trs = contentTable.querySelector('.u-table-fixed-right table tbody').getElementsByTagName("tr")[index].getBoundingClientRect();
+      var cont = contentTable.querySelector('.u-table-scroll table tbody').getElementsByTagName("tr")[index],
+          trs = cont.getBoundingClientRect(),
+          fixed_left_trs = contentTable.querySelector('.u-table-fixed-left table tbody'),
+          fixed_right_trs = contentTable.querySelector('.u-table-fixed-right table tbody');
+      fixed_left_trs = fixed_left_trs && fixed_left_trs.getElementsByTagName("tr")[index].getBoundingClientRect();
+      fixed_right_trs = fixed_right_trs && fixed_right_trs.getElementsByTagName("tr")[index].getBoundingClientRect();
 
       var div = document.createElement("div");
-      var style = "wdith:" + (_table_trs.width + _table_fixed_left_trs.width + _table_fixed_right_trs.width) + "px";
-      style += "height:" + _table_trs.height + "px";
-      style += "classname:" + _table_cont.className;
+      var style = "wdith:" + (trs.width + (fixed_left_trs ? fixed_left_trs.width : 0) + (fixed_right_trs ? fixed_right_trs.width : 0)) + "px";
+      style += ";height:" + trs.height + "px";
+      style += ";classname:" + cont.className;
       div.setAttribute("style", style);
       return div;
     };
 
     _this.synchronizeTableTr = function (currentIndex, type) {
+      if (type) {
+        //同步 this.cacheCurrentIndex
+        _this.cacheCurrentIndex = currentIndex;
+      }
       var contentTable = _this.props.contentTable;
 
       var _table_trs = contentTable.querySelector('.u-table-scroll table tbody'),
@@ -242,6 +307,7 @@ var TableRow = function (_Component) {
     _this.onMouseLeave = _this.onMouseLeave.bind(_this);
     _this.expandHeight = 0;
     _this.event = false;
+    _this.cacheCurrentIndex = null;
     return _this;
   }
 
@@ -300,6 +366,21 @@ var TableRow = function (_Component) {
   /**
    * 在一个拖动过程中，释放鼠标键时触发此事件。【目标事件】
    * @memberof TableHeader
+   */
+
+
+  /**
+   * 获取当前触摸的Dom节点
+   */
+
+
+  /**
+   * 开始调整交换行的事件
+   */
+
+
+  /**
+   * 手指移开时触发
    */
 
 

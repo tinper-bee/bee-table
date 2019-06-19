@@ -1,13 +1,28 @@
 import React from 'react';
 import Column from './Column';
 import ColumnGroup from './ColumnGroup';
+import Icon from 'bee-icon';
 
 //行控制管理
-
 export default class ColumnManager {
   _cached = {}
 
-  constructor(columns, elements,originWidth) {
+  constructor(columns, elements,originWidth,rowDraggAble) {
+    //判断是否使用行拖拽
+    if(rowDraggAble) {
+      let dragHandleColumn =[{
+        className: "drag-handle-column",
+        title: "",
+        key: "dragHandle",
+        dataIndex: "dragHandle",
+        fixed:"left",
+        width: 49, 
+        render: () => {
+          return <Icon type="uf-navmenu" />
+        }
+      }]
+      columns = dragHandleColumn.concat(columns);
+    }
     this.columns = columns || this.normalize(elements);
     this.originWidth = originWidth;
   }

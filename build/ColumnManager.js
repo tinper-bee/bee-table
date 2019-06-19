@@ -18,6 +18,10 @@ var _ColumnGroup = require('./ColumnGroup');
 
 var _ColumnGroup2 = _interopRequireDefault(_ColumnGroup);
 
+var _beeIcon = require('bee-icon');
+
+var _beeIcon2 = _interopRequireDefault(_beeIcon);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -25,13 +29,27 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 //行控制管理
-
 var ColumnManager = function () {
-  function ColumnManager(columns, elements, originWidth) {
+  function ColumnManager(columns, elements, originWidth, rowDraggAble) {
     _classCallCheck(this, ColumnManager);
 
     this._cached = {};
 
+    //判断是否使用行拖拽
+    if (rowDraggAble) {
+      var dragHandleColumn = [{
+        className: "drag-handle-column",
+        title: "",
+        key: "dragHandle",
+        dataIndex: "dragHandle",
+        fixed: "left",
+        width: 49,
+        render: function render() {
+          return _react2["default"].createElement(_beeIcon2["default"], { type: 'uf-navmenu' });
+        }
+      }];
+      columns = dragHandleColumn.concat(columns);
+    }
     this.columns = columns || this.normalize(elements);
     this.originWidth = originWidth;
   }

@@ -111,6 +111,12 @@ $icon-color:#505F79;
   td {
     padding: $vertical-padding $horizontal-padding;
     word-break: break-all;
+    &.drag-handle-column {
+      .uf {
+        font-size: 12px;
+        line-height: 12px;
+      }
+    }
     &.text-center{
       text-align: center;
     }
