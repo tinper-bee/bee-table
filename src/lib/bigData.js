@@ -85,6 +85,7 @@ export default function bigData(Table) {
     computeCachedRowParentIndex = data => {
       const {isTree} = this.props;
       const isTreeType = isTree?true:this.checkIsTreeType();
+      treeTypeIndex=0;
       if (isTreeType) {
         data.forEach((item, index) => {
           this.firstLevelKey[index] = this.getRowKey(item, index);

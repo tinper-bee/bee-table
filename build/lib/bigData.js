@@ -335,6 +335,7 @@ function bigData(Table) {
       var isTree = _this4.props.isTree;
 
       var isTreeType = isTree ? true : _this4.checkIsTreeType();
+      treeTypeIndex = 0;
       if (isTreeType) {
         data.forEach(function (item, index) {
           _this4.firstLevelKey[index] = _this4.getRowKey(item, index);
