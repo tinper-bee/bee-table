@@ -159,9 +159,9 @@ class Table extends Component {
     EventUtil.addHandler(this.contentTable,'focus',this.onFocus);
     setTimeout(this.resetScrollX, 300);
     //含有纵向滚动条
-    if(this.props.scroll.y){
+    // if(this.props.scroll.y){
        this.scrollbarWidth = measureScrollbar();
-    }
+    // }
     //后续也放在recevice里面
     if (!this.props.originWidth) {
       this.computeTableWidth();
