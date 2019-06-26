@@ -169,14 +169,16 @@ var TableHeader = function (_Component) {
           // const newTableWidth = this.drag.tableWidth + diff;// +'px';
           // this.table.table.style.width  = newTableWidth+'px';;//改变table的width
           // if(this.table.innerTableBody){//TODO 后续需要处理此处
-          //   this.table.innerTableBody.style.width  = newTableWidth+'px'; ;
+          //   this.table.innerTableBody.style.width  = newTableWidth+'px';
+
           // }
 
           var newDiff = parseInt(currentCols.style.minWidth) - parseInt(currentCols.style.width);
           if (newDiff > 0) {
             //缩小 
             var lastWidth = _this.lastColumWidth + newDiff;
-            _this.table.cols[lastShowIndex].style.width = lastWidth + "px";
+            _this.table.cols[lastShowIndex].style.width = lastWidth + "px"; //同步表头
+            _this.table.tableBodyCols[lastShowIndex].style.width = lastWidth + "px"; //同步表体
           }
 
           var showScroll = contentDomWidth - (_this.drag.tableWidth + diff) - scrollbarWidth;
@@ -512,6 +514,7 @@ var TableHeader = function (_Component) {
       table.cols = tableDome.getElementsByTagName("col");
       table.ths = tableDome.getElementsByTagName("th");
       table.tr = tableDome.getElementsByTagName("tr");
+      table.tableBodyCols = contentTable.querySelector('.u-table-scroll .u-table-body').getElementsByTagName("col");
     }
 
     table.fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header');

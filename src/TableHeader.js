@@ -76,6 +76,7 @@ class TableHeader extends Component {
       table.cols = tableDome.getElementsByTagName("col");
       table.ths = tableDome.getElementsByTagName("th");
       table.tr = tableDome.getElementsByTagName("tr");
+      table.tableBodyCols = contentTable.querySelector('.u-table-scroll .u-table-body').getElementsByTagName("col");
     }
 
     table.fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header') ;
@@ -274,13 +275,15 @@ class TableHeader extends Component {
         // const newTableWidth = this.drag.tableWidth + diff;// +'px';
         // this.table.table.style.width  = newTableWidth+'px';;//改变table的width
         // if(this.table.innerTableBody){//TODO 后续需要处理此处
-        //   this.table.innerTableBody.style.width  = newTableWidth+'px'; ;
+        //   this.table.innerTableBody.style.width  = newTableWidth+'px';
+         
         // }
 
         let newDiff = (parseInt(currentCols.style.minWidth) - parseInt(currentCols.style.width));
         if(newDiff > 0){//缩小 
           let lastWidth = this.lastColumWidth + newDiff;
-          this.table.cols[lastShowIndex].style.width = lastWidth +"px";
+          this.table.cols[lastShowIndex].style.width = lastWidth +"px";//同步表头
+          this.table.tableBodyCols[lastShowIndex].style.width = lastWidth + "px";//同步表体
         }
 
         let showScroll =  contentDomWidth - (this.drag.tableWidth + diff) - scrollbarWidth ;
