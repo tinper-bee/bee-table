@@ -36,14 +36,21 @@ const columns = [
     title: "联系人",
     dataIndex: "d",
     key: "d",
+    width: 500,
+  },
+  {
+    title: "操作",
+    dataIndex: "e",
+    key: "e",
     width: 200,
+    fixed: 'right',
   }
 ];
 
 const data = [
-  { a: "NU0391001", b: "2019-03-01", c: 'xx供应商',d:'Tom', key: "2" },
-  { a: "NU0391002", b: "2018-11-02", c: 'yy供应商',d:'Jack', key: "1" },
-  { a: "NU0391003", b: "2019-05-03", c: 'zz供应商',d:'Jane', key: "3" }
+  { a: "NU0391001", b: "2019-03-01", c: 'xx供应商',d:'Tom',e:'...', key: "2" },
+  { a: "NU0391002", b: "2018-11-02", c: 'yy供应商',d:'Jack',e:'...', key: "1" },
+  { a: "NU0391003", b: "2019-05-03", c: 'zz供应商',d:'Jane',e:'...', key: "3" }
 ];
 
 const DragColumnTable = dragColumn(Table);
