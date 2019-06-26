@@ -61,6 +61,8 @@ export default function bigData(Table) {
         
       }
       if (nextProps.data !== props.data) {
+        _this.cachedRowHeight = []; //缓存每行的高度
+        _this.cachedRowParentIndex = [];
         _this.computeCachedRowParentIndex(nextProps.data);
         if(nextProps.data.length>0){
           _this.endIndex = _this.currentIndex - nextProps.loadBuffer + _this.loadCount; //数据结束位置
