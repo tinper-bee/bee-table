@@ -77,7 +77,8 @@ var TableHeader = function (_Component) {
           targetEvent = _utils.Event.getTarget(event);
       var _this$props = _this.props,
           clsPrefix = _this$props.clsPrefix,
-          contentTable = _this$props.contentTable;
+          contentTable = _this$props.contentTable,
+          lastShowIndex = _this$props.lastShowIndex;
 
       var currentElement = _this.getOnLineObject(targetEvent);
       if (!currentElement) return;
@@ -95,6 +96,14 @@ var TableHeader = function (_Component) {
         _this.drag.oldWidth = parseInt(currentObj.style.width);
         _this.drag.minWidth = currentObj.style.minWidth != "" ? parseInt(currentObj.style.minWidth) : defaultWidth;
         _this.drag.tableWidth = parseInt(_this.table.table.style.width ? _this.table.table.style.width : _this.table.table.scrollWidth);
+        console.log(" ----- ", _this.drag);
+        if (!_this.tableOldWidth) {
+          _this.tableOldWidth = _this.drag.tableWidth; //this.getTableWidth();
+          // console.log(" this.tableOldWidth--- ",this.tableOldWidth);
+        }
+        if (!_this.lastColumWidth) {
+          _this.lastColumWidth = parseInt(_this.table.cols[lastShowIndex].style.width);
+        }
       } else if (type != 'online' && _this.props.draggable) {
         // if (!this.props.draggable || targetEvent.nodeName.toUpperCase() != "TH") return; 
         if (!_this.props.draggable) return;
@@ -108,6 +117,16 @@ var TableHeader = function (_Component) {
         // console.log("onTrMouseDown dragborder or draggable is all false !");
         return;
       }
+    };
+
+    _this.getTableWidth = function () {
+      var tableWidth = 0,
+          offWidth = 0; //this.table.cols.length;
+      for (var index = 0; index < _this.table.cols.length; index++) {
+        var da = _this.table.cols[index];
+        tableWidth += parseInt(da.style.width);
+      }
+      return tableWidth - offWidth;
     };
 
     _this.getTargetToTh = function (targetEvent) {
@@ -127,7 +146,8 @@ var TableHeader = function (_Component) {
           contentDomWidth = _this$props2.contentDomWidth,
           scrollbarWidth = _this$props2.scrollbarWidth,
           contentTable = _this$props2.contentTable,
-          headerScroll = _this$props2.headerScroll;
+          headerScroll = _this$props2.headerScroll,
+          lastShowIndex = _this$props2.lastShowIndex;
 
       _utils.Event.stopPropagation(e);
       var event = _utils.Event.getEvent(e);
@@ -145,14 +165,21 @@ var TableHeader = function (_Component) {
           if (_this.fixedTable.cols) {
             _this.fixedTable.cols[_this.drag.currIndex].style.width = newWidth + "px";
           }
-          var newTableWidth = _this.drag.tableWidth + diff + 'px';
-          _this.table.table.style.width = newTableWidth; //改变table的width
-          if (_this.table.innerTableBody) {
-            //TODO 后续需要处理此处
-            _this.table.innerTableBody.style.width = newTableWidth;
-          }
-          var showScroll = contentDomWidth - (_this.drag.tableWidth + diff) - scrollbarWidth;
 
+          // const newTableWidth = this.drag.tableWidth + diff;// +'px';
+          // this.table.table.style.width  = newTableWidth+'px';;//改变table的width
+          // if(this.table.innerTableBody){//TODO 后续需要处理此处
+          //   this.table.innerTableBody.style.width  = newTableWidth+'px'; ;
+          // }
+
+          var newDiff = parseInt(currentCols.style.minWidth) - parseInt(currentCols.style.width);
+          if (newDiff > 0) {
+            //缩小 
+            var lastWidth = _this.lastColumWidth + newDiff;
+            _this.table.cols[lastShowIndex].style.width = lastWidth + "px";
+          }
+
+          var showScroll = contentDomWidth - (_this.drag.tableWidth + diff) - scrollbarWidth;
           //表头滚动条处理
           if (headerScroll) {
             if (showScroll < 0) {
@@ -440,6 +467,7 @@ var TableHeader = function (_Component) {
     _this.table = null;
     _this._thead = null; //当前对象
     _this.event = false; //避免多次绑定问题
+    _this.lastColumWidth = null; //非固定列最后一列的初始化宽度
     return _this;
   }
 
