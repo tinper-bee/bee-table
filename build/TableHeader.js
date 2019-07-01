@@ -306,7 +306,7 @@ var TableHeader = function (_Component) {
       if (!currentIndex || parseInt(currentIndex) === _this.drag.currIndex) return;
       if (target.nodeName.toUpperCase() === "TH") {
         // target.style.border = "2px dashed rgba(5,0,0,0.25)";
-        target.setAttribute("style", "border:2px dashed rgba(5,0,0,0.25)");
+        target.setAttribute("style", "border-right:2px dashed rgba(5,0,0,0.25)");
         // target.style.backgroundColor = 'rgb(235, 236, 240)';
       }
     };
