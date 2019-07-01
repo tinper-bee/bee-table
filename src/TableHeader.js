@@ -204,7 +204,7 @@ class TableHeader extends Component {
       this.drag.oldWidth = parseInt((currentObj).style.width);
       this.drag.minWidth = currentObj.style.minWidth != ""?parseInt(currentObj.style.minWidth):defaultWidth;
       this.drag.tableWidth = parseInt(this.table.table.style.width ?this.table.table.style.width:this.table.table.scrollWidth);
-      console.log(" ----- ",this.drag);
+      // console.log(" ----- ",this.drag);
       if(!this.tableOldWidth){
         this.tableOldWidth = this.drag.tableWidth;//this.getTableWidth();
         // console.log(" this.tableOldWidth--- ",this.tableOldWidth);
@@ -262,8 +262,7 @@ class TableHeader extends Component {
       let currentCols = this.table.cols[this.drag.currIndex];
       let diff = (event.x - this.drag.oldLeft); 
       let newWidth = this.drag.oldWidth + diff;
-      this.drag.newWidth = newWidth;
-
+      this.drag.newWidth = newWidth > 0 ? newWidth : this.minWidth;
        // if(newWidth > this.drag.minWidth){
       if(newWidth > this.minWidth){
         currentCols.style.width = newWidth +'px';
@@ -315,7 +314,9 @@ class TableHeader extends Component {
                 this.optTableScroll( this.table.fixedRightBodyTable,{x:'auto'});
           }
         }
-      } 
+      }else {
+        this.drag.newWidth = this.minWidth;
+      }
     }else if(this.props.draggable && this.drag.option == "draggable"){
       // console.log(" --onTrMouseMove--draggable- ",this.drag.option);
     }else{
