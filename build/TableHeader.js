@@ -96,7 +96,7 @@ var TableHeader = function (_Component) {
         _this.drag.oldWidth = parseInt(currentObj.style.width);
         _this.drag.minWidth = currentObj.style.minWidth != "" ? parseInt(currentObj.style.minWidth) : defaultWidth;
         _this.drag.tableWidth = parseInt(_this.table.table.style.width ? _this.table.table.style.width : _this.table.table.scrollWidth);
-        console.log(" ----- ", _this.drag);
+        // console.log(" ----- ",this.drag);
         if (!_this.tableOldWidth) {
           _this.tableOldWidth = _this.drag.tableWidth; //this.getTableWidth();
           // console.log(" this.tableOldWidth--- ",this.tableOldWidth);
@@ -156,8 +156,7 @@ var TableHeader = function (_Component) {
         var currentCols = _this.table.cols[_this.drag.currIndex];
         var diff = event.x - _this.drag.oldLeft;
         var newWidth = _this.drag.oldWidth + diff;
-        _this.drag.newWidth = newWidth;
-
+        _this.drag.newWidth = newWidth > 0 ? newWidth : _this.minWidth;
         // if(newWidth > this.drag.minWidth){
         if (newWidth > _this.minWidth) {
           currentCols.style.width = newWidth + 'px';
@@ -210,6 +209,8 @@ var TableHeader = function (_Component) {
               _this.optTableScroll(_this.table.fixedRightBodyTable, { x: 'auto' });
             }
           }
+        } else {
+          _this.drag.newWidth = _this.minWidth;
         }
       } else if (_this.props.draggable && _this.drag.option == "draggable") {
         // console.log(" --onTrMouseMove--draggable- ",this.drag.option);
@@ -306,7 +307,7 @@ var TableHeader = function (_Component) {
       if (!currentIndex || parseInt(currentIndex) === _this.drag.currIndex) return;
       if (target.nodeName.toUpperCase() === "TH") {
         // target.style.border = "2px dashed rgba(5,0,0,0.25)";
-        target.setAttribute("style", "border:2px dashed rgba(5,0,0,0.25)");
+        target.setAttribute("style", "border-right:2px dashed rgba(5,0,0,0.25)");
         // target.style.backgroundColor = 'rgb(235, 236, 240)';
       }
     };

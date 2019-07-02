@@ -70,7 +70,7 @@ export default function singleSelect(Table, Radio) {
                     name="table-radio" 
                     selectedValue={selectedRowIndex}
                     onChange={value => this.onRadioChange(value, record, index)}
-                    style={{width:'16px', height:'16px', display:'block', marginLeft:'4px'}}>
+                    style={{width:'14px', height:'14px', display:'block', marginLeft:'4px'}}>
                     <Radio value={index}/>
                   </Radio.RadioGroup>
           }
@@ -84,8 +84,7 @@ export default function singleSelect(Table, Radio) {
       return <Table 
               {...this.props} 
               columns={this.getDefaultColumns(columns)} 
-              data={data} 
-              height={40}/>
+              data={data} />
     }
   };
 }
