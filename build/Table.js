@@ -786,6 +786,7 @@ var Table = function (_Component) {
     }
     var lazyCurrentIndex = props.lazyLoad && props.lazyLoad.startIndex ? props.lazyLoad.startIndex : 0;
     var lazyParentIndex = props.lazyLoad && props.lazyLoad.startParentIndex ? props.lazyLoad.startParentIndex : 0;
+    var lazyEndIndex = props.lazyLoad && props.lazyLoad.endIndex ? props.lazyLoad.endIndex : -1;
     for (var i = 0; i < data.length; i++) {
       var isHiddenExpandIcon = void 0;
       var record = data[i];
@@ -884,7 +885,9 @@ var Table = function (_Component) {
         contentTable: this.contentTable,
         tableUid: this.tableUid,
         expandedIcon: props.expandedIcon,
-        collapsedIcon: props.collapsedIcon
+        collapsedIcon: props.collapsedIcon,
+        lazyStartIndex: lazyCurrentIndex,
+        lazyEndIndex: lazyEndIndex
       })));
       this.treeRowIndex++;
       var subVisible = visible && isRowExpanded;

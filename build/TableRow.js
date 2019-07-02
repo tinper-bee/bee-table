@@ -533,7 +533,9 @@ var TableRow = function (_Component) {
         bodyDisplayInRow = _props9.bodyDisplayInRow,
         expandedIcon = _props9.expandedIcon,
         collapsedIcon = _props9.collapsedIcon,
-        hoverKey = _props9.hoverKey;
+        hoverKey = _props9.hoverKey,
+        lazyStartIndex = _props9.lazyStartIndex,
+        lazyEndIndex = _props9.lazyEndIndex;
 
     var showSum = false;
     var className = this.props.className;
@@ -582,7 +584,9 @@ var TableRow = function (_Component) {
         fixed: fixed,
         showSum: showSum,
         expandIcon: isColumnHaveExpandIcon ? expandIcon : null,
-        bodyDisplayInRow: bodyDisplayInRow
+        bodyDisplayInRow: bodyDisplayInRow,
+        lazyStartIndex: lazyStartIndex,
+        lazyEndIndex: lazyEndIndex
       }));
     }
     var style = { height: height };

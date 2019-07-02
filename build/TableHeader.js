@@ -590,6 +590,10 @@ var TableHeader = function (_Component) {
 
   TableHeader.prototype.eventListen = function eventListen(events, type, eventSource) {
     if (!this.table) return;
+    if (!eventSource) {
+      console.log("Please set the attributes of column !");
+      return;
+    }
     var tr = this.table.tr;
 
     for (var i = 0; i < events.length; i++) {
