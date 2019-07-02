@@ -31,6 +31,7 @@ class TableHeader extends Component {
     this.table = null;
     this._thead = null;//当前对象
     this.event = false;//避免多次绑定问题
+    this.lastColumWidth = null;//非固定列最后一列的初始化宽度
   }
 
   static defaultProps = {
@@ -75,6 +76,7 @@ class TableHeader extends Component {
       table.cols = tableDome.getElementsByTagName("col");
       table.ths = tableDome.getElementsByTagName("th");
       table.tr = tableDome.getElementsByTagName("tr");
+      table.tableBodyCols = contentTable.querySelector('.u-table-scroll .u-table-body').getElementsByTagName("col");
     }
 
     table.fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header') ;
@@ -185,7 +187,7 @@ class TableHeader extends Component {
     Event.stopPropagation(e); 
     let event = Event.getEvent(e) ,
     targetEvent = Event.getTarget(event);
-    const { clsPrefix, contentTable } = this.props;
+    const { clsPrefix, contentTable,lastShowIndex } = this.props;
     let currentElement = this.getOnLineObject(targetEvent);
     if(!currentElement)return;
     let type = currentElement.getAttribute('data-type');
@@ -202,6 +204,14 @@ class TableHeader extends Component {
       this.drag.oldWidth = parseInt((currentObj).style.width);
       this.drag.minWidth = currentObj.style.minWidth != ""?parseInt(currentObj.style.minWidth):defaultWidth;
       this.drag.tableWidth = parseInt(this.table.table.style.width ?this.table.table.style.width:this.table.table.scrollWidth);
+      // console.log(" ----- ",this.drag);
+      if(!this.tableOldWidth){
+        this.tableOldWidth = this.drag.tableWidth;//this.getTableWidth();
+        // console.log(" this.tableOldWidth--- ",this.tableOldWidth);
+      }
+      if(!this.lastColumWidth){
+        this.lastColumWidth = parseInt(this.table.cols[lastShowIndex].style.width);
+      }
     }else if(type != 'online' &&  this.props.draggable){
         // if (!this.props.draggable || targetEvent.nodeName.toUpperCase() != "TH") return; 
         if (!this.props.draggable) return; 
@@ -216,6 +226,15 @@ class TableHeader extends Component {
       return ;
     }
   };
+ 
+  getTableWidth = ()=>{
+    let tableWidth = 0,offWidth = 0;//this.table.cols.length;
+    for (let index = 0; index < this.table.cols.length; index++) {
+      let da = this.table.cols[index];
+      tableWidth += parseInt((da).style.width);
+    }
+    return (tableWidth-offWidth);
+  }
  
   /**
    * 判断当前的target 是否是 th，如果不是，直接递归查找。
@@ -235,7 +254,7 @@ class TableHeader extends Component {
    */
   onTrMouseMove = (e) => {
     if(!this.props.dragborder && !this.props.draggable)return;
-    const { clsPrefix ,dragborder,contentDomWidth,scrollbarWidth,contentTable,headerScroll} = this.props;
+    const { clsPrefix ,dragborder,contentDomWidth,scrollbarWidth,contentTable,headerScroll,lastShowIndex} = this.props;
     Event.stopPropagation(e); 
     let event = Event.getEvent(e);  
     if(this.props.dragborder && this.drag.option == "border"){
@@ -243,8 +262,7 @@ class TableHeader extends Component {
       let currentCols = this.table.cols[this.drag.currIndex];
       let diff = (event.x - this.drag.oldLeft); 
       let newWidth = this.drag.oldWidth + diff;
-      this.drag.newWidth = newWidth;
-
+      this.drag.newWidth = newWidth > 0 ? newWidth : this.minWidth;
        // if(newWidth > this.drag.minWidth){
       if(newWidth > this.minWidth){
         currentCols.style.width = newWidth +'px';
@@ -252,13 +270,22 @@ class TableHeader extends Component {
         if(this.fixedTable.cols){
             this.fixedTable.cols[this.drag.currIndex].style.width = newWidth + "px";
         }
-        const newTableWidth = this.drag.tableWidth + diff +'px';
-        this.table.table.style.width  = newTableWidth;//改变table的width
-        if(this.table.innerTableBody){//TODO 后续需要处理此处
-          this.table.innerTableBody.style.width  = newTableWidth ;
+
+        // const newTableWidth = this.drag.tableWidth + diff;// +'px';
+        // this.table.table.style.width  = newTableWidth+'px';;//改变table的width
+        // if(this.table.innerTableBody){//TODO 后续需要处理此处
+        //   this.table.innerTableBody.style.width  = newTableWidth+'px';
+         
+        // }
+
+        let newDiff = (parseInt(currentCols.style.minWidth) - parseInt(currentCols.style.width));
+        if(newDiff > 0){//缩小 
+          let lastWidth = this.lastColumWidth + newDiff;
+          this.table.cols[lastShowIndex].style.width = lastWidth +"px";//同步表头
+          this.table.tableBodyCols[lastShowIndex].style.width = lastWidth + "px";//同步表体
         }
+
         let showScroll =  contentDomWidth - (this.drag.tableWidth + diff) - scrollbarWidth ;
-    
         //表头滚动条处理
         if(headerScroll){
             if(showScroll < 0){
@@ -287,7 +314,9 @@ class TableHeader extends Component {
                 this.optTableScroll( this.table.fixedRightBodyTable,{x:'auto'});
           }
         }
-      } 
+      }else {
+        this.drag.newWidth = this.minWidth;
+      }
     }else if(this.props.draggable && this.drag.option == "draggable"){
       // console.log(" --onTrMouseMove--draggable- ",this.drag.option);
     }else{
@@ -446,7 +475,7 @@ class TableHeader extends Component {
     if(!currentIndex || parseInt(currentIndex) === this.drag.currIndex)return;
     if(target.nodeName.toUpperCase() === "TH"){
       // target.style.border = "2px dashed rgba(5,0,0,0.25)";
-      target.setAttribute("style","border:2px dashed rgba(5,0,0,0.25)");
+      target.setAttribute("style","border-right:2px dashed rgba(5,0,0,0.25)");
       // target.style.backgroundColor = 'rgb(235, 236, 240)';
     }
   }

@@ -324,9 +324,9 @@ var Table = function (_Component) {
     _utils.EventUtil.addHandler(this.contentTable, 'focus', this.onFocus);
     setTimeout(this.resetScrollX, 300);
     //含有纵向滚动条
-    if (this.props.scroll.y) {
-      this.scrollbarWidth = (0, _utils.measureScrollbar)();
-    }
+    // if(this.props.scroll.y){
+    this.scrollbarWidth = (0, _utils.measureScrollbar)();
+    // }
     //后续也放在recevice里面
     if (!this.props.originWidth) {
       this.computeTableWidth();

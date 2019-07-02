@@ -153,6 +153,13 @@
   .u-loading.u-loading-line.u-loading-line-warning > div {
     background-color: #ff9800; }
 
+.u-loading.u-loading-custom > div {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); }
+
 @keyframes line-scale {
   0% {
     -webkit-transform: scaley(1);
@@ -337,10 +344,10 @@
     content: "."; }
   .u-table-row-expanded:after, .u-table-expanded-row-expanded:after {
     content: "\e639";
-    font-family: "uf" !important; }
+    font-family: "uf"; }
   .u-table-row-collapsed:after, .u-table-expanded-row-collapsed:after {
     content: "\e61c";
-    font-family: "uf" !important; }
+    font-family: "uf"; }
   .u-table-row.selected {
     background: #FFF7E7; }
   .u-table tr.u-table-expanded-row {

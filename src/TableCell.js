@@ -46,7 +46,6 @@ class TableCell extends Component{
         rowSpan = (tdProps.rowSpan>lazyEndIndex && lazyEndIndex>5)?lazyEndIndex-index:tdProps.rowSpan;
         colSpan = tdProps.colSpan;
         text = text.children;
-        console.log("rowIndex====",index,"rowSpan=======",rowSpan,lazyEndIndex);
       }
     }
 
