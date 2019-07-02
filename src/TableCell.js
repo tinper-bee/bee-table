@@ -30,7 +30,7 @@ class TableCell extends Component{
   }
   render() {
     const { record, indentSize, clsPrefix, indent,
-            index, expandIcon, column ,fixed,showSum, bodyDisplayInRow} = this.props;
+            index, expandIcon, column ,fixed,showSum, bodyDisplayInRow,lazyStartIndex,lazyEndIndex} = this.props;
     const { dataIndex, render } = column;
     let {className = ''} = column;
 
@@ -43,9 +43,10 @@ class TableCell extends Component{
       text = render(text, record, index);
       if (this.isInvalidRenderCellText(text)) {
         tdProps = text.props || {};
-        rowSpan = tdProps.rowSpan;
+        rowSpan = (tdProps.rowSpan>lazyEndIndex && lazyEndIndex>5)?lazyEndIndex-index:tdProps.rowSpan;
         colSpan = tdProps.colSpan;
         text = text.children;
+        console.log("rowIndex====",index,"rowSpan=======",rowSpan,lazyEndIndex);
       }
     }
 
@@ -61,8 +62,12 @@ class TableCell extends Component{
       />
     ) : null;
 
-    if (rowSpan === 0 || colSpan === 0) {
+    if ((lazyStartIndex !==index) &&(rowSpan === 0 || colSpan === 0) ) {
       return null;
+    }
+    if(tdProps && tdProps.mergeEndIndex && index<tdProps.mergeEndIndex && rowSpan === 0){
+      rowSpan = tdProps.mergeEndIndex - index;
+      text = ''
     }
     //不是固定表格并且当前列是固定，则隐藏当前列
     if(column.fixed && !fixed){
@@ -80,7 +85,8 @@ class TableCell extends Component{
         rowSpan={rowSpan}
         className={className}
         onClick={this.handleClick}
-        title = {title}
+        title={title}
+
       >
         {indentText}
         {expandIcon}
