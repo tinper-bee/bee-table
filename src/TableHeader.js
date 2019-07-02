@@ -146,10 +146,12 @@ class TableHeader extends Component {
     this.eventListen(events,'remove',this.table.tr[0]);
   }
 
-
-
   eventListen(events,type,eventSource){
     if(!this.table)return;
+    if(!eventSource){
+      console.log("Please set the attributes of column !");
+      return;
+    }
     let {tr} = this.table;
     for (let i = 0; i < events.length; i++) {
       const _event = events[i];
