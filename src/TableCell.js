@@ -74,6 +74,9 @@ class TableCell extends Component{
     if(typeof text == 'string' && bodyDisplayInRow){
       title = text
     }
+    if(expandIcon && expandIcon.props.expandable){ 
+      className = className+` ${clsPrefix}-has-expandIcon`
+    }
     return (
       <td
         colSpan={colSpan}

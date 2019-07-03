@@ -102,6 +102,19 @@ $icon-color:#505F79;
         color: #1565c0;
       }
     }
+    td.u-table-multiSelect-column.u-table-row-has-expandIcon:not(.u-table-row-fixed-columns-in-body){
+      display: flex;
+      flex-direction: row-reverse;
+      .expand-icon-con {
+        height: 15px;
+        .uf{
+          padding-left: 0;
+        }
+        .u-table-row-expand-icon {
+          width: 0;
+        }
+      }
+    }
   }
   tr.tr-row-hover {
     background: $hover-bg-color-base;

@@ -164,6 +164,7 @@ export default function multiSelect(Table, Checkbox) {
       })
 
       let _defaultColumns =[{
+          className: 'u-table-multiSelect-column',
           title: (
             <Checkbox
               className="table-checkbox"
@@ -174,7 +175,7 @@ export default function multiSelect(Table, Checkbox) {
           ),
           key: "checkbox",
           dataIndex: "checkbox",
-         fixed:"left",
+          fixed:"left",
           width: 49, 
           render: (text, record, index) => {
             let attr = {};

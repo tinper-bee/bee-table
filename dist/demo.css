@@ -203,6 +203,17 @@
       color: #1565c0; }
     .u-table tr tr a:active {
       color: #1565c0; }
+  .u-table tr td.u-table-multiSelect-column.u-table-row-has-expandIcon:not(.u-table-row-fixed-columns-in-body) {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row-reverse;
+    flex-direction: row-reverse; }
+    .u-table tr td.u-table-multiSelect-column.u-table-row-has-expandIcon:not(.u-table-row-fixed-columns-in-body) .expand-icon-con {
+      height: 15px; }
+      .u-table tr td.u-table-multiSelect-column.u-table-row-has-expandIcon:not(.u-table-row-fixed-columns-in-body) .expand-icon-con .uf {
+        padding-left: 0; }
+      .u-table tr td.u-table-multiSelect-column.u-table-row-has-expandIcon:not(.u-table-row-fixed-columns-in-body) .expand-icon-con .u-table-row-expand-icon {
+        width: 0; }
   .u-table tr.tr-row-hover {
     background: rgb(235, 236, 240); }
   .u-table th,
@@ -1064,6 +1075,9 @@ th .drop-menu .uf {
 
 th:hover .uf {
   visibility: visible; }
+
+.expanded-table .expand-icon-con .uf {
+  font-size: 12px; }
 
 
 .demo8 .u-table {

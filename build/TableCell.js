@@ -119,6 +119,9 @@ var TableCell = function (_Component) {
     if (typeof text == 'string' && bodyDisplayInRow) {
       title = text;
     }
+    if (expandIcon && expandIcon.props.expandable) {
+      className = className + (' ' + clsPrefix + '-has-expandIcon');
+    }
     return _react2["default"].createElement(
       'td',
       {

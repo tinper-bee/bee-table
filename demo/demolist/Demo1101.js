@@ -9,8 +9,7 @@
 import React, { Component } from "react";
 import { Popconfirm,Icon } from 'tinper-bee';
 import Table from "../../src";
-import dragColumn from '../../src/lib/dragColumn';
-const DragColumnTable = dragColumn(Table);
+
 const columns16 = [
   {
     title: "操作",
@@ -59,7 +58,6 @@ const data16 = [
   { a: "NU0391002", b: "2018-11-02", c: "yy供应商", d: "操作", key: "2" },
   { a: "NU0391003", b: "2019-05-03", c: "zz供应商", d: "操作", key: "3" }
 ];
-
 
 class Demo16 extends Component {
   constructor(props){
@@ -111,14 +109,13 @@ class Demo16 extends Component {
   }
   render() {
     return (
-      <DragColumnTable
+      <Table
+        className="expanded-table"
         columns={columns16}
         data={data16}
         onExpand={this.getData}
         expandedRowRender={this.expandedRowRender}
         scroll={{x:true}}
-        dragborder={true} 
-        draggable={true} 
         collapsedIcon={<Icon type='uf-anglearrowpointingtoright'/>}
         expandedIcon={<Icon type='uf-treearrow-down'/>}
       />

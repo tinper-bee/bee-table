@@ -290,7 +290,7 @@ class TableRow extends Component{
       }
     }
     if(type){
-      currentObj && currentObj.setAttribute("style","border-bottom:2px dashed rgba(5,0,0,0.25)");
+      currentObj && currentObj.setAttribute("style","border-bottom:2px dashed rgb(30, 136, 229)");
     }else{
       currentObj && currentObj.setAttribute("style","");
     }
