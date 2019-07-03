@@ -635,6 +635,7 @@ class Table extends Component {
     }
     const lazyCurrentIndex =  props.lazyLoad && props.lazyLoad.startIndex ?props.lazyLoad.startIndex :0;
     const lazyParentIndex = props.lazyLoad && props.lazyLoad.startParentIndex ?props.lazyLoad.startParentIndex :0;
+    const lazyEndIndex =  props.lazyLoad && props.lazyLoad.endIndex ?props.lazyLoad.endIndex :-1;
     for (let i = 0; i < data.length; i++) {
       let isHiddenExpandIcon;
       const record = data[i];
@@ -738,6 +739,8 @@ class Table extends Component {
           tableUid = {this.tableUid}
           expandedIcon={props.expandedIcon}
           collapsedIcon={props.collapsedIcon}
+          lazyStartIndex = {lazyCurrentIndex}
+          lazyEndIndex = {lazyEndIndex}
         />
       );
       this.treeRowIndex++;

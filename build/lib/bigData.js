@@ -27,7 +27,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 
 var defaultHeight = 30;
-var rowDiff = 3; //行差值
+var rowDiff = 2; //行差值
 var treeTypeIndex = 0;
 function bigData(Table) {
   var _class, _temp, _initialiseProps;
@@ -284,6 +284,7 @@ function bigData(Table) {
       }
       var lazyLoad = {
         startIndex: startIndex,
+        endIndex: endIndex,
         startParentIndex: startIndex //为树状节点做准备
       };
       if (this.treeType) {
@@ -435,11 +436,12 @@ function bigData(Table) {
           // 向下滚动 下临界值超出缓存的endIndex则重新渲染
           if (rowsInView + index > endIndex - rowDiff && isOrder) {
             startIndex = index - loadBuffer > 0 ? index - loadBuffer : 0;
+            // endIndex = startIndex + rowsInView + loadBuffer*2;
             endIndex = startIndex + loadCount;
             if (endIndex > data.length) {
               endIndex = data.length;
             }
-            if (endIndex !== _this4.endIndex) {
+            if (endIndex > _this4.endIndex) {
               _this4.startIndex = startIndex;
               _this4.endIndex = endIndex;
               _this4.setState({ needRender: !needRender });
@@ -451,7 +453,7 @@ function bigData(Table) {
             if (startIndex < 0) {
               startIndex = 0;
             }
-            if (startIndex !== _this4.startIndex) {
+            if (startIndex < _this4.startIndex) {
               _this4.startIndex = startIndex;
               _this4.endIndex = _this4.startIndex + loadCount;
               _this4.setState({ needRender: !needRender });

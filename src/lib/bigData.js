@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 const defaultHeight = 30;
-const rowDiff = 3; //行差值
+const rowDiff = 2; //行差值
 let treeTypeIndex = 0;
 export default function bigData(Table) {
   return class BigData extends Component {
@@ -298,11 +298,12 @@ export default function bigData(Table) {
           // 向下滚动 下临界值超出缓存的endIndex则重新渲染
           if (rowsInView + index > endIndex - rowDiff && isOrder) {
             startIndex = index - loadBuffer > 0 ? index - loadBuffer : 0;
+            // endIndex = startIndex + rowsInView + loadBuffer*2;
             endIndex = startIndex + loadCount;
             if (endIndex > data.length) {
               endIndex = data.length;
             }
-            if (endIndex !== this.endIndex) {
+            if (endIndex > this.endIndex ) {
               this.startIndex = startIndex;
               this.endIndex = endIndex;
               this.setState({ needRender: !needRender });
@@ -314,7 +315,7 @@ export default function bigData(Table) {
             if (startIndex < 0) {
               startIndex = 0;
             }
-            if (startIndex !== this.startIndex ) {
+            if (startIndex < this.startIndex) {
               this.startIndex = startIndex;
               this.endIndex = this.startIndex + loadCount;
               this.setState({ needRender: !needRender });
@@ -430,6 +431,7 @@ export default function bigData(Table) {
       }
       const lazyLoad = {
         startIndex: startIndex,
+        endIndex:endIndex,
         startParentIndex: startIndex //为树状节点做准备
       };
       if (this.treeType) {

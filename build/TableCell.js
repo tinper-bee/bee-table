@@ -74,7 +74,9 @@ var TableCell = function (_Component) {
         column = _props2.column,
         fixed = _props2.fixed,
         showSum = _props2.showSum,
-        bodyDisplayInRow = _props2.bodyDisplayInRow;
+        bodyDisplayInRow = _props2.bodyDisplayInRow,
+        lazyStartIndex = _props2.lazyStartIndex,
+        lazyEndIndex = _props2.lazyEndIndex;
     var dataIndex = column.dataIndex,
         render = column.render;
     var _column$className = column.className,
@@ -91,7 +93,7 @@ var TableCell = function (_Component) {
       text = render(text, record, index);
       if (this.isInvalidRenderCellText(text)) {
         tdProps = text.props || {};
-        rowSpan = tdProps.rowSpan;
+        rowSpan = tdProps.rowSpan > lazyEndIndex && lazyEndIndex > 5 ? lazyEndIndex - index : tdProps.rowSpan;
         colSpan = tdProps.colSpan;
         text = text.children;
       }
@@ -106,8 +108,12 @@ var TableCell = function (_Component) {
       className: clsPrefix + '-indent indent-level-' + indent
     }) : null;
 
-    if (rowSpan === 0 || colSpan === 0) {
+    if (lazyStartIndex !== index && (rowSpan === 0 || colSpan === 0)) {
       return null;
+    }
+    if (tdProps && tdProps.mergeEndIndex && index < tdProps.mergeEndIndex && rowSpan === 0) {
+      rowSpan = tdProps.mergeEndIndex - index;
+      text = '';
     }
     //不是固定表格并且当前列是固定，则隐藏当前列
     if (column.fixed && !fixed) {
@@ -130,6 +136,7 @@ var TableCell = function (_Component) {
         className: className,
         onClick: this.handleClick,
         title: title
+
       },
       indentText,
       expandIcon,
