@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Event,EventUtil} from "./utils";
 import TableCell from './TableCell';
 import ExpandIcon from './ExpandIcon';
 
@@ -30,8 +29,6 @@ const propTypes = {
     expandIconAsCell: PropTypes.bool,
     expandRowByClick: PropTypes.bool,
     store: PropTypes.object.isRequired,
-    rowDraggAble: PropTypes.bool,
-    onDragRow: PropTypes.func,
 };
 
 const defaultProps = {
@@ -42,9 +39,7 @@ const defaultProps = {
     expandRowByClick: false,
     onHover() {},
     className:'',
-    setRowParentIndex:()=>{},
-    rowDraggAble:false,
-    // onDragRow:()=>{}
+    setRowParentIndex:()=>{}
 };
 
 class TableRow extends Component{
@@ -59,13 +54,11 @@ class TableRow extends Component{
      this.onMouseEnter = this.onMouseEnter.bind(this);
      this.onMouseLeave = this.onMouseLeave.bind(this);
      this.expandHeight = 0;
-     this.event = false;
-     this.cacheCurrentIndex = null;
  }
 
 
   componentDidMount() {
-    const { store, hoverKey,treeType,rowDraggAble } = this.props;
+    const { store, hoverKey,treeType } = this.props;
     this.unsubscribe = store.subscribe(() => {
       if (store.getState().currentHoverKey === hoverKey) {
         this.setState({ hovered: true });
@@ -78,269 +71,22 @@ class TableRow extends Component{
     if(treeType){
       this.setRowParentIndex();
     }
-  }
- 
-  /**
-   * 事件初始化
-   */
-  initEvent=()=>{
-    let  events = [
-      {key:'touchstart', fun:this.onTouchStart},//手指触摸到一个 DOM 元素时触发
-      {key:'touchmove', fun:this.onTouchMove}, //手指在一个 DOM 元素上滑动时触发
-      {key:'touchend', fun:this.onTouchEnd}, //手指从一个 DOM 元素上移开时触发
-
-      {key:'dragstart',fun:this.onDragStart},//用户开始拖动元素时触发
-      {key:'dragover', fun:this.onDragOver},//当某被拖动的对象在另一对象容器范围内拖动时触发此事件
-      {key:'drop', fun:this.onDrop},        //在一个拖动过程中，释放鼠标键时触发此事件 
-      {key:'dragenter', fun:this.onDragEnter},
-      {key:'dragleave', fun:this.onDragLeave},
-    ];
-    this.eventListen(events,'',this.element);
-  }
-
-  /**
-   * 事件移除，提供性能以及内存泄漏等问题。
-   */
-  removeDragAbleEvent=()=>{
-    let  events = [
-      {key:'touchstart', fun:this.onTouchStart},//手指触摸到一个 DOM 元素时触发
-      {key:'touchmove', fun:this.onTouchMove}, //手指在一个 DOM 元素上滑动时触发
-      {key:'touchend', fun:this.onTouchEnd}, //手指从一个 DOM 元素上移开时触发
-
-      {key:'dragstart',fun:this.onDragStart},//用户开始拖动元素时触发
-      {key:'dragover', fun:this.onDragOver},//当某被拖动的对象在另一对象容器范围内拖动时触发此事件
-      {key:'drop', fun:this.onDrop},        //在一个拖动过程中，释放鼠标键时触发此事件 
-      {key:'dragenter', fun:this.onDragEnter},
-      {key:'dragleave', fun:this.onDragLeave},
-    ];
-    this.eventListen(events,'remove',this.element);
-  }
-
-
-  /**
-   * 事件绑定和移除函数
-   */
-  eventListen(events,type,eventSource){
-    for (let i = 0; i < events.length; i++) {
-      const _event = events[i];
-      if(type === "remove"){
-        EventUtil.removeHandler(eventSource,_event.key,_event.fun);
-      }else{
-        EventUtil.addHandler(eventSource,_event.key,_event.fun);
-      }
-    }
-  }
-
-  /**
-   * 开始调整交换列的事件
-   */
-  onDragStart = (e) => {
-    if (!this.props.rowDraggAble) return;
-    let event = Event.getEvent(e) ,
-    target = Event.getTarget(event);
-     this.currentIndex = target.getAttribute("data-row-key");
-     this._dragCurrent = target;
- 
-    //TODO 自定义图像后续需要增加。
-    //  let crt = this.synchronizeTableTrShadow(); 
-    //  document.getElementById(this.props.tableUid).appendChild(crt);
-    // event.dataTransfer.setDragImage(crt, 0, 0);
-     event.dataTransfer.effectAllowed = "move";
-     event.dataTransfer.setData("Text", this.currentIndex);
-  }
-
-  onDragOver = (e) => {
-    let event = Event.getEvent(e);
-    event.preventDefault();
-  };
   
-  /**
-   * 在一个拖动过程中，释放鼠标键时触发此事件。【目标事件】
-   * @memberof TableHeader
-   */
-  onDrop = (e) => {
-    let {rowDraggAble,onDragRow} = this.props;
-    let event = Event.getEvent(e) ,
-        _target = Event.getTarget(event),
-        target = _target.parentNode;
     
-    let currentKey = event.dataTransfer.getData("text");
-    let targetKey = target.getAttribute("data-row-key");
-
-    if(!targetKey || targetKey === currentKey)return;    
-    if(target.nodeName.toUpperCase() === "TR"){
-      this.synchronizeTableTr(currentKey,null); 
-      this.synchronizeTableTr(targetKey,null);
-      // target.setAttribute("style","");
-      // this.synchronizeTrStyle(this.currentIndex,false);
-    }
-    onDragRow && onDragRow(currentKey,targetKey);
-  };
-
-  /**
-   * 获取当前触摸的Dom节点
-   */
-  getTouchDom = (event) => {
-    let currentLocation = event.changedTouches[0];
-    let realTarget = document.elementFromPoint(currentLocation.clientX, currentLocation.clientY);
-    return realTarget;
   }
 
-  /**
-   * 开始调整交换行的事件
-   */
-  onTouchStart = (e) => {
-    let event = Event.getEvent(e) ,
-        _target = Event.getTarget(event),
-        target = _target.parentNode;
-    this.currentIndex = target.getAttribute("data-row-key");
-  }
-
-  onTouchMove = (e) => {
-    let event = Event.getEvent(e);
-    event.preventDefault();
-    let touchTarget = this.getTouchDom(event),
-        target = touchTarget.parentNode,
-        targetKey = target.getAttribute("data-row-key");
-    if(!targetKey || targetKey === this.currentIndex)return;
-    if(target.nodeName.toUpperCase() === "TR"){
-      if(this.cacheCurrentIndex !== targetKey){ //模拟 touchenter toucheleave 事件
-        this.cacheCurrentIndex && this.synchronizeTableTr(this.cacheCurrentIndex,null); //去掉虚线
-        this.synchronizeTableTr(targetKey,true); //添加虚线
-      }
-    }
-  }
-
-  /**
-   * 手指移开时触发
-   */
-  onTouchEnd = (e) => {
-    let {onDragRow} = this.props;
-    let event = Event.getEvent(e),
-        currentKey = this.currentIndex, //拖拽行的key
-        touchTarget = this.getTouchDom(event), //当前触摸的DOM节点
-        target = touchTarget.parentNode, //目标位置的行
-        targetKey = target.getAttribute("data-row-key"); //目标位置的行key
-    if(!targetKey || targetKey === currentKey)return;    
-    if(target.nodeName.toUpperCase() === "TR"){
-      this.synchronizeTableTr(currentKey,null);
-      this.synchronizeTableTr(targetKey,null);
-    }
-    
-    onDragRow && onDragRow(currentKey,targetKey);
-  }
-
-  /**
-   *同步当前拖拽到阴影
-   * @memberof TableRow
-   */
-  synchronizeTableTrShadow = ()=>{
-    let {contentTable,index} = this.props; 
-
-    let cont = contentTable.querySelector('.u-table-scroll table tbody').getElementsByTagName("tr")[index],
-        trs = cont.getBoundingClientRect(),
-        fixed_left_trs = contentTable.querySelector('.u-table-fixed-left table tbody'),
-        fixed_right_trs = contentTable.querySelector('.u-table-fixed-right table tbody');
-    fixed_left_trs = fixed_left_trs && fixed_left_trs.getElementsByTagName("tr")[index].getBoundingClientRect();
-    fixed_right_trs = fixed_right_trs && fixed_right_trs.getElementsByTagName("tr")[index].getBoundingClientRect()
-    
-    let div = document.createElement("div");
-    let style = "wdith:"+(trs.width + (fixed_left_trs ? fixed_left_trs.width : 0) + (fixed_right_trs ? fixed_right_trs.width : 0))+"px";
-    style += ";height:"+ trs.height+"px";
-    style += ";classname:"+ cont.className;
-    div.setAttribute("style",style);
-    return div;
-  }
-
-
-  /**
-   * 同步自己,也需要同步当前行的行显示
-   */
-  synchronizeTableTr = (currentIndex,type)=>{
-    if(type){ //同步 this.cacheCurrentIndex
-      this.cacheCurrentIndex = currentIndex; 
-    } 
-    let {contentTable} = this.props; 
-    let _table_trs = contentTable.querySelector('.u-table-scroll table tbody'),
-     _table_fixed_left_trs = contentTable.querySelector('.u-table-fixed-left table tbody'),
-    _table_fixed_right_trs = contentTable.querySelector('.u-table-fixed-right table tbody');
-    
-    _table_trs = _table_trs?_table_trs:contentTable.querySelector('.u-table table tbody');
-
-    this.synchronizeTrStyle(_table_trs,currentIndex,type);
-    if(_table_fixed_left_trs){
-      this.synchronizeTrStyle(_table_fixed_left_trs,currentIndex,type);
-    }
-    if(_table_fixed_right_trs){
-      this.synchronizeTrStyle(_table_fixed_right_trs,currentIndex,type);
-    }
-  }
-
-  /**
-   * 设置同步的style
-   */
-  synchronizeTrStyle = (_elementBody,id,type)=>{
-    let {contentTable} = this.props,
-    trs = _elementBody.getElementsByTagName("tr"),
-    currentObj; 
-    for (let index = 0; index < trs.length; index++) {
-      const element = trs[index];
-      if(element.getAttribute("data-row-key") == id){
-        currentObj = element;
-      }
-    }
-    if(type){
-      currentObj && currentObj.setAttribute("style","border-bottom:2px dashed rgba(5,0,0,0.25)");
-    }else{
-      currentObj && currentObj.setAttribute("style","");
-    }
-  }
-
-  onDragEnter = (e) => {
-    let event = Event.getEvent(e) ,
-    _target = Event.getTarget(event),target = _target.parentNode;
-    let currentIndex = target.getAttribute("data-row-key");
-    if(!currentIndex || currentIndex === this.currentIndex)return;
-    if(target.nodeName.toUpperCase() === "TR"){
-      this.synchronizeTableTr(currentIndex,true);
-      // target.setAttribute("style","border-bottom:2px dashed rgba(5,0,0,0.25)");
-      // // target.style.backgroundColor = 'rgb(235, 236, 240)'; 
-    }
-  }
- 
-  onDragLeave = (e) => {
-    let event = Event.getEvent(e) ,
-    _target = Event.getTarget(event),target = _target.parentNode;
-    let currentIndex = target.getAttribute("data-row-key");
-    if(!currentIndex || currentIndex === this.currentIndex)return;
-    if(target.nodeName.toUpperCase() === "TR"){ 
-      this.synchronizeTableTr(currentIndex,null);
-    }
-  }
 
   componentDidUpdate(prevProps) {
-    const { rowDraggAble } = this.props;
-    if(!this.event){
-      this.event = true;
-      if(rowDraggAble){
-        this.initEvent();
-      }
-    }
-
     if(this.props.treeType){
       this.setRowParentIndex();
     }
     this.setRowHeight()
   }
-  
   componentWillUnmount() {
-    const { record, onDestroy, index,rowDraggAble } = this.props;
+    const { record, onDestroy, index } = this.props;
     onDestroy(record, index);
     if (this.unsubscribe) {
       this.unsubscribe();
-    }
-    if(rowDraggAble){
-      this.removeDragAbleEvent();
     }
   }
 
@@ -352,6 +98,7 @@ class TableRow extends Component{
   }
   setRowParentIndex(){
     const {index,setRowParentIndex,fixedIndex,rootIndex} = this.props;
+    // console.log('rootIndex',rootIndex<0?index:rootIndex,'index',fixedIndex);
     setRowParentIndex(rootIndex<0?index:rootIndex,fixedIndex);
 
   }
@@ -416,15 +163,15 @@ class TableRow extends Component{
   render() {
     const {
       clsPrefix, columns, record, height, visible, index,
-      expandIconColumnIndex, expandIconAsCell, expanded, expandRowByClick,rowDraggAble,
-      expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed,bodyDisplayInRow
-      ,expandedIcon,collapsedIcon, hoverKey,lazyStartIndex,lazyEndIndex
+      expandIconColumnIndex, expandIconAsCell, expanded, expandRowByClick,
+      expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed
     } = this.props;
     let showSum = false;
     let { className } = this.props;
     if (this.state.hovered) {
       className += ` ${clsPrefix}-hover`;
     }
+    // console.log('className--'+className,index);
     //判断是否为合计行
     if(className.indexOf('sumrow')>-1){
       showSum = true;
@@ -439,8 +186,6 @@ class TableRow extends Component{
         needIndentSpaced={needIndentSpaced}
         expanded={expanded}
         record={record}
-        expandedIcon={expandedIcon}
-        collapsedIcon={collapsedIcon}
         isHiddenExpandIcon={isHiddenExpandIcon}
       />
     );
@@ -470,9 +215,6 @@ class TableRow extends Component{
           fixed= {fixed}
           showSum={showSum}
           expandIcon={(isColumnHaveExpandIcon) ? expandIcon : null}
-          bodyDisplayInRow =  {bodyDisplayInRow}
-          lazyStartIndex={lazyStartIndex}
-          lazyEndIndex={lazyEndIndex}
         />
       );
     }
@@ -480,17 +222,14 @@ class TableRow extends Component{
     if (!visible) {
       style.display = 'none';
     }
-
     return ( 
       <tr
-        draggable={rowDraggAble}
         onClick={this.onRowClick}
         onDoubleClick={this.onRowDoubleClick}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
         className={`${clsPrefix} ${className} ${clsPrefix}-level-${indent}`}
         style={style}
-        data-row-key={record && record.key?record.key:hoverKey}
         // key={hoverKey}
         ref={this.bindElement}
       >

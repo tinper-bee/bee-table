@@ -1,0 +1,11 @@
+.opt-btns{
+    .u-button{
+        background-color: #505F79;
+        border-color: #505F79;
+        color: #fff;
+        &:hover, &:active{
+            background-color: #344563;
+            border-color: #344563;
+        }
+    }
+}

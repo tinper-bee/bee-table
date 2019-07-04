@@ -26,7 +26,7 @@ export default function multiSelect(Table, Checkbox) {
     }
 
     componentWillReceiveProps(nextProps){
-      if('data' in nextProps){
+      if(this.props.data != nextProps.data){
         let obj = this.getCheckedOrIndeter(nextProps.data);
         this.setState({
           ...obj,
@@ -67,7 +67,7 @@ export default function multiSelect(Table, Checkbox) {
       let count = 0;
       let disabledCount = 0;
       data.forEach(da=>{
-        if(da._checked && !da._disabled){
+        if(da._checked){
           count ++;
         }
         if(da._disabled){
@@ -75,7 +75,7 @@ export default function multiSelect(Table, Checkbox) {
         }
       })
 
-      if(data.length == count + disabledCount && count>0){
+      if(data.length == count + disabledCount){
         return "all";
       }
       return count == 0?false:"indeter";
@@ -175,7 +175,7 @@ export default function multiSelect(Table, Checkbox) {
           key: "checkbox",
           dataIndex: "checkbox",
          fixed:"left",
-          width: 49, 
+          width: 50, 
           render: (text, record, index) => {
             let attr = {};
             record._disabled?attr.disabled = record._disabled:"";
