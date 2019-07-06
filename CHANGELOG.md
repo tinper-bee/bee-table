@@ -1,3 +1,24 @@
+<a name="2.1.5"></a>
+## [2.1.5](https://github.com/tinper-bee/bee-table/compare/v2.1.4...v2.1.5) (2019-07-06)
+
+
+
+<a name="2.1.4"></a>
+## [2.1.4](https://github.com/tinper-bee/bee-table/compare/2.0.30...v2.1.4) (2019-07-02)
+
+
+
+<a name="2.0.30"></a>
+## [2.0.30](https://github.com/tinper-bee/bee-table/compare/v2.1.3...2.0.30) (2019-06-26)
+
+
+### Bug Fixes
+
+* 懒加载树表场景中,data动态获取需终止treeIndex ([b6cb07f](https://github.com/tinper-bee/bee-table/commit/b6cb07f))
+* 滚动加载场景中,数据动态改变下占位计算错误的问题 ([5801386](https://github.com/tinper-bee/bee-table/commit/5801386))
+
+
+
 <a name="2.1.3"></a>
 ## [2.1.3](https://github.com/tinper-bee/bee-table/compare/v2.1.2...v2.1.3) (2019-06-12)
 
