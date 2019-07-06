@@ -87,6 +87,12 @@ export default function filterColumn(Table, Popover) {
       });
     };
 
+    onHide = () => {
+      this.setState({
+        showModal: false
+      })
+    }
+
     getCloumItem = () => {
       const { prefixCls } = this.props;
       const { columns } = this.state;
@@ -190,6 +196,7 @@ export default function filterColumn(Table, Popover) {
                 placement="left"
                 content={content}
                 show={showModal}
+                onHide={this.onHide}
               >
                 <div className={`${prefixCls}-pop-column-filter-cont`}>
                   <Icon type="uf-grid" onClick={this.openCloumList} />
