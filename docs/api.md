@@ -181,9 +181,9 @@ const MultiSelectTable = multiSelect(Table, Checkbox);
 
 Table 组件参数：
 
-| 参数     | 说明         | 类型       | 默认值  |
+| 参数     | 说明         | 类型       | 返回值  |
 | ------ | ---------- | -------- | ---- |
-| getSelectedDataFunc | 返回当前选中的数据数组 | Function | 无    |
+| getSelectedDataFunc | 返回当前选中的数据数组 | Function | `selectedList` : 当前选中的行数据集合<br>`record` :  当前操作行数据<br>`index` : 当前操作行索引   |
 
 Data 数组参数：
 
