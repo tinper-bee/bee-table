@@ -846,7 +846,7 @@ class Table extends Component {
 
   getTable(options = {}) {
     const { columns, fixed } = options;
-    const { clsPrefix, scroll = {}, getBodyWrapper, footerScroll,headerScroll } = this.props;
+    const { clsPrefix, scroll = {}, getBodyWrapper, footerScroll,headerScroll,hideHeaderScroll = false } = this.props;
     let { useFixedHeader,data } = this.props;
     const bodyStyle = { ...this.props.bodyStyle };
     const headStyle = {};
@@ -865,6 +865,10 @@ class Table extends Component {
       }
     }
 
+    if(data.length == 0 && hideHeaderScroll){ 
+      //支持 NCC 需求:表格无数据时，去掉表头滚动条 (https://github.com/iuap-design/tinper-bee/issues/207)
+      bodyStyle.marginBottom = `-${this.scrollbarWidth}px`;
+    }
     if (scroll.y) {
       // maxHeight will make fixed-Table scrolling not working
       // so we only set maxHeight to body-Table here

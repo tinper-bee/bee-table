@@ -47,13 +47,12 @@ import 'bee-table/build/Table.css';
 | rowClassName | 获取行的classname | Function(record, index, indent):string | () => '' |
 | expandedRowClassName | 获取展开行的className | Function(recode, index, indent):string | () => '' |
 | indentSize             | indentSize为每个级别的data.i.children，更好地使用column.width指定 | number                                 | 15              |
-| expandIconAsCell       | 是否将expandIcon作为单元格                       | bool                                   | false           |
+| expandIconAsCell       | 展开按钮是否单独作为一个单元格                       | bool                                   | false           |
 | expandIconColumnIndex  | expandIcon的索引，当expandIconAsCell为false时，将插入哪个列 | number                                 | 0               |
 | expandedRowRender      | 额外的展开行                                   | Function(record, index, indent):node | -               |
 | haveExpandIcon       | 控制是否显示行展开icon.**注：该参数只有在和expandedRowRender同时使用才生效** | Function(record, index):bool   | () =>false |
 |expandedIcon|嵌套表格场景中展开子表时的展开图标|||
 |collapsedIcon|嵌套表格场景中关闭子表时的关闭图标|||
-| expandIconAsCell      | 展开按钮是否单独作为一个单元格                                   | bool                               | false               |
 | expandRowByClick       | 设置展开行是否通过点击行触发，此参数需要与上面参数搭配使用（默认是通过点击行前面的加号展开行 | bool                                   | false           |
 | rowDraggAble  | 是否增加行交换顺序功能 | boolean| false |
 | showHeader             | 是否显示表头                                   | bool                                   | true            |
@@ -80,6 +79,7 @@ import 'bee-table/build/Table.css';
 | headerDisplayInRow | 设置表头的内容显示一行，超出显示省略号 | bool |
 | bodyDisplayInRow |  设置表体的内容显示一行，超出显示省略号 | bool | 
 | size | 表格大小 | `sm / md / lg` | 'md' |
+| hideHeaderScroll | 表体无数据时，表头下是否显示滚动条，默认显示 | bool | false |
 > 快捷键部分参考示例 (快捷键在table中的简单使用应用)
 
 *注意: data参数中的key值必需，否则会导致部分功能出现问题！建议使用唯一的值，如id*

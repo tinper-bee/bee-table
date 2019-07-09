@@ -991,7 +991,9 @@ var Table = function (_Component) {
         scroll = _props3$scroll === undefined ? {} : _props3$scroll,
         getBodyWrapper = _props3.getBodyWrapper,
         footerScroll = _props3.footerScroll,
-        headerScroll = _props3.headerScroll;
+        headerScroll = _props3.headerScroll,
+        _props3$hideHeaderScr = _props3.hideHeaderScroll,
+        hideHeaderScroll = _props3$hideHeaderScr === undefined ? false : _props3$hideHeaderScr;
     var _props4 = this.props,
         useFixedHeader = _props4.useFixedHeader,
         data = _props4.data;
@@ -1013,6 +1015,10 @@ var Table = function (_Component) {
       }
     }
 
+    if (data.length == 0 && hideHeaderScroll) {
+      //支持 NCC 需求:表格无数据时，去掉表头滚动条 (https://github.com/iuap-design/tinper-bee/issues/207)
+      bodyStyle.marginBottom = '-' + this.scrollbarWidth + 'px';
+    }
     if (scroll.y) {
       // maxHeight will make fixed-Table scrolling not working
       // so we only set maxHeight to body-Table here
