@@ -516,7 +516,7 @@ var TableHeader = function (_Component) {
       table.ths = tableDome.getElementsByTagName("th");
       table.tr = tableDome.getElementsByTagName("tr");
       if (contentTable.querySelector('.u-table-scroll .u-table-body')) {
-        table.tableBodyCols = contentTable.querySelector('.u-table-scroll .u-table-body').getElementsByTagName("col");
+        table.tableBodyCols = contentTable.querySelector('.u-table-scroll .u-table-body') && contentTable.querySelector('.u-table-scroll .u-table-body').getElementsByTagName("col");
       }
     }
 
