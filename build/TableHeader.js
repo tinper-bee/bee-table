@@ -466,7 +466,7 @@ var TableHeader = function (_Component) {
     _this.drag = {
       option: ''
     };
-    _this.minWidth = 80; //确定最小宽度就是80
+    _this.minWidth = props.minColumnWidth ? props.minColumnWidth : 80; //确定最小宽度就是80
     _this.table = null;
     _this._thead = null; //当前对象
     _this.event = false; //避免多次绑定问题
@@ -515,7 +515,9 @@ var TableHeader = function (_Component) {
       table.cols = tableDome.getElementsByTagName("col");
       table.ths = tableDome.getElementsByTagName("th");
       table.tr = tableDome.getElementsByTagName("tr");
-      table.tableBodyCols = contentTable.querySelector('.u-table-scroll .u-table-body').getElementsByTagName("col");
+      if (contentTable.querySelector('.u-table-scroll .u-table-body')) {
+        table.tableBodyCols = contentTable.querySelector('.u-table-scroll .u-table-body').getElementsByTagName("col");
+      }
     }
 
     table.fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header');

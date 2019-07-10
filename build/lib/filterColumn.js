@@ -229,16 +229,17 @@ function filterColumn(Table, Popover) {
             _this2.checkedColumItemClick(da);
           };
         }
+
         return _react2["default"].createElement(
           "div",
           {
             key: da.key + "_" + i,
-            className: prefixCls + "-pop-cont-item",
-            onClick: paramObj.onClick ? paramObj.onClick : null
+            className: prefixCls + "-pop-cont-item"
           },
+          _react2["default"].createElement(_beeCheckbox2["default"], paramObj),
           _react2["default"].createElement(
-            _beeCheckbox2["default"],
-            paramObj,
+            "span",
+            null,
             da.title
           )
         );

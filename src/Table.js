@@ -719,7 +719,7 @@ class Table extends Component {
       if (!fixed && c.fixed) {
         fixedClass = ` ${this.props.clsPrefix}-row-fixed-columns-in-body`;
       }
-      return <col key={c.key} style={{ width: width, minWidth: c.width }} className={fixedClass}/>;
+      return <col key={c.key} style={{ width: width, minWidth: this.props.minColumnWidth }} className={fixedClass}/>;
     }));
     return <colgroup id="bee-table-colgroup">{cols}</colgroup>;
   }

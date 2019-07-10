@@ -53,7 +53,7 @@ function multiSelect(Table, Checkbox) {
     }
 
     MultiSelect.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-      if ('data' in nextProps) {
+      if (this.props.data != nextProps.data) {
         var obj = this.getCheckedOrIndeter(nextProps.data);
         this.setState(_extends({}, obj, {
           data: (0, _util.ObjectAssign)(nextProps.data)
@@ -97,7 +97,7 @@ function multiSelect(Table, Checkbox) {
       var count = 0;
       var disabledCount = 0;
       data.forEach(function (da) {
-        if (da._checked && !da._disabled) {
+        if (da._checked) {
           count++;
         }
         if (da._disabled) {
@@ -105,7 +105,7 @@ function multiSelect(Table, Checkbox) {
         }
       });
 
-      if (data.length == count + disabledCount && count > 0) {
+      if (data.length == count + disabledCount) {
         return "all";
       }
       return count == 0 ? false : "indeter";
@@ -223,7 +223,7 @@ function multiSelect(Table, Checkbox) {
         key: "checkbox",
         dataIndex: "checkbox",
         fixed: "left",
-        width: 49,
+        width: 50,
         render: function render(text, record, index) {
           var attr = {};
           record._disabled ? attr.disabled = record._disabled : "";

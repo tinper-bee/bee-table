@@ -198,22 +198,15 @@ function sort(Table, Icon) {
     };
 
     this._sortBy = function (pre, after, orderCols, orderColslen, currentIndex) {
-      var currentCol = orderCols[currentIndex];
-      var preKey = pre[currentCol.key];
-      var afterKey = after[currentCol.key];
-      var colSortFun = currentCol.sorter;
-      if (typeof colSortFun !== 'function') {
-        colSortFun = function colSortFun() {
-          return preKey - afterKey;
-        };
-      }
+      var preKey = pre[orderCols[currentIndex].key];
+      var afterKey = after[orderCols[currentIndex].key];
       if (preKey == afterKey && currentIndex + 1 <= orderColslen) {
         return _this3._sortBy(pre, after, orderCols, orderColslen, currentIndex + 1);
       }
-      if (currentCol.order == "ascend") {
-        return colSortFun(pre, after);
+      if (orderCols[currentIndex].order == "ascend") {
+        return preKey - afterKey;
       } else {
-        return -colSortFun(pre, after);
+        return afterKey - preKey;
       }
     };
 

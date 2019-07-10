@@ -73,10 +73,7 @@ var TableCell = function (_Component) {
         expandIcon = _props2.expandIcon,
         column = _props2.column,
         fixed = _props2.fixed,
-        showSum = _props2.showSum,
-        bodyDisplayInRow = _props2.bodyDisplayInRow,
-        lazyStartIndex = _props2.lazyStartIndex,
-        lazyEndIndex = _props2.lazyEndIndex;
+        showSum = _props2.showSum;
     var dataIndex = column.dataIndex,
         render = column.render;
     var _column$className = column.className,
@@ -86,14 +83,13 @@ var TableCell = function (_Component) {
     var text = _objectPath2["default"].get(record, dataIndex);
     var tdProps = void 0;
     var colSpan = void 0;
-    var rowSpan = void 0,
-        title = void 0;
+    var rowSpan = void 0;
 
     if (render && !showSum) {
       text = render(text, record, index);
       if (this.isInvalidRenderCellText(text)) {
         tdProps = text.props || {};
-        rowSpan = tdProps.rowSpan > lazyEndIndex && lazyEndIndex > 5 ? lazyEndIndex - index : tdProps.rowSpan;
+        rowSpan = tdProps.rowSpan;
         colSpan = tdProps.colSpan;
         text = text.children;
       }
@@ -108,12 +104,8 @@ var TableCell = function (_Component) {
       className: clsPrefix + '-indent indent-level-' + indent
     }) : null;
 
-    if (lazyStartIndex !== index && (rowSpan === 0 || colSpan === 0)) {
+    if (rowSpan === 0 || colSpan === 0) {
       return null;
-    }
-    if (tdProps && tdProps.mergeEndIndex && index < tdProps.mergeEndIndex && rowSpan === 0) {
-      rowSpan = tdProps.mergeEndIndex - index;
-      text = '';
     }
     //不是固定表格并且当前列是固定，则隐藏当前列
     if (column.fixed && !fixed) {
@@ -122,18 +114,13 @@ var TableCell = function (_Component) {
     if (column.textAlign) {
       className = className + (' text-' + column.textAlign);
     }
-    if (typeof text == 'string' && bodyDisplayInRow) {
-      title = text;
-    }
     return _react2["default"].createElement(
       'td',
       {
         colSpan: colSpan,
         rowSpan: rowSpan,
         className: className,
-        onClick: this.handleClick,
-        title: title
-
+        onClick: this.handleClick
       },
       indentText,
       expandIcon,

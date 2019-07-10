@@ -284,7 +284,6 @@ function bigData(Table) {
       }
       var lazyLoad = {
         startIndex: startIndex,
-        endIndex: endIndex,
         startParentIndex: startIndex //为树状节点做准备
       };
       if (this.treeType) {

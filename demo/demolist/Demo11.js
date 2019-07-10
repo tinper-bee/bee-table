@@ -65,6 +65,7 @@ class Demo23 extends Component {
     dragborder={true} 
     draggable={true} 
     scroll={{y:200}}
+    minColumnWidth={20}
     onDropBorder ={(e,width)=>{
       console.log(width+"--调整列宽后触发事件",e.target);
     }}

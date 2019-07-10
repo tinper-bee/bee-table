@@ -44,7 +44,6 @@ var scrollbarMeasure = {
 function measureScrollbar() {
   var direction = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'vertical';
 
-
   if (typeof document === 'undefined' || typeof window === 'undefined') {
     return 0;
   }
@@ -230,12 +229,11 @@ function addHandler(element, type, handler) {
 }
 
 function removeHandler(element, type, handler) {
-  if (element && element.removeEventListener) {
-    //element&& ie11报错兼容
+  if (element.removeEventListener) {
     element.removeEventListener(type, handler, false);
-  } else if (element && element.detachEvent) {
+  } else if (element.detachEvent) {
     element.detachEvent("on" + type, handler);
-  } else if (element) {
+  } else {
     element["on" + type] = null;
   }
 }
@@ -279,12 +277,11 @@ var EventUtil = exports.EventUtil = {
   },
 
   removeHandler: function removeHandler(element, type, handler) {
-    //element&& ie11报错兼容
-    if (element && element.removeEventListener) {
+    if (element.removeEventListener) {
       element.removeEventListener(type, handler, false);
-    } else if (element && element.detachEvent) {
+    } else if (element.detachEvent) {
       element.detachEvent('on' + type, handler);
-    } else if (element) {
+    } else {
       element['on' + type] = null;
     }
   }
