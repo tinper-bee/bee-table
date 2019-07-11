@@ -908,7 +908,7 @@ var Table = function (_Component) {
   };
 
   Table.prototype.getRows = function getRows(columns, fixed) {
-    //统计index，只有含有鼠表结构才有用，因为数表结构时，固定列的索引取值有问题
+    //统计index，只有含有树表结构才有用，因为树表结构时，固定列的索引取值有问题
     this.treeRowIndex = 0;
     var rs = this.getRowsByData(this.state.data, true, 0, columns, fixed);
     return rs;
@@ -993,7 +993,8 @@ var Table = function (_Component) {
         footerScroll = _props3.footerScroll,
         headerScroll = _props3.headerScroll,
         _props3$hideHeaderScr = _props3.hideHeaderScroll,
-        hideHeaderScroll = _props3$hideHeaderScr === undefined ? false : _props3$hideHeaderScr;
+        hideHeaderScroll = _props3$hideHeaderScr === undefined ? false : _props3$hideHeaderScr,
+        expandIconAsCell = _props3.expandIconAsCell;
     var _props4 = this.props,
         useFixedHeader = _props4.useFixedHeader,
         data = _props4.data;
@@ -1172,9 +1173,10 @@ var Table = function (_Component) {
     }
     var leftFixedWidth = this.columnManager.getLeftColumnsWidth(this.contentWidth);
     var rightFixedWidth = this.columnManager.getRightColumnsWidth(this.contentWidth);
+    var expandIconWidth = expandIconAsCell ? 33 : 0;
     var parStyle = {};
     if (!fixed) {
-      parStyle = { 'marginLeft': leftFixedWidth, 'marginRight': rightFixedWidth };
+      parStyle = { 'marginLeft': leftFixedWidth + expandIconWidth, 'marginRight': rightFixedWidth };
     }
     return _react2["default"].createElement(
       'div',

@@ -560,13 +560,13 @@ var TableRow = function (_Component) {
       collapsedIcon: collapsedIcon,
       isHiddenExpandIcon: isHiddenExpandIcon
     });
-
+    var isExpandIconAsCell = expandIconAsCell ? clsPrefix + '-expand-columns-in-body' : '';
     for (var i = 0; i < columns.length; i++) {
       if (expandIconAsCell && i === 0 && !showSum) {
         cells.push(_react2["default"].createElement(
           'td',
           {
-            className: clsPrefix + '-expand-icon-cell',
+            className: clsPrefix + '-expand-icon-cell ' + isExpandIconAsCell,
             key: 'rc-table-expand-icon-cell-' + i
           },
           expandIcon

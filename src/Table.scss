@@ -32,6 +32,10 @@ $icon-color:#505F79;
   &-body{
     // overflow: hidden!important;
     position: relative;
+    .u-table-row-expand-columns-in-body .expand-icon-con {
+      display: none;
+      pointer-events: none;
+    }
   }
   &-hiden-drag{
     position: relative;
@@ -105,14 +109,20 @@ $icon-color:#505F79;
     td.u-table-multiSelect-column.u-table-row-has-expandIcon:not(.u-table-row-fixed-columns-in-body){
       display: flex;
       flex-direction: row-reverse;
+      &:nth-last-child(1):last-child {
+        border-right: none;
+      }
       .expand-icon-con {
-        height: 15px;
+        height: 14px;
         .uf{
-          padding-left: 0;
+          padding: 0;
         }
         .u-table-row-expand-icon {
-          width: 0;
+          width: 2px;
         }
+      }
+      .u-checkbox {
+        margin: 0;
       }
     }
   }
@@ -138,6 +148,9 @@ $icon-color:#505F79;
     }
     .expand-icon-con{
       cursor: pointer;
+      display: inline-block;
+      font-size: 12px;
+      line-height: 12px;
     }
   }
   &-sm {
@@ -299,13 +312,12 @@ $icon-color:#505F79;
     &-expand-icon {
       cursor: pointer;
       display: inline-block;
-      margin-right: 0px;
+      margin-right: 8px;
       width: 14px;
       height: 14px;
       text-align: center;
       line-height: 14px;
       user-select: none;
-      margin-right: 10px;
       &.uf{
         font-size: 12px;
         padding: 0;

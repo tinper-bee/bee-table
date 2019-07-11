@@ -768,7 +768,7 @@ class Table extends Component {
   }
 
   getRows(columns, fixed) {
-    //统计index，只有含有鼠表结构才有用，因为数表结构时，固定列的索引取值有问题
+    //统计index，只有含有树表结构才有用，因为树表结构时，固定列的索引取值有问题
     this.treeRowIndex = 0;
     let rs = this.getRowsByData(this.state.data, true, 0, columns, fixed);
     return rs;
@@ -846,7 +846,7 @@ class Table extends Component {
 
   getTable(options = {}) {
     const { columns, fixed } = options;
-    const { clsPrefix, scroll = {}, getBodyWrapper, footerScroll,headerScroll,hideHeaderScroll = false } = this.props;
+    const { clsPrefix, scroll = {}, getBodyWrapper, footerScroll,headerScroll,hideHeaderScroll = false,expandIconAsCell } = this.props;
     let { useFixedHeader,data } = this.props;
     const bodyStyle = { ...this.props.bodyStyle };
     const headStyle = {};
@@ -1018,9 +1018,10 @@ class Table extends Component {
     }
     const leftFixedWidth = this.columnManager.getLeftColumnsWidth(this.contentWidth);
     const rightFixedWidth = this.columnManager.getRightColumnsWidth(this.contentWidth);
+    let expandIconWidth = expandIconAsCell ? 33 : 0;
     let parStyle = {}
     if(!fixed){
-      parStyle = {'marginLeft':leftFixedWidth,'marginRight':rightFixedWidth}
+      parStyle = {'marginLeft':leftFixedWidth + expandIconWidth,'marginRight':rightFixedWidth}
     }
     return <div style={parStyle}>{headTable}{BodyTable}</div>;
   }

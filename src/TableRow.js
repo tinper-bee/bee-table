@@ -444,12 +444,12 @@ class TableRow extends Component{
         isHiddenExpandIcon={isHiddenExpandIcon}
       />
     );
-
+    let isExpandIconAsCell = expandIconAsCell ? `${clsPrefix}-expand-columns-in-body` : '';
     for (let i = 0; i < columns.length; i++) {
       if (expandIconAsCell && i === 0 && !showSum ) {
         cells.push(
           <td
-            className={`${clsPrefix}-expand-icon-cell`}
+            className={`${clsPrefix}-expand-icon-cell ${isExpandIconAsCell}`}
             key={`rc-table-expand-icon-cell-${i}`}
           >
             {expandIcon}
