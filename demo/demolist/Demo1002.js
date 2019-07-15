@@ -61,9 +61,8 @@ class Demo23 extends Component {
             columns={columns23} 
             data={data23} 
             bordered
-            dragborder={true} 
-            draggable={true} 
             scroll={{y:200}}
+            dragborder={true} 
             onDropBorder ={(e,width)=>{
               console.log(width+"--调整列宽后触发事件",e.target);
             }}

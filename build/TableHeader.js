@@ -557,7 +557,7 @@ var TableHeader = function (_Component) {
       if (dragborder) {
         this.dragBorderEventInit(); //列宽
       }
-      if (dragborder) {
+      if (draggable) {
         this.dragAbleEventInit(); //交换列
       }
       if (this.table && this.table.tr) {

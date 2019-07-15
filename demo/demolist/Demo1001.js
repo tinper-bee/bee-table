@@ -69,7 +69,6 @@ class Demo22 extends Component {
             columns={columns} 
             data={data} 
             bordered
-            dragborder={true}
             draggable={true} 
             onDrop ={(event,data,columns)=>{
               console.log("--拖拽交换列后触发事件");
