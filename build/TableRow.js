@@ -464,6 +464,10 @@ var TableRow = function (_Component) {
   };
 
   TableRow.prototype.onRowClick = function onRowClick(event) {
+    // fix: 解决 onRowClick 回调函数中，事件对象属性均为 null 的问题
+    // 异步访问事件属性
+    // 调用 event.persist() 会从事件池中移除该合成函数并允许对该合成事件的引用被保留下来。
+    event.persist();
     var _props5 = this.props,
         record = _props5.record,
         index = _props5.index,
