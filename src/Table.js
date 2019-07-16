@@ -57,7 +57,8 @@ const propTypes = {
   hoverContent:PropTypes.func,
   size: PropTypes.oneOf(['sm', 'md', 'lg']),
   rowDraggAble: PropTypes.bool,
-  onDropRow: PropTypes.func
+  onDropRow: PropTypes.func,
+  onDragRowStart: PropTypes.func
 };
 
 const defaultProps = {
@@ -94,7 +95,8 @@ const defaultProps = {
   heightConsistent:false,
   size: 'md',
   rowDraggAble:false,
-  onDropRow: ()=>{}
+  onDropRow: ()=>{},
+  onDragRowStart: ()=>{}
 };
 
 class Table extends Component {
@@ -559,8 +561,26 @@ class Table extends Component {
         dragborderKey={this.props.dragborderKey} 
         rowDraggAble={this.props.rowDraggAble}
         onDragRow={this.onDragRow}
+        onDragRowStart={this.onDragRowStart}
       />
     );
+  }
+
+  /**
+   * 行拖拽开始时触发
+   * @param currentKey 当前拖拽目标的key
+   */
+  onDragRowStart = (currentKey) => {
+    let {data} = this.state,currentIndex,record;
+    data.forEach((da,i)=>{ 
+      // tr 的唯一标识通过 data.key 或 rowKey 两种方式传进来
+      let trKey = da.key ? da.key : this.getRowKey(da, i);
+      if(trKey == currentKey){
+        currentIndex = i;
+        record = da;
+      }
+    });
+    this.props.onDragRowStart && this.props.onDragRowStart(record,currentIndex);
   }
 
   /**
@@ -735,6 +755,7 @@ class Table extends Component {
           bodyDisplayInRow = {props.bodyDisplayInRow}
           rowDraggAble={this.props.rowDraggAble}
           onDragRow={this.onDragRow}
+          onDragRowStart={this.onDragRowStart}
           contentTable={this.contentTable}
           tableUid = {this.tableUid}
           expandedIcon={props.expandedIcon}

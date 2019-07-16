@@ -32,6 +32,7 @@ const propTypes = {
     store: PropTypes.object.isRequired,
     rowDraggAble: PropTypes.bool,
     onDragRow: PropTypes.func,
+    onDragRowStart: PropTypes.func,
 };
 
 const defaultProps = {
@@ -135,6 +136,7 @@ class TableRow extends Component{
    * 开始调整交换列的事件
    */
   onDragStart = (e) => {
+    let {onDragRowStart} = this.props;
     if (!this.props.rowDraggAble) return;
     let event = Event.getEvent(e) ,
     target = Event.getTarget(event);
@@ -147,6 +149,8 @@ class TableRow extends Component{
     // event.dataTransfer.setDragImage(crt, 0, 0);
      event.dataTransfer.effectAllowed = "move";
      event.dataTransfer.setData("Text", this.currentIndex);
+
+     onDragRowStart && onDragRowStart(this.currentIndex);
   }
 
   onDragOver = (e) => {
@@ -190,10 +194,13 @@ class TableRow extends Component{
    * 开始调整交换行的事件
    */
   onTouchStart = (e) => {
+    let {onDragRowStart} = this.props;
     let event = Event.getEvent(e) ,
         _target = Event.getTarget(event),
         target = _target.parentNode;
     this.currentIndex = target.getAttribute("data-row-key");
+    
+    onDragRowStart && onDragRowStart(this.currentIndex);
   }
 
   onTouchMove = (e) => {

@@ -113,7 +113,8 @@ var propTypes = {
   hoverContent: _propTypes2["default"].func,
   size: _propTypes2["default"].oneOf(['sm', 'md', 'lg']),
   rowDraggAble: _propTypes2["default"].bool,
-  onDropRow: _propTypes2["default"].func
+  onDropRow: _propTypes2["default"].func,
+  onDragRowStart: _propTypes2["default"].func
 };
 
 var defaultProps = {
@@ -159,7 +160,8 @@ var defaultProps = {
   heightConsistent: false,
   size: 'md',
   rowDraggAble: false,
-  onDropRow: function onDropRow() {}
+  onDropRow: function onDropRow() {},
+  onDragRowStart: function onDragRowStart() {}
 };
 
 var Table = function (_Component) {
@@ -187,6 +189,21 @@ var Table = function (_Component) {
       div.className = "u-table-drag-hidden-cont";
       div.id = uid;
       _this.contentTable.appendChild(div);
+    };
+
+    _this.onDragRowStart = function (currentKey) {
+      var data = _this.state.data,
+          currentIndex = void 0,
+          record = void 0;
+      data.forEach(function (da, i) {
+        // tr 的唯一标识通过 data.key 或 rowKey 两种方式传进来
+        var trKey = da.key ? da.key : _this.getRowKey(da, i);
+        if (trKey == currentKey) {
+          currentIndex = i;
+          record = da;
+        }
+      });
+      _this.props.onDragRowStart && _this.props.onDragRowStart(record, currentIndex);
     };
 
     _this.onDragRow = function (currentKey, targetKey) {
@@ -728,9 +745,16 @@ var Table = function (_Component) {
       store: this.store,
       dragborderKey: this.props.dragborderKey,
       rowDraggAble: this.props.rowDraggAble,
-      onDragRow: this.onDragRow
+      onDragRow: this.onDragRow,
+      onDragRowStart: this.onDragRowStart
     });
   };
+
+  /**
+   * 行拖拽开始时触发
+   * @param currentKey 当前拖拽目标的key
+   */
+
 
   /**
    * 行拖拽结束时触发
@@ -882,6 +906,7 @@ var Table = function (_Component) {
         bodyDisplayInRow: props.bodyDisplayInRow,
         rowDraggAble: this.props.rowDraggAble,
         onDragRow: this.onDragRow,
+        onDragRowStart: this.onDragRowStart,
         contentTable: this.contentTable,
         tableUid: this.tableUid,
         expandedIcon: props.expandedIcon,

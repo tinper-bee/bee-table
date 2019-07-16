@@ -95,7 +95,8 @@ import 'bee-table/build/Table.css';
 | onFilterChange | 触发过滤输入操作以及下拉条件的回调 | function(field,value,condition) | `field` : 字段名称 <br> `value` : 字段值 <br> `condition` : 判断条件 |
 | onFilterClear | 清除过滤条件的回调函数，回调参数为清空的字段 | function(field) | `field` : 字段名称 |
 | onRowHover | 行hover时的回调函数 | function(index,record) | `index` : 当前行的index<br> `record` : 当前行的数据 |
-| onDropRow | 拖拽改变行顺序后的回调函数 | function(data,record) | `data` : 拖拽后的新data数组<br> `record` : 拖拽行的数据 |
+| onDragRowStart | 行拖拽开始时的回调函数 | function(record,index) | `record` : 当前行的数据 <br> `index` : 当前行的index|
+| onDropRow | 行拖拽结束后的回调函数 | function(data,record) | `data` : 拖拽后的新data数组<br> `record` : 拖拽行的数据 |
 
 
 ### Column

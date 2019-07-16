@@ -56,7 +56,8 @@ var propTypes = {
   expandRowByClick: _propTypes2["default"].bool,
   store: _propTypes2["default"].object.isRequired,
   rowDraggAble: _propTypes2["default"].bool,
-  onDragRow: _propTypes2["default"].func
+  onDragRow: _propTypes2["default"].func,
+  onDragRowStart: _propTypes2["default"].func
 };
 
 var defaultProps = {
@@ -107,6 +108,8 @@ var TableRow = function (_Component) {
     };
 
     _this.onDragStart = function (e) {
+      var onDragRowStart = _this.props.onDragRowStart;
+
       if (!_this.props.rowDraggAble) return;
       var event = _utils.Event.getEvent(e),
           target = _utils.Event.getTarget(event);
@@ -119,6 +122,8 @@ var TableRow = function (_Component) {
       // event.dataTransfer.setDragImage(crt, 0, 0);
       event.dataTransfer.effectAllowed = "move";
       event.dataTransfer.setData("Text", _this.currentIndex);
+
+      onDragRowStart && onDragRowStart(_this.currentIndex);
     };
 
     _this.onDragOver = function (e) {
@@ -155,10 +160,14 @@ var TableRow = function (_Component) {
     };
 
     _this.onTouchStart = function (e) {
+      var onDragRowStart = _this.props.onDragRowStart;
+
       var event = _utils.Event.getEvent(e),
           _target = _utils.Event.getTarget(event),
           target = _target.parentNode;
       _this.currentIndex = target.getAttribute("data-row-key");
+
+      onDragRowStart && onDragRowStart(_this.currentIndex);
     };
 
     _this.onTouchMove = function (e) {

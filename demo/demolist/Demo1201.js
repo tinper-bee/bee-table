@@ -43,6 +43,16 @@ class Demo1201 extends Component {
   }
 
   /**
+   * 行拖拽开始时触发
+   * @param record 拖拽行的数据
+   * @param index 拖拽行的下标序号
+   */
+  onDragRowStart = (record,index) => {
+    console.log('拖拽的行数据：', record);
+    console.log('拖拽的行序号：', index);
+  }
+
+  /**
    * 行拖拽结束时触发
    * @param data 拖拽改变顺序后的新data数组
    * @param record 拖拽行的数据
@@ -58,6 +68,7 @@ class Demo1201 extends Component {
           columns={columns}
           data={data}
           rowDraggAble={true}
+          onDragRowStart={this.onDragRowStart}
           onDropRow={this.onDropRow}
         />
     );
