@@ -332,6 +332,7 @@ var Table = function (_Component) {
     _this.computeTableWidth = _this.computeTableWidth.bind(_this);
     _this.onBodyMouseLeave = _this.onBodyMouseLeave.bind(_this);
     _this.tableUid = null;
+    _this.contentTable = null;
     return _this;
   }
 
@@ -418,6 +419,7 @@ var Table = function (_Component) {
   };
 
   Table.prototype.componentWillUnmount = function componentWillUnmount() {
+    this.contentTable = null;
     _utils.EventUtil.removeHandler(this.contentTable, 'keydown', this.onKeyDown);
     _utils.EventUtil.removeHandler(this.contentTable, 'focus', this.onFocus);
     if (this.resizeEvent) {

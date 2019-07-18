@@ -32,6 +32,7 @@ class TableHeader extends Component {
     this._thead = null;//当前对象
     this.event = false;//避免多次绑定问题
     this.lastColumWidth = null;//非固定列最后一列的初始化宽度
+    this.fixedTable = {};
   }
 
   static defaultProps = {
@@ -51,6 +52,7 @@ class TableHeader extends Component {
   }
 
   componentWillUnmount(){
+    this.fixedTable = null;
     if(!this.table)return;
     if (this.props.draggable){
       this.removeDragAbleEvent();
@@ -59,6 +61,7 @@ class TableHeader extends Component {
       this.removeDragBorderEvent();
     }
     this.eventListen([{key:'mousedown',fun:this.onTrMouseDown}],'remove',this.table.tr[0]);
+    this.eventListen([{key:'mouseup',fun:this.bodyonLineMouseUp}],'remove',document.body);
   }
 
   /**
