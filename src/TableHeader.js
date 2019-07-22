@@ -109,7 +109,11 @@ class TableHeader extends Component {
    * 事件初始化
    */
   initEvent(){
-    let {dragborder,draggable} = this.props;
+    let {dragborder,draggable,rows} = this.props;
+    // 当传入的 columns 为空时，不绑定拖拽事件
+    if(Object.prototype.toString.call(rows) === '[object Array]' && rows.length === 0){
+      return;
+    }
     if(!this.event){ //避免多次绑定问题。
       this.event = true;
       if(dragborder){

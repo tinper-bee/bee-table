@@ -552,8 +552,13 @@ var TableHeader = function (_Component) {
   TableHeader.prototype.initEvent = function initEvent() {
     var _props = this.props,
         dragborder = _props.dragborder,
-        draggable = _props.draggable;
+        draggable = _props.draggable,
+        rows = _props.rows;
+    // 当传入的 columns 为空时，不绑定拖拽事件
 
+    if (Object.prototype.toString.call(rows) === '[object Array]' && rows.length === 0) {
+      return;
+    }
     if (!this.event) {
       //避免多次绑定问题。
       this.event = true;
