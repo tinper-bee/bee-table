@@ -390,7 +390,8 @@ class TableHeader extends Component {
     if(table){
       const innerTable = table.querySelector('.u-table-body-inner');
       if(innerTable){
-        overflow.x && (innerTable.style.overflowX = overflow.x);
+        //fixbug: 拖拽列宽后，滚动条滚到表格底部，会导致固定列和非固定列错行
+        // overflow.x && (innerTable.style.overflowX = overflow.x);
         overflow.y && (innerTable.style.overflowY = overflow.y);
       }
      
