@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Event,EventUtil} from "./utils";
+import { Event,EventUtil} from "./lib/utils";
 import TableCell from './TableCell';
 import ExpandIcon from './ExpandIcon';
 

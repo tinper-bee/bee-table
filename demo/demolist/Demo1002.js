@@ -47,10 +47,6 @@ const data23 = [
 
 const DragColumnTable = dragColumn(Table);
 
-const defaultProps23 = {
-  prefixCls: "bee-table"
-};
-
 class Demo23 extends Component {
   constructor(props) {
     super(props); 
@@ -69,7 +65,5 @@ class Demo23 extends Component {
             />;
   }
 }
-Demo23.defaultProps = defaultProps23;
-
 
 export default Demo23;

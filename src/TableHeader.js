@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import PropTypes from "prop-types";
 import { debounce } from "throttle-debounce";
-import { Event,EventUtil} from "./utils";
+import { Event,EventUtil} from "./lib/utils";
 import FilterType from "./FilterType";
 
 const propTypes = {

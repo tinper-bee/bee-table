@@ -1,6 +1,6 @@
 import React from "react";
 
-import {DicimalFormater} from "../utils";
+import {DicimalFormater} from "./utils";
 export default function sum(Table) {
   return class SumTable extends React.Component {
     //无状态

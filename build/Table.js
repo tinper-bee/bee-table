@@ -26,7 +26,7 @@ var _TableHeader = require('./TableHeader');
 
 var _TableHeader2 = _interopRequireDefault(_TableHeader);
 
-var _utils = require('./utils');
+var _utils = require('./lib/utils');
 
 var _shallowequal = require('shallowequal');
 

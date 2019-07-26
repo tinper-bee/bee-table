@@ -12,7 +12,7 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _utils = require('./utils');
+var _utils = require('./lib/utils');
 
 var _TableCell = require('./TableCell');
 

@@ -20,7 +20,7 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _throttleDebounce = require("throttle-debounce");
 
-var _utils = require("./utils");
+var _utils = require("./lib/utils");
 
 var _FilterType = require("./FilterType");
 
