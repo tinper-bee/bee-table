@@ -522,7 +522,8 @@ class Table extends Component {
     } else if (fixed === 'right') {
       colCount = this.columnManager.rightLeafColumns().length;
     } else {
-      colCount = this.columnManager.leafColumns().length;
+      // colCount = this.columnManager.leafColumns().length;
+      colCount = this.columnManager.centerColumns().length; //计算非固定列的个数，fix: 嵌套表格场景，右侧列断开的问题
     }
 
     function contentContainer() {
