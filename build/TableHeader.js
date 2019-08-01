@@ -79,8 +79,8 @@ var TableHeader = function (_Component) {
           clsPrefix = _this$props.clsPrefix,
           contentTable = _this$props.contentTable,
           lastShowIndex = _this$props.lastShowIndex;
-
-      var currentElement = _this.getOnLineObject(targetEvent);
+      // let currentElement = this.getOnLineObject(targetEvent);
+      var currentElement = _this.getTargetToTh(targetEvent);
       if (!currentElement) return;
       var type = currentElement.getAttribute('data-type');
       if (!_this.props.dragborder && !_this.props.draggable) return;
