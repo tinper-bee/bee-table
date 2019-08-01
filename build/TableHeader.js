@@ -80,6 +80,7 @@ var TableHeader = function (_Component) {
           contentTable = _this$props.contentTable,
           lastShowIndex = _this$props.lastShowIndex;
       // let currentElement = this.getOnLineObject(targetEvent);
+
       var currentElement = _this.getTargetToTh(targetEvent);
       if (!currentElement) return;
       var type = currentElement.getAttribute('data-type');
