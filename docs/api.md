@@ -265,7 +265,8 @@ Table 组件参数：
 | dragborder | 拖拽调整列宽度 | boolean | false |
 | draggable | 拖拽交换列 | boolean | false |
 | onDrop | 拖拽释放回调函数(交换列) | function | () => {} |
-| onDropBorder | 拖拽释放回调函数(调整列宽) | function | (e) => {} |
+| onDropBorder | 拖拽释放回调函数(调整列宽) | function | (e,width) => {} |
+| onDraggingBorder | 调整列宽过程中触发的回调函数 | function | (e,width) => {} |
 
 #### dragColumn 使用示例
 - [拖拽改变列顺序](http://design.yonyoucloud.com/tinper-bee/bee-table#%E6%8B%96%E6%8B%BD%E6%94%B9%E5%8F%98%E5%88%97%E9%A1%BA%E5%BA%8F)

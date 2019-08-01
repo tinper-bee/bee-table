@@ -568,7 +568,8 @@ var Table = function (_Component) {
         afterDragColWidth = _props.afterDragColWidth,
         headerScroll = _props.headerScroll,
         bordered = _props.bordered,
-        onDropBorder = _props.onDropBorder;
+        onDropBorder = _props.onDropBorder,
+        onDraggingBorder = _props.onDraggingBorder;
 
     var rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
@@ -582,7 +583,7 @@ var Table = function (_Component) {
 
     var trStyle = headerHeight && !fixed ? { height: headerHeight } : fixed ? this.getHeaderRowStyle(columns, rows) : null;
     var drop = draggable ? { onDragStart: onDragStart, onDragOver: onDragOver, onDrop: onDrop, onDragEnter: onDragEnter, draggable: draggable } : {};
-    var dragBorder = dragborder ? { onMouseDown: onMouseDown, onMouseMove: onMouseMove, onMouseUp: onMouseUp, dragborder: dragborder, onThMouseMove: onThMouseMove, dragborderKey: dragborderKey, onDropBorder: onDropBorder } : {};
+    var dragBorder = dragborder ? { onMouseDown: onMouseDown, onMouseMove: onMouseMove, onMouseUp: onMouseUp, dragborder: dragborder, onThMouseMove: onThMouseMove, dragborderKey: dragborderKey, onDropBorder: onDropBorder, onDraggingBorder: onDraggingBorder } : {};
     var contentWidthDiff = 0;
     //非固定表格,宽度不够时自动扩充
     if (!fixed) {
