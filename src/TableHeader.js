@@ -197,7 +197,8 @@ class TableHeader extends Component {
     let event = Event.getEvent(e) ,
     targetEvent = Event.getTarget(event);
     const { clsPrefix, contentTable,lastShowIndex } = this.props;
-    let currentElement = this.getOnLineObject(targetEvent);
+    // let currentElement = this.getOnLineObject(targetEvent);
+    let currentElement = this.getTargetToTh(targetEvent);
     if(!currentElement)return;
     let type = currentElement.getAttribute('data-type');
     if(!this.props.dragborder && !this.props.draggable)return;
