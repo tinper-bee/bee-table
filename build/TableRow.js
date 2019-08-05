@@ -90,7 +90,7 @@ var TableRow = function (_Component) {
 
       { key: 'dragstart', fun: _this.onDragStart }, //用户开始拖动元素时触发
       { key: 'dragover', fun: _this.onDragOver }, //当某被拖动的对象在另一对象容器范围内拖动时触发此事件
-      { key: 'drop', fun: _this.onDrop }, //在一个拖动过程中，释放鼠标键时触发此事件 
+      { key: 'drop', fun: _this.onDrop }, //在一个拖动过程中，释放鼠标键时触发此事件
       { key: 'dragenter', fun: _this.onDragEnter }, { key: 'dragleave', fun: _this.onDragLeave }];
       _this.eventListen(events, '', _this.element);
     };
@@ -102,7 +102,7 @@ var TableRow = function (_Component) {
 
       { key: 'dragstart', fun: _this.onDragStart }, //用户开始拖动元素时触发
       { key: 'dragover', fun: _this.onDragOver }, //当某被拖动的对象在另一对象容器范围内拖动时触发此事件
-      { key: 'drop', fun: _this.onDrop }, //在一个拖动过程中，释放鼠标键时触发此事件 
+      { key: 'drop', fun: _this.onDrop }, //在一个拖动过程中，释放鼠标键时触发此事件
       { key: 'dragenter', fun: _this.onDragEnter }, { key: 'dragleave', fun: _this.onDragLeave }];
       _this.eventListen(events, 'remove', _this.element);
     };
@@ -117,7 +117,7 @@ var TableRow = function (_Component) {
       _this._dragCurrent = target;
 
       //TODO 自定义图像后续需要增加。
-      //  let crt = this.synchronizeTableTrShadow(); 
+      //  let crt = this.synchronizeTableTrShadow();
       //  document.getElementById(this.props.tableUid).appendChild(crt);
       // event.dataTransfer.setDragImage(crt, 0, 0);
       event.dataTransfer.effectAllowed = "move";
@@ -165,6 +165,10 @@ var TableRow = function (_Component) {
       var event = _utils.Event.getEvent(e),
           _target = _utils.Event.getTarget(event),
           target = _target.parentNode;
+
+      while (target.tagName != 'TR') {
+        target = target.parentNode;
+      }
       _this.currentIndex = target.getAttribute("data-row-key");
 
       onDragRowStart && onDragRowStart(_this.currentIndex);
@@ -276,7 +280,7 @@ var TableRow = function (_Component) {
       if (target.nodeName.toUpperCase() === "TR") {
         _this.synchronizeTableTr(currentIndex, true);
         // target.setAttribute("style","border-bottom:2px dashed rgba(5,0,0,0.25)");
-        // // target.style.backgroundColor = 'rgb(235, 236, 240)'; 
+        // // target.style.backgroundColor = 'rgb(235, 236, 240)';
       }
     };
 

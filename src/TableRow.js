@@ -80,7 +80,7 @@ class TableRow extends Component{
       this.setRowParentIndex();
     }
   }
- 
+
   /**
    * 事件初始化
    */
@@ -92,7 +92,7 @@ class TableRow extends Component{
 
       {key:'dragstart',fun:this.onDragStart},//用户开始拖动元素时触发
       {key:'dragover', fun:this.onDragOver},//当某被拖动的对象在另一对象容器范围内拖动时触发此事件
-      {key:'drop', fun:this.onDrop},        //在一个拖动过程中，释放鼠标键时触发此事件 
+      {key:'drop', fun:this.onDrop},        //在一个拖动过程中，释放鼠标键时触发此事件
       {key:'dragenter', fun:this.onDragEnter},
       {key:'dragleave', fun:this.onDragLeave},
     ];
@@ -110,7 +110,7 @@ class TableRow extends Component{
 
       {key:'dragstart',fun:this.onDragStart},//用户开始拖动元素时触发
       {key:'dragover', fun:this.onDragOver},//当某被拖动的对象在另一对象容器范围内拖动时触发此事件
-      {key:'drop', fun:this.onDrop},        //在一个拖动过程中，释放鼠标键时触发此事件 
+      {key:'drop', fun:this.onDrop},        //在一个拖动过程中，释放鼠标键时触发此事件
       {key:'dragenter', fun:this.onDragEnter},
       {key:'dragleave', fun:this.onDragLeave},
     ];
@@ -142,9 +142,9 @@ class TableRow extends Component{
     target = Event.getTarget(event);
      this.currentIndex = target.getAttribute("data-row-key");
      this._dragCurrent = target;
- 
+
     //TODO 自定义图像后续需要增加。
-    //  let crt = this.synchronizeTableTrShadow(); 
+    //  let crt = this.synchronizeTableTrShadow();
     //  document.getElementById(this.props.tableUid).appendChild(crt);
     // event.dataTransfer.setDragImage(crt, 0, 0);
      event.dataTransfer.effectAllowed = "move";
@@ -157,7 +157,7 @@ class TableRow extends Component{
     let event = Event.getEvent(e);
     event.preventDefault();
   };
-  
+
   /**
    * 在一个拖动过程中，释放鼠标键时触发此事件。【目标事件】
    * @memberof TableHeader
@@ -167,13 +167,13 @@ class TableRow extends Component{
     let event = Event.getEvent(e) ,
         _target = Event.getTarget(event),
         target = _target.parentNode;
-    
+
     let currentKey = event.dataTransfer.getData("text");
     let targetKey = target.getAttribute("data-row-key");
 
-    if(!targetKey || targetKey === currentKey)return;    
+    if(!targetKey || targetKey === currentKey)return;
     if(target.nodeName.toUpperCase() === "TR"){
-      this.synchronizeTableTr(currentKey,null); 
+      this.synchronizeTableTr(currentKey,null);
       this.synchronizeTableTr(targetKey,null);
       // target.setAttribute("style","");
       // this.synchronizeTrStyle(this.currentIndex,false);
@@ -198,6 +198,10 @@ class TableRow extends Component{
     let event = Event.getEvent(e) ,
         _target = Event.getTarget(event),
         target = _target.parentNode;
+    
+    while (target.tagName != 'TR') {
+      target = target.parentNode
+    }
     this.currentIndex = target.getAttribute("data-row-key");
     
     onDragRowStart && onDragRowStart(this.currentIndex);
@@ -228,12 +232,12 @@ class TableRow extends Component{
         touchTarget = this.getTouchDom(event), //当前触摸的DOM节点
         target = touchTarget.parentNode, //目标位置的行
         targetKey = target.getAttribute("data-row-key"); //目标位置的行key
-    if(!targetKey || targetKey === currentKey)return;    
+    if(!targetKey || targetKey === currentKey)return;
     if(target.nodeName.toUpperCase() === "TR"){
       this.synchronizeTableTr(currentKey,null);
       this.synchronizeTableTr(targetKey,null);
     }
-    
+
     onDragRow && onDragRow(currentKey,targetKey);
   }
 
@@ -242,7 +246,7 @@ class TableRow extends Component{
    * @memberof TableRow
    */
   synchronizeTableTrShadow = ()=>{
-    let {contentTable,index} = this.props; 
+    let {contentTable,index} = this.props;
 
     let cont = contentTable.querySelector('.u-table-scroll table tbody').getElementsByTagName("tr")[index],
         trs = cont.getBoundingClientRect(),
@@ -250,7 +254,7 @@ class TableRow extends Component{
         fixed_right_trs = contentTable.querySelector('.u-table-fixed-right table tbody');
     fixed_left_trs = fixed_left_trs && fixed_left_trs.getElementsByTagName("tr")[index].getBoundingClientRect();
     fixed_right_trs = fixed_right_trs && fixed_right_trs.getElementsByTagName("tr")[index].getBoundingClientRect()
-    
+
     let div = document.createElement("div");
     let style = "wdith:"+(trs.width + (fixed_left_trs ? fixed_left_trs.width : 0) + (fixed_right_trs ? fixed_right_trs.width : 0))+"px";
     style += ";height:"+ trs.height+"px";
@@ -265,13 +269,13 @@ class TableRow extends Component{
    */
   synchronizeTableTr = (currentIndex,type)=>{
     if(type){ //同步 this.cacheCurrentIndex
-      this.cacheCurrentIndex = currentIndex; 
-    } 
-    let {contentTable} = this.props; 
+      this.cacheCurrentIndex = currentIndex;
+    }
+    let {contentTable} = this.props;
     let _table_trs = contentTable.querySelector('.u-table-scroll table tbody'),
      _table_fixed_left_trs = contentTable.querySelector('.u-table-fixed-left table tbody'),
     _table_fixed_right_trs = contentTable.querySelector('.u-table-fixed-right table tbody');
-    
+
     _table_trs = _table_trs?_table_trs:contentTable.querySelector('.u-table table tbody');
 
     this.synchronizeTrStyle(_table_trs,currentIndex,type);
@@ -289,7 +293,7 @@ class TableRow extends Component{
   synchronizeTrStyle = (_elementBody,id,type)=>{
     let {contentTable} = this.props,
     trs = _elementBody.getElementsByTagName("tr"),
-    currentObj; 
+    currentObj;
     for (let index = 0; index < trs.length; index++) {
       const element = trs[index];
       if(element.getAttribute("data-row-key") == id){
@@ -311,16 +315,16 @@ class TableRow extends Component{
     if(target.nodeName.toUpperCase() === "TR"){
       this.synchronizeTableTr(currentIndex,true);
       // target.setAttribute("style","border-bottom:2px dashed rgba(5,0,0,0.25)");
-      // // target.style.backgroundColor = 'rgb(235, 236, 240)'; 
+      // // target.style.backgroundColor = 'rgb(235, 236, 240)';
     }
   }
- 
+
   onDragLeave = (e) => {
     let event = Event.getEvent(e) ,
     _target = Event.getTarget(event),target = _target.parentNode;
     let currentIndex = target.getAttribute("data-row-key");
     if(!currentIndex || currentIndex === this.currentIndex)return;
-    if(target.nodeName.toUpperCase() === "TR"){ 
+    if(target.nodeName.toUpperCase() === "TR"){
       this.synchronizeTableTr(currentIndex,null);
     }
   }
@@ -339,7 +343,7 @@ class TableRow extends Component{
     }
     this.setRowHeight()
   }
-  
+
   componentWillUnmount() {
     const { record, onDestroy, index,rowDraggAble } = this.props;
     onDestroy(record, index);
@@ -362,7 +366,7 @@ class TableRow extends Component{
     setRowParentIndex(rootIndex<0?index:rootIndex,fixedIndex);
 
   }
-  
+
   onRowClick(event) {
     // fix: 解决 onRowClick 回调函数中，事件对象属性均为 null 的问题
     // 异步访问事件属性
@@ -381,7 +385,7 @@ class TableRow extends Component{
     if (expandable && expandRowByClick) {
       onExpand(!expanded, record, fixedIndex,event);
     }
-    this.set((e)=> {  
+    this.set((e)=> {
       onRowClick(record, fixedIndex, event);
     });
   }
@@ -411,19 +415,19 @@ class TableRow extends Component{
 
   set =(fn)=> {
       this.clear();
-      this._timeout = window.setTimeout(fn, 300);  
+      this._timeout = window.setTimeout(fn, 300);
   }
 
   clear =(event)=> {
-    if (this._timeout) {  
-        window.clearTimeout(this._timeout);  
+    if (this._timeout) {
+        window.clearTimeout(this._timeout);
     }
   }
 
   bindElement = (el)=> {
     this.element = el
   }
- 
+
   render() {
     const {
       clsPrefix, columns, record, height, visible, index,
@@ -492,7 +496,7 @@ class TableRow extends Component{
       style.display = 'none';
     }
 
-    return ( 
+    return (
       <tr
         draggable={rowDraggAble}
         onClick={this.onRowClick}

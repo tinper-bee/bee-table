@@ -214,7 +214,7 @@ class Table extends Component {
       this.scrollbarWidth = measureScrollbar();
     }
 
- 
+
     // console.log('this.scrollTop**********',this.scrollTop);
 
   }
@@ -238,7 +238,7 @@ class Table extends Component {
     if (prevProps.data.length === 0  || this.props.data.length === 0 ) {
       this.resetScrollX();
     }
-    
+
     // 是否传入 scroll中的y属性，如果传入判断是否是整数，如果是则进行比较 。bodyTable 的clientHeight进行判断
     this.isShowScrollY();
   }
@@ -272,7 +272,7 @@ class Table extends Component {
   }
 
   computeTableWidth() {
-    
+
     //如果用户传了scroll.x按用户传的为主
     let setWidthParam = this.props.scroll.x
 
@@ -285,7 +285,7 @@ class Table extends Component {
       this.contentDomWidth = this.contentTable.getBoundingClientRect().width//表格容器宽度
 
       this.contentWidth = this.contentDomWidth;//默认与容器宽度一样
-      
+
     }
     const computeObj = this.columnManager.getColumnWidth(this.contentWidth);
     let lastShowIndex = computeObj.lastShowIndex;
@@ -320,7 +320,7 @@ class Table extends Component {
       // const leftBodyTable = this.refs.fixedColumnsBodyLeft;
       const overflowy = bodyContentH <= bodyH ? 'auto':'scroll';
       this.bodyTable.style.overflowY = overflowy;
-    
+
       this.headTable.style.overflowY = overflowy;
       rightBodyTable && (rightBodyTable.style.overflowY = overflowy);
       // 没有纵向滚动条时，表头横向滚动条根据内容动态显示 待验证
@@ -329,8 +329,8 @@ class Table extends Component {
       //   rightBodyTable && (rightBodyTable.style.overflowX = 'auto');
       //   leftBodyTable && (leftBodyTable.style.overflowX = 'auto');
       // }
-     
-      
+
+
     }
   }
   onExpandedRowsChange(expandedRowKeys) {
@@ -386,7 +386,7 @@ class Table extends Component {
     );
     return key;
 
-    
+
   }
 
   getExpandedRows() {
@@ -561,7 +561,7 @@ class Table extends Component {
         indent={1}
         expandable={false}
         store={this.store}
-        dragborderKey={this.props.dragborderKey} 
+        dragborderKey={this.props.dragborderKey}
         rowDraggAble={this.props.rowDraggAble}
         onDragRow={this.onDragRow}
         onDragRowStart={this.onDragRowStart}
@@ -575,7 +575,7 @@ class Table extends Component {
    */
   onDragRowStart = (currentKey) => {
     let {data} = this.state,currentIndex,record;
-    data.forEach((da,i)=>{ 
+    data.forEach((da,i)=>{
       // tr 的唯一标识通过 data.key 或 rowKey 两种方式传进来
       let trKey = da.key ? da.key : this.getRowKey(da, i);
       if(trKey == currentKey){
@@ -617,7 +617,17 @@ class Table extends Component {
   * @param {number} index2 删除项目的位置
   */
   swapArray = (arr, index1, index2) => {
-    arr[index1] = arr.splice(index2, 1, arr[index1])[0];
+    var value1 = arr[index1]
+    arr.splice(index1,1)
+    if(index1<index2){
+      console.log('向下拖')
+      arr.splice(index2,0,value1)
+
+    }else {
+      console.log('向上拖')
+      arr.splice(index2+1,0,value1)
+    }
+ 
      return arr;
   }
 
@@ -681,13 +691,13 @@ class Table extends Component {
       if (expandedRowRender && typeof props.haveExpandIcon == 'function') {
         isHiddenExpandIcon = props.haveExpandIcon(record, i);
       }
-     
+
 
       const onHoverProps = {};
 
       onHoverProps.onHover = this.handleRowHover;
-      
-    
+
+
 
       if (props.height) {
         height = props.height
@@ -709,7 +719,7 @@ class Table extends Component {
       if(i == data.length -1 && props.showSum){
         className = className + ' sumrow';
       }
-      
+
       let paramRootIndex = rootIndex;
       //小于0说明为第一层节点，她的子孙节点要保存自己的根节点
       if(paramRootIndex<0){
@@ -801,7 +811,7 @@ class Table extends Component {
   getColGroup(columns, fixed) {
     let cols = [];
     let self = this;
-    
+
     let { contentWidthDiff = 0, lastShowIndex = 0 } = this.state;
     if (this.props.expandIconAsCell && fixed !== 'right') {
       cols.push(
@@ -909,7 +919,7 @@ class Table extends Component {
         //显示表头滚动条
         if(headerScroll){
           if(fixed){
-      
+
            if(this.domWidthDiff <= 0){
               headStyle.marginBottom = `${scrollbarWidth}px`;
               bodyStyle.marginBottom = `-${scrollbarWidth}px`;
@@ -931,7 +941,7 @@ class Table extends Component {
             }else{
               bodyStyle.marginBottom = `-${scrollbarWidth}px`;
             }
-            
+
           }else{
               // 没有数据时，表头滚动条隐藏问题
               if(data.length == 0 && this.domWidthDiff < 0){
@@ -939,14 +949,14 @@ class Table extends Component {
               }else{
                 headStyle.marginBottom = `-${scrollbarWidth}px`;
               }
-            
+
           }
-          
+
         }
       }
     }
 
-    if(data.length == 0 && hideHeaderScroll){ 
+    if(data.length == 0 && hideHeaderScroll){
       //支持 NCC 需求:表格无数据时，去掉表头滚动条 (https://github.com/iuap-design/tinper-bee/issues/207)
       headStyle.marginBottom = `-${this.scrollbarWidth}px`;
     }
@@ -1103,8 +1113,8 @@ class Table extends Component {
     const leftBodyRows = this.refs.fixedColumnsBodyLeft && this.refs.fixedColumnsBodyLeft.querySelectorAll(`.${clsPrefix}-row`) || [];
     const rightBodyRows = this.refs.fixedColumnsBodyRight && this.refs.fixedColumnsBodyRight.querySelectorAll(`.${clsPrefix}-row`) || [];
     const fixedColumnsHeadRowsHeight = [].map.call(
-      headRows, row =>{ 
-        let height = headerHeight; 
+      headRows, row =>{
+        let height = headerHeight;
         if(headerHeight){
           height = (getMaxColChildrenLength(columns)+1)*headerHeight;
         }
@@ -1128,11 +1138,11 @@ class Table extends Component {
             return row.getBoundingClientRect().height || 'auto'
           }
         }
-       
-        
-      } 
+
+
+      }
     );
-      
+
     if (shallowequal(this.state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
       shallowequal(this.state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
       return;
@@ -1172,10 +1182,10 @@ class Table extends Component {
 
   hideHoverDom(e){
     if(this.hoverDom){
-      this.hoverDom.style.display = 'none';   
+      this.hoverDom.style.display = 'none';
     }
   }
-  
+
 
   handleBodyScroll(e) {
     const headTable = this.headTable;
@@ -1233,9 +1243,9 @@ class Table extends Component {
           handleScrollY(this.lastScrollTop,this.treeType),
         300)
       }
-    
+
     }
-    
+
     // Remember last scrollLeft for scroll direction detecting.
     this.lastScrollLeft = e.target.scrollLeft;
   }
@@ -1259,7 +1269,7 @@ class Table extends Component {
           const scrollTop = this.lastScrollTop ?this.lastScrollTop:0
           let top = td.offsetTop -  scrollTop;
           if(this.headTable){
-            top = top + this.headTable.clientHeight; 
+            top = top + this.headTable.clientHeight;
           }
           this.hoverDom.style.top = top + 'px';
           this.hoverDom.style.height = td.offsetHeight + 'px';
@@ -1267,7 +1277,7 @@ class Table extends Component {
           this.hoverDom.style.display = 'block';
         }
       }
-      
+
     }
 
     onRowHover && onRowHover(currentIndex,record);
@@ -1280,7 +1290,7 @@ class Table extends Component {
       currentHoverKey: this.currentHoverKey,
     });
     this.hoverDom.style.display = 'block';
-      
+
   }
   onRowHoverMouseLeave = () =>{
 
@@ -1290,7 +1300,7 @@ class Table extends Component {
   }
 
   onKeyDown=(e)=>{
-    let event = Event.getEvent(e); 
+    let event = Event.getEvent(e);
     // event.preventDefault?event.preventDefault():event.returnValue = false;
     if(event.keyCode === 38){//up
       event.preventDefault&&event.preventDefault();
@@ -1344,11 +1354,11 @@ class Table extends Component {
     }
 
     return (
-      <div className={className} style={props.style} ref={el => this.contentTable = el} 
+      <div className={className} style={props.style} ref={el => this.contentTable = el}
       tabIndex={props.focusable && (props.tabIndex?props.tabIndex:'0')} >
         {this.getTitle()}
         <div className={`${clsPrefix}-content`}>
-         
+
           <div className={isTableScroll ? `${clsPrefix}-scroll` : ''} >
             {this.getTable({ columns: this.columnManager.groupedColumns() })}
             {this.getEmptyText()}

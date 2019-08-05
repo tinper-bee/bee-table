@@ -230,7 +230,16 @@ var Table = function (_Component) {
     };
 
     _this.swapArray = function (arr, index1, index2) {
-      arr[index1] = arr.splice(index2, 1, arr[index1])[0];
+      var value1 = arr[index1];
+      arr.splice(index1, 1);
+      if (index1 < index2) {
+        console.log('向下拖');
+        arr.splice(index2, 0, value1);
+      } else {
+        console.log('向上拖');
+        arr.splice(index2 + 1, 0, value1);
+      }
+      // arr[index1] = arr.splice(index2, 1, arr[index1])[0];
       return arr;
     };
 
