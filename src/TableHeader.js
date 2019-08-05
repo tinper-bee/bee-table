@@ -197,8 +197,8 @@ class TableHeader extends Component {
     let event = Event.getEvent(e) ,
     targetEvent = Event.getTarget(event);
     const { clsPrefix, contentTable,lastShowIndex } = this.props;
-    let currentElement = this.getOnLineObject(targetEvent);
-    // let currentElement = this.getTargetToTh(targetEvent);
+    // let currentElement = this.getOnLineObject(targetEvent);
+    let currentElement = this.getTargetToType(targetEvent);
     if(!currentElement)return;
     let type = currentElement.getAttribute('data-type');
     if(!this.props.dragborder && !this.props.draggable)return;
@@ -246,6 +246,19 @@ class TableHeader extends Component {
     return (tableWidth-offWidth);
   }
  
+  /**
+   * 根据当前节点查找到有data-type类型的容器返回。
+   * @memberof TableHeader
+   */
+  getTargetToType = (targetEvent) => {
+    let tag = targetEvent;
+    if(targetEvent && !targetEvent.getAttribute("data-type")){
+      tag = this.getTargetToType(targetEvent.parentElement);
+    }
+    return tag;
+  }
+
+  
   /**
    * 判断当前的target 是否是 th，如果不是，直接递归查找。
    * @memberof TableHeader
