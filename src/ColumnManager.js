@@ -15,8 +15,8 @@ export default class ColumnManager {
         title: "",
         key: "dragHandle",
         dataIndex: "dragHandle",
-        fixed:"left",
-        width: 49, 
+        // fixed:"left",
+        width: 49,
         render: () => {
           return <Icon type="uf-navmenu" />
         }
@@ -64,11 +64,11 @@ export default class ColumnManager {
       );
     });
   }
-  
+
   centerColumns() {
     return this._cache('centerColumns', () => {
       return this.groupedColumns().filter(
-        column => !column.fixed 
+        column => !column.fixed
       );
     });
   }
@@ -235,7 +235,7 @@ export default class ColumnManager {
   //todo 含有children的宽度计算
   _leafColumns(columns) {
     const leafColumns = [];
- 
+
     columns.forEach(column => {
       if (!column.children) {
 

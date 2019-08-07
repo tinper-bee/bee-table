@@ -90,7 +90,7 @@ var TableRow = function (_Component) {
 
       { key: 'dragstart', fun: _this.onDragStart }, //用户开始拖动元素时触发
       { key: 'dragover', fun: _this.onDragOver }, //当某被拖动的对象在另一对象容器范围内拖动时触发此事件
-      { key: 'drop', fun: _this.onDrop }, //在一个拖动过程中，释放鼠标键时触发此事件 
+      { key: 'drop', fun: _this.onDrop }, //在一个拖动过程中，释放鼠标键时触发此事件
       { key: 'dragenter', fun: _this.onDragEnter }, { key: 'dragleave', fun: _this.onDragLeave }];
       _this.eventListen(events, '', _this.element);
     };
@@ -102,7 +102,7 @@ var TableRow = function (_Component) {
 
       { key: 'dragstart', fun: _this.onDragStart }, //用户开始拖动元素时触发
       { key: 'dragover', fun: _this.onDragOver }, //当某被拖动的对象在另一对象容器范围内拖动时触发此事件
-      { key: 'drop', fun: _this.onDrop }, //在一个拖动过程中，释放鼠标键时触发此事件 
+      { key: 'drop', fun: _this.onDrop }, //在一个拖动过程中，释放鼠标键时触发此事件
       { key: 'dragenter', fun: _this.onDragEnter }, { key: 'dragleave', fun: _this.onDragLeave }];
       _this.eventListen(events, 'remove', _this.element);
     };
@@ -117,7 +117,7 @@ var TableRow = function (_Component) {
       _this._dragCurrent = target;
 
       //TODO 自定义图像后续需要增加。
-      //  let crt = this.synchronizeTableTrShadow(); 
+      //  let crt = this.synchronizeTableTrShadow();
       //  document.getElementById(this.props.tableUid).appendChild(crt);
       // event.dataTransfer.setDragImage(crt, 0, 0);
       event.dataTransfer.effectAllowed = "move";
@@ -160,17 +160,28 @@ var TableRow = function (_Component) {
     };
 
     _this.onTouchStart = function (e) {
+      e.stopPropagation();
       var onDragRowStart = _this.props.onDragRowStart;
 
       var event = _utils.Event.getEvent(e),
           _target = _utils.Event.getTarget(event),
           target = _target.parentNode;
-      _this.currentIndex = target.getAttribute("data-row-key");
 
-      onDragRowStart && onDragRowStart(_this.currentIndex);
+      if (target.tagName === 'TR') {
+
+        _this.currentIndex = target.getAttribute("data-row-key");
+
+        onDragRowStart && onDragRowStart(_this.currentIndex);
+      } else {
+
+        _this.canBeTouch = false;
+      }
     };
 
     _this.onTouchMove = function (e) {
+
+      if (!_this.canBeTouch) return;
+      e.stopPropagation();
       var event = _utils.Event.getEvent(e);
       event.preventDefault();
       var touchTarget = _this.getTouchDom(event),
@@ -187,6 +198,13 @@ var TableRow = function (_Component) {
     };
 
     _this.onTouchEnd = function (e) {
+
+      if (!_this.canBeTouch) {
+        _this.canBeTouch = true;
+        return;
+      }
+
+      e.stopPropagation();
       var onDragRow = _this.props.onDragRow;
 
       var event = _utils.Event.getEvent(e),
@@ -276,7 +294,7 @@ var TableRow = function (_Component) {
       if (target.nodeName.toUpperCase() === "TR") {
         _this.synchronizeTableTr(currentIndex, true);
         // target.setAttribute("style","border-bottom:2px dashed rgba(5,0,0,0.25)");
-        // // target.style.backgroundColor = 'rgb(235, 236, 240)'; 
+        // // target.style.backgroundColor = 'rgb(235, 236, 240)';
       }
     };
 
@@ -317,6 +335,7 @@ var TableRow = function (_Component) {
     _this.expandHeight = 0;
     _this.event = false;
     _this.cacheCurrentIndex = null;
+    _this.canBeTouch = true; //受否允许拖动该行
     return _this;
   }
 
