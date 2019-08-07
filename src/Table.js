@@ -210,6 +210,7 @@ class Table extends Component {
       this.resetScrollX();
     }
     // fix:模态框中使用table，计算的滚动条宽度为0的bug
+    // fix:表格首次渲染时 display:none，再显示时，未重新计算，导致表行出现错位的bug
     if(this.scrollbarWidth<=0 && this.props.scroll.y){
       this.scrollbarWidth = measureScrollbar();
     }
