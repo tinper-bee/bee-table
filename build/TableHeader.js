@@ -81,7 +81,7 @@ var TableHeader = function (_Component) {
           lastShowIndex = _this$props.lastShowIndex;
       // let currentElement = this.getOnLineObject(targetEvent);
 
-      var currentElement = _this.getTargetToTh(targetEvent);
+      var currentElement = _this.getTargetToType(targetEvent);
       if (!currentElement) return;
       var type = currentElement.getAttribute('data-type');
       if (!_this.props.dragborder && !_this.props.draggable) return;
@@ -128,6 +128,14 @@ var TableHeader = function (_Component) {
         tableWidth += parseInt(da.style.width);
       }
       return tableWidth - offWidth;
+    };
+
+    _this.getTargetToType = function (targetEvent) {
+      var tag = targetEvent;
+      if (targetEvent && !targetEvent.getAttribute("data-type")) {
+        tag = _this.getTargetToType(targetEvent.parentElement);
+      }
+      return tag;
     };
 
     _this.getTargetToTh = function (targetEvent) {
@@ -630,6 +638,12 @@ var TableHeader = function (_Component) {
   * 调整列宽的down事件
   * @memberof TableHeader
   */
+
+
+  /**
+   * 根据当前节点查找到有data-type类型的容器返回。
+   * @memberof TableHeader
+   */
 
 
   /**
