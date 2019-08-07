@@ -1,95 +1,95 @@
 {
  "name": "bee-table",
- "version": "2.1.11",
+ "version": "2.1.12",
  "description": "Table ui component for react",
  "keywords": [
   "react",
   "react-component",
   "bee-table",
   "iuap-design"
+ ],
+ "engines": {
+  "node": ">=6.0.0"
+ },
+ "jest": {
+  "moduleFileExtensions": [
+   "js",
+   "jsx"
   ],
-  "engines": {
-    "node": ">=6.0.0"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "jsx"
-    ],
-    "transform": {
-      "^.+\\.js$": "babel-jest"
-    }
-  },
-  "homepage": "https://github.com/tinper-bee/bee-table.git",
-  "author": "Yonyou FED",
-  "repository": "http://github.com/tinper-bee/bee-table",
-  "bugs": "https://github.com/tinper-bee/bee-table.git/issues",
-  "license": "MIT",
-  "main": "./build/index.js",
-  "config": {
-    "port": 3000,
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
-  "scripts": {
-    "dev": "bee-tools run start",
-    "build": "bee-tools run build",
-    "lint": "bee-tools run lint",
-    "test": "jest",
-    "chrome": "bee-tools run chrome",
-    "coveralls": "jest",
-    "browsers": "bee-tools run browsers",
-    "pub": "bee-tools run pub",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
-  },
-  "dependencies": {
-    "bee-button": "latest",
-    "bee-checkbox": "latest",
-    "bee-datepicker": "^2.0.28",
-    "bee-dropdown": "^2.0.4",
-    "bee-form-control": "latest",
-    "bee-icon": "latest",
-    "bee-input-number": "^2.0.7",
-    "bee-loading": "1.1.2",
-    "bee-locale": "0.0.14",
-    "bee-menus": "^2.0.6",
-    "bee-radio": "^2.0.14",
-    "bee-select": "^2.0.11",
-    "classnames": "^2.2.5",
-    "component-classes": "^1.2.6",
-    "lodash.clonedeep": "^4.5.0",
-    "object-path": "^0.11.3",
-    "shallowequal": "^1.0.2",
-    "throttle-debounce": "^2.0.1",
-    "tinper-bee-core": "latest",
-    "warning": "^3.0.0"
-  },
-  "peerDependencies": {
-    "react": "^15.3.0 || ^16.0",
-    "react-dom": "^15.3.0 || ^16.0",
-    "prop-types": "^15.6.0"
-  },
-  "devDependencies": {
-    "babel-jest": "^22.0.4",
-    "bee-clipboard": "^2.0.0",
-    "bee-drawer": "0.0.2",
-    "bee-layout": "latest",
-    "bee-pagination": "^2.0.5",
-    "bee-panel": "latest",
-    "bee-popover": "^3.0.2",
-    "bee-switch": "^2.0.6",
-    "chai": "^3.5.0",
-    "console-polyfill": "~0.2.1",
-    "cz-conventional-changelog": "^2.1.0",
-    "enzyme": "^2.9.1",
-    "es5-shim": "~4.1.10",
-    "jest": "^22.0.4",
-    "react": "^16.6.3",
-    "react-addons-test-utils": "^15.5.0",
-    "react-dom": "^16.6.3",
-    "ref-tree": "2.0.1-beta.1",
-    "reqwest": "^2.0.5",
-    "tinper-bee": "latest"
+  "transform": {
+   "^.+\\.js$": "babel-jest"
   }
+ },
+ "homepage": "https://github.com/tinper-bee/bee-table.git",
+ "author": "Yonyou FED",
+ "repository": "http://github.com/tinper-bee/bee-table",
+ "bugs": "https://github.com/tinper-bee/bee-table.git/issues",
+ "license": "MIT",
+ "main": "./build/index.js",
+ "config": {
+  "port": 3000,
+  "commitizen": {
+   "path": "./node_modules/cz-conventional-changelog"
+  }
+ },
+ "scripts": {
+  "dev": "bee-tools run start",
+  "build": "bee-tools run build",
+  "lint": "bee-tools run lint",
+  "test": "jest",
+  "chrome": "bee-tools run chrome",
+  "coveralls": "jest",
+  "browsers": "bee-tools run browsers",
+  "pub": "bee-tools run pub",
+  "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
+ },
+ "dependencies": {
+  "bee-button": "latest",
+  "bee-checkbox": "latest",
+  "bee-datepicker": "^2.0.28",
+  "bee-dropdown": "^2.0.4",
+  "bee-form-control": "latest",
+  "bee-icon": "latest",
+  "bee-input-number": "^2.0.7",
+  "bee-loading": "1.1.2",
+  "bee-locale": "0.0.14",
+  "bee-menus": "^2.0.6",
+  "bee-radio": "^2.0.14",
+  "bee-select": "^2.0.11",
+  "classnames": "^2.2.5",
+  "component-classes": "^1.2.6",
+  "lodash.clonedeep": "^4.5.0",
+  "object-path": "^0.11.3",
+  "shallowequal": "^1.0.2",
+  "throttle-debounce": "^2.0.1",
+  "tinper-bee-core": "latest",
+  "warning": "^3.0.0"
+ },
+ "peerDependencies": {
+  "react": "^15.3.0 || ^16.0",
+  "react-dom": "^15.3.0 || ^16.0",
+  "prop-types": "^15.6.0"
+ },
+ "devDependencies": {
+  "babel-jest": "^22.0.4",
+  "bee-clipboard": "^2.0.0",
+  "bee-drawer": "0.0.2",
+  "bee-layout": "latest",
+  "bee-pagination": "^2.0.5",
+  "bee-panel": "latest",
+  "bee-popover": "^3.0.2",
+  "bee-switch": "^2.0.6",
+  "chai": "^3.5.0",
+  "console-polyfill": "~0.2.1",
+  "cz-conventional-changelog": "^2.1.0",
+  "enzyme": "^2.9.1",
+  "es5-shim": "~4.1.10",
+  "jest": "^22.0.4",
+  "react": "^16.6.3",
+  "react-addons-test-utils": "^15.5.0",
+  "react-dom": "^16.6.3",
+  "ref-tree": "2.0.1-beta.1",
+  "reqwest": "^2.0.5",
+  "tinper-bee": "latest"
+ }
 }
