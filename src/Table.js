@@ -221,6 +221,7 @@ class Table extends Component {
     }
     // 是否传入 scroll中的y属性，如果传入判断是否是整数，如果是则进行比较 。bodyTable 的clientHeight进行判断
     this.isShowScrollY();
+    this.scrollbarWidth = measureScrollbar();
   }
 
   componentWillUnmount() {
