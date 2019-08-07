@@ -42,7 +42,7 @@ var ColumnManager = function () {
         title: "",
         key: "dragHandle",
         dataIndex: "dragHandle",
-        fixed: "left",
+        // fixed:"left",
         width: 49,
         render: function render() {
           return _react2["default"].createElement(_beeIcon2["default"], { type: 'uf-navmenu' });

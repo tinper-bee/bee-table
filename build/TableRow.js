@@ -160,21 +160,28 @@ var TableRow = function (_Component) {
     };
 
     _this.onTouchStart = function (e) {
+      e.stopPropagation();
       var onDragRowStart = _this.props.onDragRowStart;
 
       var event = _utils.Event.getEvent(e),
           _target = _utils.Event.getTarget(event),
           target = _target.parentNode;
 
-      while (target.tagName != 'TR') {
-        target = target.parentNode;
-      }
-      _this.currentIndex = target.getAttribute("data-row-key");
+      if (target.tagName === 'TR') {
 
-      onDragRowStart && onDragRowStart(_this.currentIndex);
+        _this.currentIndex = target.getAttribute("data-row-key");
+
+        onDragRowStart && onDragRowStart(_this.currentIndex);
+      } else {
+
+        _this.canBeTouch = false;
+      }
     };
 
     _this.onTouchMove = function (e) {
+
+      if (!_this.canBeTouch) return;
+      e.stopPropagation();
       var event = _utils.Event.getEvent(e);
       event.preventDefault();
       var touchTarget = _this.getTouchDom(event),
@@ -191,6 +198,13 @@ var TableRow = function (_Component) {
     };
 
     _this.onTouchEnd = function (e) {
+
+      if (!_this.canBeTouch) {
+        _this.canBeTouch = true;
+        return;
+      }
+
+      e.stopPropagation();
       var onDragRow = _this.props.onDragRow;
 
       var event = _utils.Event.getEvent(e),
@@ -321,6 +335,7 @@ var TableRow = function (_Component) {
     _this.expandHeight = 0;
     _this.event = false;
     _this.cacheCurrentIndex = null;
+    _this.canBeTouch = true; //受否允许拖动该行
     return _this;
   }
 

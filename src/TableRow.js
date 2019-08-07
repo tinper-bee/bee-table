@@ -62,6 +62,7 @@ class TableRow extends Component{
      this.expandHeight = 0;
      this.event = false;
      this.cacheCurrentIndex = null;
+     this.canBeTouch = true  //受否允许拖动该行
  }
 
 
@@ -194,20 +195,28 @@ class TableRow extends Component{
    * 开始调整交换行的事件
    */
   onTouchStart = (e) => {
+    e.stopPropagation()
     let {onDragRowStart} = this.props;
     let event = Event.getEvent(e) ,
         _target = Event.getTarget(event),
         target = _target.parentNode;
-    
-    while (target.tagName != 'TR') {
-      target = target.parentNode
+   
+    if (target.tagName === 'TR') {
+     
+      this.currentIndex = target.getAttribute("data-row-key");
+
+      onDragRowStart && onDragRowStart(this.currentIndex);
+    }else{
+     
+      this.canBeTouch = false
     }
-    this.currentIndex = target.getAttribute("data-row-key");
-    
-    onDragRowStart && onDragRowStart(this.currentIndex);
+
   }
 
   onTouchMove = (e) => {
+ 
+    if (!this.canBeTouch) return;
+    e.stopPropagation()
     let event = Event.getEvent(e);
     event.preventDefault();
     let touchTarget = this.getTouchDom(event),
@@ -226,6 +235,13 @@ class TableRow extends Component{
    * 手指移开时触发
    */
   onTouchEnd = (e) => {
+   
+    if(!this.canBeTouch){
+      this.canBeTouch = true
+      return
+    }
+
+    e.stopPropagation()
     let {onDragRow} = this.props;
     let event = Event.getEvent(e),
         currentKey = this.currentIndex, //拖拽行的key

@@ -239,7 +239,7 @@ var Table = function (_Component) {
         console.log('向上拖');
         arr.splice(index2 + 1, 0, value1);
       }
-      // arr[index1] = arr.splice(index2, 1, arr[index1])[0];
+
       return arr;
     };
 
