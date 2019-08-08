@@ -17,8 +17,7 @@ export function measureScrollbar(direction = 'vertical') {
   if (typeof document === 'undefined' || typeof window === 'undefined') {
     return 0;
   }
-  const tableDom =document.querySelector('.u-table');
-  let currentDom = tableDom?tableDom:document.body;
+  let currentDom = document.body;
 
   if (scrollbarSize) {
     return scrollbarSize;

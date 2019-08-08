@@ -47,8 +47,7 @@ function measureScrollbar() {
   if (typeof document === 'undefined' || typeof window === 'undefined') {
     return 0;
   }
-  var tableDom = document.querySelector('.u-table');
-  var currentDom = tableDom ? tableDom : document.body;
+  var currentDom = document.body;
 
   if (scrollbarSize) {
     return scrollbarSize;
