@@ -106,9 +106,9 @@ var TableHeader = function (_Component) {
           _this.lastColumWidth = parseInt(_this.table.cols[lastShowIndex].style.width);
         }
       } else if (type != 'online' && _this.props.draggable) {
-        // if (!this.props.draggable || targetEvent.nodeName.toUpperCase() != "TH") return; 
+        // if (!this.props.draggable || targetEvent.nodeName.toUpperCase() != "TH") return;
         if (!_this.props.draggable) return;
-        var th = _this.getTargetToTh(targetEvent);
+        var th = _this.getTargetToType(targetEvent);
         th.setAttribute('draggable', true); //添加交换列效果
         _this.drag.option = 'dragAble';
         _this.currentDome = th;
@@ -184,7 +184,7 @@ var TableHeader = function (_Component) {
 
           var newDiff = parseInt(currentCols.style.minWidth) - parseInt(currentCols.style.width);
           if (newDiff > 0) {
-            //缩小 
+            //缩小
             var lastWidth = _this.lastColumWidth + newDiff;
             _this.table.cols[lastShowIndex].style.width = lastWidth + "px"; //同步表头
             _this.table.tableBodyCols[lastShowIndex].style.width = lastWidth + "px"; //同步表体
@@ -698,7 +698,7 @@ var TableHeader = function (_Component) {
     if (!this.props.draggable) return;
     var events = [{ key: 'dragstart', fun: this.onDragStart }, //用户开始拖动元素时触发
     { key: 'dragover', fun: this.onDragOver }, //当某被拖动的对象在另一对象容器范围内拖动时触发此事件
-    { key: 'drop', fun: this.onDrop }, //在一个拖动过程中，释放鼠标键时触发此事件 
+    { key: 'drop', fun: this.onDrop }, //在一个拖动过程中，释放鼠标键时触发此事件
 
     { key: 'dragenter', fun: this.onDragEnter }, { key: 'dragend', fun: this.onDragEnd }, { key: 'dragleave', fun: this.onDragLeave }];
     this.eventListen(events, '', this.table.tr[0]); //表示把事件添加到th元素上
@@ -767,7 +767,7 @@ var TableHeader = function (_Component) {
     }
   };
 
-  //---拖拽列交换----end----- 
+  //---拖拽列交换----end-----
 
   /**
    * 过滤输入后或下拉条件的回调函数
@@ -832,7 +832,7 @@ var TableHeader = function (_Component) {
             // if(da.dataindex && da.key ===undefined ){
             keyTemp.key = da.key || da.dataindex || index + '-' + columIndex;
 
-            // } 
+            // }
             if (filterable && index == rows.length - 1) {
               da.children = _this2.filterRenderType(da["filtertype"], da.dataindex, columIndex);
               if (da.key === undefined) {
