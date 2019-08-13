@@ -462,7 +462,7 @@ var Table = function (_Component) {
       this.domWidthDiff = this.contentDomWidth - this.contentWidth;
     }
 
-    if (this.computeWidth < this.contentWidth) {
+    if (this.computeWidth <= this.contentWidth) {
       var contentWidthDiff = this.scrollbarWidth ? this.contentWidth - this.computeWidth - this.scrollbarWidth : this.contentWidth - this.computeWidth;
       //bordered的表格需要减去边框的差值1
       if (this.props.bordered) {

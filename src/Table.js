@@ -298,7 +298,7 @@ class Table extends Component {
       this.domWidthDiff = this.contentDomWidth - this.contentWidth;
     }
 
-    if (this.computeWidth < this.contentWidth) {
+    if (this.computeWidth <= this.contentWidth) {
       let contentWidthDiff = this.scrollbarWidth?this.contentWidth - this.computeWidth-this.scrollbarWidth:this.contentWidth - this.computeWidth;
       //bordered的表格需要减去边框的差值1
       if(this.props.bordered){
@@ -594,7 +594,7 @@ class Table extends Component {
    */
   onDragRow = (currentKey,targetKey)=>{
     let {data} = this.state,currentIndex,targetIndex,record;
-    data.forEach((da,i)=>{ 
+    data.forEach((da,i)=>{
       // tr 的唯一标识通过 data.key 或 rowKey 两种方式传进来
       let trKey = da.key ? da.key : this.getRowKey(da, i);
       if(trKey == currentKey){
@@ -628,7 +628,7 @@ class Table extends Component {
       console.log('向上拖')
       arr.splice(index2+1,0,value1)
     }
- 
+
      return arr;
   }
 
