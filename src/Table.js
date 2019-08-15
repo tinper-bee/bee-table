@@ -938,7 +938,7 @@ class Table extends Component {
           if(fixed){
             if(this.domWidthDiff > 0){
               headStyle.overflow = 'hidden';
-              innerBodyStyle.overflowX = 'auto'; //兼容expand场景、子表格含有固定列的场景
+              // innerBodyStyle.overflowX = 'auto'; //兼容expand场景、子表格含有固定列的场景
             }else{
               bodyStyle.marginBottom = `-${scrollbarWidth}px`;
             }
