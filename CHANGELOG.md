@@ -1,10 +1,10 @@
+<a name="2.1.14"></a>
+## [2.1.14](https://github.com/tinper-bee/bee-table/compare/v2.1.13...v2.1.14) (2019-08-17)
+
+
+
 <a name="2.1.13"></a>
-## [2.1.13](https://github.com/tinper-bee/bee-table/compare/v2.1.12...v2.1.13) (2019-08-07)
-
-
-
-<a name="2.1.12"></a>
-## [2.1.12](https://github.com/tinper-bee/bee-table/compare/v2.1.11...v2.1.12) (2019-08-07)
+## [2.1.13](https://github.com/tinper-bee/bee-table/compare/v2.1.11...v2.1.13) (2019-08-07)
 
 
 
@@ -75,12 +75,17 @@
 
 
 <a name="2.1.0"></a>
-# [2.1.0](https://github.com/tinper-bee/bee-table/compare/v2.0.24...v2.1.0) (2019-06-01)
+# [2.1.0](https://github.com/tinper-bee/bee-table/compare/v2.0.25...v2.1.0) (2019-06-01)
 
 
 ### Bug Fixes
 
 * 纵向滚动条动态显示 ([c0167c3](https://github.com/tinper-bee/bee-table/commit/c0167c3))
+
+
+
+<a name="2.0.25"></a>
+## [2.0.25](https://github.com/tinper-bee/bee-table/compare/v2.0.24...v2.0.25) (2019-05-24)
 
 
 
