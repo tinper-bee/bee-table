@@ -157,7 +157,9 @@ var TableHeader = function (_Component) {
           contentTable = _this$props2.contentTable,
           headerScroll = _this$props2.headerScroll,
           lastShowIndex = _this$props2.lastShowIndex,
-          onDraggingBorder = _this$props2.onDraggingBorder;
+          onDraggingBorder = _this$props2.onDraggingBorder,
+          leftFixedWidth = _this$props2.leftFixedWidth,
+          rightFixedWidth = _this$props2.rightFixedWidth;
 
       _utils.Event.stopPropagation(e);
       var event = _utils.Event.getEvent(e);
@@ -189,11 +191,11 @@ var TableHeader = function (_Component) {
             _this.table.cols[lastShowIndex].style.width = lastWidth + "px"; //同步表头
             _this.table.tableBodyCols[lastShowIndex].style.width = lastWidth + "px"; //同步表体
           }
-
-          var showScroll = contentDomWidth - (_this.drag.tableWidth + diff) - scrollbarWidth;
+          var showScroll = contentDomWidth - (leftFixedWidth + rightFixedWidth) - (_this.drag.tableWidth + diff) - scrollbarWidth;
           //表头滚动条处理
           if (headerScroll) {
             if (showScroll < 0) {
+              //小于 0 出现滚动条
               //找到固定列表格，设置表头的marginBottom值为scrollbarWidth;
               _this.table.contentTableHeader.style.overflowX = 'scroll';
               _this.optTableMargin(_this.table.fixedLeftHeaderTable, scrollbarWidth);
@@ -202,17 +204,20 @@ var TableHeader = function (_Component) {
               // fixedRighHeadertTable && (fixedRighHeadertTable.style.marginBottom = scrollbarWidth + "px");
               //todo inner scroll-x去掉；outer marginbottom 设置成-15px】
             } else {
+              //大于 0 不显示滚动条
               _this.table.contentTableHeader.style.overflowX = 'hidden';
               _this.optTableMargin(_this.table.fixedLeftHeaderTable, 0);
               _this.optTableMargin(_this.table.fixedRighHeadertTable, 0);
             }
           } else {
             if (showScroll < 0) {
+              _this.table.tableBody.style.overflowX = 'auto';
               _this.optTableMargin(_this.table.fixedLeftBodyTable, '-' + scrollbarWidth);
               _this.optTableMargin(_this.table.fixedRightBodyTable, '-' + scrollbarWidth);
               _this.optTableScroll(_this.table.fixedLeftBodyTable, { x: 'scroll' });
               _this.optTableScroll(_this.table.fixedRightBodyTable, { x: 'scroll' });
             } else {
+              _this.table.tableBody.style.overflowX = 'hidden';
               _this.optTableMargin(_this.table.fixedLeftBodyTable, 0);
               _this.optTableMargin(_this.table.fixedRightBodyTable, 0);
               _this.optTableScroll(_this.table.fixedLeftBodyTable, { x: 'auto' });
@@ -263,7 +268,7 @@ var TableHeader = function (_Component) {
         var innerTable = table.querySelector('.u-table-body-inner');
         if (innerTable) {
           //fixbug: 拖拽列宽后，滚动条滚到表格底部，会导致固定列和非固定列错行
-          // overflow.x && (innerTable.style.overflowX = overflow.x);
+          overflow.x && (innerTable.style.overflowX = overflow.x);
           overflow.y && (innerTable.style.overflowY = overflow.y);
         }
       }
@@ -531,6 +536,7 @@ var TableHeader = function (_Component) {
       table.cols = tableDome.getElementsByTagName("col");
       table.ths = tableDome.getElementsByTagName("th");
       table.tr = tableDome.getElementsByTagName("tr");
+      table.tableBody = contentTable.querySelector('.u-table-scroll .u-table-body') && contentTable.querySelector('.u-table-scroll .u-table-body');
       table.tableBodyCols = contentTable.querySelector('.u-table-scroll .u-table-body') && contentTable.querySelector('.u-table-scroll .u-table-body').getElementsByTagName("col");
     }
 

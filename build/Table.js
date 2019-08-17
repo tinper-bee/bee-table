@@ -553,7 +553,7 @@ var Table = function (_Component) {
     return this.props.expandedRowKeys || this.state.expandedRowKeys;
   };
 
-  Table.prototype.getHeader = function getHeader(columns, fixed) {
+  Table.prototype.getHeader = function getHeader(columns, fixed, leftFixedWidth, rightFixedWidth) {
     var _props = this.props,
         filterDelay = _props.filterDelay,
         onFilterChange = _props.onFilterChange,
@@ -618,7 +618,9 @@ var Table = function (_Component) {
       contentDomWidth: this.contentDomWidth,
       scrollbarWidth: this.scrollbarWidth,
       headerScroll: headerScroll,
-      bordered: bordered
+      bordered: bordered,
+      leftFixedWidth: leftFixedWidth,
+      rightFixedWidth: rightFixedWidth
     })) : null;
   };
 
@@ -1041,6 +1043,8 @@ var Table = function (_Component) {
     var bodyStyle = _extends({}, this.props.bodyStyle);
     var headStyle = {};
     var innerBodyStyle = {};
+    var leftFixedWidth = this.columnManager.getLeftColumnsWidth(this.contentWidth);
+    var rightFixedWidth = this.columnManager.getRightColumnsWidth(this.contentWidth);
 
     var tableClassName = '';
     //表格元素的宽度大于容器的宽度也显示滚动条
@@ -1093,7 +1097,7 @@ var Table = function (_Component) {
           if (fixed) {
             if (this.domWidthDiff > 0) {
               headStyle.overflow = 'hidden';
-              // innerBodyStyle.overflowX = 'auto'; //兼容expand场景、子表格含有固定列的场景
+              innerBodyStyle.overflowX = 'scroll'; //兼容expand场景、子表格含有固定列的场景
             } else {
               bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
             }
@@ -1141,7 +1145,7 @@ var Table = function (_Component) {
         'table',
         { className: ' ' + tableClassName + '  table-bordered ' + _drag_class + ' ', style: tableStyle },
         _this4.getColGroup(columns, fixed),
-        hasHead ? _this4.getHeader(columns, fixed) : null,
+        hasHead ? _this4.getHeader(columns, fixed, leftFixedWidth, rightFixedWidth) : null,
         tableBody
       );
     };
@@ -1210,8 +1214,8 @@ var Table = function (_Component) {
         )
       );
     }
-    var leftFixedWidth = this.columnManager.getLeftColumnsWidth(this.contentWidth);
-    var rightFixedWidth = this.columnManager.getRightColumnsWidth(this.contentWidth);
+    // const leftFixedWidth = this.columnManager.getLeftColumnsWidth(this.contentWidth);
+    // const rightFixedWidth = this.columnManager.getRightColumnsWidth(this.contentWidth);
     var expandIconWidth = expandIconAsCell ? 33 : 0;
     var parStyle = {};
     if (!fixed) {

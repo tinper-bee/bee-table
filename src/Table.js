@@ -394,7 +394,7 @@ class Table extends Component {
     return this.props.expandedRowKeys || this.state.expandedRowKeys;
   }
 
-  getHeader(columns, fixed) {
+  getHeader(columns, fixed, leftFixedWidth, rightFixedWidth) {
     const { filterDelay, onFilterChange, onFilterClear, filterable, showHeader, expandIconAsCell, clsPrefix, onDragStart, onDragEnter, onDragOver, onDrop, draggable,
       onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey, minColumnWidth, headerHeight,afterDragColWidth,headerScroll ,bordered,onDropBorder,onDraggingBorder} = this.props;
     const rows = this.getHeaderRows(columns);
@@ -438,6 +438,8 @@ class Table extends Component {
         scrollbarWidth = {this.scrollbarWidth}
         headerScroll = {headerScroll}
         bordered = {bordered}
+        leftFixedWidth = {leftFixedWidth}
+        rightFixedWidth = {rightFixedWidth}
       />
     ) : null;
   }
@@ -886,6 +888,8 @@ class Table extends Component {
     const bodyStyle = { ...this.props.bodyStyle };
     const headStyle = {};
     const innerBodyStyle = {};
+    const leftFixedWidth = this.columnManager.getLeftColumnsWidth(this.contentWidth);
+    const rightFixedWidth = this.columnManager.getRightColumnsWidth(this.contentWidth);
 
     let tableClassName = '';
     //表格元素的宽度大于容器的宽度也显示滚动条
@@ -938,7 +942,7 @@ class Table extends Component {
           if(fixed){
             if(this.domWidthDiff > 0){
               headStyle.overflow = 'hidden';
-              // innerBodyStyle.overflowX = 'auto'; //兼容expand场景、子表格含有固定列的场景
+              innerBodyStyle.overflowX = 'scroll'; //兼容expand场景、子表格含有固定列的场景
             }else{
               bodyStyle.marginBottom = `-${scrollbarWidth}px`;
             }
@@ -986,7 +990,7 @@ class Table extends Component {
         <table className={` ${tableClassName}  table-bordered ${_drag_class} `} style={tableStyle}  >
           {/* {this.props.dragborder?null:this.getColGroup(columns, fixed)} */}
           {this.getColGroup(columns, fixed)}
-          {hasHead ? this.getHeader(columns, fixed) : null}
+          {hasHead ? this.getHeader(columns, fixed, leftFixedWidth, rightFixedWidth) : null}
           {tableBody}
         </table>
       );
@@ -1051,8 +1055,8 @@ class Table extends Component {
         </div>
       );
     }
-    const leftFixedWidth = this.columnManager.getLeftColumnsWidth(this.contentWidth);
-    const rightFixedWidth = this.columnManager.getRightColumnsWidth(this.contentWidth);
+    // const leftFixedWidth = this.columnManager.getLeftColumnsWidth(this.contentWidth);
+    // const rightFixedWidth = this.columnManager.getRightColumnsWidth(this.contentWidth);
     let expandIconWidth = expandIconAsCell ? 33 : 0;
     let parStyle = {}
     if(!fixed){
