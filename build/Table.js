@@ -462,7 +462,7 @@ var Table = function (_Component) {
       this.domWidthDiff = this.contentDomWidth - this.contentWidth;
     }
 
-    if (this.computeWidth <= this.contentWidth) {
+    if (this.computeWidth < this.contentWidth) {
       var contentWidthDiff = this.scrollbarWidth ? this.contentWidth - this.computeWidth - this.scrollbarWidth : this.contentWidth - this.computeWidth;
       //bordered的表格需要减去边框的差值1
       if (this.props.bordered) {
@@ -1097,7 +1097,7 @@ var Table = function (_Component) {
           if (fixed) {
             if (this.domWidthDiff > 0) {
               headStyle.overflow = 'hidden';
-              innerBodyStyle.overflowX = 'scroll'; //兼容expand场景、子表格含有固定列的场景
+              innerBodyStyle.overflowX = 'auto'; //兼容expand场景、子表格含有固定列的场景
             } else {
               bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
             }
