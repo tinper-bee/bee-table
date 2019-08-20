@@ -244,7 +244,7 @@ $icon-color:#505F79;
     padding-right: 20px;
   }
 
-   &-fixed-header &-fixed-left &-body-inner {
+   &-fixed-header:not(.u-table-hide-header) &-fixed-left &-body-inner {
     padding-right: 0px;
   }
 

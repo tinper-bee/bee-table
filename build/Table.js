@@ -1496,6 +1496,9 @@ var Table = function (_Component) {
     if (props.useFixedHeader || props.scroll && props.scroll.y) {
       className += ' ' + clsPrefix + '-fixed-header';
     }
+    if (!props.showHeader) {
+      className += ' ' + clsPrefix + '-hide-header';
+    }
     if (props.bordered) {
       className += ' ' + clsPrefix + '-bordered';
     }

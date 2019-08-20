@@ -304,7 +304,7 @@
   .u-table-fixed-left .u-table-body-inner {
     margin-right: -20px;
     padding-right: 20px; }
-  .u-table-fixed-header .u-table-fixed-left .u-table-body-inner {
+  .u-table-fixed-header:not(.u-table-hide-header) .u-table-fixed-left .u-table-body-inner {
     padding-right: 0px; }
   .u-table-fixed-header .u-table-body-inner {
     height: 100%;
