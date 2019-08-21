@@ -241,6 +241,9 @@ import multiSelect from "bee-table/lib/multiSelect.js";
 | draggable | 可拖拽交换列 | boolean | false |
 | dragborder | 可拖拽改变列宽 | boolean | false |
 | checkMinSize | 当前表格显示最少列数 | boolean | false |
+| onDragEnd | 交换列后的回调函数 | function | (event,data,columns) |
+| onDrop | 交换列的回调函数 | function | (event,data,columns) |
+
 
  
 

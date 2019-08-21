@@ -43,7 +43,7 @@ export default function dragColumn(Table) {
         return data
     }
 
-    onDrop=(event,data)=>{
+    onDragEnd=(event,data)=>{
       let {dragSource,dragTarg} = data;
       let {columns} = this.state; 
       let sourceIndex = -1,targetIndex = -1;
@@ -65,14 +65,11 @@ export default function dragColumn(Table) {
         newDate.title = da.title;
         _newColumns.push(newDate);
       });
-      // console.log(" onDrop-------columns--- ",columns);
       this.setState({
         columns:_newColumns//cloneDeep(columns)
       });
-      // console.log(" onDrop-------columns--- ",_newColumns);
-      // console.log(columns === _newColumns);
-      if(this.props.onDrop){
-        this.props.onDrop(event,data,columns);
+      if(this.props.onDragEnd){
+        this.props.onDragEnd(event,data,columns);
       }
     }
  
@@ -86,11 +83,6 @@ export default function dragColumn(Table) {
           dragborder,
           draggable,
           className,
-          columns,
-          onDragStart,
-          onDragEnter,
-          onDragOver,
-          onDrop,
           ...others
       } = this.props;
       return (
@@ -99,10 +91,7 @@ export default function dragColumn(Table) {
               columns={this.state.columns}
               data={data}
               className={`${className} u-table-drag-border`}
-              onDragStart={this.onDragStart}
-              onDragOver={this.onDragOver}
-              onDrop={this.onDrop}
-              onDragEnter={this.onDragEnter}
+              onDragEnd={this.onDragEnd}
               draggable={draggable}
               dragborder={dragborder}
           />)

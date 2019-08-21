@@ -395,7 +395,7 @@ class Table extends Component {
   }
 
   getHeader(columns, fixed, leftFixedWidth, rightFixedWidth) {
-    const { filterDelay, onFilterChange, onFilterClear, filterable, showHeader, expandIconAsCell, clsPrefix, onDragStart, onDragEnter, onDragOver, onDrop, draggable,
+    const { filterDelay, onFilterChange, onFilterClear, filterable, showHeader, expandIconAsCell, clsPrefix, onDragStart, onDragEnter, onDragOver, onDrop,onDragEnd, draggable,
       onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey, minColumnWidth, headerHeight,afterDragColWidth,headerScroll ,bordered,onDropBorder,onDraggingBorder} = this.props;
     const rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
@@ -408,7 +408,7 @@ class Table extends Component {
     }
 
     const trStyle = headerHeight&&!fixed ? { height: headerHeight } : (fixed ? this.getHeaderRowStyle(columns, rows) : null);
-    let drop = draggable ? { onDragStart, onDragOver, onDrop, onDragEnter, draggable } : {};
+    let drop = draggable ? { onDragStart, onDragOver, onDrop,onDragEnd, onDragEnter, draggable } : {};
     let dragBorder = dragborder ? { onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey,onDropBorder,onDraggingBorder } : {};
     let contentWidthDiff = 0;
     //非固定表格,宽度不够时自动扩充

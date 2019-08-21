@@ -2,7 +2,7 @@
 *
 * @title 拖拽改变列顺序
 * @parent 列操作-拖拽 Drag
-* @description 点击选择表头并左右拖拽，可以改变表格列顺序。onDrop方法是拖拽交换列后触发的回调函数。注意：固定列不可以交换。
+* @description 点击选择表头并左右拖拽，可以改变表格列顺序。 onDragEnd 方法是拖拽交换列后触发的回调函数。注意：固定列不可以交换。
 * demo1001
 */
 import React, { Component } from 'react';
@@ -69,8 +69,16 @@ class Demo22 extends Component {
             columns={columns} 
             data={data} 
             bordered
-            draggable={true} 
+            draggable={true}
+
             onDrop ={(event,data,columns)=>{
+              console.log("--拖拽交换列onDrop触发事件");
+              console.log("event.target:",event.target);
+              console.log("data:",data);
+              console.log("拖拽完成后的columns:",columns);
+            }}
+
+            onDragEnd ={(event,data,columns)=>{
               console.log("--拖拽交换列后触发事件");
               console.log("event.target:",event.target);
               console.log("data:",data);
