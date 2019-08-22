@@ -315,6 +315,12 @@ var TableHeader = function (_Component) {
       var event = _utils.Event.getEvent(e),
           target = _utils.Event.getTarget(event);
       _this.currentDome.setAttribute('draggable', false); //添加交换列效果
+
+      var data = _this.getCurrentEventData(_this._dragCurrent);
+      if (!data) return;
+      if (!_this.props.onDrop) return;
+      // this.props.onDrop(event,target);
+      _this.props.onDrop(event, { dragSource: _this.currentObj, dragTarg: data });
     };
 
     _this.onDragEnter = function (e) {
@@ -340,8 +346,8 @@ var TableHeader = function (_Component) {
       var data = _this.getCurrentEventData(_this._dragCurrent);
       if (!data) return;
       if (!_this.currentObj || _this.currentObj.key == data.key) return;
-      if (!_this.props.onDrop) return;
-      _this.props.onDrop(event, { dragSource: _this.currentObj, dragTarg: data });
+      if (!_this.props.onDragEnd) return;
+      _this.props.onDragEnd(event, { dragSource: _this.currentObj, dragTarg: data });
     };
 
     _this.onDragLeave = function (e) {

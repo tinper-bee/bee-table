@@ -566,6 +566,7 @@ var Table = function (_Component) {
         onDragEnter = _props.onDragEnter,
         onDragOver = _props.onDragOver,
         onDrop = _props.onDrop,
+        onDragEnd = _props.onDragEnd,
         draggable = _props.draggable,
         onMouseDown = _props.onMouseDown,
         onMouseMove = _props.onMouseMove,
@@ -592,7 +593,7 @@ var Table = function (_Component) {
     }
 
     var trStyle = headerHeight && !fixed ? { height: headerHeight } : fixed ? this.getHeaderRowStyle(columns, rows) : null;
-    var drop = draggable ? { onDragStart: onDragStart, onDragOver: onDragOver, onDrop: onDrop, onDragEnter: onDragEnter, draggable: draggable } : {};
+    var drop = draggable ? { onDragStart: onDragStart, onDragOver: onDragOver, onDrop: onDrop, onDragEnd: onDragEnd, onDragEnter: onDragEnter, draggable: draggable } : {};
     var dragBorder = dragborder ? { onMouseDown: onMouseDown, onMouseMove: onMouseMove, onMouseUp: onMouseUp, dragborder: dragborder, onThMouseMove: onThMouseMove, dragborderKey: dragborderKey, onDropBorder: onDropBorder, onDraggingBorder: onDraggingBorder } : {};
     var contentWidthDiff = 0;
     //非固定表格,宽度不够时自动扩充
