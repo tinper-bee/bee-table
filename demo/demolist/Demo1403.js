@@ -13,16 +13,54 @@ import BigData from "../../src/lib/bigData";
 import multiSelect from '../../src/lib/multiSelect';
 import filterColumn from '../../src/lib/filterColumn';
 
-let  ComplexTable = filterColumn(multiSelect(BigData(Table), Checkbox), Popover, Icon);
+let  ComplexTable = filterColumn(BigData(Table), Popover, Icon);
 
 const columns = [
+    {
+      className: 'u-table-multiSelect-column',
+      title: (
+        <Checkbox
+          className="table-checkbox"
+        />
+      ),
+      key: "checkbox",
+      dataIndex: "checkbox",
+      fixed:"left",
+      width: 49, 
+      render: (text, record, index) => {
+        const obj = {
+          children: <Checkbox
+                      key={index}
+                      className="table-checkbox"
+                    />,
+          props: {},
+        };
+        if (index % 50 === 0) {
+          obj.props.rowSpan = 50;
+        } else {
+          obj.props.rowSpan = 0;
+        }
+        return obj;
+      }
+    },
     {
         title:'序号',
         dataIndex:'index',
         width:'80',
         key:'index',
+        fixed:'left',
         render:(text,record,index)=>{
-            return index
+            // return index
+            const obj = {
+              children: index,
+              props: {},
+            };
+            if (index % 50 === 0) {
+              obj.props.rowSpan = 50;
+            } else {
+              obj.props.rowSpan = 0;
+            }
+            return obj;
         }
     },
     {
@@ -46,7 +84,7 @@ const columns = [
   { title: "年龄", dataIndex: "c", key: "c", width: 200 }
 ];
 
-const data = [ ...new Array(10000) ].map((e, i) => {
+const data = [ ...new Array(150) ].map((e, i) => {
     const rs = { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };
     if(i%3==0){
         rs.b = '女';

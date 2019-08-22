@@ -62,16 +62,26 @@ class Demo30 extends Component {
     }
   }
 
+  handleClick = () => {
+    this.setState({
+      data
+    })
+  }
+
   render() {
     return (
+      <div>
+        <button onClick={this.handleClick}>更新data</button>
         <BigDataTable
           columns={columns}
-          data={data}
+          data={this.state.data}
           scroll={{y:300}}
           onRowClick={(record, index, indent) => {
             console.log('currentIndex--'+index);
           }}
         />
+      </div>
+        
 
      
     );
