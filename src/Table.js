@@ -102,7 +102,7 @@ const defaultProps = {
   onDragRowStart: ()=>{},
   bodyDisplayInRow: true,
   headerDisplayInRow: true,
-  showRowNum: true,
+  showRowNum: false,
 };
 
 class Table extends Component {
