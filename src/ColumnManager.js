@@ -7,7 +7,7 @@ import Icon from 'bee-icon';
 export default class ColumnManager {
   _cached = {}
 
-  constructor(columns, elements,originWidth,rowDraggAble) {
+  constructor(columns, elements,originWidth,rowDraggAble,showRowNum) {
     //判断是否使用行拖拽
     if(rowDraggAble) {
       let dragHandleColumn =[{
@@ -23,8 +23,30 @@ export default class ColumnManager {
       }]
       columns = dragHandleColumn.concat(columns);
     }
+    columns = this.addOrderColumn(columns,showRowNum);
+    
     this.columns = columns || this.normalize(elements);
+
     this.originWidth = originWidth;
+  }
+
+  // 向数据列中添加一列:序号
+  addOrderColumn = (columns, showRowNum) => {
+    if(!showRowNum)return columns;
+    let order = {
+      dataIndex: showRowNum.key || '_index',
+      key:'_index',
+      fixed:showRowNum.fixed || 'left',
+      width:showRowNum.width || 50,
+      title: showRowNum.name || '序号',
+    }
+    if(columns.length > 0 && columns[0].dataIndex !== 'checkbox' && columns[0].dataIndex !== 'radio'){ // 多选表格/单选表格时放在第二列,其他情况放到第一列
+      columns = [order].concat(columns);
+    }
+    else{
+      columns.splice(1,0,order); // splice方法改变原数组,返回切割出的数组,此处为[]
+    }
+    return columns;
   }
 
   isAnyColumnsFixed() {
@@ -169,7 +191,8 @@ export default class ColumnManager {
     return element && (element.type === Column || element.type === ColumnGroup);
   }
 
-  reset(columns, elements) {
+  reset(columns, elements, showRowNum) {
+    columns = this.addOrderColumn(columns,showRowNum);
     this.columns = columns || this.normalize(elements);
     this._cached = {};
   }
