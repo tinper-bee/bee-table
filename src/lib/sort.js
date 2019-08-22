@@ -244,8 +244,13 @@ export default function sort(Table, Icon) {
       }
 
       let sortButton;
-      if (column.sorter) {
+
+      // sorter和sortEnable均可触发排序,且sorter优先级更高
+      if (column.sorter || column.sortEnable ) {
         //大于0说明不是升序就是降序，判断orderNum有没有值，没有值赋值
+        if ( column.sortEnable && !column.sorter) {
+          column.sorter = column.type === 'number' ? this.numberSortFn(column.dataIndex) : this.defaultSortFn(column.dataIndex);
+        }
         if (iconTypeIndex > 0 && !column.orderNum && mode == "multiple") {
           column.orderNum = this.getOrderNum();
         }
@@ -269,6 +274,17 @@ export default function sort(Table, Icon) {
         </span>;
       return column;
     };
+
+    // 默认的比较函数,即字符串比较函数
+    defaultSortFn = (key) => (a, b)=> {
+      return a[key] > b[key] ? 1 : -1;
+    }
+    // 数值比较函数
+    numberSortFn = (key) => (a, b)=> {
+        let numberA = parseFloat(a[key]);
+        let numberB = parseFloat(b[key]);
+        return numberA > numberB ? 1 : -1;
+    }
 
     _flatToColumn(flatColumns){
       const colLen = flatColumns.length;
