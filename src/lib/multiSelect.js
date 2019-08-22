@@ -193,10 +193,18 @@ export default function multiSelect(Table, Checkbox) {
         return _defaultColumns.concat(columns);
     }
 
+    // 实现行点击时触发多选框勾选的需求
+    onRowClick = (record,index,event) =>{
+      this.onCheckboxChange('',record, index)();
+      if( this.props.onRowClick ){
+        this.props.onRowClick(record,index,event);
+      }
+    }
+
     render() {
       const {columns} = this.props;
       const {data} = this.state;
-      return <Table {...this.props} columns={this.getDefaultColumns(columns)} data={data} />
+      return <Table {...this.props} columns={this.getDefaultColumns(columns)} data={data} onRowClick={this.onRowClick}/>
     }
   };
 }
