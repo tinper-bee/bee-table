@@ -682,7 +682,21 @@ class Table extends Component {
     for (let i = 0; i < data.length; i++) {
       let isHiddenExpandIcon;
       if ( props.showRowNum ){
-        data[i][props.showRowNum.key || '_index'] = i + (props.showRowNum.base || 0);
+        switch(props.showRowNum.type){
+          case 'number':{
+            data[i][props.showRowNum.key || '_index'] = i + (props.showRowNum.base || 0);
+            break;
+          }
+          case 'ascii': {
+            data[i][props.showRowNum.key || '_index'] = String.fromCharCode(i + (props.showRowNum.base || 0).charCodeAt());
+            break;
+          }
+          default: {
+            data[i][props.showRowNum.key || '_index'] = i + (props.showRowNum.base || 0);
+            break;
+          }
+        }
+        
       } 
       const record = data[i];
       const key = this.getRowKey(record, i);
