@@ -640,7 +640,7 @@ var TableRow = function (_Component) {
         // key={hoverKey}
         , ref: this.bindElement
       },
-      cells.length > 0 ? cells : _react2["default"].createElement('td', null)
+      cells.length > 0 ? cells : _react2["default"].createElement('td', { style: { width: 0, padding: 0 } })
     );
   };
 

@@ -68,7 +68,7 @@ class DemoGroup extends Component {
     render () {
         return (
             <Row>
-            {[DemoArray[39]].map((child,index) => {
+            {[DemoArray[41]].map((child,index) => {
 
                 return (
             <Demo example= {child.example} title= {child.title} code= {child.code} scss_code= {child.scss_code} desc= {child.desc} key= {index}/>

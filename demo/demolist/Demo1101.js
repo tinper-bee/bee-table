@@ -29,7 +29,7 @@ const columns16 = [
   },
   { title: "订单编号", dataIndex: "a", key: "a", width: 250 },
   { id: "123", title: "单据日期", dataIndex: "b", key: "b", width: 100 },
-  { title: "供应商", dataIndex: "c", key: "c", width: 200 },
+  { title: "供应商", dataIndex: "c", key: "c", width: 200, fixed:'right' },
   
 ];
 const columns17 = [
@@ -96,15 +96,16 @@ class Demo16 extends Component {
 
   render() {
     return (
-      <MultiSelectTable
+      <Table
         className="expanded-table"
         columns={columns16}
         data={data16}
         onExpand={this.getData}
         expandedRowRender={this.expandedRowRender}
-        expandIconAsCell={true}
-        collapsedIcon={<Icon type='uf-anglearrowpointingtoright'/>}
-        expandedIcon={<Icon type='uf-treearrow-down'/>}
+        // expandIconAsCell={true}
+        expandIconColumnIndex={2}
+        // collapsedIcon={<Icon type='uf-anglearrowpointingtoright'/>}
+        // expandedIcon={<Icon type='uf-treearrow-down'/>}
       />
     );
   }

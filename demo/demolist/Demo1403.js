@@ -35,11 +35,19 @@ const columns = [
                     />,
           props: {},
         };
-        if (index % 50 === 0) {
-          obj.props.rowSpan = 50;
+        if (index === 0) {
+          obj.props.rowSpan = 100;
         } else {
           obj.props.rowSpan = 0;
         }
+        obj.props.mergeEndIndex = 100;
+        // if (index < 50 ) {
+        //   obj.props.mergeEndIndex = 50;
+        // } else if (index > 50 && index < 100) {
+        //   obj.props.mergeEndIndex = 100;
+        // } else if (index > 100) {
+        //   obj.props.mergeEndIndex = 150;
+        // }
         return obj;
       }
     },
@@ -55,11 +63,20 @@ const columns = [
               children: index,
               props: {},
             };
-            if (index % 50 === 0) {
-              obj.props.rowSpan = 50;
+            if (index === 0) {
+              obj.props.rowSpan = 100;
             } else {
               obj.props.rowSpan = 0;
             }
+            obj.props.mergeEndIndex = 100;
+            // if (index < 50 ) {
+            //   obj.props.mergeEndIndex = 50;
+            // } else if (index > 50 && index < 100) {
+            //   obj.props.mergeEndIndex = 100;
+            // } else if (index > 100) {
+            //   obj.props.mergeEndIndex = 150;
+            // }
+            // mergeEndIndex: 滚动加载场景，合并表行时，设置合并结束位置的行 index 值
             return obj;
         }
     },
@@ -84,7 +101,7 @@ const columns = [
   { title: "年龄", dataIndex: "c", key: "c", width: 200 }
 ];
 
-const data = [ ...new Array(150) ].map((e, i) => {
+const data = [ ...new Array(100) ].map((e, i) => {
     const rs = { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };
     if(i%3==0){
         rs.b = '女';
