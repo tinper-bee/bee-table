@@ -249,7 +249,7 @@ export default function sort(Table, Icon) {
       if (column.sorter || column.sortEnable ) {
         //大于0说明不是升序就是降序，判断orderNum有没有值，没有值赋值
         if ( column.sortEnable && !column.sorter) {
-          column.sorter = column.type === 'number' ? this.numberSortFn(column.dataIndex) : this.defaultSortFn(column.dataIndex);
+          column.sorter = column.fieldType === 'number' ? this.numberSortFn(column.dataIndex) : this.defaultSortFn(column.dataIndex);
         }
         if (iconTypeIndex > 0 && !column.orderNum && mode == "multiple") {
           column.orderNum = this.getOrderNum();
