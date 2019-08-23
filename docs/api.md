@@ -80,6 +80,8 @@ import 'bee-table/build/Table.css';
 | bodyDisplayInRow |  设置表体的内容显示一行，超出显示省略号 | bool | 
 | size | 表格大小 | `sm / md / lg` | 'md' |
 | hideHeaderScroll | 表体无数据时，表头下是否显示滚动条，默认显示 | bool | false |
+| $\color{red}{*}$showRowNum | 展示序号功能，false时不展示，true时展示默认情况，可传入自定义配置信息 | bool / obj:{name: '序号', key: '_index', // 在数据中存储的key值width: 50,base: 0,// 排序的基准值,为数字或者字母type:'number', // 排序类型,默认为number类型,支持单字母排序(type='ascii')} | false |
+
 > 快捷键部分参考示例 (快捷键在table中的简单使用应用)
 
 *注意: data参数中的key值必需，否则会导致部分功能出现问题！建议使用唯一的值，如id*
@@ -126,7 +128,9 @@ import 'bee-table/build/Table.css';
 | filterDropdownIncludeKeys | 能够设置指定的下拉条件项，通过设置keys 其中string条件可设置:LIKE,ULIKE,EQ,UEQ,START,END.number条件可设置:GT,GTEQ,LT,LTEQ,EQ,UEQ | array | [] 不设置此属性为显示所有
 | filterInputNumberOptions | 数值框接收的props，具体属性参考bee-input-number | object | null
 | textAlign | 内容对齐方式，默认是左对齐（'left、right、center'） | string |
-
+| $\color{red}{*}$sortEnable | 开启默认排序,根据fieldType属性确定排序规则，默认按字符串排序;优先级低于sorter属性 | bool | false |
+| $\color{red}{*}$linkConfig | 链接信息，fieldType为link时可用;自定义render时无效 | object | null |
+| $\color{red}{*}$fieldType | 列类型，可选`number`,`link` | string | null |
 
 ### 高阶函数
 Table内部封装了七个高阶组件，接收基础 Table 组件作为输入，输出一个新的复杂 Table 组件。高阶组件让代码更具有复用性、逻辑性与抽象特征。
