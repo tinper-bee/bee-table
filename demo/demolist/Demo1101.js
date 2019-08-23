@@ -29,7 +29,7 @@ const columns16 = [
   },
   { title: "订单编号", dataIndex: "a", key: "a", width: 250 },
   { id: "123", title: "单据日期", dataIndex: "b", key: "b", width: 100 },
-  { title: "供应商", dataIndex: "c", key: "c", width: 200 },
+  { title: "供应商", dataIndex: "c", key: "c", width: 200, fixed:'right' },
   
 ];
 const columns17 = [

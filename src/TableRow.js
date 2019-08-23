@@ -525,7 +525,7 @@ class TableRow extends Component{
         // key={hoverKey}
         ref={this.bindElement}
       >
-        {cells.length>0?cells:<td></td>}
+        {cells.length>0?cells:<td style={{width:0,padding:0}}></td>}
       </tr>
     );
   }

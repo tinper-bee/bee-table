@@ -105,7 +105,7 @@ import 'bee-table/build/Table.css';
 |:--|:---|:--|:---|
 |key|列的键|string|-|
 |className|传入列的classname|String	|-|
-|colSpan|该列的colSpan，设置列合并|Number|-|
+|colSpan|表头列合并,设置为 0 时，不渲染|Number|-|
 |title|列的标题|node|-|
 |dataIndex|	显示数据记录的字段|String|-|
 |width|宽度的特定比例根据列的宽度计算|String/Number|-|
@@ -126,6 +126,7 @@ import 'bee-table/build/Table.css';
 | filterDropdownIncludeKeys | 能够设置指定的下拉条件项，通过设置keys 其中string条件可设置:LIKE,ULIKE,EQ,UEQ,START,END.number条件可设置:GT,GTEQ,LT,LTEQ,EQ,UEQ | array | [] 不设置此属性为显示所有
 | filterInputNumberOptions | 数值框接收的props，具体属性参考bee-input-number | object | null
 | textAlign | 内容对齐方式，默认是左对齐（'left、right、center'） | string |
+| mergeEndIndex | 大数据量滚动加载场景，合并表格行时，设置合并结束位置的行 index 值，设置在列 render 函数中的 props 属性上 | Number |
 
 
 ### 高阶函数

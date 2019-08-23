@@ -64,16 +64,16 @@ class Demo30 extends Component {
 
   render() {
     return (
+      <div>
         <BigDataTable
           columns={columns}
-          data={data}
+          data={this.state.data}
           scroll={{y:300}}
           onRowClick={(record, index, indent) => {
             console.log('currentIndex--'+index);
           }}
         />
-
-     
+      </div>
     );
   }
 }
