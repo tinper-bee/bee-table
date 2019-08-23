@@ -382,7 +382,7 @@ function sort(Table, Icon) {
 
     this.defaultSortFn = function (key) {
       return function (a, b) {
-        return a[key] > b[key] ? 1 : -1;
+        return a[key] >= b[key] ? 1 : -1;
       };
     };
 
@@ -390,7 +390,7 @@ function sort(Table, Icon) {
       return function (a, b) {
         var numberA = parseFloat(a[key]);
         var numberB = parseFloat(b[key]);
-        return numberA > numberB ? 1 : -1;
+        return numberA >= numberB ? 1 : -1;
       };
     };
   }, _temp;
