@@ -28,10 +28,51 @@ class TableCell extends Component{
       onCellClick(record, e);
     }
   }
+
+  //  渲染链接类型
+  renderLinkType = ( data, record, config={}, index) => {
+    const { url, urlIndex, linkType, className, underline, descIndex, desc, linkColor } = config;
+    let linkUrl = '';
+    if(url){
+      linkUrl = url(data, record, index);
+    }
+    else if(urlIndex){
+      linkUrl = record[urlIndex];
+    }
+    if(linkUrl){
+      let link = () => {
+        window.open(linkUrl,linkType || '_blank');
+      }
+      let cls = 'u-table-link ';
+      if(className){
+        cls += `${className} `;
+      }
+      if(underline){
+        cls += 'u-table-link-underline ';
+      }
+      let title = '';
+      
+      if(desc === true){
+        title = linkUrl;
+      }
+      else if( typeof desc === 'string'){
+        title = desc;
+      }
+      else if( typeof desc === 'function'){
+        title = desc(data, record, index);
+      }
+      else if(descIndex){
+        title = record[descIndex];
+      }
+      return <span onClick={link} className={cls} style={{color:linkColor || ''}} title={title}>{data}</span>
+    }
+    return data;
+  }
+
   render() {
     const { record, indentSize, clsPrefix, indent,
             index, expandIcon, column ,fixed,showSum, bodyDisplayInRow,lazyStartIndex,lazyEndIndex} = this.props;
-    const { dataIndex, render } = column;
+    const { dataIndex, render, fieldType, linkConfig } = column;
     let {className = ''} = column;
 
     let text = objectPath.get(record, dataIndex);
@@ -49,6 +90,18 @@ class TableCell extends Component{
       }
     }
 
+    // 根据 fieldType 来渲染数据
+    if(!render){
+      switch(column.fieldType){
+        case 'link':{
+          text = this.renderLinkType(text, record, column.linkConfig, index);
+          break;
+        }
+        default : {
+          break;
+        }
+      }
+    }
 
     if (this.isInvalidRenderCellText(text)) {
       text = null;

@@ -32,7 +32,9 @@ export default class ColumnManager {
 
   // 向数据列中添加一列:序号
   addOrderColumn = (columns, showRowNum) => {
-    if(!showRowNum)return columns;
+    if(!showRowNum){
+      return columns
+    }
     let order = {
       dataIndex: showRowNum.key || '_index',
       key:'_index',

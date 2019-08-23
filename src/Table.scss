@@ -711,6 +711,13 @@ $icon-color:#505F79;
     height: 40px;
   }
 
+  .u-table-link{
+    cursor: pointer;
+    color: #0073E1;
+  }
+  .u-table-link-underline:hover{
+    text-decoration:underline;
+  }
 }
 
 .u-table:focus{
