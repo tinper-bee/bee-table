@@ -44,6 +44,55 @@ var TableCell = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
+    _this.renderLinkType = function (data, record) {
+      var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      var index = arguments[3];
+      var url = config.url,
+          urlIndex = config.urlIndex,
+          linkType = config.linkType,
+          className = config.className,
+          underline = config.underline,
+          descIndex = config.descIndex,
+          desc = config.desc,
+          linkColor = config.linkColor;
+
+      var linkUrl = '';
+      if (url) {
+        linkUrl = url(data, record, index);
+      } else if (urlIndex) {
+        linkUrl = record[urlIndex];
+      }
+      if (linkUrl) {
+        var link = function link() {
+          window.open(linkUrl, linkType || '_blank');
+        };
+        var cls = 'u-table-link ';
+        if (className) {
+          cls += className + ' ';
+        }
+        if (underline) {
+          cls += 'u-table-link-underline ';
+        }
+        var title = '';
+
+        if (desc === true) {
+          title = linkUrl;
+        } else if (typeof desc === 'string') {
+          title = desc;
+        } else if (typeof desc === 'function') {
+          title = desc(data, record, index);
+        } else if (descIndex) {
+          title = record[descIndex];
+        }
+        return _react2["default"].createElement(
+          'span',
+          { onClick: link, className: cls, style: { color: linkColor || '' }, title: title },
+          data
+        );
+      }
+      return data;
+    };
+
     _this.isInvalidRenderCellText = _this.isInvalidRenderCellText.bind(_this);
     _this.handleClick = _this.handleClick.bind(_this);
     return _this;
@@ -63,6 +112,9 @@ var TableCell = function (_Component) {
     }
   };
 
+  //  渲染链接类型
+
+
   TableCell.prototype.render = function render() {
     var _props2 = this.props,
         record = _props2.record,
@@ -78,7 +130,9 @@ var TableCell = function (_Component) {
         lazyStartIndex = _props2.lazyStartIndex,
         lazyEndIndex = _props2.lazyEndIndex;
     var dataIndex = column.dataIndex,
-        render = column.render;
+        render = column.render,
+        fieldType = column.fieldType,
+        linkConfig = column.linkConfig;
     var _column$className = column.className,
         className = _column$className === undefined ? '' : _column$className;
 
@@ -96,6 +150,21 @@ var TableCell = function (_Component) {
         rowSpan = tdProps.rowSpan > lazyEndIndex && lazyEndIndex > 5 ? lazyEndIndex - index : tdProps.rowSpan;
         colSpan = tdProps.colSpan;
         text = text.children;
+      }
+    }
+
+    // 根据 fieldType 来渲染数据
+    if (!render) {
+      switch (column.fieldType) {
+        case 'link':
+          {
+            text = this.renderLinkType(text, record, column.linkConfig, index);
+            break;
+          }
+        default:
+          {
+            break;
+          }
       }
     }
 

@@ -114,7 +114,10 @@ var propTypes = {
   size: _propTypes2["default"].oneOf(['sm', 'md', 'lg']),
   rowDraggAble: _propTypes2["default"].bool,
   onDropRow: _propTypes2["default"].func,
-  onDragRowStart: _propTypes2["default"].func
+  onDragRowStart: _propTypes2["default"].func,
+  bodyDisplayInRow: _propTypes2["default"].bool, // 表格内容超出列宽度时进行换行 or 以...形式展现
+  headerDisplayInRow: _propTypes2["default"].bool, // 表头内容超出列宽度时进行换行 or 以...形式展现
+  showRowNum: _propTypes2["default"].object // 表格是否自动生成序号,格式为{base:number || 0,defaultKey:string || '_index',defaultName:string || '序号'}
 };
 
 var defaultProps = {
@@ -161,7 +164,10 @@ var defaultProps = {
   size: 'md',
   rowDraggAble: false,
   onDropRow: function onDropRow() {},
-  onDragRowStart: function onDragRowStart() {}
+  onDragRowStart: function onDragRowStart() {},
+  bodyDisplayInRow: true,
+  headerDisplayInRow: true,
+  showRowNum: false
 };
 
 var Table = function (_Component) {
@@ -292,7 +298,7 @@ var Table = function (_Component) {
 
     var expandedRowKeys = [];
     var rows = [].concat(_toConsumableArray(props.data));
-    _this.columnManager = new _ColumnManager2["default"](props.columns, props.children, props.originWidth, props.rowDraggAble);
+    _this.columnManager = new _ColumnManager2["default"](props.columns, props.children, props.originWidth, props.rowDraggAble, props.showRowNum); // 加入props.showRowNum参数
     _this.store = (0, _createStore2["default"])({ currentHoverKey: null });
     _this.firstDid = true;
     if (props.defaultExpandAllRows) {
@@ -376,12 +382,12 @@ var Table = function (_Component) {
       });
     }
     if (nextProps.columns && nextProps.columns !== this.props.columns) {
-      this.columnManager.reset(nextProps.columns);
+      this.columnManager.reset(nextProps.columns, null, this.props.showRowNum); // 加入this.props.showRowNum参数
       if (nextProps.columns.length !== this.props.columns.length && this.refs && this.bodyTable) {
         this.scrollTop = this.bodyTable.scrollTop;
       }
     } else if (nextProps.children !== this.props.children) {
-      this.columnManager.reset(null, nextProps.children);
+      this.columnManager.reset(null, nextProps.children, this.porps.showRowNum); // 加入this.props.showRowNum参数
     }
     //适配lazyload
     if (nextProps.scrollTop > -1) {
@@ -429,6 +435,7 @@ var Table = function (_Component) {
   };
 
   Table.prototype.componentWillUnmount = function componentWillUnmount() {
+    // 移除绑定事件,避免内存泄漏
     this.contentTable = null;
     _utils.EventUtil.removeHandler(this.contentTable, 'keydown', this.onKeyDown);
     _utils.EventUtil.removeHandler(this.contentTable, 'focus', this.onFocus);
@@ -830,6 +837,9 @@ var Table = function (_Component) {
     var lazyEndIndex = props.lazyLoad && props.lazyLoad.endIndex ? props.lazyLoad.endIndex : -1;
     for (var i = 0; i < data.length; i++) {
       var isHiddenExpandIcon = void 0;
+      if (props.showRowNum) {
+        data[i][props.showRowNum.key || '_index'] = i + (props.showRowNum.base || 0);
+      }
       var record = data[i];
       var key = this.getRowKey(record, i);
       var childrenColumn = record[childrenColumnName];
@@ -1041,7 +1051,7 @@ var Table = function (_Component) {
         useFixedHeader = _props4.useFixedHeader,
         data = _props4.data;
 
-    var bodyStyle = _extends({}, this.props.bodyStyle);
+    var bodyStyle = _extends({}, this.props.bodyStyle); // 这里为什么不写在上面?
     var headStyle = {};
     var innerBodyStyle = {};
     var leftFixedWidth = this.columnManager.getLeftColumnsWidth(this.contentWidth);

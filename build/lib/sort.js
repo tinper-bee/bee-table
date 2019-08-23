@@ -125,6 +125,11 @@ function sort(Table, Icon) {
     //点击置为“”时，动态的设置相关column的orderNum值。并排序
 
 
+    // 默认的比较函数,即字符串比较函数
+
+    // 数值比较函数
+
+
     SortTable.prototype._flatToColumn = function _flatToColumn(flatColumns) {
       var colLen = flatColumns.length;
       var parentIndex = void 0,
@@ -335,8 +340,13 @@ function sort(Table, Icon) {
       }
 
       var sortButton = void 0;
-      if (column.sorter) {
+
+      // sorter和sortEnable均可触发排序,且sorter优先级更高
+      if (column.sorter || column.sortEnable) {
         //大于0说明不是升序就是降序，判断orderNum有没有值，没有值赋值
+        if (column.sortEnable && !column.sorter) {
+          column.sorter = column.fieldType === 'number' ? _this3.numberSortFn(column.dataIndex) : _this3.defaultSortFn(column.dataIndex);
+        }
         if (iconTypeIndex > 0 && !column.orderNum && mode == "multiple") {
           column.orderNum = _this3.getOrderNum();
         }
@@ -368,6 +378,20 @@ function sort(Table, Icon) {
         sortButton
       );
       return column;
+    };
+
+    this.defaultSortFn = function (key) {
+      return function (a, b) {
+        return a[key] > b[key] ? 1 : -1;
+      };
+    };
+
+    this.numberSortFn = function (key) {
+      return function (a, b) {
+        var numberA = parseFloat(a[key]);
+        var numberB = parseFloat(b[key]);
+        return numberA > numberB ? 1 : -1;
+      };
     };
   }, _temp;
 }

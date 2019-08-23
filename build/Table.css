@@ -599,6 +599,11 @@
   .u-table .u-table-drag-hidden-cont {
     width: 100px;
     height: 40px; }
+  .u-table .u-table-link {
+    cursor: pointer;
+    color: #0073E1; }
+  .u-table .u-table-link-underline:hover {
+    text-decoration: underline; }
 
 .u-table:focus {
   outline: none;
