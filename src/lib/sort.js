@@ -277,13 +277,13 @@ export default function sort(Table, Icon) {
 
     // 默认的比较函数,即字符串比较函数
     defaultSortFn = (key) => (a, b)=> {
-      return a[key] > b[key] ? 1 : -1;
+      return a[key] >= b[key] ? 1 : -1;
     }
     // 数值比较函数
     numberSortFn = (key) => (a, b)=> {
         let numberA = parseFloat(a[key]);
         let numberB = parseFloat(b[key]);
-        return numberA > numberB ? 1 : -1;
+        return numberA >= numberB ? 1 : -1;
     }
 
     _flatToColumn(flatColumns){
