@@ -72,7 +72,7 @@ class TableCell extends Component{
   render() {
     const { record, indentSize, clsPrefix, indent,
             index, expandIcon, column ,fixed,showSum, bodyDisplayInRow,lazyStartIndex,lazyEndIndex} = this.props;
-    const { dataIndex, render, fieldType, linkConfig } = column;
+    const { dataIndex, render, fieldType, linkConfig, fontColor, bgColor } = column;
     let {className = ''} = column;
 
     let text = objectPath.get(record, dataIndex);
@@ -141,7 +141,7 @@ class TableCell extends Component{
         className={className}
         onClick={this.handleClick}
         title={title}
-
+        style={{color:fontColor,backgroundColor:bgColor}}
       >
         {indentText}
         {expandIcon}
