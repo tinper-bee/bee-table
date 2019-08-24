@@ -125,7 +125,10 @@ class TableCell extends Component{
     if(column.fixed && !fixed){
       className = className+` ${clsPrefix}-fixed-columns-in-body`;
     }
-    if(column.textAlign){
+    if(column.contentAlign){
+      className =  className+` text-${column.contentAlign}`;
+    }
+    else if(column.textAlign){
       className =  className+` text-${column.textAlign}`;
     }
     if(typeof text == 'string' && bodyDisplayInRow){

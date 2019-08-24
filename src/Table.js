@@ -480,7 +480,8 @@ class Table extends Component {
         fixed: column.fixed,
         width: width,
         dataindex:column.dataIndex,
-        textAlign:column.textAlign
+        textAlign:column.textAlign,
+        titleAlign: column.titleAlign, // 标题水平对齐方式
       };
       if (column.onHeadCellClick) {
         cell.onClick = column.onHeadCellClick;

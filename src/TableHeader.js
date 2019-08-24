@@ -745,10 +745,15 @@ class TableHeader extends Component {
                 canDotDrag = "th-can-not-drag";
               }
               let thClassName = `${da.className}`?`${da.className}`:'';
-              if(da.textAlign){
+              if(da.titleAlign){
+                thClassName += ` text-${da.titleAlign} `;
+              }
+              else if(da.textAlign){
                 thClassName += ` text-${da.textAlign} `;
               }
+              
               delete da.textAlign;
+              delete da.titleAlign;
               const keyTemp = {};
               //避免key为undefined
               // if(da.dataindex && da.key ===undefined ){
