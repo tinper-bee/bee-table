@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import objectPath from 'object-path';
-
+import i18n from './lib/i18n';
+import { getComponentLocale } from 'bee-locale/build/tool';
 const propTypes = {
     record: PropTypes.object,
     clsPrefix: PropTypes.string,
@@ -30,7 +31,7 @@ class TableCell extends Component{
   }
 
   //  渲染链接类型
-  renderLinkType = ( data, record, config={}, index) => {
+  renderLinkType = ( data, record,  index, config={}) => {
     const { url, urlIndex, linkType, className, underline, descIndex, desc, linkColor } = config;
     let linkUrl = '';
     if(url){
@@ -69,6 +70,20 @@ class TableCell extends Component{
     return data;
   }
 
+  renderBoolType = ( data, record, index, config ) => {
+    let locale = getComponentLocale(this.props, this.context, 'Table', () => i18n);
+    let boolConfig = {...{ trueText: locale['bool_true'], falseText: locale['bool_false']},...config};
+    if(typeof data === 'string'){
+      if(data === 'false' || data === '0'){
+        return boolConfig.falseText;
+      }
+    }
+    else if(!data){
+      return boolConfig.falseText;
+    }
+    return boolConfig.trueText;
+  }
+
   render() {
     const { record, indentSize, clsPrefix, indent,
             index, expandIcon, column ,fixed,showSum, bodyDisplayInRow,lazyStartIndex,lazyEndIndex} = this.props;
@@ -94,7 +109,11 @@ class TableCell extends Component{
     if(!render){
       switch(column.fieldType){
         case 'link':{
-          text = this.renderLinkType(text, record, column.linkConfig, index);
+          text = this.renderLinkType(text, record, index, column.linkConfig);
+          break;
+        }
+        case 'bool':{
+          text = this.renderBoolType(text, record, index, column.boolConfig);
           break;
         }
         default : {
