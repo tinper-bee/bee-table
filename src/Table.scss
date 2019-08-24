@@ -466,6 +466,9 @@ $icon-color:#505F79;
       // overflow: hidden;
       // white-space: nowrap;
       // text-overflow: ellipsis;
+      .required {
+        color: #F22C1D;
+      }
       .bee-table-column-sorter {
         position: relative;
         margin-left: 4px;
@@ -487,6 +490,7 @@ $icon-color:#505F79;
           width: 34px;
           cursor: pointer;
         }
+        
        
       }
 

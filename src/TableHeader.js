@@ -784,6 +784,7 @@ class TableHeader extends Component {
               if(!da.fixed ){
                   return (<th {...da}  {...keyTemp} className={thClassName} data-th-fixed={da.fixed} data-line-key={da.key}
                   data-line-index={columIndex} data-th-width={da.width} data-type="draggable">
+                      {da.required ? <span className='required'>*</span>:''}
                       {da.children}
                       {
                         dragborder && columIndex != _rowLeng? <div ref={el => (this.gap = el)} data-line-key={da.key}
