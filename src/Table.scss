@@ -722,6 +722,10 @@ $icon-color:#505F79;
   .u-table-link-underline:hover{
     text-decoration:underline;
   }
+  .u-table-currency{
+    display: inline-block;
+    text-align: right;
+  }
 }
 
 .u-table:focus{

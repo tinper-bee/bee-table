@@ -72,7 +72,7 @@ class TableCell extends Component{
   }
 
   // 渲染布尔类型
-  renderBoolType = ( data, record, index, config={} ) => {
+  renderBoolType = ( data, config={} ) => {
     let locale = getComponentLocale(this.props, this.context, 'Table', () => i18n);
     let boolConfig = {...{ trueText: locale['bool_true'], falseText: locale['bool_false']},...config};
     if(typeof data === 'string'){
@@ -86,21 +86,25 @@ class TableCell extends Component{
     return boolConfig.trueText;
   }
 
-  // 渲染货币类型
-  renderCurrency = (data, record, index, config={}) => {
-    let number = formatMoney(data, config.precision || 2, config.thousand || true);
+  // 渲染整数/货币类型
+  renderNumber = (data, config={}, width=200) => {
+    console.log(config);
+    let number = formatMoney(data, config.precision, config.thousand);
     if(config.makeUp === false && number !== '0') {
       number = number.replace(/0*$/,'').replace(/\.$/,'');
     }
-    let res = <span className='u-table-currency-number'>{number}</span>;
+    let numberWidth = parseInt(width) - 16; // 减去默认的左右padding共计16px
+    let res = <span className='u-table-currency-number' >{number}</span>;
     let pre = config.preSymbol ? <span className='u-table-currency-pre'>{config.preSymbol}</span> : null;
     let next = config.nextSymbol ? <span className='u-table-currency-next'>{config.nextSymbol}</span> : null;
-    return <span className='u-table-currency'>
+    return <span className='u-table-currency' style={{width:numberWidth}}>
       {pre}
       {res}
       {next}
     </span>;
   }
+
+
 
   render() {
     const { record, indentSize, clsPrefix, indent,
@@ -131,11 +135,29 @@ class TableCell extends Component{
           break;
         }
         case 'bool':{
-          text = this.renderBoolType(text, record, index, column.boolConfig);
+          text = this.renderBoolType(text, column.boolConfig);
           break;
         }
         case 'currency':{
-          text = this.renderCurrency(text, record, indent, column.currencyConfig);
+          let config = {
+            precision: 2, // 精度值,需要大于0
+            thousand: true, // 是否显示千分符号
+            makeUp: true, // 末位是否补零
+            preSymbol: '', // 前置符号
+            nextSymbol: '', // 后置符号
+          }
+          text = this.renderNumber(text, {...config,...column.currencyConfig}, column.width);
+          break;
+        }
+        case 'number':{
+          let config = {
+            precision: 2, // 精度值,需要大于0
+            thousand: true, // 是否显示千分符号
+            makeUp: false, // 末位是否补零
+            preSymbol: '', // 前置符号
+            nextSymbol: '', // 后置符号
+          }
+          text = this.renderNumber(text, {...config,...column.numberConfig}, column.width);
           break;
         }
         default : {
