@@ -19,6 +19,7 @@ exports.getMaxColChildrenLength = getMaxColChildrenLength;
 exports.getColChildrenLength = getColChildrenLength;
 exports.DicimalFormater = DicimalFormater;
 exports.checkDicimalInvalid = checkDicimalInvalid;
+exports.formatMoney = formatMoney;
 
 var _warning = require('warning');
 
@@ -308,6 +309,22 @@ function checkDicimalInvalid(value, precision) {
   if (result == "NaN") return "";
   return result;
 };
+
+/**
+ * 将数值转化为货币类型
+ * @param {*} number 数值
+ * @param {*} places 精度
+ * @param {*} thousand 是否展示千分位
+ */
+function formatMoney(number, places, thousand) {
+  number = number || 0;
+  places = !isNaN(places = Math.abs(places)) ? places : 2;
+  var thousandSymbol = thousand ? "," : '';
+  var negative = number < 0 ? "-" : "";
+  var i = (0, _parseInt2["default"])(number = Math.abs(+number || 0).toFixed(places), 10) + "";
+  var j = (j = i.length) > 3 ? j % 3 : 0;
+  return negative + (j ? i.substr(0, j) + thousandSymbol : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousandSymbol) + (places ? '.' + Math.abs(number - i).toFixed(places).slice(2) : "");
+}
 
 var Event = exports.Event = {
   addHandler: addHandler,

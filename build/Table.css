@@ -443,6 +443,8 @@
       */
     -ms-user-select: none;
     user-select: none; }
+    .u-table-thead th .required {
+      color: #F22C1D; }
     .u-table-thead th .bee-table-column-sorter {
       position: relative;
       margin-left: 4px;
@@ -604,6 +606,9 @@
     color: #0073E1; }
   .u-table .u-table-link-underline:hover {
     text-decoration: underline; }
+  .u-table .u-table-currency {
+    display: inline-block;
+    text-align: right; }
 
 .u-table:focus {
   outline: none;

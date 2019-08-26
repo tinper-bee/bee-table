@@ -670,7 +670,9 @@ var Table = function (_Component) {
         fixed: column.fixed,
         width: width,
         dataindex: column.dataIndex,
-        textAlign: column.textAlign
+        textAlign: column.textAlign,
+        titleAlign: column.titleAlign, // 标题水平对齐方式
+        required: column.required // 标题是否展示必填标志
       };
       if (column.onHeadCellClick) {
         cell.onClick = column.onHeadCellClick;
