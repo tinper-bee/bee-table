@@ -200,21 +200,21 @@ class TableRow extends Component{
     let event = Event.getEvent(e) ,
         _target = Event.getTarget(event),
         target = _target.parentNode;
-   
+
     if (target.tagName === 'TR') {
-     
+
       this.currentIndex = target.getAttribute("data-row-key");
 
       onDragRowStart && onDragRowStart(this.currentIndex);
     }else{
-     
+
       this.canBeTouch = false
     }
 
   }
 
   onTouchMove = (e) => {
- 
+
     if (!this.canBeTouch) return;
     e.stopPropagation()
     let event = Event.getEvent(e);
@@ -235,7 +235,7 @@ class TableRow extends Component{
    * 手指移开时触发
    */
   onTouchEnd = (e) => {
-   
+
     if(!this.canBeTouch){
       this.canBeTouch = true
       return
@@ -476,6 +476,12 @@ class TableRow extends Component{
       />
     );
     let isExpandIconAsCell = expandIconAsCell ? `${clsPrefix}-expand-columns-in-body` : '';
+    var expandIndexInThisTable
+    if(this.props.fixed === 'right'){
+      expandIndexInThisTable = expandIconColumnIndex - this.props.leftColumnsLength-this.props.centerColumnsLength
+    }else {
+      expandIndexInThisTable = expandIconColumnIndex
+    }
     for (let i = 0; i < columns.length; i++) {
       if (expandIconAsCell && i === 0 && !showSum ) {
         cells.push(
@@ -488,7 +494,7 @@ class TableRow extends Component{
         );
       }
       const isColumnHaveExpandIcon = (expandIconAsCell || expandRowByClick || showSum)
-        ? false : (i === expandIconColumnIndex);
+        ? false : (i === expandIndexInThisTable);
       cells.push(
         <TableCell
           clsPrefix={clsPrefix}
