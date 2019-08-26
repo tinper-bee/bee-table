@@ -75,7 +75,7 @@ var TableCell = function (_Component) {
         var link = function link() {
           window.open(linkUrl, linkType || '_blank');
         };
-        var cls = 'u-table-link ';
+        var cls = 'u-table-link u-table-fieldtype ';
         if (className) {
           cls += className + ' ';
         }
@@ -122,10 +122,14 @@ var TableCell = function (_Component) {
     _this.renderNumber = function (data) {
       var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       var width = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 200;
+      var precision = config.precision,
+          thousand = config.thousand,
+          makeUp = config.makeUp,
+          preSymbol = config.preSymbol,
+          nextSymbol = config.nextSymbol;
 
-      console.log(config);
-      var number = (0, _utils.formatMoney)(data, config.precision, config.thousand);
-      if (config.makeUp === false && number !== '0') {
+      var number = (0, _utils.formatMoney)(data, precision, thousand);
+      if (makeUp === false && number !== '0') {
         number = number.replace(/0*$/, '').replace(/\.$/, '');
       }
       var numberWidth = parseInt(width) - 16; // 减去默认的左右padding共计16px
@@ -134,23 +138,36 @@ var TableCell = function (_Component) {
         { className: 'u-table-currency-number' },
         number
       );
-      var pre = config.preSymbol ? _react2["default"].createElement(
+      var pre = preSymbol ? _react2["default"].createElement(
         'span',
         { className: 'u-table-currency-pre' },
-        config.preSymbol
+        preSymbol
       ) : null;
-      var next = config.nextSymbol ? _react2["default"].createElement(
+      var next = nextSymbol ? _react2["default"].createElement(
         'span',
         { className: 'u-table-currency-next' },
-        config.nextSymbol
+        nextSymbol
       ) : null;
+      var title = '';
+      title += typeof preSymbol === 'string' ? preSymbol : '';
+      title += number;
+      title += typeof nextSymbol === 'string' ? nextSymbol : '';
       return _react2["default"].createElement(
         'span',
-        { className: 'u-table-currency', style: { width: numberWidth } },
+        { className: 'u-table-currency u-table-fieldtype', style: { width: numberWidth }, title: title },
         pre,
         res,
         next
       );
+    };
+
+    _this.renderDate = function (data) {
+      var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var moment = config.moment,
+          format = config.format;
+
+      if (!moment) return data;
+      return moment(data).format(format || 'YYYY-MM-DD');
     };
 
     _this.isInvalidRenderCellText = _this.isInvalidRenderCellText.bind(_this);
@@ -179,6 +196,9 @@ var TableCell = function (_Component) {
 
 
   // 渲染整数/货币类型
+
+
+  // 渲染时间类型
 
 
   TableCell.prototype.render = function render() {
@@ -249,13 +269,18 @@ var TableCell = function (_Component) {
         case 'number':
           {
             var _config = {
-              precision: 2, // 精度值,需要大于0
+              precision: 0, // 精度值,需要大于0
               thousand: true, // 是否显示千分符号
               makeUp: false, // 末位是否补零
               preSymbol: '', // 前置符号
               nextSymbol: '' // 后置符号
             };
             text = this.renderNumber(text, _extends({}, _config, column.numberConfig), column.width);
+            break;
+          }
+        case 'date':
+          {
+            text = this.renderDate(text, column.dateConfig);
             break;
           }
         default:
@@ -290,7 +315,7 @@ var TableCell = function (_Component) {
     } else if (column.textAlign) {
       className = className + (' text-' + column.textAlign);
     }
-    if (typeof text == 'string' && bodyDisplayInRow) {
+    if ((typeof text == 'string' || typeof text === 'number') && bodyDisplayInRow) {
       title = text;
     }
     if (expandIcon && expandIcon.props.expandable) {

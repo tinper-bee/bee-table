@@ -845,6 +845,12 @@
   vertical-align: middle;
   overflow: hidden; }
 
+.body-dispaly-in-row .u-table-fieldtype {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+  overflow: hidden; }
+
 .u-table-drag-hidden-cont {
   position: absolute;
   top: -1000px; }

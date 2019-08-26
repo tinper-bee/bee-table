@@ -435,6 +435,8 @@
       */
     -ms-user-select: none;
     user-select: none; }
+    .u-table-thead th .required {
+      color: #F22C1D; }
     .u-table-thead th .bee-table-column-sorter {
       position: relative;
       margin-left: 4px;
@@ -588,6 +590,14 @@
   .u-table .u-table-drag-hidden-cont {
     width: 100px;
     height: 40px; }
+  .u-table .u-table-link {
+    cursor: pointer;
+    color: #0073E1; }
+  .u-table .u-table-link-underline:hover {
+    text-decoration: underline; }
+  .u-table .u-table-currency {
+    display: inline-block;
+    text-align: right; }
 
 .u-table:focus {
   outline: none;
@@ -821,6 +831,12 @@
   table-layout: fixed; }
 
 .body-dispaly-in-row td {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+  overflow: hidden; }
+
+.body-dispaly-in-row .u-table-fieldtype {
   text-overflow: ellipsis;
   white-space: nowrap;
   vertical-align: middle;
