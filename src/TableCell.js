@@ -45,7 +45,7 @@ class TableCell extends Component{
       let link = () => {
         window.open(linkUrl,linkType || '_blank');
       }
-      let cls = 'u-table-link ';
+      let cls = 'u-table-link u-table-fieldtype ';
       if(className){
         cls += `${className} `;
       }
@@ -88,16 +88,20 @@ class TableCell extends Component{
 
   // 渲染整数/货币类型
   renderNumber = (data, config={}, width=200) => {
-    console.log(config);
-    let number = formatMoney(data, config.precision, config.thousand);
-    if(config.makeUp === false && number !== '0') {
+    const { precision, thousand, makeUp, preSymbol, nextSymbol } = config;
+    let number = formatMoney(data, precision, thousand);
+    if(makeUp === false && number !== '0') {
       number = number.replace(/0*$/,'').replace(/\.$/,'');
     }
     let numberWidth = parseInt(width) - 16; // 减去默认的左右padding共计16px
     let res = <span className='u-table-currency-number' >{number}</span>;
-    let pre = config.preSymbol ? <span className='u-table-currency-pre'>{config.preSymbol}</span> : null;
-    let next = config.nextSymbol ? <span className='u-table-currency-next'>{config.nextSymbol}</span> : null;
-    return <span className='u-table-currency' style={{width:numberWidth}}>
+    let pre = preSymbol ? <span className='u-table-currency-pre'>{preSymbol}</span> : null;
+    let next = nextSymbol ? <span className='u-table-currency-next'>{nextSymbol}</span> : null;
+    let title = '';
+    title += typeof preSymbol === 'string' ? preSymbol : '';
+    title += number;
+    title += typeof nextSymbol === 'string' ? nextSymbol : '';
+    return <span className='u-table-currency u-table-fieldtype' style={{width:numberWidth}} title={title}>
       {pre}
       {res}
       {next}
@@ -151,7 +155,7 @@ class TableCell extends Component{
         }
         case 'number':{
           let config = {
-            precision: 2, // 精度值,需要大于0
+            precision: 0, // 精度值,需要大于0
             thousand: true, // 是否显示千分符号
             makeUp: false, // 末位是否补零
             preSymbol: '', // 前置符号

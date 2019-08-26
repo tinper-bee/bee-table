@@ -686,15 +686,15 @@ class Table extends Component {
       if ( props.showRowNum ){
         switch(props.showRowNum.type){
           case 'number':{
-            data[i][props.showRowNum.key || '_index'] = i + (props.showRowNum.base || 0);
+            data[i][props.showRowNum.key || '_index'] = (props.showRowNum.base || 0) + 1;
             break;
           }
           case 'ascii': {
-            data[i][props.showRowNum.key || '_index'] = String.fromCharCode(i + (props.showRowNum.base || 0).charCodeAt());
+            data[i][props.showRowNum.key || '_index'] = String.fromCharCode(i + (props.showRowNum.base || '0').charCodeAt());
             break;
           }
           default: {
-            data[i][props.showRowNum.key || '_index'] = i + (props.showRowNum.base || 0);
+            data[i][props.showRowNum.key || '_index'] = (props.showRowNum.base || 0) + 1;
             break;
           }
         }

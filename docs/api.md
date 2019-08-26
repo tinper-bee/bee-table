@@ -128,7 +128,7 @@ import 'bee-table/build/Table.css';
 | filterDropdownIncludeKeys | 能够设置指定的下拉条件项，通过设置keys 其中string条件可设置:LIKE,ULIKE,EQ,UEQ,START,END.number条件可设置:GT,GTEQ,LT,LTEQ,EQ,UEQ | array | [] 不设置此属性为显示所有
 | filterInputNumberOptions | 数值框接收的props，具体属性参考bee-input-number | object | null
 | textAlign | 列对齐方式，默认是左对齐（'left、right、center'） | string |
-| $\color{red}{*}$sortEnable | 开启默认排序,根据fieldType属性确定排序规则，默认按字符串排序;优先级低于sorter属性 | bool | false |
+| $\color{red}{*}$sortEnable | 开启默认排序,根据fieldType属性确定排序规则，默认按字符串排序;优先级低于sorter属性;需配合高阶函数`multiSelect`使用 | bool | false |
 | $\color{red}{*}$fieldType | 列类型，可选`string`,`number`,`currency`,`bool`,`link` | string | 'string' |
 | $\color{red}{*}$fontColor | 列文本颜色 | string | - |
 | $\color{red}{*}$bgColor | 列背景颜色 | string | - |
