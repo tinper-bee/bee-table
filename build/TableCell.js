@@ -129,7 +129,7 @@ var TableCell = function (_Component) {
           nextSymbol = config.nextSymbol;
 
       var number = (0, _utils.formatMoney)(data, precision, thousand);
-      if (makeUp === false && number !== '0') {
+      if (makeUp === false && number !== '0' && number.indexOf('.') !== -1) {
         number = number.replace(/0*$/, '').replace(/\.$/, '');
       }
       var numberWidth = parseInt(width) - 16; // 减去默认的左右padding共计16px
