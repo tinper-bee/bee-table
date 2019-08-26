@@ -134,9 +134,12 @@ import 'bee-table/build/Table.css';
 | $\color{red}{*}$bgColor | 列背景颜色 | string | - |
 | $\color{red}{*}$titleAlign | 标题对齐方式 | 'left'\|'center'\|'right' | 'left' |
 | $\color{red}{*}$contentAlign | 内容对齐方式 | 'left'\|'center'\|'right' | 'left' |
-| $\color{red}{*}$required | 必填项,展示红色星号 | bool | false |
+| $\color{red}{*}$required | 必填项,列标题展示红色星号 | bool | false |
+
 #### [新增]fieldType
-fieldType属性控制了不同类型数据的渲染方式,其优先级低于render属性。目前，已有`string`,`number`,`currency`,`bool`,`link`类型，支持自定义配置。
+
+fieldType属性控制了不同类型数据的渲染方式,其优先级低于render属性。目前，已有`string`,`number`,`currency`,`bool`,`link`,`date`类型，支持自定义配置(`string`类型为默认类型)。
+
 - numberConfig
 
 |具体属性|说明|类型|默认值|
@@ -178,6 +181,15 @@ fieldType属性控制了不同类型数据的渲染方式,其优先级低于rend
 *url和urlIndex属性至少有一个，均存在时url优先级更高*
 
 *desc和descIndex属性相比，desc优先级更高*
+
+- dateConfig
+
+|具体属性|说明|类型|默认值|
+|:--|:---|:--|:---|
+|moment|传入的moment对象,必需|object|-|
+|format|渲染的时间格式|string|'YYYY-MM-DD'|
+
+*需要单独安装[moment.js](http://momentjs.cn/),并将moment对象传入*
 
 ### 高阶函数
 Table内部封装了七个高阶组件，接收基础 Table 组件作为输入，输出一个新的复杂 Table 组件。高阶组件让代码更具有复用性、逻辑性与抽象特征。

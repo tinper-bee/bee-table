@@ -108,7 +108,12 @@ class TableCell extends Component{
     </span>;
   }
 
-
+  // 渲染时间类型
+  renderDate = ( data, config={}) => {
+    const { moment, format } = config;
+    if(!moment)return data;
+    return moment(data).format(format || 'YYYY-MM-DD');
+  }
 
   render() {
     const { record, indentSize, clsPrefix, indent,
@@ -164,6 +169,10 @@ class TableCell extends Component{
           text = this.renderNumber(text, {...config,...column.numberConfig}, column.width);
           break;
         }
+        case 'date':{
+          text = this.renderDate(text, column.dateConfig);
+          break;
+        }
         default : {
           break;
         }
@@ -198,7 +207,7 @@ class TableCell extends Component{
     else if(column.textAlign){
       className =  className+` text-${column.textAlign}`;
     }
-    if(typeof text == 'string' && bodyDisplayInRow){
+    if((typeof text == 'string' || typeof text === 'number') && bodyDisplayInRow){
       title = text
     }
     if(expandIcon && expandIcon.props.expandable){ 
