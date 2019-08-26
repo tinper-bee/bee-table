@@ -154,6 +154,12 @@ class Table extends Component {
     this.onBodyMouseLeave = this.onBodyMouseLeave.bind(this);
     this.tableUid = null;
     this.contentTable = null;
+    this.leftColumnsLength  //左侧固定列的长度
+    this.centerColumnsLength  //非固定列的长度
+  }
+  componentWillMount() {
+    this.centerColumnsLength = this.columnManager.centerColumns().length
+    this.leftColumnsLength = this.columnManager.leftColumns().length
   }
 
   componentDidMount() {
@@ -661,7 +667,7 @@ class Table extends Component {
     const onRowDoubleClick = props.onRowDoubleClick;
 
     const expandIconAsCell = fixed !== 'right' ? props.expandIconAsCell : false;
-    const expandIconColumnIndex = fixed !== 'right' ? props.expandIconColumnIndex : -1;
+    const expandIconColumnIndex = props.expandIconColumnIndex
     if(props.lazyLoad && props.lazyLoad.preHeight && indent == 0){
       rst.push(
         <TableRow height={props.lazyLoad.preHeight} columns={[]} className='' key={'table_row_first'} store={this.store} visible = {true}/>
@@ -776,6 +782,8 @@ class Table extends Component {
           collapsedIcon={props.collapsedIcon}
           lazyStartIndex = {lazyCurrentIndex}
           lazyEndIndex = {lazyEndIndex}
+          centerColumnsLength={this.centerColumnsLength}
+          leftColumnsLength={this.leftColumnsLength}
         />
       );
       this.treeRowIndex++;

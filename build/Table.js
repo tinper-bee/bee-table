@@ -342,8 +342,15 @@ var Table = function (_Component) {
     _this.onBodyMouseLeave = _this.onBodyMouseLeave.bind(_this);
     _this.tableUid = null;
     _this.contentTable = null;
+    _this.leftColumnsLength; //左侧固定列的长度
+    _this.centerColumnsLength; //非固定列的长度
     return _this;
   }
+
+  Table.prototype.componentWillMount = function componentWillMount() {
+    this.centerColumnsLength = this.columnManager.centerColumns().length;
+    this.leftColumnsLength = this.columnManager.leftColumns().length;
+  };
 
   Table.prototype.componentDidMount = function componentDidMount() {
     this.getTableUID();
@@ -818,7 +825,7 @@ var Table = function (_Component) {
     var onRowDoubleClick = props.onRowDoubleClick;
 
     var expandIconAsCell = fixed !== 'right' ? props.expandIconAsCell : false;
-    var expandIconColumnIndex = fixed !== 'right' ? props.expandIconColumnIndex : -1;
+    var expandIconColumnIndex = props.expandIconColumnIndex;
     if (props.lazyLoad && props.lazyLoad.preHeight && indent == 0) {
       rst.push(_react2["default"].createElement(_TableRow2["default"], { height: props.lazyLoad.preHeight, columns: [], className: '', key: 'table_row_first', store: this.store, visible: true }));
     }
@@ -926,7 +933,9 @@ var Table = function (_Component) {
         expandedIcon: props.expandedIcon,
         collapsedIcon: props.collapsedIcon,
         lazyStartIndex: lazyCurrentIndex,
-        lazyEndIndex: lazyEndIndex
+        lazyEndIndex: lazyEndIndex,
+        centerColumnsLength: this.centerColumnsLength,
+        leftColumnsLength: this.leftColumnsLength
       })));
       this.treeRowIndex++;
       var subVisible = visible && isRowExpanded;

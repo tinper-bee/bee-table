@@ -593,6 +593,12 @@ var TableRow = function (_Component) {
       isHiddenExpandIcon: isHiddenExpandIcon
     });
     var isExpandIconAsCell = expandIconAsCell ? clsPrefix + '-expand-columns-in-body' : '';
+    var expandIndexInThisTable;
+    if (this.props.fixed === 'right') {
+      expandIndexInThisTable = expandIconColumnIndex - this.props.leftColumnsLength - this.props.centerColumnsLength;
+    } else {
+      expandIndexInThisTable = expandIconColumnIndex;
+    }
     for (var i = 0; i < columns.length; i++) {
       if (expandIconAsCell && i === 0 && !showSum) {
         cells.push(_react2["default"].createElement(
@@ -604,7 +610,7 @@ var TableRow = function (_Component) {
           expandIcon
         ));
       }
-      var isColumnHaveExpandIcon = expandIconAsCell || expandRowByClick || showSum ? false : i === expandIconColumnIndex;
+      var isColumnHaveExpandIcon = expandIconAsCell || expandRowByClick || showSum ? false : i === expandIndexInThisTable;
       cells.push(_react2["default"].createElement(_TableCell2["default"], {
         clsPrefix: clsPrefix,
         record: record,
