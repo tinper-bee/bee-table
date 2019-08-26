@@ -1,3 +1,18 @@
+<a name="2.2.2"></a>
+## [2.2.2](https://github.com/tinper-bee/bee-table/compare/v2.2.0...v2.2.2) (2019-08-26)
+
+
+### Features
+
+* **新增fieldType属性,包括string number currency bool link date类型:** 新增fieldType属性,包括string number currenc ([e771e8e](https://github.com/tinper-bee/bee-table/commit/e771e8e))
+
+
+
+<a name="2.2.0"></a>
+# [2.2.0](https://github.com/tinper-bee/bee-table/compare/v2.1.14...v2.2.0) (2019-08-21)
+
+
+
 <a name="2.1.14"></a>
 ## [2.1.14](https://github.com/tinper-bee/bee-table/compare/v2.1.13...v2.1.14) (2019-08-17)
 
@@ -75,17 +90,12 @@
 
 
 <a name="2.1.0"></a>
-# [2.1.0](https://github.com/tinper-bee/bee-table/compare/v2.0.25...v2.1.0) (2019-06-01)
+# [2.1.0](https://github.com/tinper-bee/bee-table/compare/v2.0.24...v2.1.0) (2019-06-01)
 
 
 ### Bug Fixes
 
 * 纵向滚动条动态显示 ([c0167c3](https://github.com/tinper-bee/bee-table/commit/c0167c3))
-
-
-
-<a name="2.0.25"></a>
-## [2.0.25](https://github.com/tinper-bee/bee-table/compare/v2.0.24...v2.0.25) (2019-05-24)
 
 
 
