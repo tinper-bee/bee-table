@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import objectPath from 'object-path';
 import i18n from './lib/i18n';
 import { getComponentLocale } from 'bee-locale/build/tool';
+import { formatMoney } from './lib/utils';
 const propTypes = {
     record: PropTypes.object,
     clsPrefix: PropTypes.string,
@@ -70,7 +71,8 @@ class TableCell extends Component{
     return data;
   }
 
-  renderBoolType = ( data, record, index, config ) => {
+  // 渲染布尔类型
+  renderBoolType = ( data, record, index, config={} ) => {
     let locale = getComponentLocale(this.props, this.context, 'Table', () => i18n);
     let boolConfig = {...{ trueText: locale['bool_true'], falseText: locale['bool_false']},...config};
     if(typeof data === 'string'){
@@ -82,6 +84,22 @@ class TableCell extends Component{
       return boolConfig.falseText;
     }
     return boolConfig.trueText;
+  }
+
+  // 渲染货币类型
+  renderCurrency = (data, record, index, config={}) => {
+    let number = formatMoney(data, config.precision || 2, config.thousand || true);
+    if(config.makeUp === false && number !== '0') {
+      number = number.replace(/0*$/,'').replace(/\.$/,'');
+    }
+    let res = <span className='u-table-currency-number'>{number}</span>;
+    let pre = config.preSymbol ? <span className='u-table-currency-pre'>{config.preSymbol}</span> : null;
+    let next = config.nextSymbol ? <span className='u-table-currency-next'>{config.nextSymbol}</span> : null;
+    return <span className='u-table-currency'>
+      {pre}
+      {res}
+      {next}
+    </span>;
   }
 
   render() {
@@ -114,6 +132,10 @@ class TableCell extends Component{
         }
         case 'bool':{
           text = this.renderBoolType(text, record, index, column.boolConfig);
+          break;
+        }
+        case 'currency':{
+          text = this.renderCurrency(text, record, indent, column.currencyConfig);
           break;
         }
         default : {
