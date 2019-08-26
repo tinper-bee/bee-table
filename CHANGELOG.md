@@ -1,3 +1,13 @@
+<a name="2.2.3"></a>
+## [2.2.3](https://github.com/tinper-bee/bee-table/compare/v2.2.2...v2.2.3) (2019-08-26)
+
+
+### Bug Fixes
+
+* **TableCell.js:** 修复number类型数据在末位为的显示错误的bug ([094bf16](https://github.com/tinper-bee/bee-table/commit/094bf16))
+
+
+
 <a name="2.2.2"></a>
 ## [2.2.2](https://github.com/tinper-bee/bee-table/compare/v2.2.0...v2.2.2) (2019-08-26)
 
