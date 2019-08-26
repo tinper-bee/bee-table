@@ -18,6 +18,7 @@ const columns = [
         dataIndex: "index",
         key: "index",
         width: 80, 
+        fixed: 'left',
         render(text, record, index){return index + 1}
     },
     {
@@ -131,12 +132,48 @@ const data = [
       confirmState_name:"终止",
       closeState_name:"已关闭",
       key: "3"
-    }
+    },
+    { 
+        orderCode:"NU0391025", 
+        supplierName: "xx供应商",
+        type_name: "1",
+        purchasing:'组织c', 
+        purchasingGroup:"aa",
+        voucherDate:"2018年03月18日",
+        approvalState_name:"已审批",
+        confirmState_name:"执行中",
+        closeState_name:"未关闭",
+        key: "4"
+      }, 
+      { 
+        orderCode:"NU0391026", 
+        supplierName: "xx供应商",
+        type_name: "2",
+        purchasing:'组织a', 
+        purchasingGroup:"bb",
+        voucherDate:"2018年02月05日",
+        approvalState_name:"已审批",
+        confirmState_name:"待确认",
+        closeState_name:"未关闭",
+        key: "5"
+      },
+      { 
+        orderCode:"NU0391027", 
+        supplierName: "xx供应商",
+        type_name: "3",
+        purchasing:'组织b', 
+        purchasingGroup:"aa",
+        voucherDate:"2018年07月01日",
+        approvalState_name:"已审批",
+        confirmState_name:"终止",
+        closeState_name:"已关闭",
+        key: "6"
+      }
 ];
 
 class Demo52 extends Component {
   render() {
-    return <Table columns={columns} data={data} scroll={{ x:'110%', y: 200 }}  />;
+    return <Table columns={columns} data={data} dragborder={true} scroll={{ y: 200 }}  />;
   }
 }
 

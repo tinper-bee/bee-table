@@ -60,7 +60,8 @@ export default function bigData(Table) {
           _this.endIndex = _this.currentIndex + _this.loadCount; //数据结束位置
         
       }
-      if (nextProps.data !== props.data) {
+      if (nextProps.data.toString() !== props.data.toString()) {
+        //fix: 滚动加载场景中,数据动态改变下占位计算错误的问题(26 Jun)
         _this.cachedRowHeight = []; //缓存每行的高度
         _this.cachedRowParentIndex = [];
         _this.computeCachedRowParentIndex(nextProps.data);

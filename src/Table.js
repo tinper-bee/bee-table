@@ -304,7 +304,7 @@ class Table extends Component {
       this.domWidthDiff = this.contentDomWidth - this.contentWidth;
     }
 
-    if (this.computeWidth <= this.contentWidth) {
+    if (this.computeWidth < this.contentWidth) {
       let contentWidthDiff = this.scrollbarWidth?this.contentWidth - this.computeWidth-this.scrollbarWidth:this.contentWidth - this.computeWidth;
       //bordered的表格需要减去边框的差值1
       if(this.props.bordered){
@@ -400,8 +400,8 @@ class Table extends Component {
     return this.props.expandedRowKeys || this.state.expandedRowKeys;
   }
 
-  getHeader(columns, fixed) {
-    const { filterDelay, onFilterChange, onFilterClear, filterable, showHeader, expandIconAsCell, clsPrefix, onDragStart, onDragEnter, onDragOver, onDrop, draggable,
+  getHeader(columns, fixed, leftFixedWidth, rightFixedWidth) {
+    const { filterDelay, onFilterChange, onFilterClear, filterable, showHeader, expandIconAsCell, clsPrefix, onDragStart, onDragEnter, onDragOver, onDrop,onDragEnd, draggable,
       onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey, minColumnWidth, headerHeight,afterDragColWidth,headerScroll ,bordered,onDropBorder,onDraggingBorder} = this.props;
     const rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
@@ -414,7 +414,7 @@ class Table extends Component {
     }
 
     const trStyle = headerHeight&&!fixed ? { height: headerHeight } : (fixed ? this.getHeaderRowStyle(columns, rows) : null);
-    let drop = draggable ? { onDragStart, onDragOver, onDrop, onDragEnter, draggable } : {};
+    let drop = draggable ? { onDragStart, onDragOver, onDrop,onDragEnd, onDragEnter, draggable } : {};
     let dragBorder = dragborder ? { onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey,onDropBorder,onDraggingBorder } : {};
     let contentWidthDiff = 0;
     //非固定表格,宽度不够时自动扩充
@@ -444,6 +444,8 @@ class Table extends Component {
         scrollbarWidth = {this.scrollbarWidth}
         headerScroll = {headerScroll}
         bordered = {bordered}
+        leftFixedWidth = {leftFixedWidth}
+        rightFixedWidth = {rightFixedWidth}
       />
     ) : null;
   }
@@ -894,6 +896,8 @@ class Table extends Component {
     const bodyStyle = { ...this.props.bodyStyle };
     const headStyle = {};
     const innerBodyStyle = {};
+    const leftFixedWidth = this.columnManager.getLeftColumnsWidth(this.contentWidth);
+    const rightFixedWidth = this.columnManager.getRightColumnsWidth(this.contentWidth);
 
     let tableClassName = '';
     //表格元素的宽度大于容器的宽度也显示滚动条
@@ -994,7 +998,7 @@ class Table extends Component {
         <table className={` ${tableClassName}  table-bordered ${_drag_class} `} style={tableStyle}  >
           {/* {this.props.dragborder?null:this.getColGroup(columns, fixed)} */}
           {this.getColGroup(columns, fixed)}
-          {hasHead ? this.getHeader(columns, fixed) : null}
+          {hasHead ? this.getHeader(columns, fixed, leftFixedWidth, rightFixedWidth) : null}
           {tableBody}
         </table>
       );
@@ -1059,8 +1063,8 @@ class Table extends Component {
         </div>
       );
     }
-    const leftFixedWidth = this.columnManager.getLeftColumnsWidth(this.contentWidth);
-    const rightFixedWidth = this.columnManager.getRightColumnsWidth(this.contentWidth);
+    // const leftFixedWidth = this.columnManager.getLeftColumnsWidth(this.contentWidth);
+    // const rightFixedWidth = this.columnManager.getRightColumnsWidth(this.contentWidth);
     let expandIconWidth = expandIconAsCell ? 33 : 0;
     let parStyle = {}
     if(!fixed){
@@ -1331,6 +1335,9 @@ class Table extends Component {
     }
     if (props.useFixedHeader || (props.scroll && props.scroll.y)) {
       className += ` ${clsPrefix}-fixed-header`;
+    }
+    if (!props.showHeader) {
+      className += ` ${clsPrefix}-hide-header`;
     }
     if (props.bordered) {
       className += ` ${clsPrefix}-bordered`;

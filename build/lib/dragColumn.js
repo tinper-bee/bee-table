@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -35,126 +35,115 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function dragColumn(Table) {
 
-    return function (_Component) {
-        _inherits(DragColumn, _Component);
+  return function (_Component) {
+    _inherits(DragColumn, _Component);
 
-        function DragColumn(props) {
-            _classCallCheck(this, DragColumn);
+    function DragColumn(props) {
+      _classCallCheck(this, DragColumn);
 
-            var _this = _possibleConstructorReturn(this, _Component.call(this, props));
+      var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
-            _this.setColumOrderByIndex = function (_column) {
-                _column.forEach(function (da, i) {
-                    da.dragIndex = i;
-                    da.drgHover = false;
-                });
-                return _column;
-            };
-
-            _this.onDrop = function (event, data) {
-                var dragSource = data.dragSource,
-                    dragTarg = data.dragTarg;
-                var columns = _this.state.columns;
-
-                var sourceIndex = -1,
-                    targetIndex = -1;
-
-                sourceIndex = columns.findIndex(function (da, i) {
-                    return da.key == dragSource.key;
-                });
-                targetIndex = columns.findIndex(function (da, i) {
-                    return da.key == dragTarg.key;
-                });
-                // 向前移动
-                if (targetIndex < sourceIndex) {
-                    targetIndex = targetIndex + 1;
-                }
-                columns.splice(targetIndex, 0, columns.splice(sourceIndex, 1)[0]);
-                var _newColumns = [];
-                columns.forEach(function (da, i) {
-                    var newDate = _extends(da, {});
-                    newDate.title = da.title;
-                    _newColumns.push(newDate);
-                });
-                // console.log(" onDrop-------columns--- ",columns);
-                _this.setState({
-                    columns: _newColumns //cloneDeep(columns)
-                });
-                // console.log(" onDrop-------columns--- ",_newColumns);
-                // console.log(columns === _newColumns);
-                if (_this.props.onDrop) {
-                    _this.props.onDrop(event, data, columns);
-                }
-            };
-
-            _this.getTarget = function (evt) {
-                return evt.target || evt.srcElement;
-            };
-
-            _this.state = {
-                columns: _this.setColumOrderByIndex(props.columns)
-            };
-            return _this;
-        }
-
-        DragColumn.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-            if (nextProps.columns != this.props.columns) {
-                this.setState({
-                    columns: this.setColumOrderByIndex(nextProps.columns)
-                });
-            }
-        };
-
-        DragColumn.prototype.recursion = function (_recursion) {
-            function recursion(_x) {
-                return _recursion.apply(this, arguments);
-            }
-
-            recursion.toString = function () {
-                return _recursion.toString();
-            };
-
-            return recursion;
-        }(function (obj) {
-            var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-            for (key in obj) {
-                if (_typeof(obj[key]) == 'object' && Object.keys(obj[key].length > 0)) {
-                    data[key] = recursion(obj[key]);
-                } else {
-                    data[key] = obj[key];
-                }
-            }
-            return data;
+      _this.setColumOrderByIndex = function (_column) {
+        _column.forEach(function (da, i) {
+          da.dragIndex = i;
+          da.drgHover = false;
         });
+        return _column;
+      };
 
-        DragColumn.prototype.render = function render() {
-            var _props = this.props,
-                data = _props.data,
-                dragborder = _props.dragborder,
-                draggable = _props.draggable,
-                className = _props.className,
-                columns = _props.columns,
-                onDragStart = _props.onDragStart,
-                onDragEnter = _props.onDragEnter,
-                onDragOver = _props.onDragOver,
-                onDrop = _props.onDrop,
-                others = _objectWithoutProperties(_props, ['data', 'dragborder', 'draggable', 'className', 'columns', 'onDragStart', 'onDragEnter', 'onDragOver', 'onDrop']);
+      _this.onDragEnd = function (event, data) {
+        var dragSource = data.dragSource,
+            dragTarg = data.dragTarg;
+        var columns = _this.state.columns;
 
-            return _react2["default"].createElement(Table, _extends({}, others, {
-                columns: this.state.columns,
-                data: data,
-                className: className + ' u-table-drag-border',
-                onDragStart: this.onDragStart,
-                onDragOver: this.onDragOver,
-                onDrop: this.onDrop,
-                onDragEnter: this.onDragEnter,
-                draggable: draggable,
-                dragborder: dragborder
-            }));
-        };
+        var sourceIndex = -1,
+            targetIndex = -1;
 
-        return DragColumn;
-    }(_react.Component);
+        sourceIndex = columns.findIndex(function (da, i) {
+          return da.key == dragSource.key;
+        });
+        targetIndex = columns.findIndex(function (da, i) {
+          return da.key == dragTarg.key;
+        });
+        // 向前移动
+        if (targetIndex < sourceIndex) {
+          targetIndex = targetIndex + 1;
+        }
+        columns.splice(targetIndex, 0, columns.splice(sourceIndex, 1)[0]);
+        var _newColumns = [];
+        columns.forEach(function (da, i) {
+          var newDate = _extends(da, {});
+          newDate.title = da.title;
+          _newColumns.push(newDate);
+        });
+        _this.setState({
+          columns: _newColumns //cloneDeep(columns)
+        });
+        if (_this.props.onDragEnd) {
+          _this.props.onDragEnd(event, data, columns);
+        }
+      };
+
+      _this.getTarget = function (evt) {
+        return evt.target || evt.srcElement;
+      };
+
+      _this.state = {
+        columns: _this.setColumOrderByIndex(props.columns)
+      };
+      return _this;
+    }
+
+    DragColumn.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+      if (nextProps.columns != this.props.columns) {
+        this.setState({
+          columns: this.setColumOrderByIndex(nextProps.columns)
+        });
+      }
+    };
+
+    DragColumn.prototype.recursion = function (_recursion) {
+      function recursion(_x) {
+        return _recursion.apply(this, arguments);
+      }
+
+      recursion.toString = function () {
+        return _recursion.toString();
+      };
+
+      return recursion;
+    }(function (obj) {
+      var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+      for (key in obj) {
+        if (_typeof(obj[key]) == 'object' && Object.keys(obj[key].length > 0)) {
+          data[key] = recursion(obj[key]);
+        } else {
+          data[key] = obj[key];
+        }
+      }
+      return data;
+    });
+
+    DragColumn.prototype.render = function render() {
+      var _props = this.props,
+          data = _props.data,
+          dragborder = _props.dragborder,
+          draggable = _props.draggable,
+          className = _props.className,
+          others = _objectWithoutProperties(_props, ['data', 'dragborder', 'draggable', 'className']);
+
+      return _react2["default"].createElement(Table, _extends({}, others, {
+        columns: this.state.columns,
+        data: data,
+        className: className + ' u-table-drag-border',
+        onDragEnd: this.onDragEnd,
+        draggable: draggable,
+        dragborder: dragborder
+      }));
+    };
+
+    return DragColumn;
+  }(_react.Component);
 }
 module.exports = exports['default'];
