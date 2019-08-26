@@ -80,6 +80,8 @@ import 'bee-table/build/Table.css';
 | bodyDisplayInRow |  设置表体的内容显示一行，超出显示省略号 | bool | 
 | size | 表格大小 | `sm / md / lg` | 'md' |
 | hideHeaderScroll | 表体无数据时，表头下是否显示滚动条，默认显示 | bool | false |
+| $\color{red}{*}$showRowNum | 展示序号功能，false时不展示，true时展示默认情况，可传入自定义配置信息 | bool / obj:{name: '序号', key: '_index', // 在数据中存储的key值width: 50,base: 0,// 排序的基准值,为数字或者字母type:'number', // 排序类型,默认为number类型,支持单字母排序(type='ascii')} | false |
+
 > 快捷键部分参考示例 (快捷键在table中的简单使用应用)
 
 *注意: data参数中的key值必需，否则会导致部分功能出现问题！建议使用唯一的值，如id*
@@ -125,9 +127,74 @@ import 'bee-table/build/Table.css';
 | filterDropdownType | 下拉条件类型，分为 string 和 number 条件类型 | string | string
 | filterDropdownIncludeKeys | 能够设置指定的下拉条件项，通过设置keys 其中string条件可设置:LIKE,ULIKE,EQ,UEQ,START,END.number条件可设置:GT,GTEQ,LT,LTEQ,EQ,UEQ | array | [] 不设置此属性为显示所有
 | filterInputNumberOptions | 数值框接收的props，具体属性参考bee-input-number | object | null
+<<<<<<< HEAD
 | textAlign | 内容对齐方式，默认是左对齐（'left、right、center'） | string |
 | mergeEndIndex | 大数据量滚动加载场景，合并表格行时，设置合并结束位置的行 index 值，设置在列 render 函数中的 props 属性上 | Number |
+=======
+| textAlign | 列对齐方式，默认是左对齐（'left、right、center'） | string |
+| $\color{red}{*}$sortEnable | 开启默认排序,根据fieldType属性确定排序规则，默认按字符串排序;优先级低于sorter属性;需配合高阶函数`multiSelect`使用 | bool | false |
+| $\color{red}{*}$fieldType | 列类型，可选`string`,`number`,`currency`,`bool`,`link` | string | 'string' |
+| $\color{red}{*}$fontColor | 列文本颜色 | string | - |
+| $\color{red}{*}$bgColor | 列背景颜色 | string | - |
+| $\color{red}{*}$titleAlign | 标题对齐方式 | 'left'\|'center'\|'right' | 'left' |
+| $\color{red}{*}$contentAlign | 内容对齐方式 | 'left'\|'center'\|'right' | 'left' |
+| $\color{red}{*}$required | 必填项,列标题展示红色星号 | bool | false |
 
+#### [新增]fieldType
+
+fieldType属性控制了不同类型数据的渲染方式,其优先级低于render属性。目前，已有`string`,`number`,`currency`,`bool`,`link`,`date`类型，支持自定义配置(`string`类型为默认类型)。
+
+- numberConfig
+
+|具体属性|说明|类型|默认值|
+|:--|:---|:--|:---|
+|thousand|是否展示千分符号|bool|true|
+|preSymbol|数值的前缀|string|null|
+|nextSymbol|数值的后缀|string|null|
+
+- currencyConfig
+
+|具体属性|说明|类型|默认值|
+|:--|:---|:--|:---|
+|thousand|是否展示千分符号|bool|true|
+|preSymbol|数值的前缀|string|null|
+|nextSymbol|数值的后缀|string|null|
+|precision|精度|number|2|
+|makeUp|末位是否补零|bool|true|
+
+- boolConfig
+
+|具体属性|说明|类型|默认值|
+|:--|:---|:--|:---|
+|trueText|数值为true时的展示文本|string|'是'|
+|falseText|数值为false时的展示文本|string|'否'|
+
+- linkConfig
+
+|具体属性|说明|类型|默认值|
+|:--|:---|:--|:---|
+|url|获取url的函数|function(text,record,index)|null|
+|urlIndex|数据内url字段的key值|string|null|
+|desc|鼠标hover时展示的title值，为false时不展示，true时展示链接的url，为字符串时展示字符串，为函数时展示返回值,如(text,record,index)=>'text'|bool\|string\|func|true|
+|descIndex|数据内desc字段的key值|string|null|
+|linkType|打开窗口的方式|'_self'\|'_blank'|'_blank'|
+|linkColor|链接的字体颜色|string|'#0073E1'|
+|underline|hover时是否展示下划线|bool|false|
+|className|链接的className|string|null|
+
+*url和urlIndex属性至少有一个，均存在时url优先级更高*
+
+*desc和descIndex属性相比，desc优先级更高*
+
+- dateConfig
+
+|具体属性|说明|类型|默认值|
+|:--|:---|:--|:---|
+|moment|传入的moment对象,必需|object|-|
+|format|渲染的时间格式|string|'YYYY-MM-DD'|
+>>>>>>> dev4iuap5.0
+
+*需要单独安装[moment.js](http://momentjs.cn/),并将moment对象传入*
 
 ### 高阶函数
 Table内部封装了七个高阶组件，接收基础 Table 组件作为输入，输出一个新的复杂 Table 组件。高阶组件让代码更具有复用性、逻辑性与抽象特征。

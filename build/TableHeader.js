@@ -835,10 +835,14 @@ var TableHeader = function (_Component) {
               canDotDrag = "th-can-not-drag";
             }
             var thClassName = "" + da.className ? "" + da.className : '';
-            if (da.textAlign) {
+            if (da.titleAlign) {
+              thClassName += " text-" + da.titleAlign + " ";
+            } else if (da.textAlign) {
               thClassName += " text-" + da.textAlign + " ";
             }
+
             delete da.textAlign;
+            delete da.titleAlign;
             var keyTemp = {};
             //避免key为undefined
             // if(da.dataindex && da.key ===undefined ){
@@ -867,6 +871,11 @@ var TableHeader = function (_Component) {
                 "th",
                 _extends({}, da, keyTemp, { className: thClassName, "data-th-fixed": da.fixed, "data-line-key": da.key,
                   "data-line-index": columIndex, "data-th-width": da.width, "data-type": "draggable" }),
+                da.required ? _react2["default"].createElement(
+                  "span",
+                  { className: "required" },
+                  "*"
+                ) : '',
                 da.children,
                 dragborder && columIndex != _rowLeng ? _react2["default"].createElement(
                   "div",

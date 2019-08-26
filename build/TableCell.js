@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -15,6 +17,14 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 var _objectPath = require('object-path');
 
 var _objectPath2 = _interopRequireDefault(_objectPath);
+
+var _i18n = require('./lib/i18n');
+
+var _i18n2 = _interopRequireDefault(_i18n);
+
+var _tool = require('bee-locale/build/tool');
+
+var _utils = require('./lib/utils');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -44,6 +54,122 @@ var TableCell = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
+    _this.renderLinkType = function (data, record, index) {
+      var config = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+      var url = config.url,
+          urlIndex = config.urlIndex,
+          linkType = config.linkType,
+          className = config.className,
+          underline = config.underline,
+          descIndex = config.descIndex,
+          desc = config.desc,
+          linkColor = config.linkColor;
+
+      var linkUrl = '';
+      if (url) {
+        linkUrl = url(data, record, index);
+      } else if (urlIndex) {
+        linkUrl = record[urlIndex];
+      }
+      if (linkUrl) {
+        var link = function link() {
+          window.open(linkUrl, linkType || '_blank');
+        };
+        var cls = 'u-table-link u-table-fieldtype ';
+        if (className) {
+          cls += className + ' ';
+        }
+        if (underline) {
+          cls += 'u-table-link-underline ';
+        }
+        var title = '';
+
+        if (desc === true) {
+          title = linkUrl;
+        } else if (typeof desc === 'string') {
+          title = desc;
+        } else if (typeof desc === 'function') {
+          title = desc(data, record, index);
+        } else if (descIndex) {
+          title = record[descIndex];
+        }
+        return _react2["default"].createElement(
+          'span',
+          { onClick: link, className: cls, style: { color: linkColor || '' }, title: title },
+          data
+        );
+      }
+      return data;
+    };
+
+    _this.renderBoolType = function (data) {
+      var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+      var locale = (0, _tool.getComponentLocale)(_this.props, _this.context, 'Table', function () {
+        return _i18n2["default"];
+      });
+      var boolConfig = _extends({ trueText: locale['bool_true'], falseText: locale['bool_false'] }, config);
+      if (typeof data === 'string') {
+        if (data === 'false' || data === '0') {
+          return boolConfig.falseText;
+        }
+      } else if (!data) {
+        return boolConfig.falseText;
+      }
+      return boolConfig.trueText;
+    };
+
+    _this.renderNumber = function (data) {
+      var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var width = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 200;
+      var precision = config.precision,
+          thousand = config.thousand,
+          makeUp = config.makeUp,
+          preSymbol = config.preSymbol,
+          nextSymbol = config.nextSymbol;
+
+      var number = (0, _utils.formatMoney)(data, precision, thousand);
+      if (makeUp === false && number !== '0') {
+        number = number.replace(/0*$/, '').replace(/\.$/, '');
+      }
+      var numberWidth = parseInt(width) - 16; // 减去默认的左右padding共计16px
+      var res = _react2["default"].createElement(
+        'span',
+        { className: 'u-table-currency-number' },
+        number
+      );
+      var pre = preSymbol ? _react2["default"].createElement(
+        'span',
+        { className: 'u-table-currency-pre' },
+        preSymbol
+      ) : null;
+      var next = nextSymbol ? _react2["default"].createElement(
+        'span',
+        { className: 'u-table-currency-next' },
+        nextSymbol
+      ) : null;
+      var title = '';
+      title += typeof preSymbol === 'string' ? preSymbol : '';
+      title += number;
+      title += typeof nextSymbol === 'string' ? nextSymbol : '';
+      return _react2["default"].createElement(
+        'span',
+        { className: 'u-table-currency u-table-fieldtype', style: { width: numberWidth }, title: title },
+        pre,
+        res,
+        next
+      );
+    };
+
+    _this.renderDate = function (data) {
+      var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var moment = config.moment,
+          format = config.format;
+
+      if (!moment) return data;
+      return moment(data).format(format || 'YYYY-MM-DD');
+    };
+
     _this.isInvalidRenderCellText = _this.isInvalidRenderCellText.bind(_this);
     _this.handleClick = _this.handleClick.bind(_this);
     return _this;
@@ -63,6 +189,18 @@ var TableCell = function (_Component) {
     }
   };
 
+  //  渲染链接类型
+
+
+  // 渲染布尔类型
+
+
+  // 渲染整数/货币类型
+
+
+  // 渲染时间类型
+
+
   TableCell.prototype.render = function render() {
     var _props2 = this.props,
         record = _props2.record,
@@ -78,7 +216,11 @@ var TableCell = function (_Component) {
         lazyStartIndex = _props2.lazyStartIndex,
         lazyEndIndex = _props2.lazyEndIndex;
     var dataIndex = column.dataIndex,
-        render = column.render;
+        render = column.render,
+        fieldType = column.fieldType,
+        linkConfig = column.linkConfig,
+        fontColor = column.fontColor,
+        bgColor = column.bgColor;
     var _column$className = column.className,
         className = _column$className === undefined ? '' : _column$className;
 
@@ -96,6 +238,55 @@ var TableCell = function (_Component) {
         rowSpan = tdProps.rowSpan > lazyEndIndex && lazyEndIndex > 5 ? lazyEndIndex - index : tdProps.rowSpan;
         colSpan = tdProps.colSpan;
         text = text.children;
+      }
+    }
+
+    // 根据 fieldType 来渲染数据
+    if (!render) {
+      switch (column.fieldType) {
+        case 'link':
+          {
+            text = this.renderLinkType(text, record, index, column.linkConfig);
+            break;
+          }
+        case 'bool':
+          {
+            text = this.renderBoolType(text, column.boolConfig);
+            break;
+          }
+        case 'currency':
+          {
+            var config = {
+              precision: 2, // 精度值,需要大于0
+              thousand: true, // 是否显示千分符号
+              makeUp: true, // 末位是否补零
+              preSymbol: '', // 前置符号
+              nextSymbol: '' // 后置符号
+            };
+            text = this.renderNumber(text, _extends({}, config, column.currencyConfig), column.width);
+            break;
+          }
+        case 'number':
+          {
+            var _config = {
+              precision: 0, // 精度值,需要大于0
+              thousand: true, // 是否显示千分符号
+              makeUp: false, // 末位是否补零
+              preSymbol: '', // 前置符号
+              nextSymbol: '' // 后置符号
+            };
+            text = this.renderNumber(text, _extends({}, _config, column.numberConfig), column.width);
+            break;
+          }
+        case 'date':
+          {
+            text = this.renderDate(text, column.dateConfig);
+            break;
+          }
+        default:
+          {
+            break;
+          }
       }
     }
 
@@ -119,10 +310,12 @@ var TableCell = function (_Component) {
     if (column.fixed && !fixed) {
       className = className + (' ' + clsPrefix + '-fixed-columns-in-body');
     }
-    if (column.textAlign) {
+    if (column.contentAlign) {
+      className = className + (' text-' + column.contentAlign);
+    } else if (column.textAlign) {
       className = className + (' text-' + column.textAlign);
     }
-    if (typeof text == 'string' && bodyDisplayInRow) {
+    if ((typeof text == 'string' || typeof text === 'number') && bodyDisplayInRow) {
       title = text;
     }
     if (expandIcon && expandIcon.props.expandable) {
@@ -135,8 +328,8 @@ var TableCell = function (_Component) {
         rowSpan: rowSpan,
         className: className,
         onClick: this.handleClick,
-        title: title
-
+        title: title,
+        style: { color: fontColor, backgroundColor: bgColor }
       },
       indentText,
       expandIcon,
