@@ -224,6 +224,7 @@ function bigData(Table) {
      *@description  根据返回的scrollTop计算当前的索引。此处做了两次缓存一个是根据上一次的currentIndex计算当前currentIndex。另一个是根据当前内容区的数据是否在缓存中如果在则不重新render页面
      *@param 最新一次滚动的scrollTop
      *@param treeType是否是树状表
+     *@param callback表体滚动过程中触发的回调
      */
 
 
@@ -354,7 +355,7 @@ function bigData(Table) {
       }
     };
 
-    this.handleScrollY = function (nextScrollTop, treeType) {
+    this.handleScrollY = function (nextScrollTop, treeType, callback) {
       //树表逻辑
       // 关键点是动态的获取startIndex和endIndex
       // 法子一：子节点也看成普通tr，最开始需要设置一共有多少行，哪行显示哪行不显示如何确定
@@ -446,6 +447,7 @@ function bigData(Table) {
               _this4.startIndex = startIndex;
               _this4.endIndex = endIndex;
               _this4.setState({ needRender: !needRender });
+              callback(parseInt(currentIndex + rowsInView));
             }
           }
           // 向上滚动，当前的index是否已经加载（currentIndex），若干上临界值小于startIndex则重新渲染
@@ -458,6 +460,7 @@ function bigData(Table) {
               _this4.startIndex = startIndex;
               _this4.endIndex = _this4.startIndex + loadCount;
               _this4.setState({ needRender: !needRender });
+              callback(parseInt(currentIndex + rowsInView));
             }
             // console.log(
             //   "**index**" + index,

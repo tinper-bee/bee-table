@@ -59,6 +59,7 @@ const propTypes = {
   rowDraggAble: PropTypes.bool,
   onDropRow: PropTypes.func,
   onDragRowStart: PropTypes.func,
+  onBodyScroll: PropTypes.func,
   bodyDisplayInRow: PropTypes.bool, // 表格内容超出列宽度时进行换行 or 以...形式展现
   headerDisplayInRow: PropTypes.bool, // 表头内容超出列宽度时进行换行 or 以...形式展现
   showRowNum: PropTypes.object, // 表格是否自动生成序号,格式为{base:number || 0,defaultKey:string || '_index',defaultName:string || '序号'}
@@ -100,6 +101,7 @@ const defaultProps = {
   rowDraggAble:false,
   onDropRow: ()=>{},
   onDragRowStart: ()=>{},
+  onBodyScroll: ()=>{},
   bodyDisplayInRow: true,
   headerDisplayInRow: true,
   showRowNum: false,
@@ -1228,7 +1230,7 @@ class Table extends Component {
 
   handleBodyScroll(e) {
     const headTable = this.headTable;
-    const { scroll = {},clsPrefix,handleScrollY, handleScrollX} = this.props;
+    const { scroll = {},clsPrefix,handleScrollY, handleScrollX, onBodyScroll} = this.props;
     const {fixedColumnsBodyLeft, fixedColumnsBodyRight } = this.refs;
     // Prevent scrollTop setter trigger onScroll event
     // http://stackoverflow.com/q/1386696
@@ -1279,7 +1281,7 @@ class Table extends Component {
       this.lastScrollTop = e.target.scrollTop;
       if(handleScrollY){
         debounce(
-          handleScrollY(this.lastScrollTop,this.treeType),
+          handleScrollY(this.lastScrollTop,this.treeType,onBodyScroll),
         300)
       }
 

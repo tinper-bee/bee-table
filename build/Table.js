@@ -115,6 +115,7 @@ var propTypes = {
   rowDraggAble: _propTypes2["default"].bool,
   onDropRow: _propTypes2["default"].func,
   onDragRowStart: _propTypes2["default"].func,
+  onBodyScroll: _propTypes2["default"].func,
   bodyDisplayInRow: _propTypes2["default"].bool, // 表格内容超出列宽度时进行换行 or 以...形式展现
   headerDisplayInRow: _propTypes2["default"].bool, // 表头内容超出列宽度时进行换行 or 以...形式展现
   showRowNum: _propTypes2["default"].object // 表格是否自动生成序号,格式为{base:number || 0,defaultKey:string || '_index',defaultName:string || '序号'}
@@ -165,6 +166,7 @@ var defaultProps = {
   rowDraggAble: false,
   onDropRow: function onDropRow() {},
   onDragRowStart: function onDragRowStart() {},
+  onBodyScroll: function onBodyScroll() {},
   bodyDisplayInRow: true,
   headerDisplayInRow: true,
   showRowNum: false
@@ -1430,7 +1432,8 @@ var Table = function (_Component) {
         scroll = _props9$scroll === undefined ? {} : _props9$scroll,
         clsPrefix = _props9.clsPrefix,
         handleScrollY = _props9.handleScrollY,
-        handleScrollX = _props9.handleScrollX;
+        handleScrollX = _props9.handleScrollX,
+        onBodyScroll = _props9.onBodyScroll;
     var _refs = this.refs,
         fixedColumnsBodyLeft = _refs.fixedColumnsBodyLeft,
         fixedColumnsBodyRight = _refs.fixedColumnsBodyRight;
@@ -1477,7 +1480,7 @@ var Table = function (_Component) {
       }
       this.lastScrollTop = e.target.scrollTop;
       if (handleScrollY) {
-        (0, _utils.debounce)(handleScrollY(this.lastScrollTop, this.treeType), 300);
+        (0, _utils.debounce)(handleScrollY(this.lastScrollTop, this.treeType, onBodyScroll), 300);
       }
     }
 
