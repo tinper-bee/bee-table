@@ -41,7 +41,16 @@ var ExpandIcon = function (_Component) {
   function ExpandIcon(props) {
     _classCallCheck(this, ExpandIcon);
 
-    return _possibleConstructorReturn(this, _Component.call(this, props));
+    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
+
+    _this.onExpand = function (status, record, e) {
+      var onExpand = _this.props.onExpand;
+
+      e.stopPropagation();
+      onExpand(status, record, e);
+    };
+
+    return _this;
   }
 
   ExpandIcon.prototype.shouldComponentUpdate = function shouldComponentUpdate(nextProps) {
@@ -49,6 +58,8 @@ var ExpandIcon = function (_Component) {
   };
 
   ExpandIcon.prototype.render = function render() {
+    var _this2 = this;
+
     var _props = this.props,
         expandable = _props.expandable,
         clsPrefix = _props.clsPrefix,
@@ -73,7 +84,7 @@ var ExpandIcon = function (_Component) {
       return _react2["default"].createElement(
         'span',
         { onClick: function onClick(e) {
-            return onExpand(!expanded, record, e);
+            return _this2.onExpand(!expanded, record, e);
           }, className: 'expand-icon-con' },
         currentIcon
       );
