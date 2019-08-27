@@ -694,7 +694,7 @@ class Table extends Component {
       if ( props.showRowNum ){
         switch(props.showRowNum.type){
           case 'number':{
-            data[i][props.showRowNum.key || '_index'] = (props.showRowNum.base || 0) + 1;
+            data[i][props.showRowNum.key || '_index'] = (props.showRowNum.base || 0) + i;
             break;
           }
           case 'ascii': {
@@ -702,7 +702,7 @@ class Table extends Component {
             break;
           }
           default: {
-            data[i][props.showRowNum.key || '_index'] = (props.showRowNum.base || 0) + 1;
+            data[i][props.showRowNum.key || '_index'] = (props.showRowNum.base || 0) + i;
             break;
           }
         }
