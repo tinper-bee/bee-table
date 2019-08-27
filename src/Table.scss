@@ -466,6 +466,9 @@ $icon-color:#505F79;
       // overflow: hidden;
       // white-space: nowrap;
       // text-overflow: ellipsis;
+      .required {
+        color: #F22C1D;
+      }
       .bee-table-column-sorter {
         position: relative;
         margin-left: 4px;
@@ -487,6 +490,7 @@ $icon-color:#505F79;
           width: 34px;
           cursor: pointer;
         }
+        
        
       }
 
@@ -711,6 +715,17 @@ $icon-color:#505F79;
     height: 40px;
   }
 
+  .u-table-link{
+    cursor: pointer;
+    color: #0073E1;
+  }
+  .u-table-link-underline:hover{
+    text-decoration:underline;
+  }
+  .u-table-currency{
+    display: inline-block;
+    text-align: right;
+  }
 }
 
 .u-table:focus{
@@ -1024,6 +1039,12 @@ $icon-color:#505F79;
     
   }
   td{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+    overflow: hidden;
+  }
+  .u-table-fieldtype{
     text-overflow: ellipsis;
     white-space: nowrap;
     vertical-align: middle;

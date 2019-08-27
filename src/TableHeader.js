@@ -745,10 +745,15 @@ class TableHeader extends Component {
                 canDotDrag = "th-can-not-drag";
               }
               let thClassName = `${da.className}`?`${da.className}`:'';
-              if(da.textAlign){
+              if(da.titleAlign){
+                thClassName += ` text-${da.titleAlign} `;
+              }
+              else if(da.textAlign){
                 thClassName += ` text-${da.textAlign} `;
               }
+              
               delete da.textAlign;
+              delete da.titleAlign;
               const keyTemp = {};
               //避免key为undefined
               // if(da.dataindex && da.key ===undefined ){
@@ -779,6 +784,7 @@ class TableHeader extends Component {
               if(!da.fixed ){
                   return (<th {...da}  {...keyTemp} className={thClassName} data-th-fixed={da.fixed} data-line-key={da.key}
                   data-line-index={columIndex} data-th-width={da.width} data-type="draggable">
+                      {da.required ? <span className='required'>*</span>:''}
                       {da.children}
                       {
                         dragborder && columIndex != _rowLeng? <div ref={el => (this.gap = el)} data-line-key={da.key}

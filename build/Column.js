@@ -29,7 +29,8 @@ var propTypes = {
   fixed: _propTypes2["default"].oneOf([true, 'left', 'right']),
   render: _propTypes2["default"].func,
   onCellClick: _propTypes2["default"].func,
-  ifshow: _propTypes2["default"].bool
+  ifshow: _propTypes2["default"].bool,
+  fieldType: _propTypes2["default"].string // 类型
 };
 
 var Column = function (_Component) {

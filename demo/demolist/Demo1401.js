@@ -67,6 +67,13 @@ class Demo30 extends Component {
       data
     })
   }
+  /**
+   * 表体滚动加载时触发的回调函数
+   * @param endIndex 可视区最后一条数据的 index 序号
+   */
+  handleBodyScroll = endIndex => {
+    console.log('endIndex：', endIndex);
+  }
 
   render() {
     return (
@@ -79,6 +86,7 @@ class Demo30 extends Component {
           onRowClick={(record, index, indent) => {
             console.log('currentIndex--'+index);
           }}
+          onBodyScroll={this.handleBodyScroll}
         />
       </div>
         

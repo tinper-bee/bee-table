@@ -30,10 +30,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 //行控制管理
 var ColumnManager = function () {
-  function ColumnManager(columns, elements, originWidth, rowDraggAble) {
+  function ColumnManager(columns, elements, originWidth, rowDraggAble, showRowNum) {
     _classCallCheck(this, ColumnManager);
 
-    this._cached = {};
+    _initialiseProps.call(this);
 
     //判断是否使用行拖拽
     if (rowDraggAble) {
@@ -50,9 +50,15 @@ var ColumnManager = function () {
       }];
       columns = dragHandleColumn.concat(columns);
     }
+    columns = this.addOrderColumn(columns, showRowNum);
+
     this.columns = columns || this.normalize(elements);
+
     this.originWidth = originWidth;
   }
+
+  // 向数据列中添加一列:序号
+
 
   ColumnManager.prototype.isAnyColumnsFixed = function isAnyColumnsFixed() {
     var _this = this;
@@ -226,7 +232,8 @@ var ColumnManager = function () {
     return element && (element.type === _Column2["default"] || element.type === _ColumnGroup2["default"]);
   };
 
-  ColumnManager.prototype.reset = function reset(columns, elements) {
+  ColumnManager.prototype.reset = function reset(columns, elements, showRowNum) {
+    columns = this.addOrderColumn(columns, showRowNum);
     this.columns = columns || this.normalize(elements);
     this._cached = {};
   };
@@ -326,6 +333,30 @@ var ColumnManager = function () {
 
   return ColumnManager;
 }();
+
+var _initialiseProps = function _initialiseProps() {
+  this._cached = {};
+
+  this.addOrderColumn = function (columns, showRowNum) {
+    if (!showRowNum) {
+      return columns;
+    }
+    var order = {
+      dataIndex: showRowNum.key || '_index',
+      key: '_index',
+      fixed: showRowNum.fixed || 'left',
+      width: showRowNum.width || 50,
+      title: showRowNum.name || '序号'
+    };
+    if (columns.length > 0 && columns[0].dataIndex !== 'checkbox' && columns[0].dataIndex !== 'radio') {
+      // 多选表格/单选表格时放在第二列,其他情况放到第一列
+      columns = [order].concat(columns);
+    } else {
+      columns.splice(1, 0, order); // splice方法改变原数组,返回切割出的数组,此处为[]
+    }
+    return columns;
+  };
+};
 
 exports["default"] = ColumnManager;
 module.exports = exports['default'];

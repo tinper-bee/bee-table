@@ -293,6 +293,23 @@ export function checkDicimalInvalid(value, precision) {
   return result;
 };
 
+
+/**
+ * 将数值转化为货币类型
+ * @param {*} number 数值
+ * @param {*} places 精度
+ * @param {*} thousand 是否展示千分位
+ */
+export function formatMoney(number, places, thousand) {
+  number = number || 0;
+  places = !isNaN(places = Math.abs(places)) ? places : 2;
+  let thousandSymbol = thousand ? "," : '';
+  let negative = number < 0 ? "-" : "";
+  let i = parseInt(number = Math.abs(+number || 0).toFixed(places), 10) + "";
+  let j = (j = i.length) > 3 ? j % 3 : 0;
+  return negative + (j ? i.substr(0, j) + thousandSymbol : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousandSymbol) + (places ? '.' + Math.abs(number - i).toFixed(places).slice(2) : "");
+}
+
 export const Event = {
   addHandler,
   removeHandler,
