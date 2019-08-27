@@ -852,7 +852,7 @@ var Table = function (_Component) {
         switch (props.showRowNum.type) {
           case 'number':
             {
-              data[i][props.showRowNum.key || '_index'] = (props.showRowNum.base || 0) + 1;
+              data[i][props.showRowNum.key || '_index'] = (props.showRowNum.base || 0) + i;
               break;
             }
           case 'ascii':
@@ -862,7 +862,7 @@ var Table = function (_Component) {
             }
           default:
             {
-              data[i][props.showRowNum.key || '_index'] = (props.showRowNum.base || 0) + 1;
+              data[i][props.showRowNum.key || '_index'] = (props.showRowNum.base || 0) + i;
               break;
             }
         }

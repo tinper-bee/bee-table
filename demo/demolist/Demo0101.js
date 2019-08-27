@@ -29,6 +29,7 @@ class Demo0101 extends Component {
         <Table
           columns={columns}
           data={data}
+          showRowNum={true}
         />
     );
   }
