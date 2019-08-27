@@ -517,7 +517,9 @@ class TableRow extends Component{
     if (!visible) {
       style.display = 'none';
     }
-
+    if(record._checked){
+      className += ' selected';
+    }
     return (
       <tr
         draggable={rowDraggAble}
