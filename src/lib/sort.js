@@ -249,7 +249,20 @@ export default function sort(Table, Icon) {
       if (column.sorter || column.sortEnable ) {
         //大于0说明不是升序就是降序，判断orderNum有没有值，没有值赋值
         if ( column.sortEnable && !column.sorter) {
-          column.sorter = column.fieldType === 'number' ? this.numberSortFn(column.dataIndex) : this.defaultSortFn(column.dataIndex);
+          switch(column.fieldType){
+            case 'number':{
+              column.sorter = this.numberSortFn(column.dataIndex);
+              break;
+            }
+            case 'stringChinese':{
+              column.sorter = this.chineseSortFn(column.dataIndex);
+              break;
+            }
+            default:{
+              column.sorter = this.defaultSortFn(column.dataIndex);
+              break;
+            }
+          }
         }
         if (iconTypeIndex > 0 && !column.orderNum && mode == "multiple") {
           column.orderNum = this.getOrderNum();
@@ -285,6 +298,11 @@ export default function sort(Table, Icon) {
         let numberB = parseFloat(b[key]);
         return numberA >= numberB ? 1 : -1;
     }
+
+    // 中文比较函数，按拼音排序
+    chineseSortFn = (key) => (a, b)=>{
+      return a[key].localeCompare(b[key], 'zh-Hans-CN',{sensitivity: 'accent'});
+    } 
 
     _flatToColumn(flatColumns){
       const colLen = flatColumns.length;

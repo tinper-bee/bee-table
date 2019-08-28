@@ -691,23 +691,23 @@ class Table extends Component {
     const lazyEndIndex =  props.lazyLoad && props.lazyLoad.endIndex ?props.lazyLoad.endIndex :-1;
     for (let i = 0; i < data.length; i++) {
       let isHiddenExpandIcon;
-      if ( props.showRowNum ){
-        switch(props.showRowNum.type){
-          case 'number':{
-            data[i][props.showRowNum.key || '_index'] = (props.showRowNum.base || 0) + i;
-            break;
-          }
-          case 'ascii': {
-            data[i][props.showRowNum.key || '_index'] = String.fromCharCode(i + (props.showRowNum.base || '0').charCodeAt());
-            break;
-          }
-          default: {
-            data[i][props.showRowNum.key || '_index'] = (props.showRowNum.base || 0) + i;
-            break;
-          }
-        }
+      // if ( props.showRowNum ){
+      //   switch(props.showRowNum.type){
+      //     case 'number':{
+      //       data[i][props.showRowNum.key || '_index'] = (props.showRowNum.base || 0) + i;
+      //       break;
+      //     }
+      //     case 'ascii': {
+      //       data[i][props.showRowNum.key || '_index'] = String.fromCharCode(i + (props.showRowNum.base || '0').charCodeAt());
+      //       break;
+      //     }
+      //     default: {
+      //       data[i][props.showRowNum.key || '_index'] = (props.showRowNum.base || 0) + i;
+      //       break;
+      //     }
+      //   }
         
-      } 
+      // } 
       const record = data[i];
       const key = this.getRowKey(record, i);
       const childrenColumn = record[childrenColumnName];
