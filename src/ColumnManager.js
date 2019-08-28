@@ -45,7 +45,7 @@ export default class ColumnManager {
       render:(text, record, index)=>{
         switch( type ){
           case 'ascii':{
-            return (String.fromCharCode((base || 'a').charCodeAt()) + index);
+            return (String.fromCharCode((base || 'a').charCodeAt() + index));
           }
           case 'number':
           default:{
