@@ -62,7 +62,7 @@ const propTypes = {
   onBodyScroll: PropTypes.func,
   bodyDisplayInRow: PropTypes.bool, // 表格内容超出列宽度时进行换行 or 以...形式展现
   headerDisplayInRow: PropTypes.bool, // 表头内容超出列宽度时进行换行 or 以...形式展现
-  showRowNum: PropTypes.object, // 表格是否自动生成序号,格式为{base:number || 0,defaultKey:string || '_index',defaultName:string || '序号'}
+  showRowNum: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]), // 表格是否自动生成序号,格式为{base:number || 0,defaultKey:string || '_index',defaultName:string || '序号'}
 };
 
 const defaultProps = {

@@ -130,6 +130,9 @@ function sort(Table, Icon) {
     // 数值比较函数
 
 
+    // 中文比较函数，按拼音排序
+
+
     SortTable.prototype._flatToColumn = function _flatToColumn(flatColumns) {
       var colLen = flatColumns.length;
       var parentIndex = void 0,
@@ -345,7 +348,23 @@ function sort(Table, Icon) {
       if (column.sorter || column.sortEnable) {
         //大于0说明不是升序就是降序，判断orderNum有没有值，没有值赋值
         if (column.sortEnable && !column.sorter) {
-          column.sorter = column.fieldType === 'number' ? _this3.numberSortFn(column.dataIndex) : _this3.defaultSortFn(column.dataIndex);
+          switch (column.fieldType) {
+            case 'number':
+              {
+                column.sorter = _this3.numberSortFn(column.dataIndex);
+                break;
+              }
+            case 'stringChinese':
+              {
+                column.sorter = _this3.chineseSortFn(column.dataIndex);
+                break;
+              }
+            default:
+              {
+                column.sorter = _this3.defaultSortFn(column.dataIndex);
+                break;
+              }
+          }
         }
         if (iconTypeIndex > 0 && !column.orderNum && mode == "multiple") {
           column.orderNum = _this3.getOrderNum();
@@ -391,6 +410,12 @@ function sort(Table, Icon) {
         var numberA = parseFloat(a[key]);
         var numberB = parseFloat(b[key]);
         return numberA >= numberB ? 1 : -1;
+      };
+    };
+
+    this.chineseSortFn = function (key) {
+      return function (a, b) {
+        return a[key].localeCompare(b[key], 'zh-Hans-CN', { sensitivity: 'accent' });
       };
     };
   }, _temp;
