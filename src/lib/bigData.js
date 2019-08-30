@@ -80,7 +80,7 @@ export default function bigData(Table) {
 
     }
 
-    componentDidMount() {
+    componentWillMount() {
       let { endIndex, startIndex } = this; 
       let sliceTreeList = [];
       const { data,isTree } = this.props;
@@ -143,7 +143,6 @@ export default function bigData(Table) {
       let attr = {
         id: 'key',
         parendId: 'parentKey',
-        // name: 'title',
         rootId: null,
         isLeaf: 'isLeaf'
       };
@@ -268,8 +267,7 @@ export default function bigData(Table) {
             currentKey = this.keys[i];
             currentRowHeight = 0;
             if (
-              this.firstLevelKey.indexOf(currentKey) >= 0 ||
-              this.expandChildRowKeys.indexOf(currentKey) >= 0
+              this.flatTreeKeysMap.hasOwnProperty(currentKey)
             ) {
               currentRowHeight = rowHeight;
             }
@@ -318,8 +316,9 @@ export default function bigData(Table) {
             currentKey = this.keys[index];
             currentRowHeight = 0;
             if (
-              this.firstLevelKey.indexOf(currentKey) >= 0 ||
-              this.expandChildRowKeys.indexOf(currentKey) >= 0
+              // this.firstLevelKey.indexOf(currentKey) >= 0 ||
+              // this.expandChildRowKeys.indexOf(currentKey) >= 0
+              this.flatTreeKeysMap.hasOwnProperty(currentKey)
             ) {
               currentRowHeight = rowHeight;
             }
@@ -555,19 +554,20 @@ export default function bigData(Table) {
         //   lazyLoad.startIndex = preSubCounts;
         // }
         lazyLoad.preHeight = this.getSumHeight(0, startIndex);
-        lazyLoad.sufHeight = this.getSumHeight(endIndex, this.flatTreeData.length);
+        lazyLoad.sufHeight = this.getSumHeight(endIndex, flatTreeData.length);
       } else {
         lazyLoad.preHeight = this.getSumHeight(0, startIndex);
         lazyLoad.sufHeight = this.getSumHeight(endIndex, data.length);
       }
       // console.log('*******expandedRowKeys*****'+expandedRowKeys);
-      console.log('*******startIndex*****', startIndex, endIndex);
-      console.log('*******treeData*****', treeData);
+      console.log(
+        "**startIndex**" , startIndex,
+        "**endIndex**" , endIndex
+      );
       return (
         <Table
           {...this.props}
           data={Array.isArray(treeData) && treeData.length > 0 ? treeData : data.slice(startIndex, endIndex)}
-          // data={data.slice(startIndex, endIndex)}
           lazyLoad={lazyLoad}
           handleScrollY={this.handleScrollY}
           scrollTop={scrollTop}
