@@ -488,6 +488,8 @@ class TableHeader extends Component {
    */
   onDrop = (e) => {
     if (!this.props.draggable) return;
+    let colum = this.getCurrentEventData(this._dragCurrent)
+    e.node = {props:{colum}};
     if(this.drag && this.drag.option != 'dragAble'){
       this.props.onDrop(e);
       return;
@@ -495,14 +497,14 @@ class TableHeader extends Component {
     let event = Event.getEvent(e) ,
     target = Event.getTarget(event);
     this.currentDome.setAttribute('draggable',false);//添加交换列效果
-    let data = this.getCurrentEventData(this._dragCurrent);
-    if(!data){
-      this.props.onDrop(e);
-      return;
-    }
+    // let data = this.getCurrentEventData(this._dragCurrent);
+    // if(!data){
+    //   this.props.onDrop(e);
+    //   return;
+    // }
     if(!this.props.onDrop)return;
     // this.props.onDrop(event,target);
-    this.props.onDrop(event,{dragSource:this.currentObj,dragTarg:data});
+    this.props.onDrop(event,{dragSource:this.currentObj,dragTarg:colum});
   };
 
 
