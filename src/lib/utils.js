@@ -318,3 +318,87 @@ export const Event = {
   preventDefault,
   stopPropagation
 }
+
+/**
+ * 将一维数组转换为树结构
+ * @param {*} treeData  扁平结构的 List 数组
+ * @param {*} attr 属性配置设置
+ * @param {*} flatTreeKeysMap 存储所有 key-value 的映射，方便获取各节点信息
+ */
+export function convertListToTree(treeData, attr, flatTreeKeysMap) {
+  let tree = []; //存储所有一级节点
+    let resData = treeData, //resData 存储截取的节点 + 父节点（除一级节点外）
+        resKeysMap = {}, //resData 的Map映射
+        treeKeysMap = {}; //tree 的Map映射
+    resData.map((element) => {
+      let key = attr.id;
+      resKeysMap[element[key]] = element;
+    });
+    // 查找父节点，为了补充不完整的数据结构
+    let findParentNode = (node) => {
+      let parentKey = node[attr.parendId];
+      if(parentKey !== attr.rootId) { //如果不是根节点，则继续递归
+        let item = flatTreeKeysMap[parentKey];
+        // 用 resKeysMap 判断，避免重复计算某节点的父节点
+        if(resKeysMap.hasOwnProperty(item[attr.id])) return;
+        resData.unshift(item);
+        resKeysMap[item[attr.id]] = item;
+        findParentNode(item);
+      }else{
+        // 用 treeKeysMap 判断，避免重复累加
+        if (!treeKeysMap.hasOwnProperty(node[attr.id]) ) {
+          let { key, title, children, isLeaf, ...otherProps } = node;
+          let obj = {
+                key,
+                title,
+                isLeaf,
+                children: []
+              }
+          tree.push(Object.assign(obj, {...otherProps}));
+          treeKeysMap[key] = node;
+        }
+      }
+    }
+    // 遍历 resData ，找到所有的一级节点
+    for (let i = 0; i < resData.length; i++) {
+        let item = resData[i];
+        if (item[attr.parendId] === attr.rootId && !treeKeysMap.hasOwnProperty(item[attr.id])) { //如果是根节点，就存放进 tree 对象中
+            let { key, title, children, ...otherProps } = item;
+            let obj = {
+                key: item[attr.id],
+                isLeaf: item[attr.isLeaf],
+                children: []
+            };
+            tree.push(Object.assign(obj, {...otherProps}));
+            treeKeysMap[key] = item;
+            resData.splice(i, 1);
+            i--;
+        }else { //递归查找根节点信息
+          findParentNode(item);
+        }
+    }
+    // console.log('resData',resKeysMap);
+    var run = function(treeArrs) {
+        if (resData.length > 0) {
+            for (let i = 0; i < treeArrs.length; i++) {
+                for (let j = 0; j < resData.length; j++) {
+                    let item = resData[j];
+                    if (treeArrs[i].key === item[attr.parendId]) {
+                        let { key, title, children, ...otherProps } = item;
+                        let obj = {
+                            key: item[attr.id],
+                            isLeaf: item[attr.isLeaf],
+                            children: []
+                        };
+                        treeArrs[i].children.push(Object.assign(obj, {...otherProps}));
+                        resData.splice(j, 1);
+                        j--;
+                    }
+                }
+                run(treeArrs[i].children);
+            }
+        }
+    };
+    run(tree);
+    return tree;
+}

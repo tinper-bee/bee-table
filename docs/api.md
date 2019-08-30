@@ -371,7 +371,11 @@ const BigDataTable = bigData(Table);
 
 #### API
 
-无
+Table 组件参数：
+
+| 参数     | 说明         | 类型       | 返回值  |
+| ------ | ---------- | -------- | ---- |
+| onBodyScroll | 表体滚动加载时触发的回调函数 | function(endIndex) | `endIndex` : 可视区最后一条数据的 index 序号 |
 
 #### bigData 使用示例
 - [万行以上数据渲染](http://design.yonyoucloud.com/tinper-bee/bee-table#%E4%B8%87%E8%A1%8C%E4%BB%A5%E4%B8%8A%E6%95%B0%E6%8D%AE%E6%B8%B2%E6%9F%93)

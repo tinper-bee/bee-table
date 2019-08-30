@@ -90,7 +90,7 @@ class TableCell extends Component{
   renderNumber = (data, config={}, width=200) => {
     const { precision, thousand, makeUp, preSymbol, nextSymbol } = config;
     let number = formatMoney(data, precision, thousand);
-    if(makeUp === false && number !== '0' && number.indexOf('.') !== -1) {
+    if(makeUp === false && number.indexOf('.') !== -1) {
       number = number.replace(/0*$/,'').replace(/\.$/,'');
     }
     let numberWidth = parseInt(width) - 16; // 减去默认的左右padding共计16px

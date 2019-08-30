@@ -142,6 +142,9 @@ $icon-color:#505F79;
         font-size: 12px;
         line-height: 12px;
       }
+      &.u-table-row-has-expandIcon .uf {
+        padding: 0;
+      }
     }
     &.text-center{
       text-align: center;

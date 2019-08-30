@@ -488,13 +488,18 @@ class TableHeader extends Component {
    */
   onDrop = (e) => {
     if (!this.props.draggable) return;
-    if(this.drag && this.drag.option != 'dragAble'){return;}
+    if(this.drag && this.drag.option != 'dragAble'){
+      this.props.onDrop(e);
+      return;
+    }
     let event = Event.getEvent(e) ,
     target = Event.getTarget(event);
     this.currentDome.setAttribute('draggable',false);//添加交换列效果
-
     let data = this.getCurrentEventData(this._dragCurrent);
-    if(!data)return;
+    if(!data){
+      this.props.onDrop(e);
+      return;
+    }
     if(!this.props.onDrop)return;
     // this.props.onDrop(event,target);
     this.props.onDrop(event,{dragSource:this.currentObj,dragTarg:data});

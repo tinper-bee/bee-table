@@ -233,6 +233,9 @@
     .u-table td.drag-handle-column .uf {
       font-size: 12px;
       line-height: 12px; }
+    .u-table th.drag-handle-column.u-table-row-has-expandIcon .uf,
+    .u-table td.drag-handle-column.u-table-row-has-expandIcon .uf {
+      padding: 0; }
     .u-table th.text-center,
     .u-table td.text-center {
       text-align: center; }

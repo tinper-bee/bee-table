@@ -631,7 +631,9 @@ var TableRow = function (_Component) {
     if (!visible) {
       style.display = 'none';
     }
-
+    if (record && record._checked) {
+      className += ' selected';
+    }
     return _react2["default"].createElement(
       'tr',
       {

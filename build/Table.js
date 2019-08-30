@@ -115,9 +115,10 @@ var propTypes = {
   rowDraggAble: _propTypes2["default"].bool,
   onDropRow: _propTypes2["default"].func,
   onDragRowStart: _propTypes2["default"].func,
+  onBodyScroll: _propTypes2["default"].func,
   bodyDisplayInRow: _propTypes2["default"].bool, // 表格内容超出列宽度时进行换行 or 以...形式展现
   headerDisplayInRow: _propTypes2["default"].bool, // 表头内容超出列宽度时进行换行 or 以...形式展现
-  showRowNum: _propTypes2["default"].object // 表格是否自动生成序号,格式为{base:number || 0,defaultKey:string || '_index',defaultName:string || '序号'}
+  showRowNum: _propTypes2["default"].oneOfType([_propTypes2["default"].bool, _propTypes2["default"].object]) // 表格是否自动生成序号,格式为{base:number || 0,defaultKey:string || '_index',defaultName:string || '序号'}
 };
 
 var defaultProps = {
@@ -165,6 +166,7 @@ var defaultProps = {
   rowDraggAble: false,
   onDropRow: function onDropRow() {},
   onDragRowStart: function onDragRowStart() {},
+  onBodyScroll: function onBodyScroll() {},
   bodyDisplayInRow: true,
   headerDisplayInRow: true,
   showRowNum: false
@@ -846,25 +848,23 @@ var Table = function (_Component) {
     var lazyEndIndex = props.lazyLoad && props.lazyLoad.endIndex ? props.lazyLoad.endIndex : -1;
     for (var i = 0; i < data.length; i++) {
       var isHiddenExpandIcon = void 0;
-      if (props.showRowNum) {
-        switch (props.showRowNum.type) {
-          case 'number':
-            {
-              data[i][props.showRowNum.key || '_index'] = (props.showRowNum.base || 0) + 1;
-              break;
-            }
-          case 'ascii':
-            {
-              data[i][props.showRowNum.key || '_index'] = String.fromCharCode(i + (props.showRowNum.base || '0').charCodeAt());
-              break;
-            }
-          default:
-            {
-              data[i][props.showRowNum.key || '_index'] = (props.showRowNum.base || 0) + 1;
-              break;
-            }
-        }
-      }
+      // if ( props.showRowNum ){
+      //   switch(props.showRowNum.type){
+      //     case 'number':{
+      //       data[i][props.showRowNum.key || '_index'] = (props.showRowNum.base || 0) + i;
+      //       break;
+      //     }
+      //     case 'ascii': {
+      //       data[i][props.showRowNum.key || '_index'] = String.fromCharCode(i + (props.showRowNum.base || '0').charCodeAt());
+      //       break;
+      //     }
+      //     default: {
+      //       data[i][props.showRowNum.key || '_index'] = (props.showRowNum.base || 0) + i;
+      //       break;
+      //     }
+      //   }
+
+      // } 
       var record = data[i];
       var key = this.getRowKey(record, i);
       var childrenColumn = record[childrenColumnName];
@@ -1430,7 +1430,8 @@ var Table = function (_Component) {
         scroll = _props9$scroll === undefined ? {} : _props9$scroll,
         clsPrefix = _props9.clsPrefix,
         handleScrollY = _props9.handleScrollY,
-        handleScrollX = _props9.handleScrollX;
+        handleScrollX = _props9.handleScrollX,
+        onBodyScroll = _props9.onBodyScroll;
     var _refs = this.refs,
         fixedColumnsBodyLeft = _refs.fixedColumnsBodyLeft,
         fixedColumnsBodyRight = _refs.fixedColumnsBodyRight;
@@ -1477,7 +1478,7 @@ var Table = function (_Component) {
       }
       this.lastScrollTop = e.target.scrollTop;
       if (handleScrollY) {
-        (0, _utils.debounce)(handleScrollY(this.lastScrollTop, this.treeType), 300);
+        (0, _utils.debounce)(handleScrollY(this.lastScrollTop, this.treeType, onBodyScroll), 300);
       }
     }
 

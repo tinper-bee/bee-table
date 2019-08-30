@@ -59,9 +59,10 @@ const propTypes = {
   rowDraggAble: PropTypes.bool,
   onDropRow: PropTypes.func,
   onDragRowStart: PropTypes.func,
+  onBodyScroll: PropTypes.func,
   bodyDisplayInRow: PropTypes.bool, // 表格内容超出列宽度时进行换行 or 以...形式展现
   headerDisplayInRow: PropTypes.bool, // 表头内容超出列宽度时进行换行 or 以...形式展现
-  showRowNum: PropTypes.object, // 表格是否自动生成序号,格式为{base:number || 0,defaultKey:string || '_index',defaultName:string || '序号'}
+  showRowNum: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]), // 表格是否自动生成序号,格式为{base:number || 0,defaultKey:string || '_index',defaultName:string || '序号'}
 };
 
 const defaultProps = {
@@ -100,6 +101,7 @@ const defaultProps = {
   rowDraggAble:false,
   onDropRow: ()=>{},
   onDragRowStart: ()=>{},
+  onBodyScroll: ()=>{},
   bodyDisplayInRow: true,
   headerDisplayInRow: true,
   showRowNum: false,
@@ -689,26 +691,27 @@ class Table extends Component {
     const lazyEndIndex =  props.lazyLoad && props.lazyLoad.endIndex ?props.lazyLoad.endIndex :-1;
     for (let i = 0; i < data.length; i++) {
       let isHiddenExpandIcon;
-      if ( props.showRowNum ){
-        switch(props.showRowNum.type){
-          case 'number':{
-            data[i][props.showRowNum.key || '_index'] = (props.showRowNum.base || 0) + 1;
-            break;
-          }
-          case 'ascii': {
-            data[i][props.showRowNum.key || '_index'] = String.fromCharCode(i + (props.showRowNum.base || '0').charCodeAt());
-            break;
-          }
-          default: {
-            data[i][props.showRowNum.key || '_index'] = (props.showRowNum.base || 0) + 1;
-            break;
-          }
-        }
+      // if ( props.showRowNum ){
+      //   switch(props.showRowNum.type){
+      //     case 'number':{
+      //       data[i][props.showRowNum.key || '_index'] = (props.showRowNum.base || 0) + i;
+      //       break;
+      //     }
+      //     case 'ascii': {
+      //       data[i][props.showRowNum.key || '_index'] = String.fromCharCode(i + (props.showRowNum.base || '0').charCodeAt());
+      //       break;
+      //     }
+      //     default: {
+      //       data[i][props.showRowNum.key || '_index'] = (props.showRowNum.base || 0) + i;
+      //       break;
+      //     }
+      //   }
         
-      } 
+      // } 
       const record = data[i];
       const key = this.getRowKey(record, i);
-      const childrenColumn = record[childrenColumnName];
+      const isLeaf = typeof record['isLeaf'] === 'boolean' && record['isLeaf'] || false;
+      const childrenColumn = isLeaf ? false : record[childrenColumnName];
       const isRowExpanded = this.isRowExpanded(record, i);
       let expandedRowContent;
       let expandedContentHeight = 0;
@@ -1228,7 +1231,7 @@ class Table extends Component {
 
   handleBodyScroll(e) {
     const headTable = this.headTable;
-    const { scroll = {},clsPrefix,handleScrollY, handleScrollX,onBodyScroll} = this.props;
+    const { scroll = {},clsPrefix,handleScrollY, handleScrollX, onBodyScroll} = this.props;
     const {fixedColumnsBodyLeft, fixedColumnsBodyRight } = this.refs;
     // Prevent scrollTop setter trigger onScroll event
     // http://stackoverflow.com/q/1386696

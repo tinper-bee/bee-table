@@ -62,11 +62,6 @@ class Demo30 extends Component {
     }
   }
 
-  handleClick = () => {
-    this.setState({
-      data
-    })
-  }
   /**
    * 表体滚动加载时触发的回调函数
    * @param endIndex 可视区最后一条数据的 index 序号
@@ -78,7 +73,6 @@ class Demo30 extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.handleClick}>更新data</button>
         <BigDataTable
           columns={columns}
           data={this.state.data}

@@ -341,12 +341,32 @@ var _initialiseProps = function _initialiseProps() {
     if (!showRowNum) {
       return columns;
     }
+    var key = showRowNum.key,
+        fixed = showRowNum.fixed,
+        width = showRowNum.width,
+        name = showRowNum.name,
+        type = showRowNum.type,
+        base = showRowNum.base;
+
     var order = {
-      dataIndex: showRowNum.key || '_index',
+      dataIndex: key || '_index',
       key: '_index',
-      fixed: showRowNum.fixed || 'left',
-      width: showRowNum.width || 50,
-      title: showRowNum.name || '序号'
+      fixed: fixed || 'left',
+      width: width || 50,
+      title: name || '序号',
+      render: function render(text, record, index) {
+        switch (type) {
+          case 'ascii':
+            {
+              return String.fromCharCode((base || 'a').charCodeAt() + index);
+            }
+          case 'number':
+          default:
+            {
+              return (base || 0) + index;
+            }
+        }
+      }
     };
     if (columns.length > 0 && columns[0].dataIndex !== 'checkbox' && columns[0].dataIndex !== 'radio') {
       // 多选表格/单选表格时放在第二列,其他情况放到第一列
