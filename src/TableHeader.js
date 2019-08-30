@@ -488,8 +488,8 @@ class TableHeader extends Component {
    */
   onDrop = (e) => {
     if (!this.props.draggable) return;
-    let colum = this.getCurrentEventData(this._dragCurrent)
-    e.node = {props:{colum}};
+    let props = this.getCurrentEventData(this._dragCurrent)
+    e.column = {props};
     if(this.drag && this.drag.option != 'dragAble'){
       this.props.onDrop(e);
       return;
