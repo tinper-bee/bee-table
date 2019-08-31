@@ -44,7 +44,7 @@ export default function bigData(Table) {
       this.setRowHeight = this.setRowHeight.bind(this);
       this.setRowParentIndex = this.setRowParentIndex.bind(this);
       this.expandedRowKeys = [];
-      this.flatTreeKeysMap = {}; //树表，扁平结构数据的 key-value 映射，方便获取各节点信息
+      this.flatTreeKeysMap = {}; //树表，扁平结构数据的 Map 映射，方便获取各节点信息
       this.flatTreeData = []; //深度遍历处理后的data数组
       this.treeData = []; //树表的data数据
     }
@@ -119,7 +119,8 @@ export default function bigData(Table) {
             isExpanded,
             parentKey : parentKey,
             isShown,
-            isLeaf
+            isLeaf,
+            index: flatTreeData.length
           },{...props});
           //该节点的父节点是展开状态 或 该节点是根节点
           if(isShown || parentKey === null){
@@ -264,7 +265,8 @@ export default function bigData(Table) {
       for (let i = start; i < end; i++) {
         if (this.cachedRowHeight[i] == undefined) {
           if (this.treeType) {
-            currentKey = this.keys[i];
+            // currentKey = this.keys[i];
+            currentKey = this.flatTreeData[i].key;
             currentRowHeight = 0;
             if (
               this.flatTreeKeysMap.hasOwnProperty(currentKey)
@@ -313,11 +315,10 @@ export default function bigData(Table) {
         let currentRowHeight = this.cachedRowHeight[index];
         if (currentRowHeight === undefined) {
           if (this.treeType) {
-            currentKey = this.keys[index];
+            // currentKey = this.keys[index];
+            currentKey = this.flatTreeData[index].key;
             currentRowHeight = 0;
             if (
-              // this.firstLevelKey.indexOf(currentKey) >= 0 ||
-              // this.expandChildRowKeys.indexOf(currentKey) >= 0
               this.flatTreeKeysMap.hasOwnProperty(currentKey)
             ) {
               currentRowHeight = rowHeight;
@@ -399,7 +400,7 @@ export default function bigData(Table) {
               this.startIndex = startIndex;
               this.endIndex = this.startIndex + loadCount;
               if(treeType) {
-                this.handleTreeListChange(flatTreeData.slice(startIndex,endIndex), startIndex, endIndex)
+                this.handleTreeListChange(flatTreeData.slice(startIndex,this.endIndex), startIndex, this.endIndex)
               }
               this.setState({ needRender: !needRender });
               callback(parseInt(currentIndex + rowsInView));
@@ -560,10 +561,10 @@ export default function bigData(Table) {
         lazyLoad.sufHeight = this.getSumHeight(endIndex, data.length);
       }
       // console.log('*******expandedRowKeys*****'+expandedRowKeys);
-      console.log(
-        "**startIndex**" , startIndex,
-        "**endIndex**" , endIndex
-      );
+      // console.log(
+      //   "**startIndex**" , startIndex,
+      //   "**endIndex**" , endIndex
+      // );
       return (
         <Table
           {...this.props}

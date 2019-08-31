@@ -17,7 +17,8 @@ const columns = [
         width:'150',
         key:'index',
         render:(text,record,index)=>{
-            return index
+          //树形表格，可取 record.index 作为序号索引值
+          return record.index
         }
     },
     {
