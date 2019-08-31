@@ -867,7 +867,8 @@ var Table = function (_Component) {
       // } 
       var record = data[i];
       var key = this.getRowKey(record, i);
-      var childrenColumn = record[childrenColumnName];
+      var isLeaf = typeof record['isLeaf'] === 'boolean' && record['isLeaf'] || false;
+      var childrenColumn = isLeaf ? false : record[childrenColumnName];
       var isRowExpanded = this.isRowExpanded(record, i);
       var expandedRowContent = void 0;
       var expandedContentHeight = 0;

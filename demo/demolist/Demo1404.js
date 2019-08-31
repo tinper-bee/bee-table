@@ -17,7 +17,8 @@ const columns = [
         width:'150',
         key:'index',
         render:(text,record,index)=>{
-            return index
+          //树形表格，可取 record.index 作为序号索引值
+          return record.index
         }
     },
     {
@@ -48,6 +49,10 @@ const data = [ ...new Array(1000) ].map((e, i) => {
         rs.children = [];
         for(let subi=0;subi<3;subi++){
           rs.children.push({a: i +subi + 'asub', b: i +subi + 'bsub', c: i + subi +'csub', d: i + subi +'dsub', key: i+ `${subi} sub`});
+          rs.children[subi].children = []
+          for(let subj=0;subj<100;subj++){
+            rs.children[subi].children.push({a: 333+' '+subj, b: 333+' '+subj, c: 333+' '+subj, d: 333+' '+subj, key: i+ `${subj} sub1`});
+          }
         }
     }else{
       rs.children = [];

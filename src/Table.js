@@ -710,7 +710,8 @@ class Table extends Component {
       // } 
       const record = data[i];
       const key = this.getRowKey(record, i);
-      const childrenColumn = record[childrenColumnName];
+      const isLeaf = typeof record['isLeaf'] === 'boolean' && record['isLeaf'] || false;
+      const childrenColumn = isLeaf ? false : record[childrenColumnName];
       const isRowExpanded = this.isRowExpanded(record, i);
       let expandedRowContent;
       let expandedContentHeight = 0;
