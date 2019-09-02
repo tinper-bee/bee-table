@@ -152,10 +152,13 @@ function multiSelect(Table, Checkbox) {
     };
 
     return MultiSelect;
-  }(_react.Component), _class.defaultProps = {
+  }(_react.Component), _class.propTypes = {
+    autoCheckedByClickRows: PropTypes.bool //行点击时，是否自动勾选复选框
+  }, _class.defaultProps = {
     prefixCls: "u-table-mult-select",
     getSelectedDataFunc: function getSelectedDataFunc() {},
-    autoSelect: false
+    autoSelect: false,
+    autoCheckedByClickRows: true
   }, _initialiseProps = function _initialiseProps() {
     var _this2 = this;
 
@@ -340,10 +343,14 @@ function multiSelect(Table, Checkbox) {
     };
 
     this.onRowClick = function (record, index, event) {
-      _this2.onCheckboxChange('', record, index)();
-      if (_this2.props.onRowClick) {
-        _this2.props.onRowClick(record, index, event);
+      var _props2 = _this2.props,
+          autoCheckedByClickRows = _props2.autoCheckedByClickRows,
+          onRowClick = _props2.onRowClick;
+
+      if (autoCheckedByClickRows) {
+        _this2.onCheckboxChange('', record, index)();
       }
+      onRowClick && onRowClick(record, index, event);
     };
   }, _temp;
 }

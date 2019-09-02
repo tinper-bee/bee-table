@@ -891,7 +891,7 @@ var Table = function (_Component) {
 
       onHoverProps.onHover = this.handleRowHover;
 
-      if (props.height) {
+      if (props.bodyDisplayInRow && props.height) {
         height = props.height;
       } else if (fixed || props.heightConsistent) {
         height = fixedColumnsBodyRowsHeight[fixedIndex];
@@ -1342,7 +1342,8 @@ var Table = function (_Component) {
         height = _props8.height,
         headerHeight = _props8.headerHeight,
         columns = _props8.columns,
-        heightConsistent = _props8.heightConsistent;
+        heightConsistent = _props8.heightConsistent,
+        bodyDisplayInRow = _props8.bodyDisplayInRow;
 
     var headRows = this.headTable ? this.headTable.querySelectorAll('thead') : this.bodyTable.querySelectorAll('thead');
     var bodyRows = this.bodyTable.querySelectorAll('.' + clsPrefix + '-row') || [];
@@ -1357,11 +1358,12 @@ var Table = function (_Component) {
     });
     var fixedColumnsBodyRowsHeight = [].map.call(bodyRows, function (row, index) {
       var rsHeight = height;
-      if (rsHeight) {
+      if (bodyDisplayInRow && rsHeight) {
         return rsHeight;
       } else {
         // 为了提高性能，默认获取主表的高度，但是有的场景中固定列的高度比主表的高度高，所以提供此属性，会统计所有列的高度取最大的，设置
-        if (heightConsistent) {
+        // 内容折行显示，并又设置了 height 的情况下，也要获取主表高度
+        if (heightConsistent || !bodyDisplayInRow && rsHeight) {
           var leftHeight = void 0,
               rightHeight = void 0,
               currentHeight = void 0,
@@ -1544,7 +1546,8 @@ var Table = function (_Component) {
     }
     className += ' ' + clsPrefix + '-scroll-position-' + this.state.scrollPosition;
     //如果传入height说明是固定高度
-    if (props.height) {
+    //内容过多折行显示时，height 属性会失效，为了避免产生错行
+    if (props.bodyDisplayInRow && props.height) {
       className += ' fixed-height';
     }
     if (props.bodyDisplayInRow) {

@@ -736,8 +736,7 @@ class Table extends Component {
       onHoverProps.onHover = this.handleRowHover;
 
 
-
-      if (props.height) {
+      if (props.bodyDisplayInRow && props.height) {
         height = props.height
       } else if(fixed || props.heightConsistent) {
         height = fixedColumnsBodyRowsHeight[fixedIndex];
@@ -1147,7 +1146,7 @@ class Table extends Component {
 
   syncFixedTableRowHeight() {
     //this.props.height、headerHeight分别为用户传入的行高和表头高度，如果有值，所有行的高度都是固定的，主要为了避免在千行数据中有固定列时获取行高度有问题
-    const { clsPrefix, height, headerHeight,columns,heightConsistent } = this.props;
+    const { clsPrefix, height, headerHeight,columns,heightConsistent, bodyDisplayInRow } = this.props;
     const headRows = this.headTable ?
       this.headTable.querySelectorAll('thead') :
       this.bodyTable.querySelectorAll('thead');
@@ -1165,11 +1164,12 @@ class Table extends Component {
     const fixedColumnsBodyRowsHeight = [].map.call(
       bodyRows, (row,index) =>{
         let rsHeight = height;
-        if(rsHeight){
+        if(bodyDisplayInRow && rsHeight){
           return rsHeight;
         }else{
           // 为了提高性能，默认获取主表的高度，但是有的场景中固定列的高度比主表的高度高，所以提供此属性，会统计所有列的高度取最大的，设置
-          if(heightConsistent){
+          // 内容折行显示，并又设置了 height 的情况下，也要获取主表高度
+          if(heightConsistent || (!bodyDisplayInRow && rsHeight)){
             let leftHeight,rightHeight,currentHeight,maxHeight;
             leftHeight = leftBodyRows[index]?leftBodyRows[index].getBoundingClientRect().height:0;
             rightHeight = rightBodyRows[index]?rightBodyRows[index].getBoundingClientRect().height:0;
@@ -1373,7 +1373,8 @@ class Table extends Component {
     }
     className += ` ${clsPrefix}-scroll-position-${this.state.scrollPosition}`;
     //如果传入height说明是固定高度
-    if(props.height){
+    //内容过多折行显示时，height 属性会失效，为了避免产生错行
+    if(props.bodyDisplayInRow && props.height){
       className += ' fixed-height';
     }
     if(props.bodyDisplayInRow){

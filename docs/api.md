@@ -76,11 +76,12 @@ import 'bee-table/build/Table.css';
 | heightConsistent       | 当固定列内容高度超出非固定列时，内容互错行，当此属性为true会将高度同步，当行过多时会有性能影响，所以建议非固定高度如果过高时，超出内容可以显示成省略号 | bool|false 
 | height | 自定义表格行高 | number | - |
 | headerHeight | 自定义表头行高 | number | - |
-| headerDisplayInRow | 设置表头的内容显示一行，超出显示省略号 | bool |
-| bodyDisplayInRow |  设置表体的内容显示一行，超出显示省略号 | bool | 
+| headerDisplayInRow | 设置表头的内容显示一行，超出显示省略号 | bool | true |
+| bodyDisplayInRow |  设置表体的内容显示一行，超出显示省略号，**注意：不要和 height 属性一起使用，该属性优先级高于 height** | bool | true |
 | size | 表格大小 | `sm / md / lg` | 'md' |
 | hideHeaderScroll | 表体无数据时，表头下是否显示滚动条，默认显示 | bool | false |
 | [v2.2.2新增]showRowNum | 展示序号功能，false时不展示，true时展示默认情况，可传入自定义配置信息 | bool / obj:{name: '序号', key: '_index', // 在数据中存储的key值width: 50,base: 0,// 排序的基准值,为数字或者字母type:'number', // 排序类型,默认为number类型,支持单字母排序(type='ascii')} | false |
+| autoCheckedByClickRows | 设置为 false 时，表格行点击事件，不会自动勾选复选框 | bool | true |
 
 > 快捷键部分参考示例 (快捷键在table中的简单使用应用)
 

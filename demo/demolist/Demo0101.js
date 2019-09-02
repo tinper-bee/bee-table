@@ -2,7 +2,7 @@
 *
 * @title 基本表格
 * @parent 基础 Basic
-* @description 单元格数据过长时，可结合Tooltip组件使用。
+* @description 当单元格内容过多时，会自动显示省略号，鼠标hover有提示。showRowNum 设置是否显示序号列。
 * demo0101
 */
 
