@@ -83,6 +83,7 @@ import 'bee-table/build/Table.css';
 | [v2.2.2新增]showRowNum | 展示序号功能，false时不展示，true时展示默认情况，可传入自定义配置信息 | bool / obj:{name: '序号', key: '_index', // 在数据中存储的key值width: 50,base: 0,// 排序的基准值,为数字或者字母type:'number', // 排序类型,默认为number类型,支持单字母排序(type='ascii')} | false |
 | autoCheckedByClickRows | 设置为 false 时，表格行点击事件，不会自动勾选复选框 | bool | true |
 
+| autoSelect | 树型表格勾选时，是否开启子节点的联动 | bool | false |
 > 快捷键部分参考示例 (快捷键在table中的简单使用应用)
 
 *注意: data参数中的key值必需，否则会导致部分功能出现问题！建议使用唯一的值，如id*
@@ -137,11 +138,35 @@ import 'bee-table/build/Table.css';
 | [v2.2.2新增]bgColor | 列背景颜色 | string | - |
 | [v2.2.2新增]titleAlign | 标题对齐方式 | 'left'\|'center'\|'right' | 'left' |
 | [v2.2.2新增]contentAlign | 内容对齐方式 | 'left'\|'center'\|'right' | 'left' |
-| [v2.2.2新增]required | 必填项,列标题展示红色星号 | bool | false |
+| [v2.2.2新增]required | 必填项的列标题展示红色星号 | bool | false |
+| isShow | 是否展示该列数据 | bool | true |
+| cellMenu | 渲染单元格内操作按钮 | object | - |
+
+#### [v2.2.x新增] cellMenu
+
+属性的参数说明如下:
+
+|名称|说明|类型|必填|默认值|
+|---|---|---|---|---|
+|menu|自定义的操作列表|array|是|[]|
+|icon|自定义图标|string/element|否|三圆点图标`<Icon type='uf-3dot-h'/>`|
+|iconSize|自定义图标时可能会出现右侧对齐的问题,需要手动调整图标大小|number|否|21|
+|trigger|控制下拉菜单的出现方式|'hover'\|'click'|否|'hover'|
+|className|下拉菜单的类名|string|否|-|
+
+其中,menu的配置如下:
+|名称|说明|类型|必填|默认值|
+|---|---|---|---|---|
+|key|每一项需要的唯一的key值|string|true|-|
+|text|每一项的标题|string|false|-|
+|icon|每一项的图标信息|string/element|false|-|
+|callback|点击行后的回调函数|Function(text,record,index)|false|-|
 
 #### [v2.2.2新增]fieldType
 
-fieldType属性控制了不同类型数据的渲染方式,其优先级低于render属性。目前，已有`string`,`number`,`currency`,`bool`,`link`,`date`类型，支持自定义配置(`string`类型为默认类型)。
+fieldType属性控制了不同类型数据的渲染方式,其优先级低于render属性。目前，已有`string`,`number`,`currency`,`bool`,`link`,`date`,`select`,`stringChinese`类型，支持自定义配置(`string`类型为默认类型)。
+
+- stringChinese类型的渲染同string,在配合高阶组件sort使用时,可支持中文拼音排序
 
 - numberConfig
 
@@ -193,6 +218,15 @@ fieldType属性控制了不同类型数据的渲染方式,其优先级低于rend
 |format|渲染的时间格式|string|'YYYY-MM-DD'|
 
 *需要单独安装[moment.js](http://momentjs.cn/),并将moment对象传入*
+
+- selectConfig
+
+|名称|说明|类型|必填项|默认值|
+|---|---|---|---|---|
+|options|下拉的key/value对应关系|object|是|-|
+|defaultShow|找不到对应关系时的展示值|string|否|''|
+
+*无options时按string类型渲染*
 
 ### 高阶函数
 Table内部封装了七个高阶组件，接收基础 Table 组件作为输入，输出一个新的复杂 Table 组件。高阶组件让代码更具有复用性、逻辑性与抽象特征。
