@@ -754,7 +754,7 @@ var _initialiseProps = function _initialiseProps() {
     // }
     if (!_this3.props.onDrop) return;
     // this.props.onDrop(event,target);
-    _this3.props.onDrop(event, { dragSource: _this3.currentObj, dragTarg: colum });
+    _this3.props.onDrop(event, { dragSource: _this3.currentObj, dragTarg: e.column });
   };
 
   this.onDragEnter = function (e) {

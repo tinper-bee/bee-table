@@ -26,6 +26,14 @@ var _tool = require('bee-locale/build/tool');
 
 var _utils = require('./lib/utils');
 
+var _beeDropdown = require('bee-dropdown');
+
+var _beeDropdown2 = _interopRequireDefault(_beeDropdown);
+
+var _beeMenus = require('bee-menus');
+
+var _beeMenus2 = _interopRequireDefault(_beeMenus);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
@@ -35,6 +43,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+
+var Item = _beeMenus2["default"].Item;
 
 var propTypes = {
   record: _propTypes2["default"].object,
@@ -170,8 +180,84 @@ var TableCell = function (_Component) {
       return moment(data).format(format || 'YYYY-MM-DD');
     };
 
+    _this.renderSelect = function (data) {
+      var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+      if (config.options) {
+        data = config.options[data] || config.defaultShow;
+      }
+      return data;
+    };
+
+    _this.renderColumnMenu = function (colMenu, text, record, index) {
+      if (!colMenu) return null;
+      var menu = colMenu.menu,
+          _colMenu$trigger = colMenu.trigger,
+          trigger = _colMenu$trigger === undefined ? 'hover' : _colMenu$trigger,
+          _colMenu$className = colMenu.className,
+          className = _colMenu$className === undefined ? '' : _colMenu$className,
+          _colMenu$icon = colMenu.icon,
+          icon = _colMenu$icon === undefined ? _react2["default"].createElement('i', { className: 'uf uf-3dot-h' }) : _colMenu$icon,
+          _colMenu$iconSize = colMenu.iconSize,
+          iconSize = _colMenu$iconSize === undefined ? 21 : _colMenu$iconSize;
+
+      var items = [];
+      items = menu.map(function (item) {
+        return _react2["default"].createElement(
+          Item,
+          { key: item.key, onClick: function onClick() {
+              _this.onClickColMenu(item.callback, text, record, index);
+            } },
+          item.icon,
+          item.text
+        );
+      });
+      if (items.length === 0) return null;
+      className += ' u-table-inline-op-dropdowm';
+      var menus = _react2["default"].createElement(
+        _beeMenus2["default"],
+        { className: className },
+        items
+      );
+      var top = 'calc(50% - ' + iconSize / 2 + 'px)';
+      var visibility = _this.state.showDropdowm ? 'visible' : '';
+      var iconClassName = 'u-table-inline-op-icon u-table-inline-op-icon-hover';
+      return _react2["default"].createElement(
+        _beeDropdown2["default"],
+        {
+          trigger: [trigger],
+          overlay: menus,
+          animation: 'slide-up',
+          onVisibleChange: _this.changeShowDropdowm
+        },
+        _react2["default"].createElement(
+          'span',
+          { className: iconClassName, style: { fontSize: iconSize, top: top, visibility: visibility } },
+          icon
+        )
+      );
+    };
+
+    _this.changeShowDropdowm = function (val) {
+      _this.setState({
+        showDropdowm: val
+      });
+    };
+
+    _this.onClickColMenu = function (callback, text, record, index) {
+      if (callback) {
+        callback(text, record, index);
+      }
+      _this.setState({
+        showDropdowm: false
+      });
+    };
+
     _this.isInvalidRenderCellText = _this.isInvalidRenderCellText.bind(_this);
     _this.handleClick = _this.handleClick.bind(_this);
+    _this.state = {
+      showDropdowm: false
+    };
     return _this;
   }
 
@@ -198,7 +284,19 @@ var TableCell = function (_Component) {
   // 渲染整数/货币类型
 
 
-  // 渲染时间类型
+  // 渲染时间类型-l
+
+
+  // 渲染下拉类型，主要为编辑表格铺垫
+
+
+  // 渲染行内菜单
+
+
+  // 下拉按钮状态改变，点击后保持图标常驻
+
+
+  // 菜单点击事件
 
 
   TableCell.prototype.render = function render() {
@@ -241,6 +339,7 @@ var TableCell = function (_Component) {
       }
     }
 
+    var colMenu = this.renderColumnMenu(column.cellMenu, text, record, index);
     // 根据 fieldType 来渲染数据
     if (!render) {
       switch (column.fieldType) {
@@ -283,6 +382,11 @@ var TableCell = function (_Component) {
             text = this.renderDate(text, column.dateConfig);
             break;
           }
+        case 'select':
+          {
+            text = this.renderSelect(text, column.selectConfig);
+            break;
+          }
         default:
           {
             break;
@@ -321,6 +425,9 @@ var TableCell = function (_Component) {
     if (expandIcon && expandIcon.props.expandable) {
       className = className + (' ' + clsPrefix + '-has-expandIcon');
     }
+    if (colMenu) {
+      className += ' u-table-inline-icon';
+    }
     return _react2["default"].createElement(
       'td',
       {
@@ -333,7 +440,8 @@ var TableCell = function (_Component) {
       },
       indentText,
       expandIcon,
-      text
+      text,
+      colMenu
     );
   };
 

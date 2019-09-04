@@ -504,7 +504,7 @@ class TableHeader extends Component {
     // }
     if(!this.props.onDrop)return;
     // this.props.onDrop(event,target);
-    this.props.onDrop(event,{dragSource:this.currentObj,dragTarg:colum});
+    this.props.onDrop(event,{dragSource:this.currentObj,dragTarg:e.column});
   };
 
 
