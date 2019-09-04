@@ -155,6 +155,7 @@ import 'bee-table/build/Table.css';
 |className|下拉菜单的类名|string|否|-|
 
 其中,menu的配置如下:
+
 |名称|说明|类型|必填|默认值|
 |---|---|---|---|---|
 |key|每一项需要的唯一的key值|string|true|-|
