@@ -59,7 +59,7 @@ class TableCell extends Component{
         cls += 'u-table-link-underline ';
       }
       let title = '';
-      
+
       if(desc === true){
         title = linkUrl;
       }
@@ -184,7 +184,7 @@ class TableCell extends Component{
     let tdProps;
     let colSpan;
     let rowSpan,title;
-    
+
     if (render && !showSum) {
       text = render(text, record, index);
       if (this.isInvalidRenderCellText(text)) {
@@ -274,7 +274,7 @@ class TableCell extends Component{
     if((typeof text == 'string' || typeof text === 'number') && bodyDisplayInRow){
       title = text
     }
-    if(expandIcon && expandIcon.props.expandable){ 
+    if(expandIcon && expandIcon.props.expandable){
       className = className+` ${clsPrefix}-has-expandIcon`
     }
     if(colMenu){
@@ -287,7 +287,7 @@ class TableCell extends Component{
         className={className}
         onClick={this.handleClick}
         title={title}
-        style={{color:fontColor,backgroundColor:bgColor,}}
+        style={{color:fontColor,backgroundColor:bgColor,...column.style}}
       >
         {indentText}
         {expandIcon}

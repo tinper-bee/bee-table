@@ -436,7 +436,7 @@ var TableCell = function (_Component) {
         className: className,
         onClick: this.handleClick,
         title: title,
-        style: { color: fontColor, backgroundColor: bgColor }
+        style: _extends({ color: fontColor, backgroundColor: bgColor }, column.style)
       },
       indentText,
       expandIcon,
