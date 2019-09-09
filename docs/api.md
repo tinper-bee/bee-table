@@ -292,6 +292,7 @@ Table 组件参数：
 | 参数     | 说明         | 类型       | 返回值  |
 | ------ | ---------- | -------- | ---- |
 | getSelectedDataFunc | 返回当前选中的数据数组 | Function | `selectedList` : 当前选中的行数据集合<br>`record` :  当前操作行数据<br>`index` : 当前操作行索引   |
+| multiSelectConfig | 自定义 Checkbox 属性，如设置复选框为红色填充 | Object | - |
 
 Data 数组参数：
 
