@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -627,7 +629,7 @@ var TableRow = function (_Component) {
         lazyEndIndex: lazyEndIndex
       }));
     }
-    var style = { height: height };
+    var style = _extends({ height: height }, record ? record.style : undefined);
     if (!visible) {
       style.display = 'none';
     }

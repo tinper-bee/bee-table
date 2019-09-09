@@ -513,7 +513,7 @@ class TableRow extends Component{
         />
       );
     }
-    const style = { height };
+    const style = { height ,...record?record.style:undefined};
     if (!visible) {
       style.display = 'none';
     }
