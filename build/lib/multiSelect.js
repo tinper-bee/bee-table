@@ -347,6 +347,7 @@ function multiSelect(Table, Checkbox) {
     };
 
     this.onRowClick = function (record, index, event) {
+      if (record._disabled) return;
       var _props2 = _this2.props,
           autoCheckedByClickRows = _props2.autoCheckedByClickRows,
           onRowClick = _props2.onRowClick;

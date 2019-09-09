@@ -288,6 +288,7 @@ export default function multiSelect(Table, Checkbox) {
 
     // 实现行点击时触发多选框勾选的需求
     onRowClick = (record,index,event) =>{
+      if(record._disabled) return;
       let { autoCheckedByClickRows, onRowClick } = this.props;
       if(autoCheckedByClickRows) {
         this.onCheckboxChange('',record, index)();
