@@ -79,19 +79,47 @@ class Demo34 extends Component {
   onExpand = (expandKeys)=>{
     console.log('expand---'+expandKeys);
   }
+
+  handleClick = () => {
+    this.setState({
+      data: [ ...new Array(1000) ].map((e, i) => {
+        const rs = { a: i + 'a1', b: i + 'b1', c: i + 'c1', d: i + 'd1', key: i };
+        if(i%3==0){
+            rs.b = '女';
+            rs.children = [];
+            for(let subi=0;subi<3;subi++){
+              rs.children.push({a: i +subi + 'asub', b: i +subi + 'bsub', c: i + subi +'csub', d: i + subi +'dsub', key: i+ `${subi} sub`});
+              rs.children[subi].children = []
+              for(let subj=0;subj<100;subj++){
+                rs.children[subi].children.push({a: 333+' '+subj, b: 333+' '+subj, c: 333+' '+subj, d: 333+' '+subj, key: i+ `${subj} sub1`});
+              }
+            }
+        }else{
+          rs.children = [];
+            for(let subi=0;subi<3;subi++){
+              rs.children.push({a: i +subi + 'asub', b: i +subi + 'bsub', c: i + subi +'csub', d: i + subi +'dsub', key: i+ `${subi} sub`});
+            }
+        }
+        return rs;
+       })
+    })
+  }
   render() {
     return (
-        <BigDataTable
-          columns={columns}
-          data={data}
-          parentNodeId='parent'
-          scroll={{y:300}}
-          onExpand={this.onExpand}
-          onRowClick={(record, index, indent) => {
-            console.log('currentIndex--'+index);
-          }}
-          onExpandedRowsChange={this.onExpandedRowsChange}
-        />
+        <div>
+          <button onClick={this.handleClick}>更新数据</button>
+          <BigDataTable
+            columns={columns}
+            data={data}
+            parentNodeId='parent'
+            scroll={{y:300}}
+            onExpand={this.onExpand}
+            onRowClick={(record, index, indent) => {
+              console.log('currentIndex--'+index);
+            }}
+            onExpandedRowsChange={this.onExpandedRowsChange}
+          />
+        </div>
 
      
     );
