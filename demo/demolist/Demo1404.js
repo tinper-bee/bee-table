@@ -5,7 +5,7 @@
 * demo1404
 */
 import React, { Component } from "react";
-import {Tooltip} from "tinper-bee";
+import {Button} from "tinper-bee";
 
 import Table from "../../src";
 import BigData from "../../src/lib/bigData";
@@ -17,52 +17,42 @@ const columns = [
         width:'150',
         key:'index',
         render:(text,record,index)=>{
-          //树形表格，可取 record.index 作为序号索引值
-          return record.index
+            return record.index ? record.index : index
         }
     },
-    {
-    title: "用户名", dataIndex: "a", key: "a", width: 580, className: "rowClassName",
-    render: (text, record, index) => {
-      return (
-        <Tooltip inverse overlay={text}>
-          <span tootip={text} style={{
-            display: "block",
-            width: "40px",
-            textOverflow: "ellipsis",
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-            verticalAlign: "bottom",
-          }}>{text}</span>
-        </Tooltip>
-      );
-    }
-  },
-  { id: "123", title: "性别", dataIndex: "b", key: "b", width: 80},
-  { title: "年龄", dataIndex: "c", key: "c", width: 200 }
+    {title: "用户名", dataIndex: "a", key: "a", width: 580, className: "rowClassName"},
+    { id: "123", title: "性别", dataIndex: "b", key: "b", width: 80},
+    { title: "年龄", dataIndex: "c", key: "c", width: 200 }
 ];
 
-const data = [ ...new Array(1000) ].map((e, i) => {
-    const rs = { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };
-    if(i%3==0){
-        rs.b = '女';
-        rs.children = [];
-        for(let subi=0;subi<3;subi++){
-          rs.children.push({a: i +subi + 'asub', b: i +subi + 'bsub', c: i + subi +'csub', d: i + subi +'dsub', key: i+ `${subi} sub`});
-          rs.children[subi].children = []
-          for(let subj=0;subj<100;subj++){
-            rs.children[subi].children.push({a: 333+' '+subj, b: 333+' '+subj, c: 333+' '+subj, d: 333+' '+subj, key: i+ `${subj} sub1`});
-          }
-        }
-    }else{
+const data = [ ...new Array(10) ].map((e, i) => {
+  const rs = { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };
+  if(i%3==0){
+      rs.b = '女';
       rs.children = [];
-        for(let subi=0;subi<3;subi++){
-          rs.children.push({a: i +subi + 'asub', b: i +subi + 'bsub', c: i + subi +'csub', d: i + subi +'dsub', key: i+ `${subi} sub`});
+      for(let subi=0;subi<3;subi++){
+        rs.children.push({a: i +subi + 'asub', b: i +subi + 'bsub', c: i + subi +'csub', d: i + subi +'dsub', key: i+ `${subi} sub`});
+        rs.children[subi].children = []
+        for(let subj=0;subj<100;subj++){
+          rs.children[subi].children.push({a: 333+' '+subj, b: 333+' '+subj, c: 333+' '+subj, d: 333+' '+subj, key: i+ `${subj} sub1`});
         }
-    }
-    return rs;
-   })
+      }
+  }else{
+    rs.children = [];
+      for(let subi=0;subi<3;subi++){
+        rs.children.push({a: i +subi + 'asub', b: i +subi + 'bsub', c: i + subi +'csub', d: i + subi +'dsub', key: i+ `${subi} sub`});
+      }
+  }
+  return rs;
+})
 
+const data2 = [ ...new Array(10000) ].map((e, i) => {
+  const rs = { a: i + 'a', b: i + 'b', c: i + 'c', d: i + 'd', key: i };
+  if(i%3==0){
+      rs.b = '女';
+  }
+  return rs;
+})
 
 class Demo34 extends Component {
 
@@ -79,11 +69,18 @@ class Demo34 extends Component {
   onExpand = (expandKeys)=>{
     console.log('expand---'+expandKeys);
   }
+  handleClick = () => {
+    this.setState({
+      data: data2
+    })
+  }
   render() {
     return (
+      <div>
+        <Button onClick={this.handleClick} colors="secondary" style={{marginBottom:'8px'}}>改变数据源</Button>
         <BigDataTable
           columns={columns}
-          data={data}
+          data={this.state.data}
           parentNodeId='parent'
           scroll={{y:300}}
           onExpand={this.onExpand}
@@ -92,7 +89,7 @@ class Demo34 extends Component {
           }}
           onExpandedRowsChange={this.onExpandedRowsChange}
         />
-
+      </div>
      
     );
   }
