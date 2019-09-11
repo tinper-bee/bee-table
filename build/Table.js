@@ -816,7 +816,7 @@ var Table = function (_Component) {
     var fixedColumnsBodyRowsHeight = this.state.fixedColumnsBodyRowsHeight;
 
     var rst = [];
-
+    var isTreeType = false; //每次遍历 data 前，将此变量置为 false，若遍历完 data，此变量仍为 false，说明是普通表格
     var height = void 0;
     var rowClassName = props.rowClassName;
     var rowRef = props.rowRef;
@@ -947,6 +947,7 @@ var Table = function (_Component) {
         rst.push(this.getExpandedRow(key, expandedRowContent, subVisible, expandedRowClassName(record, i, indent), fixed));
       }
       if (childrenColumn) {
+        isTreeType = true; //增加该标志位，为了兼容老版本，不修改以前的 `this.treeType` 的相关逻辑
         this.treeType = true; //证明是tree表形式visible = {true}
         rst = rst.concat(this.getRowsByData(childrenColumn, subVisible, indent + 1, columns, fixed, paramRootIndex));
       }
@@ -954,6 +955,9 @@ var Table = function (_Component) {
 
     if (props.lazyLoad && props.lazyLoad.sufHeight && indent == 0) {
       rst.push(_react2["default"].createElement(_TableRow2["default"], { height: props.lazyLoad.sufHeight, key: 'table_row_end', columns: [], className: '', store: this.store, visible: true }));
+    }
+    if (!isTreeType) {
+      this.treeType = false;
     }
     return rst;
   };

@@ -659,7 +659,7 @@ class Table extends Component {
     const expandRowByClick = props.expandRowByClick;
     const { fixedColumnsBodyRowsHeight } = this.state;
     let rst = [];
-
+    let isTreeType = false; //每次遍历 data 前，将此变量置为 false，若遍历完 data，此变量仍为 false，说明是普通表格
     let height;
     const rowClassName = props.rowClassName;
     const rowRef = props.rowRef;
@@ -797,6 +797,7 @@ class Table extends Component {
         ));
       }
       if (childrenColumn) {
+        isTreeType = true; //增加该标志位，为了兼容老版本，不修改以前的 `this.treeType` 的相关逻辑
         this.treeType = true;//证明是tree表形式visible = {true}
         rst = rst.concat(this.getRowsByData(
           childrenColumn, subVisible, indent + 1, columns, fixed,paramRootIndex
@@ -808,6 +809,9 @@ class Table extends Component {
       rst.push(
         <TableRow height={props.lazyLoad.sufHeight} key={'table_row_end'} columns={[]} className='' store={this.store} visible = {true}/>
       )
+    }
+    if (!isTreeType) {
+      this.treeType = false;
     }
     return rst;
   }
