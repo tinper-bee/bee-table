@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -8,11 +8,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 exports["default"] = multiSelect;
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _util = require("./util");
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _util = require('./util');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -152,10 +156,14 @@ function multiSelect(Table, Checkbox) {
     };
 
     return MultiSelect;
-  }(_react.Component), _class.defaultProps = {
+  }(_react.Component), _class.propTypes = {
+    autoCheckedByClickRows: _propTypes2["default"].bool //行点击时，是否自动勾选复选框
+  }, _class.defaultProps = {
     prefixCls: "u-table-mult-select",
     getSelectedDataFunc: function getSelectedDataFunc() {},
-    autoSelect: false
+    autoSelect: false,
+    autoCheckedByClickRows: true,
+    multiSelectConfig: {}
   }, _initialiseProps = function _initialiseProps() {
     var _this2 = this;
 
@@ -295,6 +303,7 @@ function multiSelect(Table, Checkbox) {
     };
 
     this.getDefaultColumns = function (columns) {
+      var multiSelectConfig = _this2.props.multiSelectConfig;
       var _state2 = _this2.state,
           checkedAll = _state2.checkedAll,
           indeterminate = _state2.indeterminate;
@@ -314,8 +323,8 @@ function multiSelect(Table, Checkbox) {
       var _defaultColumns = [{
         className: 'u-table-multiSelect-column',
         title: _react2["default"].createElement(Checkbox, _extends({
-          className: "table-checkbox"
-        }, checkAttr, {
+          className: 'table-checkbox'
+        }, checkAttr, multiSelectConfig, {
           disabled: disabledCount == dataLength ? true : false,
           onChange: _this2.onAllCheckChange
         })),
@@ -328,8 +337,8 @@ function multiSelect(Table, Checkbox) {
           record._disabled ? attr.disabled = record._disabled : "";
           return _react2["default"].createElement(Checkbox, _extends({
             key: index,
-            className: "table-checkbox"
-          }, attr, {
+            className: 'table-checkbox'
+          }, attr, multiSelectConfig, {
             checked: record._checked,
             onClick: _this2.handleClick,
             onChange: _this2.onCheckboxChange(text, record, index)
@@ -340,11 +349,16 @@ function multiSelect(Table, Checkbox) {
     };
 
     this.onRowClick = function (record, index, event) {
-      _this2.onCheckboxChange('', record, index)();
-      if (_this2.props.onRowClick) {
-        _this2.props.onRowClick(record, index, event);
+      if (record._disabled) return;
+      var _props2 = _this2.props,
+          autoCheckedByClickRows = _props2.autoCheckedByClickRows,
+          onRowClick = _props2.onRowClick;
+
+      if (autoCheckedByClickRows) {
+        _this2.onCheckboxChange('', record, index)();
       }
+      onRowClick && onRowClick(record, index, event);
     };
   }, _temp;
 }
-module.exports = exports["default"];
+module.exports = exports['default'];

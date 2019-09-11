@@ -241,10 +241,8 @@ var Table = function (_Component) {
       var value1 = arr[index1];
       arr.splice(index1, 1);
       if (index1 < index2) {
-        console.log('向下拖');
         arr.splice(index2, 0, value1);
       } else {
-        console.log('向上拖');
         arr.splice(index2 + 1, 0, value1);
       }
 
@@ -318,7 +316,8 @@ var Table = function (_Component) {
       currentHoverKey: null,
       scrollPosition: 'left',
       fixedColumnsHeadRowsHeight: [],
-      fixedColumnsBodyRowsHeight: []
+      fixedColumnsBodyRowsHeight: [],
+      fixedColumnsExpandedRowsHeight: {} //扩展行的高度
     };
 
     _this.onExpandedRowsChange = _this.onExpandedRowsChange.bind(_this);
@@ -738,10 +737,10 @@ var Table = function (_Component) {
     } else if (fixed === 'right') {
       colCount = this.columnManager.rightLeafColumns().length;
     } else {
-      // colCount = this.columnManager.leafColumns().length;
       colCount = this.columnManager.centerColumns().length; //计算非固定列的个数，fix: 嵌套表格场景，右侧列断开的问题
     }
 
+    var expandedRowHeight = this.state.fixedColumnsExpandedRowsHeight[key] || 'auto';
     function contentContainer() {
       if (content && content.props && content.props.style) {
         return _react2["default"].createElement('div', { style: { height: content.props.style.height } });
@@ -781,7 +780,8 @@ var Table = function (_Component) {
       dragborderKey: this.props.dragborderKey,
       rowDraggAble: this.props.rowDraggAble,
       onDragRow: this.onDragRow,
-      onDragRowStart: this.onDragRowStart
+      onDragRowStart: this.onDragRowStart,
+      height: expandedRowHeight
     });
   };
 
@@ -867,7 +867,8 @@ var Table = function (_Component) {
       // } 
       var record = data[i];
       var key = this.getRowKey(record, i);
-      var childrenColumn = record[childrenColumnName];
+      var isLeaf = typeof record['isLeaf'] === 'boolean' && record['isLeaf'] || false;
+      var childrenColumn = isLeaf ? false : record[childrenColumnName];
       var isRowExpanded = this.isRowExpanded(record, i);
       var expandedRowContent = void 0;
       var expandedContentHeight = 0;
@@ -890,7 +891,7 @@ var Table = function (_Component) {
 
       onHoverProps.onHover = this.handleRowHover;
 
-      if (props.height) {
+      if (props.bodyDisplayInRow && props.height) {
         height = props.height;
       } else if (fixed || props.heightConsistent) {
         height = fixedColumnsBodyRowsHeight[fixedIndex];
@@ -1341,9 +1342,11 @@ var Table = function (_Component) {
         height = _props8.height,
         headerHeight = _props8.headerHeight,
         columns = _props8.columns,
-        heightConsistent = _props8.heightConsistent;
+        heightConsistent = _props8.heightConsistent,
+        bodyDisplayInRow = _props8.bodyDisplayInRow;
 
     var headRows = this.headTable ? this.headTable.querySelectorAll('thead') : this.bodyTable.querySelectorAll('thead');
+    var expandedRows = this.bodyTable.querySelectorAll('.' + clsPrefix + '-expanded-row') || [];
     var bodyRows = this.bodyTable.querySelectorAll('.' + clsPrefix + '-row') || [];
     var leftBodyRows = this.refs.fixedColumnsBodyLeft && this.refs.fixedColumnsBodyLeft.querySelectorAll('.' + clsPrefix + '-row') || [];
     var rightBodyRows = this.refs.fixedColumnsBodyRight && this.refs.fixedColumnsBodyRight.querySelectorAll('.' + clsPrefix + '-row') || [];
@@ -1356,11 +1359,12 @@ var Table = function (_Component) {
     });
     var fixedColumnsBodyRowsHeight = [].map.call(bodyRows, function (row, index) {
       var rsHeight = height;
-      if (rsHeight) {
+      if (bodyDisplayInRow && rsHeight) {
         return rsHeight;
       } else {
         // 为了提高性能，默认获取主表的高度，但是有的场景中固定列的高度比主表的高度高，所以提供此属性，会统计所有列的高度取最大的，设置
-        if (heightConsistent) {
+        // 内容折行显示，并又设置了 height 的情况下，也要获取主表高度
+        if (heightConsistent || !bodyDisplayInRow && rsHeight) {
           var leftHeight = void 0,
               rightHeight = void 0,
               currentHeight = void 0,
@@ -1375,13 +1379,19 @@ var Table = function (_Component) {
         }
       }
     });
-
-    if ((0, _shallowequal2["default"])(this.state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) && (0, _shallowequal2["default"])(this.state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
+    var fixedColumnsExpandedRowsHeight = {};
+    expandedRows.length > 0 && expandedRows.forEach(function (row) {
+      var parentRowKey = row && row.previousSibling && row.previousSibling.getAttribute("data-row-key"),
+          height = row && row.getBoundingClientRect().height || 'auto';
+      fixedColumnsExpandedRowsHeight[parentRowKey] = height;
+    });
+    if ((0, _shallowequal2["default"])(this.state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) && (0, _shallowequal2["default"])(this.state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight) && (0, _shallowequal2["default"])(this.state.fixedColumnsExpandedRowsHeight, fixedColumnsExpandedRowsHeight)) {
       return;
     }
     this.setState({
       fixedColumnsHeadRowsHeight: fixedColumnsHeadRowsHeight,
-      fixedColumnsBodyRowsHeight: fixedColumnsBodyRowsHeight
+      fixedColumnsBodyRowsHeight: fixedColumnsBodyRowsHeight,
+      fixedColumnsExpandedRowsHeight: fixedColumnsExpandedRowsHeight
     });
   };
 
@@ -1543,7 +1553,8 @@ var Table = function (_Component) {
     }
     className += ' ' + clsPrefix + '-scroll-position-' + this.state.scrollPosition;
     //如果传入height说明是固定高度
-    if (props.height) {
+    //内容过多折行显示时，height 属性会失效，为了避免产生错行
+    if (props.bodyDisplayInRow && props.height) {
       className += ' fixed-height';
     }
     if (props.bodyDisplayInRow) {

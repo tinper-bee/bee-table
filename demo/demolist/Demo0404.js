@@ -96,6 +96,7 @@ class Demo33 extends Component {
                 data={data} 
                 multiSelect={{type: "checkbox"}}
                 getSelectedDataFunc={this.getSelectedDataFunc}
+                autoCheckedByClickRows={false} //行点击是否触发勾选动作
                 />
     }
 }

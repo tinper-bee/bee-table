@@ -131,6 +131,7 @@ class Table extends Component {
       scrollPosition: 'left',
       fixedColumnsHeadRowsHeight: [],
       fixedColumnsBodyRowsHeight: [],
+      fixedColumnsExpandedRowsHeight: {}, //扩展行的高度
     }
 
     this.onExpandedRowsChange = this.onExpandedRowsChange.bind(this);
@@ -542,10 +543,10 @@ class Table extends Component {
     } else if (fixed === 'right') {
       colCount = this.columnManager.rightLeafColumns().length;
     } else {
-      // colCount = this.columnManager.leafColumns().length;
       colCount = this.columnManager.centerColumns().length; //计算非固定列的个数，fix: 嵌套表格场景，右侧列断开的问题
     }
 
+    let expandedRowHeight = this.state.fixedColumnsExpandedRowsHeight[key] || 'auto';
     function contentContainer() {
       if (content && content.props && content.props.style) {
         return (
@@ -585,6 +586,7 @@ class Table extends Component {
         rowDraggAble={this.props.rowDraggAble}
         onDragRow={this.onDragRow}
         onDragRowStart={this.onDragRowStart}
+        height={expandedRowHeight}
       />
     );
   }
@@ -640,11 +642,9 @@ class Table extends Component {
     var value1 = arr[index1]
     arr.splice(index1,1)
     if(index1<index2){
-      console.log('向下拖')
       arr.splice(index2,0,value1)
 
     }else {
-      console.log('向上拖')
       arr.splice(index2+1,0,value1)
     }
 
@@ -736,8 +736,7 @@ class Table extends Component {
       onHoverProps.onHover = this.handleRowHover;
 
 
-
-      if (props.height) {
+      if (props.bodyDisplayInRow && props.height) {
         height = props.height
       } else if(fixed || props.heightConsistent) {
         height = fixedColumnsBodyRowsHeight[fixedIndex];
@@ -1147,10 +1146,11 @@ class Table extends Component {
 
   syncFixedTableRowHeight() {
     //this.props.height、headerHeight分别为用户传入的行高和表头高度，如果有值，所有行的高度都是固定的，主要为了避免在千行数据中有固定列时获取行高度有问题
-    const { clsPrefix, height, headerHeight,columns,heightConsistent } = this.props;
+    const { clsPrefix, height, headerHeight,columns,heightConsistent, bodyDisplayInRow } = this.props;
     const headRows = this.headTable ?
       this.headTable.querySelectorAll('thead') :
       this.bodyTable.querySelectorAll('thead');
+    const expandedRows = this.bodyTable.querySelectorAll(`.${clsPrefix}-expanded-row`) || [];
     const bodyRows = this.bodyTable.querySelectorAll(`.${clsPrefix}-row`) || [];
     const leftBodyRows = this.refs.fixedColumnsBodyLeft && this.refs.fixedColumnsBodyLeft.querySelectorAll(`.${clsPrefix}-row`) || [];
     const rightBodyRows = this.refs.fixedColumnsBodyRight && this.refs.fixedColumnsBodyRight.querySelectorAll(`.${clsPrefix}-row`) || [];
@@ -1165,11 +1165,12 @@ class Table extends Component {
     const fixedColumnsBodyRowsHeight = [].map.call(
       bodyRows, (row,index) =>{
         let rsHeight = height;
-        if(rsHeight){
+        if(bodyDisplayInRow && rsHeight){
           return rsHeight;
         }else{
           // 为了提高性能，默认获取主表的高度，但是有的场景中固定列的高度比主表的高度高，所以提供此属性，会统计所有列的高度取最大的，设置
-          if(heightConsistent){
+          // 内容折行显示，并又设置了 height 的情况下，也要获取主表高度
+          if(heightConsistent || (!bodyDisplayInRow && rsHeight)){
             let leftHeight,rightHeight,currentHeight,maxHeight;
             leftHeight = leftBodyRows[index]?leftBodyRows[index].getBoundingClientRect().height:0;
             rightHeight = rightBodyRows[index]?rightBodyRows[index].getBoundingClientRect().height:0;
@@ -1180,18 +1181,23 @@ class Table extends Component {
             return row.getBoundingClientRect().height || 'auto'
           }
         }
-
-
       }
     );
-
+    const fixedColumnsExpandedRowsHeight = {};
+    expandedRows.length > 0 && expandedRows.forEach(row => {
+      let parentRowKey = row && row.previousSibling && row.previousSibling.getAttribute("data-row-key"),
+          height = row && row.getBoundingClientRect().height || 'auto';
+      fixedColumnsExpandedRowsHeight[parentRowKey] = height;
+    })
     if (shallowequal(this.state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
-      shallowequal(this.state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
+      shallowequal(this.state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight) &&
+      shallowequal(this.state.fixedColumnsExpandedRowsHeight, fixedColumnsExpandedRowsHeight)) {
       return;
     }
     this.setState({
       fixedColumnsHeadRowsHeight,
       fixedColumnsBodyRowsHeight,
+      fixedColumnsExpandedRowsHeight,
     });
   }
 
@@ -1373,7 +1379,8 @@ class Table extends Component {
     }
     className += ` ${clsPrefix}-scroll-position-${this.state.scrollPosition}`;
     //如果传入height说明是固定高度
-    if(props.height){
+    //内容过多折行显示时，height 属性会失效，为了避免产生错行
+    if(props.bodyDisplayInRow && props.height){
       className += ' fixed-height';
     }
     if(props.bodyDisplayInRow){

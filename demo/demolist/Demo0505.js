@@ -446,6 +446,214 @@ class Demo0505 extends Component {
           />
         )
       },
+      {
+        title: "名字",
+        dataIndex: "b",
+        key: "b",
+        render: (text, record, index) => (
+          <StringEditCell
+            colName={"名字"}
+            editable={this.state.isEditingAll}
+            isEdited={record.isEdited.b || false}
+            required
+            value={text}
+            onChange={this.onCellChange(index, "b")}
+            throwError={this.throwError}
+          />
+        )
+      },
+      {
+        title: "名字",
+        dataIndex: "b",
+        key: "b",
+        render: (text, record, index) => (
+          <StringEditCell
+            colName={"名字"}
+            editable={this.state.isEditingAll}
+            isEdited={record.isEdited.b || false}
+            required
+            value={text}
+            onChange={this.onCellChange(index, "b")}
+            throwError={this.throwError}
+          />
+        )
+      },
+      {
+        title: "名字",
+        dataIndex: "b",
+        key: "b",
+        render: (text, record, index) => (
+          <StringEditCell
+            colName={"名字"}
+            editable={this.state.isEditingAll}
+            isEdited={record.isEdited.b || false}
+            required
+            value={text}
+            onChange={this.onCellChange(index, "b")}
+            throwError={this.throwError}
+          />
+        )
+      },
+      {
+        title: "名字",
+        dataIndex: "b",
+        key: "b",
+        render: (text, record, index) => (
+          <StringEditCell
+            colName={"名字"}
+            editable={this.state.isEditingAll}
+            isEdited={record.isEdited.b || false}
+            required
+            value={text}
+            onChange={this.onCellChange(index, "b")}
+            throwError={this.throwError}
+          />
+        )
+      },
+      {
+        title: "名字",
+        dataIndex: "b",
+        key: "b",
+        render: (text, record, index) => (
+          <StringEditCell
+            colName={"名字"}
+            editable={this.state.isEditingAll}
+            isEdited={record.isEdited.b || false}
+            required
+            value={text}
+            onChange={this.onCellChange(index, "b")}
+            throwError={this.throwError}
+          />
+        )
+      },
+      {
+        title: "名字",
+        dataIndex: "b",
+        key: "b",
+        render: (text, record, index) => (
+          <StringEditCell
+            colName={"名字"}
+            editable={this.state.isEditingAll}
+            isEdited={record.isEdited.b || false}
+            required
+            value={text}
+            onChange={this.onCellChange(index, "b")}
+            throwError={this.throwError}
+          />
+        )
+      },
+      {
+        title: "名字",
+        dataIndex: "b",
+        key: "b",
+        render: (text, record, index) => (
+          <StringEditCell
+            colName={"名字"}
+            editable={this.state.isEditingAll}
+            isEdited={record.isEdited.b || false}
+            required
+            value={text}
+            onChange={this.onCellChange(index, "b")}
+            throwError={this.throwError}
+          />
+        )
+      },
+      {
+        title: "名字",
+        dataIndex: "b",
+        key: "b",
+        render: (text, record, index) => (
+          <StringEditCell
+            colName={"名字"}
+            editable={this.state.isEditingAll}
+            isEdited={record.isEdited.b || false}
+            required
+            value={text}
+            onChange={this.onCellChange(index, "b")}
+            throwError={this.throwError}
+          />
+        )
+      },
+      {
+        title: "名字",
+        dataIndex: "b",
+        key: "b",
+        render: (text, record, index) => (
+          <StringEditCell
+            colName={"名字"}
+            editable={this.state.isEditingAll}
+            isEdited={record.isEdited.b || false}
+            required
+            value={text}
+            onChange={this.onCellChange(index, "b")}
+            throwError={this.throwError}
+          />
+        )
+      },
+      {
+        title: "名字",
+        dataIndex: "b",
+        key: "b",
+        render: (text, record, index) => (
+          <StringEditCell
+            colName={"名字"}
+            editable={this.state.isEditingAll}
+            isEdited={record.isEdited.b || false}
+            required
+            value={text}
+            onChange={this.onCellChange(index, "b")}
+            throwError={this.throwError}
+          />
+        )
+      },
+      {
+        title: "名字",
+        dataIndex: "b",
+        key: "b",
+        render: (text, record, index) => (
+          <StringEditCell
+            colName={"名字"}
+            editable={this.state.isEditingAll}
+            isEdited={record.isEdited.b || false}
+            required
+            value={text}
+            onChange={this.onCellChange(index, "b")}
+            throwError={this.throwError}
+          />
+        )
+      },
+      {
+        title: "名字",
+        dataIndex: "b",
+        key: "b",
+        render: (text, record, index) => (
+          <StringEditCell
+            colName={"名字"}
+            editable={this.state.isEditingAll}
+            isEdited={record.isEdited.b || false}
+            required
+            value={text}
+            onChange={this.onCellChange(index, "b")}
+            throwError={this.throwError}
+          /> 
+        )
+      },
+      {
+        title: "名字",
+        dataIndex: "b",
+        key: "b",
+        render: (text, record, index) => (
+          <StringEditCell
+            colName={"名字"}
+            editable={this.state.isEditingAll}
+            isEdited={record.isEdited.b || false}
+            required
+            value={text}
+            onChange={this.onCellChange(index, "b")}
+            throwError={this.throwError}
+          />
+        )
+      },
       // 只是用来占位占宽度的
       {
         key: "placeholder"

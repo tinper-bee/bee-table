@@ -128,6 +128,31 @@ $icon-color:#505F79;
         margin: 0;
       }
     }
+    td.u-table-inline-icon{
+      position: relative;
+      padding-right: 24px;
+      span.u-table-inline-op-icon{
+        position: absolute;
+        right: 0;
+        .uf{
+          display: block;
+          vertical-align: top;
+        }
+      }
+      span.u-table-inline-op-icon-hover{
+        visibility: hidden;
+      }
+    } 
+  }
+  tr.u-table-row-hover{
+    td.u-table-inline-icon{
+      span.u-table-inline-op-icon-hover{
+        visibility: visible;
+      }
+    }
+  }
+  .u-table-inline-op-icon-hidden{
+    visibility: hidden;
   }
   tr.tr-row-hover {
     background: $hover-bg-color-base;
@@ -313,6 +338,7 @@ $icon-color:#505F79;
       }
       tr.u-table-row-hover{
         background:unquote("rgb(#{$table-row-hover-bg-color})");
+        
       }
     }
     &-expand-icon {
@@ -1089,5 +1115,17 @@ $icon-color:#505F79;
 
   .tooltip-inner {
     border-color: #F44336 !important;
+  }
+}
+.u-dropdown{
+  ul.u-table-inline-op-dropdowm{
+    li.u-dropdown-menu-item{
+      padding: 0 20px 0 10px;
+      height: 30px;
+      line-height: 30px;
+      i.uf{
+        font-size: 12px;
+      }
+    }
   }
 }

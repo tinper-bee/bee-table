@@ -61,20 +61,13 @@ class Demo12 extends Component {
   
   render() {
     let multiObj = {
-      type: "checkbox"
+      inverse: true, //设置选中为红色填充
     };
     return (
       <MultiSelectTable 
         columns={columns} 
         data={data} 
-        multiSelect={multiObj}
-        rowClassName={(record,index,indent)=>{
-          if (record._checked) {
-              return 'selected';
-          } else {
-              return '';
-          }
-        }}
+        // multiSelectConfig={multiObj} //可以自定义 Checkbox 属性
         getSelectedDataFunc={this.getSelectedDataFunc}/>
     );
   }

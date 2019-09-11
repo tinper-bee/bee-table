@@ -236,6 +236,21 @@
         width: 2px; }
     .u-table tr td.u-table-multiSelect-column.u-table-row-has-expandIcon:not(.u-table-row-fixed-columns-in-body) .u-checkbox {
       margin: 0; }
+  .u-table tr td.u-table-inline-icon {
+    position: relative;
+    padding-right: 24px; }
+    .u-table tr td.u-table-inline-icon span.u-table-inline-op-icon {
+      position: absolute;
+      right: 0; }
+      .u-table tr td.u-table-inline-icon span.u-table-inline-op-icon .uf {
+        display: block;
+        vertical-align: top; }
+    .u-table tr td.u-table-inline-icon span.u-table-inline-op-icon-hover {
+      visibility: hidden; }
+  .u-table tr.u-table-row-hover td.u-table-inline-icon span.u-table-inline-op-icon-hover {
+    visibility: visible; }
+  .u-table .u-table-inline-op-icon-hidden {
+    visibility: hidden; }
   .u-table tr.tr-row-hover {
     background: rgb(235, 236, 240); }
   .u-table th,
@@ -875,3 +890,10 @@
 
 .u-editable-table-tp .tooltip-inner {
   border-color: #F44336 !important; }
+
+.u-dropdown ul.u-table-inline-op-dropdowm li.u-dropdown-menu-item {
+  padding: 0 20px 0 10px;
+  height: 30px;
+  line-height: 30px; }
+  .u-dropdown ul.u-table-inline-op-dropdowm li.u-dropdown-menu-item i.uf {
+    font-size: 12px; }

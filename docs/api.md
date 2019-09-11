@@ -76,11 +76,13 @@ import 'bee-table/build/Table.css';
 | heightConsistent       | 当固定列内容高度超出非固定列时，内容互错行，当此属性为true会将高度同步，当行过多时会有性能影响，所以建议非固定高度如果过高时，超出内容可以显示成省略号 | bool|false 
 | height | 自定义表格行高 | number | - |
 | headerHeight | 自定义表头行高 | number | - |
-| headerDisplayInRow | 设置表头的内容显示一行，超出显示省略号 | bool |
-| bodyDisplayInRow |  设置表体的内容显示一行，超出显示省略号 | bool | 
+| headerDisplayInRow | 设置表头的内容显示一行，超出显示省略号 | bool | true |
+| bodyDisplayInRow |  设置表体的内容显示一行，超出显示省略号，**注意：不要和 height 属性一起使用，该属性优先级高于 height** | bool | true |
 | size | 表格大小 | `sm / md / lg` | 'md' |
 | hideHeaderScroll | 表体无数据时，表头下是否显示滚动条，默认显示 | bool | false |
 | [v2.2.2新增]showRowNum | 展示序号功能，false时不展示，true时展示默认情况，可传入自定义配置信息 | bool / obj:{name: '序号', key: '_index', // 在数据中存储的key值width: 50,base: 0,// 排序的基准值,为数字或者字母type:'number', // 排序类型,默认为number类型,支持单字母排序(type='ascii')} | false |
+| autoCheckedByClickRows | 设置为 false 时，表格行点击事件，不会自动勾选复选框 | bool | true |
+| autoSelect | 树型表格勾选时，是否开启子节点的联动 | bool | false |
 
 > 快捷键部分参考示例 (快捷键在table中的简单使用应用)
 
@@ -100,6 +102,11 @@ import 'bee-table/build/Table.css';
 | onDragRowStart | 行拖拽开始时的回调函数 | function(record,index) | `record` : 当前行的数据 <br> `index` : 当前行的index|
 | onDropRow | 行拖拽结束后的回调函数 | function(data,record) | `data` : 拖拽后的新data数组<br> `record` : 拖拽行的数据 |
 
+### Data
+
+|参数|说明|类型|默认值|
+|:--|:---|:--|:---|
+| style | 该行的样式，严格按照react的样式书写规则，即对象内每一个属性的键为小写驼峰式，值为字符串 | object | - |
 
 ### Column
 
@@ -136,11 +143,37 @@ import 'bee-table/build/Table.css';
 | [v2.2.2新增]bgColor | 列背景颜色 | string | - |
 | [v2.2.2新增]titleAlign | 标题对齐方式 | 'left'\|'center'\|'right' | 'left' |
 | [v2.2.2新增]contentAlign | 内容对齐方式 | 'left'\|'center'\|'right' | 'left' |
-| [v2.2.2新增]required | 必填项,列标题展示红色星号 | bool | false |
+| [v2.2.2新增]required | 必填项的列标题展示红色星号 | bool | false |
+| isShow | 是否展示该列数据 | bool | true |
+| cellMenu | 渲染单元格内操作按钮 | object | - |
+| style | 该列的样式，严格按照react的样式书写规则，即对象内每一个属性的键为小写驼峰式，值为字符串 | object | - |
+
+#### [v2.2.x新增] cellMenu
+
+属性的参数说明如下:
+
+|名称|说明|类型|必填|默认值|
+|---|---|---|---|---|
+|menu|自定义的操作列表|array|是|[]|
+|icon|自定义图标|string/element|否|三圆点图标`<Icon type='uf-3dot-h'/>`|
+|iconSize|自定义图标时可能会出现右侧对齐的问题,需要手动调整图标大小|number|否|21|
+|trigger|控制下拉菜单的出现方式|'hover'\|'click'|否|'hover'|
+|className|下拉菜单的类名|string|否|-|
+
+其中,menu的配置如下:
+
+|名称|说明|类型|必填|默认值|
+|---|---|---|---|---|
+|key|每一项需要的唯一的key值|string|true|-|
+|text|每一项的标题|string|false|-|
+|icon|每一项的图标信息|string/element|false|-|
+|callback|点击行后的回调函数|Function(text,record,index)|false|-|
 
 #### [v2.2.2新增]fieldType
 
-fieldType属性控制了不同类型数据的渲染方式,其优先级低于render属性。目前，已有`string`,`number`,`currency`,`bool`,`link`,`date`类型，支持自定义配置(`string`类型为默认类型)。
+fieldType属性控制了不同类型数据的渲染方式,其优先级低于render属性。目前，已有`string`,`number`,`currency`,`bool`,`link`,`date`,`select`,`stringChinese`类型，支持自定义配置(`string`类型为默认类型)。
+
+- stringChinese类型的渲染同string,在配合高阶组件sort使用时,可支持中文拼音排序
 
 - numberConfig
 
@@ -192,6 +225,15 @@ fieldType属性控制了不同类型数据的渲染方式,其优先级低于rend
 |format|渲染的时间格式|string|'YYYY-MM-DD'|
 
 *需要单独安装[moment.js](http://momentjs.cn/),并将moment对象传入*
+
+- selectConfig
+
+|名称|说明|类型|必填项|默认值|
+|---|---|---|---|---|
+|options|下拉的key/value对应关系|object|是|-|
+|defaultShow|找不到对应关系时的展示值|string|否|''|
+
+*无options时按string类型渲染*
 
 ### 高阶函数
 Table内部封装了七个高阶组件，接收基础 Table 组件作为输入，输出一个新的复杂 Table 组件。高阶组件让代码更具有复用性、逻辑性与抽象特征。
@@ -250,6 +292,7 @@ Table 组件参数：
 | 参数     | 说明         | 类型       | 返回值  |
 | ------ | ---------- | -------- | ---- |
 | getSelectedDataFunc | 返回当前选中的数据数组 | Function | `selectedList` : 当前选中的行数据集合<br>`record` :  当前操作行数据<br>`index` : 当前操作行索引   |
+| multiSelectConfig | 自定义 Checkbox 属性，如设置复选框为红色填充 | Object | - |
 
 Data 数组参数：
 

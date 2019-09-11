@@ -501,8 +501,8 @@ export default function bigData(Table) {
         //重新递归数据
         let flatTreeData = _this.deepTraversal(data);
         let sliceTreeList = flatTreeData.slice(_this.startIndex, _this.endIndex);
-        this.flatTreeData = flatTreeData;
-        this.handleTreeListChange(sliceTreeList);
+        _this.flatTreeData = flatTreeData;
+        _this.handleTreeListChange(sliceTreeList);
         _this.cacheExpandedKeys = null;
       }
       
@@ -522,9 +522,6 @@ export default function bigData(Table) {
       if(endIndex < 0 ){
         endIndex = 0;
       }
-      // if(endIndex > data.length){
-      //   endIndex = data.length;
-      // }
       if (treeType && endIndex > flatTreeData.length || !treeType && endIndex > data.length) {
         endIndex = treeType ? flatTreeData.length : data.length;
       }
@@ -533,7 +530,7 @@ export default function bigData(Table) {
         endIndex:endIndex,
         startParentIndex: startIndex //为树状节点做准备
       };
-      if (this.treeType) {
+      if (treeType) {
         // const preSubCounts = this.cachedRowParentIndex.findIndex(item => {
         //   return item == startIndex;
         // });

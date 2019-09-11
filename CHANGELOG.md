@@ -1,3 +1,33 @@
+<a name="2.2.11"></a>
+## [2.2.11](https://github.com/tinper-bee/bee-table/compare/v2.2.10...v2.2.11) (2019-09-09)
+
+
+
+<a name="2.2.10"></a>
+## [2.2.10](https://github.com/tinper-bee/bee-table/compare/v2.2.9...v2.2.10) (2019-09-04)
+
+
+
+<a name="2.2.9"></a>
+## [2.2.9](https://github.com/tinper-bee/bee-table/compare/v2.2.8...v2.2.9) (2019-09-03)
+
+
+### Features
+
+* **bee-table:** multiSelect 未引入 PropTypes 报错bug ([240c61c](https://github.com/tinper-bee/bee-table/commit/240c61c))
+
+
+
+<a name="2.2.8"></a>
+## [2.2.8](https://github.com/tinper-bee/bee-table/compare/v2.2.7...v2.2.8) (2019-09-02)
+
+
+
+<a name="2.2.7"></a>
+## [2.2.7](https://github.com/tinper-bee/bee-table/compare/v2.2.3...v2.2.7) (2019-09-02)
+
+
+
 <a name="2.2.3"></a>
 ## [2.2.3](https://github.com/tinper-bee/bee-table/compare/v2.2.2...v2.2.3) (2019-08-26)
 

@@ -24,10 +24,22 @@ export default class ColumnManager {
       columns = dragHandleColumn.concat(columns);
     }
     columns = this.addOrderColumn(columns,showRowNum);
-    
+    columns = this.deleteColumnNotShow(columns);
     this.columns = columns || this.normalize(elements);
 
     this.originWidth = originWidth;
+  }
+
+  // delete the column which does not show
+  deleteColumnNotShow = (columns) => {
+    let len = columns.length;
+    for(let i=0; i < len; i++) {
+      if(columns && columns[i] && columns[i].isShow === false){
+        columns.splice(i,1);
+        i--;
+      }
+    }
+    return columns;
   }
 
   // 向数据列中添加一列:序号
@@ -207,6 +219,7 @@ export default class ColumnManager {
 
   reset(columns, elements, showRowNum) {
     columns = this.addOrderColumn(columns,showRowNum);
+    columns = this.deleteColumnNotShow(columns);
     this.columns = columns || this.normalize(elements);
     this._cached = {};
   }

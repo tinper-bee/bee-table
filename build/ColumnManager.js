@@ -51,11 +51,14 @@ var ColumnManager = function () {
       columns = dragHandleColumn.concat(columns);
     }
     columns = this.addOrderColumn(columns, showRowNum);
-
+    columns = this.deleteColumnNotShow(columns);
     this.columns = columns || this.normalize(elements);
 
     this.originWidth = originWidth;
   }
+
+  // delete the column which does not show
+
 
   // 向数据列中添加一列:序号
 
@@ -234,6 +237,7 @@ var ColumnManager = function () {
 
   ColumnManager.prototype.reset = function reset(columns, elements, showRowNum) {
     columns = this.addOrderColumn(columns, showRowNum);
+    columns = this.deleteColumnNotShow(columns);
     this.columns = columns || this.normalize(elements);
     this._cached = {};
   };
@@ -336,6 +340,17 @@ var ColumnManager = function () {
 
 var _initialiseProps = function _initialiseProps() {
   this._cached = {};
+
+  this.deleteColumnNotShow = function (columns) {
+    var len = columns.length;
+    for (var i = 0; i < len; i++) {
+      if (columns && columns[i] && columns[i].isShow === false) {
+        columns.splice(i, 1);
+        i--;
+      }
+    }
+    return columns;
+  };
 
   this.addOrderColumn = function (columns, showRowNum) {
     if (!showRowNum) {
