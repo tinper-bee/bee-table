@@ -395,7 +395,7 @@ var Table = function (_Component) {
         this.scrollTop = this.bodyTable.scrollTop;
       }
     } else if (nextProps.children !== this.props.children) {
-      this.columnManager.reset(null, nextProps.children, this.porps.showRowNum); // 加入this.props.showRowNum参数
+      this.columnManager.reset(null, nextProps.children, this.props.showRowNum); // 加入this.props.showRowNum参数
     }
     //适配lazyload
     if (nextProps.scrollTop > -1) {
