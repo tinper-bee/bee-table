@@ -139,7 +139,7 @@ var defaultProps = {
     return 'No Data';
   },
   columns: [],
-  minColumnWidth: 80,
+  minColumnWidth: 80, //设置Column列最小宽度
   locale: {},
   syncHover: true,
   setRowHeight: function setRowHeight() {},
