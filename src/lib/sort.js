@@ -58,7 +58,7 @@ export default function sort(Table, Icon) {
         children = item.children;
         flatColumns.push(item);
         if(children){
-          item.children = [];
+          // item.children = [];
           _this._toFlatColumn(children,flatColumns.length - 1,flatColumns);
         }
       });
