@@ -287,7 +287,7 @@ class TableCell extends Component{
         className={className}
         onClick={this.handleClick}
         title={title}
-        style={{color:fontColor,backgroundColor:bgColor,...column.style}}
+        style={{maxWidth:column.width, color:fontColor, backgroundColor:bgColor, ...column.style}}
       >
         {indentText}
         {expandIcon}
