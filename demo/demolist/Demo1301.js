@@ -41,22 +41,12 @@ class Demo12 extends Component {
    *@param selectedList:当前选中的行数据
    *@param record 当前操作行数据
    *@param index 当前操作行索引
+   *@param newData 进行多选操作之后的新数据 data
    * @memberof Demo12
    */
-  getSelectedDataFunc = (selectedList,record,index) => {
+  getSelectedDataFunc = (selectedList,record,index,newData) => {
     console.log("selectedList", selectedList,"index",index);
-    // 如果在回调中增加setState逻辑，需要同步data中的_checked属性。即下面的代码
-    // const allChecked = selectedList.length == 0?false:true;
-    // record为undefind则为全选或者全不选
-    // if(!record){
-    //   data12.forEach(item=>{
-    //     item._checked = allChecked;
-    //   })
-    // }else{
-    //   data12[index]['_checked'] = record._checked;
-    // } 
-
-    
+    // 注意：需要用回调中提供的参数 newData，去更新 state 或 store 中的 data 属性值，否则当表格重新render的时候，已选数据会被冲刷掉。
   };
   
   render() {

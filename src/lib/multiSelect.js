@@ -166,7 +166,7 @@ export default function multiSelect(Table, Checkbox) {
         indeterminate:indeterminate,
         checkedAll:check
       });
-      this.props.getSelectedDataFunc(selectList);
+      this.props.getSelectedDataFunc(selectList,undefined,undefined,data);
     }
 
     /**
@@ -238,7 +238,7 @@ export default function multiSelect(Table, Checkbox) {
           selectList.push(da);
         }
       })
-      this.props.getSelectedDataFunc(selectList,record,index);
+      this.props.getSelectedDataFunc(selectList,record,index,data);
     };
 
     
