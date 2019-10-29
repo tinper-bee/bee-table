@@ -1303,10 +1303,12 @@ class Table extends Component {
     this.lastScrollLeft = e.target.scrollLeft;
   }
 
-  handleRowHover(isHover, key,event,currentIndex) {
+  handleRowHover(isHover, key,event,currentIndex, propsRecord) {
     //增加新的API，设置是否同步Hover状态，提高性能，避免无关的渲染
     let { syncHover,onRowHover,data } = this.props;
-    const record = data[currentIndex];
+    //fix:树形表，onRowHover返回参数异常
+    let { isTreeType } = this;
+    const record = isTreeType ? propsRecord : data[currentIndex];
     // 固定列、或者含有hoverdom时情况下同步hover状态
     if(this.columnManager.isAnyColumnsFixed() && syncHover ){
       this.hoverKey = key;

@@ -523,12 +523,13 @@ var TableRow = function (_Component) {
         onHover = _props7.onHover,
         hoverKey = _props7.hoverKey,
         fixedIndex = _props7.fixedIndex,
-        syncHover = _props7.syncHover;
+        syncHover = _props7.syncHover,
+        record = _props7.record;
 
     if (syncHover) {
       this.setState({ hovered: true });
     }
-    onHover(true, hoverKey, e, fixedIndex);
+    onHover(true, hoverKey, e, fixedIndex, record);
   };
 
   TableRow.prototype.onMouseLeave = function onMouseLeave(e) {
@@ -536,12 +537,13 @@ var TableRow = function (_Component) {
         onHover = _props8.onHover,
         hoverKey = _props8.hoverKey,
         fixedIndex = _props8.fixedIndex,
-        syncHover = _props8.syncHover;
+        syncHover = _props8.syncHover,
+        record = _props8.record;
 
     if (syncHover) {
       this.setState({ hovered: false });
     }
-    onHover(false, hoverKey, e, fixedIndex);
+    onHover(false, hoverKey, e, fixedIndex, record);
   };
 
   TableRow.prototype.render = function render() {

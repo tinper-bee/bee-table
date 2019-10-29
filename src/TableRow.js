@@ -413,20 +413,20 @@ class TableRow extends Component{
   }
 
   onMouseEnter(e) {
-    const { onHover, hoverKey,fixedIndex,syncHover } = this.props;
+    const { onHover, hoverKey,fixedIndex,syncHover,record } = this.props;
     if(syncHover){
       this.setState({ hovered: true });
     }
-    onHover(true, hoverKey,e,fixedIndex);
+    onHover(true, hoverKey,e,fixedIndex,record);
   }
 
   onMouseLeave(e) {
 
-    const { onHover, hoverKey ,fixedIndex,syncHover} = this.props;
+    const { onHover, hoverKey ,fixedIndex,syncHover,record} = this.props;
     if(syncHover){
       this.setState({ hovered: false });
     }
-    onHover(false, hoverKey,e,fixedIndex);
+    onHover(false, hoverKey,e,fixedIndex,record);
   }
 
   set =(fn)=> {

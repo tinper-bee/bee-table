@@ -1501,14 +1501,17 @@ var Table = function (_Component) {
     this.lastScrollLeft = e.target.scrollLeft;
   };
 
-  Table.prototype.handleRowHover = function handleRowHover(isHover, key, event, currentIndex) {
+  Table.prototype.handleRowHover = function handleRowHover(isHover, key, event, currentIndex, propsRecord) {
     //增加新的API，设置是否同步Hover状态，提高性能，避免无关的渲染
     var _props10 = this.props,
         syncHover = _props10.syncHover,
         onRowHover = _props10.onRowHover,
         data = _props10.data;
+    //fix:树形表，onRowHover返回参数异常
 
-    var record = data[currentIndex];
+    var isTreeType = this.isTreeType;
+
+    var record = isTreeType ? propsRecord : data[currentIndex];
     // 固定列、或者含有hoverdom时情况下同步hover状态
     if (this.columnManager.isAnyColumnsFixed() && syncHover) {
       this.hoverKey = key;
