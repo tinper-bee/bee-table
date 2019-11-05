@@ -11,7 +11,8 @@ import React, { Component } from "react";
 import Table from "../../src";
 import {Button} from "tinper-bee";
 
-const { ColumnGroup, Column } = Table;
+import dragColumn from '../../src/lib/dragColumn';
+// const { ColumnGroup, Column } = Table;
 
 const columns = [
   {
@@ -103,15 +104,21 @@ for (let i = 0; i < 20; i++) {
   });
 }
 
+const DragColumnTable = dragColumn(Table);
+
 class Demo32 extends Component {
   render() {
     return (
-      <Table
+      <DragColumnTable
         className={'demo32'}
         columns={columns}
         data={data}
         headerHeight={40} //自定义表头高度
         bordered
+        dragborder={true} 
+        onDropBorder ={(e,width)=>{
+          console.log(width+"--调整列宽后触发事件",e.target);
+        }}
         scroll={{ y: 240 }}
       />
     );
