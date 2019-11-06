@@ -43,14 +43,14 @@ export default function bigData(Table) {
       this.endIndex = this.currentIndex + this.loadCount; //数据结束位置
       this.setRowHeight = this.setRowHeight.bind(this);
       this.setRowParentIndex = this.setRowParentIndex.bind(this);
-      this.expandedRowKeys = [];
+      this.expandedRowKeys = props.expandedRowKeys || [];
       this.flatTreeKeysMap = {}; //树表，扁平结构数据的 Map 映射，方便获取各节点信息
       this.flatTreeData = []; //深度遍历处理后的data数组
       this.treeData = []; //树表的data数据
     }
     componentWillReceiveProps(nextProps) {
       const props = this.props;
-      const {currentIndex ,data} = nextProps;
+      const {currentIndex ,data, expandedRowKeys:newExpandedKeys} = nextProps;
       const _this = this,dataLen = data.length;
       if (nextProps.scroll.y !== props.scroll.y) {
         const rowHeight = nextProps.height ? nextProps.height : defaultHeight;
@@ -83,6 +83,15 @@ export default function bigData(Table) {
       //如果传currentIndex，会判断该条数据是否在可视区域，如果没有的话，则重新计算startIndex和endIndex
       if(currentIndex!==-1 && currentIndex !== this.currentIndex){
         _this.setStartAndEndIndex(currentIndex,dataLen);
+      }
+      if(newExpandedKeys !== props.expandedRowKeys){
+        _this.cacheExpandedKeys = newExpandedKeys;
+        //重新递归数据
+        let flatTreeData = _this.deepTraversal(data);
+        let sliceTreeList = flatTreeData.slice(_this.startIndex, _this.endIndex);
+        _this.flatTreeData = flatTreeData;
+        _this.handleTreeListChange(sliceTreeList);
+        _this.cacheExpandedKeys = null;
       }
 
     }
@@ -496,7 +505,7 @@ export default function bigData(Table) {
         if(expandState){
           expandedRowKeys.push(rowKey);
           this.setState({ needRender: !needRender });
-         }else{
+        }else{
            let index = -1;
            expandedRowKeys.forEach((r, i) => {
              if (r === rowKey) {
@@ -507,21 +516,20 @@ export default function bigData(Table) {
              expandedRowKeys.splice(index, 1);
              this.setState({ needRender: !needRender });
            }
-         }
+        }
+        if(this.treeType) {
+            //收起和展开时，缓存 expandedKeys
+            _this.cacheExpandedKeys = expandedRowKeys;
+            //重新递归数据
+            let flatTreeData = _this.deepTraversal(data);
+            let sliceTreeList = flatTreeData.slice(_this.startIndex, _this.endIndex);
+            _this.flatTreeData = flatTreeData;
+            _this.handleTreeListChange(sliceTreeList);
+            _this.cacheExpandedKeys = null;
+        }
       }
       
-      if(this.treeType) {
-        //收起和展开时，缓存 expandedKeys
-        _this.cacheExpandedKeys = expandedRowKeys;
-        //重新递归数据
-        let flatTreeData = _this.deepTraversal(data);
-        let sliceTreeList = flatTreeData.slice(_this.startIndex, _this.endIndex);
-        _this.flatTreeData = flatTreeData;
-        _this.handleTreeListChange(sliceTreeList);
-        _this.cacheExpandedKeys = null;
-      }
-      
-    // expandState为true时，记录下
+      // expandState为true时，记录下
       _this.props.onExpand(expandState, record);
     };
 
@@ -564,7 +572,7 @@ export default function bigData(Table) {
           setRowHeight={this.setRowHeight}
           setRowParentIndex={this.setRowParentIndex}
           onExpand={this.onExpand}
-          onExpandedRowsChange={this.onExpandedRowsChange}
+          onExpandedRowsChange={this.props.onExpandedRowsChange}
           expandedRowKeys={expandedRowKeys}
           //   className={'lazy-table'}
         />

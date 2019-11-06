@@ -364,7 +364,7 @@ class Table extends Component {
     }
     const info = this.findExpandedRow(record);
     if (typeof info !== 'undefined' && !expanded) {
-      this.onRowDestroy(record, index);
+      this.onRowDestroy(record, index, true);
     } else if (!info && expanded) {
       const expandedRows = this.getExpandedRows().concat();
       expandedRows.push(this.getRowKey(record, index));
@@ -373,7 +373,7 @@ class Table extends Component {
     this.props.onExpand(expanded, record,index);
   }
 
-  onRowDestroy(record, rowIndex) {
+  onRowDestroy(record, rowIndex, isExpandOperation) {
     const expandedRows = this.getExpandedRows().concat();
     const rowKey = this.getRowKey(record, rowIndex);
     let index = -1;
@@ -389,7 +389,15 @@ class Table extends Component {
     if(this.currentHoverKey == rowKey && this.hoverDom){
       this.hoverDom.style.display = 'none';
     }
-    this.onExpandedRowsChange(expandedRows);
+    // todo:如果是TableRow组件卸载触发的该方法，需要加判断，解决懒加载时，持续触发onExpandedRowsChange的问题
+    if(isExpandOperation){
+        this.onExpandedRowsChange(expandedRows);
+    } else {
+        const info = this.findExpandedRow(record);
+        if(typeof info === 'undefined'){
+            this.onExpandedRowsChange(expandedRows);
+        }
+    }
   }
 
   getRowKey(record, index) {

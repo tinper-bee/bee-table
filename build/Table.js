@@ -529,7 +529,7 @@ var Table = function (_Component) {
     }
     var info = this.findExpandedRow(record);
     if (typeof info !== 'undefined' && !expanded) {
-      this.onRowDestroy(record, index);
+      this.onRowDestroy(record, index, true);
     } else if (!info && expanded) {
       var expandedRows = this.getExpandedRows().concat();
       expandedRows.push(this.getRowKey(record, index));
@@ -538,7 +538,7 @@ var Table = function (_Component) {
     this.props.onExpand(expanded, record, index);
   };
 
-  Table.prototype.onRowDestroy = function onRowDestroy(record, rowIndex) {
+  Table.prototype.onRowDestroy = function onRowDestroy(record, rowIndex, isExpandOperation) {
     var expandedRows = this.getExpandedRows().concat();
     var rowKey = this.getRowKey(record, rowIndex);
     var index = -1;
@@ -554,7 +554,15 @@ var Table = function (_Component) {
     if (this.currentHoverKey == rowKey && this.hoverDom) {
       this.hoverDom.style.display = 'none';
     }
-    this.onExpandedRowsChange(expandedRows);
+    // todo:如果是TableRow组件卸载触发的该方法，需要加判断，解决懒加载时，持续触发onExpandedRowsChange的问题
+    if (isExpandOperation) {
+      this.onExpandedRowsChange(expandedRows);
+    } else {
+      var info = this.findExpandedRow(record);
+      if (typeof info === 'undefined') {
+        this.onExpandedRowsChange(expandedRows);
+      }
+    }
   };
 
   Table.prototype.getRowKey = function getRowKey(record, index) {
