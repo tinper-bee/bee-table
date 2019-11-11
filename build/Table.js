@@ -48,6 +48,30 @@ var _beeLoading = require('bee-loading');
 
 var _beeLoading2 = _interopRequireDefault(_beeLoading);
 
+var _beeDropdown = require('bee-dropdown');
+
+var _beeDropdown2 = _interopRequireDefault(_beeDropdown);
+
+var _beeMenus = require('bee-menus');
+
+var _beeMenus2 = _interopRequireDefault(_beeMenus);
+
+var _beeButton = require('bee-button');
+
+var _beeButton2 = _interopRequireDefault(_beeButton);
+
+var _beeIcon = require('bee-icon');
+
+var _beeIcon2 = _interopRequireDefault(_beeIcon);
+
+var _svg = require('./svg');
+
+var _svg2 = _interopRequireDefault(_svg);
+
+var _Portal = require('bee-overlay/build/Portal');
+
+var _Portal2 = _interopRequireDefault(_Portal);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
@@ -100,7 +124,9 @@ var propTypes = {
   onFilterClear: _propTypes2["default"].func,
   syncHover: _propTypes2["default"].bool,
   tabIndex: _propTypes2["default"].string,
-  hoverContent: _propTypes2["default"].func
+  hoverContent: _propTypes2["default"].func,
+  canConfigureTableSize: _propTypes2["default"].bool,
+  getToolbarContainer: _propTypes2["default"].func
 };
 
 var defaultProps = {
@@ -145,7 +171,8 @@ var defaultProps = {
   setRowHeight: function setRowHeight() {},
   setRowParentIndex: function setRowParentIndex() {},
   tabIndex: '0',
-  heightConsistent: false
+  heightConsistent: false,
+  canConfigureTableSize: false
 };
 
 var Table = function (_Component) {
@@ -203,6 +230,75 @@ var Table = function (_Component) {
       _this.props.onTableKeyDown && _this.props.onTableKeyDown();
     };
 
+    _this.getTableToolbar = function () {
+      var clsPrefix = _this.props.clsPrefix;
+
+      var menu = _react2["default"].createElement(
+        _beeMenus2["default"],
+        { className: clsPrefix + '-adjustSize-menus', onSelect: _this.onConfigMenuSelect },
+        _react2["default"].createElement(
+          _beeMenus2["default"].Item,
+          { key: 'sm' },
+          _svg2["default"].compact,
+          '\u7D27\u51D1\u578B'
+        ),
+        _react2["default"].createElement(
+          _beeMenus2["default"].Item,
+          { key: 'md' },
+          _svg2["default"].moderate,
+          '\u9002\u4E2D'
+        ),
+        _react2["default"].createElement(
+          _beeMenus2["default"].Item,
+          { key: 'lg' },
+          _svg2["default"].easy,
+          '\u5BBD\u677E\u578B'
+        )
+      );
+      return _react2["default"].createElement(
+        _beeDropdown2["default"],
+        {
+          trigger: ['hover'],
+          overlay: menu,
+          placement: 'bottomRight',
+          animation: 'slide-up' },
+        _react2["default"].createElement(
+          _beeButton2["default"],
+          { bordered: true, className: clsPrefix + '-adjustSize-btn' },
+          _react2["default"].createElement(_beeIcon2["default"], { type: 'uf-table' }),
+          _react2["default"].createElement(_beeIcon2["default"], { type: 'uf-arrow-down' })
+        )
+      );
+    };
+
+    _this.onConfigMenuSelect = function (_ref) {
+      var key = _ref.key;
+      var tableSizeConf = _this.state.tableSizeConf;
+
+      if (key === 'sm') {
+        tableSizeConf = {
+          height: 30,
+          headerHeight: 35,
+          fontSize: 12
+        };
+      } else if (key === 'lg') {
+        tableSizeConf = {
+          height: 50,
+          headerHeight: 50,
+          fontSize: 14
+        };
+      } else if (key === 'md') {
+        tableSizeConf = {
+          height: 40,
+          headerHeight: 40,
+          fontSize: 12
+        };
+      }
+      _this.setState({
+        tableSizeConf: tableSizeConf
+      });
+    };
+
     var expandedRowKeys = [];
     var rows = [].concat(_toConsumableArray(props.data));
     _this.columnManager = new _ColumnManager2["default"](props.columns, props.children, props.originWidth);
@@ -223,7 +319,8 @@ var Table = function (_Component) {
       currentHoverKey: null,
       scrollPosition: 'left',
       fixedColumnsHeadRowsHeight: [],
-      fixedColumnsBodyRowsHeight: []
+      fixedColumnsBodyRowsHeight: [],
+      tableSizeConf: null //实现表格动态缩放
     };
 
     _this.onExpandedRowsChange = _this.onExpandedRowsChange.bind(_this);
@@ -449,6 +546,7 @@ var Table = function (_Component) {
   };
 
   Table.prototype.getHeader = function getHeader(columns, fixed) {
+    var tableSizeConf = this.state.tableSizeConf;
     var _props = this.props,
         filterDelay = _props.filterDelay,
         onFilterChange = _props.onFilterChange,
@@ -485,7 +583,11 @@ var Table = function (_Component) {
       });
     }
 
-    var trStyle = headerHeight && !fixed ? { height: headerHeight } : fixed ? this.getHeaderRowStyle(columns, rows) : null;
+    // const trStyle = headerHeight&&!fixed ? { height: headerHeight } : (fixed ? this.getHeaderRowStyle(columns, rows) : null);
+    var trStyle = fixed ? this.getHeaderRowStyle(columns, rows) : headerHeight ? { height: headerHeight } : null;
+    if (!fixed && tableSizeConf && tableSizeConf.headerHeight) {
+      trStyle = { height: tableSizeConf.headerHeight };
+    }
     var drop = draggable ? { onDragStart: onDragStart, onDragOver: onDragOver, onDrop: onDrop, onDragEnter: onDragEnter, draggable: draggable } : {};
     var dragBorder = dragborder ? { onMouseDown: onMouseDown, onMouseMove: onMouseMove, onMouseUp: onMouseUp, dragborder: dragborder, onThMouseMove: onThMouseMove, dragborderKey: dragborderKey, onDropBorder: onDropBorder } : {};
     var contentWidthDiff = 0;
@@ -674,7 +776,9 @@ var Table = function (_Component) {
     var childrenColumnName = props.childrenColumnName;
     var expandedRowRender = props.expandedRowRender;
     var expandRowByClick = props.expandRowByClick;
-    var fixedColumnsBodyRowsHeight = this.state.fixedColumnsBodyRowsHeight;
+    var _state2 = this.state,
+        fixedColumnsBodyRowsHeight = _state2.fixedColumnsBodyRowsHeight,
+        tableSizeConf = _state2.tableSizeConf;
 
     var rst = [];
 
@@ -726,6 +830,10 @@ var Table = function (_Component) {
         height = props.height;
       } else if (fixed || props.heightConsistent) {
         height = fixedColumnsBodyRowsHeight[fixedIndex];
+      }
+      // 如果切换了配置，以自定义配置的高度为准
+      if (!fixed && !props.heightConsistent && tableSizeConf && tableSizeConf.headerHeight) {
+        height = tableSizeConf.height;
       }
 
       var leafColumns = void 0;
@@ -786,7 +894,8 @@ var Table = function (_Component) {
         treeType: childrenColumn || this.treeType ? true : false,
         fixedIndex: fixedIndex + lazyCurrentIndex,
         rootIndex: rootIndex,
-        syncHover: props.syncHover
+        syncHover: props.syncHover,
+        tableSizeConf: tableSizeConf
       })));
       this.treeRowIndex++;
       var subVisible = visible && isRowExpanded;
@@ -819,11 +928,11 @@ var Table = function (_Component) {
     var cols = [];
     var self = this;
 
-    var _state2 = this.state,
-        _state2$contentWidthD = _state2.contentWidthDiff,
-        contentWidthDiff = _state2$contentWidthD === undefined ? 0 : _state2$contentWidthD,
-        _state2$lastShowIndex = _state2.lastShowIndex,
-        lastShowIndex = _state2$lastShowIndex === undefined ? 0 : _state2$lastShowIndex;
+    var _state3 = this.state,
+        _state3$contentWidthD = _state3.contentWidthDiff,
+        contentWidthDiff = _state3$contentWidthD === undefined ? 0 : _state3$contentWidthD,
+        _state3$lastShowIndex = _state3.lastShowIndex,
+        lastShowIndex = _state3$lastShowIndex === undefined ? 0 : _state3$lastShowIndex;
 
     if (this.props.expandIconAsCell && fixed !== 'right') {
       cols.push(_react2["default"].createElement('col', {
@@ -1304,8 +1413,15 @@ var Table = function (_Component) {
     onRowHover && onRowHover(currentIndex, record);
   };
 
+  /**
+   * 自定义设置表格行高、字体大小
+   */
+
+
   Table.prototype.render = function render() {
     var _this6 = this;
+
+    var tableSizeConf = this.state.tableSizeConf;
 
     var props = this.props;
     var clsPrefix = props.clsPrefix;
@@ -1322,7 +1438,7 @@ var Table = function (_Component) {
     }
     className += ' ' + clsPrefix + '-scroll-position-' + this.state.scrollPosition;
     //如果传入height说明是固定高度
-    if (props.height) {
+    if (props.height || tableSizeConf) {
       className += ' fixed-height';
     }
     var isTableScroll = this.columnManager.isAnyColumnsFixed() || props.scroll.x || props.scroll.y;
@@ -1332,13 +1448,22 @@ var Table = function (_Component) {
         show: loading
       };
     }
-
+    var portal = props.canConfigureTableSize && typeof window !== 'undefined' && props.getToolbarContainer ? _react2["default"].createElement(
+      _Portal2["default"],
+      { container: props.getToolbarContainer },
+      this.getTableToolbar()
+    ) : this.getTableToolbar();
     return _react2["default"].createElement(
       'div',
       { className: className, style: props.style, ref: function ref(el) {
           return _this6.contentTable = el;
         },
         tabIndex: props.focusable && (props.tabIndex ? props.tabIndex : '0') },
+      props.canConfigureTableSize && _react2["default"].createElement(
+        'div',
+        { className: clsPrefix + '-toolbar' },
+        portal
+      ),
       this.getTitle(),
       _react2["default"].createElement(
         'div',
