@@ -10,6 +10,12 @@ import ColumnManager from './ColumnManager';
 import createStore from './createStore';
 import Loading from 'bee-loading';
 import { Event,EventUtil,closest} from "./utils";
+import Dropdown from 'bee-dropdown';
+import Menu from 'bee-menus';
+import Button from 'bee-button';
+import Icon from 'bee-icon';
+import Tablesvg from './svg';
+import Portal from 'bee-overlay/build/Portal';
 
 const propTypes = {
   data: PropTypes.array,
@@ -51,7 +57,9 @@ const propTypes = {
   onFilterClear: PropTypes.func,
   syncHover: PropTypes.bool,
   tabIndex:PropTypes.string,
-  hoverContent:PropTypes.func
+  hoverContent:PropTypes.func,
+  canConfigureTableSize: PropTypes.bool,
+  getToolbarContainer: PropTypes.func,
 };
 
 const defaultProps = {
@@ -85,7 +93,8 @@ const defaultProps = {
   setRowHeight:()=>{},
   setRowParentIndex:()=>{},
   tabIndex:'0',
-  heightConsistent:false
+  heightConsistent:false,
+  canConfigureTableSize:false
 };
 
 class Table extends Component {
@@ -112,6 +121,7 @@ class Table extends Component {
       scrollPosition: 'left',
       fixedColumnsHeadRowsHeight: [],
       fixedColumnsBodyRowsHeight: [],
+      tableSizeConf: null, //实现表格动态缩放
     }
 
     this.onExpandedRowsChange = this.onExpandedRowsChange.bind(this);
@@ -346,6 +356,7 @@ class Table extends Component {
   }
 
   getHeader(columns, fixed) {
+    const { tableSizeConf } = this.state;
     const { filterDelay, onFilterChange, onFilterClear, filterable, showHeader, expandIconAsCell, clsPrefix, onDragStart, onDragEnter, onDragOver, onDrop, draggable,
       onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey, minColumnWidth, headerHeight,afterDragColWidth,headerScroll ,bordered,onDropBorder} = this.props;
     const rows = this.getHeaderRows(columns);
@@ -358,7 +369,11 @@ class Table extends Component {
       });
     }
 
-    const trStyle = headerHeight&&!fixed ? { height: headerHeight } : (fixed ? this.getHeaderRowStyle(columns, rows) : null);
+    // const trStyle = headerHeight&&!fixed ? { height: headerHeight } : (fixed ? this.getHeaderRowStyle(columns, rows) : null);
+    let trStyle = fixed ? this.getHeaderRowStyle(columns, rows) : ( headerHeight ? { height: headerHeight } : null );
+    if( !fixed && tableSizeConf && tableSizeConf.headerHeight ){
+        trStyle = { height:tableSizeConf.headerHeight };
+    }
     let drop = draggable ? { onDragStart, onDragOver, onDrop, onDragEnter, draggable } : {};
     let dragBorder = dragborder ? { onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey,onDropBorder } : {};
     let contentWidthDiff = 0;
@@ -533,7 +548,7 @@ class Table extends Component {
     const childrenColumnName = props.childrenColumnName;
     const expandedRowRender = props.expandedRowRender;
     const expandRowByClick = props.expandRowByClick;
-    const { fixedColumnsBodyRowsHeight } = this.state;
+    const { fixedColumnsBodyRowsHeight,tableSizeConf } = this.state;
     let rst = [];
 
     let height;
@@ -587,6 +602,10 @@ class Table extends Component {
         height = props.height
       } else if(fixed || props.heightConsistent) {
         height = fixedColumnsBodyRowsHeight[fixedIndex];
+      }
+      // 如果切换了配置，以自定义配置的高度为准
+      if( !fixed && !props.heightConsistent && tableSizeConf && tableSizeConf.headerHeight ){
+        height = tableSizeConf.height;
       }
 
       let leafColumns;
@@ -649,6 +668,7 @@ class Table extends Component {
           fixedIndex={fixedIndex+lazyCurrentIndex}
           rootIndex = {rootIndex}
           syncHover = {props.syncHover}
+          tableSizeConf={tableSizeConf}
         />
       );
       this.treeRowIndex++;
@@ -1170,7 +1190,56 @@ class Table extends Component {
     this.props.onTableKeyDown&&this.props.onTableKeyDown();
   }
 
+    /**
+     * 自定义设置表格行高、字体大小
+     */
+    getTableToolbar = () => {
+        const { clsPrefix } = this.props;
+        let menu = (
+            <Menu className={`${clsPrefix}-adjustSize-menus`} onSelect={this.onConfigMenuSelect}>
+                <Menu.Item key="sm">{Tablesvg.compact}紧凑型</Menu.Item>
+                <Menu.Item key="md">{Tablesvg.moderate}适中</Menu.Item>
+                <Menu.Item key="lg">{Tablesvg.easy}宽松型</Menu.Item>
+            </Menu>
+        )
+        return (
+            <Dropdown
+                trigger={['hover']}
+                overlay={menu}
+                placement="bottomRight"
+                animation="slide-up">
+                <Button bordered className={`${clsPrefix}-adjustSize-btn`}><Icon type="uf-table"/><Icon type="uf-arrow-down"/></Button>
+            </Dropdown>
+        ) 
+    }
+    onConfigMenuSelect = ({key}) => {
+        let { tableSizeConf } = this.state;
+        if(key === 'sm'){
+            tableSizeConf = {
+                height: 30,
+                headerHeight: 35,
+                fontSize: 12
+            };
+        } else if(key === 'lg'){
+            tableSizeConf = {
+                height: 50,
+                headerHeight: 50,
+                fontSize: 14
+            };
+        } else if(key === 'md'){
+            tableSizeConf = {
+                height: 40,
+                headerHeight: 40,
+                fontSize: 12
+            };
+        }
+        this.setState({
+            tableSizeConf
+        })
+    }
+
   render() {
+    const {tableSizeConf} = this.state;
     const props = this.props;
     const clsPrefix = props.clsPrefix;
 
@@ -1186,7 +1255,7 @@ class Table extends Component {
     }
     className += ` ${clsPrefix}-scroll-position-${this.state.scrollPosition}`;
     //如果传入height说明是固定高度
-    if(props.height){
+    if(props.height || tableSizeConf){
       className += ' fixed-height';
     }
     const isTableScroll = this.columnManager.isAnyColumnsFixed() ||
@@ -1198,10 +1267,17 @@ class Table extends Component {
         show: loading,
       };
     }
-
+    let portal = props.canConfigureTableSize && typeof window !== 'undefined' && props.getToolbarContainer ? (
+        <Portal container={props.getToolbarContainer}>
+            { this.getTableToolbar() }
+        </Portal>
+    ) : this.getTableToolbar();
     return (
       <div className={className} style={props.style} ref={el => this.contentTable = el} 
       tabIndex={props.focusable && (props.tabIndex?props.tabIndex:'0')} >
+        { props.canConfigureTableSize && 
+          <div className={`${clsPrefix}-toolbar`}>{portal}</div>
+        }
         {this.getTitle()}
         <div className={`${clsPrefix}-content`}>
          
