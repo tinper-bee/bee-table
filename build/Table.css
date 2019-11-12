@@ -486,8 +486,8 @@
     display: none;
     pointer-events: none; }
   .u-table .u-checkbox {
-    height: 16px;
-    line-height: 16px;
+    height: 14px;
+    line-height: 14px;
     margin: 0px; }
 
 .u-table:focus {

@@ -175,6 +175,12 @@ var defaultProps = {
   canConfigureTableSize: false
 };
 
+var tableSizeIcons = {
+  'sm': _svg2["default"].compact,
+  'md': _svg2["default"].moderate,
+  'lg': _svg2["default"].easy
+};
+
 var Table = function (_Component) {
   _inherits(Table, _Component);
 
@@ -232,6 +238,7 @@ var Table = function (_Component) {
 
     _this.getTableToolbar = function () {
       var clsPrefix = _this.props.clsPrefix;
+      var tableSize = _this.state.tableSize;
 
       var menu = _react2["default"].createElement(
         _beeMenus2["default"],
@@ -265,7 +272,7 @@ var Table = function (_Component) {
         _react2["default"].createElement(
           _beeButton2["default"],
           { bordered: true, className: clsPrefix + '-adjustSize-btn' },
-          _react2["default"].createElement(_beeIcon2["default"], { type: 'uf-table' }),
+          tableSizeIcons[tableSize],
           _react2["default"].createElement(_beeIcon2["default"], { type: 'uf-arrow-down' })
         )
       );
@@ -273,7 +280,9 @@ var Table = function (_Component) {
 
     _this.onConfigMenuSelect = function (_ref) {
       var key = _ref.key;
-      var tableSizeConf = _this.state.tableSizeConf;
+      var _this$state = _this.state,
+          tableSizeConf = _this$state.tableSizeConf,
+          tableSize = _this$state.tableSize;
 
       if (key === 'sm') {
         tableSizeConf = {
@@ -281,21 +290,25 @@ var Table = function (_Component) {
           headerHeight: 35,
           fontSize: 12
         };
+        tableSize = 'sm';
       } else if (key === 'lg') {
         tableSizeConf = {
           height: 50,
           headerHeight: 50,
           fontSize: 14
         };
+        tableSize = 'lg';
       } else if (key === 'md') {
         tableSizeConf = {
           height: 40,
           headerHeight: 40,
           fontSize: 12
         };
+        tableSize = 'md';
       }
       _this.setState({
-        tableSizeConf: tableSizeConf
+        tableSizeConf: tableSizeConf,
+        tableSize: tableSize
       });
     };
 
@@ -320,7 +333,8 @@ var Table = function (_Component) {
       scrollPosition: 'left',
       fixedColumnsHeadRowsHeight: [],
       fixedColumnsBodyRowsHeight: [],
-      tableSizeConf: null //实现表格动态缩放
+      tableSizeConf: null, //实现表格动态缩放
+      tableSize: 'md'
     };
 
     _this.onExpandedRowsChange = _this.onExpandedRowsChange.bind(_this);
@@ -586,7 +600,10 @@ var Table = function (_Component) {
     // const trStyle = headerHeight&&!fixed ? { height: headerHeight } : (fixed ? this.getHeaderRowStyle(columns, rows) : null);
     var trStyle = fixed ? this.getHeaderRowStyle(columns, rows) : headerHeight ? { height: headerHeight } : null;
     if (!fixed && tableSizeConf && tableSizeConf.headerHeight) {
-      trStyle = { height: tableSizeConf.headerHeight };
+      trStyle = {
+        height: tableSizeConf.headerHeight,
+        fontSize: tableSizeConf.fontSize
+      };
     }
     var drop = draggable ? { onDragStart: onDragStart, onDragOver: onDragOver, onDrop: onDrop, onDragEnter: onDragEnter, draggable: draggable } : {};
     var dragBorder = dragborder ? { onMouseDown: onMouseDown, onMouseMove: onMouseMove, onMouseUp: onMouseUp, dragborder: dragborder, onThMouseMove: onThMouseMove, dragborderKey: dragborderKey, onDropBorder: onDropBorder } : {};

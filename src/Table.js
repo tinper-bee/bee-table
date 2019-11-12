@@ -97,6 +97,12 @@ const defaultProps = {
   canConfigureTableSize:false
 };
 
+const tableSizeIcons = {
+    'sm': Tablesvg.compact,
+    'md': Tablesvg.moderate,
+    'lg': Tablesvg.easy
+}
+
 class Table extends Component {
   constructor(props) {
     super(props);
@@ -122,6 +128,7 @@ class Table extends Component {
       fixedColumnsHeadRowsHeight: [],
       fixedColumnsBodyRowsHeight: [],
       tableSizeConf: null, //实现表格动态缩放
+      tableSize: 'md'
     }
 
     this.onExpandedRowsChange = this.onExpandedRowsChange.bind(this);
@@ -372,7 +379,10 @@ class Table extends Component {
     // const trStyle = headerHeight&&!fixed ? { height: headerHeight } : (fixed ? this.getHeaderRowStyle(columns, rows) : null);
     let trStyle = fixed ? this.getHeaderRowStyle(columns, rows) : ( headerHeight ? { height: headerHeight } : null );
     if( !fixed && tableSizeConf && tableSizeConf.headerHeight ){
-        trStyle = { height:tableSizeConf.headerHeight };
+        trStyle = { 
+            height : tableSizeConf.headerHeight,
+            fontSize : tableSizeConf.fontSize
+        };
     }
     let drop = draggable ? { onDragStart, onDragOver, onDrop, onDragEnter, draggable } : {};
     let dragBorder = dragborder ? { onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey,onDropBorder } : {};
@@ -1195,6 +1205,7 @@ class Table extends Component {
      */
     getTableToolbar = () => {
         const { clsPrefix } = this.props;
+        const { tableSize } = this.state;
         let menu = (
             <Menu className={`${clsPrefix}-adjustSize-menus`} onSelect={this.onConfigMenuSelect}>
                 <Menu.Item key="sm">{Tablesvg.compact}紧凑型</Menu.Item>
@@ -1208,33 +1219,37 @@ class Table extends Component {
                 overlay={menu}
                 placement="bottomRight"
                 animation="slide-up">
-                <Button bordered className={`${clsPrefix}-adjustSize-btn`}><Icon type="uf-table"/><Icon type="uf-arrow-down"/></Button>
+                <Button bordered className={`${clsPrefix}-adjustSize-btn`}>{tableSizeIcons[tableSize]}<Icon type="uf-arrow-down"/></Button>
             </Dropdown>
         ) 
     }
     onConfigMenuSelect = ({key}) => {
-        let { tableSizeConf } = this.state;
+        let { tableSizeConf, tableSize } = this.state;
         if(key === 'sm'){
             tableSizeConf = {
                 height: 30,
                 headerHeight: 35,
                 fontSize: 12
             };
+            tableSize = 'sm';
         } else if(key === 'lg'){
             tableSizeConf = {
                 height: 50,
                 headerHeight: 50,
                 fontSize: 14
             };
+            tableSize = 'lg';
         } else if(key === 'md'){
             tableSizeConf = {
                 height: 40,
                 headerHeight: 40,
                 fontSize: 12
             };
+            tableSize = 'md';
         }
         this.setState({
-            tableSizeConf
+            tableSizeConf,
+            tableSize
         })
     }
 
