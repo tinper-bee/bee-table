@@ -58,20 +58,10 @@ class Demo34 extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: data,
-            selectedRowIndex: 0,
-            expandKeys: [0]
+            data: data
         }
     }
-    /**
-     * expandedRowKeys : 展开行的keys数组
-     */
-    onExpandedRowsChange = (expandedRowKeys) => {
-        // console.log('expandedRowKeys', expandedRowKeys);
-        this.setState({
-            expandKeys:expandedRowKeys
-        })
-    }
+
     /**
      * expanded : 当前的状态
      * record : 当前行的数据
@@ -97,8 +87,6 @@ class Demo34 extends Component {
                     onRowClick={(record, index, indent) => {
                         console.log('currentIndex--' + index);
                     }}
-                    onExpandedRowsChange={this.onExpandedRowsChange}
-                    expandedRowKeys={this.state.expandKeys}
                 />
             </div>
 
