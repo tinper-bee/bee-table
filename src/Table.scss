@@ -87,7 +87,7 @@ $icon-color:#505F79;
       border-bottom: 1px solid $table-th-bottom-border;
     }
     tr>th:last-child{
-      border-right: none; 
+      // border-right: none; 
     }
   }
   tr {
@@ -590,9 +590,12 @@ $icon-color:#505F79;
 
         .online{
           height: 100%;
-          width: 1px;
-          background:transparent;//兼容火狐浏览器，如果table设置border，
+          width: 4px;
+          // background:transparent;//兼容火狐浏览器，如果table设置border，
           margin: 0 auto;
+        }
+        .online:hover{
+          background:#000000;
         }
         .online-hover{
           background:#000000;

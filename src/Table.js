@@ -124,6 +124,10 @@ class Table extends Component {
     } else {
       expandedRowKeys = props.expandedRowKeys || props.defaultExpandedRowKeys;
     }
+
+    this.columnsChildrenList = [];//复杂表头、所有叶子节点
+    this.getColumnsChildrenList(props.columns);//复杂表头、所有叶子节点
+
     this.state = {
       expandedRowKeys,
       data: props.data,
@@ -164,7 +168,7 @@ class Table extends Component {
     this.tableUid = null;
     this.contentTable = null;
     this.leftColumnsLength  //左侧固定列的长度
-    this.centerColumnsLength  //非固定列的长度
+    this.centerColumnsLength  //非固定列的长度 
   }
   componentWillMount() {
     this.centerColumnsLength = this.columnManager.centerColumns().length
@@ -418,6 +422,13 @@ class Table extends Component {
     return this.props.expandedRowKeys || this.state.expandedRowKeys;
   }
 
+  //todo 后续改进
+  getColumnsChildrenList = (columns)=>{ 
+    columns.forEach(da=>{
+      da.children?this.getColumnsChildrenList(da.children):this.columnsChildrenList.push(da);
+    })
+  }
+
   getHeader(columns, fixed, leftFixedWidth, rightFixedWidth) {
     const { filterDelay, onFilterChange, onFilterClear, filterable, showHeader, expandIconAsCell, clsPrefix, onDragStart, onDragEnter, onDragOver, onDrop,onDragEnd, draggable,
       onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey, minColumnWidth, headerHeight,afterDragColWidth,headerScroll ,bordered,onDropBorder,onDraggingBorder} = this.props;
@@ -430,11 +441,10 @@ class Table extends Component {
         rowSpan: rows.length,
       });
     }
-
     const trStyle = headerHeight&&!fixed ? { height: headerHeight } : (fixed ? this.getHeaderRowStyle(columns, rows) : null);
     let drop = draggable ? { onDragStart, onDragOver, onDrop,onDragEnd, onDragEnter, draggable } : {};
     let dragBorder = dragborder ? { onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey,onDropBorder,onDraggingBorder } : {};
-    let contentWidthDiff = 0;
+    let contentWidthDiff = 0; 
     //非固定表格,宽度不够时自动扩充
     if (!fixed) {
       contentWidthDiff = this.state.contentWidthDiff
@@ -443,6 +453,7 @@ class Table extends Component {
       <TableHeader
         {...drop}
         {...dragBorder}
+        columnsChildrenList={this.columnsChildrenList}
         locale={this.props.locale}
         minColumnWidth={minColumnWidth}
         contentWidthDiff={contentWidthDiff}

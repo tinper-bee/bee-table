@@ -60,7 +60,10 @@ class TableHeader extends Component {
     if(this.props.dragborder){
       this.removeDragBorderEvent();
     }
-    this.eventListen([{key:'mousedown',fun:this.onTrMouseDown}],'remove',this.table.tr[0]);
+    this.doEventList(this.table.tr,(tr)=>{
+      this.eventListen([{key:'mousedown',fun:this.onTrMouseDown}],'remove',tr);  
+    })
+    // this.eventListen([{key:'mousedown',fun:this.onTrMouseDown}],'remove',this.table.tr[0]);
     this.eventListen([{key:'mouseup',fun:this.bodyonLineMouseUp}],'remove',document.body);
   }
 
@@ -124,9 +127,19 @@ class TableHeader extends Component {
         this.dragAbleEventInit();//交换列
       }
       if(this.table && this.table.tr){
-        this.eventListen([{key:'mousedown',fun:this.onTrMouseDown}],'',this.table.tr[0]);//body mouseup
+        // this.eventListen([{key:'mousedown',fun:this.onTrMouseDown}],'',this.table.tr[0]);//body mouseup
+        this.doEventList(this.table.tr,(tr)=>{
+          this.eventListen([{key:'mousedown',fun:this.onTrMouseDown}],'',tr);//body mouseup
+        })
       }
       this.eventListen([{key:'mouseup',fun:this.bodyonLineMouseUp}],'',document.body);//body mouseup
+    }
+  }
+
+
+  doEventList(trs,action){
+    for (let index = 0; index < trs.length; index++) {
+      action(trs[index]);
     }
   }
 
@@ -140,7 +153,10 @@ class TableHeader extends Component {
       {key:'mousemove', fun:this.onTrMouseMove},
       // {key:'mousemove', fun:debounce(50,this.onTrMouseMove)},//函数节流后体验很差
     ];
-    this.eventListen(events,'',this.table.tr[0]);//表示把事件添加到th元素上
+    this.doEventList(this.table.tr,(tr)=>{
+      this.eventListen(events,'',tr);//表示把事件添加到th元素上
+    })
+    // this.eventListen(events,'',this.table.tr[0]);//表示把事件添加到th元素上
   }
 
   /**
@@ -151,7 +167,10 @@ class TableHeader extends Component {
       {key:'mouseup', fun:this.onTrMouseUp},
       {key:'mousemove', fun:this.onTrMouseMove},
     ];
-    this.eventListen(events,'remove',this.table.tr[0]);
+    // this.eventListen(events,'remove',this.table.tr[0]);
+    this.doEventList(this.table.tr,(tr)=>{
+      this.eventListen(events,'remove',this.table.tr);
+    })
   }
 
   eventListen(events,type,eventSource){
@@ -197,7 +216,7 @@ class TableHeader extends Component {
     Event.stopPropagation(e);
     let event = Event.getEvent(e) ,
     targetEvent = Event.getTarget(event);
-    const { clsPrefix, contentTable,lastShowIndex } = this.props;
+    const { clsPrefix, contentTable,lastShowIndex,columnsChildrenList } = this.props;
     // let currentElement = this.getOnLineObject(targetEvent);
     let currentElement = this.getTargetToType(targetEvent);
     if(!currentElement)return;
@@ -207,18 +226,23 @@ class TableHeader extends Component {
       if(!this.props.dragborder)return;
       targetEvent.setAttribute('draggable',false);//添加交换列效果
       let currentIndex = parseInt(currentElement.getAttribute("data-line-index"));
-      let defaultWidth = currentElement.getAttribute("data-th-width");
-      let currentObj = this.table.cols[currentIndex];
+      let defaultWidth = currentElement.getAttribute("data-th-width"); 
       this.drag.option = "border";//拖拽操作
+      if(columnsChildrenList){
+        let columnKey = currentElement.getAttribute("data-line-key");
+        if(columnKey){
+          currentIndex = columnsChildrenList.findIndex(da=>da.key.toLowerCase() === columnKey.toLowerCase());
+        }
+      }
+      console.log("currentIndex :",currentIndex);
+      let currentObj = this.table.cols[currentIndex];
       this.drag.currIndex = currentIndex;
       this.drag.oldLeft = event.x;
       this.drag.oldWidth = parseInt((currentObj).style.width);
       this.drag.minWidth = currentObj.style.minWidth != ""?parseInt(currentObj.style.minWidth):defaultWidth;
       this.drag.tableWidth = parseInt(this.table.table.style.width ?this.table.table.style.width:this.table.table.scrollWidth);
-      // console.log(" ----- ",this.drag);
       if(!this.tableOldWidth){
         this.tableOldWidth = this.drag.tableWidth;//this.getTableWidth();
-        // console.log(" this.tableOldWidth--- ",this.tableOldWidth);
       }
       if(!this.lastColumWidth){
         this.lastColumWidth = parseInt(this.table.cols[lastShowIndex].style.width);
@@ -727,10 +751,10 @@ class TableHeader extends Component {
 
   render() {
     const { clsPrefix, rowStyle,draggable,
-        dragborder, rows,filterable,fixed,lastShowIndex,
+        dragborder, rows,filterable,fixed,lastShowIndex,columnsChildrenList
     } = this.props;
-
     let attr = dragborder ? { id: `u-table-drag-thead-${this.theadKey}` } : {};
+    let lastObj = columnsChildrenList[columnsChildrenList.length-1];
     return (
       <thead className={`${clsPrefix}-thead`} {...attr} data-theader-fixed='scroll' ref={_thead=>this._thead = _thead} >
         {rows.map((row, index) => {
@@ -794,7 +818,8 @@ class TableHeader extends Component {
                       {da.required ? <span className='required'>*</span>:''}
                       {da.children}
                       {
-                        dragborder && columIndex != _rowLeng? <div ref={el => (this.gap = el)} data-line-key={da.key}
+                        // && columIndex != _rowLeng
+                        dragborder && da.key != lastObj.key ? <div ref={el => (this.gap = el)} data-line-key={da.key}
                         data-line-index={columIndex} data-th-width={da.width}
                         data-type="online" className = {`${clsPrefix}-thead-th-drag-gap`}>
                         <div className='online' /></div>:""
