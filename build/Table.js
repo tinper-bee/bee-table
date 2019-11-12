@@ -599,7 +599,7 @@ var Table = function (_Component) {
 
     // const trStyle = headerHeight&&!fixed ? { height: headerHeight } : (fixed ? this.getHeaderRowStyle(columns, rows) : null);
     var trStyle = fixed ? this.getHeaderRowStyle(columns, rows) : headerHeight ? { height: headerHeight } : null;
-    if (!fixed && tableSizeConf && tableSizeConf.headerHeight) {
+    if (tableSizeConf && tableSizeConf.headerHeight) {
       trStyle = {
         height: tableSizeConf.headerHeight,
         fontSize: tableSizeConf.fontSize
@@ -849,7 +849,7 @@ var Table = function (_Component) {
         height = fixedColumnsBodyRowsHeight[fixedIndex];
       }
       // 如果切换了配置，以自定义配置的高度为准
-      if (!fixed && !props.heightConsistent && tableSizeConf && tableSizeConf.headerHeight) {
+      if (tableSizeConf && tableSizeConf.headerHeight) {
         height = tableSizeConf.height;
       }
 

@@ -8,7 +8,7 @@ import React, { Component } from "react";
 import Table from "../../src";
 
 const columns = [
-    { title: "订单编号", dataIndex: "orderNum", key: "orderNum", width: 100 },
+    { title: "订单编号", dataIndex: "orderNum", key: "orderNum", fixed: 'left',width: 100 },
     { title: "采购组织", dataIndex: "org", key: "org", width: 200 },
     { title: "供应商", dataIndex: "supplier", key: "supplier", width: 100 },
     { title: "订单日期", dataIndex: "orderDate", key: "orderDate", width: 150 },
@@ -16,7 +16,7 @@ const columns = [
     { title: "单据状态", dataIndex: "status", key: "status", width: 100 },
     { title: "提交人", dataIndex: "submitter", key: "submitter", width: 100 },
     { title: "单位", dataIndex: "unit", key: "unit", width: 100 },
-    { title: "总税价合计", dataIndex: "sum", key: "sum", width: 100 },
+    { title: "总税价合计", dataIndex: "sum", key: "sum", fixed: 'right', width: 100 },
 ];
 
 const data = [
@@ -79,6 +79,8 @@ class Demo0 extends Component {
                 <Table
                     canConfigureTableSize={true}
                     getToolbarContainer={this.getToolbarContainer}
+                    height={30}
+                    headerHeight={35}
                     columns={columns}
                     data={data}
                     onRowClick={(record, index, indent) => {
