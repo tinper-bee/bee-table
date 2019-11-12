@@ -242,7 +242,7 @@ var Table = function (_Component) {
 
       var menu = _react2["default"].createElement(
         _beeMenus2["default"],
-        { className: clsPrefix + '-adjustSize-menus', onSelect: _this.onConfigMenuSelect },
+        { className: clsPrefix + '-adjustSize-menus', onSelect: _this.onConfigMenuSelect, defaultSelectedKeys: ['md'] },
         _react2["default"].createElement(
           _beeMenus2["default"].Item,
           { key: 'sm' },
@@ -1455,8 +1455,11 @@ var Table = function (_Component) {
     }
     className += ' ' + clsPrefix + '-scroll-position-' + this.state.scrollPosition;
     //如果传入height说明是固定高度
-    if (props.height || tableSizeConf) {
+    if (props.height || tableSizeConf && tableSizeConf.height) {
       className += ' fixed-height';
+    }
+    if (props.headerHeight || tableSizeConf && tableSizeConf.headerHeight) {
+      className += ' fixed-header-height';
     }
     var isTableScroll = this.columnManager.isAnyColumnsFixed() || props.scroll.x || props.scroll.y;
     var loading = props.loading;

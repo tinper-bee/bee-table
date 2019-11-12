@@ -1207,7 +1207,7 @@ class Table extends Component {
         const { clsPrefix } = this.props;
         const { tableSize } = this.state;
         let menu = (
-            <Menu className={`${clsPrefix}-adjustSize-menus`} onSelect={this.onConfigMenuSelect}>
+            <Menu className={`${clsPrefix}-adjustSize-menus`} onSelect={this.onConfigMenuSelect} defaultSelectedKeys={['md']}>
                 <Menu.Item key="sm">{Tablesvg.compact}紧凑型</Menu.Item>
                 <Menu.Item key="md">{Tablesvg.moderate}适中</Menu.Item>
                 <Menu.Item key="lg">{Tablesvg.easy}宽松型</Menu.Item>
@@ -1270,8 +1270,11 @@ class Table extends Component {
     }
     className += ` ${clsPrefix}-scroll-position-${this.state.scrollPosition}`;
     //如果传入height说明是固定高度
-    if(props.height || tableSizeConf){
+    if(props.height || (tableSizeConf && tableSizeConf.height)){
       className += ' fixed-height';
+    }
+    if(props.headerHeight || (tableSizeConf && tableSizeConf.headerHeight)){
+        className += ' fixed-header-height';
     }
     const isTableScroll = this.columnManager.isAnyColumnsFixed() ||
       props.scroll.x ||

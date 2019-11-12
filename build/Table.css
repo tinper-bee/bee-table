@@ -246,7 +246,7 @@
     color: rgb(33, 33, 33); }
   .u-table.fixed-height td {
     padding: 0px 8px; }
-  .u-table.fixed-height th {
+  .u-table.fixed-header-height th {
     padding: 0px 8px; }
   .u-table-fixed-header .u-table-body {
     background: #fff;
