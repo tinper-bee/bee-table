@@ -54,6 +54,7 @@ class TableRow extends Component{
      this._timeout = null;
      this.state = {
          hovered: false,
+         tableSizeConf: {}
      };
      this.onRowClick = this.onRowClick.bind(this);
      this.onRowDoubleClick = this.onRowDoubleClick.bind(this);
@@ -79,6 +80,16 @@ class TableRow extends Component{
     this.setRowHeight()
     if(treeType){
       this.setRowParentIndex();
+    }
+  }
+
+  componentWillReceiveProps(nextProps){
+    const { tableSizeConf:newTableSizeConf } = nextProps;
+    const { tableSizeConf:oldTableSizeConf } = this.props;
+    if( newTableSizeConf !== oldTableSizeConf ){
+        this.setState({
+            tableSizeConf: newTableSizeConf
+        })
     }
   }
 
@@ -445,6 +456,7 @@ class TableRow extends Component{
   }
 
   render() {
+    const { tableSizeConf } = this.state;
     const {
       clsPrefix, columns, record, height, visible, index,
       expandIconColumnIndex, expandIconAsCell, expanded, expandRowByClick,rowDraggAble,
@@ -519,6 +531,9 @@ class TableRow extends Component{
     }
     if(record && record._checked){
       className += ' selected';
+    }
+    if (tableSizeConf && tableSizeConf.fontSize) {
+        style.fontSize = tableSizeConf.fontSize;
     }
     return (
       <tr

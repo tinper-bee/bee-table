@@ -13,6 +13,11 @@ import Icon from 'bee-icon';
 import { Event,EventUtil,closest} from "./lib/utils";
 import i18n from "./lib/i18n";
 import { getComponentLocale } from "bee-locale/build/tool";
+import Dropdown from 'bee-dropdown';
+import Menu from 'bee-menus';
+import Button from 'bee-button';
+import Tablesvg from './svg';
+import Portal from 'bee-overlay/build/Portal';
 
 const propTypes = {
   data: PropTypes.array,
@@ -63,6 +68,8 @@ const propTypes = {
   bodyDisplayInRow: PropTypes.bool, // 表格内容超出列宽度时进行换行 or 以...形式展现
   headerDisplayInRow: PropTypes.bool, // 表头内容超出列宽度时进行换行 or 以...形式展现
   showRowNum: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]), // 表格是否自动生成序号,格式为{base:number || 0,defaultKey:string || '_index',defaultName:string || '序号'}
+  canConfigureTableSize: PropTypes.bool,
+  getToolbarContainer: PropTypes.func,
 };
 
 const defaultProps = {
@@ -105,7 +112,14 @@ const defaultProps = {
   bodyDisplayInRow: true,
   headerDisplayInRow: true,
   showRowNum: false,
+  canConfigureTableSize:false
 };
+
+const tableSizeIcons = {
+    'sm': Tablesvg.compact,
+    'md': Tablesvg.moderate,
+    'lg': Tablesvg.easy
+}
 
 class Table extends Component {
   constructor(props) {
@@ -132,6 +146,8 @@ class Table extends Component {
       fixedColumnsHeadRowsHeight: [],
       fixedColumnsBodyRowsHeight: [],
       fixedColumnsExpandedRowsHeight: {}, //扩展行的高度
+      tableSizeConf: null, //实现表格动态缩放
+      tableSize: 'md'
     }
 
     this.onExpandedRowsChange = this.onExpandedRowsChange.bind(this);
@@ -419,6 +435,7 @@ class Table extends Component {
   }
 
   getHeader(columns, fixed, leftFixedWidth, rightFixedWidth) {
+    const { tableSizeConf } = this.state;
     const { filterDelay, onFilterChange, onFilterClear, filterable, showHeader, expandIconAsCell, clsPrefix, onDragStart, onDragEnter, onDragOver, onDrop,onDragEnd, draggable,
       onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey, minColumnWidth, headerHeight,afterDragColWidth,headerScroll ,bordered,onDropBorder,onDraggingBorder} = this.props;
     const rows = this.getHeaderRows(columns);
@@ -431,7 +448,14 @@ class Table extends Component {
       });
     }
 
-    const trStyle = headerHeight&&!fixed ? { height: headerHeight } : (fixed ? this.getHeaderRowStyle(columns, rows) : null);
+    // const trStyle = headerHeight&&!fixed ? { height: headerHeight } : (fixed ? this.getHeaderRowStyle(columns, rows) : null);
+    let trStyle = fixed ? this.getHeaderRowStyle(columns, rows) : ( headerHeight ? { height: headerHeight } : null );
+    if( tableSizeConf && tableSizeConf.headerHeight ){
+        trStyle = { 
+            height : tableSizeConf.headerHeight,
+            fontSize : tableSizeConf.fontSize
+        };
+    }
     let drop = draggable ? { onDragStart, onDragOver, onDrop,onDragEnd, onDragEnter, draggable } : {};
     let dragBorder = dragborder ? { onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey,onDropBorder,onDraggingBorder } : {};
     let contentWidthDiff = 0;
@@ -676,7 +700,7 @@ class Table extends Component {
     const childrenColumnName = props.childrenColumnName;
     const expandedRowRender = props.expandedRowRender;
     const expandRowByClick = props.expandRowByClick;
-    const { fixedColumnsBodyRowsHeight } = this.state;
+    const { fixedColumnsBodyRowsHeight,tableSizeConf } = this.state;
     let rst = [];
     let height;
     const rowClassName = props.rowClassName;
@@ -747,6 +771,10 @@ class Table extends Component {
         height = props.height
       } else if(fixed || props.heightConsistent) {
         height = fixedColumnsBodyRowsHeight[fixedIndex];
+      }
+      // 如果切换了配置，以自定义配置的高度为准
+      if( props.bodyDisplayInRow && tableSizeConf && tableSizeConf.headerHeight ){
+        height = tableSizeConf.height;
       }
 
       let leafColumns;
@@ -821,6 +849,7 @@ class Table extends Component {
           lazyEndIndex = {lazyEndIndex}
           centerColumnsLength={this.centerColumnsLength}
           leftColumnsLength={this.leftColumnsLength}
+          tableSizeConf={tableSizeConf}
         />
       );
       this.treeRowIndex++;
@@ -1375,7 +1404,49 @@ class Table extends Component {
     this.props.onTableKeyDown&&this.props.onTableKeyDown();
   }
 
+    /**
+     * 自定义设置表格行高、字体大小
+     */
+    getTableToolbar = () => {
+        const { clsPrefix } = this.props;
+        const { tableSize } = this.state;
+        let menu = (
+            <Menu className={`${clsPrefix}-adjustSize-menus`} onSelect={this.onConfigMenuSelect} defaultSelectedKeys={['md']}>
+                <Menu.Item key="sm">{Tablesvg.compact}紧凑型</Menu.Item>
+                <Menu.Item key="md">{Tablesvg.moderate}适中</Menu.Item>
+                <Menu.Item key="lg">{Tablesvg.easy}宽松型</Menu.Item>
+            </Menu>
+        )
+        return (
+            <Dropdown
+                trigger={['hover']}
+                overlay={menu}
+                placement="bottomRight"
+                animation="slide-up">
+                <Button bordered className={`${clsPrefix}-adjustSize-btn`}>{tableSizeIcons[tableSize]}<Icon type="uf-arrow-down"/></Button>
+            </Dropdown>
+        ) 
+    }
+    onConfigMenuSelect = ({key}) => {
+        let { tableSizeConf,tableSize } = this.state;
+        if(key === 'sm'){
+            tableSizeConf = { height: 30, headerHeight: 35, fontSize: 12 };
+            tableSize = 'sm';
+        } else if(key === 'lg'){
+            tableSizeConf = { height: 50, headerHeight: 50, fontSize: 14 };
+            tableSize = 'lg';
+        } else if(key === 'md'){
+            tableSizeConf = { height: 40, headerHeight: 40, fontSize: 12 };
+            tableSize = 'md';
+        }
+        this.setState({
+            tableSizeConf,
+            tableSize
+        })
+    }
+
   render() {
+    const {tableSizeConf} = this.state;
     const props = this.props;
     const clsPrefix = props.clsPrefix;
     const hasFixedLeft = this.columnManager.isAnyColumnsLeftFixed();
@@ -1395,8 +1466,11 @@ class Table extends Component {
     className += ` ${clsPrefix}-scroll-position-${this.state.scrollPosition}`;
     //如果传入height说明是固定高度
     //内容过多折行显示时，height 属性会失效，为了避免产生错行
-    if(props.bodyDisplayInRow && props.height){
+    if(props.bodyDisplayInRow && (props.height || (tableSizeConf && tableSizeConf.height))){
       className += ' fixed-height';
+    }
+    if(props.headerHeight || (tableSizeConf && tableSizeConf.headerHeight)){
+        className += ' fixed-header-height';
     }
     if(props.bodyDisplayInRow){
       className += ' body-dispaly-in-row'
@@ -1419,10 +1493,18 @@ class Table extends Component {
     if(hasFixedLeft){
       className += ` has-fixed-left`;
     }
+    let portal = props.canConfigureTableSize && typeof window !== 'undefined' && props.getToolbarContainer ? (
+        <Portal container={props.getToolbarContainer}>
+            { this.getTableToolbar() }
+        </Portal>
+    ) : this.getTableToolbar();
 
     return (
       <div className={className} style={props.style} ref={el => this.contentTable = el}
       tabIndex={props.focusable && (props.tabIndex?props.tabIndex:'0')} >
+        { props.canConfigureTableSize && 
+          <div className={`${clsPrefix}-toolbar`}>{portal}</div>
+        }
         {this.getTitle()}
         <div className={`${clsPrefix}-content`}>
 

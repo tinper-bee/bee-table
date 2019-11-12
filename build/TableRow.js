@@ -328,7 +328,8 @@ var TableRow = function (_Component) {
 
     _this._timeout = null;
     _this.state = {
-      hovered: false
+      hovered: false,
+      tableSizeConf: {}
     };
     _this.onRowClick = _this.onRowClick.bind(_this);
     _this.onRowDoubleClick = _this.onRowDoubleClick.bind(_this);
@@ -361,6 +362,17 @@ var TableRow = function (_Component) {
     this.setRowHeight();
     if (treeType) {
       this.setRowParentIndex();
+    }
+  };
+
+  TableRow.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+    var newTableSizeConf = nextProps.tableSizeConf;
+    var oldTableSizeConf = this.props.tableSizeConf;
+
+    if (newTableSizeConf !== oldTableSizeConf) {
+      this.setState({
+        tableSizeConf: newTableSizeConf
+      });
     }
   };
 
@@ -547,6 +559,7 @@ var TableRow = function (_Component) {
   };
 
   TableRow.prototype.render = function render() {
+    var tableSizeConf = this.state.tableSizeConf;
     var _props9 = this.props,
         clsPrefix = _props9.clsPrefix,
         columns = _props9.columns,
@@ -637,6 +650,9 @@ var TableRow = function (_Component) {
     }
     if (record && record._checked) {
       className += ' selected';
+    }
+    if (tableSizeConf && tableSizeConf.fontSize) {
+      style.fontSize = tableSizeConf.fontSize;
     }
     return _react2["default"].createElement(
       'tr',

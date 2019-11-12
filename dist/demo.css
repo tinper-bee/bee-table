@@ -303,6 +303,8 @@
     color: rgb(33, 33, 33); }
   .u-table.fixed-height td {
     padding: 0px 8px; }
+  .u-table.fixed-header-height th {
+    padding: 0px 8px; }
   .u-table-fixed-header .u-table-body {
     background: #fff;
     position: relative; }
@@ -889,6 +891,27 @@
   .u-dropdown ul.u-table-inline-op-dropdowm li.u-dropdown-menu-item i.uf {
     font-size: 12px; }
 
+.u-table-adjustSize-btn.u-button {
+  min-width: 0;
+  padding: 4px 12px; }
+  .u-table-adjustSize-btn.u-button .uf {
+    padding: 0; }
+    .u-table-adjustSize-btn.u-button .uf:first-child {
+      margin-right: 8px; }
+    .u-table-adjustSize-btn.u-button .uf:last-child {
+      font-size: 12px; }
+
+.u-table-adjustSize-menus.u-dropdown-menu > .u-dropdown-menu-item {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 0 8px;
+  line-height: 32px;
+  height: 32px; }
+  .u-table-adjustSize-menus.u-dropdown-menu > .u-dropdown-menu-item svg {
+    margin-right: 4px; }
+
 .selected {
   background: #FFF7E7; }
 
@@ -911,6 +934,11 @@
 
 .demo04.u-table tr.u-table-row-hover, .demo04 .u-table tr:hover {
   background: #ebecf0; }
+
+.demo0108 {
+  text-align: end; }
+  .demo0108 .u-table-adjustSize-btn {
+    margin-bottom: 8px; }
 
 .demo22 .opt-btns {
   margin-bottom: 8px; }

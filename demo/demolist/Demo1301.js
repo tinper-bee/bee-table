@@ -41,7 +41,7 @@ class Demo12 extends Component {
    *@param selectedList:当前选中的行数据
    *@param record 当前操作行数据
    *@param index 当前操作行索引
-   *@param newData 进行多选操作之后的新数据 data
+   *@param newData 进行多选操作之后的新数据 data。【tinper-bee@2.2.2 新增参数】
    * @memberof Demo12
    */
   getSelectedDataFunc = (selectedList,record,index,newData) => {
