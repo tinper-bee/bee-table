@@ -213,8 +213,6 @@
       display: inline-block; }
   .u-table thead tr:last-child {
     border-bottom: 1px solid #C1C7D0; }
-  .u-table thead tr > th:last-child {
-    border-right: none; }
   .u-table tr:hover td .uf-eye {
     visibility: visible !important; }
   .u-table tr tr a {
@@ -525,9 +523,10 @@
       z-index: 1; }
       .u-table-thead-th-drag-gap .online {
         height: 100%;
-        width: 1px;
-        background: transparent;
+        width: 4px;
         margin: 0 auto; }
+      .u-table-thead-th-drag-gap .online:hover {
+        background: #000000; }
       .u-table-thead-th-drag-gap .online-hover {
         background: #000000; }
     .u-table-thead-th-drag-gap:hover {

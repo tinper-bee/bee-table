@@ -199,6 +199,12 @@ var Table = function (_Component) {
       _this.contentTable.appendChild(div);
     };
 
+    _this.getColumnsChildrenList = function (columns) {
+      columns.forEach(function (da) {
+        da.children ? _this.getColumnsChildrenList(da.children) : _this.columnsChildrenList.push(da);
+      });
+    };
+
     _this.onDragRowStart = function (currentKey) {
       var data = _this.state.data,
           currentIndex = void 0,
@@ -310,6 +316,10 @@ var Table = function (_Component) {
     } else {
       expandedRowKeys = props.expandedRowKeys || props.defaultExpandedRowKeys;
     }
+
+    _this.columnsChildrenList = []; //复杂表头、所有叶子节点
+    _this.getColumnsChildrenList(props.columns); //复杂表头、所有叶子节点
+
     _this.state = {
       expandedRowKeys: expandedRowKeys,
       data: props.data,
@@ -350,7 +360,7 @@ var Table = function (_Component) {
     _this.tableUid = null;
     _this.contentTable = null;
     _this.leftColumnsLength; //左侧固定列的长度
-    _this.centerColumnsLength; //非固定列的长度
+    _this.centerColumnsLength; //非固定列的长度 
     return _this;
   }
 
@@ -576,6 +586,9 @@ var Table = function (_Component) {
     return this.props.expandedRowKeys || this.state.expandedRowKeys;
   };
 
+  //todo 后续改进
+
+
   Table.prototype.getHeader = function getHeader(columns, fixed, leftFixedWidth, rightFixedWidth) {
     var _props = this.props,
         filterDelay = _props.filterDelay,
@@ -614,7 +627,6 @@ var Table = function (_Component) {
         rowSpan: rows.length
       });
     }
-
     var trStyle = headerHeight && !fixed ? { height: headerHeight } : fixed ? this.getHeaderRowStyle(columns, rows) : null;
     var drop = draggable ? { onDragStart: onDragStart, onDragOver: onDragOver, onDrop: onDrop, onDragEnd: onDragEnd, onDragEnter: onDragEnter, draggable: draggable } : {};
     var dragBorder = dragborder ? { onMouseDown: onMouseDown, onMouseMove: onMouseMove, onMouseUp: onMouseUp, dragborder: dragborder, onThMouseMove: onThMouseMove, dragborderKey: dragborderKey, onDropBorder: onDropBorder, onDraggingBorder: onDraggingBorder } : {};
@@ -624,6 +636,7 @@ var Table = function (_Component) {
       contentWidthDiff = this.state.contentWidthDiff;
     }
     return showHeader ? _react2["default"].createElement(_TableHeader2["default"], _extends({}, drop, dragBorder, {
+      columnsChildrenList: this.columnsChildrenList,
       locale: this.props.locale,
       minColumnWidth: minColumnWidth,
       contentWidthDiff: contentWidthDiff,
