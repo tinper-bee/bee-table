@@ -198,8 +198,6 @@
       display: inline-block; }
   .u-table thead tr:last-child {
     border-bottom: 1px solid #C1C7D0; }
-  .u-table thead tr > th:last-child {
-    border-right: none; }
   .u-table tr:hover td .uf-eye {
     visibility: visible !important; }
   .u-table tr tr a {
@@ -360,7 +358,6 @@
     text-align: center;
     line-height: 14px;
     -webkit-user-select: none;
-    -moz-user-select: none;
     -ms-user-select: none;
     user-select: none; }
     .u-table-row-expand-icon.uf, .u-table-expanded-row-expand-icon.uf {
@@ -446,7 +443,6 @@
     background: rgb(241, 242, 245);
     color: rgb(33, 33, 33);
     background-clip: padding-box;
-    -moz-user-select: -moz-none;
     -webkit-user-select: none;
     /*
         Introduced in IE 10. 
@@ -514,9 +510,10 @@
       z-index: 1; }
       .u-table-thead-th-drag-gap .online {
         height: 100%;
-        width: 1px;
-        background: transparent;
+        width: 4px;
         margin: 0 auto; }
+      .u-table-thead-th-drag-gap .online:hover {
+        background: #000000; }
       .u-table-thead-th-drag-gap .online-hover {
         background: #000000; }
     .u-table-thead-th-drag-gap:hover {
