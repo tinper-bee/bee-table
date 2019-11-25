@@ -1,6 +1,6 @@
 /**
  *
- * @title 多列表头、多列表头的拖拽表头宽度
+ * @title 多列表头
  * @parent 列渲染 Custom Render
  * @description columns[n] 可以内嵌 children，以渲染分组表头。
  * 自定义表头高度需要传headerHeight，注：修改th的padding top和bottom置为0，否则会有影响
@@ -16,42 +16,42 @@ import dragColumn from '../../src/lib/dragColumn';
 
 const columns = [
   {
-    title: "Name",
+    title: "姓名",
     dataIndex: "name",
     key: "name",
     width: 100,
     fixed: "left"
   },
   {
-    title: "Other",
+    title: "个人信息",
     width:600,
     children: [
       {
-        title: "Age",
+        title: "年龄",
         dataIndex: "age",
         key: "age",
         width: 200
       },
       {
-        title: "Address",
+        title: "地址",
         children: [
           {
-            title: "Street",
+            title: "街道",
             dataIndex: "street",
             key: "street",
             width: 200
           },
           {
-            title: "Block",
+            title: "单元",
             children: [
               {
-                title: "Building",
+                title: "楼号",
                 dataIndex: "building",
                 key: "building",
                 width: 100
               },
               {
-                title: "Door No.",
+                title: "门户",
                 dataIndex: "number",
                 key: "number",
                 width: 100
@@ -63,17 +63,17 @@ const columns = [
     ]
   },
   {
-    title: "Company",
+    title: "公司信息",
     width:400,
     children: [
       {
-        title: "Company Address",
+        title: "公司地址",
         dataIndex: "companyAddress",
         key: "companyAddress",
         width:200,
       },
       {
-        title: "Company Name",
+        title: "公司名称",
         dataIndex: "companyName",
         key: "companyName",
         width:200,
@@ -81,7 +81,7 @@ const columns = [
     ]
   },
   {
-    title: "Gender",
+    title: "性别",
     dataIndex: "gender",
     key: "gender",
     width: 60,
@@ -98,9 +98,9 @@ for (let i = 0; i < 20; i++) {
     street: "Lake Park",
     building: "C",
     number: 2035,
-    companyAddress: "Lake Street 42",
-    companyName: "SoftLake Co",
-    gender: "M"
+    companyAddress: "北清路 68 号",
+    companyName: "用友",
+    gender: "男"
   });
 }
 

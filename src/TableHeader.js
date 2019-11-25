@@ -761,6 +761,7 @@ class TableHeader extends Component {
           let _rowLeng = (row.length-1);
           return(<tr key={index} style={rowStyle} className={(filterable && index == rows.length - 1)?'filterable':''}>
             {row.map((da, columIndex, arr) => {
+              da.children = da.required ? <span><span className='required'>*</span>{da.children}</span> : da.children;
               let thHover = da.drgHover
                 ? ` ${clsPrefix}-thead th-drag-hover`
                 : "";
@@ -815,7 +816,6 @@ class TableHeader extends Component {
               if(!da.fixed ){
                   return (<th {...da}  {...keyTemp} className={thClassName} data-th-fixed={da.fixed} data-line-key={da.key}
                   data-line-index={columIndex} data-th-width={da.width} data-type="draggable">
-                      {da.required ? <span className='required'>*</span>:''}
                       {da.children}
                       {
                         // && columIndex != _rowLeng

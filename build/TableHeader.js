@@ -423,6 +423,16 @@ var TableHeader = function (_Component) {
           "tr",
           { key: index, style: rowStyle, className: filterable && index == rows.length - 1 ? 'filterable' : '' },
           row.map(function (da, columIndex, arr) {
+            da.children = da.required ? _react2["default"].createElement(
+              "span",
+              null,
+              _react2["default"].createElement(
+                "span",
+                { className: "required" },
+                "*"
+              ),
+              da.children
+            ) : da.children;
             var thHover = da.drgHover ? " " + clsPrefix + "-thead th-drag-hover" : "";
             delete da.drgHover;
             var fixedStyle = "";
@@ -472,11 +482,6 @@ var TableHeader = function (_Component) {
                 "th",
                 _extends({}, da, keyTemp, { className: thClassName, "data-th-fixed": da.fixed, "data-line-key": da.key,
                   "data-line-index": columIndex, "data-th-width": da.width, "data-type": "draggable" }),
-                da.required ? _react2["default"].createElement(
-                  "span",
-                  { className: "required" },
-                  "*"
-                ) : '',
                 da.children,
 
                 // && columIndex != _rowLeng

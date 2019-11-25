@@ -77,12 +77,14 @@ class Demo21 extends Component {
             key: "orderCode",
             width: 100, 
             fixed: 'left',
+            required: true
         },
         {
             title: "供应商名称",
             dataIndex: "supplierName",
             key: "supplierName",
-            width: 150
+            width: 150,
+            required: true
         },
         {
             title: "类型",
@@ -96,6 +98,18 @@ class Demo21 extends Component {
             key: "purchasing",
             width: 100
         },
+        {
+          title: "单据日期",
+          dataIndex: "voucherDate",
+          key: "voucherDate",
+          width: 150
+        },
+        {
+          title: "审批状态",
+          dataIndex: "approvalState_name",
+          key: "approvalState_name",
+          width: 150
+        }
       ]};
   }
   afterFilter = (optData,columns)=>{

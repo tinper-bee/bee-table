@@ -101,7 +101,7 @@ export default function filterColumn(Table, Popover) {
             id:da.key,
             checked:da.checked
           }
-          if(da.fixed){
+          if(da.fixed || da.required){
             paramObj.disabled = true
           }else{
             paramObj.onClick = () => {
