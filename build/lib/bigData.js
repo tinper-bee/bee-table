@@ -112,7 +112,7 @@ function bigData(Table) {
         _this.setStartAndEndIndex(currentIndex, dataLen);
       }
       if (newExpandedKeys !== props.expandedRowKeys) {
-        _this.cacheExpandedKeys = newExpandedKeys;
+        _this.cacheExpandedKeys = new Set(newExpandedKeys);
         //重新递归数据
         var flatTreeData = _this.deepTraversal(data);
         var sliceTreeList = flatTreeData.slice(_this.startIndex, _this.endIndex);
@@ -402,6 +402,7 @@ function bigData(Table) {
           _this$expandedRowKeys = _this.expandedRowKeys,
           expandedRowKeys = _this$expandedRowKeys === undefined ? [] : _this$expandedRowKeys,
           flatTreeKeysMap = _this.flatTreeKeysMap,
+          expandedKeysSet = cacheExpandedKeys ? cacheExpandedKeys : new Set(expandedRowKeys),
           flatTreeData = [],
           dataCopy = treeData;
 
@@ -410,11 +411,11 @@ function bigData(Table) {
           var _dataCopy$i = dataCopy[i],
               key = _dataCopy$i.key,
               children = _dataCopy$i.children,
-              props = _objectWithoutProperties(_dataCopy$i, ["key", "children"]);
+              props = _objectWithoutProperties(_dataCopy$i, ["key", "children"]),
+              dataCopyI = new Object(),
+              isLeaf = children ? false : true,
+              isExpanded = parentKey === null || expandedKeysSet.has(parentKey) ? expandedKeysSet.has(key) : false;
 
-          var dataCopyI = new Object();
-          var isLeaf = children ? false : true,
-              isExpanded = cacheExpandedKeys ? cacheExpandedKeys.indexOf(key) !== -1 : expandedRowKeys.indexOf(key) !== -1;
           dataCopyI = _extends(dataCopyI, {
             key: key,
             isExpanded: isExpanded,
@@ -642,20 +643,21 @@ function bigData(Table) {
             _this4.setState({ needRender: !needRender });
           }
         }
-        if (_this4.treeType) {
-          //收起和展开时，缓存 expandedKeys
-          _this.cacheExpandedKeys = expandedRowKeys;
-          //重新递归数据
-          var flatTreeData = _this.deepTraversal(data);
-          var sliceTreeList = flatTreeData.slice(_this.startIndex, _this.endIndex);
-          _this.flatTreeData = flatTreeData;
-          _this.handleTreeListChange(sliceTreeList);
-          _this.cacheExpandedKeys = null;
-        }
       }
 
       // expandState为true时，记录下
       _this.props.onExpand(expandState, record);
+
+      if (_this4.treeType) {
+        //收起和展开时，缓存 expandedKeys
+        _this.cacheExpandedKeys = new Set(expandedRowKeys);
+        //重新递归数据
+        var flatTreeData = _this.deepTraversal(data);
+        var sliceTreeList = flatTreeData.slice(_this.startIndex, _this.endIndex);
+        _this.flatTreeData = flatTreeData;
+        _this.handleTreeListChange(sliceTreeList);
+        _this.cacheExpandedKeys = null;
+      }
     };
   }, _temp;
 }
