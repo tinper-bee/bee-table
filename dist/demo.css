@@ -342,7 +342,6 @@
     text-align: center;
     line-height: 14px;
     -webkit-user-select: none;
-    -moz-user-select: none;
     -ms-user-select: none;
     user-select: none; }
     .u-table-row-expand-icon.uf, .u-table-expanded-row-expand-icon.uf {
@@ -428,7 +427,6 @@
     background: rgb(241, 242, 245);
     color: rgb(33, 33, 33);
     background-clip: padding-box;
-    -moz-user-select: -moz-none;
     -webkit-user-select: none;
     /*
         Introduced in IE 10. 

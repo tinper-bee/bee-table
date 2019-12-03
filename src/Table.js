@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classes from 'component-classes';
 import TableRow from './TableRow';
 import TableHeader from './TableHeader';
-import { measureScrollbar, debounce, warningOnce ,getMaxColChildrenLength} from './lib/utils';
+import { measureScrollbar, debounce, warningOnce ,getMaxColChildrenLength, throttle} from './lib/utils';
 import shallowequal from 'shallowequal';
 import addEventListener from 'tinper-bee-core/lib/addEventListener';
 import ColumnManager from './ColumnManager';
@@ -229,7 +229,8 @@ class Table extends Component {
   componentDidUpdate(prevProps) {
 
     if (this.columnManager.isAnyColumnsFixed()) {
-      this.syncFixedTableRowHeight();
+      throttle(this.syncFixedTableRowHeight, 300)();
+      // this.syncFixedTableRowHeight();
     }
     //适应模态框中表格、以及父容器宽度变化的情况
     if (typeof (this.props.scroll.x) !== 'number' && this.contentTable.getBoundingClientRect().width !== this.contentDomWidth && this.firstDid) {

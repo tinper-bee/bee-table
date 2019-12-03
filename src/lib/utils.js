@@ -66,6 +66,36 @@ export function debounce(func, wait, immediate) {
   };
 }
 
+function isObject(value) {
+  const type = typeof value
+  return value != null && (type == 'object' || type == 'function')
+}
+
+/**
+ * 函数节流
+ * @param {*} func 延时调用函数
+ * @param {*} wait 延迟多长时间
+ * @param {*} options 至少多长时间触发一次
+ * @return Function 延迟执行的方法
+ */
+export function throttle(func, wait, options) {
+  let leading = true
+  let trailing = true
+
+  if (typeof func !== 'function') {
+    throw new TypeError('Expected a function')
+  }
+  if (isObject(options)) {
+    leading = 'leading' in options ? !!options.leading : leading
+    trailing = 'trailing' in options ? !!options.trailing : trailing
+  }
+  return debounce(func, wait, {
+    leading,
+    trailing,
+    'maxWait': wait,
+  })
+}
+
 const warned = {};
 export function warningOnce(condition, format, args) {
   if (!warned[format]) {

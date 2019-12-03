@@ -414,7 +414,8 @@ var Table = function (_Component) {
   Table.prototype.componentDidUpdate = function componentDidUpdate(prevProps) {
 
     if (this.columnManager.isAnyColumnsFixed()) {
-      this.syncFixedTableRowHeight();
+      (0, _utils.throttle)(this.syncFixedTableRowHeight, 300)();
+      // this.syncFixedTableRowHeight();
     }
     //适应模态框中表格、以及父容器宽度变化的情况
     if (typeof this.props.scroll.x !== 'number' && this.contentTable.getBoundingClientRect().width !== this.contentDomWidth && this.firstDid) {

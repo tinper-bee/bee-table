@@ -7,8 +7,11 @@ exports.Event = exports.EventUtil = exports.tryParseInt = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 exports.measureScrollbar = measureScrollbar;
 exports.debounce = debounce;
+exports.throttle = throttle;
 exports.warningOnce = warningOnce;
 exports.getOffset = getOffset;
 exports.addClass = addClass;
@@ -93,6 +96,36 @@ function debounce(func, wait, immediate) {
       func.apply(context, args);
     }
   };
+}
+
+function isObject(value) {
+  var type = typeof value === 'undefined' ? 'undefined' : _typeof(value);
+  return value != null && (type == 'object' || type == 'function');
+}
+
+/**
+ * 函数节流
+ * @param {*} func 延时调用函数
+ * @param {*} wait 延迟多长时间
+ * @param {*} options 至少多长时间触发一次
+ * @return Function 延迟执行的方法
+ */
+function throttle(func, wait, options) {
+  var leading = true;
+  var trailing = true;
+
+  if (typeof func !== 'function') {
+    throw new TypeError('Expected a function');
+  }
+  if (isObject(options)) {
+    leading = 'leading' in options ? !!options.leading : leading;
+    trailing = 'trailing' in options ? !!options.trailing : trailing;
+  }
+  return debounce(func, wait, {
+    leading: leading,
+    trailing: trailing,
+    'maxWait': wait
+  });
 }
 
 var warned = {};
