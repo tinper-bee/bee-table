@@ -407,16 +407,18 @@ var Table = function (_Component) {
     if (this.scrollbarWidth <= 0 && this.props.scroll.y) {
       this.scrollbarWidth = (0, _utils.measureScrollbar)();
     }
+    if (this.columnManager.isAnyColumnsFixed()) {
+      (0, _utils.throttle)(this.syncFixedTableRowHeight, 300)();
+    }
 
     // console.log('this.scrollTop**********',this.scrollTop);
   };
 
   Table.prototype.componentDidUpdate = function componentDidUpdate(prevProps) {
 
-    if (this.columnManager.isAnyColumnsFixed()) {
-      (0, _utils.throttle)(this.syncFixedTableRowHeight, 300)();
-      // this.syncFixedTableRowHeight();
-    }
+    // if (this.columnManager.isAnyColumnsFixed()) {
+    //   throttle(this.syncFixedTableRowHeight, 300)();
+    // }
     //适应模态框中表格、以及父容器宽度变化的情况
     if (typeof this.props.scroll.x !== 'number' && this.contentTable.getBoundingClientRect().width !== this.contentDomWidth && this.firstDid) {
       this.computeTableWidth();
