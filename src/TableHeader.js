@@ -225,7 +225,8 @@ class TableHeader extends Component {
     if(type == 'online' && this.props.dragborder){
       if(!this.props.dragborder)return;
       targetEvent.setAttribute('draggable',false);//添加交换列效果
-      let currentIndex = parseInt(currentElement.getAttribute("data-line-index"));
+      // let currentIndex = parseInt(currentElement.getAttribute("data-line-index"));
+      let currentIndex = -1;
       let defaultWidth = currentElement.getAttribute("data-th-width"); 
       this.drag.option = "border";//拖拽操作
       if(columnsChildrenList){
@@ -311,20 +312,12 @@ class TableHeader extends Component {
       let diff = (event.x - this.drag.oldLeft);
       let newWidth = this.drag.oldWidth + diff;
       this.drag.newWidth = newWidth > 0 ? newWidth : this.minWidth;
-       // if(newWidth > this.drag.minWidth){
       if(newWidth > this.minWidth){
         currentCols.style.width = newWidth +'px';
         //hao 支持固定表头拖拽 修改表体的width
         if(this.fixedTable.cols){
             this.fixedTable.cols[this.drag.currIndex].style.width = newWidth + "px";
         }
-
-        // const newTableWidth = this.drag.tableWidth + diff;// +'px';
-        // this.table.table.style.width  = newTableWidth+'px';;//改变table的width
-        // if(this.table.innerTableBody){//TODO 后续需要处理此处
-        //   this.table.innerTableBody.style.width  = newTableWidth+'px';
-
-        // }
 
         let newDiff = (parseInt(currentCols.style.minWidth) - parseInt(currentCols.style.width));
         if(newDiff > 0){//缩小
@@ -340,9 +333,6 @@ class TableHeader extends Component {
                 this.table.contentTableHeader.style.overflowX = 'scroll';
                 this.optTableMargin( this.table.fixedLeftHeaderTable,scrollbarWidth);
                 this.optTableMargin( this.table.fixedRighHeadertTable,scrollbarWidth);
-                // fixedLeftHeaderTable && (fixedLeftHeaderTable.style.marginBottom = scrollbarWidth + "px");
-                // fixedRighHeadertTable && (fixedRighHeadertTable.style.marginBottom = scrollbarWidth + "px");
-              //todo inner scroll-x去掉；outer marginbottom 设置成-15px】
               }else{ //大于 0 不显示滚动条
                 this.table.contentTableHeader.style.overflowX = 'hidden';
                 this.optTableMargin( this.table.fixedLeftHeaderTable,0);
@@ -366,10 +356,6 @@ class TableHeader extends Component {
       }else {
         this.drag.newWidth = this.minWidth;
       }
-    }else if(this.props.draggable && this.drag.option == "draggable"){
-      // console.log(" --onTrMouseMove--draggable- ",this.drag.option);
-    }else{
-      // console.log("onTrMouseMove dragborder or draggable is all false !");
     }
     // 增加拖拽列宽动作的回调函数
     this.drag.newWidth && onDraggingBorder && onDraggingBorder(event, this.drag.newWidth);

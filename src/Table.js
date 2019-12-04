@@ -424,12 +424,20 @@ class Table extends Component {
 
   //todo 后续改进
   getColumnsChildrenList = (columns)=>{ 
+    const { expandIconAsCell } = this.props;
+    if(expandIconAsCell){
+      this.columnsChildrenList.push({
+        className: "u-table-expand-icon-column",
+        key: "expand-icon"
+      })
+    }
     columns.forEach(da=>{
       da.children?this.getColumnsChildrenList(da.children):this.columnsChildrenList.push(da);
     })
   }
 
   getHeader(columns, fixed, leftFixedWidth, rightFixedWidth) {
+    const { lastShowIndex } = this.state;
     const { filterDelay, onFilterChange, onFilterClear, filterable, showHeader, expandIconAsCell, clsPrefix, onDragStart, onDragEnter, onDragOver, onDrop,onDragEnd, draggable,
       onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey, minColumnWidth, headerHeight,afterDragColWidth,headerScroll ,bordered,onDropBorder,onDraggingBorder} = this.props;
     const rows = this.getHeaderRows(columns);
@@ -458,7 +466,7 @@ class Table extends Component {
         minColumnWidth={minColumnWidth}
         contentWidthDiff={contentWidthDiff}
         contentWidth={this.contentWidth}
-        lastShowIndex={this.state.lastShowIndex}
+        lastShowIndex={expandIconAsCell ? parseInt(lastShowIndex) + 1 : lastShowIndex}
         clsPrefix={clsPrefix}
         rows={rows}
         contentTable={this.contentTable}

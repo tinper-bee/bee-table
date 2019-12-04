@@ -552,7 +552,8 @@ var _initialiseProps = function _initialiseProps() {
     if (type == 'online' && _this7.props.dragborder) {
       if (!_this7.props.dragborder) return;
       targetEvent.setAttribute('draggable', false); //添加交换列效果
-      var currentIndex = parseInt(currentElement.getAttribute("data-line-index"));
+      // let currentIndex = parseInt(currentElement.getAttribute("data-line-index"));
+      var currentIndex = -1;
       var defaultWidth = currentElement.getAttribute("data-th-width");
       _this7.drag.option = "border"; //拖拽操作
       if (columnsChildrenList) {
@@ -640,20 +641,12 @@ var _initialiseProps = function _initialiseProps() {
       var diff = event.x - _this7.drag.oldLeft;
       var newWidth = _this7.drag.oldWidth + diff;
       _this7.drag.newWidth = newWidth > 0 ? newWidth : _this7.minWidth;
-      // if(newWidth > this.drag.minWidth){
       if (newWidth > _this7.minWidth) {
         currentCols.style.width = newWidth + 'px';
         //hao 支持固定表头拖拽 修改表体的width
         if (_this7.fixedTable.cols) {
           _this7.fixedTable.cols[_this7.drag.currIndex].style.width = newWidth + "px";
         }
-
-        // const newTableWidth = this.drag.tableWidth + diff;// +'px';
-        // this.table.table.style.width  = newTableWidth+'px';;//改变table的width
-        // if(this.table.innerTableBody){//TODO 后续需要处理此处
-        //   this.table.innerTableBody.style.width  = newTableWidth+'px';
-
-        // }
 
         var newDiff = parseInt(currentCols.style.minWidth) - parseInt(currentCols.style.width);
         if (newDiff > 0) {
@@ -671,9 +664,6 @@ var _initialiseProps = function _initialiseProps() {
             _this7.table.contentTableHeader.style.overflowX = 'scroll';
             _this7.optTableMargin(_this7.table.fixedLeftHeaderTable, scrollbarWidth);
             _this7.optTableMargin(_this7.table.fixedRighHeadertTable, scrollbarWidth);
-            // fixedLeftHeaderTable && (fixedLeftHeaderTable.style.marginBottom = scrollbarWidth + "px");
-            // fixedRighHeadertTable && (fixedRighHeadertTable.style.marginBottom = scrollbarWidth + "px");
-            //todo inner scroll-x去掉；outer marginbottom 设置成-15px】
           } else {
             //大于 0 不显示滚动条
             _this7.table.contentTableHeader.style.overflowX = 'hidden';
@@ -698,12 +688,8 @@ var _initialiseProps = function _initialiseProps() {
       } else {
         _this7.drag.newWidth = _this7.minWidth;
       }
-    } else if (_this7.props.draggable && _this7.drag.option == "draggable") {
-      // console.log(" --onTrMouseMove--draggable- ",this.drag.option);
-    } else {}
-      // console.log("onTrMouseMove dragborder or draggable is all false !");
-
-      // 增加拖拽列宽动作的回调函数
+    }
+    // 增加拖拽列宽动作的回调函数
     _this7.drag.newWidth && onDraggingBorder && onDraggingBorder(event, _this7.drag.newWidth);
   };
 

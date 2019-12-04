@@ -200,6 +200,14 @@ var Table = function (_Component) {
     };
 
     _this.getColumnsChildrenList = function (columns) {
+      var expandIconAsCell = _this.props.expandIconAsCell;
+
+      if (expandIconAsCell) {
+        _this.columnsChildrenList.push({
+          className: "u-table-expand-icon-column",
+          key: "expand-icon"
+        });
+      }
       columns.forEach(function (da) {
         da.children ? _this.getColumnsChildrenList(da.children) : _this.columnsChildrenList.push(da);
       });
@@ -590,6 +598,7 @@ var Table = function (_Component) {
 
 
   Table.prototype.getHeader = function getHeader(columns, fixed, leftFixedWidth, rightFixedWidth) {
+    var lastShowIndex = this.state.lastShowIndex;
     var _props = this.props,
         filterDelay = _props.filterDelay,
         onFilterChange = _props.onFilterChange,
@@ -641,7 +650,7 @@ var Table = function (_Component) {
       minColumnWidth: minColumnWidth,
       contentWidthDiff: contentWidthDiff,
       contentWidth: this.contentWidth,
-      lastShowIndex: this.state.lastShowIndex,
+      lastShowIndex: expandIconAsCell ? parseInt(lastShowIndex) + 1 : lastShowIndex,
       clsPrefix: clsPrefix,
       rows: rows,
       contentTable: this.contentTable,
