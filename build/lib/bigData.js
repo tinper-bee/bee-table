@@ -376,11 +376,10 @@ function bigData(Table) {
 
     this.getTreeData = function (expandedKeys) {
       var startIndex = _this4.startIndex,
-          endIndex = _this4.endIndex,
-          cacheExpandedKeys = _this4.cacheExpandedKeys;
+          endIndex = _this4.endIndex;
       var data = _this4.props.data;
 
-      cacheExpandedKeys = expandedKeys && new Set(expandedKeys);
+      _this4.cacheExpandedKeys = expandedKeys && new Set(expandedKeys);
       // 深递归 data，截取可视区 data 数组，再将扁平结构转换成嵌套结构
       var sliceTreeList = [];
       var flatTreeData = _this4.deepTraversal(data);
@@ -388,7 +387,7 @@ function bigData(Table) {
       sliceTreeList = flatTreeData.slice(startIndex, endIndex);
       _this4.handleTreeListChange(sliceTreeList);
 
-      cacheExpandedKeys = expandedKeys && null;
+      _this4.cacheExpandedKeys = expandedKeys && null;
     };
 
     this.deepTraversal = function (treeData) {
@@ -410,7 +409,7 @@ function bigData(Table) {
               children = _dataCopy$i.children,
               props = _objectWithoutProperties(_dataCopy$i, ["key", "children"]),
               dataCopyI = new Object(),
-              isLeaf = children ? false : true,
+              isLeaf = children && children.length > 0 ? false : true,
               isExpanded = parentKey === null || expandedKeysSet.has(parentKey) ? expandedKeysSet.has(key) : false;
 
           dataCopyI = _extends(dataCopyI, {

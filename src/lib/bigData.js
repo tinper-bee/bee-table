@@ -105,9 +105,9 @@ export default function bigData(Table) {
      * @param expandedKeys: props 中传入的新 expandedRowKeys 属性值
      */
     getTreeData = (expandedKeys) => {
-      let { startIndex, endIndex, cacheExpandedKeys } = this; 
+      let { startIndex, endIndex } = this; 
       const { data } = this.props;
-      cacheExpandedKeys = expandedKeys && new Set(expandedKeys);
+      this.cacheExpandedKeys = expandedKeys && new Set(expandedKeys);
       // 深递归 data，截取可视区 data 数组，再将扁平结构转换成嵌套结构
       let sliceTreeList = [];
       let flatTreeData = this.deepTraversal(data);
@@ -115,7 +115,7 @@ export default function bigData(Table) {
       sliceTreeList = flatTreeData.slice(startIndex, endIndex);
       this.handleTreeListChange(sliceTreeList);
 
-      cacheExpandedKeys = expandedKeys && null;
+      this.cacheExpandedKeys = expandedKeys && null;
     }
 
     /**
@@ -133,7 +133,7 @@ export default function bigData(Table) {
         for (let i=0, l=dataCopy.length; i<l; i++) {
           let { key, children, ...props } = dataCopy[i],
               dataCopyI = new Object(),
-              isLeaf = children ? false : true,
+              isLeaf = (children && children.length > 0) ? false : true,
               //如果父节点是收起状态，则子节点的展开状态无意义。（一级节点或根节点直接判断自身状态即可）
               isExpanded = (parentKey === null || expandedKeysSet.has(parentKey)) ? expandedKeysSet.has(key) : false;
           dataCopyI = Object.assign(dataCopyI,{

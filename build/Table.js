@@ -877,26 +877,11 @@ var Table = function (_Component) {
     var lazyEndIndex = props.lazyLoad && props.lazyLoad.endIndex ? props.lazyLoad.endIndex : -1;
     for (var i = 0; i < data.length; i++) {
       var isHiddenExpandIcon = void 0;
-      // if ( props.showRowNum ){
-      //   switch(props.showRowNum.type){
-      //     case 'number':{
-      //       data[i][props.showRowNum.key || '_index'] = (props.showRowNum.base || 0) + i;
-      //       break;
-      //     }
-      //     case 'ascii': {
-      //       data[i][props.showRowNum.key || '_index'] = String.fromCharCode(i + (props.showRowNum.base || '0').charCodeAt());
-      //       break;
-      //     }
-      //     default: {
-      //       data[i][props.showRowNum.key || '_index'] = (props.showRowNum.base || 0) + i;
-      //       break;
-      //     }
-      //   }
-
-      // } 
       var record = data[i];
       var key = this.getRowKey(record, i);
-      var isLeaf = typeof record['isLeaf'] === 'boolean' && record['isLeaf'] || false;
+      // isLeaf 字段是在 bigData 里添加的，只有层级树大数据场景需要该字段
+      // isLeaf 有三种取值情况：true / false / null
+      var isLeaf = typeof record['isLeaf'] === 'boolean' ? record['isLeaf'] : null;
       var childrenColumn = isLeaf ? false : record[childrenColumnName];
       var isRowExpanded = this.isRowExpanded(record, i);
       var expandedRowContent = void 0;
@@ -962,7 +947,7 @@ var Table = function (_Component) {
         visible: visible,
         expandRowByClick: expandRowByClick,
         onExpand: this.onExpanded,
-        expandable: childrenColumn || expandedRowRender,
+        expandable: expandedRowRender || (childrenColumn && childrenColumn.length > 0 ? true : isLeaf === false),
         expanded: isRowExpanded,
         clsPrefix: props.clsPrefix + '-row',
         childrenColumnName: childrenColumnName,
