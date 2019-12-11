@@ -1,3 +1,13 @@
+<a name="2.2.22"></a>
+## [2.2.22](https://github.com/tinper-bee/bee-table/compare/v2.2.21...v2.2.22) (2019-12-11)
+
+
+### Bug Fixes
+
+* expandIconAsCell={true}，表格错行 ([a560c51](https://github.com/tinper-bee/bee-table/commit/a560c51))
+
+
+
 <a name="2.2.21"></a>
 ## [2.2.21](https://github.com/tinper-bee/bee-table/compare/v2.2.20...v2.2.21) (2019-12-05)
 
