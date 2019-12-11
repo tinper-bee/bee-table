@@ -497,10 +497,15 @@ var TableRow = function (_Component) {
         expandRowByClick = _props5.expandRowByClick,
         expanded = _props5.expanded,
         onExpand = _props5.onExpand,
-        fixedIndex = _props5.fixedIndex;
+        fixedIndex = _props5.fixedIndex,
+        onRowDoubleClick = _props5.onRowDoubleClick;
 
     if (expandable && expandRowByClick) {
       onExpand(!expanded, record, fixedIndex, event);
+    }
+    if (onRowDoubleClick.toString() === 'function onRowDoubleClick() {}') {
+      onRowClick(record, fixedIndex, event);
+      return;
     }
     this.set(function (e) {
       onRowClick(record, fixedIndex, event);

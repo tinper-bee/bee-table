@@ -396,10 +396,15 @@ class TableRow extends Component{
       expandRowByClick,
       expanded,
       onExpand,
-      fixedIndex
+      fixedIndex,
+      onRowDoubleClick
     } = this.props;
     if (expandable && expandRowByClick) {
       onExpand(!expanded, record, fixedIndex,event);
+    }
+    if(onRowDoubleClick.toString() === 'function onRowDoubleClick() {}'){
+      onRowClick(record, fixedIndex, event);
+      return;
     }
     this.set((e)=> {
       onRowClick(record, fixedIndex, event);
