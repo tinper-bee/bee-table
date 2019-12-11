@@ -172,6 +172,8 @@ var defaultProps = {
   showRowNum: false
 };
 
+var expandIconCellWidth = Number(43);
+
 var Table = function (_Component) {
   _inherits(Table, _Component);
 
@@ -439,11 +441,13 @@ var Table = function (_Component) {
     // console.log('this.scrollTop**********',this.scrollTop);
   };
 
-  Table.prototype.componentDidUpdate = function componentDidUpdate(prevProps) {
-    // fix: 挪到 componentWillReceiveProps 中处理，解决 ie11 滚动加载，导致浏览器崩溃的问题
-    // if (this.columnManager.isAnyColumnsFixed()) {
-    //   this.syncFixedTableRowHeight();
-    // }
+  Table.prototype.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
+    // 展开行后追加了新的DOM，必须在此阶段同步高度并重新渲染
+    if (this.state.expandedRowKeys.length > 0) {
+      if (this.columnManager.isAnyColumnsFixed()) {
+        this.syncFixedTableRowHeight();
+      }
+    }
     //适应模态框中表格、以及父容器宽度变化的情况
     if (typeof this.props.scroll.x !== 'number' && this.contentTable.getBoundingClientRect().width !== this.contentDomWidth && this.firstDid) {
       this.computeTableWidth();
@@ -474,8 +478,9 @@ var Table = function (_Component) {
   };
 
   Table.prototype.computeTableWidth = function computeTableWidth() {
-
+    var expandIconAsCell = this.props.expandIconAsCell;
     //如果用户传了scroll.x按用户传的为主
+
     var setWidthParam = this.props.scroll.x;
 
     if (typeof setWidthParam == 'number') {
@@ -489,8 +494,9 @@ var Table = function (_Component) {
       this.contentWidth = this.contentDomWidth; //默认与容器宽度一样
     }
     var computeObj = this.columnManager.getColumnWidth(this.contentWidth);
+    var expandColWidth = expandIconAsCell ? expandIconCellWidth : 0;
     var lastShowIndex = computeObj.lastShowIndex;
-    this.computeWidth = computeObj.computeWidth;
+    this.computeWidth = computeObj.computeWidth + expandColWidth;
 
     this.domWidthDiff = this.contentDomWidth - this.computeWidth;
     if (typeof setWidthParam == 'string' && setWidthParam.indexOf('%')) {
@@ -636,7 +642,8 @@ var Table = function (_Component) {
         key: 'u-table-expandIconAsCell',
         className: clsPrefix + '-expand-icon-th',
         title: '',
-        rowSpan: rows.length
+        rowSpan: rows.length,
+        width: expandIconCellWidth
       });
     }
     var trStyle = headerHeight && !fixed ? { height: headerHeight } : fixed ? this.getHeaderRowStyle(columns, rows) : null;
@@ -984,7 +991,8 @@ var Table = function (_Component) {
         lazyStartIndex: lazyCurrentIndex,
         lazyEndIndex: lazyEndIndex,
         centerColumnsLength: this.centerColumnsLength,
-        leftColumnsLength: this.leftColumnsLength
+        leftColumnsLength: this.leftColumnsLength,
+        expandIconCellWidth: expandIconCellWidth
       })));
       this.treeRowIndex++;
       var subVisible = visible && isRowExpanded;

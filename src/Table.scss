@@ -182,6 +182,10 @@ $icon-color:#505F79;
       display: inline-block;
       font-size: 12px;
       line-height: 12px;
+      .uf{
+        padding: 0;
+        font-size: 12px;
+      }
     }
   }
   &-sm {

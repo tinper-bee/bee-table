@@ -261,6 +261,10 @@
       display: inline-block;
       font-size: 12px;
       line-height: 12px; }
+      .u-table th .expand-icon-con .uf,
+      .u-table td .expand-icon-con .uf {
+        padding: 0;
+        font-size: 12px; }
   .u-table-sm td {
     padding: 8px 8px; }
   .u-table-lg td {

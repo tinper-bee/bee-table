@@ -107,6 +107,8 @@ const defaultProps = {
   showRowNum: false,
 };
 
+const expandIconCellWidth = Number(43);
+
 class Table extends Component {
   constructor(props) {
     super(props);
@@ -241,11 +243,13 @@ class Table extends Component {
 
   }
 
-  componentDidUpdate(prevProps) {
-    // fix: 挪到 componentWillReceiveProps 中处理，解决 ie11 滚动加载，导致浏览器崩溃的问题
-    // if (this.columnManager.isAnyColumnsFixed()) {
-    //   this.syncFixedTableRowHeight();
-    // }
+  componentDidUpdate(prevProps, prevState) {
+    // 展开行后追加了新的DOM，必须在此阶段同步高度并重新渲染
+    if (this.state.expandedRowKeys.length > 0) {
+      if(this.columnManager.isAnyColumnsFixed()) {
+        this.syncFixedTableRowHeight();
+      }
+    }
     //适应模态框中表格、以及父容器宽度变化的情况
     if (typeof (this.props.scroll.x) !== 'number' && this.contentTable.getBoundingClientRect().width !== this.contentDomWidth && this.firstDid) {
       this.computeTableWidth();
@@ -295,7 +299,7 @@ class Table extends Component {
   }
 
   computeTableWidth() {
-
+    let {expandIconAsCell} = this.props;
     //如果用户传了scroll.x按用户传的为主
     let setWidthParam = this.props.scroll.x
 
@@ -311,8 +315,9 @@ class Table extends Component {
 
     }
     const computeObj = this.columnManager.getColumnWidth(this.contentWidth);
+    const expandColWidth = expandIconAsCell ? expandIconCellWidth : 0;
     let lastShowIndex = computeObj.lastShowIndex;
-    this.computeWidth = computeObj.computeWidth;
+    this.computeWidth = computeObj.computeWidth + expandColWidth;
 
     this.domWidthDiff = this.contentDomWidth - this.computeWidth;
     if (typeof (setWidthParam) == 'string' && setWidthParam.indexOf('%')) {
@@ -449,6 +454,7 @@ class Table extends Component {
         className: `${clsPrefix}-expand-icon-th`,
         title: '',
         rowSpan: rows.length,
+        width: expandIconCellWidth
       });
     }
     const trStyle = headerHeight&&!fixed ? { height: headerHeight } : (fixed ? this.getHeaderRowStyle(columns, rows) : null);
@@ -827,6 +833,7 @@ class Table extends Component {
           lazyEndIndex = {lazyEndIndex}
           centerColumnsLength={this.centerColumnsLength}
           leftColumnsLength={this.leftColumnsLength}
+          expandIconCellWidth={expandIconCellWidth}
         />
       );
       this.treeRowIndex++;

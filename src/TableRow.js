@@ -449,7 +449,7 @@ class TableRow extends Component{
       clsPrefix, columns, record, height, visible, index,
       expandIconColumnIndex, expandIconAsCell, expanded, expandRowByClick,rowDraggAble,
       expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed,bodyDisplayInRow
-      ,expandedIcon,collapsedIcon, hoverKey,lazyStartIndex,lazyEndIndex
+      ,expandedIcon,collapsedIcon, hoverKey,lazyStartIndex,lazyEndIndex, expandIconCellWidth
     } = this.props;
     let showSum = false;
     let { className } = this.props;
@@ -488,6 +488,7 @@ class TableRow extends Component{
           <td
             className={`${clsPrefix}-expand-icon-cell ${isExpandIconAsCell}`}
             key={`rc-table-expand-icon-cell-${i}`}
+            width={expandIconCellWidth}
           >
             {expandIcon}
           </td>

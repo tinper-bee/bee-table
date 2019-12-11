@@ -571,7 +571,8 @@ var TableRow = function (_Component) {
         collapsedIcon = _props9.collapsedIcon,
         hoverKey = _props9.hoverKey,
         lazyStartIndex = _props9.lazyStartIndex,
-        lazyEndIndex = _props9.lazyEndIndex;
+        lazyEndIndex = _props9.lazyEndIndex,
+        expandIconCellWidth = _props9.expandIconCellWidth;
 
     var showSum = false;
     var className = this.props.className;
@@ -609,7 +610,8 @@ var TableRow = function (_Component) {
           'td',
           {
             className: clsPrefix + '-expand-icon-cell ' + isExpandIconAsCell,
-            key: 'rc-table-expand-icon-cell-' + i
+            key: 'rc-table-expand-icon-cell-' + i,
+            width: expandIconCellWidth
           },
           expandIcon
         ));
