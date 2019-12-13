@@ -137,8 +137,8 @@ var defaultProps = {
   onExpand: function onExpand() {},
   onExpandedRowsChange: function onExpandedRowsChange() {},
   onRowClick: function onRowClick() {},
-  onRowDoubleClick: function onRowDoubleClick() {},
 
+  // onRowDoubleClick() { },
   clsPrefix: 'u-table',
   bodyStyle: {},
   style: {},

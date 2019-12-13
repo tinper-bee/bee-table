@@ -77,7 +77,7 @@ const defaultProps = {
   onExpand() { },
   onExpandedRowsChange() { },
   onRowClick() { },
-  onRowDoubleClick() { },
+  // onRowDoubleClick() { },
   clsPrefix: 'u-table',
   bodyStyle: {},
   style: {},

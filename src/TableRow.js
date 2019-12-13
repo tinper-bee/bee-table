@@ -37,7 +37,7 @@ const propTypes = {
 
 const defaultProps = {
     onRowClick() {},
-    onRowDoubleClick() {},
+    // onRowDoubleClick() {},
     onDestroy() {},
     expandIconColumnIndex: 0,
     expandRowByClick: false,
@@ -402,7 +402,7 @@ class TableRow extends Component{
     if (expandable && expandRowByClick) {
       onExpand(!expanded, record, fixedIndex,event);
     }
-    if(onRowDoubleClick.toString() === 'function onRowDoubleClick() {}'){
+    if(!onRowDoubleClick){
       onRowClick(record, fixedIndex, event);
       return;
     }
@@ -414,7 +414,7 @@ class TableRow extends Component{
   onRowDoubleClick(event) {
     const { record, index, onRowDoubleClick,fixedIndex } = this.props;
     this.clear();
-    onRowDoubleClick(record, fixedIndex, event);
+    onRowDoubleClick && onRowDoubleClick(record, fixedIndex, event);
   }
 
   onMouseEnter(e) {

@@ -64,7 +64,8 @@ var propTypes = {
 
 var defaultProps = {
   onRowClick: function onRowClick() {},
-  onRowDoubleClick: function onRowDoubleClick() {},
+
+  // onRowDoubleClick() {},
   onDestroy: function onDestroy() {},
 
   expandIconColumnIndex: 0,
@@ -503,7 +504,7 @@ var TableRow = function (_Component) {
     if (expandable && expandRowByClick) {
       onExpand(!expanded, record, fixedIndex, event);
     }
-    if (onRowDoubleClick.toString() === 'function onRowDoubleClick() {}') {
+    if (!onRowDoubleClick) {
       onRowClick(record, fixedIndex, event);
       return;
     }
@@ -520,7 +521,7 @@ var TableRow = function (_Component) {
         fixedIndex = _props6.fixedIndex;
 
     this.clear();
-    onRowDoubleClick(record, fixedIndex, event);
+    onRowDoubleClick && onRowDoubleClick(record, fixedIndex, event);
   };
 
   TableRow.prototype.onMouseEnter = function onMouseEnter(e) {
