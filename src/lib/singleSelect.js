@@ -9,10 +9,14 @@ import {ObjectAssign} from './util';
 export default function singleSelect(Table, Radio) {
 
   return class SingleSelect extends Component {
+    static propTypes = {
+      autoCheckedByClickRows: PropTypes.bool, //行点击时，是否自动勾选单选框
+    };
     static defaultProps = {
       prefixCls: "u-table-single-select",
       getSelectedDataFunc:()=>{},
-      selectedRowIndex: ''
+      selectedRowIndex: '',
+      autoCheckedByClickRows: true
     }
 
     constructor(props) {
@@ -44,6 +48,10 @@ export default function singleSelect(Table, Radio) {
         return Object.prototype.toString.call(o)=='[object Array]';
     }
 
+    handleRadioClick = (e) => {
+      e.stopPropagation();
+    }
+
     onRadioChange = (value, record, index) => {
       let { selectedRowIndex } = this.state;
       if(selectedRowIndex === index){
@@ -69,6 +77,7 @@ export default function singleSelect(Table, Radio) {
                     className="table-radio" 
                     name="table-radio" 
                     selectedValue={selectedRowIndex}
+                    onClick={this.handleRadioClick}
                     onChange={value => this.onRadioChange(value, record, index)}
                     style={{width:'14px', height:'14px', display:'block', marginLeft:'4px'}}>
                     <Radio value={index}/>
@@ -77,6 +86,14 @@ export default function singleSelect(Table, Radio) {
         }]
         return _defaultColumns.concat(columns);
     }
+    // 实现行点击时触发单选框勾选的需求
+    onRowClick = (record,index,event) =>{
+      let { autoCheckedByClickRows, onRowClick } = this.props;
+      if(autoCheckedByClickRows) {
+        this.onRadioChange('',record, index);
+      }
+      onRowClick && onRowClick(record,index,event);
+    }
 
     render() {
       const {columns} = this.props;
@@ -84,7 +101,8 @@ export default function singleSelect(Table, Radio) {
       return <Table 
               {...this.props} 
               columns={this.getDefaultColumns(columns)} 
-              data={data} />
+              data={data} 
+              onRowClick={this.onRowClick}/>
     }
   };
 }

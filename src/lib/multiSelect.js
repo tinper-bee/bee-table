@@ -133,11 +133,6 @@ export default function multiSelect(Table, Checkbox) {
       if(checkedAll){
         check = false;
       }else{
-        // if(indeterminate){
-        //   check = true;
-        // }else{
-        //   check = true;
-        // }
         check = true;
       }
       let selectList = [];
@@ -209,10 +204,6 @@ export default function multiSelect(Table, Checkbox) {
       getTreeNodeByFlag(node);
       return res;
     }
-
-    handleClick=()=>{
-      
-    }
  
     onCheckboxChange = (text, record, index) => () => {
       let {data} = this.state;
@@ -282,7 +273,6 @@ export default function multiSelect(Table, Checkbox) {
                 {...attr}
                 {...multiSelectConfig}
                 checked={record._checked}
-                onClick={this.handleClick}
                 onChange={this.onCheckboxChange(text, record, index)}
               />
           }

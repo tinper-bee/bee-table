@@ -41,6 +41,10 @@ function singleSelect(Table, Radio) {
 
       var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
+      _this.handleRadioClick = function (e) {
+        e.stopPropagation();
+      };
+
       _this.onRadioChange = function (value, record, index) {
         var selectedRowIndex = _this.state.selectedRowIndex;
 
@@ -70,6 +74,7 @@ function singleSelect(Table, Radio) {
                 className: "table-radio",
                 name: "table-radio",
                 selectedValue: selectedRowIndex,
+                onClick: _this.handleRadioClick,
                 onChange: function onChange(value) {
                   return _this.onRadioChange(value, record, index);
                 },
@@ -79,6 +84,17 @@ function singleSelect(Table, Radio) {
           }
         }];
         return _defaultColumns.concat(columns);
+      };
+
+      _this.onRowClick = function (record, index, event) {
+        var _this$props = _this.props,
+            autoCheckedByClickRows = _this$props.autoCheckedByClickRows,
+            onRowClick = _this$props.onRowClick;
+
+        if (autoCheckedByClickRows) {
+          _this.onRadioChange('', record, index);
+        }
+        onRowClick && onRowClick(record, index, event);
       };
 
       _this.state = {
@@ -110,6 +126,8 @@ function singleSelect(Table, Radio) {
     SingleSelect.prototype.isArray = function isArray(o) {
       return Object.prototype.toString.call(o) == '[object Array]';
     };
+    // 实现行点击时触发单选框勾选的需求
+
 
     SingleSelect.prototype.render = function render() {
       var columns = this.props.columns;
@@ -117,14 +135,18 @@ function singleSelect(Table, Radio) {
 
       return _react2["default"].createElement(Table, _extends({}, this.props, {
         columns: this.getDefaultColumns(columns),
-        data: data }));
+        data: data,
+        onRowClick: this.onRowClick }));
     };
 
     return SingleSelect;
-  }(_react.Component), _class.defaultProps = {
+  }(_react.Component), _class.propTypes = {
+    autoCheckedByClickRows: PropTypes.bool //行点击时，是否自动勾选单选框
+  }, _class.defaultProps = {
     prefixCls: "u-table-single-select",
     getSelectedDataFunc: function getSelectedDataFunc() {},
-    selectedRowIndex: ''
+    selectedRowIndex: '',
+    autoCheckedByClickRows: true
   }, _temp;
 }
 module.exports = exports["default"];
