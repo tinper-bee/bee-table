@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -8,11 +8,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 exports["default"] = singleSelect;
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _util = require("./util");
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _util = require('./util');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -71,8 +75,8 @@ function singleSelect(Table, Radio) {
             return _react2["default"].createElement(
               Radio.RadioGroup,
               {
-                className: "table-radio",
-                name: "table-radio",
+                className: 'table-radio',
+                name: 'table-radio',
                 selectedValue: selectedRowIndex,
                 onClick: _this.handleRadioClick,
                 onChange: function onChange(value) {
@@ -141,7 +145,7 @@ function singleSelect(Table, Radio) {
 
     return SingleSelect;
   }(_react.Component), _class.propTypes = {
-    autoCheckedByClickRows: PropTypes.bool //行点击时，是否自动勾选单选框
+    autoCheckedByClickRows: _propTypes2["default"].bool //行点击时，是否自动勾选单选框
   }, _class.defaultProps = {
     prefixCls: "u-table-single-select",
     getSelectedDataFunc: function getSelectedDataFunc() {},
@@ -149,4 +153,4 @@ function singleSelect(Table, Radio) {
     autoCheckedByClickRows: true
   }, _temp;
 }
-module.exports = exports["default"];
+module.exports = exports['default'];

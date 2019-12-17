@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import {ObjectAssign} from './util';
 /**
  * 参数: 单选表头
