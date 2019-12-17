@@ -434,20 +434,17 @@ var Table = function (_Component) {
     if (this.scrollbarWidth <= 0 && this.props.scroll.y) {
       this.scrollbarWidth = (0, _utils.measureScrollbar)();
     }
-    if (this.columnManager.isAnyColumnsFixed()) {
-      this.syncFixedTableRowHeight();
-    }
 
     // console.log('this.scrollTop**********',this.scrollTop);
   };
 
   Table.prototype.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
-    // 展开行后追加了新的DOM，必须在此阶段同步高度并重新渲染
-    if (this.state.expandedRowKeys.length > 0) {
-      if (this.columnManager.isAnyColumnsFixed()) {
-        this.syncFixedTableRowHeight();
-      }
+    // todo: IE 大数据渲染，行高不固定，且设置了 heightConsistent={true} 时，滚动加载操作会导致 ie11 浏览器崩溃
+    // https://github.com/tinper-bee/bee-table/commit/bd2092cdbaad236ff89477304e58dea93325bf09
+    if (this.columnManager.isAnyColumnsFixed()) {
+      this.syncFixedTableRowHeight();
     }
+
     //适应模态框中表格、以及父容器宽度变化的情况
     if (typeof this.props.scroll.x !== 'number' && this.contentTable.getBoundingClientRect().width !== this.contentDomWidth && this.firstDid) {
       this.computeTableWidth();
