@@ -42,7 +42,7 @@ export default function bigData(Table) {
       this.endIndex = this.currentIndex + this.loadCount; //数据结束位置
       this.setRowHeight = this.setRowHeight.bind(this);
       this.setRowParentIndex = this.setRowParentIndex.bind(this);
-      this.expandedRowKeys = [];
+      this.expandedRowKeys = props.expandedRowKeys || [];
     }
     componentWillReceiveProps(nextProps) {
       const props = this.props;
@@ -72,6 +72,11 @@ export default function bigData(Table) {
       //如果传currentIndex，会判断该条数据是否在可视区域，如果没有的话，则重新计算startIndex和endIndex
       if(currentIndex!==-1 && currentIndex !== this.currentIndex){
         _this.setStartAndEndIndex(currentIndex,dataLen);
+      }
+      if ('expandedRowKeys' in nextProps) {
+        this.setState({
+          expandedRowKeys: nextProps.expandedRowKeys,
+        });
       }
 
     }
@@ -471,7 +476,7 @@ export default function bigData(Table) {
           setRowHeight={this.setRowHeight}
           setRowParentIndex={this.setRowParentIndex}
           onExpand={this.onExpand}
-          onExpandedRowsChange={this.onExpandedRowsChange}
+          onExpandedRowsChange={this.props.onExpandedRowsChange}
           expandedRowKeys={expandedRowKeys}
           //   className={'lazy-table'}
         />

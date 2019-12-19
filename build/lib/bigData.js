@@ -63,7 +63,7 @@ function bigData(Table) {
       _this2.endIndex = _this2.currentIndex + _this2.loadCount; //数据结束位置
       _this2.setRowHeight = _this2.setRowHeight.bind(_this2);
       _this2.setRowParentIndex = _this2.setRowParentIndex.bind(_this2);
-      _this2.expandedRowKeys = [];
+      _this2.expandedRowKeys = props.expandedRowKeys || [];
       return _this2;
     }
 
@@ -95,6 +95,11 @@ function bigData(Table) {
       //如果传currentIndex，会判断该条数据是否在可视区域，如果没有的话，则重新计算startIndex和endIndex
       if (currentIndex !== -1 && currentIndex !== this.currentIndex) {
         _this.setStartAndEndIndex(currentIndex, dataLen);
+      }
+      if ('expandedRowKeys' in nextProps) {
+        this.setState({
+          expandedRowKeys: nextProps.expandedRowKeys
+        });
       }
     };
 
@@ -314,7 +319,7 @@ function bigData(Table) {
         setRowHeight: this.setRowHeight,
         setRowParentIndex: this.setRowParentIndex,
         onExpand: this.onExpand,
-        onExpandedRowsChange: this.onExpandedRowsChange,
+        onExpandedRowsChange: this.props.onExpandedRowsChange,
         expandedRowKeys: expandedRowKeys
         //   className={'lazy-table'}
       }));
