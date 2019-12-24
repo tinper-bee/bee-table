@@ -805,7 +805,7 @@ class TableHeader extends Component {
                       {da.children}
                       {
                         // && columIndex != _rowLeng
-                        dragborder && da.key != lastObj.key ? <div ref={el => (this.gap = el)} data-line-key={da.key}
+                        dragborder && lastObj && da.key != lastObj.key ? <div ref={el => (this.gap = el)} data-line-key={da.key}
                         data-line-index={columIndex} data-th-width={da.width}
                         data-type="online" className = {`${clsPrefix}-thead-th-drag-gap`}>
                         <div className='online' /></div>:""

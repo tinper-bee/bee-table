@@ -485,7 +485,7 @@ var TableHeader = function (_Component) {
                 da.children,
 
                 // && columIndex != _rowLeng
-                dragborder && da.key != lastObj.key ? _react2["default"].createElement(
+                dragborder && lastObj && da.key != lastObj.key ? _react2["default"].createElement(
                   "div",
                   { ref: function ref(el) {
                       return _this6.gap = el;
