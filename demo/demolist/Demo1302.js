@@ -63,13 +63,6 @@ class Demo1302 extends Component {
                 columns={columns}
                 data={data}
                 selectedRowIndex={selectedRowIndex}
-                rowClassName={(record,index,indent)=>{
-                    if (index === selectedRowIndex) {
-                        return 'selected';
-                    } else {
-                        return '';
-                    }
-                }}
                 getSelectedDataFunc={this.getSelectedDataFunc}
             /> 
         );

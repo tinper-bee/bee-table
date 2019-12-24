@@ -96,6 +96,15 @@ export default function singleSelect(Table, Radio) {
       onRowClick && onRowClick(record,index,event);
     }
 
+    getRowClassName = (record,index,event) =>{
+      let { selectedRowIndex } = this.state;
+      if (index === selectedRowIndex) {
+        return 'selected';
+      } else {
+        return '';
+      }
+    }
+
     render() {
       const {columns} = this.props;
       const {data} = this.state;
@@ -103,7 +112,9 @@ export default function singleSelect(Table, Radio) {
               {...this.props} 
               columns={this.getDefaultColumns(columns)} 
               data={data} 
-              onRowClick={this.onRowClick}/>
+              onRowClick={this.onRowClick}
+              rowClassName={this.getRowClassName}
+              />
     }
   };
 }

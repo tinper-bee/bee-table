@@ -55,6 +55,7 @@ class Demo12 extends Component {
     };
     return (
       <MultiSelectTable 
+        bordered
         columns={columns} 
         data={data} 
         // multiSelectConfig={multiObj} //可以自定义 Checkbox 属性
