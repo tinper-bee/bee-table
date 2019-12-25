@@ -552,7 +552,6 @@ var _initialiseProps = function _initialiseProps() {
     if (type == 'online' && _this7.props.dragborder) {
       if (!_this7.props.dragborder) return;
       targetEvent.setAttribute('draggable', false); //添加交换列效果
-      // let currentIndex = parseInt(currentElement.getAttribute("data-line-index"));
       var currentIndex = -1;
       var defaultWidth = currentElement.getAttribute("data-th-width");
       _this7.drag.option = "border"; //拖拽操作
@@ -560,11 +559,11 @@ var _initialiseProps = function _initialiseProps() {
         var columnKey = currentElement.getAttribute("data-line-key");
         if (columnKey) {
           currentIndex = columnsChildrenList.findIndex(function (da) {
-            return da.key.toLowerCase() === columnKey.toLowerCase();
+            return (da.key && da.key.toLowerCase()) === columnKey.toLowerCase();
           });
         }
       }
-      console.log("currentIndex :", currentIndex);
+      // console.log("currentIndex :",currentIndex);
       var currentObj = _this7.table.cols[currentIndex];
       _this7.drag.currIndex = currentIndex;
       _this7.drag.oldLeft = event.x;
@@ -615,7 +614,7 @@ var _initialiseProps = function _initialiseProps() {
     if (targetEvent.nodeName.toUpperCase() != "TH") {
       th = _this7.getThDome(targetEvent);
     }
-    console.log(" getTargetToTh: ", th);
+    // console.log(" getTargetToTh: ", th);
     return th;
   };
 

@@ -8,26 +8,31 @@ export default class ColumnManager {
   _cached = {}
 
   constructor(columns, elements,originWidth,rowDraggAble,showRowNum) {
-    //判断是否使用行拖拽
-    if(rowDraggAble) {
-      let dragHandleColumn =[{
-        className: "drag-handle-column",
-        title: "",
-        key: "dragHandle",
-        dataIndex: "dragHandle",
-        // fixed:"left",
-        width: 49,
-        render: () => {
-          return <Icon type="uf-navmenu" />
-        }
-      }]
-      columns = dragHandleColumn.concat(columns);
-    }
+    columns = this.addDragHandleColumn(columns,rowDraggAble);
     columns = this.addOrderColumn(columns,showRowNum);
     columns = this.deleteColumnNotShow(columns);
     this.columns = columns || this.normalize(elements);
 
     this.originWidth = originWidth;
+  }
+
+  // 向数据列中添加一列:行拖拽标识
+  addDragHandleColumn = (columns, rowDraggAble) => {
+    if(!rowDraggAble){
+      return columns
+    }
+    let dragHandleColumn =[{
+      className: "drag-handle-column",
+      title: "",
+      key: "dragHandle",
+      dataIndex: "dragHandle",
+      width: 49,
+      render: () => {
+        return <Icon type="uf-navmenu" />
+      }
+    }]
+    columns = dragHandleColumn.concat(columns);
+    return columns;
   }
 
   // delete the column which does not show

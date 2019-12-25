@@ -201,20 +201,6 @@ var Table = function (_Component) {
       _this.contentTable.appendChild(div);
     };
 
-    _this.getColumnsChildrenList = function (columns) {
-      var expandIconAsCell = _this.props.expandIconAsCell;
-
-      if (expandIconAsCell) {
-        _this.columnsChildrenList.push({
-          className: "u-table-expand-icon-column",
-          key: "expand-icon"
-        });
-      }
-      columns.forEach(function (da) {
-        da.children ? _this.getColumnsChildrenList(da.children) : _this.columnsChildrenList.push(da);
-      });
-    };
-
     _this.onDragRowStart = function (currentKey) {
       var data = _this.state.data,
           currentIndex = void 0,
@@ -327,9 +313,6 @@ var Table = function (_Component) {
       expandedRowKeys = props.expandedRowKeys || props.defaultExpandedRowKeys;
     }
 
-    _this.columnsChildrenList = []; //复杂表头、所有叶子节点
-    _this.getColumnsChildrenList(props.columns); //复杂表头、所有叶子节点
-
     _this.state = {
       expandedRowKeys: expandedRowKeys,
       data: props.data,
@@ -371,6 +354,7 @@ var Table = function (_Component) {
     _this.contentTable = null;
     _this.leftColumnsLength; //左侧固定列的长度
     _this.centerColumnsLength; //非固定列的长度 
+    _this.columnsChildrenList = []; //复杂表头、所有叶子节点
     return _this;
   }
 
@@ -600,9 +584,6 @@ var Table = function (_Component) {
     return this.props.expandedRowKeys || this.state.expandedRowKeys;
   };
 
-  //todo 后续改进
-
-
   Table.prototype.getHeader = function getHeader(columns, fixed, leftFixedWidth, rightFixedWidth) {
     var lastShowIndex = this.state.lastShowIndex;
     var _props = this.props,
@@ -633,6 +614,7 @@ var Table = function (_Component) {
         onDropBorder = _props.onDropBorder,
         onDraggingBorder = _props.onDraggingBorder;
 
+    this.columnsChildrenList = []; //复杂表头拖拽，重新render表头前，将其置空
     var rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
       rows[0].unshift({
@@ -641,6 +623,10 @@ var Table = function (_Component) {
         title: '',
         rowSpan: rows.length,
         width: expandIconCellWidth
+      });
+      this.columnsChildrenList.unshift({
+        className: "u-table-expand-icon-column",
+        key: "expand-icon"
       });
     }
     var trStyle = headerHeight && !fixed ? { height: headerHeight } : fixed ? this.getHeaderRowStyle(columns, rows) : null;
@@ -724,6 +710,8 @@ var Table = function (_Component) {
       }
       if (column.children) {
         _this2.getHeaderRows(column.children, currentRow + 1, rows);
+      } else {
+        _this2.columnsChildrenList.push(column); //复杂表头拖拽，所有叶子节点
       }
       if ('colSpan' in column) {
         cell.colSpan = column.colSpan;

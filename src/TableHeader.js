@@ -225,17 +225,16 @@ class TableHeader extends Component {
     if(type == 'online' && this.props.dragborder){
       if(!this.props.dragborder)return;
       targetEvent.setAttribute('draggable',false);//添加交换列效果
-      // let currentIndex = parseInt(currentElement.getAttribute("data-line-index"));
       let currentIndex = -1;
       let defaultWidth = currentElement.getAttribute("data-th-width"); 
       this.drag.option = "border";//拖拽操作
       if(columnsChildrenList){
         let columnKey = currentElement.getAttribute("data-line-key");
         if(columnKey){
-          currentIndex = columnsChildrenList.findIndex(da=>da.key.toLowerCase() === columnKey.toLowerCase());
+          currentIndex = columnsChildrenList.findIndex(da=> (da.key && da.key.toLowerCase()) === columnKey.toLowerCase());
         }
       }
-      console.log("currentIndex :",currentIndex);
+      // console.log("currentIndex :",currentIndex);
       let currentObj = this.table.cols[currentIndex];
       this.drag.currIndex = currentIndex;
       this.drag.oldLeft = event.x;
@@ -294,7 +293,7 @@ class TableHeader extends Component {
     if(targetEvent.nodeName.toUpperCase() != "TH"){
       th = this.getThDome(targetEvent);
     }
-    console.log(" getTargetToTh: ", th);
+    // console.log(" getTargetToTh: ", th);
     return th;
   }
   /**

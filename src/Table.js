@@ -127,9 +127,6 @@ class Table extends Component {
       expandedRowKeys = props.expandedRowKeys || props.defaultExpandedRowKeys;
     }
 
-    this.columnsChildrenList = [];//复杂表头、所有叶子节点
-    this.getColumnsChildrenList(props.columns);//复杂表头、所有叶子节点
-
     this.state = {
       expandedRowKeys,
       data: props.data,
@@ -171,6 +168,7 @@ class Table extends Component {
     this.contentTable = null;
     this.leftColumnsLength  //左侧固定列的长度
     this.centerColumnsLength  //非固定列的长度 
+    this.columnsChildrenList = [];//复杂表头、所有叶子节点
   }
   componentWillMount() {
     this.centerColumnsLength = this.columnManager.centerColumns().length
@@ -214,7 +212,7 @@ class Table extends Component {
       this.columnManager.reset(nextProps.columns, null, this.props.showRowNum); // 加入this.props.showRowNum参数
       if(nextProps.columns.length !== this.props.columns.length && this.refs && this.bodyTable){
          this.scrollTop = this.bodyTable.scrollTop;
-     }
+      }
     } else if (nextProps.children !== this.props.children) {
       this.columnManager.reset(null, nextProps.children,this.props.showRowNum); // 加入this.props.showRowNum参数
     }
@@ -426,24 +424,11 @@ class Table extends Component {
     return this.props.expandedRowKeys || this.state.expandedRowKeys;
   }
 
-  //todo 后续改进
-  getColumnsChildrenList = (columns)=>{ 
-    const { expandIconAsCell } = this.props;
-    if(expandIconAsCell){
-      this.columnsChildrenList.push({
-        className: "u-table-expand-icon-column",
-        key: "expand-icon"
-      })
-    }
-    columns.forEach(da=>{
-      da.children?this.getColumnsChildrenList(da.children):this.columnsChildrenList.push(da);
-    })
-  }
-
   getHeader(columns, fixed, leftFixedWidth, rightFixedWidth) {
     const { lastShowIndex } = this.state;
     const { filterDelay, onFilterChange, onFilterClear, filterable, showHeader, expandIconAsCell, clsPrefix, onDragStart, onDragEnter, onDragOver, onDrop,onDragEnd, draggable,
       onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey, minColumnWidth, headerHeight,afterDragColWidth,headerScroll ,bordered,onDropBorder,onDraggingBorder} = this.props;
+    this.columnsChildrenList = []; //复杂表头拖拽，重新render表头前，将其置空
     const rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
       rows[0].unshift({
@@ -453,6 +438,10 @@ class Table extends Component {
         rowSpan: rows.length,
         width: expandIconCellWidth
       });
+      this.columnsChildrenList.unshift({
+        className: "u-table-expand-icon-column",
+        key: "expand-icon"
+      })
     }
     const trStyle = headerHeight&&!fixed ? { height: headerHeight } : (fixed ? this.getHeaderRowStyle(columns, rows) : null);
     let drop = draggable ? { onDragStart, onDragOver, onDrop,onDragEnd, onDragEnter, draggable } : {};
@@ -530,6 +519,8 @@ class Table extends Component {
       }
       if (column.children) {
         this.getHeaderRows(column.children, currentRow + 1, rows);
+      } else {
+        this.columnsChildrenList.push(column); //复杂表头拖拽，所有叶子节点
       }
       if ('colSpan' in column) {
         cell.colSpan = column.colSpan;
