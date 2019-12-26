@@ -50,8 +50,8 @@ export default function bigData(Table) {
     }
     componentWillReceiveProps(nextProps) {
       const props = this.props;
-      const {currentIndex ,data, expandedRowKeys:newExpandedKeys} = nextProps;
-      const _this = this,dataLen = data.length;
+      const {currentIndex ,data:newData, expandedRowKeys:newExpandedKeys} = nextProps;
+      const _this = this,dataLen = newData.length;
       if (nextProps.scroll.y !== props.scroll.y) {
         const rowHeight = nextProps.height ? nextProps.height : defaultHeight;
         const scrollY = nextProps.scroll.y ? parseInt(nextProps.scroll.y) : 0;
@@ -65,21 +65,21 @@ export default function bigData(Table) {
         
       }
       if('data' in nextProps){
-        const isTreeType = nextProps.isTree ? true : _this.checkIsTreeType(nextProps.data);
+        const isTreeType = nextProps.isTree ? true : _this.checkIsTreeType(newData);
         _this.treeType = isTreeType;
         //fix: 滚动加载场景中,数据动态改变下占位计算错误的问题(26 Jun)
-        if (nextProps.data.toString() !== props.data.toString()) {
+        if (newData.toString() !== props.data.toString()) {
           _this.cachedRowHeight = []; //缓存每行的高度
           _this.cachedRowParentIndex = [];
-          _this.computeCachedRowParentIndex(nextProps.data);
+          _this.computeCachedRowParentIndex(newData);
         }
         _this.treeData = [];
         _this.flatTreeData = [];
-        if(nextProps.data.length>0){
+        if(newData.length>0){
           _this.endIndex = _this.currentIndex - nextProps.loadBuffer + _this.loadCount; //数据结束位置
         }
         if(isTreeType){
-          _this.getTreeData(newExpandedKeys);
+          _this.getTreeData(newExpandedKeys, newData);
         }
       }
       //如果传currentIndex，会判断该条数据是否在可视区域，如果没有的话，则重新计算startIndex和endIndex
@@ -102,11 +102,12 @@ export default function bigData(Table) {
 
     /**
      * 如果是树形表，需要对传入的 data 进行处理
-     * @param expandedKeys: props 中传入的新 expandedRowKeys 属性值
+     * @param expandedKeys: nextProps 中传入的新 expandedRowKeys 属性值
+     * @param newData: nextProps 中传入的新 data 属性值
      */
-    getTreeData = (expandedKeys) => {
+    getTreeData = (expandedKeys, newData) => {
       let { startIndex, endIndex } = this; 
-      const { data } = this.props;
+      const data = newData ? newData : this.props.data;
       this.cacheExpandedKeys = expandedKeys && new Set(expandedKeys);
       // 深递归 data，截取可视区 data 数组，再将扁平结构转换成嵌套结构
       let sliceTreeList = [];
