@@ -874,8 +874,10 @@ var Table = function (_Component) {
       var isHiddenExpandIcon = void 0;
       var record = data[i];
       var key = this.getRowKey(record, i);
+      // 兼容 NCC 以前的业务逻辑，支持外部通过 record 中的 isleaf 字段，判断是否为叶子节点
+      record['isLeaf'] = typeof record['isleaf'] === 'boolean' ? record['isleaf'] : record['isLeaf'];
       // isLeaf 字段是在 bigData 里添加的，只有层级树大数据场景需要该字段
-      // isLeaf 有三种取值情况：true / false / null
+      // isLeaf 有三种取值情况：true / false / null。（Table内部字段）
       var isLeaf = typeof record['isLeaf'] === 'boolean' ? record['isLeaf'] : null;
       var childrenColumn = isLeaf ? false : record[childrenColumnName];
       var isRowExpanded = this.isRowExpanded(record, i);
