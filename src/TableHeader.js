@@ -816,7 +816,7 @@ class TableHeader extends Component {
                   className:`${thClassName} ${fixedStyle}`,
                 };
                 da.onClick ?thDefaultObj.onClick = (e)=>{da.onClick(da, e)}:"";
-                return (<th {...thDefaultObj} {...keyTemp}  data-th-fixed={da.fixed} />)
+                return (<th {...thDefaultObj} {...keyTemp}  data-th-fixed={da.fixed} style={{maxWidth: da.width}}/>)
               }
             })}
           </tr>

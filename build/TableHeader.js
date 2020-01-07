@@ -502,7 +502,7 @@ var TableHeader = function (_Component) {
               da.onClick ? thDefaultObj.onClick = function (e) {
                 da.onClick(da, e);
               } : "";
-              return _react2["default"].createElement("th", _extends({}, thDefaultObj, keyTemp, { "data-th-fixed": da.fixed }));
+              return _react2["default"].createElement("th", _extends({}, thDefaultObj, keyTemp, { "data-th-fixed": da.fixed, style: { maxWidth: da.width } }));
             }
           })
         );

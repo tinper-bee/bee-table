@@ -2,11 +2,10 @@
 *
 * @title 拖拽改变列宽度
 * @parent 列操作-拖拽 Drag
-* @description onDropBorder方法为调整列宽后触发的回调函数。注：不支持tree结构的表头、合并表头的table。
+* @description onDropBorder方法为调整列宽后触发的回调函数。注：不支持tree结构的表头。
 * demo1002
 */
 import React, { Component } from 'react';
-import {Icon} from "tinper-bee";
 
 import Table from '../../src'; 
 import dragColumn from '../../src/lib/dragColumn';
