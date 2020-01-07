@@ -224,7 +224,8 @@ var ColumnManager = function () {
     return element && (element.type === _Column2["default"] || element.type === _ColumnGroup2["default"]);
   };
 
-  ColumnManager.prototype.reset = function reset(columns, elements, showRowNum) {
+  ColumnManager.prototype.reset = function reset(columns, elements, showRowNum, rowDraggAble) {
+    columns = this.addDragHandleColumn(columns, rowDraggAble);
     columns = this.addOrderColumn(columns, showRowNum);
     columns = this.deleteColumnNotShow(columns);
     this.columns = columns || this.normalize(elements);

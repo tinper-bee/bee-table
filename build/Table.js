@@ -383,6 +383,10 @@ var Table = function (_Component) {
   };
 
   Table.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+    var _props = this.props,
+        rowDraggAble = _props.rowDraggAble,
+        showRowNum = _props.showRowNum;
+
     if ('data' in nextProps) {
       this.setState({
         data: nextProps.data
@@ -394,12 +398,12 @@ var Table = function (_Component) {
       });
     }
     if (nextProps.columns && nextProps.columns !== this.props.columns) {
-      this.columnManager.reset(nextProps.columns, null, this.props.showRowNum); // 加入this.props.showRowNum参数
+      this.columnManager.reset(nextProps.columns, null, showRowNum, rowDraggAble); // 加入this.props.showRowNum参数
       if (nextProps.columns.length !== this.props.columns.length && this.refs && this.bodyTable) {
         this.scrollTop = this.bodyTable.scrollTop;
       }
     } else if (nextProps.children !== this.props.children) {
-      this.columnManager.reset(null, nextProps.children, this.props.showRowNum); // 加入this.props.showRowNum参数
+      this.columnManager.reset(null, nextProps.children, showRowNum, rowDraggAble); // 加入this.props.showRowNum参数
     }
     //适配lazyload
     if (nextProps.scrollTop > -1) {
@@ -586,33 +590,33 @@ var Table = function (_Component) {
 
   Table.prototype.getHeader = function getHeader(columns, fixed, leftFixedWidth, rightFixedWidth) {
     var lastShowIndex = this.state.lastShowIndex;
-    var _props = this.props,
-        filterDelay = _props.filterDelay,
-        onFilterChange = _props.onFilterChange,
-        onFilterClear = _props.onFilterClear,
-        filterable = _props.filterable,
-        showHeader = _props.showHeader,
-        expandIconAsCell = _props.expandIconAsCell,
-        clsPrefix = _props.clsPrefix,
-        onDragStart = _props.onDragStart,
-        onDragEnter = _props.onDragEnter,
-        onDragOver = _props.onDragOver,
-        onDrop = _props.onDrop,
-        onDragEnd = _props.onDragEnd,
-        draggable = _props.draggable,
-        onMouseDown = _props.onMouseDown,
-        onMouseMove = _props.onMouseMove,
-        onMouseUp = _props.onMouseUp,
-        dragborder = _props.dragborder,
-        onThMouseMove = _props.onThMouseMove,
-        dragborderKey = _props.dragborderKey,
-        minColumnWidth = _props.minColumnWidth,
-        headerHeight = _props.headerHeight,
-        afterDragColWidth = _props.afterDragColWidth,
-        headerScroll = _props.headerScroll,
-        bordered = _props.bordered,
-        onDropBorder = _props.onDropBorder,
-        onDraggingBorder = _props.onDraggingBorder;
+    var _props2 = this.props,
+        filterDelay = _props2.filterDelay,
+        onFilterChange = _props2.onFilterChange,
+        onFilterClear = _props2.onFilterClear,
+        filterable = _props2.filterable,
+        showHeader = _props2.showHeader,
+        expandIconAsCell = _props2.expandIconAsCell,
+        clsPrefix = _props2.clsPrefix,
+        onDragStart = _props2.onDragStart,
+        onDragEnter = _props2.onDragEnter,
+        onDragOver = _props2.onDragOver,
+        onDrop = _props2.onDrop,
+        onDragEnd = _props2.onDragEnd,
+        draggable = _props2.draggable,
+        onMouseDown = _props2.onMouseDown,
+        onMouseMove = _props2.onMouseMove,
+        onMouseUp = _props2.onMouseUp,
+        dragborder = _props2.dragborder,
+        onThMouseMove = _props2.onThMouseMove,
+        dragborderKey = _props2.dragborderKey,
+        minColumnWidth = _props2.minColumnWidth,
+        headerHeight = _props2.headerHeight,
+        afterDragColWidth = _props2.afterDragColWidth,
+        headerScroll = _props2.headerScroll,
+        bordered = _props2.bordered,
+        onDropBorder = _props2.onDropBorder,
+        onDraggingBorder = _props2.onDraggingBorder;
 
     this.columnsChildrenList = []; //复杂表头拖拽，重新render表头前，将其置空
     var rows = this.getHeaderRows(columns);
@@ -752,9 +756,9 @@ var Table = function (_Component) {
   };
 
   Table.prototype.getExpandedRow = function getExpandedRow(key, content, visible, className, fixed) {
-    var _props2 = this.props,
-        clsPrefix = _props2.clsPrefix,
-        expandIconAsCell = _props2.expandIconAsCell;
+    var _props3 = this.props,
+        clsPrefix = _props3.clsPrefix,
+        expandIconAsCell = _props3.expandIconAsCell;
 
     var colCount = void 0;
     if (fixed === 'left') {
@@ -1083,19 +1087,19 @@ var Table = function (_Component) {
     var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var columns = options.columns,
         fixed = options.fixed;
-    var _props3 = this.props,
-        clsPrefix = _props3.clsPrefix,
-        _props3$scroll = _props3.scroll,
-        scroll = _props3$scroll === undefined ? {} : _props3$scroll,
-        getBodyWrapper = _props3.getBodyWrapper,
-        footerScroll = _props3.footerScroll,
-        headerScroll = _props3.headerScroll,
-        _props3$hideHeaderScr = _props3.hideHeaderScroll,
-        hideHeaderScroll = _props3$hideHeaderScr === undefined ? false : _props3$hideHeaderScr,
-        expandIconAsCell = _props3.expandIconAsCell;
     var _props4 = this.props,
-        useFixedHeader = _props4.useFixedHeader,
-        data = _props4.data;
+        clsPrefix = _props4.clsPrefix,
+        _props4$scroll = _props4.scroll,
+        scroll = _props4$scroll === undefined ? {} : _props4$scroll,
+        getBodyWrapper = _props4.getBodyWrapper,
+        footerScroll = _props4.footerScroll,
+        headerScroll = _props4.headerScroll,
+        _props4$hideHeaderScr = _props4.hideHeaderScroll,
+        hideHeaderScroll = _props4$hideHeaderScr === undefined ? false : _props4$hideHeaderScr,
+        expandIconAsCell = _props4.expandIconAsCell;
+    var _props5 = this.props,
+        useFixedHeader = _props5.useFixedHeader,
+        data = _props5.data;
 
     var bodyStyle = _extends({}, this.props.bodyStyle); // 这里为什么不写在上面?
     var headStyle = {};
@@ -1287,9 +1291,9 @@ var Table = function (_Component) {
   };
 
   Table.prototype.getTitle = function getTitle() {
-    var _props5 = this.props,
-        title = _props5.title,
-        clsPrefix = _props5.clsPrefix;
+    var _props6 = this.props,
+        title = _props6.title,
+        clsPrefix = _props6.clsPrefix;
 
     return title ? _react2["default"].createElement(
       'div',
@@ -1299,9 +1303,9 @@ var Table = function (_Component) {
   };
 
   Table.prototype.getFooter = function getFooter() {
-    var _props6 = this.props,
-        footer = _props6.footer,
-        clsPrefix = _props6.clsPrefix;
+    var _props7 = this.props,
+        footer = _props7.footer,
+        clsPrefix = _props7.clsPrefix;
 
     return footer ? _react2["default"].createElement(
       'div',
@@ -1311,10 +1315,10 @@ var Table = function (_Component) {
   };
 
   Table.prototype.getEmptyText = function getEmptyText() {
-    var _props7 = this.props,
-        defaultEmptyText = _props7.emptyText,
-        clsPrefix = _props7.clsPrefix,
-        data = _props7.data;
+    var _props8 = this.props,
+        defaultEmptyText = _props8.emptyText,
+        clsPrefix = _props8.clsPrefix,
+        data = _props8.data;
 
     var locale = (0, _tool.getComponentLocale)(this.props, this.context, 'Table', function () {
       return _i18n2["default"];
@@ -1355,13 +1359,13 @@ var Table = function (_Component) {
 
   Table.prototype.syncFixedTableRowHeight = function syncFixedTableRowHeight() {
     //this.props.height、headerHeight分别为用户传入的行高和表头高度，如果有值，所有行的高度都是固定的，主要为了避免在千行数据中有固定列时获取行高度有问题
-    var _props8 = this.props,
-        clsPrefix = _props8.clsPrefix,
-        height = _props8.height,
-        headerHeight = _props8.headerHeight,
-        columns = _props8.columns,
-        heightConsistent = _props8.heightConsistent,
-        bodyDisplayInRow = _props8.bodyDisplayInRow;
+    var _props9 = this.props,
+        clsPrefix = _props9.clsPrefix,
+        height = _props9.height,
+        headerHeight = _props9.headerHeight,
+        columns = _props9.columns,
+        heightConsistent = _props9.heightConsistent,
+        bodyDisplayInRow = _props9.bodyDisplayInRow;
 
     var headRows = this.headTable ? this.headTable.querySelectorAll('thead') : this.bodyTable.querySelectorAll('thead');
     var expandedRows = this.bodyTable.querySelectorAll('.' + clsPrefix + '-expanded-row') || [];
@@ -1453,13 +1457,13 @@ var Table = function (_Component) {
 
   Table.prototype.handleBodyScroll = function handleBodyScroll(e) {
     var headTable = this.headTable;
-    var _props9 = this.props,
-        _props9$scroll = _props9.scroll,
-        scroll = _props9$scroll === undefined ? {} : _props9$scroll,
-        clsPrefix = _props9.clsPrefix,
-        handleScrollY = _props9.handleScrollY,
-        handleScrollX = _props9.handleScrollX,
-        onBodyScroll = _props9.onBodyScroll;
+    var _props10 = this.props,
+        _props10$scroll = _props10.scroll,
+        scroll = _props10$scroll === undefined ? {} : _props10$scroll,
+        clsPrefix = _props10.clsPrefix,
+        handleScrollY = _props10.handleScrollY,
+        handleScrollX = _props10.handleScrollX,
+        onBodyScroll = _props10.onBodyScroll;
     var _refs = this.refs,
         fixedColumnsBodyLeft = _refs.fixedColumnsBodyLeft,
         fixedColumnsBodyRight = _refs.fixedColumnsBodyRight;
@@ -1516,10 +1520,10 @@ var Table = function (_Component) {
 
   Table.prototype.handleRowHover = function handleRowHover(isHover, key, event, currentIndex, propsRecord) {
     //增加新的API，设置是否同步Hover状态，提高性能，避免无关的渲染
-    var _props10 = this.props,
-        syncHover = _props10.syncHover,
-        onRowHover = _props10.onRowHover,
-        data = _props10.data;
+    var _props11 = this.props,
+        syncHover = _props11.syncHover,
+        onRowHover = _props11.onRowHover,
+        data = _props11.data;
     //fix:树形表，onRowHover返回参数异常
 
     var isTreeType = this.isTreeType;

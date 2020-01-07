@@ -222,7 +222,8 @@ export default class ColumnManager {
     return element && (element.type === Column || element.type === ColumnGroup);
   }
 
-  reset(columns, elements, showRowNum) {
+  reset(columns, elements, showRowNum, rowDraggAble) {
+    columns = this.addDragHandleColumn(columns,rowDraggAble);
     columns = this.addOrderColumn(columns,showRowNum);
     columns = this.deleteColumnNotShow(columns);
     this.columns = columns || this.normalize(elements);

@@ -198,6 +198,7 @@ class Table extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    let { rowDraggAble, showRowNum } = this.props;
     if ('data' in nextProps) {
       this.setState({
         data: nextProps.data,
@@ -209,12 +210,12 @@ class Table extends Component {
       });
     }
     if (nextProps.columns && nextProps.columns !== this.props.columns) {
-      this.columnManager.reset(nextProps.columns, null, this.props.showRowNum); // 加入this.props.showRowNum参数
+      this.columnManager.reset(nextProps.columns, null, showRowNum, rowDraggAble); // 加入this.props.showRowNum参数
       if(nextProps.columns.length !== this.props.columns.length && this.refs && this.bodyTable){
          this.scrollTop = this.bodyTable.scrollTop;
       }
     } else if (nextProps.children !== this.props.children) {
-      this.columnManager.reset(null, nextProps.children,this.props.showRowNum); // 加入this.props.showRowNum参数
+      this.columnManager.reset(null, nextProps.children, showRowNum, rowDraggAble); // 加入this.props.showRowNum参数
     }
     //适配lazyload
     if(nextProps.scrollTop > -1){
