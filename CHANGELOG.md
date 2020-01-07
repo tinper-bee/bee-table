@@ -1,3 +1,13 @@
+<a name="2.2.31"></a>
+## [2.2.31](https://github.com/tinper-bee/bee-table/compare/v2.2.30...v2.2.31) (2020-01-07)
+
+
+### Bug Fixes
+
+* 行拖拽，表头更新后，拖拽把手丢失 ([b183fde](https://github.com/tinper-bee/bee-table/commit/b183fde))
+
+
+
 <a name="2.2.30"></a>
 ## [2.2.30](https://github.com/tinper-bee/bee-table/compare/v2.2.29...v2.2.30) (2019-12-31)
 
