@@ -17,7 +17,7 @@ const columns = [
       title: "序号",
       dataIndex: "index",
       key: "index",
-      width: 80, 
+      width: 85, 
       fixed: 'left',
       render(text, record, index){return index + 1}
   },
@@ -25,7 +25,7 @@ const columns = [
       title: "订单编号",
       dataIndex: "orderCode",
       key: "orderCode",
-      width: 100, 
+      width: 120, 
       fixed: 'left',
   },
   {
