@@ -550,7 +550,7 @@ var _initialiseProps = function _initialiseProps() {
     var type = currentElement.getAttribute('data-type');
     if (!_this7.props.dragborder && !_this7.props.draggable) return;
     if (type == 'online' && _this7.props.dragborder) {
-      if (!_this7.props.dragborder) return;
+      // if(!this.props.dragborder)return;
       targetEvent.setAttribute('draggable', false); //添加交换列效果
       var currentIndex = -1;
       var defaultWidth = currentElement.getAttribute("data-th-width");
@@ -695,7 +695,9 @@ var _initialiseProps = function _initialiseProps() {
   this.onTrMouseUp = function (e) {
     var event = _utils.Event.getEvent(e);
     var width = _this7.drag.newWidth;
+    var opt = _this7.drag.option;
     _this7.mouseClear();
+    if (opt !== "border") return; // fix:点击表头会触发onDropBorder事件的问题
     _this7.props.onDropBorder && _this7.props.onDropBorder(event, width);
   };
 

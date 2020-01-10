@@ -223,7 +223,7 @@ class TableHeader extends Component {
     let type = currentElement.getAttribute('data-type');
     if(!this.props.dragborder && !this.props.draggable)return;
     if(type == 'online' && this.props.dragborder){
-      if(!this.props.dragborder)return;
+      // if(!this.props.dragborder)return;
       targetEvent.setAttribute('draggable',false);//添加交换列效果
       let currentIndex = -1;
       let defaultWidth = currentElement.getAttribute("data-th-width"); 
@@ -367,7 +367,9 @@ class TableHeader extends Component {
   onTrMouseUp = (e) => {
     let event = Event.getEvent(e);
     let width = this.drag.newWidth;
+    let opt = this.drag.option;
     this.mouseClear();
+    if(opt !== "border") return; // fix:点击表头会触发onDropBorder事件的问题
     this.props.onDropBorder && this.props.onDropBorder(event,width);
   };
 
