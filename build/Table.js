@@ -410,17 +410,17 @@ var Table = function (_Component) {
       // this.bodyTable.scrollTop = nextProps.scrollTop;
       this.scrollTop = nextProps.scrollTop;
     }
+    // fix:模态框中使用table，计算的滚动条宽度为0的bug
+    // fix:表格首次渲染时 display:none，再显示时，未重新计算，导致表行出现错位的bug
+    if (this.scrollbarWidth <= 0 && this.props.scroll.y) {
+      this.scrollbarWidth = (0, _utils.measureScrollbar)();
+    }
     if (!nextProps.originWidth) {
       this.computeTableWidth();
       this.firstDid = true; //避免重复update
     }
     if (nextProps.resetScroll) {
       this.resetScrollX();
-    }
-    // fix:模态框中使用table，计算的滚动条宽度为0的bug
-    // fix:表格首次渲染时 display:none，再显示时，未重新计算，导致表行出现错位的bug
-    if (this.scrollbarWidth <= 0 && this.props.scroll.y) {
-      this.scrollbarWidth = (0, _utils.measureScrollbar)();
     }
 
     // console.log('this.scrollTop**********',this.scrollTop);
@@ -694,7 +694,7 @@ var Table = function (_Component) {
       } else if (width) {
         width = parseInt(width);
       }
-      if (lastShowIndex == i && width) {
+      if (!column.fixed && lastShowIndex == i && width) {
         width = width + contentWidthDiff;
       }
       var cell = {
