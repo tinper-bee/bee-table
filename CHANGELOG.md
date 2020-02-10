@@ -1,3 +1,13 @@
+<a name="2.2.34"></a>
+## [2.2.34](https://github.com/tinper-bee/bee-table/compare/v2.2.33...v2.2.34) (2020-02-10)
+
+
+### Bug Fixes
+
+* 解决treetable右侧出现空白的问题 ([41a51ce](https://github.com/tinper-bee/bee-table/commit/41a51ce))
+
+
+
 <a name="2.2.33"></a>
 ## [2.2.33](https://github.com/tinper-bee/bee-table/compare/v2.2.31...v2.2.33) (2020-01-10)
 
