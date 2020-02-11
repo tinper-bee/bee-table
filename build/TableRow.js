@@ -622,7 +622,8 @@ var TableRow = function (_Component) {
           expandIcon
         ));
       }
-      var isColumnHaveExpandIcon = expandIconAsCell || expandRowByClick || showSum ? false : i === expandIndexInThisTable;
+      // bugfix 设置expandRowByClick，无法显示箭头，去掉 expandRowByClick 判断
+      var isColumnHaveExpandIcon = expandIconAsCell || showSum ? false : i === expandIndexInThisTable;
       cells.push(_react2["default"].createElement(_TableCell2["default"], {
         clsPrefix: clsPrefix,
         record: record,
