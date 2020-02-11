@@ -499,7 +499,8 @@ class TableRow extends Component{
           </td>
         );
       }
-      const isColumnHaveExpandIcon = (expandIconAsCell || expandRowByClick || showSum)
+      // bugfix 设置expandRowByClick，无法显示箭头，去掉 expandRowByClick 判断
+      const isColumnHaveExpandIcon = (expandIconAsCell || showSum) 
         ? false : (i === expandIndexInThisTable);
       cells.push(
         <TableCell
