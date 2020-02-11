@@ -1,3 +1,13 @@
+<a name="2.2.35"></a>
+## [2.2.35](https://github.com/tinper-bee/bee-table/compare/v2.2.34...v2.2.35) (2020-02-11)
+
+
+### Bug Fixes
+
+* **bee-table:** bugfix 设置expandRowByClick，无法显示箭头，去掉 expandRowByClick 判断 ([7a27bc5](https://github.com/tinper-bee/bee-table/commit/7a27bc5))
+
+
+
 <a name="2.2.34"></a>
 ## [2.2.34](https://github.com/tinper-bee/bee-table/compare/v2.2.33...v2.2.34) (2020-02-10)
 
@@ -382,17 +392,17 @@
 
 
 <a name="2.0.9"></a>
-## [2.0.9](https://github.com/tinper-bee/bee-table/compare/v2.0.8...v2.0.9) (2019-03-27)
-
-
-
-<a name="2.0.8"></a>
-## [2.0.8](https://github.com/tinper-bee/bee-table/compare/v2.0.7...v2.0.8) (2019-03-25)
+## [2.0.9](https://github.com/tinper-bee/bee-table/compare/v2.0.7...v2.0.9) (2019-03-27)
 
 
 
 <a name="2.0.7"></a>
-## [2.0.7](https://github.com/tinper-bee/bee-table/compare/v2.0.6...v2.0.7) (2019-03-20)
+## [2.0.7](https://github.com/tinper-bee/bee-table/compare/v2.0.8...v2.0.7) (2019-03-20)
+
+
+
+<a name="2.0.8"></a>
+## [2.0.8](https://github.com/tinper-bee/bee-table/compare/v2.0.6...v2.0.8) (2019-03-20)
 
 
 ### Bug Fixes
