@@ -372,6 +372,7 @@ Table 组件参数：
 | ------ | ---------- | -------- | ---- |
 | dragborder | 拖拽调整列宽度 | boolean | false |
 | draggable | 拖拽交换列 | boolean | false |
+| minColumnWidth | 拖拽列宽度的最小限制 | number | 80 |
 | onDrop | 拖拽释放回调函数(交换列) | function | () => {} |
 | onDropBorder | 拖拽释放回调函数(调整列宽) | function | (e,width) => {} |
 | onDraggingBorder | 调整列宽过程中触发的回调函数 | function | (e,width) => {} |

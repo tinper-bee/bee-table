@@ -27,7 +27,7 @@ class TableHeader extends Component {
     this.drag = {
       option:''
     };
-    this.minWidth = 80;//确定最小宽度就是80
+    this.minWidth = parseInt(props.minColumnWidth);
     this.table = null;
     this._thead = null;//当前对象
     this.event = false;//避免多次绑定问题

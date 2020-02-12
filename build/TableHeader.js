@@ -64,7 +64,7 @@ var TableHeader = function (_Component) {
     _this.drag = {
       option: ''
     };
-    _this.minWidth = 80; //确定最小宽度就是80
+    _this.minWidth = parseInt(props.minColumnWidth);
     _this.table = null;
     _this._thead = null; //当前对象
     _this.event = false; //避免多次绑定问题
