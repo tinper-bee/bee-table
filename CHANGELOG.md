@@ -1,3 +1,8 @@
+<a name="2.2.36"></a>
+## [2.2.36](https://github.com/tinper-bee/bee-table/compare/v2.2.35...v2.2.36) (2020-02-12)
+
+
+
 <a name="2.2.35"></a>
 ## [2.2.35](https://github.com/tinper-bee/bee-table/compare/v2.2.34...v2.2.35) (2020-02-11)
 
@@ -392,17 +397,17 @@
 
 
 <a name="2.0.9"></a>
-## [2.0.9](https://github.com/tinper-bee/bee-table/compare/v2.0.7...v2.0.9) (2019-03-27)
-
-
-
-<a name="2.0.7"></a>
-## [2.0.7](https://github.com/tinper-bee/bee-table/compare/v2.0.8...v2.0.7) (2019-03-20)
+## [2.0.9](https://github.com/tinper-bee/bee-table/compare/v2.0.8...v2.0.9) (2019-03-27)
 
 
 
 <a name="2.0.8"></a>
-## [2.0.8](https://github.com/tinper-bee/bee-table/compare/v2.0.6...v2.0.8) (2019-03-20)
+## [2.0.8](https://github.com/tinper-bee/bee-table/compare/v2.0.7...v2.0.8) (2019-03-25)
+
+
+
+<a name="2.0.7"></a>
+## [2.0.7](https://github.com/tinper-bee/bee-table/compare/v2.0.6...v2.0.7) (2019-03-20)
 
 
 ### Bug Fixes
