@@ -563,7 +563,10 @@ var _initialiseProps = function _initialiseProps() {
           });
         }
       }
-      // console.log("currentIndex :",currentIndex);
+      if (currentIndex < 0) {
+        console.log('Key must be set for column!');
+        return;
+      }
       var currentObj = _this7.table.cols[currentIndex];
       _this7.drag.currIndex = currentIndex;
       _this7.drag.oldLeft = event.x;

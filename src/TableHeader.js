@@ -234,7 +234,10 @@ class TableHeader extends Component {
           currentIndex = columnsChildrenList.findIndex(da=> (da.key && da.key.toLowerCase()) === columnKey.toLowerCase());
         }
       }
-      // console.log("currentIndex :",currentIndex);
+      if(currentIndex < 0){
+        console.log('Key must be set for column!')
+        return;
+      }
       let currentObj = this.table.cols[currentIndex];
       this.drag.currIndex = currentIndex;
       this.drag.oldLeft = event.x;
