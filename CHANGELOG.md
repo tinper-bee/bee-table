@@ -1,3 +1,13 @@
+<a name="2.2.38"></a>
+## [2.2.38](https://github.com/tinper-bee/bee-table/compare/v2.2.37...v2.2.38) (2020-03-02)
+
+
+### Features
+
+* **bee-table:** 列过滤 filterType新增 dateyear(日期-年)、datemonth(日期-月)、dateweek(日期-周) 类型 ([f892ba3](https://github.com/tinper-bee/bee-table/commit/f892ba3))
+
+
+
 <a name="2.2.37"></a>
 ## [2.2.37](https://github.com/tinper-bee/bee-table/compare/v2.2.36...v2.2.37) (2020-02-28)
 
@@ -402,17 +412,17 @@
 
 
 <a name="2.0.9"></a>
-## [2.0.9](https://github.com/tinper-bee/bee-table/compare/v2.0.8...v2.0.9) (2019-03-27)
-
-
-
-<a name="2.0.8"></a>
-## [2.0.8](https://github.com/tinper-bee/bee-table/compare/v2.0.7...v2.0.8) (2019-03-25)
+## [2.0.9](https://github.com/tinper-bee/bee-table/compare/v2.0.7...v2.0.9) (2019-03-27)
 
 
 
 <a name="2.0.7"></a>
-## [2.0.7](https://github.com/tinper-bee/bee-table/compare/v2.0.6...v2.0.7) (2019-03-20)
+## [2.0.7](https://github.com/tinper-bee/bee-table/compare/v2.0.8...v2.0.7) (2019-03-20)
+
+
+
+<a name="2.0.8"></a>
+## [2.0.8](https://github.com/tinper-bee/bee-table/compare/v2.0.6...v2.0.8) (2019-03-20)
 
 
 ### Bug Fixes
