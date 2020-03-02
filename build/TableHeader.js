@@ -930,6 +930,51 @@ var _initialiseProps = function _initialiseProps() {
           filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
           , filterDropdownIncludeKeys: rows[1][index]["filterdropdownincludekeys"] //下拉条件按照指定的keys去显示
         });
+      //日期 年
+      case "dateyear":
+        return _react2["default"].createElement(_FilterType2["default"], {
+          locale: locale,
+          rendertype: type,
+          className: "filter-date",
+          onClick: function onClick() {},
+          format: rows[1][index]["format"] || "YYYY",
+          dataIndex: dataIndex //字段
+          , onFilterChange: _this7.handlerFilterChange //输入框回调
+          , onFilterClear: _this7.handlerFilterClear //清除回调
+          , filterDropdown: rows[1][index]["filterdropdown"],
+          filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
+          , filterDropdownIncludeKeys: rows[1][index]["filterdropdownincludekeys"] //下拉条件按照指定的keys去显示
+        });
+      //日期 月
+      case "datemonth":
+        return _react2["default"].createElement(_FilterType2["default"], {
+          locale: locale,
+          rendertype: type,
+          className: "filter-date",
+          onClick: function onClick() {},
+          format: rows[1][index]["format"] || "YYYY-MM",
+          dataIndex: dataIndex //字段
+          , onFilterChange: _this7.handlerFilterChange //输入框回调
+          , onFilterClear: _this7.handlerFilterClear //清除回调
+          , filterDropdown: rows[1][index]["filterdropdown"],
+          filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
+          , filterDropdownIncludeKeys: rows[1][index]["filterdropdownincludekeys"] //下拉条件按照指定的keys去显示
+        });
+      //日期 周
+      case "dateweek":
+        return _react2["default"].createElement(_FilterType2["default"], {
+          locale: locale,
+          rendertype: type,
+          className: "filter-date",
+          onClick: function onClick() {},
+          format: rows[1][index]["format"] || "YYYY-Wo",
+          dataIndex: dataIndex //字段
+          , onFilterChange: _this7.handlerFilterChange //输入框回调
+          , onFilterClear: _this7.handlerFilterClear //清除回调
+          , filterDropdown: rows[1][index]["filterdropdown"],
+          filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
+          , filterDropdownIncludeKeys: rows[1][index]["filterdropdownincludekeys"] //下拉条件按照指定的keys去显示
+        });
       //日期范围
       case "daterange":
         return _react2["default"].createElement(_FilterType2["default"], {

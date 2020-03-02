@@ -715,6 +715,57 @@ class TableHeader extends Component {
             filterDropdownIncludeKeys={rows[1][index]["filterdropdownincludekeys"]}//下拉条件按照指定的keys去显示
           />
         );
+      //日期 年
+      case "dateyear":
+        return (
+          <FilterType
+            locale={locale}
+            rendertype={type}
+            className={`filter-date`}
+            onClick={() => { }}
+            format={rows[1][index]["format"] || "YYYY"}
+            dataIndex={dataIndex}//字段
+            onFilterChange={this.handlerFilterChange}//输入框回调
+            onFilterClear={this.handlerFilterClear}//清除回调
+            filterDropdown={rows[1][index]["filterdropdown"]}
+            filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
+            filterDropdownIncludeKeys={rows[1][index]["filterdropdownincludekeys"]}//下拉条件按照指定的keys去显示
+          />
+        );
+      //日期 月
+      case "datemonth":
+        return (
+          <FilterType
+            locale={locale}
+            rendertype={type}
+            className={`filter-date`}
+            onClick={() => { }}
+            format={rows[1][index]["format"] || "YYYY-MM"}
+            dataIndex={dataIndex}//字段
+            onFilterChange={this.handlerFilterChange}//输入框回调
+            onFilterClear={this.handlerFilterClear}//清除回调
+            filterDropdown={rows[1][index]["filterdropdown"]}
+            filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
+            filterDropdownIncludeKeys={rows[1][index]["filterdropdownincludekeys"]}//下拉条件按照指定的keys去显示
+          />
+        );
+      //日期 周
+      case "dateweek":
+        return (
+          <FilterType
+            locale={locale}
+            rendertype={type}
+            className={`filter-date`}
+            onClick={() => { }}
+            format={rows[1][index]["format"] || "YYYY-Wo"}
+            dataIndex={dataIndex}//字段
+            onFilterChange={this.handlerFilterChange}//输入框回调
+            onFilterClear={this.handlerFilterClear}//清除回调
+            filterDropdown={rows[1][index]["filterdropdown"]}
+            filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number
+            filterDropdownIncludeKeys={rows[1][index]["filterdropdownincludekeys"]}//下拉条件按照指定的keys去显示
+          />
+        );
       //日期范围
       case "daterange":
         return (

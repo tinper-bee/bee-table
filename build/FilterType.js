@@ -48,7 +48,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 
-var RangePicker = _beeDatepicker2["default"].RangePicker;
+var RangePicker = _beeDatepicker2["default"].RangePicker,
+    YearPicker = _beeDatepicker2["default"].YearPicker,
+    MonthPicker = _beeDatepicker2["default"].MonthPicker,
+    WeekPicker = _beeDatepicker2["default"].WeekPicker;
 
 
 var propTypes = {
@@ -287,6 +290,75 @@ var FilterType = function (_Component) {
                             filterDropdownIncludeKeys: filterDropdownIncludeKeys
                         })
                     );
+                case 'dateyear':
+                    return _react2["default"].createElement(
+                        'div',
+                        { className: clsPrefix + ' filter-wrap' },
+                        _react2["default"].createElement(YearPicker, _extends({}, _this.props, {
+                            value: _this.state.value,
+                            onChange: _this.changeDate,
+                            open: _this.state.open,
+                            format: format,
+                            locale: _zh_CN2["default"]
+                        })),
+                        _react2["default"].createElement(_FilterDropDown2["default"], {
+                            locale: locale,
+                            dataIndex: dataIndex,
+                            dataText: _this.state.value,
+                            onSelectDropdown: _this.onSelectDropdown,
+                            onClickClear: _this.clearFilter,
+                            isShowCondition: filterDropdown,
+                            isShowClear: _this.state.value,
+                            filterDropdownType: filterDropdownType,
+                            filterDropdownIncludeKeys: filterDropdownIncludeKeys
+                        })
+                    );
+                case 'datemonth':
+                    return _react2["default"].createElement(
+                        'div',
+                        { className: clsPrefix + ' filter-wrap' },
+                        _react2["default"].createElement(MonthPicker, _extends({}, _this.props, {
+                            value: _this.state.value,
+                            onChange: _this.changeDate,
+                            open: _this.state.open,
+                            format: format,
+                            locale: _zh_CN2["default"]
+                        })),
+                        _react2["default"].createElement(_FilterDropDown2["default"], {
+                            locale: locale,
+                            dataIndex: dataIndex,
+                            dataText: _this.state.value,
+                            onSelectDropdown: _this.onSelectDropdown,
+                            onClickClear: _this.clearFilter,
+                            isShowCondition: filterDropdown,
+                            isShowClear: _this.state.value,
+                            filterDropdownType: filterDropdownType,
+                            filterDropdownIncludeKeys: filterDropdownIncludeKeys
+                        })
+                    );
+                case 'dateweek':
+                    return _react2["default"].createElement(
+                        'div',
+                        { className: clsPrefix + ' filter-wrap' },
+                        _react2["default"].createElement(WeekPicker, _extends({}, _this.props, {
+                            value: _this.state.value,
+                            onChange: _this.changeDate,
+                            open: _this.state.open,
+                            format: format,
+                            locale: _zh_CN2["default"]
+                        })),
+                        _react2["default"].createElement(_FilterDropDown2["default"], {
+                            locale: locale,
+                            dataIndex: dataIndex,
+                            dataText: _this.state.value,
+                            onSelectDropdown: _this.onSelectDropdown,
+                            onClickClear: _this.clearFilter,
+                            isShowCondition: filterDropdown,
+                            isShowClear: _this.state.value,
+                            filterDropdownType: filterDropdownType,
+                            filterDropdownIncludeKeys: filterDropdownIncludeKeys
+                        })
+                    );
                 case 'daterange':
                     return _react2["default"].createElement(
                         'div',
@@ -395,7 +467,7 @@ var FilterType = function (_Component) {
     /**
      * 根据不同的类型生成对应的组件类型包含一些参数的适应
      *
-     * @param {*} rendertype 参数类型，包括['text','dropdown','date','daterange','number']
+     * @param {*} rendertype 参数类型，包括['text','dropdown','date','dateyear','datemonth','dateweek',daterange','number']
      * @returns
      */
 

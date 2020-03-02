@@ -7,7 +7,7 @@ import Select from 'bee-select';
 import InputNumber from 'bee-input-number';
 import FilterDropDown from './FilterDropDown';
 
-const { RangePicker } = DatePicker;
+const { RangePicker,YearPicker,MonthPicker,WeekPicker } = DatePicker;
 
 const propTypes = {
     filterDropdown: PropTypes.string
@@ -155,7 +155,7 @@ class FilterType extends Component {
     /**
      * 根据不同的类型生成对应的组件类型包含一些参数的适应
      *
-     * @param {*} rendertype 参数类型，包括['text','dropdown','date','daterange','number']
+     * @param {*} rendertype 参数类型，包括['text','dropdown','date','dateyear','datemonth','dateweek',daterange','number']
      * @returns
      */
     renderControl = (rendertype) => {
@@ -227,6 +227,72 @@ class FilterType extends Component {
             case 'date':
                 return <div className={`${clsPrefix} filter-wrap`}>
                     <DatePicker
+                        {...this.props}
+                        value={this.state.value}
+                        onChange={this.changeDate}
+                        open={this.state.open}
+                        format={format}
+                        locale={zhCN}
+                    /><FilterDropDown
+                        locale={locale}
+                        dataIndex={dataIndex}
+                        dataText={this.state.value}
+                        onSelectDropdown={this.onSelectDropdown}
+                        onClickClear={this.clearFilter}
+                        isShowCondition={filterDropdown}
+                        isShowClear={this.state.value}
+                        filterDropdownType={filterDropdownType}
+                        filterDropdownIncludeKeys={filterDropdownIncludeKeys}
+                    >
+                    </FilterDropDown>
+                </div>
+            case 'dateyear':
+                return <div className={`${clsPrefix} filter-wrap`}>
+                    <YearPicker
+                        {...this.props}
+                        value={this.state.value}
+                        onChange={this.changeDate}
+                        open={this.state.open}
+                        format={format}
+                        locale={zhCN}
+                    /><FilterDropDown
+                        locale={locale}
+                        dataIndex={dataIndex}
+                        dataText={this.state.value}
+                        onSelectDropdown={this.onSelectDropdown}
+                        onClickClear={this.clearFilter}
+                        isShowCondition={filterDropdown}
+                        isShowClear={this.state.value}
+                        filterDropdownType={filterDropdownType}
+                        filterDropdownIncludeKeys={filterDropdownIncludeKeys}
+                    >
+                    </FilterDropDown>
+                </div>
+            case 'datemonth':
+                return <div className={`${clsPrefix} filter-wrap`}>
+                    <MonthPicker
+                        {...this.props}
+                        value={this.state.value}
+                        onChange={this.changeDate}
+                        open={this.state.open}
+                        format={format}
+                        locale={zhCN}
+                    /><FilterDropDown
+                        locale={locale}
+                        dataIndex={dataIndex}
+                        dataText={this.state.value}
+                        onSelectDropdown={this.onSelectDropdown}
+                        onClickClear={this.clearFilter}
+                        isShowCondition={filterDropdown}
+                        isShowClear={this.state.value}
+                        filterDropdownType={filterDropdownType}
+                        filterDropdownIncludeKeys={filterDropdownIncludeKeys}
+                    >
+                    </FilterDropDown>
+                </div>
+            case 'dateweek':
+                return <div className={`${clsPrefix} filter-wrap`}>
+                    <WeekPicker
                         {...this.props}
                         value={this.state.value}
                         onChange={this.changeDate}

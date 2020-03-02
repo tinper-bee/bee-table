@@ -125,7 +125,7 @@ import 'bee-table/build/Table.css';
 |onCellClick|单击列的单元格时调用|Function(row, event)|-|
 |onHeadCellClick|单击表头的单元格时调用|Function(row, event)|row 当前行的数据|
 | order | 设置排序 | string（"descend"、"ascend"） | -|
-| filterType | 过滤下拉的类型.可选`text(文本框)`,`dropdown(下拉)`,`date(日期)`,`daterange(日期范围)`,`number(数值)` | string | text |
+| filterType | 过滤下拉的类型.可选`text(文本框)`,`dropdown(下拉)`,`date(日期)`,`dateyear(日期-年)`,`datemonth(日期-月)`,`dateweek(日期-周)`,`daterange(日期范围)`,`number(数值)` | string | text |
 | filterDropdown | 是否显示过滤下拉.可选`show`,`hide` | string | show |
 | format | 针对过滤下拉设置日期类的格式 | string | YYYY-MM-DD |
 | filterDropdownAuto | 设置下拉条件是否自动设置选项，`auto`自动根据当前数据生成，`manual`手动传入，可以使用`filterDropdownData`来传入自定义数据 | string | auto |
