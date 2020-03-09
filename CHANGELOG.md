@@ -1,3 +1,13 @@
+<a name="2.2.39"></a>
+## [2.2.39](https://github.com/tinper-bee/bee-table/compare/v2.2.38...v2.2.39) (2020-03-09)
+
+
+### Bug Fixes
+
+* **bee-table:** 过滤行多语设置bug ([99c0289](https://github.com/tinper-bee/bee-table/commit/99c0289))
+
+
+
 <a name="2.2.38"></a>
 ## [2.2.38](https://github.com/tinper-bee/bee-table/compare/v2.2.37...v2.2.38) (2020-03-02)
 
