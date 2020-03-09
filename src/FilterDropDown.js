@@ -184,4 +184,7 @@ FilterDropDown.defaultProps = {
     filterDropdownType: 'string'
 }
 
+FilterDropDown.contextTypes = {
+    beeLocale: PropTypes.object
+};
 export default FilterDropDown;

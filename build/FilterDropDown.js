@@ -313,5 +313,8 @@ FilterDropDown.defaultProps = {
     filterDropdownType: 'string'
 };
 
+FilterDropDown.contextTypes = {
+    beeLocale: _propTypes2["default"].object
+};
 exports["default"] = FilterDropDown;
 module.exports = exports['default'];
