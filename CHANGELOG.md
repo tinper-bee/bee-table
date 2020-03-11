@@ -1,3 +1,14 @@
+<a name="2.2.40"></a>
+## [2.2.40](https://github.com/tinper-bee/bee-table/compare/v2.2.39...v2.2.40) (2020-03-11)
+
+
+### Features
+
+* **bee-table:** en_us.js默认翻译修改 ([1fe5f57](https://github.com/tinper-bee/bee-table/commit/1fe5f57))
+* **bee-table:** tableCell colSpan==0 return null & isLeaf 改为 _isLeaf ([4452dc6](https://github.com/tinper-bee/bee-table/commit/4452dc6))
+
+
+
 <a name="2.2.39"></a>
 ## [2.2.39](https://github.com/tinper-bee/bee-table/compare/v2.2.38...v2.2.39) (2020-03-09)
 
