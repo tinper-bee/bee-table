@@ -429,19 +429,22 @@ var TableCell = function (_Component) {
       className += ' u-table-inline-icon';
     }
     return _react2["default"].createElement(
-      'td',
-      {
-        colSpan: colSpan,
-        rowSpan: rowSpan,
-        className: className,
-        onClick: this.handleClick,
-        title: title,
-        style: _extends({ maxWidth: column.width, color: fontColor, backgroundColor: bgColor }, column.style)
-      },
-      indentText,
-      expandIcon,
-      text,
-      colMenu
+      _react.Fragment,
+      null,
+      colSpan == 0 ? null : _react2["default"].createElement(
+        'td',
+        {
+          colSpan: colSpan,
+          rowSpan: rowSpan,
+          className: className,
+          onClick: this.handleClick,
+          title: title,
+          style: _extends({ maxWidth: column.width, color: fontColor, backgroundColor: bgColor }, column.style) },
+        indentText,
+        expandIcon,
+        text,
+        colMenu
+      )
     );
   };
 

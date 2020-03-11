@@ -134,14 +134,14 @@ export default function bigData(Table) {
         for (let i=0, l=dataCopy.length; i<l; i++) {
           let { key, children, ...props } = dataCopy[i],
               dataCopyI = new Object(),
-              isLeaf = (children && children.length > 0) ? false : true,
+              _isLeaf = (children && children.length > 0) ? false : true,
               //如果父节点是收起状态，则子节点的展开状态无意义。（一级节点或根节点直接判断自身状态即可）
               isExpanded = (parentKey === null || expandedKeysSet.has(parentKey)) ? expandedKeysSet.has(key) : false;
           dataCopyI = Object.assign(dataCopyI,{
             key,
             isExpanded,
             parentKey : parentKey,
-            isLeaf,
+            _isLeaf,
             index: flatTreeData.length
           },{...props});
 
@@ -166,7 +166,7 @@ export default function bigData(Table) {
         id: 'key',
         parendId: 'parentKey',
         rootId: null,
-        isLeaf: 'isLeaf'
+        _isLeaf: '_isLeaf'
       };
       let treeData = convertListToTree(treeList, attr, this.flatTreeKeysMap);
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component,Fragment } from 'react';
 import PropTypes from 'prop-types';
 import objectPath from 'object-path';
 import i18n from './lib/i18n';
@@ -281,19 +281,22 @@ class TableCell extends Component{
       className += ' u-table-inline-icon'
     }
     return (
-      <td
-        colSpan={colSpan}
-        rowSpan={rowSpan}
-        className={className}
-        onClick={this.handleClick}
-        title={title}
-        style={{maxWidth:column.width, color:fontColor, backgroundColor:bgColor, ...column.style}}
-      >
-        {indentText}
-        {expandIcon}
-        {text}
-        {colMenu}
-      </td>
+      <Fragment>
+        {
+          colSpan==0?null:<td
+                            colSpan={colSpan}
+                            rowSpan={rowSpan}
+                            className={className}
+                            onClick={this.handleClick}
+                            title={title}
+                            style={{maxWidth:column.width, color:fontColor, backgroundColor:bgColor, ...column.style}}>
+                            {indentText}
+                            {expandIcon}
+                            {text}
+                            {colMenu}
+                          </td>
+        }
+      </Fragment>
     );
   }
 };

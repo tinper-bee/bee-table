@@ -347,11 +347,11 @@ export function convertListToTree(treeData, attr, flatTreeKeysMap) {
       }else{
         // 用 treeKeysMap 判断，避免重复累加
         if (!treeKeysMap.hasOwnProperty(node[attr.id]) ) {
-          let { key, title, children, isLeaf, ...otherProps } = node;
+          let { key, title, children, _isLeaf, ...otherProps } = node;
           let obj = {
                 key,
                 title,
-                isLeaf,
+                _isLeaf,
                 children: []
               }
           tree.push(Object.assign(obj, {...otherProps}));
@@ -366,7 +366,7 @@ export function convertListToTree(treeData, attr, flatTreeKeysMap) {
             let { key, title, children, ...otherProps } = item;
             let obj = {
                 key: item[attr.id],
-                isLeaf: item[attr.isLeaf],
+                _isLeaf: item[attr._isLeaf],
                 children: []
             };
             tree.push(Object.assign(obj, {...otherProps}));
@@ -387,7 +387,7 @@ export function convertListToTree(treeData, attr, flatTreeKeysMap) {
                         let { key, title, children, ...otherProps } = item;
                         let obj = {
                             key: item[attr.id],
-                            isLeaf: item[attr.isLeaf],
+                            _isLeaf: item[attr._isLeaf],
                             children: []
                         };
                         treeArrs[i].children.push(Object.assign(obj, {...otherProps}));
