@@ -107,6 +107,10 @@ var TableCell = function (_Component) {
     if (rowSpan === 0 || colSpan === 0) {
       return null;
     }
+    if (tdProps && tdProps.mergeEndIndex && index < tdProps.mergeEndIndex && rowSpan === 0) {
+      rowSpan = tdProps.mergeEndIndex - index;
+      text = '';
+    }
     //不是固定表格并且当前列是固定，则隐藏当前列
     if (column.fixed && !fixed) {
       className = className + (' ' + clsPrefix + '-fixed-columns-in-body');
