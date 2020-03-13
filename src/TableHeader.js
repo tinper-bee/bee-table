@@ -39,6 +39,24 @@ class TableHeader extends Component {
     contentWidthDiff: 0
   };
 
+  componentWillReceiveProps(nextProps) {
+    // 表格column改变时，要重新绑定拖拽事件，否则拖拽不生效
+    const { columnsChildrenList:oldCols } = this.props;
+    const { columnsChildrenList:newCols } = nextProps;
+    if (this._thead) {
+      if(newCols.length !== oldCols.length){
+        this.event = false;
+        return;
+      } 
+      oldCols.some((item, index) => {
+        if (newCols[index] && newCols[index].dataIndex !== item.dataIndex) {
+          this.event = false;
+          return true;
+        }
+      });
+    }
+  }
+
   componentDidUpdate(){
     this.initTable();
     this.initEvent();
