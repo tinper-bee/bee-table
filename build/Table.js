@@ -84,6 +84,8 @@ var propTypes = {
   //特殊的渲染规则的key值
   rowKey: _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].func]),
   rowClassName: _propTypes2["default"].func,
+  //column的主键，和 column.key 作用相同
+  columnKey: _propTypes2["default"].string,
   expandedRowClassName: _propTypes2["default"].func,
   childrenColumnName: _propTypes2["default"].string,
   onExpand: _propTypes2["default"].func,
@@ -127,6 +129,7 @@ var defaultProps = {
   expandIconAsCell: false,
   defaultExpandAllRows: false,
   defaultExpandedRowKeys: [],
+  columnKey: 'key',
   rowKey: 'key',
   rowClassName: function rowClassName() {
     return '';
@@ -672,6 +675,7 @@ var Table = function (_Component) {
 
     var currentRow = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
     var rows = arguments[2];
+    var columnKey = this.props.columnKey;
     var _state = this.state,
         _state$contentWidthDi = _state.contentWidthDiff,
         contentWidthDiff = _state$contentWidthDi === undefined ? 0 : _state$contentWidthDi,
@@ -683,6 +687,9 @@ var Table = function (_Component) {
     rows[currentRow] = rows[currentRow] || [];
 
     columns.forEach(function (column, i) {
+      if (!column.key) {
+        column.key = column[columnKey];
+      }
       if (column.rowSpan && rows.length < column.rowSpan) {
         while (rows.length < column.rowSpan) {
           rows.push([]);

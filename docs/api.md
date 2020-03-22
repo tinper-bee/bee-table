@@ -38,6 +38,7 @@ import 'bee-table/build/Table.css';
 | :--------------------- | :--------------------------------------- | :------------------------------------- | :-------------- |
 | data                   | 传入的表格数据（key值必需，否则会导致部分功能出现问题。建议使用唯一的值，如id）   | array                                  | []              |
 | columns                | 列的配置表，具体配置见下表                            | array                                  | -               |
+| columnKey    |    如果columnKey是字符串，`column [columnKey]`将被作为主键。    | string                                  | 'key'               |
 | bordered                | 是否展示外边框和列边框                            | boolean                                  | false               |
 | defaultExpandAllRows   | 默认是否展开所有行                                | bool                                   | false           |
 | defaultExpandedRowKeys | 初始扩展行键                                   | array                                  | []              |

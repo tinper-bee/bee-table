@@ -28,6 +28,8 @@ const propTypes = {
   //特殊的渲染规则的key值
   rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   rowClassName: PropTypes.func,
+  //column的主键，和 column.key 作用相同
+  columnKey: PropTypes.string,
   expandedRowClassName: PropTypes.func,
   childrenColumnName: PropTypes.string,
   onExpand: PropTypes.func,
@@ -71,6 +73,7 @@ const defaultProps = {
   expandIconAsCell: false,
   defaultExpandAllRows: false,
   defaultExpandedRowKeys: [],
+  columnKey: 'key',
   rowKey: 'key',
   rowClassName: () => '',
   expandedRowClassName: () => '',
@@ -483,12 +486,16 @@ class Table extends Component {
   }
 
   getHeaderRows(columns, currentRow = 0, rows) {
+    const { columnKey } = this.props;
     let { contentWidthDiff = 0, lastShowIndex = -1 } = this.state;
     let filterCol = [];
     rows = rows || [];
     rows[currentRow] = rows[currentRow] || [];
 
     columns.forEach((column,i) => {
+      if (!column.key) {
+        column.key = column[columnKey];
+      }
       if (column.rowSpan && rows.length < column.rowSpan) {
         while (rows.length < column.rowSpan) {
           rows.push([]);
