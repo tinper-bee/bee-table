@@ -1,3 +1,13 @@
+<a name="2.2.42"></a>
+## [2.2.42](https://github.com/tinper-bee/bee-table/compare/v2.2.41...v2.2.42) (2020-03-22)
+
+
+### Features
+
+* 增加columnKey属性，column[columnKey]可作为主键 ([da2414b](https://github.com/tinper-bee/bee-table/commit/da2414b))
+
+
+
 <a name="2.2.41"></a>
 ## [2.2.41](https://github.com/tinper-bee/bee-table/compare/v2.2.40...v2.2.41) (2020-03-13)
 
