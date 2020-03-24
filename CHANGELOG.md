@@ -1,3 +1,13 @@
+<a name="2.2.43"></a>
+## [2.2.43](https://github.com/tinper-bee/bee-table/compare/v2.2.42...v2.2.43) (2020-03-24)
+
+
+### Bug Fixes
+
+* **bee-table:** TableCell去掉Frament ([606ed5d](https://github.com/tinper-bee/bee-table/commit/606ed5d))
+
+
+
 <a name="2.2.42"></a>
 ## [2.2.42](https://github.com/tinper-bee/bee-table/compare/v2.2.41...v2.2.42) (2020-03-22)
 
@@ -448,17 +458,17 @@
 
 
 <a name="2.0.9"></a>
-## [2.0.9](https://github.com/tinper-bee/bee-table/compare/v2.0.8...v2.0.9) (2019-03-27)
-
-
-
-<a name="2.0.8"></a>
-## [2.0.8](https://github.com/tinper-bee/bee-table/compare/v2.0.7...v2.0.8) (2019-03-25)
+## [2.0.9](https://github.com/tinper-bee/bee-table/compare/v2.0.7...v2.0.9) (2019-03-27)
 
 
 
 <a name="2.0.7"></a>
-## [2.0.7](https://github.com/tinper-bee/bee-table/compare/v2.0.6...v2.0.7) (2019-03-20)
+## [2.0.7](https://github.com/tinper-bee/bee-table/compare/v2.0.8...v2.0.7) (2019-03-20)
+
+
+
+<a name="2.0.8"></a>
+## [2.0.8](https://github.com/tinper-bee/bee-table/compare/v2.0.6...v2.0.8) (2019-03-20)
 
 
 ### Bug Fixes
