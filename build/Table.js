@@ -387,6 +387,8 @@ var Table = function (_Component) {
 
   Table.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
     if ('data' in nextProps) {
+      console.log("————————————————————data");
+      console.log(nextProps.data);
       this.setState({
         data: nextProps.data
       });

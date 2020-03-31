@@ -202,6 +202,8 @@ class Table extends Component {
 
   componentWillReceiveProps(nextProps) {
     if ('data' in nextProps) {
+      console.log("————————————————————data")
+      console.log(nextProps.data)
       this.setState({
         data: nextProps.data,
       });

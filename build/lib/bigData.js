@@ -100,6 +100,11 @@ function bigData(Table) {
           _this.cachedRowParentIndex = [];
           _this.computeCachedRowParentIndex(newData);
         }
+        if (newData.length && newData[0].key == undefined) {
+          //数据没有key时设置key
+          _this.cachedRowParentIndex = [];
+          _this.computeCachedRowParentIndex(newData);
+        }
         _this.treeData = [];
         _this.flatTreeData = [];
         if (newData.length > 0) {
@@ -344,8 +349,9 @@ function bigData(Table) {
         lazyLoad.preHeight = this.getSumHeight(0, startIndex);
         lazyLoad.sufHeight = this.getSumHeight(endIndex, data.length);
       }
-      // console.log('*******expandedRowKeys*****'+expandedRowKeys);
+      console.log('*******data*****', data);
       var dataSource = treeType && Array.isArray(treeData) && treeData.length > 0 ? treeData : data.slice(startIndex, endIndex);
+      console.log('*******dataSource*****', dataSource);
       return _react2["default"].createElement(Table, _extends({}, this.props, {
         data: dataSource,
         lazyLoad: lazyLoad,
