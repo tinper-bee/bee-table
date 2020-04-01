@@ -349,9 +349,9 @@ function bigData(Table) {
         lazyLoad.preHeight = this.getSumHeight(0, startIndex);
         lazyLoad.sufHeight = this.getSumHeight(endIndex, data.length);
       }
-      console.log('*******data*****', data);
+      // console.log('*******data*****',data);
       var dataSource = treeType && Array.isArray(treeData) && treeData.length > 0 ? treeData : data.slice(startIndex, endIndex);
-      console.log('*******dataSource*****', dataSource);
+      // console.log('*******dataSource*****',dataSource);
       return _react2["default"].createElement(Table, _extends({}, this.props, {
         data: dataSource,
         lazyLoad: lazyLoad,
@@ -412,12 +412,14 @@ function bigData(Table) {
       if (Array.isArray(dataCopy)) {
         for (var i = 0, l = dataCopy.length; i < l; i++) {
           var _dataCopy$i = dataCopy[i],
-              key = _dataCopy$i.key,
               children = _dataCopy$i.children,
-              props = _objectWithoutProperties(_dataCopy$i, ["key", "children"]),
+              props = _objectWithoutProperties(_dataCopy$i, ["children"]),
+              key = _this4.getRowKey(dataCopy[i], i),
               dataCopyI = new Object(),
               isLeaf = children && children.length > 0 ? false : true,
               isExpanded = parentKey === null || expandedKeysSet.has(parentKey) ? expandedKeysSet.has(key) : false;
+          // console.log("getRowKey:: "+this.getRowKey(dataCopy[i],i))
+
 
           dataCopyI = _extends(dataCopyI, {
             key: key,
