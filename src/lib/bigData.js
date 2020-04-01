@@ -136,11 +136,13 @@ export default function bigData(Table) {
           dataCopy = treeData;
       if(Array.isArray(dataCopy)){
         for (let i=0, l=dataCopy.length; i<l; i++) {
-          let { key, children, ...props } = dataCopy[i],
+          let {  children, ...props } = dataCopy[i],
+          key = this.getRowKey(dataCopy[i],i),
               dataCopyI = new Object(),
               isLeaf = (children && children.length > 0) ? false : true,
               //如果父节点是收起状态，则子节点的展开状态无意义。（一级节点或根节点直接判断自身状态即可）
               isExpanded = (parentKey === null || expandedKeysSet.has(parentKey)) ? expandedKeysSet.has(key) : false;
+              // console.log("getRowKey:: "+this.getRowKey(dataCopy[i],i))
           dataCopyI = Object.assign(dataCopyI,{
             key,
             isExpanded,
@@ -562,9 +564,9 @@ export default function bigData(Table) {
         lazyLoad.preHeight = this.getSumHeight(0, startIndex);
         lazyLoad.sufHeight = this.getSumHeight(endIndex, data.length);
       }
-      console.log('*******data*****',data);
+      // console.log('*******data*****',data);
       const dataSource = (treeType && Array.isArray(treeData) && treeData.length > 0) ? treeData : data.slice(startIndex, endIndex);
-      console.log('*******dataSource*****',dataSource);
+      // console.log('*******dataSource*****',dataSource);
       return (
         <Table
           {...this.props}
