@@ -1,3 +1,13 @@
+<a name="2.2.45"></a>
+## [2.2.45](https://github.com/tinper-bee/bee-table/compare/v2.2.44...v2.2.45) (2020-04-01)
+
+
+### Bug Fixes
+
+* **bee-table:** 树形表格数据没有key无法展开bug ([a24a865](https://github.com/tinper-bee/bee-table/commit/a24a865))
+
+
+
 <a name="2.2.44"></a>
 ## [2.2.44](https://github.com/tinper-bee/bee-table/compare/v2.2.43...v2.2.44) (2020-03-30)
 
