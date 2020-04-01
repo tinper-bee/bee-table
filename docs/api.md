@@ -43,7 +43,7 @@ import 'bee-table/build/Table.css';
 | defaultExpandAllRows   | 默认是否展开所有行                                | bool                                   | false           |
 | defaultExpandedRowKeys | 初始扩展行键                                   | array                                  | []              |
 | rowRef                 | 获取行的ref                                  | Function(record, index, indent):string | () => null      |
-| rowKey                 | 如果rowKey是字符串，`record [rowKey]`将被用作键。如果rowKey是function，`rowKey（record, index）`的返回值将被用作键。 | string or Function(record, index):string      | 'key'           |
+| rowKey                 | 如果rowKey是字符串，`record [rowKey]`将被用作键。如果rowKey是function，`rowKey（record, index）`的返回值将被用作键。树形表格时作为每条数据的唯一标示，如果唯一标示不是"key"键的值，则必须传入，例如 `rowKey='id'` | string or Function(record, index):string      | 'key'           |
 | expandedRowKeys        | 展开的行，控制属性                                | array                                  | -               |
 | rowClassName | 获取行的classname | Function(record, index, indent):string | () => '' |
 | expandedRowClassName | 获取展开行的className | Function(recode, index, indent):string | () => '' |

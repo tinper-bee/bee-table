@@ -123,7 +123,7 @@ class Demo4 extends Component {
           selectedRow: selectedRow
       });
     }}
-    
+    rowKey="key"//每条数据的唯一标示，默认为key，如果不是key，必须传
     columns={columns4} data={data4} />;
   }
 }

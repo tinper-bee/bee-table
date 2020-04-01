@@ -87,6 +87,7 @@ class Demo34 extends Component {
                     onRowClick={(record, index, indent) => {
                         console.log('currentIndex--' + index);
                     }}
+                    rowKey="key"//每条数据的唯一标示，默认为key，如果不是key，必须传
                 />
             </div>
 

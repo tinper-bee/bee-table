@@ -406,9 +406,9 @@ function bigData(Table) {
       if (Array.isArray(dataCopy)) {
         for (var i = 0, l = dataCopy.length; i < l; i++) {
           var _dataCopy$i = dataCopy[i],
-              key = _dataCopy$i.key,
               children = _dataCopy$i.children,
-              props = _objectWithoutProperties(_dataCopy$i, ["key", "children"]),
+              props = _objectWithoutProperties(_dataCopy$i, ["children"]),
+              key = _this4.getRowKey(dataCopy[i], i),
               dataCopyI = new Object(),
               _isLeaf = children && children.length > 0 ? false : true,
               isExpanded = parentKey === null || expandedKeysSet.has(parentKey) ? expandedKeysSet.has(key) : false;
