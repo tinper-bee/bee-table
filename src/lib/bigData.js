@@ -148,7 +148,8 @@ export default function bigData(Table) {
             isExpanded,
             parentKey : parentKey,
             isLeaf,
-            index: flatTreeData.length
+            index: flatTreeData.length,
+            children
           },{...props});
 
           flatTreeData.push(dataCopyI); // 取每项数据放入一个新数组

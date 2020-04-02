@@ -426,7 +426,8 @@ function bigData(Table) {
             isExpanded: isExpanded,
             parentKey: parentKey,
             isLeaf: isLeaf,
-            index: flatTreeData.length
+            index: flatTreeData.length,
+            children: children
           }, _extends({}, props));
 
           flatTreeData.push(dataCopyI); // 取每项数据放入一个新数组
