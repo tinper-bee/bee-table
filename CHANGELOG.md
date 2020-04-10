@@ -1,3 +1,13 @@
+<a name="2.2.46"></a>
+## [2.2.46](https://github.com/tinper-bee/bee-table/compare/v2.2.45...v2.2.46) (2020-04-10)
+
+
+### Bug Fixes
+
+* **bee-table:** bug修复：ie 下报错 对象不支持 “forEach” 方法、切换数据源，startIndex、endIndex错误 ([ead7706](https://github.com/tinper-bee/bee-table/commit/ead7706))
+
+
+
 <a name="2.2.45"></a>
 ## [2.2.45](https://github.com/tinper-bee/bee-table/compare/v2.2.44...v2.2.45) (2020-04-01)
 
