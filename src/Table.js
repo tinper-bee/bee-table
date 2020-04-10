@@ -1208,7 +1208,8 @@ class Table extends Component {
       }
     );
     const fixedColumnsExpandedRowsHeight = {};
-    expandedRows.length > 0 && expandedRows.forEach(row => {
+    // expandedRows为NodeList  Array.prototype.forEach ie 下报错 对象不支持 “forEach” 方法
+    expandedRows.length > 0 && Array.prototype.forEach.call(expandedRows,row => {
       let parentRowKey = row && row.previousSibling && row.previousSibling.getAttribute("data-row-key"),
           height = row && row.getBoundingClientRect().height || 'auto';
       fixedColumnsExpandedRowsHeight[parentRowKey] = height;

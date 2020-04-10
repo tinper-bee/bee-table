@@ -1409,7 +1409,8 @@ var Table = function (_Component) {
       }
     });
     var fixedColumnsExpandedRowsHeight = {};
-    expandedRows.length > 0 && expandedRows.forEach(function (row) {
+    // expandedRows为NodeList  Array.prototype.forEach ie 下报错 对象不支持 “forEach” 方法
+    expandedRows.length > 0 && Array.prototype.forEach.call(expandedRows, function (row) {
       var parentRowKey = row && row.previousSibling && row.previousSibling.getAttribute("data-row-key"),
           height = row && row.getBoundingClientRect().height || 'auto';
       fixedColumnsExpandedRowsHeight[parentRowKey] = height;
