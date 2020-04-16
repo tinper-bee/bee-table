@@ -1,3 +1,13 @@
+<a name="2.2.48"></a>
+## [2.2.48](https://github.com/tinper-bee/bee-table/compare/v2.2.47...v2.2.48) (2020-04-16)
+
+
+### Features
+
+* **bee-table:** column render方法新增第四个参数为column设置的属性 ([b4b0c95](https://github.com/tinper-bee/bee-table/commit/b4b0c95))
+
+
+
 <a name="2.2.47"></a>
 ## [2.2.47](https://github.com/tinper-bee/bee-table/compare/v2.2.46...v2.2.47) (2020-04-16)
 
