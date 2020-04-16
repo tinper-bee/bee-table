@@ -1,3 +1,13 @@
+<a name="2.2.47"></a>
+## [2.2.47](https://github.com/tinper-bee/bee-table/compare/v2.2.46...v2.2.47) (2020-04-16)
+
+
+### Features
+
+* **bee-table:** 子表数据减少时，动态计算高度 ([a4df9ce](https://github.com/tinper-bee/bee-table/commit/a4df9ce))
+
+
+
 <a name="2.2.46"></a>
 ## [2.2.46](https://github.com/tinper-bee/bee-table/compare/v2.2.45...v2.2.46) (2020-04-10)
 
