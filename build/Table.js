@@ -951,8 +951,6 @@ var Table = function (_Component) {
       if (rootIndex == -1) {
         index = i + lazyParentIndex;
       }
-      console.log('preHeight', props.preHeight);
-      console.log('height: ', height);
       rst.push(_react2["default"].createElement(_TableRow2["default"], _extends({
         indent: indent,
         indentSize: props.indentSize,

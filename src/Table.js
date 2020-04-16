@@ -783,8 +783,6 @@ class Table extends Component {
       if(rootIndex ==-1){
         index = i+lazyParentIndex
       }
-      console.log('preHeight',props.preHeight)
-      console.log('height: ',height)
       rst.push(
         <TableRow
           indent={indent}

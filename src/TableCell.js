@@ -177,7 +177,7 @@ class TableCell extends Component{
   render() {
     const { record, indentSize, clsPrefix, indent,
             index, expandIcon, column ,fixed,showSum, bodyDisplayInRow,lazyStartIndex,lazyEndIndex} = this.props;
-    const { dataIndex, render, fieldType, linkConfig, fontColor, bgColor } = column;
+    const { dataIndex, render, fieldType, linkConfig, fontColor, bgColor,...other } = column;
     let {className = ''} = column;
 
     let text = objectPath.get(record, dataIndex);
@@ -186,7 +186,9 @@ class TableCell extends Component{
     let rowSpan,title;
 
     if (render && !showSum) {
-      text = render(text, record, index);
+      text = render(text, record, index,{
+        dataIndex, render, fieldType, linkConfig, fontColor, bgColor,...other
+      });
       if (this.isInvalidRenderCellText(text)) {
         tdProps = text.props || {};
         rowSpan = (tdProps.rowSpan>lazyEndIndex && lazyEndIndex>5)?lazyEndIndex-index:tdProps.rowSpan;

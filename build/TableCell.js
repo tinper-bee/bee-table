@@ -38,6 +38,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
 
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -313,12 +315,15 @@ var TableCell = function (_Component) {
         bodyDisplayInRow = _props2.bodyDisplayInRow,
         lazyStartIndex = _props2.lazyStartIndex,
         lazyEndIndex = _props2.lazyEndIndex;
+
     var dataIndex = column.dataIndex,
         render = column.render,
         fieldType = column.fieldType,
         linkConfig = column.linkConfig,
         fontColor = column.fontColor,
-        bgColor = column.bgColor;
+        bgColor = column.bgColor,
+        other = _objectWithoutProperties(column, ['dataIndex', 'render', 'fieldType', 'linkConfig', 'fontColor', 'bgColor']);
+
     var _column$className = column.className,
         className = _column$className === undefined ? '' : _column$className;
 
@@ -330,7 +335,8 @@ var TableCell = function (_Component) {
         title = void 0;
 
     if (render && !showSum) {
-      text = render(text, record, index);
+      text = render(text, record, index, _extends({
+        dataIndex: dataIndex, render: render, fieldType: fieldType, linkConfig: linkConfig, fontColor: fontColor, bgColor: bgColor }, other));
       if (this.isInvalidRenderCellText(text)) {
         tdProps = text.props || {};
         rowSpan = tdProps.rowSpan > lazyEndIndex && lazyEndIndex > 5 ? lazyEndIndex - index : tdProps.rowSpan;
