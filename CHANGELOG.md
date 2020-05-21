@@ -1,3 +1,18 @@
+## [2.2.49](https://github.com/tinper-bee/bee-table/compare/v2.2.48...v2.2.49) (2020-05-21)
+
+
+### Bug Fixes
+
+* 自动化 ([0977659](https://github.com/tinper-bee/bee-table/commit/0977659081eefe04b7d10446a10d608d7e726899))
+
+
+### Features
+
+* 列合计新增精度 ([b9c99bb](https://github.com/tinper-bee/bee-table/commit/b9c99bb547a82466c20b777d3f504ce316ad7aea))
+* 格式化 ([386af02](https://github.com/tinper-bee/bee-table/commit/386af02ce820f090a8b714f4158ffe6785ebcca9))
+
+
+
 <a name="2.2.48"></a>
 ## [2.2.48](https://github.com/tinper-bee/bee-table/compare/v2.2.47...v2.2.48) (2020-04-16)
 
