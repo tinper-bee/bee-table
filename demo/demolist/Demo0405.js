@@ -13,6 +13,7 @@ import sum from "../../src/lib/sum.js";
 import multiSelect from "../../src/lib/multiSelect.js";
  
 let ComplexTable = multiSelect(sum(Table), Checkbox);
+//sum第二个参数可以设置精度，例如 sum(Table,4); 设计精度为4
 let _sum = 0;
 const columns = [
   {

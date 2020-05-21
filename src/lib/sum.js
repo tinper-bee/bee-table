@@ -1,7 +1,7 @@
 import React from "react";
 
 import {DicimalFormater} from "./utils";
-export default function sum(Table) {
+export default function sum(Table,precision=2) {
   return class SumTable extends React.Component {
     //无状态
     constructor(props) {
@@ -64,7 +64,7 @@ export default function sum(Table) {
             }
             
           })
-          sumdata[column.dataIndex] = DicimalFormater(count,2);
+          sumdata[column.dataIndex] = DicimalFormater(count,precision);
         }
         if(index == 0){
           sumdata[column.dataIndex] = "合计 "+sumdata[column.dataIndex];

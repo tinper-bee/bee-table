@@ -340,6 +340,9 @@ import { Table } from 'tinper-bee';
 
 const SumTable = sum(Table);
 
+//[v2.2.49新增]precision为精度，默认为2
+const SumTable = sum(Table,precision);
+
 ```
 
 #### API
@@ -351,7 +354,7 @@ column 数组参数：
 | sumCol | 该列设置为合计列，合计行中会显示合计数据 | boolean | false |
 
 #### sum 使用示例
-- [列合计（总计）](http://design.yonyoucloud.com/tinper-bee/bee-table#%E5%88%97%E5%90%88%E8%AE%A1%EF%BC%88%E6%80%BB%E8%AE%A1%EF%BC%89)
+- [列合计（总计）](http://bee.tinper.org/tinper-bee/bee-table#%E5%88%97%E5%90%88%E8%AE%A1%EF%BC%88%E6%80%BB%E8%AE%A1%EF%BC%89)
 
 ### dragColumn 拖拽列功能
 
