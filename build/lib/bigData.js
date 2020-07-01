@@ -99,6 +99,10 @@ function bigData(Table) {
           _this.cachedRowHeight = []; //缓存每行的高度
           _this.cachedRowParentIndex = [];
           _this.computeCachedRowParentIndex(newData);
+          // fix：切换数据源，startIndex、endIndex错误
+          _this.currentIndex = 0;
+          _this.startIndex = _this.currentIndex; //数据开始位置
+          _this.endIndex = _this.currentIndex + _this.loadCount;
         }
         if (newData.length && newData[0].key == undefined) {
           //数据没有key时设置key
