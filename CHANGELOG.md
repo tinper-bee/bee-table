@@ -1,3 +1,15 @@
+## [2.2.50](https://github.com/tinper-bee/bee-table/compare/v2.2.49...v2.2.50) (2020-07-08)
+
+
+### Features
+
+* changelog ([ba31790](https://github.com/tinper-bee/bee-table/commit/ba317900d387a311b7489d7cd4285609e2ad739f))
+* 列合计新增精度 ([b80e703](https://github.com/tinper-bee/bee-table/commit/b80e703b77d1904094971a766445b998e1c03b41))
+* 列合计新增精度 ([532fbb4](https://github.com/tinper-bee/bee-table/commit/532fbb4851bd147de817abeec1234b977ef7a674))
+* 排序回调新增data参数 ([344e948](https://github.com/tinper-bee/bee-table/commit/344e94814141fc9da75af350f777ede7f3c132cd))
+
+
+
 ## [2.2.49](https://github.com/tinper-bee/bee-table/compare/v2.2.48...v2.2.49) (2020-05-21)
 
 
