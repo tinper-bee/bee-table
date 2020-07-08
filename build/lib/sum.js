@@ -25,6 +25,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 
 function sum(Table) {
+  var precision = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
+
   return function (_React$Component) {
     _inherits(SumTable, _React$Component);
 
@@ -91,7 +93,7 @@ function sum(Table) {
                 count += _num;
               }
             });
-            sumdata[column.dataIndex] = (0, _utils.DicimalFormater)(count, 2);
+            sumdata[column.dataIndex] = (0, _utils.DicimalFormater)(count, precision);
           }
           if (index == 0) {
             sumdata[column.dataIndex] = "合计 " + sumdata[column.dataIndex];

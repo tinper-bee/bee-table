@@ -195,7 +195,7 @@ export default function sort(Table, Icon) {
           } else {
             data = oldData.concat();
           }
-          typeof sort.sortFun === "function" && sort.sortFun(sortCol,data);
+          typeof sort.sortFun === "function" && sort.sortFun(sortCol,data,oldData);
         }
       } else {
         seleObj = flatColumns.find(da => da.key == column.key);
@@ -211,7 +211,7 @@ export default function sort(Table, Icon) {
           sort.sortFun(sortCol);
         } else {
           data = this.multiSort(flatColumns);
-          typeof sort.sortFun === "function" && sort.sortFun(sortCol,data);
+          typeof sort.sortFun === "function" && sort.sortFun(sortCol,data,oldData);
         }
       }
       this.setState({ data, oldData, flatColumns });
