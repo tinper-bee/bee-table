@@ -1,3 +1,12 @@
+## [2.2.53](https://github.com/tinper-bee/bee-table/compare/v2.2.52...v2.2.53) (2020-07-09)
+
+
+### Features
+
+* 新增sumRender自定义列合计render函数 ([4c6f69f](https://github.com/tinper-bee/bee-table/commit/4c6f69fcabd23a5f823cd37e34c38b6e4e9633e8))
+
+
+
 ## [2.2.52](https://github.com/tinper-bee/bee-table/compare/v2.2.51...v2.2.52) (2020-07-09)
 
 
