@@ -64,7 +64,12 @@ export default function sum(Table,precision=2) {
             }
             
           })
-          sumdata[column.dataIndex] = DicimalFormater(count,precision);
+          let sum = DicimalFormater(count,precision);
+          sumdata[column.dataIndex] = sum;
+          if(column.sumRender&&typeof column.sumRender =='function'){
+            sumdata[column.dataIndex] = column.sumRender(sum)
+          }
+          
         }
         if(index == 0){
           sumdata[column.dataIndex] = "合计 "+sumdata[column.dataIndex];

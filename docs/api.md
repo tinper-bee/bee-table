@@ -149,6 +149,7 @@ import 'bee-table/build/Table.css';
 | isShow | 是否展示该列数据 | bool | true |
 | cellMenu | 渲染单元格内操作按钮 | object | - |
 | style | 该列的样式，严格按照react的样式书写规则，即对象内每一个属性的键为小写驼峰式，值为字符串 | object | - |
+| sumRender | 自定义合计render函数 | func(value) | - |
 
 #### [v2.2.x新增] cellMenu
 
