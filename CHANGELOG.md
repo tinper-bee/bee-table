@@ -1,3 +1,12 @@
+## [2.2.52](https://github.com/tinper-bee/bee-table/compare/v2.2.51...v2.2.52) (2020-07-09)
+
+
+### Bug Fixes
+
+* onPaste行列参数修改 ([3b8c65d](https://github.com/tinper-bee/bee-table/commit/3b8c65d02b8e9a6cbc0045f36e1e4567accdfa79))
+
+
+
 ## [2.2.51](https://github.com/tinper-bee/bee-table/compare/v2.2.50...v2.2.51) (2020-07-09)
 
 
