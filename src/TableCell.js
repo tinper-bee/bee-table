@@ -175,8 +175,7 @@ class TableCell extends Component{
     })
   }
   onPaste=(e)=>{
-    let { index:row,onPaste,fixed } = this.props
-    let col = e.target.cellIndex;
+    let { index:row,onPaste,fixed,col } = this.props
     let position = {
       row,
       col,

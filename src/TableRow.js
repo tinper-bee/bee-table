@@ -518,6 +518,7 @@ class TableRow extends Component{
           lazyStartIndex={lazyStartIndex}
           lazyEndIndex={lazyEndIndex}
           onPaste={onPaste}
+          col={i}
         />
       );
     }
