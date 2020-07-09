@@ -65,6 +65,7 @@ const propTypes = {
   bodyDisplayInRow: PropTypes.bool, // 表格内容超出列宽度时进行换行 or 以...形式展现
   headerDisplayInRow: PropTypes.bool, // 表头内容超出列宽度时进行换行 or 以...形式展现
   showRowNum: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]), // 表格是否自动生成序号,格式为{base:number || 0,defaultKey:string || '_index',defaultName:string || '序号'}
+  onPaste:PropTypes.func,
 };
 
 const defaultProps = {
@@ -108,6 +109,7 @@ const defaultProps = {
   bodyDisplayInRow: true,
   headerDisplayInRow: true,
   showRowNum: false,
+  onPaste:()=>{}
 };
 
 const expandIconCellWidth = Number(43);
@@ -567,7 +569,7 @@ class Table extends Component {
   }
 
   getExpandedRow(key, content, visible, className, fixed) {
-    const { clsPrefix, expandIconAsCell } = this.props;
+    const { clsPrefix, expandIconAsCell,onPaste } = this.props;
     let colCount;
     if (fixed === 'left') {
       colCount = this.columnManager.leftLeafColumns().length;
@@ -605,6 +607,7 @@ class Table extends Component {
     }
     return (
       <TableRow
+        onPaste={onPaste}
         columns={columns}
         visible={visible}
         className={className}
@@ -699,6 +702,7 @@ class Table extends Component {
     const childrenColumnName = props.childrenColumnName;
     const expandedRowRender = props.expandedRowRender;
     const expandRowByClick = props.expandRowByClick;
+    const onPaste = props.onPaste;
     const { fixedColumnsBodyRowsHeight } = this.state;
     let rst = [];
     let height;
@@ -713,7 +717,7 @@ class Table extends Component {
     const expandIconColumnIndex = props.expandIconColumnIndex
     if(props.lazyLoad && props.lazyLoad.preHeight && indent == 0){
       rst.push(
-        <TableRow height={props.lazyLoad.preHeight} columns={[]} className='' key={'table_row_first'} store={this.store} visible = {true}/>
+        <TableRow onPaste={onPaste} height={props.lazyLoad.preHeight} columns={[]} className='' key={'table_row_first'} store={this.store} visible = {true}/>
       )
     }
     const lazyCurrentIndex =  props.lazyLoad && props.lazyLoad.startIndex ?props.lazyLoad.startIndex :0;
@@ -785,6 +789,7 @@ class Table extends Component {
       }
       rst.push(
         <TableRow
+          onPaste={onPaste}
           indent={indent}
           indentSize={props.indentSize}
           needIndentSpaced={needIndentSpaced}
@@ -853,7 +858,7 @@ class Table extends Component {
 
     if(props.lazyLoad && props.lazyLoad.sufHeight && indent == 0){
       rst.push(
-        <TableRow height={props.lazyLoad.sufHeight} key={'table_row_end'} columns={[]} className='' store={this.store} visible = {true}/>
+        <TableRow onPaste={onPaste} height={props.lazyLoad.sufHeight} key={'table_row_end'} columns={[]} className='' store={this.store} visible = {true}/>
       )
     }
     if (!this.isTreeType) {

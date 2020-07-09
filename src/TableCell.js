@@ -14,7 +14,8 @@ const propTypes = {
     indent: PropTypes.number,
     indentSize: PropTypes.number,
     column: PropTypes.object,
-    expandIcon: PropTypes.node
+    expandIcon: PropTypes.node,
+    onPaste:PropTypes.func
 };
 
 class TableCell extends Component{
@@ -173,6 +174,16 @@ class TableCell extends Component{
       showDropdowm: false,
     })
   }
+  onPaste=(e)=>{
+    let { index:row,onPaste,fixed } = this.props
+    let col = e.target.cellIndex;
+    let position = {
+      row,
+      col,
+      fixed:!!fixed
+    }
+    onPaste(e,position)
+  }
 
   render() {
     const { record, indentSize, clsPrefix, indent,
@@ -289,6 +300,7 @@ class TableCell extends Component{
             className={className}
             onClick={this.handleClick}
             title={title}
+            onPaste={this.onPaste}
             style={{maxWidth:column.width, color:fontColor, backgroundColor:bgColor, ...column.style}}>
             {indentText}
             {expandIcon}

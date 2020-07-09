@@ -451,7 +451,7 @@ class TableRow extends Component{
 
   render() {
     const {
-      clsPrefix, columns, record, height, visible, index,
+      clsPrefix, columns, record, height, visible, index,onPaste,
       expandIconColumnIndex, expandIconAsCell, expanded, expandRowByClick,rowDraggAble,
       expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed,bodyDisplayInRow
       ,expandedIcon,collapsedIcon, hoverKey,lazyStartIndex,lazyEndIndex, expandIconCellWidth
@@ -517,6 +517,7 @@ class TableRow extends Component{
           bodyDisplayInRow =  {bodyDisplayInRow}
           lazyStartIndex={lazyStartIndex}
           lazyEndIndex={lazyEndIndex}
+          onPaste={onPaste}
         />
       );
     }

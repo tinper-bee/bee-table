@@ -84,6 +84,7 @@ import 'bee-table/build/Table.css';
 | [v2.2.2新增]showRowNum | 展示序号功能，false时不展示，true时展示默认情况，可传入自定义配置信息 | bool / obj:{name: '序号', key: '_index', // 在数据中存储的key值width: 50,base: 0,// 排序的基准值,为数字或者字母type:'number', // 排序类型,默认为number类型,支持单字母排序(type='ascii')} | false |
 | [v2.2.8新增]autoCheckedByClickRows | 设置为 false 时，表格行点击事件，不会自动勾选复选框 | bool | true |
 | [v2.2.8新增]autoSelect | 树型表格勾选时，是否开启子节点的联动 | bool | false |
+| onPaste | 粘贴的回调函数 | func(event,positon) | - |
 
 > 快捷键部分参考示例 (快捷键在table中的简单使用应用)
 
