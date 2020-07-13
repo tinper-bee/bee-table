@@ -1015,6 +1015,7 @@ var Table = function (_Component) {
         _props3$scroll = _props3.scroll,
         scroll = _props3$scroll === undefined ? {} : _props3$scroll,
         getBodyWrapper = _props3.getBodyWrapper,
+        expandIconAsCell = _props3.expandIconAsCell,
         footerScroll = _props3.footerScroll,
         headerScroll = _props3.headerScroll;
     var useFixedHeader = this.props.useFixedHeader;
@@ -1180,8 +1181,9 @@ var Table = function (_Component) {
     var leftFixedWidth = this.columnManager.getLeftColumnsWidth(this.contentWidth);
     var rightFixedWidth = this.columnManager.getRightColumnsWidth(this.contentWidth);
     var parStyle = {};
+    var expandIconWidth = expandIconAsCell ? 33 : 0;
     if (!fixed) {
-      parStyle = { 'marginLeft': leftFixedWidth, 'marginRight': rightFixedWidth };
+      parStyle = { 'marginLeft': leftFixedWidth + expandIconWidth, 'marginRight': rightFixedWidth };
     }
     return _react2["default"].createElement(
       'div',

@@ -18,6 +18,9 @@
   color: #212121;
   text-align: center; }
 
+.u-loading-container {
+  position: relative; }
+
 /**
   * default样式 单个圆圈加载
   */

@@ -784,7 +784,7 @@ class Table extends Component {
 
   getTable(options = {}) {
     const { columns, fixed } = options;
-    const { clsPrefix, scroll = {}, getBodyWrapper, footerScroll,headerScroll } = this.props;
+    const { clsPrefix, scroll = {}, getBodyWrapper, expandIconAsCell,footerScroll,headerScroll } = this.props;
     let { useFixedHeader } = this.props;
     const bodyStyle = { ...this.props.bodyStyle };
     const headStyle = {};
@@ -945,8 +945,9 @@ class Table extends Component {
     const leftFixedWidth = this.columnManager.getLeftColumnsWidth(this.contentWidth);
     const rightFixedWidth = this.columnManager.getRightColumnsWidth(this.contentWidth);
     let parStyle = {}
+    let expandIconWidth = expandIconAsCell ? 33 : 0;
     if(!fixed){
-      parStyle = {'marginLeft':leftFixedWidth,'marginRight':rightFixedWidth}
+      parStyle = {'marginLeft':leftFixedWidth+expandIconWidth,'marginRight':rightFixedWidth}
     }
     return <div style={parStyle}>{headTable}{BodyTable}</div>;
   }
