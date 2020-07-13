@@ -1183,7 +1183,7 @@ var Table = function (_Component) {
     var parStyle = {};
     var expandIconWidth = expandIconAsCell ? 33 : 0;
     if (!fixed) {
-      parStyle = { 'marginLeft': leftFixedWidth + expandIconWidth, 'marginRight': rightFixedWidth };
+      parStyle = { 'marginLeft': this.columnManager.isIE() ? leftFixedWidth + expandIconWidth + 40 : leftFixedWidth + expandIconWidth, 'marginRight': rightFixedWidth };
     }
     return _react2["default"].createElement(
       'div',

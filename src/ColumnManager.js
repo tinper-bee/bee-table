@@ -1,6 +1,7 @@
 import React from 'react';
 import Column from './Column';
 import ColumnGroup from './ColumnGroup';
+import { isInteger } from 'lodash';
 
 //行控制管理
 
@@ -238,4 +239,11 @@ export default class ColumnManager {
     });
     return leafColumns;
   }
+  isIE(){
+    if(window){
+      if (!!window.ActiveXObject || "ActiveXObject" in window)return true;
+    }
+    return false;
+  }
 }
+

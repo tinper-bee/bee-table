@@ -947,7 +947,7 @@ class Table extends Component {
     let parStyle = {}
     let expandIconWidth = expandIconAsCell ? 33 : 0;
     if(!fixed){
-      parStyle = {'marginLeft':leftFixedWidth+expandIconWidth,'marginRight':rightFixedWidth}
+      parStyle = {'marginLeft':this.columnManager.isIE()?leftFixedWidth+expandIconWidth+40:leftFixedWidth+expandIconWidth,'marginRight':rightFixedWidth}
     }
     return <div style={parStyle}>{headTable}{BodyTable}</div>;
   }

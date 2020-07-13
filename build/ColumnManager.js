@@ -18,6 +18,8 @@ var _ColumnGroup = require('./ColumnGroup');
 
 var _ColumnGroup2 = _interopRequireDefault(_ColumnGroup);
 
+var _lodash = require('lodash');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -304,6 +306,13 @@ var ColumnManager = function () {
       }
     });
     return leafColumns;
+  };
+
+  ColumnManager.prototype.isIE = function isIE() {
+    if (window) {
+      if (!!window.ActiveXObject || "ActiveXObject" in window) return true;
+    }
+    return false;
   };
 
   return ColumnManager;
