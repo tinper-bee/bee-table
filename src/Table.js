@@ -618,6 +618,7 @@ class Table extends Component {
         store={this.store}
         dragborderKey={this.props.dragborderKey}
         rowDraggAble={this.props.rowDraggAble}
+        useDragHandle={this.props.useDragHandle}
         onDragRow={this.onDragRow}
         onDragRowStart={this.onDragRowStart}
         height={expandedRowHeight}
@@ -793,7 +794,7 @@ class Table extends Component {
           indent={indent}
           indentSize={props.indentSize}
           needIndentSpaced={needIndentSpaced}
-          className={`${className} ${this.props.rowDraggAble?' row-dragg-able ':''}`}
+          className={`${className} ${props.rowDraggAble && !props.useDragHandle?'row-dragg-able ':''}`}
           record={record}
           expandIconAsCell={expandIconAsCell}
           onDestroy={this.onRowDestroy}
@@ -825,7 +826,8 @@ class Table extends Component {
           rootIndex = {rootIndex}
           syncHover = {props.syncHover}
           bodyDisplayInRow = {props.bodyDisplayInRow}
-          rowDraggAble={this.props.rowDraggAble}
+          rowDraggAble={props.rowDraggAble}
+          useDragHandle={props.useDragHandle}
           onDragRow={this.onDragRow}
           onDragRowStart={this.onDragRowStart}
           contentTable={this.contentTable}
@@ -1378,8 +1380,11 @@ class Table extends Component {
           this.hoverDom.style.lineHeight = td.offsetHeight + 'px';
           this.hoverDom.style.display = 'block';
         }
+        this.setState({
+          currentHoverIndex: currentIndex,
+          currentHoverRecord: record
+        })
       }
-
     }
 
     onRowHover && onRowHover(currentIndex,record);
@@ -1415,6 +1420,7 @@ class Table extends Component {
   }
 
   render() {
+    const { currentHoverRecord, currentHoverIndex } = this.state;
     const props = this.props;
     const clsPrefix = props.clsPrefix;
     const hasFixedLeft = this.columnManager.isAnyColumnsLeftFixed();
@@ -1484,7 +1490,7 @@ class Table extends Component {
           container={this}
           {...loading} />
         { props.hoverContent && <div className="u-row-hover"
-                                     onMouseEnter={this.onRowHoverMouseEnter} onMouseLeave={this.onRowHoverMouseLeave} ref={el=> this.hoverDom = el }>{props.hoverContent()}</div>}
+                                     onMouseEnter={this.onRowHoverMouseEnter} onMouseLeave={this.onRowHoverMouseLeave} ref={el=> this.hoverDom = el }>{props.hoverContent(currentHoverRecord, currentHoverIndex)}</div>}
       </div>
     );
   }

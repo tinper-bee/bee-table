@@ -141,17 +141,14 @@ class TableRow extends Component{
     if (!this.props.rowDraggAble) return;
     let event = Event.getEvent(e) ,
     target = Event.getTarget(event);
-     this.currentIndex = target.getAttribute("data-row-key");
-     this._dragCurrent = target;
-
-    //TODO 自定义图像后续需要增加。
-    //  let crt = this.synchronizeTableTrShadow();
-    //  document.getElementById(this.props.tableUid).appendChild(crt);
-    // event.dataTransfer.setDragImage(crt, 0, 0);
-     event.dataTransfer.effectAllowed = "move";
-     event.dataTransfer.setData("Text", this.currentIndex);
-
-     onDragRowStart && onDragRowStart(this.currentIndex);
+    if (target.tagName === 'TD') {
+      target = target.parentNode;
+    }
+    this.currentIndex = target.getAttribute("data-row-key");
+    this._dragCurrent = target;
+    event.dataTransfer.effectAllowed = "move";
+    event.dataTransfer.setData("Text", this.currentIndex);
+    onDragRowStart && onDragRowStart(this.currentIndex);
   }
 
   onDragOver = (e) => {
@@ -164,7 +161,7 @@ class TableRow extends Component{
    * @memberof TableHeader
    */
   onDrop = (e) => {
-    let {rowDraggAble,onDragRow} = this.props;
+    let {onDragRow} = this.props;
     let event = Event.getEvent(e) ,
         _target = Event.getTarget(event),
         target = _target.parentNode;
@@ -176,8 +173,6 @@ class TableRow extends Component{
     if(target.nodeName.toUpperCase() === "TR"){
       this.synchronizeTableTr(currentKey,null);
       this.synchronizeTableTr(targetKey,null);
-      // target.setAttribute("style","");
-      // this.synchronizeTrStyle(this.currentIndex,false);
     }
     onDragRow && onDragRow(currentKey,targetKey);
   };
@@ -330,8 +325,6 @@ class TableRow extends Component{
     if(!currentIndex || currentIndex === this.currentIndex)return;
     if(target.nodeName.toUpperCase() === "TR"){
       this.synchronizeTableTr(currentIndex,true);
-      // target.setAttribute("style","border-bottom:2px dashed rgba(5,0,0,0.25)");
-      // // target.style.backgroundColor = 'rgb(235, 236, 240)';
     }
   }
 
@@ -452,7 +445,7 @@ class TableRow extends Component{
   render() {
     const {
       clsPrefix, columns, record, height, visible, index,onPaste,
-      expandIconColumnIndex, expandIconAsCell, expanded, expandRowByClick,rowDraggAble,
+      expandIconColumnIndex, expandIconAsCell, expanded, useDragHandle,rowDraggAble,
       expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed,bodyDisplayInRow
       ,expandedIcon,collapsedIcon, hoverKey,lazyStartIndex,lazyEndIndex, expandIconCellWidth
     } = this.props;
@@ -531,7 +524,7 @@ class TableRow extends Component{
     }
     return (
       <tr
-        draggable={rowDraggAble}
+        draggable={rowDraggAble && !useDragHandle}
         onClick={this.onRowClick}
         onDoubleClick={this.onRowDoubleClick}
         onMouseEnter={this.onMouseEnter}

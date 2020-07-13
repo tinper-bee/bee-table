@@ -27,6 +27,7 @@ export default class ColumnManager {
       key: "dragHandle",
       dataIndex: "dragHandle",
       width: 49,
+      draggable: true,
       render: () => {
         return <Icon type="uf-navmenu" />
       }

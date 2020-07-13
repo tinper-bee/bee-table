@@ -120,7 +120,8 @@ var propTypes = {
   onBodyScroll: _propTypes2["default"].func,
   bodyDisplayInRow: _propTypes2["default"].bool, // 表格内容超出列宽度时进行换行 or 以...形式展现
   headerDisplayInRow: _propTypes2["default"].bool, // 表头内容超出列宽度时进行换行 or 以...形式展现
-  showRowNum: _propTypes2["default"].oneOfType([_propTypes2["default"].bool, _propTypes2["default"].object]) // 表格是否自动生成序号,格式为{base:number || 0,defaultKey:string || '_index',defaultName:string || '序号'}
+  showRowNum: _propTypes2["default"].oneOfType([_propTypes2["default"].bool, _propTypes2["default"].object]), // 表格是否自动生成序号,格式为{base:number || 0,defaultKey:string || '_index',defaultName:string || '序号'}
+  onPaste: _propTypes2["default"].func
 };
 
 var defaultProps = {
@@ -172,7 +173,8 @@ var defaultProps = {
   onBodyScroll: function onBodyScroll() {},
   bodyDisplayInRow: true,
   headerDisplayInRow: true,
-  showRowNum: false
+  showRowNum: false,
+  onPaste: function onPaste() {}
 };
 
 var expandIconCellWidth = Number(43);
@@ -773,7 +775,8 @@ var Table = function (_Component) {
   Table.prototype.getExpandedRow = function getExpandedRow(key, content, visible, className, fixed) {
     var _props3 = this.props,
         clsPrefix = _props3.clsPrefix,
-        expandIconAsCell = _props3.expandIconAsCell;
+        expandIconAsCell = _props3.expandIconAsCell,
+        onPaste = _props3.onPaste;
 
     var colCount = void 0;
     if (fixed === 'left') {
@@ -813,6 +816,7 @@ var Table = function (_Component) {
       });
     }
     return _react2["default"].createElement(_TableRow2["default"], {
+      onPaste: onPaste,
       columns: columns,
       visible: visible,
       className: className,
@@ -823,6 +827,7 @@ var Table = function (_Component) {
       store: this.store,
       dragborderKey: this.props.dragborderKey,
       rowDraggAble: this.props.rowDraggAble,
+      useDragHandle: this.props.useDragHandle,
       onDragRow: this.onDragRow,
       onDragRowStart: this.onDragRowStart,
       height: expandedRowHeight
@@ -868,6 +873,7 @@ var Table = function (_Component) {
     var childrenColumnName = props.childrenColumnName;
     var expandedRowRender = props.expandedRowRender;
     var expandRowByClick = props.expandRowByClick;
+    var onPaste = props.onPaste;
     var fixedColumnsBodyRowsHeight = this.state.fixedColumnsBodyRowsHeight;
 
     var rst = [];
@@ -884,7 +890,7 @@ var Table = function (_Component) {
     var expandIconAsCell = fixed !== 'right' ? props.expandIconAsCell : false;
     var expandIconColumnIndex = props.expandIconColumnIndex;
     if (props.lazyLoad && props.lazyLoad.preHeight && indent == 0) {
-      rst.push(_react2["default"].createElement(_TableRow2["default"], { height: props.lazyLoad.preHeight, columns: [], className: '', key: 'table_row_first', store: this.store, visible: true }));
+      rst.push(_react2["default"].createElement(_TableRow2["default"], { onPaste: onPaste, height: props.lazyLoad.preHeight, columns: [], className: '', key: 'table_row_first', store: this.store, visible: true }));
     }
     var lazyCurrentIndex = props.lazyLoad && props.lazyLoad.startIndex ? props.lazyLoad.startIndex : 0;
     var lazyParentIndex = props.lazyLoad && props.lazyLoad.startParentIndex ? props.lazyLoad.startParentIndex : 0;
@@ -952,10 +958,11 @@ var Table = function (_Component) {
         index = i + lazyParentIndex;
       }
       rst.push(_react2["default"].createElement(_TableRow2["default"], _extends({
+        onPaste: onPaste,
         indent: indent,
         indentSize: props.indentSize,
         needIndentSpaced: needIndentSpaced,
-        className: className + ' ' + (this.props.rowDraggAble ? ' row-dragg-able ' : ''),
+        className: className + ' ' + (props.rowDraggAble && !props.useDragHandle ? 'row-dragg-able ' : ''),
         record: record,
         expandIconAsCell: expandIconAsCell,
         onDestroy: this.onRowDestroy,
@@ -987,7 +994,8 @@ var Table = function (_Component) {
         rootIndex: rootIndex,
         syncHover: props.syncHover,
         bodyDisplayInRow: props.bodyDisplayInRow,
-        rowDraggAble: this.props.rowDraggAble,
+        rowDraggAble: props.rowDraggAble,
+        useDragHandle: props.useDragHandle,
         onDragRow: this.onDragRow,
         onDragRowStart: this.onDragRowStart,
         contentTable: this.contentTable,
@@ -1014,7 +1022,7 @@ var Table = function (_Component) {
     }
 
     if (props.lazyLoad && props.lazyLoad.sufHeight && indent == 0) {
-      rst.push(_react2["default"].createElement(_TableRow2["default"], { height: props.lazyLoad.sufHeight, key: 'table_row_end', columns: [], className: '', store: this.store, visible: true }));
+      rst.push(_react2["default"].createElement(_TableRow2["default"], { onPaste: onPaste, height: props.lazyLoad.sufHeight, key: 'table_row_end', columns: [], className: '', store: this.store, visible: true }));
     }
     if (!this.isTreeType) {
       this.treeType = false;
@@ -1584,6 +1592,10 @@ var Table = function (_Component) {
           this.hoverDom.style.lineHeight = td.offsetHeight + 'px';
           this.hoverDom.style.display = 'block';
         }
+        this.setState({
+          currentHoverIndex: currentIndex,
+          currentHoverRecord: record
+        });
       }
     }
 
@@ -1592,6 +1604,10 @@ var Table = function (_Component) {
 
   Table.prototype.render = function render() {
     var _this7 = this;
+
+    var _state3 = this.state,
+        currentHoverRecord = _state3.currentHoverRecord,
+        currentHoverIndex = _state3.currentHoverIndex;
 
     var props = this.props;
     var clsPrefix = props.clsPrefix;
@@ -1672,7 +1688,7 @@ var Table = function (_Component) {
           onMouseEnter: this.onRowHoverMouseEnter, onMouseLeave: this.onRowHoverMouseLeave, ref: function ref(el) {
             return _this7.hoverDom = el;
           } },
-        props.hoverContent()
+        props.hoverContent(currentHoverRecord, currentHoverIndex)
       )
     );
   };

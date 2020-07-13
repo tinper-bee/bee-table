@@ -341,6 +341,7 @@ var _initialiseProps = function _initialiseProps() {
       key: "dragHandle",
       dataIndex: "dragHandle",
       width: 49,
+      draggable: true,
       render: function render() {
         return _react2["default"].createElement(_beeIcon2["default"], { type: 'uf-navmenu' });
       }

@@ -55,7 +55,8 @@ var propTypes = {
   indent: _propTypes2["default"].number,
   indentSize: _propTypes2["default"].number,
   column: _propTypes2["default"].object,
-  expandIcon: _propTypes2["default"].node
+  expandIcon: _propTypes2["default"].node,
+  onPaste: _propTypes2["default"].func
 };
 
 var TableCell = function (_Component) {
@@ -255,6 +256,21 @@ var TableCell = function (_Component) {
       });
     };
 
+    _this.onPaste = function (e) {
+      var _this$props = _this.props,
+          row = _this$props.index,
+          onPaste = _this$props.onPaste,
+          fixed = _this$props.fixed,
+          col = _this$props.col;
+
+      var position = {
+        row: row,
+        col: col,
+        fixed: !!fixed
+      };
+      onPaste(e, position);
+    };
+
     _this.isInvalidRenderCellText = _this.isInvalidRenderCellText.bind(_this);
     _this.handleClick = _this.handleClick.bind(_this);
     _this.state = {
@@ -438,11 +454,13 @@ var TableCell = function (_Component) {
     return _react2["default"].createElement(
       'td',
       {
+        draggable: column.draggable,
         colSpan: colSpan,
         rowSpan: rowSpan,
         className: className,
         onClick: this.handleClick,
         title: title,
+        onPaste: this.onPaste,
         style: _extends({ maxWidth: column.width, color: fontColor, backgroundColor: bgColor }, column.style) },
       indentText,
       expandIcon,

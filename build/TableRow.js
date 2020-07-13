@@ -116,16 +116,13 @@ var TableRow = function (_Component) {
       if (!_this.props.rowDraggAble) return;
       var event = _utils.Event.getEvent(e),
           target = _utils.Event.getTarget(event);
+      if (target.tagName === 'TD') {
+        target = target.parentNode;
+      }
       _this.currentIndex = target.getAttribute("data-row-key");
       _this._dragCurrent = target;
-
-      //TODO 自定义图像后续需要增加。
-      //  let crt = this.synchronizeTableTrShadow();
-      //  document.getElementById(this.props.tableUid).appendChild(crt);
-      // event.dataTransfer.setDragImage(crt, 0, 0);
       event.dataTransfer.effectAllowed = "move";
       event.dataTransfer.setData("Text", _this.currentIndex);
-
       onDragRowStart && onDragRowStart(_this.currentIndex);
     };
 
@@ -135,9 +132,7 @@ var TableRow = function (_Component) {
     };
 
     _this.onDrop = function (e) {
-      var _this$props = _this.props,
-          rowDraggAble = _this$props.rowDraggAble,
-          onDragRow = _this$props.onDragRow;
+      var onDragRow = _this.props.onDragRow;
 
       var event = _utils.Event.getEvent(e),
           _target = _utils.Event.getTarget(event),
@@ -150,8 +145,6 @@ var TableRow = function (_Component) {
       if (target.nodeName.toUpperCase() === "TR") {
         _this.synchronizeTableTr(currentKey, null);
         _this.synchronizeTableTr(targetKey, null);
-        // target.setAttribute("style","");
-        // this.synchronizeTrStyle(this.currentIndex,false);
       }
       onDragRow && onDragRow(currentKey, targetKey);
     };
@@ -228,9 +221,9 @@ var TableRow = function (_Component) {
     };
 
     _this.synchronizeTableTrShadow = function () {
-      var _this$props2 = _this.props,
-          contentTable = _this$props2.contentTable,
-          index = _this$props2.index;
+      var _this$props = _this.props,
+          contentTable = _this$props.contentTable,
+          index = _this$props.index;
 
 
       var cont = contentTable.querySelector('.u-table-scroll table tbody').getElementsByTagName("tr")[index],
@@ -296,8 +289,6 @@ var TableRow = function (_Component) {
       if (!currentIndex || currentIndex === _this.currentIndex) return;
       if (target.nodeName.toUpperCase() === "TR") {
         _this.synchronizeTableTr(currentIndex, true);
-        // target.setAttribute("style","border-bottom:2px dashed rgba(5,0,0,0.25)");
-        // // target.style.backgroundColor = 'rgb(235, 236, 240)';
       }
     };
 
@@ -560,10 +551,11 @@ var TableRow = function (_Component) {
         height = _props9.height,
         visible = _props9.visible,
         index = _props9.index,
+        onPaste = _props9.onPaste,
         expandIconColumnIndex = _props9.expandIconColumnIndex,
         expandIconAsCell = _props9.expandIconAsCell,
         expanded = _props9.expanded,
-        expandRowByClick = _props9.expandRowByClick,
+        useDragHandle = _props9.useDragHandle,
         rowDraggAble = _props9.rowDraggAble,
         expandable = _props9.expandable,
         onExpand = _props9.onExpand,
@@ -637,7 +629,9 @@ var TableRow = function (_Component) {
         expandIcon: isColumnHaveExpandIcon ? expandIcon : null,
         bodyDisplayInRow: bodyDisplayInRow,
         lazyStartIndex: lazyStartIndex,
-        lazyEndIndex: lazyEndIndex
+        lazyEndIndex: lazyEndIndex,
+        onPaste: onPaste,
+        col: i
       }));
     }
     var style = _extends({ height: height }, record ? record.style : undefined);
@@ -650,7 +644,7 @@ var TableRow = function (_Component) {
     return _react2["default"].createElement(
       'tr',
       {
-        draggable: rowDraggAble,
+        draggable: rowDraggAble && !useDragHandle,
         onClick: this.onRowClick,
         onDoubleClick: this.onRowDoubleClick,
         onMouseEnter: this.onMouseEnter,

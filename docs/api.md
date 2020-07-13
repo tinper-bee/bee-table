@@ -56,6 +56,7 @@ import 'bee-table/build/Table.css';
 |collapsedIcon|嵌套表格场景中关闭子表时的关闭图标|||
 | expandRowByClick       | 设置展开行是否通过点击行触发，此参数需要与上面参数搭配使用（默认是通过点击行前面的加号展开行 | bool                                   | false           |
 | rowDraggAble  | 是否增加行交换顺序功能 | boolean| false |
+| useDragHandle  | 通过行手柄进行拖拽排序，在 `rowDraggAble` 为 `true` 时有效 | boolean| false |
 | showHeader             | 是否显示表头                                   | bool                                   | true            |
 | title                  | 表格标题                                     | Function                               | -               |
 | footer                 | 表格尾部                                     | Function                               | -               |

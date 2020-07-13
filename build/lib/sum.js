@@ -93,7 +93,11 @@ function sum(Table) {
                 count += _num;
               }
             });
-            sumdata[column.dataIndex] = (0, _utils.DicimalFormater)(count, precision);
+            var _sum = (0, _utils.DicimalFormater)(count, precision);
+            sumdata[column.dataIndex] = _sum;
+            if (column.sumRender && typeof column.sumRender == 'function') {
+              sumdata[column.dataIndex] = column.sumRender(_sum);
+            }
           }
           if (index == 0) {
             sumdata[column.dataIndex] = "合计 " + sumdata[column.dataIndex];

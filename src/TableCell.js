@@ -294,6 +294,7 @@ class TableCell extends Component{
     }
     if(colSpan==0)return null;
     return <td
+            draggable={column.draggable}
             colSpan={colSpan}
             rowSpan={rowSpan}
             className={className}
