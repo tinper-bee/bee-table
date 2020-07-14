@@ -59,6 +59,7 @@ const propTypes = {
   hoverContent:PropTypes.func,
   size: PropTypes.oneOf(['sm', 'md', 'lg']),
   rowDraggAble: PropTypes.bool,
+  hideDragHandle: PropTypes.bool, // 隐藏行拖拽把手
   onDropRow: PropTypes.func,
   onDragRowStart: PropTypes.func,
   onBodyScroll: PropTypes.func,
@@ -103,6 +104,7 @@ const defaultProps = {
   heightConsistent:false,
   size: 'md',
   rowDraggAble:false,
+  hideDragHandle:false,
   onDropRow: ()=>{},
   onDragRowStart: ()=>{},
   onBodyScroll: ()=>{},
@@ -119,7 +121,8 @@ class Table extends Component {
     super(props);
     let expandedRowKeys = [];
     let rows = [...props.data];
-    this.columnManager = new ColumnManager(props.columns, props.children, props.originWidth, props.rowDraggAble, props.showRowNum); // 加入props.showRowNum参数
+    const showDragHandle = !props.hideDragHandle && props.rowDraggAble;
+    this.columnManager = new ColumnManager(props.columns, props.children, props.originWidth, showDragHandle, props.showRowNum); // 加入props.showRowNum参数
     this.store = createStore({ currentHoverKey: null });
     this.firstDid = true;
     if (props.defaultExpandAllRows) {
@@ -203,7 +206,7 @@ class Table extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let { rowDraggAble, showRowNum } = this.props;
+    let { hideDragHandle, rowDraggAble, showRowNum } = this.props;
     if ('data' in nextProps) {
       this.setState({
         data: nextProps.data,
@@ -215,12 +218,12 @@ class Table extends Component {
       });
     }
     if (nextProps.columns && nextProps.columns !== this.props.columns) {
-      this.columnManager.reset(nextProps.columns, null, showRowNum, rowDraggAble); // 加入this.props.showRowNum参数
+      this.columnManager.reset(nextProps.columns, null, showRowNum, !hideDragHandle && rowDraggAble); // 加入this.props.showRowNum参数
       if(nextProps.columns.length !== this.props.columns.length && this.refs && this.bodyTable){
          this.scrollTop = this.bodyTable.scrollTop;
       }
     } else if (nextProps.children !== this.props.children) {
-      this.columnManager.reset(null, nextProps.children, showRowNum, rowDraggAble); // 加入this.props.showRowNum参数
+      this.columnManager.reset(null, nextProps.children, showRowNum, !hideDragHandle && rowDraggAble); // 加入this.props.showRowNum参数
     }
     //适配lazyload
     if(nextProps.scrollTop > -1){

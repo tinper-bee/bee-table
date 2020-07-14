@@ -10,7 +10,7 @@ import React, { Component } from 'react';
 import Table from '../../src'; 
 import dragColumn from '../../src/lib/dragColumn';
 
-const columns23 = [
+const columns = [
   {
     title: "订单编号",
     dataIndex: "a",
@@ -38,7 +38,7 @@ const columns23 = [
   }
 ];
 
-const data23 = [
+const data = [
   { a: "NU0391001", b: "2019-03-01", c: "xx供应商",d:'Tom', key: "2" },
   { a: "NU0391002", b: "2018-11-02", c: "yy供应商",d:'Jack', key: "1" },
   { a: "NU0391003", b: "2019-05-03", c: "zz供应商",d:'Jane', key: "3" }
@@ -46,15 +46,15 @@ const data23 = [
 
 const DragColumnTable = dragColumn(Table);
 
-class Demo23 extends Component {
+class Demo30 extends Component {
   constructor(props) {
     super(props); 
   }
 
   render() {
     return <DragColumnTable 
-            columns={columns23} 
-            data={data23} 
+            columns={columns} 
+            data={data} 
             bordered
             scroll={{y:200}}
             dragborder={true} 
@@ -65,4 +65,4 @@ class Demo23 extends Component {
   }
 }
 
-export default Demo23;
+export default Demo30;

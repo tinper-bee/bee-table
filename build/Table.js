@@ -115,6 +115,7 @@ var propTypes = {
   hoverContent: _propTypes2["default"].func,
   size: _propTypes2["default"].oneOf(['sm', 'md', 'lg']),
   rowDraggAble: _propTypes2["default"].bool,
+  hideDragHandle: _propTypes2["default"].bool, // 隐藏行拖拽把手
   onDropRow: _propTypes2["default"].func,
   onDragRowStart: _propTypes2["default"].func,
   onBodyScroll: _propTypes2["default"].func,
@@ -168,6 +169,7 @@ var defaultProps = {
   heightConsistent: false,
   size: 'md',
   rowDraggAble: false,
+  hideDragHandle: false,
   onDropRow: function onDropRow() {},
   onDragRowStart: function onDragRowStart() {},
   onBodyScroll: function onBodyScroll() {},
@@ -313,7 +315,8 @@ var Table = function (_Component) {
 
     var expandedRowKeys = [];
     var rows = [].concat(_toConsumableArray(props.data));
-    _this.columnManager = new _ColumnManager2["default"](props.columns, props.children, props.originWidth, props.rowDraggAble, props.showRowNum); // 加入props.showRowNum参数
+    var showDragHandle = !props.hideDragHandle && props.rowDraggAble;
+    _this.columnManager = new _ColumnManager2["default"](props.columns, props.children, props.originWidth, showDragHandle, props.showRowNum); // 加入props.showRowNum参数
     _this.store = (0, _createStore2["default"])({ currentHoverKey: null });
     _this.firstDid = true;
     if (props.defaultExpandAllRows) {
@@ -397,6 +400,7 @@ var Table = function (_Component) {
 
   Table.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
     var _props = this.props,
+        hideDragHandle = _props.hideDragHandle,
         rowDraggAble = _props.rowDraggAble,
         showRowNum = _props.showRowNum;
 
@@ -411,12 +415,12 @@ var Table = function (_Component) {
       });
     }
     if (nextProps.columns && nextProps.columns !== this.props.columns) {
-      this.columnManager.reset(nextProps.columns, null, showRowNum, rowDraggAble); // 加入this.props.showRowNum参数
+      this.columnManager.reset(nextProps.columns, null, showRowNum, !hideDragHandle && rowDraggAble); // 加入this.props.showRowNum参数
       if (nextProps.columns.length !== this.props.columns.length && this.refs && this.bodyTable) {
         this.scrollTop = this.bodyTable.scrollTop;
       }
     } else if (nextProps.children !== this.props.children) {
-      this.columnManager.reset(null, nextProps.children, showRowNum, rowDraggAble); // 加入this.props.showRowNum参数
+      this.columnManager.reset(null, nextProps.children, showRowNum, !hideDragHandle && rowDraggAble); // 加入this.props.showRowNum参数
     }
     //适配lazyload
     if (nextProps.scrollTop > -1) {

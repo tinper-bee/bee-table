@@ -30,7 +30,7 @@ const data = [
   { a: "ASVAL_201903120007", b: "小杨", c: "女", d: "财务四科", e: "T2", key: "1009" }
 ];
 
-class Demo1201 extends Component {
+class Demo38 extends Component {
 
   constructor(props) {
     super(props);
@@ -77,4 +77,4 @@ class Demo1201 extends Component {
   }
 }
 
-export default Demo1201;
+export default Demo38;
