@@ -1,3 +1,12 @@
+## [2.2.55](https://github.com/tinper-bee/bee-table/compare/v2.2.54...v2.2.55) (2020-07-14)
+
+
+### Features
+
+* 增加 hideDragHandle 参数，隐藏行拖拽把手[[#609](https://github.com/tinper-bee/bee-table/issues/609)] ([b5eab50](https://github.com/tinper-bee/bee-table/commit/b5eab50b9a8b66c96a31b8f8c980ea9f9ea4d264))
+
+
+
 ## [2.2.54](https://github.com/tinper-bee/bee-table/compare/v2.2.48...v2.2.54) (2020-07-14)
 
 
