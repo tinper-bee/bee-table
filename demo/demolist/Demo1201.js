@@ -69,7 +69,7 @@ class Demo38 extends Component {
           columns={columns}
           data={data}
           rowDraggAble={true}
-          useDragHandle={true}
+          // useDragHandle={true}
           onDragRowStart={this.onDragRowStart}
           onDropRow={this.onDropRow}
         />
