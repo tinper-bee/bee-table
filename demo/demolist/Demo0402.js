@@ -10,7 +10,6 @@
 
 import React, { Component } from "react";
 import Table from "../../src";
-import {Button} from "tinper-bee";
 
 import dragColumn from '../../src/lib/dragColumn';
 
@@ -106,7 +105,7 @@ for (let i = 0; i < 20; i++) {
 
 const DragColumnTable = dragColumn(Table);
 
-class Demo32 extends Component {
+class Demo12 extends Component {
   render() {
     return (
       <DragColumnTable
@@ -125,4 +124,4 @@ class Demo32 extends Component {
   }
 }
 
-export default Demo32;
+export default Demo12;

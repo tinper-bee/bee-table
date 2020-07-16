@@ -9,7 +9,7 @@
 import React, { Component } from 'react';
 import Table from '../../src';
 
-const columns26 = [
+const columns = [
   { title: "姓名", width: 180, dataIndex: "name", key: "name", filterType: "text", filterDropdown: "show" },
   { title: "年龄", width: 150, dataIndex: "age", key: "age", filterType: "dropdown", filterDropdown: "show" },
   { title: "日期", width: 200, dataIndex: "date", key: "date", filterType: "date", filterDropdown: "show", format: "YYYY-MM-DD" },
@@ -17,7 +17,7 @@ const columns26 = [
   { title: "备注", dataIndex: "mark", key: "mark" }
 ];
 
-const data26 = [
+const data = [
   {
     key: "1",
     name: "John Brown",
@@ -83,7 +83,7 @@ const data26 = [
   }
 ];
 
-class Demo26 extends Component {
+class Demo23 extends Component {
   handlerFilterChange = (key, val, condition) => {
     console.log('参数：key=', key, ' value=', val, 'condition=', condition);
   }
@@ -98,9 +98,9 @@ class Demo26 extends Component {
       filterDelay={500}//输入文本多少ms触发回调函数，默认300ms
       filterable={true}//是否开启过滤数据功能
       bordered
-      columns={columns26}
-      data={data26} />;
+      columns={columns}
+      data={data} />;
   }
 }
 
-export default Demo26;
+export default Demo23;

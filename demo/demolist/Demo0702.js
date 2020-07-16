@@ -13,7 +13,7 @@ import Table from '../../src';
 import multiSelect from '../../src/lib/multiSelect';
 import sort from '../../src/lib/sort';
 
-const data27 = [
+const data = [
   {
     key: "1",
     name: "John Brown",
@@ -82,7 +82,7 @@ const data27 = [
 
 const MultiSelectTable = multiSelect(Table, Checkbox);
 const ComplexTable = sort(MultiSelectTable, Icon);
-class Demo27 extends Component {
+class Demo24 extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -107,7 +107,7 @@ class Demo27 extends Component {
     let multiObj = {
       type: "checkbox"
     };
-    let columns27 = [
+    let columns = [
       {
         title: "姓名",
         width: 180,
@@ -162,9 +162,9 @@ class Demo27 extends Component {
       getSelectedDataFunc={this.getSelectedDataFunc}
       bordered
       multiSelect={multiObj}
-      columns={columns27}
-      data={data27} />;
+      columns={columns}
+      data={data} />;
   }
 }
 
-export default Demo27;
+export default Demo24;

@@ -50,7 +50,7 @@ const data = [
 const MultiSelectTable = multiSelect(Table, Checkbox);
 const ComplexTable = sort(MultiSelectTable, Icon);
 
-class Demo33 extends Component {
+class Demo13 extends Component {
     constructor(props) {
         super(props);
     }
@@ -101,4 +101,4 @@ class Demo33 extends Component {
     }
 }
 
-export default Demo33; 
+export default Demo13; 
