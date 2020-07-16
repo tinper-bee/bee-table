@@ -1,3 +1,12 @@
+## [2.2.56](https://github.com/tinper-bee/bee-table/compare/v2.2.55...v2.2.56) (2020-07-16)
+
+
+### Features
+
+* 行拖拽样式修改[JCJS-2307] ([2cb8982](https://github.com/tinper-bee/bee-table/commit/2cb8982d677c28af4a17bd81b4c5736304d08a5f))
+
+
+
 ## [2.2.55](https://github.com/tinper-bee/bee-table/compare/v2.2.54...v2.2.55) (2020-07-14)
 
 
