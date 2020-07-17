@@ -880,7 +880,7 @@ var _initialiseProps = function _initialiseProps() {
           , clsPrefix: clsPrefix //css前缀
           , className: clsPrefix + " filter-text",
           dataIndex: dataIndex //字段
-          , onFilterChange: _this8.handlerFilterChange //输入框回调
+          , onFilterChange: (0, _throttleDebounce.debounce)(filterDelay || 300, _this8.handlerFilterChange) //输入框回调
           , onFilterClear: _this8.handlerFilterClear //清除回调
           , filterDropdown: rows[1][index]["filterdropdown"] //是否显示下拉条件
           , filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
