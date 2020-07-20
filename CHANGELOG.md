@@ -1,3 +1,12 @@
+## [2.2.58](https://github.com/tinper-bee/bee-table/compare/v2.2.57...v2.2.58) (2020-07-20)
+
+
+### Features
+
+* 普通表格新增onBodyScroll回调 ([b42d80b](https://github.com/tinper-bee/bee-table/commit/b42d80b02aafa9a67e9fafed95c40a5b9afd302f))
+
+
+
 ## [2.2.57](https://github.com/tinper-bee/bee-table/compare/v2.2.56...v2.2.57) (2020-07-17)
 
 
