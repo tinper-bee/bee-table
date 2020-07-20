@@ -1347,6 +1347,9 @@ class Table extends Component {
         debounce(
           handleScrollY(this.lastScrollTop,this.treeType,onBodyScroll),
         300)
+      }else{
+        //滚动回调
+        onBodyScroll(this.lastScrollTop)
       }
 
     }
