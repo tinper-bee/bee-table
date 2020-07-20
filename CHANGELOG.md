@@ -1,3 +1,12 @@
+## [2.2.57](https://github.com/tinper-bee/bee-table/compare/v2.2.56...v2.2.57) (2020-07-17)
+
+
+### Features
+
+* 条件过滤，输入框输入即查询[[#605](https://github.com/tinper-bee/bee-table/issues/605)] ([2a06e5f](https://github.com/tinper-bee/bee-table/commit/2a06e5fa8f28b955d69ccceae020139657eb3d1f))
+
+
+
 ## [2.2.56](https://github.com/tinper-bee/bee-table/compare/v2.2.55...v2.2.56) (2020-07-16)
 
 

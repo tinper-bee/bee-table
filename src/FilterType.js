@@ -49,8 +49,11 @@ class FilterType extends Component {
      *
      */
     changeText = (val) => {
+        let { onFilterChange, dataIndex } = this.props;
         this.setState({
             value: val
+        }, () => {
+            onFilterChange(dataIndex, val, this.state.condition);
         });
     }
 

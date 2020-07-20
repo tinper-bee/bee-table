@@ -83,15 +83,21 @@ var FilterType = function (_Component) {
         };
 
         _this.changeText = function (val) {
+            var _this$props2 = _this.props,
+                onFilterChange = _this$props2.onFilterChange,
+                dataIndex = _this$props2.dataIndex;
+
             _this.setState({
                 value: val
+            }, function () {
+                onFilterChange(dataIndex, val, _this.state.condition);
             });
         };
 
         _this.changeTextCall = function (e) {
-            var _this$props2 = _this.props,
-                onFilterChange = _this$props2.onFilterChange,
-                dataIndex = _this$props2.dataIndex;
+            var _this$props3 = _this.props,
+                onFilterChange = _this$props3.onFilterChange,
+                dataIndex = _this$props3.dataIndex;
 
             if (e.keyCode == 13) {
                 e.target.value !== "" && onFilterChange(dataIndex, e.target.value, _this.state.condition);
@@ -105,9 +111,9 @@ var FilterType = function (_Component) {
         };
 
         _this.onSelectDropdown = function (item) {
-            var _this$props3 = _this.props,
-                onFilterChange = _this$props3.onFilterChange,
-                dataIndex = _this$props3.dataIndex;
+            var _this$props4 = _this.props,
+                onFilterChange = _this$props4.onFilterChange,
+                dataIndex = _this$props4.dataIndex;
 
             _this.setState({
                 condition: item.key
@@ -117,9 +123,9 @@ var FilterType = function (_Component) {
         };
 
         _this.changeNumber = function (value) {
-            var _this$props4 = _this.props,
-                onFilterChange = _this$props4.onFilterChange,
-                dataIndex = _this$props4.dataIndex;
+            var _this$props5 = _this.props,
+                onFilterChange = _this$props5.onFilterChange,
+                dataIndex = _this$props5.dataIndex;
 
             _this.setState({
                 value: value
@@ -144,9 +150,9 @@ var FilterType = function (_Component) {
         };
 
         _this.changeSelect = function (value) {
-            var _this$props5 = _this.props,
-                onFilterChange = _this$props5.onFilterChange,
-                dataIndex = _this$props5.dataIndex;
+            var _this$props6 = _this.props,
+                onFilterChange = _this$props6.onFilterChange,
+                dataIndex = _this$props6.dataIndex;
 
             if (onFilterChange) {
                 onFilterChange(dataIndex, value, _this.state.condition);
@@ -173,9 +179,9 @@ var FilterType = function (_Component) {
         };
 
         _this.changeDate = function (value) {
-            var _this$props6 = _this.props,
-                onFilterChange = _this$props6.onFilterChange,
-                dataIndex = _this$props6.dataIndex;
+            var _this$props7 = _this.props,
+                onFilterChange = _this$props7.onFilterChange,
+                dataIndex = _this$props7.dataIndex;
 
             if (onFilterChange) {
                 onFilterChange(dataIndex, value, _this.state.condition);
@@ -187,18 +193,18 @@ var FilterType = function (_Component) {
         };
 
         _this.renderControl = function (rendertype) {
-            var _this$props7 = _this.props,
-                filterInputNumberOptions = _this$props7.filterInputNumberOptions,
-                filterDropdownIncludeKeys = _this$props7.filterDropdownIncludeKeys,
-                dataIndex = _this$props7.dataIndex,
-                filterDropdown = _this$props7.filterDropdown,
-                filterDropdownType = _this$props7.filterDropdownType,
-                format = _this$props7.format,
-                className = _this$props7.className,
-                onChange = _this$props7.onChange,
-                onSelectDropdown = _this$props7.onSelectDropdown,
-                clsPrefix = _this$props7.clsPrefix,
-                locale = _this$props7.locale;
+            var _this$props8 = _this.props,
+                filterInputNumberOptions = _this$props8.filterInputNumberOptions,
+                filterDropdownIncludeKeys = _this$props8.filterDropdownIncludeKeys,
+                dataIndex = _this$props8.dataIndex,
+                filterDropdown = _this$props8.filterDropdown,
+                filterDropdownType = _this$props8.filterDropdownType,
+                format = _this$props8.format,
+                className = _this$props8.className,
+                onChange = _this$props8.onChange,
+                onSelectDropdown = _this$props8.onSelectDropdown,
+                clsPrefix = _this$props8.clsPrefix,
+                locale = _this$props8.locale;
 
             switch (rendertype) {
                 case 'text':

@@ -657,7 +657,7 @@ class TableHeader extends Component {
             clsPrefix={clsPrefix}//css前缀
             className={`${clsPrefix} filter-text`}
             dataIndex={dataIndex}//字段
-            onFilterChange={this.handlerFilterChange}//输入框回调
+            onFilterChange={debounce(filterDelay || 300, this.handlerFilterChange)}//输入框回调
             onFilterClear={this.handlerFilterClear}//清除回调
             filterDropdown={rows[1][index]["filterdropdown"]}//是否显示下拉条件
             filterDropdownType={rows[1][index]["filterdropdowntype"]}//下拉的条件类型为string,number

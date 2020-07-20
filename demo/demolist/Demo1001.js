@@ -6,8 +6,6 @@
 * demo1001
 */
 import React, { Component } from 'react';
-import {Icon} from "tinper-bee";
-
 import Table from '../../src'; 
 import dragColumn from '../../src/lib/dragColumn';
 
@@ -55,11 +53,11 @@ const data = [
 
 const DragColumnTable = dragColumn(Table);
 
-const defaultProps22 = {
+const defaultProps29 = {
   prefixCls: "bee-table"
 };
 
-class Demo22 extends Component {
+class Demo29 extends Component {
   constructor(props) {
     super(props); 
   }
@@ -88,5 +86,5 @@ class Demo22 extends Component {
   }
 }
 
-Demo22.defaultProps = defaultProps22;
-export default Demo22;
+Demo29.defaultProps = defaultProps29;
+export default Demo29;
