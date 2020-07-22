@@ -6,12 +6,6 @@
 * 合计和固定列错位[[#540](https://github.com/tinper-bee/bee-table/issues/540)] ([f3541df](https://github.com/tinper-bee/bee-table/commit/f3541dfe034712751ca62c73f63d3874f8036d1f))
 
 
-### Features
-
-* 普通表格新增onBodyScroll回调 ([b42d80b](https://github.com/tinper-bee/bee-table/commit/b42d80b02aafa9a67e9fafed95c40a5b9afd302f))
-
-
-
 ## [2.2.58](https://github.com/tinper-bee/bee-table/compare/v2.2.57...v2.2.58) (2020-07-20)
 
 
