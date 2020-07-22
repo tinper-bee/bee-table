@@ -481,7 +481,8 @@ class TableRow extends Component{
       expandIndexInThisTable = expandIconColumnIndex
     }
     for (let i = 0; i < columns.length; i++) {
-      if (expandIconAsCell && i === 0 && !showSum ) {
+      if (expandIconAsCell && i === 0) {
+        showSum ? cells.push(<td width={expandIconCellWidth}></td>) :
         cells.push(
           <td
             className={`${clsPrefix}-expand-icon-cell ${isExpandIconAsCell}`}

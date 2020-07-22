@@ -1304,7 +1304,7 @@ var Table = function (_Component) {
     }
     // const leftFixedWidth = this.columnManager.getLeftColumnsWidth(this.contentWidth);
     // const rightFixedWidth = this.columnManager.getRightColumnsWidth(this.contentWidth);
-    var expandIconWidth = expandIconAsCell ? 33 : 0;
+    var expandIconWidth = expandIconAsCell ? 32 : 0;
     var parStyle = {};
     if (!fixed) {
       parStyle = { 'marginLeft': leftFixedWidth + expandIconWidth, 'marginRight': rightFixedWidth };

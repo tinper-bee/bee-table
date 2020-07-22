@@ -603,8 +603,8 @@ var TableRow = function (_Component) {
       expandIndexInThisTable = expandIconColumnIndex;
     }
     for (var i = 0; i < columns.length; i++) {
-      if (expandIconAsCell && i === 0 && !showSum) {
-        cells.push(_react2["default"].createElement(
+      if (expandIconAsCell && i === 0) {
+        showSum ? cells.push(_react2["default"].createElement('td', { width: expandIconCellWidth })) : cells.push(_react2["default"].createElement(
           'td',
           {
             className: clsPrefix + '-expand-icon-cell ' + isExpandIconAsCell,

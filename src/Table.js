@@ -1127,7 +1127,7 @@ class Table extends Component {
     }
     // const leftFixedWidth = this.columnManager.getLeftColumnsWidth(this.contentWidth);
     // const rightFixedWidth = this.columnManager.getRightColumnsWidth(this.contentWidth);
-    let expandIconWidth = expandIconAsCell ? 33 : 0;
+    let expandIconWidth = expandIconAsCell ? 32 : 0;
     let parStyle = {}
     if(!fixed){
       parStyle = {'marginLeft':leftFixedWidth + expandIconWidth,'marginRight':rightFixedWidth}
