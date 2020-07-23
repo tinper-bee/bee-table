@@ -126,7 +126,8 @@ var propTypes = {
   tabIndex: _propTypes2["default"].string,
   hoverContent: _propTypes2["default"].func,
   canConfigureTableSize: _propTypes2["default"].bool,
-  getToolbarContainer: _propTypes2["default"].func
+  getToolbarContainer: _propTypes2["default"].func,
+  ieDefaultLeft: _propTypes2["default"].number
 };
 
 var defaultProps = {
@@ -172,7 +173,8 @@ var defaultProps = {
   setRowParentIndex: function setRowParentIndex() {},
   tabIndex: '0',
   heightConsistent: false,
-  canConfigureTableSize: false
+  canConfigureTableSize: false,
+  ieDefaultLeft: 20
 };
 
 var tableSizeIcons = {
@@ -1183,7 +1185,7 @@ var Table = function (_Component) {
     var parStyle = {};
     var expandIconWidth = expandIconAsCell ? 33 : 0;
     if (!fixed) {
-      parStyle = { 'marginLeft': this.columnManager.isIE() ? leftFixedWidth + expandIconWidth + 40 : leftFixedWidth + expandIconWidth, 'marginRight': rightFixedWidth };
+      parStyle = { 'marginLeft': this.columnManager.isIE() ? leftFixedWidth + expandIconWidth + Number(this.props.ieDefaultLeft) : leftFixedWidth + expandIconWidth, 'marginRight': rightFixedWidth };
     }
     return _react2["default"].createElement(
       'div',

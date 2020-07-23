@@ -99,6 +99,7 @@ import bee-table/build/Table.css;
 | filterDropdownIncludeKeys | 能够设置指定的下拉条件项，通过设置keys 其中string条件可设置:LIKE,ULIKE,EQ,UEQ,START,END.number条件可设置:GT,GTEQ,LT,LTEQ,EQ,UEQ | array | [] 不设置此属性为显示所有
 | filterInputNumberOptions | 数值框接收的props，具体属性参考bee-input-number | object | null
 | textAlign | 内容对齐方式，默认是左对齐（'left、right、center'） | string | 
+| ieDefaultLeft | ie左侧固定列默认增加宽度 | number | 20
 
 
 ## 快捷键API

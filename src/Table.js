@@ -60,6 +60,7 @@ const propTypes = {
   hoverContent:PropTypes.func,
   canConfigureTableSize: PropTypes.bool,
   getToolbarContainer: PropTypes.func,
+  ieDefaultLeft:PropTypes.number
 };
 
 const defaultProps = {
@@ -94,7 +95,8 @@ const defaultProps = {
   setRowParentIndex:()=>{},
   tabIndex:'0',
   heightConsistent:false,
-  canConfigureTableSize:false
+  canConfigureTableSize:false,
+  ieDefaultLeft:20
 };
 
 const tableSizeIcons = {
@@ -947,7 +949,7 @@ class Table extends Component {
     let parStyle = {}
     let expandIconWidth = expandIconAsCell ? 33 : 0;
     if(!fixed){
-      parStyle = {'marginLeft':this.columnManager.isIE()?leftFixedWidth+expandIconWidth+40:leftFixedWidth+expandIconWidth,'marginRight':rightFixedWidth}
+      parStyle = {'marginLeft':this.columnManager.isIE()?leftFixedWidth+expandIconWidth+Number(this.props.ieDefaultLeft):leftFixedWidth+expandIconWidth,'marginRight':rightFixedWidth}
     }
     return <div style={parStyle}>{headTable}{BodyTable}</div>;
   }
