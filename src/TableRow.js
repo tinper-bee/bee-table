@@ -33,6 +33,7 @@ const propTypes = {
     rowDraggAble: PropTypes.bool,
     onDragRow: PropTypes.func,
     onDragRowStart: PropTypes.func,
+    syncRowHeight:PropTypes.bool
 };
 
 const defaultProps = {
@@ -46,6 +47,7 @@ const defaultProps = {
     setRowParentIndex:()=>{},
     rowDraggAble:false,
     // onDragRow:()=>{}
+    syncRowHeight:false
 };
 
 class TableRow extends Component{
@@ -339,18 +341,19 @@ class TableRow extends Component{
   }
 
   componentDidUpdate(prevProps) {
-    const { rowDraggAble } = this.props;
+    const { rowDraggAble,syncRowHeight } = this.props;
     if(!this.event){
       this.event = true;
       if(rowDraggAble){
         this.initEvent();
       }
     }
-
     if(this.props.treeType){
       this.setRowParentIndex();
     }
-    this.setRowHeight()
+    if(syncRowHeight){
+      this.setRowHeight()
+    }
   }
 
   componentWillUnmount() {

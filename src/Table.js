@@ -98,7 +98,7 @@ const defaultProps = {
   minColumnWidth: 80,
   locale:{},
   syncHover: true,
-  setRowHeight:()=>{},
+  // setRowHeight:()=>{},
   setRowParentIndex:()=>{},
   tabIndex:'0',
   heightConsistent:false,
