@@ -568,7 +568,7 @@ class Table extends Component {
   }
 
   getExpandedRow(key, content, visible, className, fixed) {
-    const { clsPrefix, expandIconAsCell } = this.props;
+    const { clsPrefix, expandIconAsCell,syncRowHeight } = this.props;
     let colCount;
     if (fixed === 'left') {
       colCount = this.columnManager.leftLeafColumns().length;
@@ -619,6 +619,7 @@ class Table extends Component {
         onDragRow={this.onDragRow}
         onDragRowStart={this.onDragRowStart}
         height={expandedRowHeight}
+        syncRowHeight={syncRowHeight}
       />
     );
   }
@@ -700,6 +701,7 @@ class Table extends Component {
     const childrenColumnName = props.childrenColumnName;
     const expandedRowRender = props.expandedRowRender;
     const expandRowByClick = props.expandRowByClick;
+    const syncRowHeight = props.syncRowHeight;
     const { fixedColumnsBodyRowsHeight } = this.state;
     let rst = [];
     let height;
@@ -714,7 +716,7 @@ class Table extends Component {
     const expandIconColumnIndex = props.expandIconColumnIndex
     if(props.lazyLoad && props.lazyLoad.preHeight && indent == 0){
       rst.push(
-        <TableRow height={props.lazyLoad.preHeight} columns={[]} className='' key={'table_row_first'} store={this.store} visible = {true}/>
+        <TableRow syncRowHeight={syncRowHeight} height={props.lazyLoad.preHeight} columns={[]} className='' key={'table_row_first'} store={this.store} visible = {true}/>
       )
     }
     const lazyCurrentIndex =  props.lazyLoad && props.lazyLoad.startIndex ?props.lazyLoad.startIndex :0;
@@ -833,6 +835,7 @@ class Table extends Component {
           centerColumnsLength={this.centerColumnsLength}
           leftColumnsLength={this.leftColumnsLength}
           expandIconCellWidth={expandIconCellWidth}
+          syncRowHeight={syncRowHeight}
         />
       );
       this.treeRowIndex++;
@@ -854,7 +857,7 @@ class Table extends Component {
 
     if(props.lazyLoad && props.lazyLoad.sufHeight && indent == 0){
       rst.push(
-        <TableRow height={props.lazyLoad.sufHeight} key={'table_row_end'} columns={[]} className='' store={this.store} visible = {true}/>
+        <TableRow syncRowHeight={syncRowHeight} height={props.lazyLoad.sufHeight} key={'table_row_end'} columns={[]} className='' store={this.store} visible = {true}/>
       )
     }
     if (!this.isTreeType) {
