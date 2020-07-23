@@ -74,7 +74,8 @@ var defaultProps = {
 
   className: '',
   setRowParentIndex: function setRowParentIndex() {},
-  rowDraggAble: false
+  rowDraggAble: false,
+  syncRowHeight: true
   // onDragRow:()=>{}
 };
 
@@ -432,7 +433,9 @@ var TableRow = function (_Component) {
 
 
   TableRow.prototype.componentDidUpdate = function componentDidUpdate(prevProps) {
-    var rowDraggAble = this.props.rowDraggAble;
+    var _props2 = this.props,
+        rowDraggAble = _props2.rowDraggAble,
+        syncRowHeight = _props2.syncRowHeight;
 
     if (!this.event) {
       this.event = true;
@@ -444,15 +447,17 @@ var TableRow = function (_Component) {
     if (this.props.treeType) {
       this.setRowParentIndex();
     }
-    this.setRowHeight();
+    if (syncRowHeight) {
+      this.setRowHeight();
+    }
   };
 
   TableRow.prototype.componentWillUnmount = function componentWillUnmount() {
-    var _props2 = this.props,
-        record = _props2.record,
-        onDestroy = _props2.onDestroy,
-        index = _props2.index,
-        rowDraggAble = _props2.rowDraggAble;
+    var _props3 = this.props,
+        record = _props3.record,
+        onDestroy = _props3.onDestroy,
+        index = _props3.index,
+        rowDraggAble = _props3.rowDraggAble;
 
     onDestroy(record, index);
     if (this.unsubscribe) {
@@ -464,23 +469,23 @@ var TableRow = function (_Component) {
   };
 
   TableRow.prototype.setRowHeight = function setRowHeight() {
-    var _props3 = this.props,
-        setRowHeight = _props3.setRowHeight,
-        _props3$expandedConte = _props3.expandedContentHeight,
-        expandedContentHeight = _props3$expandedConte === undefined ? 0 : _props3$expandedConte,
-        fixed = _props3.fixed,
-        fixedIndex = _props3.fixedIndex;
+    var _props4 = this.props,
+        setRowHeight = _props4.setRowHeight,
+        _props4$expandedConte = _props4.expandedContentHeight,
+        expandedContentHeight = _props4$expandedConte === undefined ? 0 : _props4$expandedConte,
+        fixed = _props4.fixed,
+        fixedIndex = _props4.fixedIndex;
 
     if (!setRowHeight || !this.element || fixed) return;
     setRowHeight(this.element.clientHeight + expandedContentHeight, fixedIndex);
   };
 
   TableRow.prototype.setRowParentIndex = function setRowParentIndex() {
-    var _props4 = this.props,
-        index = _props4.index,
-        setRowParentIndex = _props4.setRowParentIndex,
-        fixedIndex = _props4.fixedIndex,
-        rootIndex = _props4.rootIndex;
+    var _props5 = this.props,
+        index = _props5.index,
+        setRowParentIndex = _props5.setRowParentIndex,
+        fixedIndex = _props5.fixedIndex,
+        rootIndex = _props5.rootIndex;
 
     setRowParentIndex(rootIndex < 0 ? index : rootIndex, fixedIndex);
   };
@@ -490,16 +495,16 @@ var TableRow = function (_Component) {
     // 异步访问事件属性
     // 调用 event.persist() 会从事件池中移除该合成函数并允许对该合成事件的引用被保留下来。
     event.persist();
-    var _props5 = this.props,
-        record = _props5.record,
-        index = _props5.index,
-        onRowClick = _props5.onRowClick,
-        expandable = _props5.expandable,
-        expandRowByClick = _props5.expandRowByClick,
-        expanded = _props5.expanded,
-        onExpand = _props5.onExpand,
-        fixedIndex = _props5.fixedIndex,
-        onRowDoubleClick = _props5.onRowDoubleClick;
+    var _props6 = this.props,
+        record = _props6.record,
+        index = _props6.index,
+        onRowClick = _props6.onRowClick,
+        expandable = _props6.expandable,
+        expandRowByClick = _props6.expandRowByClick,
+        expanded = _props6.expanded,
+        onExpand = _props6.onExpand,
+        fixedIndex = _props6.fixedIndex,
+        onRowDoubleClick = _props6.onRowDoubleClick;
 
     if (expandable && expandRowByClick) {
       onExpand(!expanded, record, fixedIndex, event);
@@ -514,31 +519,17 @@ var TableRow = function (_Component) {
   };
 
   TableRow.prototype.onRowDoubleClick = function onRowDoubleClick(event) {
-    var _props6 = this.props,
-        record = _props6.record,
-        index = _props6.index,
-        onRowDoubleClick = _props6.onRowDoubleClick,
-        fixedIndex = _props6.fixedIndex;
+    var _props7 = this.props,
+        record = _props7.record,
+        index = _props7.index,
+        onRowDoubleClick = _props7.onRowDoubleClick,
+        fixedIndex = _props7.fixedIndex;
 
     this.clear();
     onRowDoubleClick && onRowDoubleClick(record, fixedIndex, event);
   };
 
   TableRow.prototype.onMouseEnter = function onMouseEnter(e) {
-    var _props7 = this.props,
-        onHover = _props7.onHover,
-        hoverKey = _props7.hoverKey,
-        fixedIndex = _props7.fixedIndex,
-        syncHover = _props7.syncHover,
-        record = _props7.record;
-
-    if (syncHover) {
-      this.setState({ hovered: true });
-    }
-    onHover(true, hoverKey, e, fixedIndex, record);
-  };
-
-  TableRow.prototype.onMouseLeave = function onMouseLeave(e) {
     var _props8 = this.props,
         onHover = _props8.onHover,
         hoverKey = _props8.hoverKey,
@@ -547,38 +538,52 @@ var TableRow = function (_Component) {
         record = _props8.record;
 
     if (syncHover) {
+      this.setState({ hovered: true });
+    }
+    onHover(true, hoverKey, e, fixedIndex, record);
+  };
+
+  TableRow.prototype.onMouseLeave = function onMouseLeave(e) {
+    var _props9 = this.props,
+        onHover = _props9.onHover,
+        hoverKey = _props9.hoverKey,
+        fixedIndex = _props9.fixedIndex,
+        syncHover = _props9.syncHover,
+        record = _props9.record;
+
+    if (syncHover) {
       this.setState({ hovered: false });
     }
     onHover(false, hoverKey, e, fixedIndex, record);
   };
 
   TableRow.prototype.render = function render() {
-    var _props9 = this.props,
-        clsPrefix = _props9.clsPrefix,
-        columns = _props9.columns,
-        record = _props9.record,
-        height = _props9.height,
-        visible = _props9.visible,
-        index = _props9.index,
-        expandIconColumnIndex = _props9.expandIconColumnIndex,
-        expandIconAsCell = _props9.expandIconAsCell,
-        expanded = _props9.expanded,
-        expandRowByClick = _props9.expandRowByClick,
-        rowDraggAble = _props9.rowDraggAble,
-        expandable = _props9.expandable,
-        onExpand = _props9.onExpand,
-        needIndentSpaced = _props9.needIndentSpaced,
-        indent = _props9.indent,
-        indentSize = _props9.indentSize,
-        isHiddenExpandIcon = _props9.isHiddenExpandIcon,
-        fixed = _props9.fixed,
-        bodyDisplayInRow = _props9.bodyDisplayInRow,
-        expandedIcon = _props9.expandedIcon,
-        collapsedIcon = _props9.collapsedIcon,
-        hoverKey = _props9.hoverKey,
-        lazyStartIndex = _props9.lazyStartIndex,
-        lazyEndIndex = _props9.lazyEndIndex,
-        expandIconCellWidth = _props9.expandIconCellWidth;
+    var _props10 = this.props,
+        clsPrefix = _props10.clsPrefix,
+        columns = _props10.columns,
+        record = _props10.record,
+        height = _props10.height,
+        visible = _props10.visible,
+        index = _props10.index,
+        expandIconColumnIndex = _props10.expandIconColumnIndex,
+        expandIconAsCell = _props10.expandIconAsCell,
+        expanded = _props10.expanded,
+        expandRowByClick = _props10.expandRowByClick,
+        rowDraggAble = _props10.rowDraggAble,
+        expandable = _props10.expandable,
+        onExpand = _props10.onExpand,
+        needIndentSpaced = _props10.needIndentSpaced,
+        indent = _props10.indent,
+        indentSize = _props10.indentSize,
+        isHiddenExpandIcon = _props10.isHiddenExpandIcon,
+        fixed = _props10.fixed,
+        bodyDisplayInRow = _props10.bodyDisplayInRow,
+        expandedIcon = _props10.expandedIcon,
+        collapsedIcon = _props10.collapsedIcon,
+        hoverKey = _props10.hoverKey,
+        lazyStartIndex = _props10.lazyStartIndex,
+        lazyEndIndex = _props10.lazyEndIndex,
+        expandIconCellWidth = _props10.expandIconCellWidth;
 
     var showSum = false;
     var className = this.props.className;

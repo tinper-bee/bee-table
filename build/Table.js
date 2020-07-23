@@ -161,7 +161,7 @@ var defaultProps = {
   minColumnWidth: 80,
   locale: {},
   syncHover: true,
-  setRowHeight: function setRowHeight() {},
+  // setRowHeight:()=>{},
   setRowParentIndex: function setRowParentIndex() {},
   tabIndex: '0',
   heightConsistent: false,
