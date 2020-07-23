@@ -1,3 +1,12 @@
+## [2.2.60](https://github.com/tinper-bee/bee-table/compare/v2.2.59...v2.2.60) (2020-07-23)
+
+
+### Features
+
+* setRowHeight性能优化 ([bc5aa63](https://github.com/tinper-bee/bee-table/commit/bc5aa63851e445fda47fb37534c5dc38451ea99b))
+
+
+
 ## [2.2.59](https://github.com/tinper-bee/bee-table/compare/v2.2.57...v2.2.59) (2020-07-22)
 
 
