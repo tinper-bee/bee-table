@@ -1,3 +1,12 @@
+## [2.2.61](https://github.com/tinper-bee/bee-table/compare/v2.2.60...v2.2.61) (2020-07-29)
+
+
+### Features
+
+* onDropRow增加参数targetIndex ([17bf7b9](https://github.com/tinper-bee/bee-table/commit/17bf7b9c49d7ec5d85160e587063c42968b77e4e))
+
+
+
 ## [2.2.60](https://github.com/tinper-bee/bee-table/compare/v2.2.59...v2.2.60) (2020-07-23)
 
 
