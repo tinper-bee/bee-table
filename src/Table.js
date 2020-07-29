@@ -664,11 +664,15 @@ class Table extends Component {
         targetIndex = i;
       }
     });
-    data = this.swapArray(data,currentIndex,targetIndex);
-    this.props.onDropRow && this.props.onDropRow(data,record);
-    this.setState({
-      data,
-    });
+    if(currentIndex > -1) {
+      data = this.swapArray(data,currentIndex,targetIndex);
+      this.props.onDropRow && this.props.onDropRow(data,record,targetIndex);
+      this.setState({
+        data,
+      });
+    } else {
+      this.props.onDropRow && this.props.onDropRow(data,record,targetIndex);
+    }
   }
   /**
   * 数组元素交换位置

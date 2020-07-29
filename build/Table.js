@@ -239,11 +239,15 @@ var Table = function (_Component) {
           targetIndex = i;
         }
       });
-      data = _this.swapArray(data, currentIndex, targetIndex);
-      _this.props.onDropRow && _this.props.onDropRow(data, record);
-      _this.setState({
-        data: data
-      });
+      if (currentIndex > -1) {
+        data = _this.swapArray(data, currentIndex, targetIndex);
+        _this.props.onDropRow && _this.props.onDropRow(data, record, targetIndex);
+        _this.setState({
+          data: data
+        });
+      } else {
+        _this.props.onDropRow && _this.props.onDropRow(data, record, targetIndex);
+      }
     };
 
     _this.swapArray = function (arr, index1, index2) {
@@ -1556,6 +1560,9 @@ var Table = function (_Component) {
       this.lastScrollTop = e.target.scrollTop;
       if (handleScrollY) {
         (0, _utils.debounce)(handleScrollY(this.lastScrollTop, this.treeType, onBodyScroll), 300);
+      } else {
+        //滚动回调
+        onBodyScroll(this.lastScrollTop);
       }
     }
 
