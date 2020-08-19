@@ -161,7 +161,7 @@ var defaultProps = {
   minColumnWidth: 80,
   locale: {},
   syncHover: true,
-  setRowHeight: function setRowHeight() {},
+  // setRowHeight:()=>{},
   setRowParentIndex: function setRowParentIndex() {},
   tabIndex: '0',
   heightConsistent: false,
@@ -387,6 +387,8 @@ var Table = function (_Component) {
 
   Table.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
     if ('data' in nextProps) {
+      console.log("————————————————————data");
+      console.log(nextProps.data);
       this.setState({
         data: nextProps.data
       });
@@ -761,7 +763,8 @@ var Table = function (_Component) {
   Table.prototype.getExpandedRow = function getExpandedRow(key, content, visible, className, fixed) {
     var _props2 = this.props,
         clsPrefix = _props2.clsPrefix,
-        expandIconAsCell = _props2.expandIconAsCell;
+        expandIconAsCell = _props2.expandIconAsCell,
+        syncRowHeight = _props2.syncRowHeight;
 
     var colCount = void 0;
     if (fixed === 'left') {
@@ -813,7 +816,8 @@ var Table = function (_Component) {
       rowDraggAble: this.props.rowDraggAble,
       onDragRow: this.onDragRow,
       onDragRowStart: this.onDragRowStart,
-      height: expandedRowHeight
+      height: expandedRowHeight,
+      syncRowHeight: syncRowHeight
     });
   };
 
@@ -856,6 +860,7 @@ var Table = function (_Component) {
     var childrenColumnName = props.childrenColumnName;
     var expandedRowRender = props.expandedRowRender;
     var expandRowByClick = props.expandRowByClick;
+    var syncRowHeight = props.syncRowHeight;
     var fixedColumnsBodyRowsHeight = this.state.fixedColumnsBodyRowsHeight;
 
     var rst = [];
@@ -872,7 +877,7 @@ var Table = function (_Component) {
     var expandIconAsCell = fixed !== 'right' ? props.expandIconAsCell : false;
     var expandIconColumnIndex = props.expandIconColumnIndex;
     if (props.lazyLoad && props.lazyLoad.preHeight && indent == 0) {
-      rst.push(_react2["default"].createElement(_TableRow2["default"], { height: props.lazyLoad.preHeight, columns: [], className: '', key: 'table_row_first', store: this.store, visible: true }));
+      rst.push(_react2["default"].createElement(_TableRow2["default"], { syncRowHeight: syncRowHeight, height: props.lazyLoad.preHeight, columns: [], className: '', key: 'table_row_first', store: this.store, visible: true }));
     }
     var lazyCurrentIndex = props.lazyLoad && props.lazyLoad.startIndex ? props.lazyLoad.startIndex : 0;
     var lazyParentIndex = props.lazyLoad && props.lazyLoad.startParentIndex ? props.lazyLoad.startParentIndex : 0;
@@ -986,7 +991,8 @@ var Table = function (_Component) {
         lazyEndIndex: lazyEndIndex,
         centerColumnsLength: this.centerColumnsLength,
         leftColumnsLength: this.leftColumnsLength,
-        expandIconCellWidth: expandIconCellWidth
+        expandIconCellWidth: expandIconCellWidth,
+        syncRowHeight: syncRowHeight
       })));
       this.treeRowIndex++;
       var subVisible = visible && isRowExpanded;
@@ -1002,7 +1008,7 @@ var Table = function (_Component) {
     }
 
     if (props.lazyLoad && props.lazyLoad.sufHeight && indent == 0) {
-      rst.push(_react2["default"].createElement(_TableRow2["default"], { height: props.lazyLoad.sufHeight, key: 'table_row_end', columns: [], className: '', store: this.store, visible: true }));
+      rst.push(_react2["default"].createElement(_TableRow2["default"], { syncRowHeight: syncRowHeight, height: props.lazyLoad.sufHeight, key: 'table_row_end', columns: [], className: '', store: this.store, visible: true }));
     }
     if (!this.isTreeType) {
       this.treeType = false;
@@ -1405,7 +1411,8 @@ var Table = function (_Component) {
       }
     });
     var fixedColumnsExpandedRowsHeight = {};
-    expandedRows.length > 0 && expandedRows.forEach(function (row) {
+    //expandedRows为NodeList  Array.prototype.forEach ie 下报错 对象不支持 “forEach” 方法
+    expandedRows.length > 0 && Array.prototype.forEach.call(expandedRows, function (row) {
       var parentRowKey = row && row.previousSibling && row.previousSibling.getAttribute("data-row-key"),
           height = row && row.getBoundingClientRect().height || 'auto';
       fixedColumnsExpandedRowsHeight[parentRowKey] = height;

@@ -72,6 +72,14 @@ export default function bigData(Table) {
           _this.cachedRowHeight = []; //缓存每行的高度
           _this.cachedRowParentIndex = [];
           _this.computeCachedRowParentIndex(newData);
+          // fix：切换数据源，startIndex、endIndex错误
+          _this.currentIndex = 0;
+          _this.startIndex = _this.currentIndex; //数据开始位置
+          _this.endIndex = _this.currentIndex + _this.loadCount; 
+        }
+        if(newData.length&&(newData[0].key==undefined)){//数据没有key时设置key
+          _this.cachedRowParentIndex = [];
+          _this.computeCachedRowParentIndex(newData);
         }
         _this.treeData = [];
         _this.flatTreeData = [];
@@ -132,17 +140,20 @@ export default function bigData(Table) {
           dataCopy = treeData;
       if(Array.isArray(dataCopy)){
         for (let i=0, l=dataCopy.length; i<l; i++) {
-          let { key, children, ...props } = dataCopy[i],
+          let {  children, ...props } = dataCopy[i],
+          key = this.getRowKey(dataCopy[i],i),
               dataCopyI = new Object(),
               isLeaf = (children && children.length > 0) ? false : true,
               //如果父节点是收起状态，则子节点的展开状态无意义。（一级节点或根节点直接判断自身状态即可）
               isExpanded = (parentKey === null || expandedKeysSet.has(parentKey)) ? expandedKeysSet.has(key) : false;
+              // console.log("getRowKey:: "+this.getRowKey(dataCopy[i],i))
           dataCopyI = Object.assign(dataCopyI,{
             key,
             isExpanded,
             parentKey : parentKey,
             isLeaf,
-            index: flatTreeData.length
+            index: flatTreeData.length,
+            children
           },{...props});
 
           flatTreeData.push(dataCopyI); // 取每项数据放入一个新数组
@@ -558,8 +569,9 @@ export default function bigData(Table) {
         lazyLoad.preHeight = this.getSumHeight(0, startIndex);
         lazyLoad.sufHeight = this.getSumHeight(endIndex, data.length);
       }
-      // console.log('*******expandedRowKeys*****'+expandedRowKeys);
+      // console.log('*******data*****',data);
       const dataSource = (treeType && Array.isArray(treeData) && treeData.length > 0) ? treeData : data.slice(startIndex, endIndex);
+      // console.log('*******dataSource*****',dataSource);
       return (
         <Table
           {...this.props}

@@ -99,6 +99,15 @@ function bigData(Table) {
           _this.cachedRowHeight = []; //缓存每行的高度
           _this.cachedRowParentIndex = [];
           _this.computeCachedRowParentIndex(newData);
+          // fix：切换数据源，startIndex、endIndex错误
+          _this.currentIndex = 0;
+          _this.startIndex = _this.currentIndex; //数据开始位置
+          _this.endIndex = _this.currentIndex + _this.loadCount;
+        }
+        if (newData.length && newData[0].key == undefined) {
+          //数据没有key时设置key
+          _this.cachedRowParentIndex = [];
+          _this.computeCachedRowParentIndex(newData);
         }
         _this.treeData = [];
         _this.flatTreeData = [];
@@ -344,8 +353,9 @@ function bigData(Table) {
         lazyLoad.preHeight = this.getSumHeight(0, startIndex);
         lazyLoad.sufHeight = this.getSumHeight(endIndex, data.length);
       }
-      // console.log('*******expandedRowKeys*****'+expandedRowKeys);
+      // console.log('*******data*****',data);
       var dataSource = treeType && Array.isArray(treeData) && treeData.length > 0 ? treeData : data.slice(startIndex, endIndex);
+      // console.log('*******dataSource*****',dataSource);
       return _react2["default"].createElement(Table, _extends({}, this.props, {
         data: dataSource,
         lazyLoad: lazyLoad,
@@ -406,19 +416,22 @@ function bigData(Table) {
       if (Array.isArray(dataCopy)) {
         for (var i = 0, l = dataCopy.length; i < l; i++) {
           var _dataCopy$i = dataCopy[i],
-              key = _dataCopy$i.key,
               children = _dataCopy$i.children,
-              props = _objectWithoutProperties(_dataCopy$i, ["key", "children"]),
+              props = _objectWithoutProperties(_dataCopy$i, ["children"]),
+              key = _this4.getRowKey(dataCopy[i], i),
               dataCopyI = new Object(),
               isLeaf = children && children.length > 0 ? false : true,
               isExpanded = parentKey === null || expandedKeysSet.has(parentKey) ? expandedKeysSet.has(key) : false;
+          // console.log("getRowKey:: "+this.getRowKey(dataCopy[i],i))
+
 
           dataCopyI = _extends(dataCopyI, {
             key: key,
             isExpanded: isExpanded,
             parentKey: parentKey,
             isLeaf: isLeaf,
-            index: flatTreeData.length
+            index: flatTreeData.length,
+            children: children
           }, _extends({}, props));
 
           flatTreeData.push(dataCopyI); // 取每项数据放入一个新数组

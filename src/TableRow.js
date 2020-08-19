@@ -45,6 +45,7 @@ const defaultProps = {
     className:'',
     setRowParentIndex:()=>{},
     rowDraggAble:false,
+    syncRowHeight:true,
     // onDragRow:()=>{}
 };
 
@@ -346,7 +347,7 @@ class TableRow extends Component{
   }
 
   componentDidUpdate(prevProps) {
-    const { rowDraggAble } = this.props;
+    const { rowDraggAble,syncRowHeight } = this.props;
     if(!this.event){
       this.event = true;
       if(rowDraggAble){
@@ -357,7 +358,9 @@ class TableRow extends Component{
     if(this.props.treeType){
       this.setRowParentIndex();
     }
-    this.setRowHeight()
+    if(syncRowHeight){
+      this.setRowHeight()
+    }
   }
 
   componentWillUnmount() {
