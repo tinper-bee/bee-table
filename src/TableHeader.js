@@ -102,6 +102,7 @@ class TableHeader extends Component {
       table.tr = tableDome.getElementsByTagName("tr");
       table.tableBody = contentTable.querySelector('.u-table-scroll .u-table-body') && contentTable.querySelector('.u-table-scroll .u-table-body');
       table.tableBodyCols = contentTable.querySelector('.u-table-scroll .u-table-body') && contentTable.querySelector('.u-table-scroll .u-table-body').getElementsByTagName("col");
+      table.bodyRows = table.tableBody && table.tableBody.querySelectorAll('tr') || [];
     }
 
     table.fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header') ;
@@ -110,7 +111,7 @@ class TableHeader extends Component {
     table.fixedLeftBodyTable = contentTable.querySelector('.u-table-fixed-left .u-table-body-outer') ;
     table.fixedRightBodyTable = contentTable.querySelector('.u-table-fixed-right .u-table-body-outer') ;
     table.innerTableBody= contentTable.querySelector('.u-table-scroll .u-table-body table');
-
+    table.fixedLeftBodyRows = table.fixedLeftBodyTable && table.fixedLeftBodyTable.querySelectorAll('tr') || [];
     this.table = table;
 
     if(!this.props.dragborder)return;
@@ -334,6 +335,15 @@ class TableHeader extends Component {
       this.drag.newWidth = newWidth > 0 ? newWidth : this.minWidth;
       if(newWidth > this.minWidth){
         currentCols.style.width = newWidth +'px';
+
+        // displayinrow 判断、 固定行高判断
+        this.table.bodyRows.forEach((row,index)=>{
+          const leftRow = this.table.fixedLeftBodyRows[index]
+          if(leftRow) {
+            const height = row.getBoundingClientRect().height;
+            leftRow.style.height = height + "px";
+          }
+        })
         //hao 支持固定表头拖拽 修改表体的width
         if(this.fixedTable.cols){
             this.fixedTable.cols[this.drag.currIndex].style.width = newWidth + "px";
@@ -344,6 +354,7 @@ class TableHeader extends Component {
           let lastWidth = this.lastColumWidth + newDiff;
           this.table.cols[lastShowIndex].style.width = lastWidth +"px";//同步表头
           this.table.tableBodyCols[lastShowIndex].style.width = lastWidth + "px";//同步表体
+          
         }
         let showScroll =  contentDomWidth - (leftFixedWidth + rightFixedWidth) - (this.drag.tableWidth + diff) - scrollbarWidth ;
         //表头滚动条处理
