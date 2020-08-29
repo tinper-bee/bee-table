@@ -336,7 +336,7 @@ class TableHeader extends Component {
       if(newWidth > this.minWidth){
         currentCols.style.width = newWidth +'px';
 
-        // displayinrow 判断、 固定行高判断   
+        // displayinrow 判断、 固定行高判断  
         this.table.bodyRows.forEach((row,index)=>{
           const leftRow = this.table.fixedLeftBodyRows[index]
           if(leftRow) {
