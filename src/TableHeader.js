@@ -112,6 +112,7 @@ class TableHeader extends Component {
     table.fixedRightBodyTable = contentTable.querySelector('.u-table-fixed-right .u-table-body-outer') ;
     table.innerTableBody= contentTable.querySelector('.u-table-scroll .u-table-body table');
     table.fixedLeftBodyRows = table.fixedLeftBodyTable && table.fixedLeftBodyTable.querySelectorAll('tr') || [];
+    table.fixedRightBodyRows = table.fixedRightBodyTable && table.fixedRightBodyTable.querySelectorAll('tr') || [];
     this.table = table;
 
     if(!this.props.dragborder)return;
@@ -324,7 +325,7 @@ class TableHeader extends Component {
    */
   onTrMouseMove = (e) => {
     if(!this.props.dragborder && !this.props.draggable)return;
-    const { clsPrefix ,dragborder,contentDomWidth,scrollbarWidth,contentTable,headerScroll,lastShowIndex,onDraggingBorder, leftFixedWidth, rightFixedWidth} = this.props;
+    const { clsPrefix ,dragborder,contentDomWidth,scrollbarWidth,contentTable,headerScroll,lastShowIndex,onDraggingBorder, leftFixedWidth, rightFixedWidth, bodyDisplayInRow} = this.props;
     Event.stopPropagation(e);
     let event = Event.getEvent(e);
     if(this.props.dragborder && this.drag.option == "border"){
@@ -336,14 +337,19 @@ class TableHeader extends Component {
       if(newWidth > this.minWidth){
         currentCols.style.width = newWidth +'px';
 
-        // displayinrow 判断、 固定行高判断  
-        this.table.bodyRows.forEach((row,index)=>{
-          const leftRow = this.table.fixedLeftBodyRows[index]
-          if(leftRow) {
-            const height = row.getBoundingClientRect().height;
-            leftRow.style.height = height + "px";
-          }
-        })
+        // displayinrow 判断、 固定行高判断 
+        if(!bodyDisplayInRow) {
+          this.table.bodyRows.forEach((row,index)=>{
+            const leftRow = this.table.fixedLeftBodyRows[index];
+            const rightRow = this.table.fixedRightBodyRows[index];
+            if(leftRow || rightRow) {
+              const height = row.getBoundingClientRect().height;
+              leftRow && (leftRow.style.height = height + "px")
+              rightRow && (rightRow.style.height = height + "px")
+            }
+          })
+        }
+
         //hao 支持固定表头拖拽 修改表体的width
         if(this.fixedTable.cols){
             this.fixedTable.cols[this.drag.currIndex].style.width = newWidth + "px";

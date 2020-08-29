@@ -436,7 +436,7 @@ class Table extends Component {
   getHeader(columns, fixed, leftFixedWidth, rightFixedWidth) {
     const { lastShowIndex } = this.state;
     const { filterDelay, onFilterChange, onFilterClear, filterable, showHeader, expandIconAsCell, clsPrefix, onDragStart, onDragEnter, onDragOver, onDrop,onDragEnd, draggable,
-      onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey, minColumnWidth, headerHeight,afterDragColWidth,headerScroll ,bordered,onDropBorder,onDraggingBorder} = this.props;
+      onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey, minColumnWidth, headerHeight,afterDragColWidth,headerScroll ,bordered,onDropBorder,onDraggingBorder, bodyDisplayInRow} = this.props;
     this.columnsChildrenList = []; //复杂表头拖拽，重新render表头前，将其置空
     const rows = this.getHeaderRows(columns);
     if (expandIconAsCell && fixed !== 'right') {
@@ -486,6 +486,7 @@ class Table extends Component {
         bordered = {bordered}
         leftFixedWidth = {leftFixedWidth}
         rightFixedWidth = {rightFixedWidth}
+        bodyDisplayInRow = {bodyDisplayInRow}
       />
     ) : null;
   }
