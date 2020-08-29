@@ -1,3 +1,15 @@
+## [2.2.62](https://github.com/tinper-bee/bee-table/compare/v2.2.61...v2.2.62) (2020-08-29)
+
+
+### Bug Fixes
+
+* commit ([422c482](https://github.com/tinper-bee/bee-table/commit/422c4821a7de4dd6c1f927035df932522fabf6d2))
+* commit ([94e19ce](https://github.com/tinper-bee/bee-table/commit/94e19ce4b97afb682c6158d82b8dd16c0188677a))
+* 拖拽列宽 ([f348474](https://github.com/tinper-bee/bee-table/commit/f34847484da7e3423ee65a0330b4f761f27baf31))
+* 拖拽列宽同步固定列的高度 ([c29a6cf](https://github.com/tinper-bee/bee-table/commit/c29a6cf1121b0a401a6e7ff0f61b4d738fed2176))
+
+
+
 ## [2.2.61](https://github.com/tinper-bee/bee-table/compare/v2.2.60...v2.2.61) (2020-07-29)
 
 
