@@ -1,3 +1,12 @@
+## [2.2.63](https://github.com/tinper-bee/bee-table/compare/v2.2.62...v2.2.63) (2020-09-07)
+
+
+### Bug Fixes
+
+* footer 返回含有固定列Table时,拖拽主表格高度不同步 ([7147516](https://github.com/tinper-bee/bee-table/commit/7147516dd3ef5687fa28234f071a1e1dbabcdc35))
+
+
+
 ## [2.2.62](https://github.com/tinper-bee/bee-table/compare/v2.2.61...v2.2.62) (2020-08-29)
 
 
