@@ -144,14 +144,27 @@ var TableHeader = function (_Component) {
       table.tr = tableDome.getElementsByTagName("tr");
       table.tableBody = contentTable.querySelector('.u-table-scroll .u-table-body') && contentTable.querySelector('.u-table-scroll .u-table-body');
       table.tableBodyCols = contentTable.querySelector('.u-table-scroll .u-table-body') && contentTable.querySelector('.u-table-scroll .u-table-body').getElementsByTagName("col");
-    }
+      table.bodyRows = table.tableBody && table.tableBody.querySelectorAll('tr') || [];
 
-    table.fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header');
-    table.fixedRighHeadertTable = contentTable.querySelector('.u-table-fixed-right .u-table-header');
-    table.contentTableHeader = contentTable.querySelector('.u-table-scroll .u-table-header');
-    table.fixedLeftBodyTable = contentTable.querySelector('.u-table-fixed-left .u-table-body-outer');
-    table.fixedRightBodyTable = contentTable.querySelector('.u-table-fixed-right .u-table-body-outer');
-    table.innerTableBody = contentTable.querySelector('.u-table-scroll .u-table-body table');
+      table.fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header');
+      table.fixedRighHeadertTable = contentTable.querySelector('.u-table-fixed-right .u-table-header');
+      table.contentTableHeader = contentTable.querySelector('.u-table-scroll .u-table-header');
+      table.fixedLeftBodyTable = contentTable.querySelectorAll('.u-table-fixed-left .u-table-body-outer');
+      if (table.fixedLeftBodyTable) {
+        var leftBodyTableIndex = table.fixedLeftBodyTable.length - 1 < 0 ? 0 : table.fixedLeftBodyTable.length - 1;
+        table.fixedLeftBodyTable = table.fixedLeftBodyTable[leftBodyTableIndex];
+      }
+
+      table.fixedRightBodyTable = contentTable.querySelectorAll('.u-table-fixed-right .u-table-body-outer');
+      if (table.fixedRightBodyTable) {
+        var rightBodyTableIndex = table.fixedRightBodyTable.length - 1 < 0 ? 0 : table.fixedRightBodyTable.length - 1;
+        table.fixedRightBodyTable = table.fixedRightBodyTable[rightBodyTableIndex];
+      }
+
+      table.innerTableBody = contentTable.querySelector('.u-table-scroll .u-table-body table');
+      table.fixedLeftBodyRows = table.fixedLeftBodyTable && table.fixedLeftBodyTable.querySelectorAll('tr') || [];
+      table.fixedRightBodyRows = table.fixedRightBodyTable && table.fixedRightBodyTable.querySelectorAll('tr') || [];
+    }
 
     this.table = table;
 
@@ -654,7 +667,8 @@ var _initialiseProps = function _initialiseProps() {
         lastShowIndex = _props4.lastShowIndex,
         onDraggingBorder = _props4.onDraggingBorder,
         leftFixedWidth = _props4.leftFixedWidth,
-        rightFixedWidth = _props4.rightFixedWidth;
+        rightFixedWidth = _props4.rightFixedWidth,
+        bodyDisplayInRow = _props4.bodyDisplayInRow;
 
     _utils.Event.stopPropagation(e);
     var event = _utils.Event.getEvent(e);
@@ -666,6 +680,20 @@ var _initialiseProps = function _initialiseProps() {
       _this8.drag.newWidth = newWidth > 0 ? newWidth : _this8.minWidth;
       if (newWidth > _this8.minWidth) {
         currentCols.style.width = newWidth + 'px';
+
+        // displayinrow 判断、 固定行高判断 
+        if (!bodyDisplayInRow) {
+          _this8.table.bodyRows.forEach(function (row, index) {
+            var leftRow = _this8.table.fixedLeftBodyRows[index];
+            var rightRow = _this8.table.fixedRightBodyRows[index];
+            if (leftRow || rightRow) {
+              var height = row.getBoundingClientRect().height;
+              leftRow && (leftRow.style.height = height + "px");
+              rightRow && (rightRow.style.height = height + "px");
+            }
+          });
+        }
+
         //hao 支持固定表头拖拽 修改表体的width
         if (_this8.fixedTable.cols) {
           _this8.fixedTable.cols[_this8.drag.currIndex].style.width = newWidth + "px";

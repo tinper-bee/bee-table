@@ -163,7 +163,7 @@ var defaultProps = {
   minColumnWidth: 80,
   locale: {},
   syncHover: true,
-  setRowHeight: function setRowHeight() {},
+  // setRowHeight:()=>{},
   setRowParentIndex: function setRowParentIndex() {},
   tabIndex: '0',
   heightConsistent: false,
@@ -637,7 +637,8 @@ var Table = function (_Component) {
         headerScroll = _props2.headerScroll,
         bordered = _props2.bordered,
         onDropBorder = _props2.onDropBorder,
-        onDraggingBorder = _props2.onDraggingBorder;
+        onDraggingBorder = _props2.onDraggingBorder,
+        bodyDisplayInRow = _props2.bodyDisplayInRow;
 
     this.columnsChildrenList = []; //复杂表头拖拽，重新render表头前，将其置空
     var rows = this.getHeaderRows(columns);
@@ -684,7 +685,8 @@ var Table = function (_Component) {
       headerScroll: headerScroll,
       bordered: bordered,
       leftFixedWidth: leftFixedWidth,
-      rightFixedWidth: rightFixedWidth
+      rightFixedWidth: rightFixedWidth,
+      bodyDisplayInRow: bodyDisplayInRow
     })) : null;
   };
 

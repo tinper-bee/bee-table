@@ -103,16 +103,28 @@ class TableHeader extends Component {
       table.tableBody = contentTable.querySelector('.u-table-scroll .u-table-body') && contentTable.querySelector('.u-table-scroll .u-table-body');
       table.tableBodyCols = contentTable.querySelector('.u-table-scroll .u-table-body') && contentTable.querySelector('.u-table-scroll .u-table-body').getElementsByTagName("col");
       table.bodyRows = table.tableBody && table.tableBody.querySelectorAll('tr') || [];
+   
+      table.fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header') ;
+      table.fixedRighHeadertTable = contentTable.querySelector('.u-table-fixed-right .u-table-header');
+      table.contentTableHeader  = contentTable.querySelector('.u-table-scroll .u-table-header');
+      table.fixedLeftBodyTable = contentTable.querySelectorAll('.u-table-fixed-left .u-table-body-outer') ;
+      if (table.fixedLeftBodyTable) {
+        const leftBodyTableIndex =  table.fixedLeftBodyTable.length-1 < 0 ? 0 : table.fixedLeftBodyTable.length-1
+        table.fixedLeftBodyTable = table.fixedLeftBodyTable[leftBodyTableIndex]
+      }
+     
+      table.fixedRightBodyTable = contentTable.querySelectorAll('.u-table-fixed-right .u-table-body-outer') ;
+      if (table.fixedRightBodyTable) {
+        const rightBodyTableIndex = table.fixedRightBodyTable.length-1 < 0 ? 0 : table.fixedRightBodyTable.length-1
+        table.fixedRightBodyTable = table.fixedRightBodyTable[rightBodyTableIndex]
+      }
+
+      table.innerTableBody= contentTable.querySelector('.u-table-scroll .u-table-body table');
+      table.fixedLeftBodyRows = table.fixedLeftBodyTable && table.fixedLeftBodyTable.querySelectorAll('tr') || [];
+      table.fixedRightBodyRows = table.fixedRightBodyTable && table.fixedRightBodyTable.querySelectorAll('tr') || [];
     }
 
-    table.fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header') ;
-    table.fixedRighHeadertTable = contentTable.querySelector('.u-table-fixed-right .u-table-header');
-    table.contentTableHeader  = contentTable.querySelector('.u-table-scroll .u-table-header');
-    table.fixedLeftBodyTable = contentTable.querySelector('.u-table-fixed-left .u-table-body-outer') ;
-    table.fixedRightBodyTable = contentTable.querySelector('.u-table-fixed-right .u-table-body-outer') ;
-    table.innerTableBody= contentTable.querySelector('.u-table-scroll .u-table-body table');
-    table.fixedLeftBodyRows = table.fixedLeftBodyTable && table.fixedLeftBodyTable.querySelectorAll('tr') || [];
-    table.fixedRightBodyRows = table.fixedRightBodyTable && table.fixedRightBodyTable.querySelectorAll('tr') || [];
+   
     this.table = table;
 
     if(!this.props.dragborder)return;
