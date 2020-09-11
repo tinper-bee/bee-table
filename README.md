@@ -148,6 +148,7 @@ class Demo extends Component {
 | filterDropdownType | 下拉条件类型，分为 string 和 number 条件类型 | string | string
 | filterDropdownIncludeKeys | 能够设置指定的下拉条件项，通过设置keys 其中string条件可设置:LIKE,ULIKE,EQ,UEQ,START,END.number条件可设置:GT,GTEQ,LT,LTEQ,EQ,UEQ | array | [] 不设置此属性为显示所有
 | filterInputNumberOptions | 数值框接收的props，具体属性参考bee-input-number | object | null
+|notRowDrag| rowDraggAble 为true时表示这个表格是可以行拖拽改变顺序的，notRowDrag为true可以实现某一列来控制这行是否可以拖拽|bool| 默认为false的，不会控制当前行是否拖拽。
 
 ## 快捷键API
 
