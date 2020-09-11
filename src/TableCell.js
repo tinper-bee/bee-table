@@ -184,6 +184,11 @@ class TableCell extends Component{
     onPaste(e,position)
   }
 
+  onCellMouseOver = (e)=> {
+    const {column} = this.props
+    this.props.stopRowDrag(column.notRowDrag)
+  }
+
   render() {
     const { record, indentSize, clsPrefix, indent,
             index, expandIcon, column ,fixed,showSum, bodyDisplayInRow,lazyStartIndex,lazyEndIndex} = this.props;
@@ -301,6 +306,7 @@ class TableCell extends Component{
             onClick={this.handleClick}
             title={title}
             onPaste={this.onPaste}
+            onMouseOver={this.onCellMouseOver}
             style={{maxWidth:column.width, color:fontColor, backgroundColor:bgColor, ...column.style}}>
             {indentText}
             {expandIcon}

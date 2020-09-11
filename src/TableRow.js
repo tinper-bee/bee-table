@@ -140,7 +140,7 @@ class TableRow extends Component{
    */
   onDragStart = (e) => {
     let {onDragRowStart} = this.props;
-    if (!this.props.rowDraggAble) return;
+    if (!this.props.rowDraggAble || this.notRowDrag) return;
     let event = Event.getEvent(e) ,
     target = Event.getTarget(event);
     if (target.tagName === 'TD') {
@@ -430,6 +430,16 @@ class TableRow extends Component{
     onHover(false, hoverKey,e,fixedIndex,record);
   }
 
+  stopRowDrag = (isStop) => {
+    const {rowDraggAble} = this.props;
+    const {notRowDrag} = this.state;
+    if(rowDraggAble && isStop!== notRowDrag) {
+        this.setState({
+          notRowDrag: isStop
+        })
+    }
+  }
+
   set =(fn)=> {
       this.clear();
       this._timeout = window.setTimeout(fn, 300);
@@ -452,6 +462,7 @@ class TableRow extends Component{
       expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed,bodyDisplayInRow
       ,expandedIcon,collapsedIcon, hoverKey,lazyStartIndex,lazyEndIndex, expandIconCellWidth
     } = this.props;
+    const {notRowDrag} = this.state;
     let showSum = false;
     let { className } = this.props;
     if (this.state.hovered) {
@@ -515,6 +526,7 @@ class TableRow extends Component{
           lazyStartIndex={lazyStartIndex}
           lazyEndIndex={lazyEndIndex}
           onPaste={onPaste}
+          stopRowDrag={this.stopRowDrag}
           col={i}
         />
       );
@@ -526,9 +538,14 @@ class TableRow extends Component{
     if(record && record._checked){
       className += ' selected';
     }
+
+    if(rowDraggAble && !useDragHandle && !notRowDrag) {
+      className += ' row-dragg-able'
+    }
+
     return (
       <tr
-        draggable={rowDraggAble && !useDragHandle}
+        draggable={rowDraggAble && !useDragHandle && !notRowDrag}
         onClick={this.onRowClick}
         onDoubleClick={this.onRowDoubleClick}
         onMouseEnter={this.onMouseEnter}

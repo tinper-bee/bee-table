@@ -802,7 +802,7 @@ class Table extends Component {
           indent={indent}
           indentSize={props.indentSize}
           needIndentSpaced={needIndentSpaced}
-          className={`${className} ${props.rowDraggAble && !props.useDragHandle?'row-dragg-able ':''}`}
+          className={`${className}`}
           record={record}
           expandIconAsCell={expandIconAsCell}
           onDestroy={this.onRowDestroy}
