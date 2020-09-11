@@ -1,3 +1,12 @@
+## [2.2.64](https://github.com/tinper-bee/bee-table/compare/v2.2.63...v2.2.64) (2020-09-11)
+
+
+### Features
+
+* 自定义某列来控制当前行是否可以拖拽 ([8aebc77](https://github.com/tinper-bee/bee-table/commit/8aebc779572409e82f4b3b3930139caf5d3a670e))
+
+
+
 ## [2.2.63](https://github.com/tinper-bee/bee-table/compare/v2.2.62...v2.2.63) (2020-09-07)
 
 
