@@ -41,3 +41,6 @@ coverage
 package-lock.json
 demo/.DS_Store
 demo/demolist/.DS_Store
+
+# vsCode
+.history

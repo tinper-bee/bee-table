@@ -271,6 +271,12 @@ var TableCell = function (_Component) {
       onPaste(e, position);
     };
 
+    _this.onCellMouseOver = function (e) {
+      var column = _this.props.column;
+
+      _this.props.stopRowDrag(column.notRowDrag);
+    };
+
     _this.isInvalidRenderCellText = _this.isInvalidRenderCellText.bind(_this);
     _this.handleClick = _this.handleClick.bind(_this);
     _this.state = {
@@ -461,6 +467,7 @@ var TableCell = function (_Component) {
         onClick: this.handleClick,
         title: title,
         onPaste: this.onPaste,
+        onMouseOver: this.onCellMouseOver,
         style: _extends({ maxWidth: column.width, color: fontColor, backgroundColor: bgColor }, column.style) },
       indentText,
       expandIcon,

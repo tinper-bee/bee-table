@@ -245,7 +245,8 @@ class TableHeader extends Component {
    * @memberof TableHeader
    */
   onTrMouseDown = (e) => {
-    Event.stopPropagation(e);
+    const { eventNoStop } = this.props;
+    !eventNoStop && Event.stopPropagation(e);
     let event = Event.getEvent(e) ,
     targetEvent = Event.getTarget(event);
     const { clsPrefix, contentTable,lastShowIndex,columnsChildrenList } = this.props;
@@ -337,8 +338,8 @@ class TableHeader extends Component {
    */
   onTrMouseMove = (e) => {
     if(!this.props.dragborder && !this.props.draggable)return;
-    const { clsPrefix ,dragborder,contentDomWidth,scrollbarWidth,contentTable,headerScroll,lastShowIndex,onDraggingBorder, leftFixedWidth, rightFixedWidth, bodyDisplayInRow} = this.props;
-    Event.stopPropagation(e);
+    const { clsPrefix ,dragborder,contentDomWidth,scrollbarWidth,contentTable,headerScroll,lastShowIndex,onDraggingBorder, leftFixedWidth, rightFixedWidth, bodyDisplayInRow, eventNoStop} = this.props;
+    !eventNoStop && Event.stopPropagation(e);
     let event = Event.getEvent(e);
     if(this.props.dragborder && this.drag.option == "border"){
       //移动改变宽度

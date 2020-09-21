@@ -569,7 +569,9 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onTrMouseDown = function (e) {
-    _utils.Event.stopPropagation(e);
+    var eventNoStop = _this8.props.eventNoStop;
+
+    !eventNoStop && _utils.Event.stopPropagation(e);
     var event = _utils.Event.getEvent(e),
         targetEvent = _utils.Event.getTarget(event);
     var _props3 = _this8.props,
@@ -668,9 +670,10 @@ var _initialiseProps = function _initialiseProps() {
         onDraggingBorder = _props4.onDraggingBorder,
         leftFixedWidth = _props4.leftFixedWidth,
         rightFixedWidth = _props4.rightFixedWidth,
-        bodyDisplayInRow = _props4.bodyDisplayInRow;
+        bodyDisplayInRow = _props4.bodyDisplayInRow,
+        eventNoStop = _props4.eventNoStop;
 
-    _utils.Event.stopPropagation(e);
+    !eventNoStop && _utils.Event.stopPropagation(e);
     var event = _utils.Event.getEvent(e);
     if (_this8.props.dragborder && _this8.drag.option == "border") {
       //移动改变宽度

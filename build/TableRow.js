@@ -115,7 +115,7 @@ var TableRow = function (_Component) {
     _this.onDragStart = function (e) {
       var onDragRowStart = _this.props.onDragRowStart;
 
-      if (!_this.props.rowDraggAble) return;
+      if (!_this.props.rowDraggAble || _this.notRowDrag) return;
       var event = _utils.Event.getEvent(e),
           target = _utils.Event.getTarget(event);
       if (target.tagName === 'TD') {
@@ -302,6 +302,17 @@ var TableRow = function (_Component) {
       if (!currentIndex || currentIndex === _this.currentIndex) return;
       if (target.nodeName.toUpperCase() === "TR") {
         _this.synchronizeTableTr(currentIndex, null);
+      }
+    };
+
+    _this.stopRowDrag = function (isStop) {
+      var rowDraggAble = _this.props.rowDraggAble;
+      var notRowDrag = _this.state.notRowDrag;
+
+      if (rowDraggAble && isStop !== notRowDrag) {
+        _this.setState({
+          notRowDrag: isStop
+        });
       }
     };
 
@@ -576,6 +587,7 @@ var TableRow = function (_Component) {
         lazyStartIndex = _props10.lazyStartIndex,
         lazyEndIndex = _props10.lazyEndIndex,
         expandIconCellWidth = _props10.expandIconCellWidth;
+    var notRowDrag = this.state.notRowDrag;
 
     var showSum = false;
     var className = this.props.className;
@@ -636,6 +648,7 @@ var TableRow = function (_Component) {
         lazyStartIndex: lazyStartIndex,
         lazyEndIndex: lazyEndIndex,
         onPaste: onPaste,
+        stopRowDrag: this.stopRowDrag,
         col: i
       }));
     }
@@ -646,10 +659,15 @@ var TableRow = function (_Component) {
     if (record && record._checked) {
       className += ' selected';
     }
+
+    if (rowDraggAble && !useDragHandle && !notRowDrag) {
+      className += ' row-dragg-able';
+    }
+
     return _react2["default"].createElement(
       'tr',
       {
-        draggable: rowDraggAble && !useDragHandle,
+        draggable: rowDraggAble && !useDragHandle && !notRowDrag,
         onClick: this.onRowClick,
         onDoubleClick: this.onRowDoubleClick,
         onMouseEnter: this.onMouseEnter,

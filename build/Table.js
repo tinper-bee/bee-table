@@ -638,7 +638,8 @@ var Table = function (_Component) {
         bordered = _props2.bordered,
         onDropBorder = _props2.onDropBorder,
         onDraggingBorder = _props2.onDraggingBorder,
-        bodyDisplayInRow = _props2.bodyDisplayInRow;
+        bodyDisplayInRow = _props2.bodyDisplayInRow,
+        headerEventNoStop = _props2.headerEventNoStop;
 
     this.columnsChildrenList = []; //复杂表头拖拽，重新render表头前，将其置空
     var rows = this.getHeaderRows(columns);
@@ -686,7 +687,8 @@ var Table = function (_Component) {
       bordered: bordered,
       leftFixedWidth: leftFixedWidth,
       rightFixedWidth: rightFixedWidth,
-      bodyDisplayInRow: bodyDisplayInRow
+      bodyDisplayInRow: bodyDisplayInRow,
+      eventNoStop: headerEventNoStop
     })) : null;
   };
 
@@ -972,7 +974,7 @@ var Table = function (_Component) {
         indent: indent,
         indentSize: props.indentSize,
         needIndentSpaced: needIndentSpaced,
-        className: className + ' ' + (props.rowDraggAble && !props.useDragHandle ? 'row-dragg-able ' : ''),
+        className: '' + className,
         record: record,
         expandIconAsCell: expandIconAsCell,
         onDestroy: this.onRowDestroy,
