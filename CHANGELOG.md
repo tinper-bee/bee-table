@@ -1,3 +1,12 @@
+## [2.2.65](https://github.com/tinper-bee/bee-table/compare/v2.2.64...v2.2.65) (2020-09-21)
+
+
+### Features
+
+* 支持表头自定义mouseDown事件 ([dc00d42](https://github.com/tinper-bee/bee-table/commit/dc00d42445cb9aa3d7cdbd16669e6734613d0525))
+
+
+
 ## [2.2.64](https://github.com/tinper-bee/bee-table/compare/v2.2.63...v2.2.64) (2020-09-11)
 
 
