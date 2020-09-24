@@ -167,7 +167,8 @@ class TableRow extends Component{
     let event = Event.getEvent(e) ,
         _target = Event.getTarget(event),
         target = _target.parentNode;
-
+    event.preventDefault()
+    event.stopPropagation();
     let currentKey = event.dataTransfer.getData("text");
     let targetKey = target.getAttribute("data-row-key");
 

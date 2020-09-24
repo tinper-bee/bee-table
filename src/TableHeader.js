@@ -558,6 +558,8 @@ class TableHeader extends Component {
     }
     let event = Event.getEvent(e) ,
     target = Event.getTarget(event);
+    event.preventDefault()
+    event.stopPropagation();
     this.currentDome.setAttribute('draggable',false);//添加交换列效果
     // let data = this.getCurrentEventData(this._dragCurrent);
     // if(!data){
@@ -587,6 +589,8 @@ class TableHeader extends Component {
     let event = Event.getEvent(e) ,
     target = Event.getTarget(event);
     this._dragCurrent.setAttribute("style","");
+    event.preventDefault()
+    event.stopPropagation();
     // this._dragCurrent.style = "";
     document.getElementById(this._table_none_cont_id).innerHTML = "";
 
