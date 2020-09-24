@@ -1,3 +1,12 @@
+## [2.2.66](https://github.com/tinper-bee/bee-table/compare/v2.2.65...v2.2.66) (2020-09-24)
+
+
+### Bug Fixes
+
+* #DDMPT-20421  火狐浏览器下拖拽后跳转新页面bug ([e96497c](https://github.com/tinper-bee/bee-table/commit/e96497cf596f444e5bbf6b8a8a0d3c43cd1130ff)), closes [#DDMPT-20421](https://github.com/tinper-bee/bee-table/issues/DDMPT-20421)
+
+
+
 ## [2.2.65](https://github.com/tinper-bee/bee-table/compare/v2.2.64...v2.2.65) (2020-09-21)
 
 
