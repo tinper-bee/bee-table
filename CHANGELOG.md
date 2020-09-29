@@ -1,3 +1,12 @@
+## [2.2.67](https://github.com/tinper-bee/bee-table/compare/v2.2.66...v2.2.67) (2020-09-29)
+
+
+### Features
+
+* 增加列拷贝钩子函数 ([c6e520d](https://github.com/tinper-bee/bee-table/commit/c6e520db0febe6c7d31cce6f7e629898d693ce64))
+
+
+
 ## [2.2.66](https://github.com/tinper-bee/bee-table/compare/v2.2.65...v2.2.66) (2020-09-24)
 
 
