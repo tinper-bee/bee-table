@@ -841,6 +841,12 @@ class TableHeader extends Component {
     }
   };
 
+  onCopy = (data,index, event) => {
+    if(this.props.onCopy) {
+      this.props.onCopy(Object.assign(data,{col: index}),event)
+    }
+  }
+
 
   render() {
     const { clsPrefix, rowStyle,draggable,
@@ -908,7 +914,7 @@ class TableHeader extends Component {
               thClassName += ` ${fixedStyle}`;
               if(!da.fixed ){
                   return (<th {...da}  {...keyTemp} className={thClassName} data-th-fixed={da.fixed} data-line-key={da.key}
-                  data-line-index={columIndex} data-th-width={da.width} data-type="draggable">
+                  data-line-index={columIndex} data-th-width={da.width} data-type="draggable" onCopy={(event) => {this.onCopy(da,columIndex,event)}}>
                       {da.children}
                       {
                         // && columIndex != _rowLeng
@@ -924,7 +930,7 @@ class TableHeader extends Component {
                   className:`${thClassName} ${fixedStyle}`,
                 };
                 da.onClick ?thDefaultObj.onClick = (e)=>{da.onClick(da, e)}:"";
-                return (<th {...thDefaultObj} {...keyTemp}  data-th-fixed={da.fixed} style={{maxWidth: da.width}}/>)
+                return (<th {...thDefaultObj} {...keyTemp}  data-th-fixed={da.fixed} style={{maxWidth: da.width}} onCopy={this.onCopy}/>)
               }
             })}
           </tr>

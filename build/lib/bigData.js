@@ -96,6 +96,7 @@ function bigData(Table) {
         _this.treeType = isTreeType;
         //fix: 滚动加载场景中,数据动态改变下占位计算错误的问题(26 Jun)
         if (newData.toString() !== props.data.toString()) {
+
           _this.cachedRowHeight = []; //缓存每行的高度
           _this.cachedRowParentIndex = [];
           _this.computeCachedRowParentIndex(newData);

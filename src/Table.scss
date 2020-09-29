@@ -29,6 +29,9 @@ $icon-color:#505F79;
   position: relative;
   line-height: $line-height;
   overflow: hidden;
+  &.copy .u-table-thead th {
+    user-select: unset 
+  }
   &-body{
     // overflow: hidden!important;
     position: relative;

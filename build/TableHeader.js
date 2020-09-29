@@ -830,6 +830,8 @@ var _initialiseProps = function _initialiseProps() {
     }
     var event = _utils.Event.getEvent(e),
         target = _utils.Event.getTarget(event);
+    event.preventDefault();
+    event.stopPropagation();
     _this8.currentDome.setAttribute('draggable', false); //添加交换列效果
     // let data = this.getCurrentEventData(this._dragCurrent);
     // if(!data){
@@ -858,6 +860,8 @@ var _initialiseProps = function _initialiseProps() {
     var event = _utils.Event.getEvent(e),
         target = _utils.Event.getTarget(event);
     _this8._dragCurrent.setAttribute("style", "");
+    event.preventDefault();
+    event.stopPropagation();
     // this._dragCurrent.style = "";
     document.getElementById(_this8._table_none_cont_id).innerHTML = "";
 

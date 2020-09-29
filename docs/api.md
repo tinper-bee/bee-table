@@ -86,8 +86,10 @@ import 'bee-table/build/Table.css';
 | [v2.2.8新增]autoCheckedByClickRows | 设置为 false 时，表格行点击事件，不会自动勾选复选框 | bool | true |
 | [v2.2.8新增]autoSelect | 树型表格勾选时，是否开启子节点的联动 | bool | false |
 | onPaste | 粘贴的回调函数 | func(event,positon) | - |
+| onCopy | 复制列的回调函数 | func(data,event) | - |
 | onBodyScroll | table body 滚动的回调 | func(scrollTop) | - |
 | syncRowHeight | 滚动是否同步高度,关闭此功能有利于提高性能，注：树表和主子表不允许关闭 | true | - |
+
 
 > 快捷键部分参考示例 (快捷键在table中的简单使用应用)
 

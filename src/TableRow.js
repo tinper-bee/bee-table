@@ -352,9 +352,10 @@ class TableRow extends Component{
     if(this.props.treeType){
       this.setRowParentIndex();
     }
-    if(syncRowHeight){
-      this.setRowHeight()
-    }
+    // if(syncRowHeight){
+    //   this.setRowHeight()
+    // }
+    this.setRowHeight()
   }
 
   componentWillUnmount() {

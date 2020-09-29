@@ -139,7 +139,8 @@ var TableRow = function (_Component) {
       var event = _utils.Event.getEvent(e),
           _target = _utils.Event.getTarget(event),
           target = _target.parentNode;
-
+      event.preventDefault();
+      event.stopPropagation();
       var currentKey = event.dataTransfer.getData("text");
       var targetKey = target.getAttribute("data-row-key");
 
@@ -449,9 +450,10 @@ var TableRow = function (_Component) {
     if (this.props.treeType) {
       this.setRowParentIndex();
     }
-    if (syncRowHeight) {
-      this.setRowHeight();
-    }
+    // if(syncRowHeight){
+    //   this.setRowHeight()
+    // }
+    this.setRowHeight();
   };
 
   TableRow.prototype.componentWillUnmount = function componentWillUnmount() {
