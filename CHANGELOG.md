@@ -1,3 +1,12 @@
+## [2.2.68](https://github.com/tinper-bee/bee-table/compare/v2.2.67...v2.2.68) (2020-10-09)
+
+
+### Bug Fixes
+
+* bigData 更改数据源表格数据空白 ([5cbd047](https://github.com/tinper-bee/bee-table/commit/5cbd047e6e7977df73960faf51c3ecf3b766dc0a))
+
+
+
 ## [2.2.67](https://github.com/tinper-bee/bee-table/compare/v2.2.66...v2.2.67) (2020-09-29)
 
 
