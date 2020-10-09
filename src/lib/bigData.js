@@ -73,9 +73,12 @@ export default function bigData(Table) {
           _this.cachedRowParentIndex = [];
           _this.computeCachedRowParentIndex(newData);
           // fix：切换数据源，startIndex、endIndex错误
-          _this.currentIndex = 0;
-          _this.startIndex = _this.currentIndex; //数据开始位置
-          _this.endIndex = _this.currentIndex + _this.loadCount; 
+          if(_this.scrollTop <= 0) { // 增加scrollTop 判断，ncc场景下滚动条不在最上层， 会出现空白，因为重置了currentIndex没有重置滚动条
+            _this.currentIndex = 0;
+            _this.startIndex = _this.currentIndex; //数据开始位置
+            _this.endIndex = _this.currentIndex + _this.loadCount; 
+          }
+          
         }
         _this.treeData = [];
         _this.flatTreeData = [];

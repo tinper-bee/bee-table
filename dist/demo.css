@@ -162,6 +162,10 @@
   position: relative;
   line-height: 1.33;
   overflow: hidden; }
+  .u-table.copy .u-table-thead th {
+    -webkit-user-select: unset;
+    -ms-user-select: unset;
+    user-select: unset; }
   .u-table-body {
     position: relative; }
     .u-table-body .u-table-row-expand-columns-in-body .expand-icon-con {
