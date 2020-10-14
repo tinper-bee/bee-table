@@ -515,7 +515,9 @@ var TableHeader = function (_Component) {
               return _react2["default"].createElement(
                 "th",
                 _extends({}, da, keyTemp, { className: thClassName, "data-th-fixed": da.fixed, "data-line-key": da.key,
-                  "data-line-index": columIndex, "data-th-width": da.width, "data-type": "draggable" }),
+                  "data-line-index": columIndex, "data-th-width": da.width, "data-type": "draggable", onCopy: function onCopy(event) {
+                    _this7.onCopy(da, columIndex, event);
+                  } }),
                 da.children,
 
                 // && columIndex != _rowLeng
@@ -536,7 +538,7 @@ var TableHeader = function (_Component) {
               da.onClick ? thDefaultObj.onClick = function (e) {
                 da.onClick(da, e);
               } : "";
-              return _react2["default"].createElement("th", _extends({}, thDefaultObj, keyTemp, { "data-th-fixed": da.fixed, style: { maxWidth: da.width } }));
+              return _react2["default"].createElement("th", _extends({}, thDefaultObj, keyTemp, { "data-th-fixed": da.fixed, style: { maxWidth: da.width }, onCopy: _this7.onCopy }));
             }
           })
         );
@@ -1049,6 +1051,12 @@ var _initialiseProps = function _initialiseProps() {
       default:
         //不匹配类型默认文本输入
         return _react2["default"].createElement("div", null);
+    }
+  };
+
+  this.onCopy = function (data, index, event) {
+    if (_this8.props.onCopy) {
+      _this8.props.onCopy(_extends(data, { col: index }), event);
     }
   };
 };

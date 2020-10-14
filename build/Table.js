@@ -639,7 +639,8 @@ var Table = function (_Component) {
         onDropBorder = _props2.onDropBorder,
         onDraggingBorder = _props2.onDraggingBorder,
         bodyDisplayInRow = _props2.bodyDisplayInRow,
-        headerEventNoStop = _props2.headerEventNoStop;
+        headerEventNoStop = _props2.headerEventNoStop,
+        onCopy = _props2.onCopy;
 
     this.columnsChildrenList = []; //复杂表头拖拽，重新render表头前，将其置空
     var rows = this.getHeaderRows(columns);
@@ -688,7 +689,8 @@ var Table = function (_Component) {
       leftFixedWidth: leftFixedWidth,
       rightFixedWidth: rightFixedWidth,
       bodyDisplayInRow: bodyDisplayInRow,
-      eventNoStop: headerEventNoStop
+      eventNoStop: headerEventNoStop,
+      onCopy: onCopy
     })) : null;
   };
 
@@ -1639,6 +1641,9 @@ var Table = function (_Component) {
     }
     if (props.bordered) {
       className += ' ' + clsPrefix + '-bordered';
+    }
+    if (props.onCopy) {
+      className += ' copy';
     }
     className += ' ' + clsPrefix + '-scroll-position-' + this.state.scrollPosition;
     //如果传入height说明是固定高度
