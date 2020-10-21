@@ -94,6 +94,9 @@ function sum(Table) {
               }
             });
             var _sum = (0, _utils.DicimalFormater)(count, precision);
+            if (column.sumThousandth) {
+              _sum = _this.toThousands(_sum);
+            }
             sumdata[column.dataIndex] = _sum;
             if (column.sumRender && typeof column.sumRender == 'function') {
               sumdata[column.dataIndex] = column.sumRender(_sum);
@@ -114,9 +117,25 @@ function sum(Table) {
 
     /**
      * 获取当前的表格类型。
-     * 
+     *
      */
 
+
+    SumTable.prototype.toThousands = function toThousands(num) {
+      var result = '',
+          counter = 0;
+      num = (num || 0).toString();
+      var numArr = num.split('.');
+      num = numArr[0];
+      for (var i = num.length - 1; i >= 0; i--) {
+        counter++;
+        result = num.charAt(i) + result;
+        if (!(counter % 3) && i != 0) {
+          result = ',' + result;
+        }
+      }
+      return numArr.length === 1 ? result : result + '.' + numArr[1];
+    };
 
     SumTable.prototype.render = function render() {
       return _react2["default"].createElement(Table, _extends({}, this.props, {

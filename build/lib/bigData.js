@@ -96,14 +96,16 @@ function bigData(Table) {
         _this.treeType = isTreeType;
         //fix: 滚动加载场景中,数据动态改变下占位计算错误的问题(26 Jun)
         if (newData.toString() !== props.data.toString()) {
-
           _this.cachedRowHeight = []; //缓存每行的高度
           _this.cachedRowParentIndex = [];
           _this.computeCachedRowParentIndex(newData);
           // fix：切换数据源，startIndex、endIndex错误
-          _this.currentIndex = 0;
-          _this.startIndex = _this.currentIndex; //数据开始位置
-          _this.endIndex = _this.currentIndex + _this.loadCount;
+          if (_this.scrollTop <= 0) {
+            // 增加scrollTop 判断，ncc场景下滚动条不在最上层， 会出现空白，因为重置了currentIndex没有重置滚动条
+            _this.currentIndex = 0;
+            _this.startIndex = _this.currentIndex; //数据开始位置
+            _this.endIndex = _this.currentIndex + _this.loadCount;
+          }
         }
         _this.treeData = [];
         _this.flatTreeData = [];

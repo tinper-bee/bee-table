@@ -8,10 +8,10 @@
 
 import React, { Component } from "react";
 import {Checkbox} from "tinper-bee";
-import Table from "../../src"; 
+import Table from "../../src";
 import sum from "../../src/lib/sum.js";
 import multiSelect from "../../src/lib/multiSelect.js";
- 
+
 let ComplexTable = multiSelect(sum(Table), Checkbox);
 //sum第二个参数可以设置精度，例如 sum(Table,4); 设计精度为4
 let _sum = 0;
@@ -57,14 +57,16 @@ const columns = [
     dataIndex: "total",
     key: "total",
     width: 100,
-    sumCol: true
+    sumCol: true,
+	  sumThousandth: true
   },
   {
     title: "金额",
     dataIndex: "money",
     key: "money",
     width: 100,
-    sumCol: true
+    sumCol: true,
+	  sumThousandth: true
   }
 ];
 
@@ -80,7 +82,7 @@ function getData(){
       contact: "Tom",
       warehouse: "普通仓",
       total: i + Math.floor(Math.random()*10),
-      money: 20 *  Math.floor(Math.random()*10)
+      money: 2000 *  Math.floor(Math.random()*10)
     });
     _sum += data[i].total;
     _sum += data[i].money;
@@ -89,7 +91,7 @@ function getData(){
 }
 
 class Demo35 extends Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -102,7 +104,7 @@ class Demo35 extends Component {
     const {data} = this.state;
     return (
       <div>
-         <ComplexTable 
+         <ComplexTable
           columns={columns}
           data={data}
           bordered
