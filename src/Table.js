@@ -265,9 +265,10 @@ class Table extends Component {
       this.bodyTable.scrollTop = this.scrollTop;
       this.scrollTop = -1;
     }
-    if (prevProps.data.length === 0  || this.props.data.length === 0 ) {
-      this.resetScrollX();
-    }
+    // 当表格没有数据时，重置滚动条位置，造成grid里面的表头列无法操作
+    // if (prevProps.data.length === 0  || this.props.data.length === 0 ) {
+    //   this.resetScrollX();
+    // }
 
     // 是否传入 scroll中的y属性，如果传入判断是否是整数，如果是则进行比较 。bodyTable 的clientHeight进行判断
     this.isShowScrollY();
