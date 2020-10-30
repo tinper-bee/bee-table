@@ -1,3 +1,12 @@
+## [2.2.71](https://github.com/tinper-bee/bee-table/compare/v2.2.70...v2.2.71) (2020-10-30)
+
+
+### Features
+
+* 增加getCellClassNameAPI支持自定义单元格样式 ([05d175a](https://github.com/tinper-bee/bee-table/commit/05d175a94f72f5ac5fb45a805ab1a24ccb4b9864))
+
+
+
 ## [2.2.70](https://github.com/tinper-bee/bee-table/compare/v2.2.68...v2.2.70) (2020-10-21)
 
 
