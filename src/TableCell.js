@@ -191,7 +191,7 @@ class TableCell extends Component{
 
   render() {
     const { record, indentSize, clsPrefix, indent,
-            index, expandIcon, column ,fixed,showSum, bodyDisplayInRow,lazyStartIndex,lazyEndIndex} = this.props;
+            index, expandIcon, column ,fixed,showSum, bodyDisplayInRow,lazyStartIndex,lazyEndIndex, getCellClassName} = this.props;
     const { dataIndex, render, fieldType, linkConfig, fontColor, bgColor,...other } = column;
     let {className = ''} = column;
 
@@ -297,6 +297,12 @@ class TableCell extends Component{
     if(colMenu){
       className += ' u-table-inline-icon'
     }
+
+    if(typeof getCellClassName == 'function') {
+      const selfClassName = getCellClassName(record, index, column) || ''
+      className += ` ${selfClassName}`
+    }
+
     if(colSpan==0)return null;
     return <td
             draggable={column.draggable}

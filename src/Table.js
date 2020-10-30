@@ -576,7 +576,7 @@ class Table extends Component {
   }
 
   getExpandedRow(key, content, visible, className, fixed) {
-    const { clsPrefix, expandIconAsCell,onPaste } = this.props;
+    const { clsPrefix, expandIconAsCell,onPaste, getCellClassName } = this.props;
     let colCount;
     if (fixed === 'left') {
       colCount = this.columnManager.leftLeafColumns().length;
@@ -629,6 +629,7 @@ class Table extends Component {
         onDragRow={this.onDragRow}
         onDragRowStart={this.onDragRowStart}
         height={expandedRowHeight}
+        getCellClassName = {getCellClassName}
       />
     );
   }
@@ -850,6 +851,7 @@ class Table extends Component {
           centerColumnsLength={this.centerColumnsLength}
           leftColumnsLength={this.leftColumnsLength}
           expandIconCellWidth={expandIconCellWidth}
+          getCellClassName = {props.getCellClassName}
         />
       );
       this.treeRowIndex++;

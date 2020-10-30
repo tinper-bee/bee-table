@@ -462,7 +462,7 @@ class TableRow extends Component{
       clsPrefix, columns, record, height, visible, index,onPaste,
       expandIconColumnIndex, expandIconAsCell, expanded, useDragHandle,rowDraggAble,
       expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed,bodyDisplayInRow
-      ,expandedIcon,collapsedIcon, hoverKey,lazyStartIndex,lazyEndIndex, expandIconCellWidth
+      ,expandedIcon,collapsedIcon, hoverKey,lazyStartIndex,lazyEndIndex, expandIconCellWidth, getCellClassName
     } = this.props;
     const {notRowDrag} = this.state;
     let showSum = false;
@@ -530,6 +530,7 @@ class TableRow extends Component{
           onPaste={onPaste}
           stopRowDrag={this.stopRowDrag}
           col={i}
+          getCellClassName = {getCellClassName}
         />
       );
     }
