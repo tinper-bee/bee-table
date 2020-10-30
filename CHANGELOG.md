@@ -1,3 +1,12 @@
+## [2.2.72](https://github.com/tinper-bee/bee-table/compare/v2.2.71...v2.2.72) (2020-10-30)
+
+
+### Features
+
+* 支持表格初始化时根据soter属性进行默认排序 ([f346d7a](https://github.com/tinper-bee/bee-table/commit/f346d7a45cf998dc4d924af99a2b806c601daa9f))
+
+
+
 ## [2.2.71](https://github.com/tinper-bee/bee-table/compare/v2.2.70...v2.2.71) (2020-10-30)
 
 
