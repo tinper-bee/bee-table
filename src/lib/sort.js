@@ -27,24 +27,45 @@ export default function sort(Table, Icon) {
       let flatColumns = [];
       this._toFlatColumn(props.columns,-1,flatColumns);
       this.state = { data: this.props.data, columns: props.columns,flatColumns:flatColumns };
-      
+      this._initSort();
     }
     static defaultProps = { sort: { mode: "single", backSource: false } }; //默认是前端排序，值为true为后端排序
+    
     componentWillReceiveProps(nextProps) {
+
+      if (nextProps.columns !== this.props.columns) {
+        let flatColumns = [];
+        this._toFlatColumn(nextProps.columns,-1,flatColumns);
+        this.setState({ columns: nextProps.columns ,flatColumns});
+      }
      
       if (nextProps.data !== this.props.data) {
         this.setState({
           data: nextProps.data,
           oldData: nextProps.data.concat()
         });
+        this._initSort();
       }
-      if (nextProps.columns !== this.props.columns) {
-        let flatColumns = [];
-        this._toFlatColumn(nextProps.columns,-1,flatColumns);
-        this.setState({ columns: nextProps.columns ,flatColumns});
-       
+      
+    }
+
+    _initSort = () => {
+      const {flatColumns} = this.state;
+      let needSort = false;
+      flatColumns.forEach(item => {
+        if(item.order == 'descend' || item.order == 'ascend') {
+          needSort = true;
+          return
+        }
+      })
+      if(needSort) {
+        const data = this.multiSort(flatColumns)
+        this.setState({
+          data
+        })
       }
     }
+
     /**
      *column扁平化处理，适应多表头避免递归操作
      *
