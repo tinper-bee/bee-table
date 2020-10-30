@@ -155,6 +155,7 @@ import 'bee-table/build/Table.css';
 | cellMenu | 渲染单元格内操作按钮 | object | - |
 | style | 该列的样式，严格按照react的样式书写规则，即对象内每一个属性的键为小写驼峰式，值为字符串 | object | - |
 | sumRender | 自定义合计render函数 | func(value) | - |
+|getCellClassName|自定义单元格样式| func(record,index,column) record：当前行数据，index:行索引，column：当前列索引|-|
 
 #### [v2.2.x新增] cellMenu
 
