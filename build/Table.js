@@ -465,9 +465,10 @@ var Table = function (_Component) {
       this.bodyTable.scrollTop = this.scrollTop;
       this.scrollTop = -1;
     }
-    if (prevProps.data.length === 0 || this.props.data.length === 0) {
-      this.resetScrollX();
-    }
+    // 当表格没有数据时，重置滚动条位置，造成grid里面的表头列无法操作
+    // if (prevProps.data.length === 0  || this.props.data.length === 0 ) {
+    //   this.resetScrollX();
+    // }
 
     // 是否传入 scroll中的y属性，如果传入判断是否是整数，如果是则进行比较 。bodyTable 的clientHeight进行判断
     this.isShowScrollY();
@@ -790,7 +791,8 @@ var Table = function (_Component) {
     var _props3 = this.props,
         clsPrefix = _props3.clsPrefix,
         expandIconAsCell = _props3.expandIconAsCell,
-        onPaste = _props3.onPaste;
+        onPaste = _props3.onPaste,
+        getCellClassName = _props3.getCellClassName;
 
     var colCount = void 0;
     if (fixed === 'left') {
@@ -844,7 +846,8 @@ var Table = function (_Component) {
       useDragHandle: this.props.useDragHandle,
       onDragRow: this.onDragRow,
       onDragRowStart: this.onDragRowStart,
-      height: expandedRowHeight
+      height: expandedRowHeight,
+      getCellClassName: getCellClassName
     });
   };
 
@@ -1020,7 +1023,8 @@ var Table = function (_Component) {
         lazyEndIndex: lazyEndIndex,
         centerColumnsLength: this.centerColumnsLength,
         leftColumnsLength: this.leftColumnsLength,
-        expandIconCellWidth: expandIconCellWidth
+        expandIconCellWidth: expandIconCellWidth,
+        getCellClassName: props.getCellClassName
       })));
       this.treeRowIndex++;
       var subVisible = visible && isRowExpanded;

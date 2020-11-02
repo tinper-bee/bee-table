@@ -336,7 +336,8 @@ var TableCell = function (_Component) {
         showSum = _props2.showSum,
         bodyDisplayInRow = _props2.bodyDisplayInRow,
         lazyStartIndex = _props2.lazyStartIndex,
-        lazyEndIndex = _props2.lazyEndIndex;
+        lazyEndIndex = _props2.lazyEndIndex,
+        getCellClassName = _props2.getCellClassName;
 
     var dataIndex = column.dataIndex,
         render = column.render,
@@ -456,6 +457,12 @@ var TableCell = function (_Component) {
     if (colMenu) {
       className += ' u-table-inline-icon';
     }
+
+    if (typeof getCellClassName == 'function') {
+      var selfClassName = getCellClassName(record, index, column) || '';
+      className += ' ' + selfClassName;
+    }
+
     if (colSpan == 0) return null;
     return _react2["default"].createElement(
       'td',

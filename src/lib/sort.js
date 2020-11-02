@@ -43,8 +43,10 @@ export default function sort(Table, Icon) {
         this.setState({
           data: nextProps.data,
           oldData: nextProps.data.concat()
+        }, function(){
+          this._initSort(); // 数据更新后需要重新排序
         });
-        this._initSort();
+        
       }
       
     }

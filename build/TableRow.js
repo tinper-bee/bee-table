@@ -588,7 +588,8 @@ var TableRow = function (_Component) {
         hoverKey = _props10.hoverKey,
         lazyStartIndex = _props10.lazyStartIndex,
         lazyEndIndex = _props10.lazyEndIndex,
-        expandIconCellWidth = _props10.expandIconCellWidth;
+        expandIconCellWidth = _props10.expandIconCellWidth,
+        getCellClassName = _props10.getCellClassName;
     var notRowDrag = this.state.notRowDrag;
 
     var showSum = false;
@@ -651,7 +652,8 @@ var TableRow = function (_Component) {
         lazyEndIndex: lazyEndIndex,
         onPaste: onPaste,
         stopRowDrag: this.stopRowDrag,
-        col: i
+        col: i,
+        getCellClassName: getCellClassName
       }));
     }
     var style = _extends({ height: height }, record ? record.style : undefined);
