@@ -57,31 +57,34 @@ function sort(Table, Icon) {
       var flatColumns = [];
       _this2._toFlatColumn(props.columns, -1, flatColumns);
       _this2.state = { data: _this2.props.data, columns: props.columns, flatColumns: flatColumns };
-
+      _this2._initSort();
       return _this2;
     }
 
     //默认是前端排序，值为true为后端排序
+
     SortTable.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
 
-      if (nextProps.data !== this.props.data) {
-        this.setState({
-          data: nextProps.data,
-          oldData: nextProps.data.concat()
-        });
-      }
       if (nextProps.columns !== this.props.columns) {
         var flatColumns = [];
         this._toFlatColumn(nextProps.columns, -1, flatColumns);
         this.setState({ columns: nextProps.columns, flatColumns: flatColumns });
       }
+
+      if (nextProps.data !== this.props.data) {
+        this.setState({
+          data: nextProps.data,
+          oldData: nextProps.data.concat()
+        }, function () {
+          this._initSort(); // 数据更新后需要重新排序
+        });
+      }
     };
+
     /**
      *column扁平化处理，适应多表头避免递归操作
      *
      */
-
-
     SortTable.prototype._toFlatColumn = function _toFlatColumn(columns) {
       var parentIndex = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : -1;
       var flatColumns = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
@@ -163,6 +166,24 @@ function sort(Table, Icon) {
     return SortTable;
   }(_react.Component), _class.defaultProps = { sort: { mode: "single", backSource: false } }, _initialiseProps = function _initialiseProps() {
     var _this3 = this;
+
+    this._initSort = function () {
+      var flatColumns = _this3.state.flatColumns;
+
+      var needSort = false;
+      flatColumns.forEach(function (item) {
+        if (item.order == 'descend' || item.order == 'ascend') {
+          needSort = true;
+          return;
+        }
+      });
+      if (needSort) {
+        var data = _this3.multiSort(flatColumns);
+        _this3.setState({
+          data: data
+        });
+      }
+    };
 
     this.getOrderNum = function () {
       var orderNum = 0;
