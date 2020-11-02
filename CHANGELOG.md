@@ -1,3 +1,12 @@
+## [2.2.73](https://github.com/tinper-bee/bee-table/compare/v2.2.72...v2.2.73) (2020-11-02)
+
+
+### Bug Fixes
+
+* 默认前端排序点击分页后数据不更新 ([b236218](https://github.com/tinper-bee/bee-table/commit/b2362185f58df51a28254f6ebefabacc860621b9))
+
+
+
 ## [2.2.72](https://github.com/tinper-bee/bee-table/compare/v2.2.71...v2.2.72) (2020-10-30)
 
 
