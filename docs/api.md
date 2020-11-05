@@ -132,6 +132,7 @@ import 'bee-table/build/Table.css';
 |onCellClick|单击列的单元格时调用|Function(row, event)|-|
 |onHeadCellClick|单击表头的单元格时调用|Function(row, event)|row 当前行的数据|
 | order | 设置排序 | string（"descend"、"ascend"） | -|
+| orderNum | 多列排序时，用来设置排序优先级（1的优先级最高） | number | -|
 | filterType | 过滤下拉的类型.可选`text(文本框)`,`dropdown(下拉)`,`date(日期)`,`dateyear(日期-年)`,`datemonth(日期-月)`,`dateweek(日期-周)`,`daterange(日期范围)`,`number(数值)` | string | text |
 | filterDropdown | 是否显示过滤下拉.可选`show`,`hide` | string | show |
 | format | 针对过滤下拉设置日期类的格式 | string | YYYY-MM-DD |
