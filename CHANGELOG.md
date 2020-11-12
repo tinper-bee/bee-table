@@ -1,3 +1,12 @@
+## [2.2.74](https://github.com/tinper-bee/bee-table/compare/v2.2.73...v2.2.74) (2020-11-12)
+
+
+### Bug Fixes
+
+* 特殊场景this.flatTreeData为空引起报错 ([6c260cd](https://github.com/tinper-bee/bee-table/commit/6c260cd227e13e2f8da2769693c0ce3b90792d8f))
+
+
+
 ## [2.2.73](https://github.com/tinper-bee/bee-table/compare/v2.2.72...v2.2.73) (2020-11-02)
 
 
