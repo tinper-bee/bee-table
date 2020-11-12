@@ -295,7 +295,7 @@ export default function bigData(Table) {
         if (this.cachedRowHeight[i] == undefined) {
           if (this.treeType) {
             // currentKey = this.keys[i];
-            currentKey = this.flatTreeData[i].key;
+            currentKey = this.flatTreeData[i] && this.flatTreeData[i].key;
             currentRowHeight = 0;
             if (
               this.flatTreeKeysMap.hasOwnProperty(currentKey)
