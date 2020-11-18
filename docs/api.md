@@ -89,6 +89,7 @@ import 'bee-table/build/Table.css';
 | onCopy | 复制列的回调函数 | func(data,event) | - |
 | onBodyScroll | table body 滚动的回调 | func(scrollTop) | - |
 | syncRowHeight | 滚动是否同步高度,关闭此功能有利于提高性能，注：树表和主子表不允许关闭 | true | - |
+|onBodyMouseLeave| 移除表体的回调事件| func() |-|
 
 
 > 快捷键部分参考示例 (快捷键在table中的简单使用应用)
