@@ -67,6 +67,7 @@ const propTypes = {
   headerDisplayInRow: PropTypes.bool, // 表头内容超出列宽度时进行换行 or 以...形式展现
   showRowNum: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]), // 表格是否自动生成序号,格式为{base:number || 0,defaultKey:string || '_index',defaultName:string || '序号'}
   onPaste:PropTypes.func,
+  onBodyMouseLeave: PropTypes.func
 };
 
 const defaultProps = {
@@ -1287,6 +1288,10 @@ class Table extends Component {
   }
   onBodyMouseLeave(e){
     this.hideHoverDom(e);
+    const {onBodyMouseLeave} = this.props;
+    if(onBodyMouseLeave) {
+      onBodyMouseLeave()
+    }
   }
 
   detectScrollTarget(e) {
