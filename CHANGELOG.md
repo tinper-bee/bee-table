@@ -1,3 +1,12 @@
+## [2.2.75](https://github.com/tinper-bee/bee-table/compare/v2.2.74...v2.2.75) (2020-11-18)
+
+
+### Features
+
+* 增加onBodyMouseLeave回调函数 ([cb40026](https://github.com/tinper-bee/bee-table/commit/cb40026e8c3c42418a23cb4bdb23cdb5d9ec1be1))
+
+
+
 ## [2.2.74](https://github.com/tinper-bee/bee-table/compare/v2.2.73...v2.2.74) (2020-11-12)
 
 
