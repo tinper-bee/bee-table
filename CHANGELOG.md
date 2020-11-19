@@ -1,3 +1,12 @@
+## [2.2.76](https://github.com/tinper-bee/bee-table/compare/v2.2.75...v2.2.76) (2020-11-19)
+
+
+### Bug Fixes
+
+* 优化onBodyMouseLeave调用 ([3b1ffec](https://github.com/tinper-bee/bee-table/commit/3b1ffecacde80da6bf6808b9a1f3c5b0b6298f29))
+
+
+
 ## [2.2.75](https://github.com/tinper-bee/bee-table/compare/v2.2.74...v2.2.75) (2020-11-18)
 
 
