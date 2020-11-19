@@ -176,7 +176,7 @@ class Table extends Component {
     this.tableUid = null;
     this.contentTable = null;
     this.leftColumnsLength  //左侧固定列的长度
-    this.centerColumnsLength  //非固定列的长度 
+    this.centerColumnsLength  //非固定列的长度
     this.columnsChildrenList = [];//复杂表头、所有叶子节点
   }
   componentWillMount() {
@@ -254,7 +254,7 @@ class Table extends Component {
     if(this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
     }
-  
+
     //适应模态框中表格、以及父容器宽度变化的情况
     if (typeof (this.props.scroll.x) !== 'number' && this.contentTable.getBoundingClientRect().width !== this.contentDomWidth && this.firstDid) {
       this.computeTableWidth();
@@ -457,7 +457,7 @@ class Table extends Component {
     const trStyle = headerHeight&&!fixed ? { height: headerHeight } : (fixed ? this.getHeaderRowStyle(columns, rows) : null);
     let drop = draggable ? { onDragStart, onDragOver, onDrop,onDragEnd, onDragEnter, draggable } : {};
     let dragBorder = dragborder ? { onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey,onDropBorder,onDraggingBorder } : {};
-    let contentWidthDiff = 0; 
+    let contentWidthDiff = 0;
     //非固定表格,宽度不够时自动扩充
     if (!fixed) {
       contentWidthDiff = this.state.contentWidthDiff
@@ -1200,7 +1200,7 @@ class Table extends Component {
     let tdPaddingTop = this.getStyle(td,'paddingTop'),tdPaddingBottom = this.getStyle(td,'paddingBottom'),
     tdBorderTop = this.getStyle(td,'borderTopWidth'),tdBorderBottom = this.getStyle(td,'borderBottomWidth');
     return Number(tdPaddingTop.replace('px',''))+Number(tdPaddingBottom.replace('px',''))+Number(tdBorderTop.replace('px',''))+Number(tdBorderBottom.replace('px',''))
-    
+
   }
 
   syncFixedTableRowHeight() {
@@ -1253,7 +1253,7 @@ class Table extends Component {
             let trueheight = row.querySelectorAll('.u-table')[0].getBoundingClientRect().height;
             height = trueheight+tdPadding;
           } catch (error) {
-            
+
           }
       fixedColumnsExpandedRowsHeight[parentRowKey] = height;
     })
@@ -1286,11 +1286,23 @@ class Table extends Component {
   isRowExpanded(record, index) {
     return typeof this.findExpandedRow(record, index) !== 'undefined';
   }
+
+  clearBodyMouseLeaveTimer = () => {
+    if (this.bodyMouseLeaveTimmer) {
+      clearTimeout(this.bodyMouseLeaveTimmer)
+      this.bodyMouseLeaveTimmer = null
+    }
+  }
+
   onBodyMouseLeave(e){
     this.hideHoverDom(e);
     const {onBodyMouseLeave} = this.props;
-    if(onBodyMouseLeave) {
-      onBodyMouseLeave()
+    if (typeof onBodyMouseLeave === 'function') {
+      this.clearBodyMouseLeaveTimer();
+      //因为鼠标移动到 hoverContent 中也会触发 onBodyMouseLeave，这是错误的
+      //所以讲 onBodyMouseLeave 回调的调用放入 setTimeout中，
+      // 当触发 hoverContent 的 onRowHoverMouseEnter 回调时，清除此定时器
+      this.bodyMouseLeaveTimmer = setTimeout(onBodyMouseLeave, 0)
     }
   }
 
@@ -1418,6 +1430,7 @@ class Table extends Component {
       currentHoverKey: this.currentHoverKey,
     });
     this.hoverDom.style.display = 'block';
+    this.clearBodyMouseLeaveTimer();
 
   }
   onRowHoverMouseLeave = () =>{
