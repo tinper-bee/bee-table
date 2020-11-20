@@ -1,3 +1,12 @@
+## [2.2.77](https://github.com/tinper-bee/bee-table/compare/v2.2.76...v2.2.77) (2020-11-20)
+
+
+### Bug Fixes
+
+* currentIndex 为-1 比较判断 ([8d87472](https://github.com/tinper-bee/bee-table/commit/8d87472b4e258fb2accb3bd30f14e5069af0285e))
+
+
+
 ## [2.2.76](https://github.com/tinper-bee/bee-table/compare/v2.2.75...v2.2.76) (2020-11-19)
 
 
