@@ -90,7 +90,7 @@ export default function bigData(Table) {
         }
       }
       //如果传currentIndex，会判断该条数据是否在可视区域，如果没有的话，则重新计算startIndex和endIndex
-      if(currentIndex!==-1 && currentIndex !== this.currentIndex){
+      if(currentIndex != -1 && currentIndex !== this.currentIndex){
         _this.setStartAndEndIndex(currentIndex,dataLen);
       }
     }
