@@ -1103,8 +1103,9 @@ class Table extends Component {
         onScroll={this.handleBodyScroll}
         onMouseLeave={this.onBodyMouseLeave}
       >
-        {this.renderDragHideTable()}
+       
         {renderTable(!useFixedHeader)}
+        {this.renderDragHideTable()}
       </div>
     );
 
