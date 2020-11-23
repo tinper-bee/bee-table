@@ -1,3 +1,12 @@
+## [2.2.78](https://github.com/tinper-bee/bee-table/compare/v2.2.77...v2.2.78) (2020-11-23)
+
+
+### Bug Fixes
+
+* 拖拽下的表格含有固定列的场景右侧固定列box-shaow bug ([f8ff20f](https://github.com/tinper-bee/bee-table/commit/f8ff20f30a4ca328e32fbbca5e0c6220f40b4815))
+
+
+
 ## [2.2.77](https://github.com/tinper-bee/bee-table/compare/v2.2.76...v2.2.77) (2020-11-20)
 
 
