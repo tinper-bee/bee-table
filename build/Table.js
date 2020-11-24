@@ -122,7 +122,8 @@ var propTypes = {
   bodyDisplayInRow: _propTypes2["default"].bool, // 表格内容超出列宽度时进行换行 or 以...形式展现
   headerDisplayInRow: _propTypes2["default"].bool, // 表头内容超出列宽度时进行换行 or 以...形式展现
   showRowNum: _propTypes2["default"].oneOfType([_propTypes2["default"].bool, _propTypes2["default"].object]), // 表格是否自动生成序号,格式为{base:number || 0,defaultKey:string || '_index',defaultName:string || '序号'}
-  onPaste: _propTypes2["default"].func
+  onPaste: _propTypes2["default"].func,
+  onBodyMouseLeave: _propTypes2["default"].func
 };
 
 var defaultProps = {
@@ -288,12 +289,20 @@ var Table = function (_Component) {
       return Number(tdPaddingTop.replace('px', '')) + Number(tdPaddingBottom.replace('px', '')) + Number(tdBorderTop.replace('px', '')) + Number(tdBorderBottom.replace('px', ''));
     };
 
+    _this.clearBodyMouseLeaveTimer = function () {
+      if (_this.bodyMouseLeaveTimmer) {
+        clearTimeout(_this.bodyMouseLeaveTimmer);
+        _this.bodyMouseLeaveTimmer = null;
+      }
+    };
+
     _this.onRowHoverMouseEnter = function () {
 
       _this.store.setState({
         currentHoverKey: _this.currentHoverKey
       });
       _this.hoverDom.style.display = 'block';
+      _this.clearBodyMouseLeaveTimer();
     };
 
     _this.onRowHoverMouseLeave = function () {};
@@ -373,7 +382,7 @@ var Table = function (_Component) {
     _this.tableUid = null;
     _this.contentTable = null;
     _this.leftColumnsLength; //左侧固定列的长度
-    _this.centerColumnsLength; //非固定列的长度 
+    _this.centerColumnsLength; //非固定列的长度
     _this.columnsChildrenList = []; //复杂表头、所有叶子节点
     return _this;
   }
@@ -1500,6 +1509,15 @@ var Table = function (_Component) {
 
   Table.prototype.onBodyMouseLeave = function onBodyMouseLeave(e) {
     this.hideHoverDom(e);
+    var onBodyMouseLeave = this.props.onBodyMouseLeave;
+
+    if (typeof onBodyMouseLeave === 'function') {
+      this.clearBodyMouseLeaveTimer();
+      //因为鼠标移动到 hoverContent 中也会触发 onBodyMouseLeave，这是错误的
+      //所以讲 onBodyMouseLeave 回调的调用放入 setTimeout中，
+      // 当触发 hoverContent 的 onRowHoverMouseEnter 回调时，清除此定时器
+      this.bodyMouseLeaveTimmer = setTimeout(onBodyMouseLeave, 0);
+    }
   };
 
   Table.prototype.detectScrollTarget = function detectScrollTarget(e) {
@@ -1541,7 +1559,7 @@ var Table = function (_Component) {
       }
       if (e.target.scrollLeft === 0) {
         position = 'left';
-      } else if (e.target.scrollLeft + 1 >= e.target.children[0].getBoundingClientRect().width - e.target.getBoundingClientRect().width) {
+      } else if (e.target.scrollLeft + 1 >= e.target.querySelector('table').getBoundingClientRect().width - e.target.getBoundingClientRect().width) {
         position = 'right';
       } else if (this.state.scrollPosition !== 'middle') {
         position = 'middle';

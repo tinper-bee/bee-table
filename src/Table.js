@@ -1103,9 +1103,8 @@ class Table extends Component {
         onScroll={this.handleBodyScroll}
         onMouseLeave={this.onBodyMouseLeave}
       >
-       
-        {renderTable(!useFixedHeader)}
         {this.renderDragHideTable()}
+        {renderTable(!useFixedHeader)}
       </div>
     );
 
@@ -1339,7 +1338,7 @@ class Table extends Component {
       if (e.target.scrollLeft === 0) {
         position='left';
       } else if (e.target.scrollLeft + 1 >=
-        e.target.children[0].getBoundingClientRect().width -
+        e.target.querySelector('table').getBoundingClientRect().width -
         e.target.getBoundingClientRect().width) {
           position='right';
       } else if (this.state.scrollPosition !== 'middle') {

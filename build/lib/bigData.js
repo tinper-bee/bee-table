@@ -117,7 +117,7 @@ function bigData(Table) {
         }
       }
       //如果传currentIndex，会判断该条数据是否在可视区域，如果没有的话，则重新计算startIndex和endIndex
-      if (currentIndex !== -1 && currentIndex !== this.currentIndex) {
+      if (currentIndex != -1 && currentIndex !== this.currentIndex) {
         _this.setStartAndEndIndex(currentIndex, dataLen);
       }
     };
@@ -258,7 +258,7 @@ function bigData(Table) {
         if (this.cachedRowHeight[i] == undefined) {
           if (this.treeType) {
             // currentKey = this.keys[i];
-            currentKey = this.flatTreeData[i].key;
+            currentKey = this.flatTreeData[i] && this.flatTreeData[i].key;
             currentRowHeight = 0;
             if (this.flatTreeKeysMap.hasOwnProperty(currentKey)) {
               currentRowHeight = rowHeight;
