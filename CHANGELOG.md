@@ -1,3 +1,12 @@
+## [2.2.79](https://github.com/tinper-bee/bee-table/compare/v2.2.78...v2.2.79) (2020-11-24)
+
+
+### Bug Fixes
+
+* 表格横向滚动条拖拽时右侧固定列style ([3acd6ea](https://github.com/tinper-bee/bee-table/commit/3acd6ea33e0d2048feacca18e2fd723abd458239))
+
+
+
 ## [2.2.78](https://github.com/tinper-bee/bee-table/compare/v2.2.77...v2.2.78) (2020-11-23)
 
 
