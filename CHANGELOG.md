@@ -1,3 +1,12 @@
+## [2.2.80](https://github.com/tinper-bee/bee-table/compare/v2.2.79...v2.2.80) (2020-12-01)
+
+
+### Bug Fixes
+
+* 嵌套表格兼容问题 ([aaed13e](https://github.com/tinper-bee/bee-table/commit/aaed13e95991c793a29371a30496265892e743d7))
+
+
+
 ## [2.2.79](https://github.com/tinper-bee/bee-table/compare/v2.2.78...v2.2.79) (2020-11-24)
 
 
