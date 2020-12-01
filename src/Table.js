@@ -251,7 +251,7 @@ class Table extends Component {
   componentDidUpdate(prevProps, prevState) {
     // todo: IE 大数据渲染，行高不固定，且设置了 heightConsistent={true} 时，滚动加载操作会导致 ie11 浏览器崩溃
     // https://github.com/tinper-bee/bee-table/commit/bd2092cdbaad236ff89477304e58dea93325bf09
-    if(this.columnManager.isAnyColumnsFixed()) {
+    if(this.columnManager.isAnyColumnsFixed() && !prevProps.height) {
       this.syncFixedTableRowHeight();
     }
 
@@ -1219,7 +1219,7 @@ class Table extends Component {
         if(headerHeight){
           height = (getMaxColChildrenLength(columns)+1)*headerHeight;
         }
-        return headerHeight ? height : (row.getBoundingClientRect().height || 'auto')}
+        return headerHeight ? height : (parseInt(row.getBoundingClientRect().height) || 'auto')}
     );
     const fixedColumnsBodyRowsHeight = [].map.call(
       bodyRows, (row,index) =>{
@@ -1231,13 +1231,13 @@ class Table extends Component {
           // 内容折行显示，并又设置了 height 的情况下，也要获取主表高度
           if(heightConsistent || (!bodyDisplayInRow && rsHeight)){
             let leftHeight,rightHeight,currentHeight,maxHeight;
-            leftHeight = leftBodyRows[index]?leftBodyRows[index].getBoundingClientRect().height:0;
-            rightHeight = rightBodyRows[index]?rightBodyRows[index].getBoundingClientRect().height:0;
-            currentHeight = row.getBoundingClientRect().height
+            leftHeight = leftBodyRows[index]?parseInt(leftBodyRows[index].getBoundingClientRect().height):0;
+            rightHeight = rightBodyRows[index]?parseInt(rightBodyRows[index].getBoundingClientRect().height):0;
+            currentHeight = parseInt(row.getBoundingClientRect().height)
             maxHeight = Math.max(leftHeight,rightHeight,currentHeight);
             return maxHeight || 'auto'
           }else{
-            return row.getBoundingClientRect().height || 'auto'
+            return parseInt(row.getBoundingClientRect().height) || 'auto'
           }
         }
       }
@@ -1246,22 +1246,23 @@ class Table extends Component {
     // expandedRows为NodeList  Array.prototype.forEach ie 下报错 对象不支持 “forEach” 方法
     expandedRows.length > 0 && Array.prototype.forEach.call(expandedRows,row => {
       let parentRowKey = row && row.previousSibling && row.previousSibling.getAttribute("data-row-key"),
-          height = row && row.getBoundingClientRect().height || 'auto';
+          height = row && parseInt(row.getBoundingClientRect().height) || 'auto';
           try {//子表数据减少时，动态计算高度
             let td = row.querySelector('td');
             let tdPadding = this.getTdPadding(td);
-            let trueheight = row.querySelectorAll('.u-table')[0].getBoundingClientRect().height;
+            let trueheight = parseInt(row.querySelectorAll('.u-table')[0].getBoundingClientRect().height);
             height = trueheight+tdPadding;
           } catch (error) {
 
           }
-      fixedColumnsExpandedRowsHeight[parentRowKey] = height;
+      fixedColumnsExpandedRowsHeight[parentRowKey] = parseInt(height);
     })
     if (shallowequal(this.state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
       shallowequal(this.state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight) &&
       shallowequal(this.state.fixedColumnsExpandedRowsHeight, fixedColumnsExpandedRowsHeight)) {
       return;
     }
+  
     this.setState({
       fixedColumnsHeadRowsHeight,
       fixedColumnsBodyRowsHeight,
