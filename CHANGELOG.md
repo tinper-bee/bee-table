@@ -1,3 +1,12 @@
+## [2.2.82](https://github.com/tinper-bee/bee-table/compare/v2.2.81...v2.2.82) (2020-12-10)
+
+
+### Bug Fixes
+
+*  浏览器IE拖拽不好使 ([b581de4](https://github.com/tinper-bee/bee-table/commit/b581de4fe90cc6b63850fb548300b90fce231527))
+
+
+
 ## [2.2.81](https://github.com/tinper-bee/bee-table/compare/v2.2.80...v2.2.81) (2020-12-10)
 
 
