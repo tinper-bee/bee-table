@@ -1,3 +1,12 @@
+## [2.2.81](https://github.com/tinper-bee/bee-table/compare/v2.2.80...v2.2.81) (2020-12-10)
+
+
+### Bug Fixes
+
+* 排序时data 为空处理 ([4ec5557](https://github.com/tinper-bee/bee-table/commit/4ec55575983537e50940cfb03150310dac65887b))
+
+
+
 ## [2.2.80](https://github.com/tinper-bee/bee-table/compare/v2.2.79...v2.2.80) (2020-12-01)
 
 
