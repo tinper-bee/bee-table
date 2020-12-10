@@ -158,7 +158,7 @@ export default function sort(Table, Icon) {
      * 多列排序 先排order为1的，其他的基于已排序的数据排
      */
     multiSort = columns => {
-      let { data, oldData } = this.state;
+      let { data, oldData=[] } = this.state;
       const self = this;
       let orderCols = {},
         orderColslen = 0;
@@ -180,7 +180,7 @@ export default function sort(Table, Icon) {
     };
 
     toggleSortOrder = (order, column) => {
-      let { data, oldData, flatColumns } = this.state;
+      let { data, oldData = [], flatColumns } = this.state;
       let { sort } = this.props;
       let seleObj;
       if (!oldData) {
