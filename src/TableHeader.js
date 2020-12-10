@@ -273,7 +273,7 @@ class TableHeader extends Component {
       }
       let currentObj = this.table.cols[currentIndex];
       this.drag.currIndex = currentIndex;
-      this.drag.oldLeft = event.x;
+      this.drag.oldLeft = event.clientX;
       this.drag.oldWidth = parseInt((currentObj).style.width);
       this.drag.minWidth = currentObj.style.minWidth != ""?parseInt(currentObj.style.minWidth):defaultWidth;
       this.drag.tableWidth = parseInt(this.table.table.style.width ?this.table.table.style.width:this.table.table.scrollWidth);
@@ -344,7 +344,7 @@ class TableHeader extends Component {
     if(this.props.dragborder && this.drag.option == "border"){
       //移动改变宽度
       let currentCols = this.table.cols[this.drag.currIndex];
-      let diff = (event.x - this.drag.oldLeft);
+      let diff = (event.clientX - this.drag.oldLeft);
       let newWidth = this.drag.oldWidth + diff;
       this.drag.newWidth = newWidth > 0 ? newWidth : this.minWidth;
       if(newWidth > this.minWidth){

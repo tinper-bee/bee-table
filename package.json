@@ -74,6 +74,7 @@
   "prop-types": "^15.6.0"
  },
  "devDependencies": {
+  "@babel/polyfill": "^7.12.1",
   "babel-jest": "^22.0.4",
   "bee-clipboard": "^2.0.0",
   "bee-drawer": "0.0.2",

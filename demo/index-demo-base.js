@@ -1,3 +1,4 @@
+import polyfill from '@babel/polyfill'
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Con, Row, Col } from 'bee-layout';
