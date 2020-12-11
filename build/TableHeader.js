@@ -550,7 +550,7 @@ var _initialiseProps = function _initialiseProps() {
     var type = currentElement.getAttribute('data-type');
     if (!_this7.props.dragborder && !_this7.props.draggable) return;
     if (type == 'online' && _this7.props.dragborder) {
-      if (!_this7.props.dragborder) return;
+      // if(!this.props.dragborder)return;
       targetEvent.setAttribute('draggable', false); //添加交换列效果
       var currentIndex = -1;
       var defaultWidth = currentElement.getAttribute("data-th-width");
@@ -573,9 +573,9 @@ var _initialiseProps = function _initialiseProps() {
       if (!_this7.tableOldWidth) {
         _this7.tableOldWidth = _this7.drag.tableWidth; //this.getTableWidth();
       }
-      if (!_this7.lastColumWidth) {
-        _this7.lastColumWidth = parseInt(_this7.table.cols[lastShowIndex].style.width);
-      }
+      // if(!this.lastColumWidth){
+      _this7.lastColumWidth = parseInt(_this7.table.cols[lastShowIndex].style.width);
+      // }
     } else if (type != 'online' && _this7.props.draggable) {
       // if (!this.props.draggable || targetEvent.nodeName.toUpperCase() != "TH") return;
       if (!_this7.props.draggable) return;
@@ -670,6 +670,7 @@ var _initialiseProps = function _initialiseProps() {
             _this7.optTableMargin(_this7.table.fixedRighHeadertTable, 0);
           }
         } else {
+          l;
           if (showScroll < 0) {
             _this7.table.tableBody.style.overflowX = 'auto';
             _this7.optTableMargin(_this7.table.fixedLeftBodyTable, '-' + scrollbarWidth);

@@ -223,7 +223,7 @@ class TableHeader extends Component {
     let type = currentElement.getAttribute('data-type');
     if(!this.props.dragborder && !this.props.draggable)return;
     if(type == 'online' && this.props.dragborder){
-      if(!this.props.dragborder)return;
+      // if(!this.props.dragborder)return;
       targetEvent.setAttribute('draggable',false);//添加交换列效果
       let currentIndex = -1;
       let defaultWidth = currentElement.getAttribute("data-th-width"); 
@@ -244,9 +244,9 @@ class TableHeader extends Component {
       if(!this.tableOldWidth){
         this.tableOldWidth = this.drag.tableWidth;//this.getTableWidth();
       }
-      if(!this.lastColumWidth){
+      // if(!this.lastColumWidth){
         this.lastColumWidth = parseInt(this.table.cols[lastShowIndex].style.width);
-      }
+      // }
     }else if(type != 'online' &&  this.props.draggable){
         // if (!this.props.draggable || targetEvent.nodeName.toUpperCase() != "TH") return;
         if (!this.props.draggable) return;
@@ -337,7 +337,7 @@ class TableHeader extends Component {
                 this.optTableMargin( this.table.fixedLeftHeaderTable,0);
                 this.optTableMargin( this.table.fixedRighHeadertTable,0);
             }
-        }else{
+        }else{l
           if(showScroll < 0){
                 this.table.tableBody.style.overflowX = 'auto';
                 this.optTableMargin( this.table.fixedLeftBodyTable,'-'+scrollbarWidth);
