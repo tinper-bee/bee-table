@@ -607,7 +607,7 @@ var _initialiseProps = function _initialiseProps() {
       }
       var currentObj = _this8.table.cols[currentIndex];
       _this8.drag.currIndex = currentIndex;
-      _this8.drag.oldLeft = event.x;
+      _this8.drag.oldLeft = event.clientX;
       _this8.drag.oldWidth = parseInt(currentObj.style.width);
       _this8.drag.minWidth = currentObj.style.minWidth != "" ? parseInt(currentObj.style.minWidth) : defaultWidth;
       _this8.drag.tableWidth = parseInt(_this8.table.table.style.width ? _this8.table.table.style.width : _this8.table.table.scrollWidth);
@@ -680,7 +680,7 @@ var _initialiseProps = function _initialiseProps() {
     if (_this8.props.dragborder && _this8.drag.option == "border") {
       //移动改变宽度
       var currentCols = _this8.table.cols[_this8.drag.currIndex];
-      var diff = event.x - _this8.drag.oldLeft;
+      var diff = event.clientX - _this8.drag.oldLeft;
       var newWidth = _this8.drag.oldWidth + diff;
       _this8.drag.newWidth = newWidth > 0 ? newWidth : _this8.minWidth;
       if (newWidth > _this8.minWidth) {

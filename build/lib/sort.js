@@ -249,7 +249,8 @@ function sort(Table, Icon) {
     this.multiSort = function (columns) {
       var _state = _this3.state,
           data = _state.data,
-          oldData = _state.oldData;
+          _state$oldData = _state.oldData,
+          oldData = _state$oldData === undefined ? [] : _state$oldData;
 
       var self = _this3;
       var orderCols = {},
@@ -274,7 +275,8 @@ function sort(Table, Icon) {
     this.toggleSortOrder = function (order, column) {
       var _state2 = _this3.state,
           data = _state2.data,
-          oldData = _state2.oldData,
+          _state2$oldData = _state2.oldData,
+          oldData = _state2$oldData === undefined ? [] : _state2$oldData,
           flatColumns = _state2.flatColumns;
       var sort = _this3.props.sort;
 

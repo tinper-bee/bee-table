@@ -251,7 +251,7 @@ class Table extends Component {
   componentDidUpdate(prevProps, prevState) {
     // todo: IE 大数据渲染，行高不固定，且设置了 heightConsistent={true} 时，滚动加载操作会导致 ie11 浏览器崩溃
     // https://github.com/tinper-bee/bee-table/commit/bd2092cdbaad236ff89477304e58dea93325bf09
-    if(this.columnManager.isAnyColumnsFixed() && !prevProps.height) {
+    if(this.columnManager.isAnyColumnsFixed() && !prevProps.height && prevProps.data == this.props.data) {
       this.syncFixedTableRowHeight();
     }
 
