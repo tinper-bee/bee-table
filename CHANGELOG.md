@@ -1,3 +1,12 @@
+## [2.2.83](https://github.com/tinper-bee/bee-table/compare/v2.2.82...v2.2.83) (2020-12-15)
+
+
+### Bug Fixes
+
+* update时判断表格数据 ([9e7b9f7](https://github.com/tinper-bee/bee-table/commit/9e7b9f763dc4c556a13d12902b9b0baa56b1a217))
+
+
+
 ## [2.2.82](https://github.com/tinper-bee/bee-table/compare/v2.2.81...v2.2.82) (2020-12-10)
 
 
