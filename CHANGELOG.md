@@ -1,3 +1,12 @@
+## [2.2.84](https://github.com/tinper-bee/bee-table/compare/v2.2.83...v2.2.84) (2020-12-23)
+
+
+### Bug Fixes
+
+* ie 下展开表格当含有height时不再动态获取该表格高度 ([8a0bba1](https://github.com/tinper-bee/bee-table/commit/8a0bba14ddbb9383371ffda96112d08778538322))
+
+
+
 ## [2.2.83](https://github.com/tinper-bee/bee-table/compare/v2.2.82...v2.2.83) (2020-12-15)
 
 
