@@ -1246,18 +1246,16 @@ class Table extends Component {
     // expandedRows为NodeList  Array.prototype.forEach ie 下报错 对象不支持 “forEach” 方法
     expandedRows.length > 0 && Array.prototype.forEach.call(expandedRows,row => {
       let parentRowKey = row && row.previousSibling && row.previousSibling.getAttribute("data-row-key");
-      let exHeight = height;
-      if(!exHeight) {
-        exHeight = row && parseInt(row.getBoundingClientRect().height) || 'auto';
-        try {//子表数据减少时，动态计算高度
-          let td = row.querySelector('td');
-          let tdPadding = this.getTdPadding(td);
-          let trueheight = parseInt(row.querySelectorAll('.u-table')[0].getBoundingClientRect().height);
-          exHeight = trueheight+tdPadding;
-        } catch (error) {
+      let exHeight = row && parseInt(row.getBoundingClientRect().height) || 'auto';
+        // fix: ie 展开表格计算渲染bug
+        // try {//子表数据减少时，动态计算高度
+        //   let td = row.querySelector('td');
+        //   let tdPadding = this.getTdPadding(td);
+        //   let trueheight = parseInt(row.querySelectorAll('.u-table')[0].getBoundingClientRect().height);
+        //   exHeight = trueheight+tdPadding;
+        // } catch (error) {
 
-        }
-      }
+        // }
       fixedColumnsExpandedRowsHeight[parentRowKey] = parseInt(exHeight);
     })
     if (shallowequal(this.state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
