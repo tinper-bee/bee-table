@@ -1,3 +1,12 @@
+## [2.2.85](https://github.com/tinper-bee/bee-table/compare/v2.2.84...v2.2.85) (2020-12-24)
+
+
+### Bug Fixes
+
+* #JCJS-6424 表格展开高度计算bug ([00f282c](https://github.com/tinper-bee/bee-table/commit/00f282ca7ee00e69268d43a5540a16bcfe15858d)), closes [#JCJS-6424](https://github.com/tinper-bee/bee-table/issues/JCJS-6424)
+
+
+
 ## [2.2.84](https://github.com/tinper-bee/bee-table/compare/v2.2.83...v2.2.84) (2020-12-23)
 
 
