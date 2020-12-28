@@ -1,3 +1,12 @@
+# [2.3.0](https://github.com/tinper-bee/bee-table/compare/v2.2.85...v2.3.0) (2020-12-28)
+
+
+### Features
+
+* 固定列支持拖拽改变列宽 ([c2cf138](https://github.com/tinper-bee/bee-table/commit/c2cf13800073970f5f42723e20ec7e1404df655b))
+
+
+
 ## [2.2.85](https://github.com/tinper-bee/bee-table/compare/v2.2.84...v2.2.85) (2020-12-24)
 
 
