@@ -100,6 +100,7 @@ class TableHeader extends Component {
       table.cols = tableDome.getElementsByTagName("col");
       table.ths = tableDome.getElementsByTagName("th");
       table.tr = tableDome.getElementsByTagName("tr");
+      table.tableHeaderCols = contentTable.querySelector('.u-table-scroll .u-table-header') && contentTable.querySelector('.u-table-scroll .u-table-header').getElementsByTagName("col");
       table.tableBody = contentTable.querySelector('.u-table-scroll .u-table-body') && contentTable.querySelector('.u-table-scroll .u-table-body');
       table.tableBodyCols = contentTable.querySelector('.u-table-scroll .u-table-body') && contentTable.querySelector('.u-table-scroll .u-table-body').getElementsByTagName("col");
       table.bodyRows = table.tableBody && table.tableBody.querySelectorAll('tr') || [];
@@ -180,14 +181,17 @@ class TableHeader extends Component {
    */
   dragBorderEventInit (){
     if(!this.props.dragborder )return;
-    let  events = [
-      {key:'mouseup', fun:this.onTrMouseUp},
-      {key:'mousemove', fun:this.onTrMouseMove},
-      // {key:'mousemove', fun:debounce(50,this.onTrMouseMove)},//函数节流后体验很差
-    ];
-    this.doEventList(this.table.tr,(tr)=>{
-      this.eventListen(events,'',tr);//表示把事件添加到th元素上
-    })
+    this.eventListen([{key:'mouseup', fun:this.onTrMouseUp}],'',document.body);
+    this.eventListen([{key:'mousemove', fun:this.onTrMouseMove}],'',document.body);
+    
+    // let  events = [
+    //   {key:'mouseup', fun:this.onTrMouseUp},
+    //   {key:'mousemove', fun:this.onTrMouseMove},
+    //   // {key:'mousemove', fun:debounce(50,this.onTrMouseMove)},//函数节流后体验很差
+    // ];
+    // this.doEventList(this.table.tr,(tr)=>{
+    //   this.eventListen(events,'',tr);//表示把事件添加到th元素上
+    // })
     // this.eventListen(events,'',this.table.tr[0]);//表示把事件添加到th元素上
   }
 
@@ -254,6 +258,7 @@ class TableHeader extends Component {
     let currentElement = this.getTargetToType(targetEvent);
     if(!currentElement)return;
     let type = currentElement.getAttribute('data-type');
+    const fixedType = currentElement.getAttribute('data-th-fixed'); 
     if(!this.props.dragborder && !this.props.draggable)return;
     if(type == 'online' && this.props.dragborder){
       // if(!this.props.dragborder)return;
@@ -280,9 +285,26 @@ class TableHeader extends Component {
       if(!this.tableOldWidth){
         this.tableOldWidth = this.drag.tableWidth;//this.getTableWidth();
       }
-      if(!this.lastColumWidth){
-        this.lastColumWidth = parseInt(this.table.cols[lastShowIndex].style.width);
+
+      // if(!this.lastColumWidth){
+        const contentT = this.table.tableHeaderCols || this.table.cols ;
+        this.lastColumWidth = parseInt(contentT[lastShowIndex].style.width);
+        // console.log('begin--lastColumnWidth',this.lastColumWidth);
+      // }
+      this.drag.contentTableCWidth = this.table.contentTableHeader.clientWidth;
+      this.drag.contentTableSWidth = this.table.contentTableHeader.scrollWidth;
+      if(fixedType) {
+          const contentTablePar = this.table.contentTableHeader.parentNode;
+         
+          if(contentTablePar) {
+            const originL = parseInt(contentTablePar.style.marginLeft);
+            const originR = parseInt(contentTablePar.style.marginRight);
+            // 内容区表格marginLef
+            this.drag.contentTableML = originL;
+            this.drag.contentTableMR = originR;
+          }
       }
+      this.drag.fixedType = fixedType;
     }else if(type != 'online' &&  this.props.draggable){
         // if (!this.props.draggable || targetEvent.nodeName.toUpperCase() != "TH") return;
         if (!this.props.draggable) return;
@@ -349,7 +371,7 @@ class TableHeader extends Component {
       this.drag.newWidth = newWidth > 0 ? newWidth : this.minWidth;
       if(newWidth > this.minWidth){
         currentCols.style.width = newWidth +'px';
-
+        
         // displayinrow 判断、 固定行高判断 
         if(!bodyDisplayInRow) {
           this.table.bodyRows.forEach((row,index)=>{
@@ -368,16 +390,30 @@ class TableHeader extends Component {
             this.fixedTable.cols[this.drag.currIndex].style.width = newWidth + "px";
         }
 
-        let newDiff = (parseInt(currentCols.style.minWidth) - parseInt(currentCols.style.width));
-        if(newDiff > 0){//缩小
-          let lastWidth = this.lastColumWidth + newDiff;
-          this.table.cols[lastShowIndex].style.width = lastWidth +"px";//同步表头
-          this.table.tableBodyCols[lastShowIndex].style.width = lastWidth + "px";//同步表体
+        const  contentTableSWidth = this.drag.contentTableSWidth - this.drag.contentTableCWidth;
+          // console.log('contentTableSWidth+diff',contentTableSWidth+diff,'diff',diff);
+          if(diff<0 && contentTableSWidth+diff < 0) {
+            const headerCols = this.table.tableHeaderCols || this.table.cols;
+            const lastWidth =this.lastColumWidth - (contentTableSWidth+diff);
+            // console.log('lastWidth',lastWidth,'lastShowIndex',lastShowIndex);
+            headerCols[lastShowIndex].style.width = lastWidth +"px";//同步表头
+            this.table.tableBodyCols[lastShowIndex].style.width = lastWidth + "px";//同步表体
+          }
+        // 内容区非固定列场景拖拽
+        if(!this.drag.fixedType) {
           
-        }
-        let showScroll =  contentDomWidth - (leftFixedWidth + rightFixedWidth) - (this.drag.tableWidth + diff) - scrollbarWidth ;
-        //表头滚动条处理
-        if(headerScroll){
+          // let newDiff = (parseInt(currentCols.style.minWidth) - parseInt(currentCols.style.width));
+          // if(newDiff > 0){//缩小
+          //   let lastWidth = this.lastColumWidth + newDiff;
+          //   this.table.cols[lastShowIndex].style.width = lastWidth +"px";//同步表头
+          //   this.table.tableBodyCols[lastShowIndex].style.width = lastWidth + "px";//同步表体
+            
+          // }
+         
+         let showScroll =  contentDomWidth - (leftFixedWidth + rightFixedWidth) - (this.drag.tableWidth + diff) - scrollbarWidth ;
+
+          //表头滚动条处理
+          if(headerScroll){
             if(showScroll < 0){ //小于 0 出现滚动条
                 //找到固定列表格，设置表头的marginBottom值为scrollbarWidth;
                 this.table.contentTableHeader.style.overflowX = 'scroll';
@@ -388,7 +424,7 @@ class TableHeader extends Component {
                 this.optTableMargin( this.table.fixedLeftHeaderTable,0);
                 this.optTableMargin( this.table.fixedRighHeadertTable,0);
             }
-        }else{
+          }else{
           if(showScroll < 0){
                 this.table.tableBody.style.overflowX = 'auto';
                 this.optTableMargin( this.table.fixedLeftBodyTable,'-'+scrollbarWidth);
@@ -402,7 +438,36 @@ class TableHeader extends Component {
             this.optTableScroll( this.table.fixedLeftBodyTable,{x:'auto'});
                 this.optTableScroll( this.table.fixedRightBodyTable,{x:'auto'});
           }
+          }
+        }else if(this.drag.fixedType) {
+          if(this.table.ths[this.drag.currIndex]) {
+            this.table.ths[this.drag.currIndex].width = newWidth
+          }
+          // console.log('this.drag.contentTableML',this.drag.contentTableML,'diff',diff);
+          // debugger
+
+          const contentTablePar = this.table.contentTableHeader.parentNode;
+          // left、right缩小的内容，在没有滚动条时，需要将宽度同步到到最后一列
+          // diff<0 往里拖，
+          // const  contentTableSWidth = this.drag.contentTableSWidth - this.drag.contentTableCWidth;
+          // console.log('contentTableSWidth+diff',contentTableSWidth+diff,'diff',diff);
+          // if(diff<0 && contentTableSWidth+diff < 0) {
+          //   const headerCols = this.table.tableHeaderCols || this.table.cols;
+          //   const lastWidth =this.lastColumWidth - (contentTableSWidth+diff);
+          //   console.log('lastWidth',lastWidth,'lastShowIndex',lastShowIndex);
+          //   headerCols[lastShowIndex].style.width = lastWidth +"px";//同步表头
+          //   this.table.tableBodyCols[lastShowIndex].style.width = lastWidth + "px";//同步表体
+          // }
+          if(this.drag.fixedType == 'left') {
+            contentTablePar.style.marginLeft = this.drag.contentTableML + diff + 'px'
+            
+          }else {
+            contentTablePar.style.marginRight = this.drag.contentTableMR + diff + 'px'
+          }
+
+
         }
+       
       }else {
         this.drag.newWidth = this.minWidth;
       }
@@ -920,7 +985,7 @@ class TableHeader extends Component {
                         // && columIndex != _rowLeng
                         dragborder && lastObj && da.key != lastObj.key ? <div ref={el => (this.gap = el)} data-line-key={da.key}
                         data-line-index={columIndex} data-th-width={da.width}
-                        data-type="online" className = {`${clsPrefix}-thead-th-drag-gap`}>
+                        data-type="online" data-th-fixed={da.fixed} className = {`${clsPrefix}-thead-th-drag-gap`}>
                         <div className='online' /></div>:""
                       }
                 </th>)
@@ -930,7 +995,16 @@ class TableHeader extends Component {
                   className:`${thClassName} ${fixedStyle}`,
                 };
                 da.onClick ?thDefaultObj.onClick = (e)=>{da.onClick(da, e)}:"";
-                return (<th {...thDefaultObj} {...keyTemp}  data-th-fixed={da.fixed} style={{maxWidth: da.width}} onCopy={this.onCopy}/>)
+                return (<th {...thDefaultObj} {...keyTemp}  data-th-fixed={da.fixed} style={{maxWidth: da.width}} onCopy={this.onCopy}>
+                   {da.children}
+                      {
+                        // && columIndex != _rowLeng
+                        dragborder ? <div ref={el => (this.gap = el)} data-line-key={da.key}
+                        data-line-index={columIndex} data-th-width={da.width}
+                        data-type="online" data-th-fixed={da.fixed} className = {`${clsPrefix}-thead-th-drag-gap`}>
+                        <div className='online' /></div>:""
+                      }
+                </th>)
               }
             })}
           </tr>
