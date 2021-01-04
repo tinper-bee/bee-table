@@ -147,6 +147,9 @@ class TableRow extends Component{
       target = target.parentNode;
     }
     this.currentIndex = target.getAttribute("data-row-key");
+
+    // 拖拽其实index
+    this.props.contentTable.startI = target.getAttribute("data-row-index");
     this._dragCurrent = target;
     event.dataTransfer.effectAllowed = "move";
     event.dataTransfer.setData("Text", this.currentIndex);
@@ -163,7 +166,7 @@ class TableRow extends Component{
    * @memberof TableHeader
    */
   onDrop = (e) => {
-    let {onDragRow} = this.props;
+    let {onDragRow, contentTable} = this.props;
     let event = Event.getEvent(e) ,
         _target = Event.getTarget(event),
         target = _target.parentNode;
@@ -314,20 +317,27 @@ class TableRow extends Component{
         currentObj = element;
       }
     }
-    if(type){
+    if(type == 'down'){
       currentObj && currentObj.setAttribute("style","border-bottom:2px solid #02B1FD");
+    }else if(type){
+      currentObj && currentObj.setAttribute("style","border-top:2px solid #02B1FD");
     }else{
       currentObj && currentObj.setAttribute("style","");
     }
   }
 
   onDragEnter = (e) => {
+    const {contentTable} = this.props;
     let event = Event.getEvent(e) ,
     _target = Event.getTarget(event),target = _target.parentNode;
     let currentIndex = target.getAttribute("data-row-key");
+    let dragEnterIndex = target.getAttribute("data-row-index");
     if(!currentIndex || currentIndex === this.currentIndex)return;
+    const dragType = parseInt(dragEnterIndex) > parseInt(contentTable.startI)  ? 'down' : 'top'
+    
+    contentTable.dragType = dragType;
     if(target.nodeName.toUpperCase() === "TR"){
-      this.synchronizeTableTr(currentIndex,true);
+      this.synchronizeTableTr(currentIndex,dragType);
     }
   }
 
@@ -556,6 +566,7 @@ class TableRow extends Component{
         className={`${clsPrefix} ${className} ${clsPrefix}-level-${indent}`}
         style={style}
         data-row-key={record && record.key?record.key:hoverKey}
+        data-row-index={this.props.index}
         // key={hoverKey}
         ref={this.bindElement}
       >

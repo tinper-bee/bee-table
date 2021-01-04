@@ -670,7 +670,10 @@ class Table extends Component {
         targetIndex = i;
       }
     });
-    if(currentIndex > -1) {
+    if (currentIndex > -1) {
+      if (this.contentTable.dragType == 'top') {
+        targetIndex = targetIndex-1
+      }
       data = this.swapArray(data,currentIndex,targetIndex);
       this.props.onDropRow && this.props.onDropRow(data,record,targetIndex);
       this.setState({
