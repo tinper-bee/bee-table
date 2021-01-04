@@ -1,3 +1,12 @@
+## [2.3.1](https://github.com/tinper-bee/bee-table/compare/v2.3.0...v2.3.1) (2021-01-04)
+
+
+### Bug Fixes
+
+* issues/655 表格拖拽没办法拖拽到第一行 ([b7a75a3](https://github.com/tinper-bee/bee-table/commit/b7a75a3a1e86337375703b02d5233fdc071bc5ba))
+
+
+
 # [2.3.0](https://github.com/tinper-bee/bee-table/compare/v2.2.85...v2.3.0) (2020-12-28)
 
 
