@@ -56,7 +56,13 @@ const columns13 = [
     key: "e",
     width: 200,
     sumCol: true,
-    sorter: (pre, after) => pre.e - after.e,
+    sorter: (pre, after) => pre.e.value - after.e.value,
+    getMultiSorterValue: data => {
+      return data.value
+    },
+    render: (text, data) => {
+      return text.value
+    }
   },
   {
     title: "供应商",
@@ -67,13 +73,12 @@ const columns13 = [
 ];
 
 const data13 = [
-  { a: "NU0391001", b: 675, c: 30, d: "xx供应商",e:100, key: "2" },
-  { a: "NU0391002", b: 43, c: 41, d: "yy供应商",e:90, key: "1" },
-  { a: "NU0391003", b: 43, c: 81, d: "zz供应商", e:120,key: "4" },
-  { a: "NU0391004", b: 43, c: 81, d: "aa供应商", e:130,key: "5" },
-  { a: "NU0391005", b: 153, c: 25, d: "bb供应商",e:90, key: "3" }
+  { a: "NU0391001", b: 675, c: 30, d: "xx供应商",e:{value: 120}, key: "2" },
+  { a: "NU0391002", b: 43, c: 41, d: "yy供应商",e:{value: 90}, key: "1" },
+  { a: "NU0391003", b: 43, c: 81, d: "zz供应商", e:{value: 120},key: "4" },
+  { a: "NU0391004", b: 43, c: 81, d: "aa供应商", e:{value: 110},key: "5" },
+  { a: "NU0391005", b: 153, c: 25, d: "bb供应商",e:{value: 90}, key: "3" }
 ];
-
 
 //拼接成复杂功能的table组件不能在render中定义，需要像此例子声明在组件的外侧，不然操作state会导致功能出现异常
 let ComplexTable = multiSelect(sort(sum(Table, Icon)), Checkbox);

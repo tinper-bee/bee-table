@@ -139,8 +139,13 @@ export default function sort(Table, Icon) {
      */
     _sortBy = (pre, after, orderCols, orderColslen, currentIndex) => {
       const currentCol = orderCols[currentIndex];
-      const preKey = pre[currentCol.key];
-      const afterKey = after[currentCol.key];
+      const getMultiSorterValueFunc = currentCol.getMultiSorterValue
+      let preKey = pre[currentCol.key];
+      let afterKey = after[currentCol.key];
+      if (getMultiSorterValueFunc) {
+        preKey = getMultiSorterValueFunc(preKey)
+        afterKey = getMultiSorterValueFunc(afterKey)
+      }
       let colSortFun = currentCol.sorter;
       if(typeof colSortFun !== 'function'){
         colSortFun = () => preKey - afterKey;
