@@ -1,3 +1,12 @@
+## [2.3.2](https://github.com/tinper-bee/bee-table/compare/v2.3.1...v2.3.2) (2021-01-07)
+
+
+### Bug Fixes
+
+* 多排序字段处理 ([a19770b](https://github.com/tinper-bee/bee-table/commit/a19770beeefd7c2acf974790248b448b2bffc64f))
+
+
+
 ## [2.3.1](https://github.com/tinper-bee/bee-table/compare/v2.3.0...v2.3.1) (2021-01-04)
 
 
