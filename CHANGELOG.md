@@ -1,3 +1,12 @@
+## [2.3.4](https://github.com/tinper-bee/bee-table/compare/v2.3.3...v2.3.4) (2021-01-11)
+
+
+### Bug Fixes
+
+* 传入不同的scroll.y时，重置scrollTop ([f5f381c](https://github.com/tinper-bee/bee-table/commit/f5f381c3f185ad72432a4f462d376d3b21c8105f))
+
+
+
 ## [2.3.3](https://github.com/tinper-bee/bee-table/compare/v2.3.1...v2.3.3) (2021-01-07)
 
 
