@@ -121,6 +121,7 @@ import 'bee-table/build/Table.css';
 |width|宽度的特定比例根据列的宽度计算|String/Number|-|
 |fixed|	当表水平滚动时，此列将被固定：true或'left'或'right'| true/'left'/'right'|-|
 |sorter|前端列排序方法，只要列上有此属性就说明这列可排序。**注：默认是前端排序,排序方法书写时注意有些字段的值可能是undefined的情况，需要转换成0**| function|-|
+|getMultiSorterValue| 多列排序的时候，可以使用此方法得到单元格中显示的值，用来进行排序中的判断|Function(row)|-|
 |sorterClick|排序的回调函数|function|-|
 |render|cell的render函数有三个参数：这个单元格的文本，这行的记录，这行的索引，它返回一个对象：{children：value，props：{colSpan：1，rowSpan：1}} ==>'children'是这个单元格的文本，props是这个单元格的一些设置，可以设置单元格行/列合并。2.2.48及以后版本新增第四个参数options为column设置的属性|-|
 |onCellClick|单击列的单元格时调用|Function(row, event)|-|
