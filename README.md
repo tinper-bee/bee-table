@@ -8,7 +8,8 @@
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/tinper-bee/bee-table.svg)](http://isitmaintained.com/project/tinper-bee/bee-table "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/tinper-bee/bee-table.svg)](http://isitmaintained.com/project/tinper-bee/bee-table "Percentage of issues still open")
 
-react bee-table component for tinper-bee   
+
+react bee-table component for tinper-bee 
 
 该table组件除了基本表格功能之外，还提供了一下功能。
   * 动态设置过滤列
