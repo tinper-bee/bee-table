@@ -211,8 +211,8 @@ function sort(Table, Icon) {
       var preKey = pre[currentCol.key];
       var afterKey = after[currentCol.key];
       if (getMultiSorterValueFunc) {
-        preKey = getMultiSorterValueFunc(preKey);
-        afterKey = getMultiSorterValueFunc(afterKey);
+        preKey = getMultiSorterValueFunc(pre, currentCol);
+        afterKey = getMultiSorterValueFunc(after, currentCol);
       }
       var colSortFun = currentCol.sorter;
       if (typeof colSortFun !== 'function') {
