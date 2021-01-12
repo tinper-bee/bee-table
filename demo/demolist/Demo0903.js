@@ -57,9 +57,7 @@ const columns13 = [
     width: 200,
     sumCol: true,
     sorter: (pre, after) => pre.e.value - after.e.value,
-    getMultiSorterValue: data => {
-      return data.value
-    },
+    // getMultiSorterValue: (data, col) => {},
     render: (text, data) => {
       return text.value
     }

@@ -143,8 +143,8 @@ export default function sort(Table, Icon) {
       let preKey = pre[currentCol.key];
       let afterKey = after[currentCol.key];
       if (getMultiSorterValueFunc) {
-        preKey = getMultiSorterValueFunc(preKey)
-        afterKey = getMultiSorterValueFunc(afterKey)
+        preKey = getMultiSorterValueFunc(pre, currentCol)
+        afterKey = getMultiSorterValueFunc(after, currentCol)
       }
       let colSortFun = currentCol.sorter;
       if(typeof colSortFun !== 'function'){
