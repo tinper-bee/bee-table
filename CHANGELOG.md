@@ -1,3 +1,12 @@
+## [2.3.7](https://github.com/tinper-bee/bee-table/compare/v2.3.5...v2.3.7) (2021-01-12)
+
+
+### Bug Fixes
+
+* provide more parameters for getting multi-sort value ([b487e67](https://github.com/tinper-bee/bee-table/commit/b487e67f45f4db3af2574c90554e1348f0861e2e))
+
+
+
 ## [2.3.6](https://github.com/tinper-bee/bee-table/compare/v2.3.5...v2.3.6) (2021-01-11)
 
 
