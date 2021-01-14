@@ -1,3 +1,12 @@
+## [2.3.8](https://github.com/tinper-bee/bee-table/compare/v2.3.7...v2.3.8) (2021-01-14)
+
+
+### Bug Fixes
+
+* 固定列在主表渲染引起的渲染多次问题 ([390a8a4](https://github.com/tinper-bee/bee-table/commit/390a8a4e5f0bff40817c22c1d4520dc05c8856e4))
+
+
+
 ## [2.3.7](https://github.com/tinper-bee/bee-table/compare/v2.3.5...v2.3.7) (2021-01-12)
 
 
