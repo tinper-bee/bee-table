@@ -273,7 +273,7 @@ class Table extends Component {
     // 当懒加载手动设置的scroll.y发生变化时，滚动条回到顶部
     const prevScrollY = prevProps.scroll.y
     const currentScrollY = this.props.scroll.y
-    if (prevScrollY && currentScrollY && (prevScrollY !== currentScrollY) && this.props.lazyLoad) {
+    if (prevScrollY && currentScrollY && (prevScrollY !== currentScrollY) && this.props.lazyLoad && !this.props.ignoreScrollYChange) {
       this.bodyTable.scrollTop = 0
     }
     // 是否传入 scroll中的y属性，如果传入判断是否是整数，如果是则进行比较 。bodyTable 的clientHeight进行判断
