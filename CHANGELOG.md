@@ -1,3 +1,12 @@
+## [2.3.11](https://github.com/tinper-bee/bee-table/compare/v2.3.10...v2.3.11) (2021-02-03)
+
+
+### Bug Fixes
+
+* scroll.Y变化时重新计算scrollTop ([5906420](https://github.com/tinper-bee/bee-table/commit/5906420fc4fdf130b2ffd456a853c83130eb262b))
+
+
+
 ## [2.3.10](https://github.com/tinper-bee/bee-table/compare/v2.3.9...v2.3.10) (2021-02-03)
 
 
