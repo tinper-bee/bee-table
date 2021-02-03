@@ -1,3 +1,7 @@
+## [2.3.13](https://github.com/tinper-bee/bee-table/compare/v2.3.12...v2.3.13) (2021-02-03)
+
+
+
 ## [2.3.12](https://github.com/tinper-bee/bee-table/compare/v2.3.11...v2.3.12) (2021-02-03)
 
 
