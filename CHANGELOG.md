@@ -1,3 +1,13 @@
+## [2.3.9](https://github.com/tinper-bee/bee-table/compare/v2.3.7...v2.3.9) (2021-02-03)
+
+
+### Bug Fixes
+
+* 固定列在主表渲染引起的渲染多次问题 ([390a8a4](https://github.com/tinper-bee/bee-table/commit/390a8a4e5f0bff40817c22c1d4520dc05c8856e4))
+* 懒加载时修改table的scrollTop ([69d6a22](https://github.com/tinper-bee/bee-table/commit/69d6a2216b7994f5152f524b6eb2b6ec35805ae1))
+
+
+
 ## [2.3.8](https://github.com/tinper-bee/bee-table/compare/v2.3.7...v2.3.8) (2021-01-14)
 
 
