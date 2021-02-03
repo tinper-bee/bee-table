@@ -1,3 +1,12 @@
+## [2.3.10](https://github.com/tinper-bee/bee-table/compare/v2.3.9...v2.3.10) (2021-02-03)
+
+
+### Bug Fixes
+
+* 加入ignoreScrollYChange参数 ([dcbb145](https://github.com/tinper-bee/bee-table/commit/dcbb145328f75b70cd804cddf30b9e102342c70c))
+
+
+
 ## [2.3.9](https://github.com/tinper-bee/bee-table/compare/v2.3.7...v2.3.9) (2021-02-03)
 
 
