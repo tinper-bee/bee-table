@@ -1246,13 +1246,13 @@ class Table extends Component {
           // 内容折行显示，并又设置了 height 的情况下，也要获取主表高度
           if(heightConsistent || (!bodyDisplayInRow && rsHeight)){
             let leftHeight,rightHeight,currentHeight,maxHeight;
-            leftHeight = leftBodyRows[index]?parseInt(leftBodyRows[index].getBoundingClientRect().height):0;
-            rightHeight = rightBodyRows[index]?parseInt(rightBodyRows[index].getBoundingClientRect().height):0;
-            currentHeight = parseInt(row.getBoundingClientRect().height)
+            leftHeight = leftBodyRows[index]?Number(leftBodyRows[index].getBoundingClientRect().height).toFixed(2):0; // 有些浏览器中，取到的高度是小数，直接parseInt有问题，保留两位小数处理
+            rightHeight = rightBodyRows[index]?Number(rightBodyRows[index].getBoundingClientRect().height).toFixed(2):0;
+            currentHeight = Number(row.getBoundingClientRect().height).toFixed(2)
             maxHeight = Math.max(leftHeight,rightHeight,currentHeight);
             return maxHeight || 'auto'
           }else{
-            return parseInt(row.getBoundingClientRect().height) || 'auto'
+            return Number((Number(row.getBoundingClientRect().height)).toFixed(2)) || 'auto';
           }
         }
       }
