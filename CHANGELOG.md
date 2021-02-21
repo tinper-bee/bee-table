@@ -1,3 +1,12 @@
+## [2.3.14](https://github.com/tinper-bee/bee-table/compare/v2.3.13...v2.3.14) (2021-02-21)
+
+
+### Bug Fixes
+
+* 固定列中，元素高度保留两位小数 ([8166170](https://github.com/tinper-bee/bee-table/commit/816617051a38029c59138001416541163b855962))
+
+
+
 ## [2.3.13](https://github.com/tinper-bee/bee-table/compare/v2.3.12...v2.3.13) (2021-02-03)
 
 
