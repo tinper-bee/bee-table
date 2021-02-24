@@ -285,6 +285,20 @@ class Table extends Component {
     }
     // 是否传入 scroll中的y属性，如果传入判断是否是整数，如果是则进行比较 。bodyTable 的clientHeight进行判断
     this.isShowScrollY();
+    if (this.bodyTable) {
+      if (!this.props.scroll.x && window.getComputedStyle(this.bodyTable).overflowX !== 'hidden') {
+        this.bodyTable.style.overflowX = 'hidden'
+      }
+    }
+    if (this.bodyTableOuter) { // 隐藏几个不需要真正滚动的父元素的滚动条
+      this.bodyTableOuter.style.overflowY = 'hidden'
+    }
+    if (this.fixedColumnsBodyLeftOuter) {
+      this.fixedColumnsBodyLeftOuter.style.overflowY = 'hidden'
+    }
+    if (this.fixedColumnsBodyRightOuter) {
+      this.fixedColumnsBodyRightOuter.style.overflowY = 'hidden'
+    }
   }
 
   componentWillUnmount() {
@@ -1093,7 +1107,6 @@ class Table extends Component {
     };
 
     let headTable;
-
     if (useFixedHeader) {
       headTable = (
         <div
@@ -1112,14 +1125,15 @@ class Table extends Component {
       <div
         className={`${clsPrefix}-body`}
         style={bodyStyle}
-        ref={(el)=>{this.bodyTable = el}}
         onMouseOver={this.detectScrollTarget}
         onTouchStart={this.detectScrollTarget}
-        onScroll={this.handleBodyScroll}
+        ref={(el)=>{this.bodyTableOuter = el}}
         onMouseLeave={this.onBodyMouseLeave}
       >
         {this.renderDragHideTable()}
-        {renderTable(!useFixedHeader)}
+        <div className="scroll-container" onScroll={this.handleBodyScroll} ref={(el)=>{this.bodyTable = el}} style={{...bodyStyle}}>
+          {renderTable(!useFixedHeader)}
+        </div>
       </div>
     );
 
@@ -1140,13 +1154,13 @@ class Table extends Component {
           <div
             style={{...innerBodyStyle}}
             className={`${clsPrefix}-body-inner`}
-            ref={refName}
+            ref={el => this[`${refName}Outer`] = el}
             onMouseOver={this.detectScrollTarget}
             onTouchStart={this.detectScrollTarget}
-            onScroll={this.handleBodyScroll}
           >
-            {renderTable(!useFixedHeader)}
-            {/* <div className="scroll-dom" style={{height:`${this.scrollbarWidth}px`}}></div> */}
+            <div className="fixed-scroll-container" ref={refName} style={{...innerBodyStyle}} onScroll={this.handleBodyScroll}>
+              {renderTable(!useFixedHeader)}
+            </div>
           </div>
         </div>
       );
