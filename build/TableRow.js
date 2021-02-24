@@ -122,6 +122,9 @@ var TableRow = function (_Component) {
         target = target.parentNode;
       }
       _this.currentIndex = target.getAttribute("data-row-key");
+
+      // 拖拽其实index
+      _this.props.contentTable.startI = target.getAttribute("data-row-index");
       _this._dragCurrent = target;
       event.dataTransfer.effectAllowed = "move";
       event.dataTransfer.setData("Text", _this.currentIndex);
@@ -134,7 +137,9 @@ var TableRow = function (_Component) {
     };
 
     _this.onDrop = function (e) {
-      var onDragRow = _this.props.onDragRow;
+      var _this$props = _this.props,
+          onDragRow = _this$props.onDragRow,
+          contentTable = _this$props.contentTable;
 
       var event = _utils.Event.getEvent(e),
           _target = _utils.Event.getTarget(event),
@@ -224,9 +229,9 @@ var TableRow = function (_Component) {
     };
 
     _this.synchronizeTableTrShadow = function () {
-      var _this$props = _this.props,
-          contentTable = _this$props.contentTable,
-          index = _this$props.index;
+      var _this$props2 = _this.props,
+          contentTable = _this$props2.contentTable,
+          index = _this$props2.index;
 
 
       var cont = contentTable.querySelector('.u-table-scroll table tbody').getElementsByTagName("tr")[index],
@@ -277,21 +282,29 @@ var TableRow = function (_Component) {
           currentObj = element;
         }
       }
-      if (type) {
+      if (type == 'down') {
         currentObj && currentObj.setAttribute("style", "border-bottom:2px solid #02B1FD");
+      } else if (type) {
+        currentObj && currentObj.setAttribute("style", "border-top:2px solid #02B1FD");
       } else {
         currentObj && currentObj.setAttribute("style", "");
       }
     };
 
     _this.onDragEnter = function (e) {
+      var contentTable = _this.props.contentTable;
+
       var event = _utils.Event.getEvent(e),
           _target = _utils.Event.getTarget(event),
           target = _target.parentNode;
       var currentIndex = target.getAttribute("data-row-key");
+      var dragEnterIndex = target.getAttribute("data-row-index");
       if (!currentIndex || currentIndex === _this.currentIndex) return;
+      var dragType = parseInt(dragEnterIndex) > parseInt(contentTable.startI) ? 'down' : 'top';
+
+      contentTable.dragType = dragType;
       if (target.nodeName.toUpperCase() === "TR") {
-        _this.synchronizeTableTr(currentIndex, true);
+        _this.synchronizeTableTr(currentIndex, dragType);
       }
     };
 
@@ -678,7 +691,8 @@ var TableRow = function (_Component) {
         onMouseLeave: this.onMouseLeave,
         className: clsPrefix + ' ' + className + ' ' + clsPrefix + '-level-' + indent,
         style: style,
-        'data-row-key': record && record.key ? record.key : hoverKey
+        'data-row-key': record && record.key ? record.key : hoverKey,
+        'data-row-index': this.props.index
         // key={hoverKey}
         , ref: this.bindElement
       },

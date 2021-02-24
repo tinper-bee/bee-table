@@ -356,70 +356,74 @@ var TableCell = function (_Component) {
     var colSpan = void 0;
     var rowSpan = void 0,
         title = void 0;
-
-    if (render && !showSum) {
-      text = render(text, record, index, _extends({
-        dataIndex: dataIndex, render: render, fieldType: fieldType, linkConfig: linkConfig, fontColor: fontColor, bgColor: bgColor }, other));
-      if (this.isInvalidRenderCellText(text)) {
-        tdProps = text.props || {};
-        rowSpan = tdProps.rowSpan > lazyEndIndex && lazyEndIndex > 5 ? lazyEndIndex - index : tdProps.rowSpan;
-        colSpan = tdProps.colSpan;
-        text = text.children;
-      }
-    }
-
     var colMenu = this.renderColumnMenu(column.cellMenu, text, record, index);
-    // 根据 fieldType 来渲染数据
-    if (!render) {
-      switch (column.fieldType) {
-        case 'link':
-          {
-            text = this.renderLinkType(text, record, index, column.linkConfig);
-            break;
-          }
-        case 'bool':
-          {
-            text = this.renderBoolType(text, column.boolConfig);
-            break;
-          }
-        case 'currency':
-          {
-            var config = {
-              precision: 2, // 精度值,需要大于0
-              thousand: true, // 是否显示千分符号
-              makeUp: true, // 末位是否补零
-              preSymbol: '', // 前置符号
-              nextSymbol: '' // 后置符号
-            };
-            text = this.renderNumber(text, _extends({}, config, column.currencyConfig), column.width);
-            break;
-          }
-        case 'number':
-          {
-            var _config = {
-              precision: 0, // 精度值,需要大于0
-              thousand: true, // 是否显示千分符号
-              makeUp: false, // 末位是否补零
-              preSymbol: '', // 前置符号
-              nextSymbol: '' // 后置符号
-            };
-            text = this.renderNumber(text, _extends({}, _config, column.numberConfig), column.width);
-            break;
-          }
-        case 'date':
-          {
-            text = this.renderDate(text, column.dateConfig);
-            break;
-          }
-        case 'select':
-          {
-            text = this.renderSelect(text, column.selectConfig);
-            break;
-          }
-        default:
-          {
-            break;
-          }
+    // 如果是固定列在主表格上就渲染null
+    if (column.fixed && !fixed) {
+      text = null;
+    } else {
+      if (render && !showSum) {
+        text = render(text, record, index, _extends({
+          dataIndex: dataIndex, render: render, fieldType: fieldType, linkConfig: linkConfig, fontColor: fontColor, bgColor: bgColor }, other));
+        if (this.isInvalidRenderCellText(text)) {
+          tdProps = text.props || {};
+          rowSpan = tdProps.rowSpan > lazyEndIndex && lazyEndIndex > 5 ? lazyEndIndex - index : tdProps.rowSpan;
+          colSpan = tdProps.colSpan;
+          text = text.children;
+        }
+      }
+
+      // 根据 fieldType 来渲染数据
+      if (!render) {
+        switch (column.fieldType) {
+          case 'link':
+            {
+              text = this.renderLinkType(text, record, index, column.linkConfig);
+              break;
+            }
+          case 'bool':
+            {
+              text = this.renderBoolType(text, column.boolConfig);
+              break;
+            }
+          case 'currency':
+            {
+              var config = {
+                precision: 2, // 精度值,需要大于0
+                thousand: true, // 是否显示千分符号
+                makeUp: true, // 末位是否补零
+                preSymbol: '', // 前置符号
+                nextSymbol: '' // 后置符号
+              };
+              text = this.renderNumber(text, _extends({}, config, column.currencyConfig), column.width);
+              break;
+            }
+          case 'number':
+            {
+              var _config = {
+                precision: 0, // 精度值,需要大于0
+                thousand: true, // 是否显示千分符号
+                makeUp: false, // 末位是否补零
+                preSymbol: '', // 前置符号
+                nextSymbol: '' // 后置符号
+              };
+              text = this.renderNumber(text, _extends({}, _config, column.numberConfig), column.width);
+              break;
+            }
+          case 'date':
+            {
+              text = this.renderDate(text, column.dateConfig);
+              break;
+            }
+          case 'select':
+            {
+              text = this.renderSelect(text, column.selectConfig);
+              break;
+            }
+          default:
+            {
+              break;
+            }
+        }
       }
     }
 
