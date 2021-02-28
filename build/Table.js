@@ -497,8 +497,12 @@ var Table = function (_Component) {
     // 是否传入 scroll中的y属性，如果传入判断是否是整数，如果是则进行比较 。bodyTable 的clientHeight进行判断
     this.isShowScrollY();
     if (this.bodyTable) {
-      if (!this.props.scroll.x && window.getComputedStyle(this.bodyTable).overflowX !== 'hidden') {
+      var currentOverflowX = window.getComputedStyle(this.bodyTable).overflowX;
+      if (!this.props.scroll.x && currentOverflowX === 'scroll') {
         this.bodyTable.style.overflowX = 'hidden';
+      }
+      if (this.props.scroll.x && currentOverflowX !== 'scroll') {
+        this.bodyTable.style.overflowX = 'scroll';
       }
     }
     if (this.bodyTableOuter) {
@@ -1207,6 +1211,9 @@ var Table = function (_Component) {
         // bodyStyle.height = bodyStyle.height || scroll.y;
         innerBodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
         innerBodyStyle.overflowY = bodyStyle.overflowY || 'scroll';
+        if (scroll.x) {
+          innerBodyStyle.overflowX = 'scroll';
+        }
       } else {
         bodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
       }
