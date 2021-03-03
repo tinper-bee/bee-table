@@ -298,10 +298,10 @@ class Table extends Component {
     this.isShowScrollY();
     if (this.bodyTable) {
       const currentOverflowX = window.getComputedStyle(this.bodyTable).overflowX
-      if (!this.props.scroll.x && currentOverflowX === 'scroll') {
+      if ((!this.props.scroll.x || this.props.scroll.x === '100%') && currentOverflowX === 'scroll') {
         this.bodyTable.style.overflowX = 'hidden';
       }
-      if (this.props.scroll.x && currentOverflowX !== 'scroll') {
+      if ((this.props.scroll.x && this.props.scroll.x !== '100%') && currentOverflowX !== 'scroll') {
         this.bodyTable.style.overflowX = 'scroll';
       }
     }
@@ -1024,7 +1024,7 @@ class Table extends Component {
       if(this.props.data.length == 0 && this.props.headerScroll ){
         bodyStyle.overflowX = 'hidden';
       }
-      if (!footerScroll) {
+      if (!footerScroll && scroll.x !== '100%') {
         bodyStyle.overflowX = bodyStyle.overflowX || 'auto';
       }
     }
@@ -1036,7 +1036,7 @@ class Table extends Component {
         // bodyStyle.height = bodyStyle.height || scroll.y;
         innerBodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
         innerBodyStyle.overflowY = bodyStyle.overflowY || 'scroll';
-        if (scroll.x) {
+        if (scroll.x && scroll.x !== '100%') {
           innerBodyStyle.overflowX = 'scroll';
         }
       } else {
@@ -1164,6 +1164,9 @@ class Table extends Component {
       }
       delete bodyStyle.overflowX;
       delete bodyStyle.overflowY;
+      if (scroll.x === '100%') {
+        delete bodyStyle.marginBottom
+      }
       BodyTable = (
         <div
           className={`${clsPrefix}-body-outer`}
