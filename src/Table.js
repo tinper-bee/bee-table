@@ -298,7 +298,7 @@ class Table extends Component {
     this.isShowScrollY();
     if (this.bodyTable) {
       const currentOverflowX = window.getComputedStyle(this.bodyTable).overflowX
-      if ((!this.props.scroll.x || this.props.scroll.x === '100%') && currentOverflowX === 'scroll') {
+      if ((!this.props.scroll.x || this.props.scroll.x === '100%') && currentOverflowX !== 'hidden') {
         this.bodyTable.style.overflowX = 'hidden';
       }
       if ((this.props.scroll.x && this.props.scroll.x !== '100%') && currentOverflowX !== 'scroll') {
@@ -1038,6 +1038,8 @@ class Table extends Component {
         innerBodyStyle.overflowY = bodyStyle.overflowY || 'scroll';
         if (scroll.x && scroll.x !== '100%') {
           innerBodyStyle.overflowX = 'scroll';
+        } else {
+          innerBodyStyle.overflowX = 'hidden';
         }
       } else {
         bodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
