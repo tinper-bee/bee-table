@@ -1255,6 +1255,17 @@ class Table extends Component {
 
   }
 
+  getFlatRecords = data => {
+    var result = []
+    for (var i = 0; i < data.length; i++) {
+      result.push(data[i])
+      if ((data[i].children || []).length) {
+        result = result.concat(this.getFlatRecords(data[i].children))
+      }
+    }
+    return result
+  };
+
   syncFixedTableRowHeight() {
     //this.props.height、headerHeight分别为用户传入的行高和表头高度，如果有值，所有行的高度都是固定的，主要为了避免在千行数据中有固定列时获取行高度有问题
     const { clsPrefix, height, headerHeight,columns,heightConsistent, bodyDisplayInRow } = this.props;
@@ -1273,12 +1284,20 @@ class Table extends Component {
         }
         return headerHeight ? height : (parseInt(row.getBoundingClientRect().height) || 'auto')}
     );
+    const flatRecords = this.getFlatRecords(this.props.data || [])
     const fixedColumnsBodyRowsHeight = [].map.call(
       bodyRows, (row,index) =>{
         let rsHeight = height;
         if(bodyDisplayInRow && rsHeight){
           return rsHeight;
         }else{
+          const rowKey = row.getAttribute('data-row-key')
+          const record = flatRecords.find(record => record.key === rowKey) || {}
+          const leafKey = 'isleaf' in record ? 'isleaf' : '_isLeaf' in record ? '_isLeaf' : null // ncc传递这俩属性区分是否是子节点
+          const isLeaf = leafKey && record[leafKey] === true
+          if (isLeaf) {
+            return Number((Number(row.getBoundingClientRect().height)).toFixed(2)) || 'auto';
+          }
           // 为了提高性能，默认获取主表的高度，但是有的场景中固定列的高度比主表的高度高，所以提供此属性，会统计所有列的高度取最大的，设置
           // 内容折行显示，并又设置了 height 的情况下，也要获取主表高度
           if(heightConsistent || (!bodyDisplayInRow && rsHeight)){

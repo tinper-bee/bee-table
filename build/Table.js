@@ -292,6 +292,17 @@ var Table = function (_Component) {
       return Number(tdPaddingTop.replace('px', '')) + Number(tdPaddingBottom.replace('px', '')) + Number(tdBorderTop.replace('px', '')) + Number(tdBorderBottom.replace('px', ''));
     };
 
+    _this.getFlatRecords = function (data) {
+      var result = [];
+      for (var i = 0; i < data.length; i++) {
+        result.push(data[i]);
+        if ((data[i].children || []).length) {
+          result = result.concat(_this.getFlatRecords(data[i].children));
+        }
+      }
+      return result;
+    };
+
     _this.clearBodyMouseLeaveTimer = function () {
       if (_this.bodyMouseLeaveTimmer) {
         clearTimeout(_this.bodyMouseLeaveTimmer);
@@ -1504,11 +1515,21 @@ var Table = function (_Component) {
       }
       return headerHeight ? height : parseInt(row.getBoundingClientRect().height) || 'auto';
     });
+    var flatRecords = this.getFlatRecords(this.props.data || []);
     var fixedColumnsBodyRowsHeight = [].map.call(bodyRows, function (row, index) {
       var rsHeight = height;
       if (bodyDisplayInRow && rsHeight) {
         return rsHeight;
       } else {
+        var rowKey = row.getAttribute('data-row-key');
+        var record = flatRecords.find(function (record) {
+          return record.key === rowKey;
+        }) || {};
+        var leafKey = 'isleaf' in record ? 'isleaf' : '_isLeaf' in record ? '_isLeaf' : null; // ncc传递这俩属性区分是否是子节点
+        var isLeaf = leafKey && record[leafKey] === true;
+        if (isLeaf) {
+          return Number(Number(row.getBoundingClientRect().height).toFixed(2)) || 'auto';
+        }
         // 为了提高性能，默认获取主表的高度，但是有的场景中固定列的高度比主表的高度高，所以提供此属性，会统计所有列的高度取最大的，设置
         // 内容折行显示，并又设置了 height 的情况下，也要获取主表高度
         if (heightConsistent || !bodyDisplayInRow && rsHeight) {
