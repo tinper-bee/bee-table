@@ -297,12 +297,17 @@ class Table extends Component {
     // 是否传入 scroll中的y属性，如果传入判断是否是整数，如果是则进行比较 。bodyTable 的clientHeight进行判断
     this.isShowScrollY();
     if (this.bodyTable) {
-      const currentOverflowX = window.getComputedStyle(this.bodyTable).overflowX
-      if ((!this.props.scroll.x || this.props.scroll.x === '100%') && currentOverflowX !== 'hidden') {
+      const currentOverflowX = window.getComputedStyle(this.bodyTable).overflowX;
+      if (!this.props.scroll.x && currentOverflowX === 'scroll') {
         this.bodyTable.style.overflowX = 'hidden';
       }
-      if ((this.props.scroll.x && this.props.scroll.x !== '100%') && currentOverflowX !== 'scroll') {
-        this.bodyTable.style.overflowX = 'scroll';
+      if (this.props.scroll.x && currentOverflowX !== 'scroll') {
+        // 此处应该对比一下实际的
+        if (this.computeWidth > this.contentDomWidth) {
+          this.bodyTable.style.overflowX = 'scroll';
+        } else {
+          this.bodyTable.style.overflowX = 'hidden';
+        }
       }
     }
     if (this.bodyTableOuter) { // 隐藏几个不需要真正滚动的父元素的滚动条
@@ -1024,7 +1029,7 @@ class Table extends Component {
       if(this.props.data.length == 0 && this.props.headerScroll ){
         bodyStyle.overflowX = 'hidden';
       }
-      if (!footerScroll && scroll.x !== '100%') {
+      if (!footerScroll && this.computeWidth > this.contentDomWidth) {
         bodyStyle.overflowX = bodyStyle.overflowX || 'auto';
       }
     }
@@ -1036,10 +1041,12 @@ class Table extends Component {
         // bodyStyle.height = bodyStyle.height || scroll.y;
         innerBodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
         innerBodyStyle.overflowY = bodyStyle.overflowY || 'scroll';
-        if (scroll.x && scroll.x !== '100%') {
-          innerBodyStyle.overflowX = 'scroll';
-        } else {
-          innerBodyStyle.overflowX = 'hidden';
+        if (scroll.x) {
+          if (this.computeWidth > this.contentDomWidth) {
+            innerBodyStyle.overflowX = 'scroll';
+          } else {
+            innerBodyStyle.overflowX = 'hidden';
+          }
         }
       } else {
         bodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
@@ -1074,7 +1081,9 @@ class Table extends Component {
               headStyle.overflow = 'hidden';
               innerBodyStyle.overflowX = 'auto'; //兼容expand场景、子表格含有固定列的场景
             }else{
-              bodyStyle.marginBottom = `-${scrollbarWidth}px`;
+              if (this.computeWidth > this.contentDomWidth) {
+                bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
+              }
             }
 
           }else{
@@ -1166,9 +1175,6 @@ class Table extends Component {
       }
       delete bodyStyle.overflowX;
       delete bodyStyle.overflowY;
-      if (scroll.x === '100%') {
-        delete bodyStyle.marginBottom
-      }
       BodyTable = (
         <div
           className={`${clsPrefix}-body-outer`}
