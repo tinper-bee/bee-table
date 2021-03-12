@@ -398,6 +398,7 @@ var Table = function (_Component) {
     _this.leftColumnsLength; //左侧固定列的长度
     _this.centerColumnsLength; //非固定列的长度
     _this.columnsChildrenList = []; //复杂表头、所有叶子节点
+    _this.dataChanged = false; // 数据是否改变
     return _this;
   }
 
@@ -432,6 +433,7 @@ var Table = function (_Component) {
         showRowNum = _props.showRowNum;
 
     if ('data' in nextProps) {
+      this.dataChanged = JSON.stringify(this.props.data) !== JSON.stringify(nextProps.data);
       this.setState({
         data: nextProps.data
       });
@@ -1512,8 +1514,9 @@ var Table = function (_Component) {
     var headRows = this.headTable ? this.headTable.querySelectorAll('thead') : this.bodyTable.querySelectorAll('thead');
     var expandedRows = this.bodyTable.querySelectorAll('.' + clsPrefix + '-expanded-row') || [];
     var bodyRows = this.bodyTable.querySelectorAll('.' + clsPrefix + '-row') || [];
-    var leftBodyRows = this.refs.fixedColumnsBodyLeft && this.refs.fixedColumnsBodyLeft.querySelectorAll('.' + clsPrefix + '-row') || [];
-    var rightBodyRows = this.refs.fixedColumnsBodyRight && this.refs.fixedColumnsBodyRight.querySelectorAll('.' + clsPrefix + '-row') || [];
+    var leftBodyRows = !this.dataChanged && this.refs.fixedColumnsBodyLeft && this.refs.fixedColumnsBodyLeft.querySelectorAll('.' + clsPrefix + '-row') || [];
+    var rightBodyRows = !this.dataChanged && this.refs.fixedColumnsBodyRight && this.refs.fixedColumnsBodyRight.querySelectorAll('.' + clsPrefix + '-row') || [];
+    this.dataChanged = false;
     var fixedColumnsHeadRowsHeight = [].map.call(headRows, function (row) {
       var height = headerHeight;
       if (headerHeight) {

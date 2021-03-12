@@ -178,6 +178,7 @@ class Table extends Component {
     this.leftColumnsLength  //左侧固定列的长度
     this.centerColumnsLength  //非固定列的长度
     this.columnsChildrenList = [];//复杂表头、所有叶子节点
+    this.dataChanged = false; // 数据是否改变
   }
   componentWillMount() {
     this.centerColumnsLength = this.columnManager.centerColumns().length
@@ -209,6 +210,7 @@ class Table extends Component {
   componentWillReceiveProps(nextProps) {
     let { hideDragHandle, rowDraggAble, showRowNum } = this.props;
     if ('data' in nextProps) {
+      this.dataChanged = JSON.stringify(this.props.data) !== JSON.stringify(nextProps.data)
       this.setState({
         data: nextProps.data,
       });
@@ -1280,8 +1282,9 @@ class Table extends Component {
       this.bodyTable.querySelectorAll('thead');
     const expandedRows = this.bodyTable.querySelectorAll(`.${clsPrefix}-expanded-row`) || [];
     const bodyRows = this.bodyTable.querySelectorAll(`.${clsPrefix}-row`) || [];
-    const leftBodyRows = this.refs.fixedColumnsBodyLeft && this.refs.fixedColumnsBodyLeft.querySelectorAll(`.${clsPrefix}-row`) || [];
-    const rightBodyRows = this.refs.fixedColumnsBodyRight && this.refs.fixedColumnsBodyRight.querySelectorAll(`.${clsPrefix}-row`) || [];
+    const leftBodyRows = !this.dataChanged && this.refs.fixedColumnsBodyLeft && this.refs.fixedColumnsBodyLeft.querySelectorAll(`.${clsPrefix}-row`) || [];
+    const rightBodyRows = !this.dataChanged && this.refs.fixedColumnsBodyRight && this.refs.fixedColumnsBodyRight.querySelectorAll(`.${clsPrefix}-row`) || [];
+    this.dataChanged = false
     const fixedColumnsHeadRowsHeight = [].map.call(
       headRows, row =>{
         let height = headerHeight;
