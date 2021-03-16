@@ -286,7 +286,7 @@ function sort(Table, Icon) {
       var sort = _this3.props.sort;
 
       var seleObj = void 0;
-      if (!oldData) {
+      if (!oldData.length) {
         oldData = data.concat();
       }
       var sortCol = void 0;

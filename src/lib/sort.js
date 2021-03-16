@@ -188,7 +188,7 @@ export default function sort(Table, Icon) {
       let { data, oldData = [], flatColumns } = this.state;
       let { sort } = this.props;
       let seleObj;
-      if (!oldData) {
+      if (!oldData.length) {
         oldData = data.concat();
       }
       let  sortCol ;
