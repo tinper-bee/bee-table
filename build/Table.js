@@ -1245,12 +1245,10 @@ var Table = function (_Component) {
         // bodyStyle.height = bodyStyle.height || scroll.y;
         innerBodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
         innerBodyStyle.overflowY = bodyStyle.overflowY || 'scroll';
-        if (scroll.x) {
-          if (this.computeWidth > this.contentDomWidth) {
-            innerBodyStyle.overflowX = 'scroll';
-          } else {
-            innerBodyStyle.overflowX = 'hidden';
-          }
+        if (this.computeWidth > this.contentDomWidth) {
+          innerBodyStyle.overflowX = 'scroll';
+        } else {
+          innerBodyStyle.overflowX = 'hidden';
         }
       } else {
         bodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
