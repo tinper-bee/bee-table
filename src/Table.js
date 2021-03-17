@@ -164,6 +164,7 @@ class Table extends Component {
     this.getFooter = this.getFooter.bind(this);
     this.getEmptyText = this.getEmptyText.bind(this);
     this.getHeaderRowStyle = this.getHeaderRowStyle.bind(this);
+    this.manualSyncFixedTableRowHeight = this.manualSyncFixedTableRowHeight.bind(this)
     this.syncFixedTableRowHeight = this.syncFixedTableRowHeight.bind(this);
     this.resetScrollX = this.resetScrollX.bind(this);
     this.findExpandedRow = this.findExpandedRow.bind(this);
@@ -210,7 +211,6 @@ class Table extends Component {
   componentWillReceiveProps(nextProps) {
     let { hideDragHandle, rowDraggAble, showRowNum } = this.props;
     if ('data' in nextProps) {
-      this.dataChanged = JSON.stringify(this.props.data) !== JSON.stringify(nextProps.data)
       this.setState({
         data: nextProps.data,
       });
@@ -1271,6 +1271,11 @@ class Table extends Component {
     }
     return result
   };
+
+  manualSyncFixedTableRowHeight() {
+    this.dataChanged = true
+    this.syncFixedTableRowHeight()
+  }
 
   syncFixedTableRowHeight() {
     //this.props.height、headerHeight分别为用户传入的行高和表头高度，如果有值，所有行的高度都是固定的，主要为了避免在千行数据中有固定列时获取行高度有问题

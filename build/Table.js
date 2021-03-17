@@ -384,6 +384,7 @@ var Table = function (_Component) {
     _this.getFooter = _this.getFooter.bind(_this);
     _this.getEmptyText = _this.getEmptyText.bind(_this);
     _this.getHeaderRowStyle = _this.getHeaderRowStyle.bind(_this);
+    _this.manualSyncFixedTableRowHeight = _this.manualSyncFixedTableRowHeight.bind(_this);
     _this.syncFixedTableRowHeight = _this.syncFixedTableRowHeight.bind(_this);
     _this.resetScrollX = _this.resetScrollX.bind(_this);
     _this.findExpandedRow = _this.findExpandedRow.bind(_this);
@@ -433,7 +434,6 @@ var Table = function (_Component) {
         showRowNum = _props.showRowNum;
 
     if ('data' in nextProps) {
-      this.dataChanged = JSON.stringify(this.props.data) !== JSON.stringify(nextProps.data);
       this.setState({
         data: nextProps.data
       });
@@ -1497,6 +1497,11 @@ var Table = function (_Component) {
     } else {
       return document.defaultView.getComputedStyle(obj, null)[attr];
     }
+  };
+
+  Table.prototype.manualSyncFixedTableRowHeight = function manualSyncFixedTableRowHeight() {
+    this.dataChanged = true;
+    this.syncFixedTableRowHeight();
   };
 
   Table.prototype.syncFixedTableRowHeight = function syncFixedTableRowHeight() {

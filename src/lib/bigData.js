@@ -573,6 +573,7 @@ export default function bigData(Table) {
           {...this.props}
           data={dataSource}
           lazyLoad={lazyLoad}
+          ref={el => this.table = el}
           handleScrollY={this.handleScrollY}
           scrollTop={scrollTop}
           setRowHeight={this.setRowHeight}
