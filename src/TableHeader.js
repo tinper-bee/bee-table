@@ -171,7 +171,7 @@ class TableHeader extends Component {
 
 
   doEventList(trs,action){
-    if (trs && Array.isArray(trs) && action) {
+    if (trs && HTMLCollection.prototype.isPrototypeOf(trs) && action) {
       for (let index = 0; index < trs.length; index++) {
         action(trs[index]);
       }
