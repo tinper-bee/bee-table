@@ -220,7 +220,7 @@ var TableHeader = function (_Component) {
   };
 
   TableHeader.prototype.doEventList = function doEventList(trs, action) {
-    if (trs && Array.isArray(trs) && action) {
+    if (trs && HTMLCollection.prototype.isPrototypeOf(trs) && action) {
       for (var index = 0; index < trs.length; index++) {
         action(trs[index]);
       }
