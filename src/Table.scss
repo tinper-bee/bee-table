@@ -1139,3 +1139,32 @@ $icon-color:#505F79;
     }
   }
 }
+
+
+.loading-td {
+  position: relative !important;
+  width: 1000px !important;
+  height: 500px !important;
+  display: block !important;
+}
+.loading-div {
+  position: absolute;
+  margin: 80px 0 0 0;
+  animation-fill-mode: both;
+  border: none !important;
+  width: 40px;
+  height: 40px;
+  top: 0;
+  &.pre {
+    bottom: 0;
+  }
+  &.suf {
+    top: 0;
+  }
+  left: 30%;
+  background: transparent !important;
+  display: inline-block;
+  animation: rotate1 1s 0s linear infinite !important;
+  text-align: center;
+  line-height: 40px;
+}

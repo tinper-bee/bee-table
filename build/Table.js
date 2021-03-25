@@ -984,7 +984,7 @@ var Table = function (_Component) {
     var expandIconAsCell = fixed !== 'right' ? props.expandIconAsCell : false;
     var expandIconColumnIndex = props.expandIconColumnIndex;
     if (props.lazyLoad && props.lazyLoad.preHeight && indent == 0) {
-      rst.push(_react2["default"].createElement(_TableRow2["default"], { onPaste: onPaste, height: props.lazyLoad.preHeight, columns: [], className: '', key: 'table_row_first', store: this.store, visible: true }));
+      rst.push(_react2["default"].createElement(_TableRow2["default"], { onPaste: onPaste, isPre: true, height: props.lazyLoad.preHeight, columns: [], className: '', key: 'table_row_first', store: this.store, visible: true }));
     }
     var lazyCurrentIndex = props.lazyLoad && props.lazyLoad.startIndex ? props.lazyLoad.startIndex : 0;
     var lazyParentIndex = props.lazyLoad && props.lazyLoad.startParentIndex ? props.lazyLoad.startParentIndex : 0;
@@ -1117,7 +1117,7 @@ var Table = function (_Component) {
     }
 
     if (props.lazyLoad && props.lazyLoad.sufHeight && indent == 0) {
-      rst.push(_react2["default"].createElement(_TableRow2["default"], { onPaste: onPaste, height: props.lazyLoad.sufHeight, key: 'table_row_end', columns: [], className: '', store: this.store, visible: true }));
+      rst.push(_react2["default"].createElement(_TableRow2["default"], { onPaste: onPaste, isSuf: true, height: props.lazyLoad.sufHeight, key: 'table_row_end', columns: [], className: '', store: this.store, visible: true }));
     }
     if (!this.isTreeType) {
       this.treeType = false;

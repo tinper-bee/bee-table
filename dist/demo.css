@@ -894,6 +894,31 @@
   .u-dropdown ul.u-table-inline-op-dropdowm li.u-dropdown-menu-item i.uf {
     font-size: 12px; }
 
+.loading-td {
+  position: relative !important;
+  width: 1000px !important;
+  height: 500px !important;
+  display: block !important; }
+
+.loading-div {
+  position: absolute;
+  margin: 80px 0 0 0;
+  animation-fill-mode: both;
+  border: none !important;
+  width: 40px;
+  height: 40px;
+  top: 0;
+  left: 30%;
+  background: transparent !important;
+  display: inline-block;
+  animation: rotate1 1s 0s linear infinite !important;
+  text-align: center;
+  line-height: 40px; }
+  .loading-div.pre {
+    bottom: 0; }
+  .loading-div.suf {
+    top: 0; }
+
 .selected {
   background: #FFF7E7; }
 
