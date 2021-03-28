@@ -894,6 +894,20 @@
   .u-dropdown ul.u-table-inline-op-dropdowm li.u-dropdown-menu-item i.uf {
     font-size: 12px; }
 
+.loading-td {
+  position: relative !important;
+  display: block !important; }
+  .loading-td.pre-td {
+    bottom: 0; }
+
+.loading-div {
+  position: absolute;
+  border: none !important; }
+  .loading-div.pre {
+    bottom: 0; }
+  .loading-div.suf {
+    top: 0; }
+
 .selected {
   background: #FFF7E7; }
 

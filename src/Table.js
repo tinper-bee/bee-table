@@ -780,7 +780,7 @@ class Table extends Component {
     const expandIconColumnIndex = props.expandIconColumnIndex
     if(props.lazyLoad && props.lazyLoad.preHeight && indent == 0){
       rst.push(
-        <TableRow onPaste={onPaste} height={props.lazyLoad.preHeight} columns={[]} className='' key={'table_row_first'} store={this.store} visible = {true}/>
+        <TableRow onPaste={onPaste} containerWidth={this.contentDomWidth} isPre height={props.lazyLoad.preHeight} columns={[]} className='' key={'table_row_first'} store={this.store} visible = {true}/>
       )
     }
     const lazyCurrentIndex =  props.lazyLoad && props.lazyLoad.startIndex ?props.lazyLoad.startIndex :0;
@@ -923,7 +923,7 @@ class Table extends Component {
 
     if(props.lazyLoad && props.lazyLoad.sufHeight && indent == 0){
       rst.push(
-        <TableRow onPaste={onPaste} height={props.lazyLoad.sufHeight} key={'table_row_end'} columns={[]} className='' store={this.store} visible = {true}/>
+        <TableRow onPaste={onPaste} containerWidth={this.contentDomWidth} isSuf height={props.lazyLoad.sufHeight} key={'table_row_end'} columns={[]} className='' store={this.store} visible = {true}/>
       )
     }
     if (!this.isTreeType) {

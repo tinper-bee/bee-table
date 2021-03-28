@@ -467,14 +467,24 @@ class TableRow extends Component{
     this.element = el
   }
 
+  getLoadingStyle = (isPre, isSuf) => {
+    if (isPre) {
+      return this.element && this.element.nextSibling ? this.element.nextSibling .getBoundingClientRect() : {}
+    }
+    if (isSuf) {
+      return this.element && this.element.previousSibling ? this.element.previousSibling.getBoundingClientRect() : {}
+    }
+  }
+
   render() {
     const {
-      clsPrefix, columns, record, height, visible, index,onPaste,
+      clsPrefix, columns, record, height, visible, index,onPaste, isPre, isSuf, containerWidth,
       expandIconColumnIndex, expandIconAsCell, expanded, useDragHandle,rowDraggAble,
       expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed,bodyDisplayInRow
       ,expandedIcon,collapsedIcon, hoverKey,lazyStartIndex,lazyEndIndex, expandIconCellWidth, getCellClassName
     } = this.props;
     const {notRowDrag} = this.state;
+    const isEmptyTr = isPre || isSuf
     let showSum = false;
     let { className } = this.props;
     if (this.state.hovered) {
@@ -555,7 +565,7 @@ class TableRow extends Component{
     if(rowDraggAble && !useDragHandle && !notRowDrag) {
       className += ' row-dragg-able'
     }
-
+    const tdStyle = !isEmptyTr ? {} : this.getLoadingStyle(isPre, isSuf)
     return (
       <tr
         draggable={rowDraggAble && !useDragHandle && !notRowDrag}
@@ -570,7 +580,13 @@ class TableRow extends Component{
         // key={hoverKey}
         ref={this.bindElement}
       >
-        {cells.length>0?cells:<td style={{width:0,padding:0}}></td>}
+        {cells.length > 0 ? cells : isEmptyTr ?
+        <td className={`loading-td ${ isPre ? 'pre-td' : 'suf-td' }`} style={{ width: tdStyle.width || 1200, height: tdStyle.height || 100 }}>
+          <div style={{ left: (containerWidth || 1200) / 2 - 23 }} className={`loading-div ${ isPre ? 'pre' : 'suf' }`}>
+            加载中...
+          </div>
+          </td> : <td style={{width: 0,padding: 0}}>
+        </td>}
       </tr>
     );
   }

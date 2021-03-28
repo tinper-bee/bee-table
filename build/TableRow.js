@@ -345,6 +345,15 @@ var TableRow = function (_Component) {
       _this.element = el;
     };
 
+    _this.getLoadingStyle = function (isPre, isSuf) {
+      if (isPre) {
+        return _this.element && _this.element.nextSibling ? _this.element.nextSibling.getBoundingClientRect() : {};
+      }
+      if (isSuf) {
+        return _this.element && _this.element.previousSibling ? _this.element.previousSibling.getBoundingClientRect() : {};
+      }
+    };
+
     _this._timeout = null;
     _this.state = {
       hovered: false
@@ -583,6 +592,9 @@ var TableRow = function (_Component) {
         visible = _props10.visible,
         index = _props10.index,
         onPaste = _props10.onPaste,
+        isPre = _props10.isPre,
+        isSuf = _props10.isSuf,
+        containerWidth = _props10.containerWidth,
         expandIconColumnIndex = _props10.expandIconColumnIndex,
         expandIconAsCell = _props10.expandIconAsCell,
         expanded = _props10.expanded,
@@ -605,6 +617,7 @@ var TableRow = function (_Component) {
         getCellClassName = _props10.getCellClassName;
     var notRowDrag = this.state.notRowDrag;
 
+    var isEmptyTr = isPre || isSuf;
     var showSum = false;
     var className = this.props.className;
 
@@ -680,7 +693,7 @@ var TableRow = function (_Component) {
     if (rowDraggAble && !useDragHandle && !notRowDrag) {
       className += ' row-dragg-able';
     }
-
+    var tdStyle = !isEmptyTr ? {} : this.getLoadingStyle(isPre, isSuf);
     return _react2["default"].createElement(
       'tr',
       {
@@ -696,7 +709,15 @@ var TableRow = function (_Component) {
         // key={hoverKey}
         , ref: this.bindElement
       },
-      cells.length > 0 ? cells : _react2["default"].createElement('td', { style: { width: 0, padding: 0 } })
+      cells.length > 0 ? cells : isEmptyTr ? _react2["default"].createElement(
+        'td',
+        { className: 'loading-td ' + (isPre ? 'pre-td' : 'suf-td'), style: { width: tdStyle.width || 1200, height: tdStyle.height || 100 } },
+        _react2["default"].createElement(
+          'div',
+          { style: { left: (containerWidth || 1200) / 2 - 23 }, className: 'loading-div ' + (isPre ? 'pre' : 'suf') },
+          '\u52A0\u8F7D\u4E2D...'
+        )
+      ) : _react2["default"].createElement('td', { style: { width: 0, padding: 0 } })
     );
   };
 
