@@ -427,14 +427,15 @@ class TableHeader extends Component {
                 this.optTableMargin( this.table.fixedRighHeadertTable,0);
             }
           }else{
+          const scrollContainers = this.table.tableBody.querySelectorAll('.scroll-container') || []
           if(showScroll < 0){
-                this.table.tableBody.style.overflowX = 'auto';
+                scrollContainers[0] ? scrollContainers[0].style.overflowX = 'auto' : null
                 this.optTableMargin( this.table.fixedLeftBodyTable,'-'+scrollbarWidth);
                 this.optTableMargin( this.table.fixedRightBodyTable,'-'+scrollbarWidth);
                 this.optTableScroll( this.table.fixedLeftBodyTable,{x:'scroll'});
                 this.optTableScroll( this.table.fixedRightBodyTable,{x:'scroll'});
           }else{
-            this.table.tableBody.style.overflowX = 'hidden';
+            scrollContainers[0] ? scrollContainers[0].style.overflowX = 'hidden' : null
             this.optTableMargin( this.table.fixedLeftBodyTable,0);
             this.optTableMargin( this.table.fixedRightBodyTable,0);
             this.optTableScroll( this.table.fixedLeftBodyTable,{x:'auto'});
@@ -462,12 +463,25 @@ class TableHeader extends Component {
           // }
           if(this.drag.fixedType == 'left') {
             contentTablePar.style.marginLeft = this.drag.contentTableML + diff + 'px'
-            
           }else {
             contentTablePar.style.marginRight = this.drag.contentTableMR + diff + 'px'
           }
-
-
+          const containerWidth = contentTablePar.getBoundingClientRect().width
+          const tableWidth = this.table.innerTableBody.getBoundingClientRect().width
+          const scrollContainers = this.table.tableBody.querySelectorAll('.scroll-container') || []
+          if (tableWidth > containerWidth) {
+            scrollContainers[0] ? scrollContainers[0].style.overflowX = 'auto' : null
+            this.optTableMargin( this.table.fixedLeftBodyTable,'-'+scrollbarWidth);
+            this.optTableMargin( this.table.fixedRightBodyTable,'-'+scrollbarWidth);
+            this.optTableScroll( this.table.fixedLeftBodyTable,{x:'scroll'});
+            this.optTableScroll( this.table.fixedRightBodyTable,{x:'scroll'});
+          } else {
+            scrollContainers[0] ? scrollContainers[0].style.overflowX = 'hidden' : null
+            this.optTableMargin( this.table.fixedLeftBodyTable,0);
+            this.optTableMargin( this.table.fixedRightBodyTable,0);
+            this.optTableScroll( this.table.fixedLeftBodyTable,{x:'auto'});
+            this.optTableScroll( this.table.fixedRightBodyTable,{x:'auto'});
+          }
         }
        
       }else {
@@ -538,7 +552,13 @@ class TableHeader extends Component {
       const innerTable = table.querySelector('.u-table-body-inner');
       if(innerTable){
         //fixbug: 拖拽列宽后，滚动条滚到表格底部，会导致固定列和非固定列错行
-        overflow.x && (innerTable.style.overflowX = overflow.x);
+        if (overflow.x) {
+          const fixedScrollContainers = innerTable.querySelectorAll('.fixed-scroll-container')
+          if (fixedScrollContainers && fixedScrollContainers.length) {
+            fixedScrollContainers[0] && (fixedScrollContainers[0].style.overflowX = overflow.x);
+            fixedScrollContainers[1] && (fixedScrollContainers[1].style.overflowX = overflow.x);
+          }
+        }
         overflow.y && (innerTable.style.overflowY = overflow.y);
       }
 

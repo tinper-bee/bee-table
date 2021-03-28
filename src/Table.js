@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classes from 'component-classes';
 import TableRow from './TableRow';
 import TableHeader from './TableHeader';
-import { measureScrollbar, debounce, warningOnce ,getMaxColChildrenLength} from './lib/utils';
+import { measureScrollbar, debounce, warningOnce ,getMaxColChildrenLength } from './lib/utils';
 import shallowequal from 'shallowequal';
 import addEventListener from 'tinper-bee-core/lib/addEventListener';
 import ColumnManager from './ColumnManager';
@@ -307,8 +307,6 @@ class Table extends Component {
         // 此处应该对比一下实际的
         if (this.computeWidth > this.contentDomWidth) {
           this.bodyTable.style.overflowX = 'scroll';
-        } else {
-          this.bodyTable.style.overflowX = 'hidden';
         }
       }
     }
@@ -1045,7 +1043,7 @@ class Table extends Component {
         innerBodyStyle.overflowY = bodyStyle.overflowY || 'scroll';
         if (this.computeWidth > this.contentDomWidth) {
           innerBodyStyle.overflowX = 'scroll';
-        } else {
+        } else if (this.contentWidth === this.contentDomWidth) {
           innerBodyStyle.overflowX = 'hidden';
         }
       } else {
@@ -1118,6 +1116,9 @@ class Table extends Component {
       // 自动出现滚动条
       if ( !fixed && this.contentDomWidth < this.contentWidth) {
         tableStyle.width = this.contentWidth - this.columnManager.getLeftColumnsWidth(this.contentWidth) - this.columnManager.getRightColumnsWidth(this.contentWidth);
+      }
+      if (this.bodyTable && !fixed && this.contentDomWidth === this.contentWidth) {
+        tableStyle.width = this.bodyTable.clientWidth
       }
       const tableBody = hasBody ? getBodyWrapper(
         <tbody className={`${clsPrefix}-tbody`} onMouseLeave={this.onBodyMouseLeave}>
@@ -1279,7 +1280,7 @@ class Table extends Component {
 
   syncFixedTableRowHeight() {
     //this.props.height、headerHeight分别为用户传入的行高和表头高度，如果有值，所有行的高度都是固定的，主要为了避免在千行数据中有固定列时获取行高度有问题
-    const { clsPrefix, height, headerHeight,columns,heightConsistent, bodyDisplayInRow } = this.props;
+    const { clsPrefix, height, headerHeight,columns,heightConsistent, bodyDisplayInRow, lazyLoad } = this.props;
     const headRows = this.headTable ?
       this.headTable.querySelectorAll('thead') :
       this.bodyTable.querySelectorAll('thead');

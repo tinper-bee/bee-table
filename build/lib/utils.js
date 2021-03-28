@@ -8,6 +8,7 @@ exports.Event = exports.EventUtil = exports.tryParseInt = undefined;
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 exports.measureScrollbar = measureScrollbar;
+exports.myBrowser = myBrowser;
 exports.debounce = debounce;
 exports.warningOnce = warningOnce;
 exports.getOffset = getOffset;
@@ -73,6 +74,30 @@ function measureScrollbar() {
   currentDom.removeChild(scrollDiv);
   scrollbarSize = size;
   return scrollbarSize;
+}
+
+function myBrowser() {
+  var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+  var isOpera = userAgent.indexOf("Opera") > -1;
+  if (isOpera) {
+    //判断是否Opera浏览器
+    return "Opera";
+  }
+  if (userAgent.indexOf("Firefox") > -1) {
+    //判断是否Firefox浏览器
+    return "FF";
+  }
+  if (userAgent.indexOf("Chrome") > -1) {
+    return "Chrome";
+  }
+  if (userAgent.indexOf("Safari") > -1) {
+    //判断是否Safari浏览器
+    return "Safari";
+  }
+  if (userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera) {
+    //判断是否IE浏览器
+    return "IE";
+  }
 }
 
 function debounce(func, wait, immediate) {

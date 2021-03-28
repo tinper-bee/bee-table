@@ -782,14 +782,15 @@ var _initialiseProps = function _initialiseProps() {
               _this7.optTableMargin(_this7.table.fixedRighHeadertTable, 0);
             }
           } else {
+            var scrollContainers = _this7.table.tableBody.querySelectorAll('.scroll-container') || [];
             if (showScroll < 0) {
-              _this7.table.tableBody.style.overflowX = 'auto';
+              scrollContainers[0] ? scrollContainers[0].style.overflowX = 'auto' : null;
               _this7.optTableMargin(_this7.table.fixedLeftBodyTable, '-' + scrollbarWidth);
               _this7.optTableMargin(_this7.table.fixedRightBodyTable, '-' + scrollbarWidth);
               _this7.optTableScroll(_this7.table.fixedLeftBodyTable, { x: 'scroll' });
               _this7.optTableScroll(_this7.table.fixedRightBodyTable, { x: 'scroll' });
             } else {
-              _this7.table.tableBody.style.overflowX = 'hidden';
+              scrollContainers[0] ? scrollContainers[0].style.overflowX = 'hidden' : null;
               _this7.optTableMargin(_this7.table.fixedLeftBodyTable, 0);
               _this7.optTableMargin(_this7.table.fixedRightBodyTable, 0);
               _this7.optTableScroll(_this7.table.fixedLeftBodyTable, { x: 'auto' });
@@ -819,6 +820,22 @@ var _initialiseProps = function _initialiseProps() {
             contentTablePar.style.marginLeft = _this7.drag.contentTableML + diff + 'px';
           } else {
             contentTablePar.style.marginRight = _this7.drag.contentTableMR + diff + 'px';
+          }
+          var containerWidth = contentTablePar.getBoundingClientRect().width;
+          var tableWidth = _this7.table.innerTableBody.getBoundingClientRect().width;
+          var _scrollContainers = _this7.table.tableBody.querySelectorAll('.scroll-container') || [];
+          if (tableWidth > containerWidth) {
+            _scrollContainers[0] ? _scrollContainers[0].style.overflowX = 'auto' : null;
+            _this7.optTableMargin(_this7.table.fixedLeftBodyTable, '-' + scrollbarWidth);
+            _this7.optTableMargin(_this7.table.fixedRightBodyTable, '-' + scrollbarWidth);
+            _this7.optTableScroll(_this7.table.fixedLeftBodyTable, { x: 'scroll' });
+            _this7.optTableScroll(_this7.table.fixedRightBodyTable, { x: 'scroll' });
+          } else {
+            _scrollContainers[0] ? _scrollContainers[0].style.overflowX = 'hidden' : null;
+            _this7.optTableMargin(_this7.table.fixedLeftBodyTable, 0);
+            _this7.optTableMargin(_this7.table.fixedRightBodyTable, 0);
+            _this7.optTableScroll(_this7.table.fixedLeftBodyTable, { x: 'auto' });
+            _this7.optTableScroll(_this7.table.fixedRightBodyTable, { x: 'auto' });
           }
         }
       } else {
@@ -863,7 +880,13 @@ var _initialiseProps = function _initialiseProps() {
       var innerTable = table.querySelector('.u-table-body-inner');
       if (innerTable) {
         //fixbug: 拖拽列宽后，滚动条滚到表格底部，会导致固定列和非固定列错行
-        overflow.x && (innerTable.style.overflowX = overflow.x);
+        if (overflow.x) {
+          var fixedScrollContainers = innerTable.querySelectorAll('.fixed-scroll-container');
+          if (fixedScrollContainers && fixedScrollContainers.length) {
+            fixedScrollContainers[0] && (fixedScrollContainers[0].style.overflowX = overflow.x);
+            fixedScrollContainers[1] && (fixedScrollContainers[1].style.overflowX = overflow.x);
+          }
+        }
         overflow.y && (innerTable.style.overflowY = overflow.y);
       }
     }

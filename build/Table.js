@@ -534,8 +534,6 @@ var Table = function (_Component) {
         // 此处应该对比一下实际的
         if (this.computeWidth > this.contentDomWidth) {
           this.bodyTable.style.overflowX = 'scroll';
-        } else {
-          this.bodyTable.style.overflowX = 'hidden';
         }
       }
     }
@@ -1247,7 +1245,7 @@ var Table = function (_Component) {
         innerBodyStyle.overflowY = bodyStyle.overflowY || 'scroll';
         if (this.computeWidth > this.contentDomWidth) {
           innerBodyStyle.overflowX = 'scroll';
-        } else {
+        } else if (this.contentWidth === this.contentDomWidth) {
           innerBodyStyle.overflowX = 'hidden';
         }
       } else {
@@ -1320,6 +1318,9 @@ var Table = function (_Component) {
       // 自动出现滚动条
       if (!fixed && _this4.contentDomWidth < _this4.contentWidth) {
         tableStyle.width = _this4.contentWidth - _this4.columnManager.getLeftColumnsWidth(_this4.contentWidth) - _this4.columnManager.getRightColumnsWidth(_this4.contentWidth);
+      }
+      if (_this4.bodyTable && !fixed && _this4.contentDomWidth === _this4.contentWidth) {
+        tableStyle.width = _this4.bodyTable.clientWidth;
       }
       var tableBody = hasBody ? getBodyWrapper(_react2["default"].createElement(
         'tbody',
@@ -1512,7 +1513,8 @@ var Table = function (_Component) {
         headerHeight = _props9.headerHeight,
         columns = _props9.columns,
         heightConsistent = _props9.heightConsistent,
-        bodyDisplayInRow = _props9.bodyDisplayInRow;
+        bodyDisplayInRow = _props9.bodyDisplayInRow,
+        lazyLoad = _props9.lazyLoad;
 
     var headRows = this.headTable ? this.headTable.querySelectorAll('thead') : this.bodyTable.querySelectorAll('thead');
     var expandedRows = this.bodyTable.querySelectorAll('.' + clsPrefix + '-expanded-row') || [];
