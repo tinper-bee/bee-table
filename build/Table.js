@@ -168,6 +168,7 @@ var defaultProps = {
   setRowParentIndex: function setRowParentIndex() {},
   tabIndex: '0',
   heightConsistent: false,
+  syncFixedRowHeight: false,
   size: 'md',
   rowDraggAble: false,
   hideDragHandle: false,
@@ -1514,7 +1515,8 @@ var Table = function (_Component) {
         columns = _props9.columns,
         heightConsistent = _props9.heightConsistent,
         bodyDisplayInRow = _props9.bodyDisplayInRow,
-        lazyLoad = _props9.lazyLoad;
+        lazyLoad = _props9.lazyLoad,
+        syncFixedRowHeight = _props9.syncFixedRowHeight;
 
     var headRows = this.headTable ? this.headTable.querySelectorAll('thead') : this.bodyTable.querySelectorAll('thead');
     var expandedRows = this.bodyTable.querySelectorAll('.' + clsPrefix + '-expanded-row') || [];
@@ -1546,7 +1548,7 @@ var Table = function (_Component) {
         }
         // 为了提高性能，默认获取主表的高度，但是有的场景中固定列的高度比主表的高度高，所以提供此属性，会统计所有列的高度取最大的，设置
         // 内容折行显示，并又设置了 height 的情况下，也要获取主表高度
-        if (heightConsistent || !bodyDisplayInRow && rsHeight) {
+        if (heightConsistent || !bodyDisplayInRow && rsHeight && syncFixedRowHeight) {
           var leftHeight = void 0,
               rightHeight = void 0,
               currentHeight = void 0,

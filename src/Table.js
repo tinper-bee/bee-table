@@ -103,6 +103,7 @@ const defaultProps = {
   setRowParentIndex:()=>{},
   tabIndex:'0',
   heightConsistent:false,
+  syncFixedRowHeight: false,
   size: 'md',
   rowDraggAble:false,
   hideDragHandle:false,
@@ -1280,7 +1281,7 @@ class Table extends Component {
 
   syncFixedTableRowHeight() {
     //this.props.height、headerHeight分别为用户传入的行高和表头高度，如果有值，所有行的高度都是固定的，主要为了避免在千行数据中有固定列时获取行高度有问题
-    const { clsPrefix, height, headerHeight,columns,heightConsistent, bodyDisplayInRow, lazyLoad } = this.props;
+    const { clsPrefix, height, headerHeight,columns,heightConsistent, bodyDisplayInRow, lazyLoad, syncFixedRowHeight } = this.props;
     const headRows = this.headTable ?
       this.headTable.querySelectorAll('thead') :
       this.bodyTable.querySelectorAll('thead');
@@ -1313,7 +1314,7 @@ class Table extends Component {
           }
           // 为了提高性能，默认获取主表的高度，但是有的场景中固定列的高度比主表的高度高，所以提供此属性，会统计所有列的高度取最大的，设置
           // 内容折行显示，并又设置了 height 的情况下，也要获取主表高度
-          if(heightConsistent || (!bodyDisplayInRow && rsHeight)){
+          if(heightConsistent || (!bodyDisplayInRow && rsHeight && syncFixedRowHeight)){
             let leftHeight,rightHeight,currentHeight,maxHeight;
             leftHeight = leftBodyRows[index]?Number(leftBodyRows[index].getBoundingClientRect().height).toFixed(2):0; // 有些浏览器中，取到的高度是小数，直接parseInt有问题，保留两位小数处理
             rightHeight = rightBodyRows[index]?Number(rightBodyRows[index].getBoundingClientRect().height).toFixed(2):0;

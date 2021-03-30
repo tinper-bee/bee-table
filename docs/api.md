@@ -76,6 +76,7 @@ import 'bee-table/build/Table.css';
 | loadBuffer       | 使用BigData高阶组件实现大数据加载时，上下加载的缓存 | number| 5
 | hoverContent       | hover某行时，动态渲染行菜单元素，此方法需返回行菜单元素的内容 | Function| 
 | heightConsistent       | 当固定列内容高度超出非固定列时，内容互错行，当此属性为true会将高度同步，当行过多时会有性能影响，所以建议非固定高度如果过高时，超出内容可以显示成省略号 | bool|false 
+| syncFixedRowHeight | 当bodyDisplayInRow为false的时候，同步固定列的高度 | bool | - |
 | height | 自定义表格行高 | number | - |
 | headerHeight | 自定义表头行高 | number | - |
 | headerDisplayInRow | 设置表头的内容显示一行，超出显示省略号 | bool | true |
