@@ -148,7 +148,7 @@ var TableHeader = function (_Component) {
       table.bodyRows = table.tableBody && table.tableBody.querySelectorAll('tr') || [];
 
       table.fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header');
-      table.fixedRighHeadertTable = contentTable.querySelector('.u-table-fixed-right .u-table-header');
+      table.fixedRightHeaderTable = contentTable.querySelector('.u-table-fixed-right .u-table-header');
       table.contentTableHeader = contentTable.querySelector('.u-table-scroll .u-table-header');
       table.fixedLeftBodyTable = contentTable.querySelectorAll('.u-table-fixed-left .u-table-body-outer');
       if (table.fixedLeftBodyTable) {
@@ -163,6 +163,10 @@ var TableHeader = function (_Component) {
       }
 
       table.innerTableBody = contentTable.querySelector('.u-table-scroll .u-table-body table');
+      table.fixedLeftHeaderTableBody = table.fixedLeftHeaderTable && table.fixedLeftHeaderTable.querySelector('table') || null;
+      table.fixedRightHeaderTableBody = table.fixedRightHeaderTable && table.fixedRightHeaderTable.querySelector('table') || null;
+      table.fixedLeftInnerTableBody = table.fixedLeftBodyTable && table.fixedLeftBodyTable.querySelector('table') || null;
+      table.fixedRightInnerTableBody = table.fixedRightBodyTable && table.fixedRightBodyTable.querySelector('table') || null;
       table.fixedLeftBodyRows = table.fixedLeftBodyTable && table.fixedLeftBodyTable.querySelectorAll('tr') || [];
       table.fixedRightBodyRows = table.fixedRightBodyTable && table.fixedRightBodyTable.querySelectorAll('tr') || [];
     }
@@ -774,12 +778,12 @@ var _initialiseProps = function _initialiseProps() {
               //找到固定列表格，设置表头的marginBottom值为scrollbarWidth;
               _this7.table.contentTableHeader.style.overflowX = 'scroll';
               _this7.optTableMargin(_this7.table.fixedLeftHeaderTable, scrollbarWidth);
-              _this7.optTableMargin(_this7.table.fixedRighHeadertTable, scrollbarWidth);
+              _this7.optTableMargin(_this7.table.fixedRightHeaderTable, scrollbarWidth);
             } else {
               //大于 0 不显示滚动条
               _this7.table.contentTableHeader.style.overflowX = 'hidden';
               _this7.optTableMargin(_this7.table.fixedLeftHeaderTable, 0);
-              _this7.optTableMargin(_this7.table.fixedRighHeadertTable, 0);
+              _this7.optTableMargin(_this7.table.fixedRightHeaderTable, 0);
             }
           } else {
             var scrollContainers = _this7.table.tableBody.querySelectorAll('.scroll-container') || [];
@@ -803,7 +807,7 @@ var _initialiseProps = function _initialiseProps() {
           }
           // console.log('this.drag.contentTableML',this.drag.contentTableML,'diff',diff);
           // debugger
-
+          _this7.syncFixedBodyTableWidth(); // 同步body中table的宽度
           var contentTablePar = _this7.table.contentTableHeader.parentNode;
           // left、right缩小的内容，在没有滚动条时，需要将宽度同步到到最后一列
           // diff<0 往里拖，
@@ -844,6 +848,21 @@ var _initialiseProps = function _initialiseProps() {
     }
     // 增加拖拽列宽动作的回调函数
     _this7.drag.newWidth && onDraggingBorder && onDraggingBorder(event, _this7.drag.newWidth);
+  };
+
+  this.syncFixedBodyTableWidth = function () {
+    var _table = _this7.table,
+        fixedLeftHeaderTableBody = _table.fixedLeftHeaderTableBody,
+        fixedLeftInnerTableBody = _table.fixedLeftInnerTableBody,
+        fixedRightHeaderTableBody = _table.fixedRightHeaderTableBody,
+        fixedRightInnerTableBody = _table.fixedRightInnerTableBody;
+
+    if (fixedLeftHeaderTableBody && fixedLeftInnerTableBody) {
+      fixedLeftInnerTableBody.style.width = fixedLeftHeaderTableBody.getBoundingClientRect().width + 'px';
+    }
+    if (fixedRightHeaderTableBody && fixedRightInnerTableBody) {
+      fixedRightInnerTableBody.style.width = fixedRightHeaderTableBody.getBoundingClientRect().width + 'px';
+    }
   };
 
   this.onTrMouseUp = function (e) {
