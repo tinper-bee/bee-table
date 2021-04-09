@@ -709,15 +709,8 @@ var TableRow = function (_Component) {
         // key={hoverKey}
         , ref: this.bindElement
       },
-      cells.length > 0 ? cells : isEmptyTr ? _react2["default"].createElement(
-        'td',
-        { className: 'loading-td ' + (isPre ? 'pre-td' : 'suf-td'), style: { width: tdStyle.width || 1200, height: tdStyle.height || 100 } },
-        _react2["default"].createElement(
-          'div',
-          { style: { left: (containerWidth || 1200) / 2 - 23 }, className: 'loading-div ' + (isPre ? 'pre' : 'suf') },
-          '\u52A0\u8F7D\u4E2D...'
-        )
-      ) : _react2["default"].createElement('td', { style: { width: 0, padding: 0 } })
+      cells.length > 0 ? cells : isEmptyTr ? // loading暂时去掉
+      _react2["default"].createElement('td', { style: { width: 0, padding: 0 } }) : _react2["default"].createElement('td', { style: { width: 0, padding: 0 } })
     );
   };
 

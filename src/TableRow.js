@@ -580,12 +580,9 @@ class TableRow extends Component{
         // key={hoverKey}
         ref={this.bindElement}
       >
-        {cells.length > 0 ? cells : isEmptyTr ?
-        <td className={`loading-td ${ isPre ? 'pre-td' : 'suf-td' }`} style={{ width: tdStyle.width || 1200, height: tdStyle.height || 100 }}>
-          <div style={{ left: (containerWidth || 1200) / 2 - 23 }} className={`loading-div ${ isPre ? 'pre' : 'suf' }`}>
-            加载中...
-          </div>
-          </td> : <td style={{width: 0,padding: 0}}>
+        {cells.length > 0 ? cells : isEmptyTr ? // loading暂时去掉
+        <td style={{width: 0,padding: 0}}>
+        </td> : <td style={{width: 0,padding: 0}}>
         </td>}
       </tr>
     );
