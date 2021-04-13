@@ -210,9 +210,11 @@ class TableHeader extends Component {
       {key:'mousemove', fun:this.onTrMouseMove},
     ];
     // this.eventListen(events,'remove',this.table.tr[0]);
-    this.doEventList(this.table.tr,(tr)=>{
-      this.eventListen(events,'remove',this.table.tr);
-    })
+    if(this.table && this.table.tr){
+      this.doEventList(this.table.tr,(tr)=>{
+        this.eventListen(events,'remove',this.table.tr);
+      })
+    }
   }
 
   eventListen(events,type,eventSource){

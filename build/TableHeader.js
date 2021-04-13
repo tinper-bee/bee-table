@@ -262,9 +262,11 @@ var TableHeader = function (_Component) {
 
     var events = [{ key: 'mouseup', fun: this.onTrMouseUp }, { key: 'mousemove', fun: this.onTrMouseMove }];
     // this.eventListen(events,'remove',this.table.tr[0]);
-    this.doEventList(this.table.tr, function (tr) {
-      _this5.eventListen(events, 'remove', _this5.table.tr);
-    });
+    if (this.table && this.table.tr) {
+      this.doEventList(this.table.tr, function (tr) {
+        _this5.eventListen(events, 'remove', _this5.table.tr);
+      });
+    }
   };
 
   TableHeader.prototype.eventListen = function eventListen(events, type, eventSource) {
