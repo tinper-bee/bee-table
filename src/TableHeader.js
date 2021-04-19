@@ -377,22 +377,22 @@ class TableHeader extends Component {
       let diff = (event.clientX - this.drag.oldLeft);
       let newWidth = this.drag.oldWidth + diff;
       this.drag.newWidth = newWidth > 0 ? newWidth : this.minWidth;
+
+      // displayinrow 判断、 固定行高判断
+      if(!bodyDisplayInRow) {
+        this.table.bodyRows.forEach((row,index)=>{
+          const leftRow = this.table.fixedLeftBodyRows[index];
+          const rightRow = this.table.fixedRightBodyRows[index];
+          if(leftRow || rightRow) {
+            const height = row.getBoundingClientRect().height;
+            leftRow && (leftRow.style.height = height + "px")
+            rightRow && (rightRow.style.height = height + "px")
+          }
+        })
+      }
+
       if(newWidth > this.minWidth){
         currentCols.style.width = newWidth +'px';
-        
-        // displayinrow 判断、 固定行高判断 
-        if(!bodyDisplayInRow) {
-          this.table.bodyRows.forEach((row,index)=>{
-            const leftRow = this.table.fixedLeftBodyRows[index];
-            const rightRow = this.table.fixedRightBodyRows[index];
-            if(leftRow || rightRow) {
-              const height = row.getBoundingClientRect().height;
-              leftRow && (leftRow.style.height = height + "px")
-              rightRow && (rightRow.style.height = height + "px")
-            }
-          })
-        }
-
         //hao 支持固定表头拖拽 修改表体的width
         if(this.fixedTable.cols){
             this.fixedTable.cols[this.drag.currIndex].style.width = newWidth + "px";

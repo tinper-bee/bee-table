@@ -278,23 +278,27 @@ class Table extends Component {
     const currentScrollY = this.props.scroll.y
     if (prevScrollY && currentScrollY && (prevScrollY !== currentScrollY) && this.props.lazyLoad && !this.props.ignoreScrollYChange) {
       this.bodyTable.scrollTop = 0
-    } else if (this.props.ignoreScrollYChange && currentScrollY && prevScrollY && (prevScrollY !== currentScrollY)) {
-      const bodyScrollTop = this.bodyTable.scrollTop
-      if (bodyScrollTop === 0) { // 在顶部的时候，滚动条不用动
-        this.bodyTable.scrollTop = 0;
-      } else {
-        const distance = bodyScrollTop + currentScrollY - prevScrollY;
-        if (distance < 0) {
+    } else if (this.props.ignoreScrollYChange && currentScrollY && prevScrollY) {
+      if (prevScrollY !== currentScrollY) {
+        const bodyScrollTop = this.bodyTable.scrollTop
+        if (bodyScrollTop === 0) { // 在顶部的时候，滚动条不用动
           this.bodyTable.scrollTop = 0;
         } else {
-          const { scrollHeight, scrollTop } = this.bodyTable
-          const bottomDistance = Math.abs(scrollHeight - scrollTop - prevScrollY) // 在最底部的时候也不用滚动滚动条
-          if (bottomDistance < 5) { // 有些dom计算不是十分精确，设置一个值来缓冲一下
-            this.bodyTable.scrollTop = scrollTop + prevScrollY - currentScrollY
+          const distance = bodyScrollTop + currentScrollY - prevScrollY;
+          if (distance < 0) {
+            this.bodyTable.scrollTop = 0;
           } else {
-            this.bodyTable.scrollTop = distance;
+            const { scrollHeight, scrollTop } = this.bodyTable
+            const bottomDistance = Math.abs(scrollHeight - scrollTop - prevScrollY) // 在最底部的时候也不用滚动滚动条
+            if (bottomDistance < 5) { // 有些dom计算不是十分精确，设置一个值来缓冲一下
+              this.bodyTable.scrollTop = scrollTop + prevScrollY - currentScrollY
+            } else {
+              this.bodyTable.scrollTop = distance;
+            }
           }
         }
+      } else {
+        this.bodyTable.scrollTop += 1
       }
     }
     // 是否传入 scroll中的y属性，如果传入判断是否是整数，如果是则进行比较 。bodyTable 的clientHeight进行判断

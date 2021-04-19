@@ -730,22 +730,22 @@ var _initialiseProps = function _initialiseProps() {
       var diff = event.clientX - _this7.drag.oldLeft;
       var newWidth = _this7.drag.oldWidth + diff;
       _this7.drag.newWidth = newWidth > 0 ? newWidth : _this7.minWidth;
+
+      // displayinrow 判断、 固定行高判断
+      if (!bodyDisplayInRow) {
+        _this7.table.bodyRows.forEach(function (row, index) {
+          var leftRow = _this7.table.fixedLeftBodyRows[index];
+          var rightRow = _this7.table.fixedRightBodyRows[index];
+          if (leftRow || rightRow) {
+            var height = row.getBoundingClientRect().height;
+            leftRow && (leftRow.style.height = height + "px");
+            rightRow && (rightRow.style.height = height + "px");
+          }
+        });
+      }
+
       if (newWidth > _this7.minWidth) {
         currentCols.style.width = newWidth + 'px';
-
-        // displayinrow 判断、 固定行高判断 
-        if (!bodyDisplayInRow) {
-          _this7.table.bodyRows.forEach(function (row, index) {
-            var leftRow = _this7.table.fixedLeftBodyRows[index];
-            var rightRow = _this7.table.fixedRightBodyRows[index];
-            if (leftRow || rightRow) {
-              var height = row.getBoundingClientRect().height;
-              leftRow && (leftRow.style.height = height + "px");
-              rightRow && (rightRow.style.height = height + "px");
-            }
-          });
-        }
-
         //hao 支持固定表头拖拽 修改表体的width
         if (_this7.fixedTable.cols) {
           _this7.fixedTable.cols[_this7.drag.currIndex].style.width = newWidth + "px";

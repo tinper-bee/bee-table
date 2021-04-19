@@ -90,6 +90,7 @@ export default function dragColumn(Table) {
               {...others}
               columns={this.state.columns}
               data={data}
+              ref={el => this.table = el}
               className={`${className} u-table-drag-border`}
               onDragEnd={this.onDragEnd}
               draggable={draggable}

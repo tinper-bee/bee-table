@@ -500,28 +500,32 @@ var Table = function (_Component) {
     var currentScrollY = this.props.scroll.y;
     if (prevScrollY && currentScrollY && prevScrollY !== currentScrollY && this.props.lazyLoad && !this.props.ignoreScrollYChange) {
       this.bodyTable.scrollTop = 0;
-    } else if (this.props.ignoreScrollYChange && currentScrollY && prevScrollY && prevScrollY !== currentScrollY) {
-      var bodyScrollTop = this.bodyTable.scrollTop;
-      if (bodyScrollTop === 0) {
-        // 在顶部的时候，滚动条不用动
-        this.bodyTable.scrollTop = 0;
-      } else {
-        var distance = bodyScrollTop + currentScrollY - prevScrollY;
-        if (distance < 0) {
+    } else if (this.props.ignoreScrollYChange && currentScrollY && prevScrollY) {
+      if (prevScrollY !== currentScrollY) {
+        var bodyScrollTop = this.bodyTable.scrollTop;
+        if (bodyScrollTop === 0) {
+          // 在顶部的时候，滚动条不用动
           this.bodyTable.scrollTop = 0;
         } else {
-          var _bodyTable = this.bodyTable,
-              scrollHeight = _bodyTable.scrollHeight,
-              scrollTop = _bodyTable.scrollTop;
-
-          var bottomDistance = Math.abs(scrollHeight - scrollTop - prevScrollY); // 在最底部的时候也不用滚动滚动条
-          if (bottomDistance < 5) {
-            // 有些dom计算不是十分精确，设置一个值来缓冲一下
-            this.bodyTable.scrollTop = scrollTop + prevScrollY - currentScrollY;
+          var distance = bodyScrollTop + currentScrollY - prevScrollY;
+          if (distance < 0) {
+            this.bodyTable.scrollTop = 0;
           } else {
-            this.bodyTable.scrollTop = distance;
+            var _bodyTable = this.bodyTable,
+                scrollHeight = _bodyTable.scrollHeight,
+                scrollTop = _bodyTable.scrollTop;
+
+            var bottomDistance = Math.abs(scrollHeight - scrollTop - prevScrollY); // 在最底部的时候也不用滚动滚动条
+            if (bottomDistance < 5) {
+              // 有些dom计算不是十分精确，设置一个值来缓冲一下
+              this.bodyTable.scrollTop = scrollTop + prevScrollY - currentScrollY;
+            } else {
+              this.bodyTable.scrollTop = distance;
+            }
           }
         }
+      } else {
+        this.bodyTable.scrollTop += 1;
       }
     }
     // 是否传入 scroll中的y属性，如果传入判断是否是整数，如果是则进行比较 。bodyTable 的clientHeight进行判断

@@ -126,6 +126,8 @@ function dragColumn(Table) {
     });
 
     DragColumn.prototype.render = function render() {
+      var _this2 = this;
+
       var _props = this.props,
           data = _props.data,
           dragborder = _props.dragborder,
@@ -136,6 +138,9 @@ function dragColumn(Table) {
       return _react2["default"].createElement(Table, _extends({}, others, {
         columns: this.state.columns,
         data: data,
+        ref: function ref(el) {
+          return _this2.table = el;
+        },
         className: className + ' u-table-drag-border',
         onDragEnd: this.onDragEnd,
         draggable: draggable,
