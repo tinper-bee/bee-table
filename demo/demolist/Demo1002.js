@@ -33,6 +33,7 @@ const columns = [
   {
     title: "联系人",
     dataIndex: "d",
+    fixed: 'right',
     key: "d",
     width: 500,
   }

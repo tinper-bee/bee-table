@@ -638,6 +638,7 @@ var _initialiseProps = function _initialiseProps() {
       var currentObj = _this7.table.cols[currentIndex];
       _this7.drag.currIndex = currentIndex;
       _this7.drag.oldLeft = event.clientX;
+      _this7.drag.currentLeft = event.clientX;
       _this7.drag.oldWidth = parseInt(currentObj.style.width);
       _this7.drag.minWidth = currentObj.style.minWidth != "" ? parseInt(currentObj.style.minWidth) : defaultWidth;
       _this7.drag.tableWidth = parseInt(_this7.table.table.style.width ? _this7.table.table.style.width : _this7.table.table.scrollWidth);
@@ -664,6 +665,11 @@ var _initialiseProps = function _initialiseProps() {
         }
       }
       _this7.drag.fixedType = fixedType;
+      if (fixedType === 'left' && _this7.table.fixedRightBodyTable) {
+        _this7.drag.fixedRightBodyTableLeft = _this7.table.fixedRightBodyTable.getBoundingClientRect().left;
+      } else {
+        _this7.drag.fixedRightBodyTableLeft = null;
+      }
     } else if (type != 'online' && _this7.props.draggable) {
       // if (!this.props.draggable || targetEvent.nodeName.toUpperCase() != "TH") return;
       if (!_this7.props.draggable) return;
@@ -726,10 +732,18 @@ var _initialiseProps = function _initialiseProps() {
     var event = _utils.Event.getEvent(e);
     if (_this7.props.dragborder && _this7.drag.option == "border") {
       //移动改变宽度
+
+      var isMoveToRight = _this7.drag.currentLeft < event.clientX;
+      if (_this7.drag.fixedType === 'left' && isMoveToRight && _this7.drag.fixedRightBodyTableLeft) {
+        if (_this7.drag.fixedRightBodyTableLeft - event.clientX < 100) {
+          return; // 拖动左侧固定列，离右侧固定列距离小于100时，禁止拖动
+        }
+      }
       var currentCols = _this7.table.cols[_this7.drag.currIndex];
       var diff = event.clientX - _this7.drag.oldLeft;
       var newWidth = _this7.drag.oldWidth + diff;
       _this7.drag.newWidth = newWidth > 0 ? newWidth : _this7.minWidth;
+      _this7.drag.currentLeft = event.clientX;
 
       // displayinrow 判断、 固定行高判断
       if (!bodyDisplayInRow) {

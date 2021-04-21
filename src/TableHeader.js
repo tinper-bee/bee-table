@@ -287,6 +287,7 @@ class TableHeader extends Component {
       let currentObj = this.table.cols[currentIndex];
       this.drag.currIndex = currentIndex;
       this.drag.oldLeft = event.clientX;
+      this.drag.currentLeft = event.clientX;
       this.drag.oldWidth = parseInt((currentObj).style.width);
       this.drag.minWidth = currentObj.style.minWidth != ""?parseInt(currentObj.style.minWidth):defaultWidth;
       this.drag.tableWidth = parseInt(this.table.table.style.width ?this.table.table.style.width:this.table.table.scrollWidth);
@@ -313,6 +314,11 @@ class TableHeader extends Component {
           }
       }
       this.drag.fixedType = fixedType;
+      if (fixedType === 'left' && this.table.fixedRightBodyTable) {
+        this.drag.fixedRightBodyTableLeft = this.table.fixedRightBodyTable.getBoundingClientRect().left
+      } else {
+        this.drag.fixedRightBodyTableLeft = null
+      }
     }else if(type != 'online' &&  this.props.draggable){
         // if (!this.props.draggable || targetEvent.nodeName.toUpperCase() != "TH") return;
         if (!this.props.draggable) return;
@@ -373,10 +379,18 @@ class TableHeader extends Component {
     let event = Event.getEvent(e);
     if(this.props.dragborder && this.drag.option == "border"){
       //移动改变宽度
+
+      const isMoveToRight = this.drag.currentLeft < event.clientX
+      if (this.drag.fixedType === 'left' && isMoveToRight && this.drag.fixedRightBodyTableLeft) {
+        if (this.drag.fixedRightBodyTableLeft - event.clientX < 100) {
+          return // 拖动左侧固定列，离右侧固定列距离小于100时，禁止拖动
+        }
+      }
       let currentCols = this.table.cols[this.drag.currIndex];
       let diff = (event.clientX - this.drag.oldLeft);
       let newWidth = this.drag.oldWidth + diff;
       this.drag.newWidth = newWidth > 0 ? newWidth : this.minWidth;
+      this.drag.currentLeft = event.clientX;
 
       // displayinrow 判断、 固定行高判断
       if(!bodyDisplayInRow) {
