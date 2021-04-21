@@ -228,8 +228,13 @@ function sort(Table, Icon) {
 
     this._sortBy = function (pre, after, orderCols, orderColslen, currentIndex) {
       var currentCol = orderCols[currentIndex];
+      var getMultiSorterValueFunc = currentCol.getMultiSorterValue;
       var preKey = pre[currentCol.key];
       var afterKey = after[currentCol.key];
+      if (getMultiSorterValueFunc) {
+        preKey = getMultiSorterValueFunc(pre, currentCol);
+        afterKey = getMultiSorterValueFunc(after, currentCol);
+      }
       var colSortFun = currentCol.sorter;
       if (typeof colSortFun !== 'function') {
         colSortFun = function colSortFun() {

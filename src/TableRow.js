@@ -67,6 +67,13 @@ class TableRow extends Component{
      this.canBeTouch = true  //受否允许拖动该行
  }
 
+  componentWillReceiveProps (nextProps) {
+    const { rowDraggAble } = this.props;
+    if(rowDraggAble !== nextProps.rowDraggAble) {
+      this.event = false
+      this.initEvent();
+    }
+  }
 
   componentDidMount() {
     const { store, hoverKey,treeType,rowDraggAble } = this.props;

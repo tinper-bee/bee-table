@@ -241,6 +241,9 @@ var Table = function (_Component) {
         }
       });
       if (currentIndex > -1) {
+        if (_this.contentTable.dragType == 'top') {
+          targetIndex = targetIndex - 1;
+        }
         data = _this.swapArray(data, currentIndex, targetIndex);
         _this.props.onDropRow && _this.props.onDropRow(data, record, targetIndex);
         _this.setState({
@@ -478,7 +481,19 @@ var Table = function (_Component) {
     // if (prevProps.data.length === 0  || this.props.data.length === 0 ) {
     //   this.resetScrollX();
     // }
-
+    // 当懒加载手动设置的scroll.y发生变化时，滚动条回到顶部
+    var prevScrollY = prevProps.scroll.y;
+    var currentScrollY = this.props.scroll.y;
+    if (prevScrollY && currentScrollY && prevScrollY !== currentScrollY && this.props.lazyLoad && !this.props.ignoreScrollYChange) {
+      this.bodyTable.scrollTop = 0;
+    } else if (this.props.ignoreScrollYChange && currentScrollY && prevScrollY && prevScrollY !== currentScrollY) {
+      var distance = this.bodyTable.scrollTop + (currentScrollY - prevScrollY);
+      if (distance < 0) {
+        this.bodyTable.scrollTop = 0;
+      } else {
+        this.bodyTable.scrollTop = distance;
+      }
+    }
     // 是否传入 scroll中的y属性，如果传入判断是否是整数，如果是则进行比较 。bodyTable 的clientHeight进行判断
     this.isShowScrollY();
   };
@@ -1416,8 +1431,6 @@ var Table = function (_Component) {
   };
 
   Table.prototype.syncFixedTableRowHeight = function syncFixedTableRowHeight() {
-    var _this5 = this;
-
     //this.props.height、headerHeight分别为用户传入的行高和表头高度，如果有值，所有行的高度都是固定的，主要为了避免在千行数据中有固定列时获取行高度有问题
     var _props9 = this.props,
         clsPrefix = _props9.clsPrefix,
@@ -1451,13 +1464,13 @@ var Table = function (_Component) {
               rightHeight = void 0,
               currentHeight = void 0,
               maxHeight = void 0;
-          leftHeight = leftBodyRows[index] ? parseInt(leftBodyRows[index].getBoundingClientRect().height) : 0;
-          rightHeight = rightBodyRows[index] ? parseInt(rightBodyRows[index].getBoundingClientRect().height) : 0;
-          currentHeight = parseInt(row.getBoundingClientRect().height);
+          leftHeight = leftBodyRows[index] ? Number(leftBodyRows[index].getBoundingClientRect().height).toFixed(2) : 0; // 有些浏览器中，取到的高度是小数，直接parseInt有问题，保留两位小数处理
+          rightHeight = rightBodyRows[index] ? Number(rightBodyRows[index].getBoundingClientRect().height).toFixed(2) : 0;
+          currentHeight = Number(row.getBoundingClientRect().height).toFixed(2);
           maxHeight = Math.max(leftHeight, rightHeight, currentHeight);
           return maxHeight || 'auto';
         } else {
-          return parseInt(row.getBoundingClientRect().height) || 'auto';
+          return Number(Number(row.getBoundingClientRect().height).toFixed(2)) || 'auto';
         }
       }
     });
@@ -1465,17 +1478,16 @@ var Table = function (_Component) {
     // expandedRows为NodeList  Array.prototype.forEach ie 下报错 对象不支持 “forEach” 方法
     expandedRows.length > 0 && Array.prototype.forEach.call(expandedRows, function (row) {
       var parentRowKey = row && row.previousSibling && row.previousSibling.getAttribute("data-row-key");
-      var exHeight = height;
-      if (!exHeight) {
-        exHeight = row && parseInt(row.getBoundingClientRect().height) || 'auto';
-        try {
-          //子表数据减少时，动态计算高度
-          var td = row.querySelector('td');
-          var tdPadding = _this5.getTdPadding(td);
-          var trueheight = parseInt(row.querySelectorAll('.u-table')[0].getBoundingClientRect().height);
-          exHeight = trueheight + tdPadding;
-        } catch (error) {}
-      }
+      var exHeight = row && parseInt(row.getBoundingClientRect().height) || 'auto';
+      // fix: ie 展开表格计算渲染bug
+      // try {//子表数据减少时，动态计算高度
+      //   let td = row.querySelector('td');
+      //   let tdPadding = this.getTdPadding(td);
+      //   let trueheight = parseInt(row.querySelectorAll('.u-table')[0].getBoundingClientRect().height);
+      //   exHeight = trueheight+tdPadding;
+      // } catch (error) {
+
+      // }
       fixedColumnsExpandedRowsHeight[parentRowKey] = parseInt(exHeight);
     });
     if ((0, _shallowequal2["default"])(this.state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) && (0, _shallowequal2["default"])(this.state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight) && (0, _shallowequal2["default"])(this.state.fixedColumnsExpandedRowsHeight, fixedColumnsExpandedRowsHeight)) {
@@ -1499,10 +1511,10 @@ var Table = function (_Component) {
   };
 
   Table.prototype.findExpandedRow = function findExpandedRow(record, index) {
-    var _this6 = this;
+    var _this5 = this;
 
     var rows = this.getExpandedRows().filter(function (i) {
-      return i === _this6.getRowKey(record, index);
+      return i === _this5.getRowKey(record, index);
     });
     return rows[0];
   };
@@ -1646,7 +1658,7 @@ var Table = function (_Component) {
   };
 
   Table.prototype.render = function render() {
-    var _this7 = this;
+    var _this6 = this;
 
     var _state3 = this.state,
         currentHoverRecord = _state3.currentHoverRecord,
@@ -1700,7 +1712,7 @@ var Table = function (_Component) {
     return _react2["default"].createElement(
       'div',
       { className: className, style: props.style, ref: function ref(el) {
-          return _this7.contentTable = el;
+          return _this6.contentTable = el;
         },
         tabIndex: props.focusable && (props.tabIndex ? props.tabIndex : '0') },
       this.getTitle(),
@@ -1732,7 +1744,7 @@ var Table = function (_Component) {
         'div',
         { className: 'u-row-hover',
           onMouseEnter: this.onRowHoverMouseEnter, onMouseLeave: this.onRowHoverMouseLeave, ref: function ref(el) {
-            return _this7.hoverDom = el;
+            return _this6.hoverDom = el;
           } },
         props.hoverContent(currentHoverRecord, currentHoverIndex)
       )

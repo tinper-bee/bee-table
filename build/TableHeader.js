@@ -142,6 +142,7 @@ var TableHeader = function (_Component) {
       table.cols = tableDome.getElementsByTagName("col");
       table.ths = tableDome.getElementsByTagName("th");
       table.tr = tableDome.getElementsByTagName("tr");
+      table.tableHeaderCols = contentTable.querySelector('.u-table-scroll .u-table-header') && contentTable.querySelector('.u-table-scroll .u-table-header').getElementsByTagName("col");
       table.tableBody = contentTable.querySelector('.u-table-scroll .u-table-body') && contentTable.querySelector('.u-table-scroll .u-table-body');
       table.tableBodyCols = contentTable.querySelector('.u-table-scroll .u-table-body') && contentTable.querySelector('.u-table-scroll .u-table-body').getElementsByTagName("col");
       table.bodyRows = table.tableBody && table.tableBody.querySelectorAll('tr') || [];
@@ -230,13 +231,18 @@ var TableHeader = function (_Component) {
 
 
   TableHeader.prototype.dragBorderEventInit = function dragBorderEventInit() {
-    var _this5 = this;
-
     if (!this.props.dragborder) return;
-    var events = [{ key: 'mouseup', fun: this.onTrMouseUp }, { key: 'mousemove', fun: this.onTrMouseMove }];
-    this.doEventList(this.table.tr, function (tr) {
-      _this5.eventListen(events, '', tr); //表示把事件添加到th元素上
-    });
+    this.eventListen([{ key: 'mouseup', fun: this.onTrMouseUp }], '', document.body);
+    this.eventListen([{ key: 'mousemove', fun: this.onTrMouseMove }], '', document.body);
+
+    // let  events = [
+    //   {key:'mouseup', fun:this.onTrMouseUp},
+    //   {key:'mousemove', fun:this.onTrMouseMove},
+    //   // {key:'mousemove', fun:debounce(50,this.onTrMouseMove)},//函数节流后体验很差
+    // ];
+    // this.doEventList(this.table.tr,(tr)=>{
+    //   this.eventListen(events,'',tr);//表示把事件添加到th元素上
+    // })
     // this.eventListen(events,'',this.table.tr[0]);//表示把事件添加到th元素上
   };
 
@@ -246,12 +252,12 @@ var TableHeader = function (_Component) {
 
 
   TableHeader.prototype.removeDragBorderEvent = function removeDragBorderEvent() {
-    var _this6 = this;
+    var _this5 = this;
 
     var events = [{ key: 'mouseup', fun: this.onTrMouseUp }, { key: 'mousemove', fun: this.onTrMouseMove }];
     // this.eventListen(events,'remove',this.table.tr[0]);
     this.doEventList(this.table.tr, function (tr) {
-      _this6.eventListen(events, 'remove', _this6.table.tr);
+      _this5.eventListen(events, 'remove', _this5.table.tr);
     });
   };
 
@@ -431,7 +437,7 @@ var TableHeader = function (_Component) {
 
 
   TableHeader.prototype.render = function render() {
-    var _this7 = this;
+    var _this6 = this;
 
     var _props2 = this.props,
         clsPrefix = _props2.clsPrefix,
@@ -449,7 +455,7 @@ var TableHeader = function (_Component) {
     return _react2["default"].createElement(
       "thead",
       _extends({ className: clsPrefix + "-thead" }, attr, { "data-theader-fixed": "scroll", ref: function ref(_thead) {
-          return _this7._thead = _thead;
+          return _this6._thead = _thead;
         } }),
       rows.map(function (row, index) {
         var _rowLeng = row.length - 1;
@@ -495,7 +501,7 @@ var TableHeader = function (_Component) {
 
             // }
             if (filterable && index == rows.length - 1) {
-              da.children = _this7.filterRenderType(da["filtertype"], da.dataindex, columIndex);
+              da.children = _this6.filterRenderType(da["filtertype"], da.dataindex, columIndex);
               if (da.key === undefined) {
                 keyTemp.key = keyTemp.key + '-filterable';
               }
@@ -516,7 +522,7 @@ var TableHeader = function (_Component) {
                 "th",
                 _extends({}, da, keyTemp, { className: thClassName, "data-th-fixed": da.fixed, "data-line-key": da.key,
                   "data-line-index": columIndex, "data-th-width": da.width, "data-type": "draggable", onCopy: function onCopy(event) {
-                    _this7.onCopy(da, columIndex, event);
+                    _this6.onCopy(da, columIndex, event);
                   } }),
                 da.children,
 
@@ -524,10 +530,10 @@ var TableHeader = function (_Component) {
                 dragborder && lastObj && da.key != lastObj.key ? _react2["default"].createElement(
                   "div",
                   { ref: function ref(el) {
-                      return _this7.gap = el;
+                      return _this6.gap = el;
                     }, "data-line-key": da.key,
                     "data-line-index": columIndex, "data-th-width": da.width,
-                    "data-type": "online", className: clsPrefix + "-thead-th-drag-gap" },
+                    "data-type": "online", "data-th-fixed": da.fixed, className: clsPrefix + "-thead-th-drag-gap" },
                   _react2["default"].createElement("div", { className: "online" })
                 ) : ""
               );
@@ -538,7 +544,22 @@ var TableHeader = function (_Component) {
               da.onClick ? thDefaultObj.onClick = function (e) {
                 da.onClick(da, e);
               } : "";
-              return _react2["default"].createElement("th", _extends({}, thDefaultObj, keyTemp, { "data-th-fixed": da.fixed, style: { maxWidth: da.width }, onCopy: _this7.onCopy }));
+              return _react2["default"].createElement(
+                "th",
+                _extends({}, thDefaultObj, keyTemp, { "data-th-fixed": da.fixed, style: { maxWidth: da.width }, onCopy: _this6.onCopy }),
+                da.children,
+
+                // && columIndex != _rowLeng
+                dragborder ? _react2["default"].createElement(
+                  "div",
+                  { ref: function ref(el) {
+                      return _this6.gap = el;
+                    }, "data-line-key": da.key,
+                    "data-line-index": columIndex, "data-th-width": da.width,
+                    "data-type": "online", "data-th-fixed": da.fixed, className: clsPrefix + "-thead-th-drag-gap" },
+                  _react2["default"].createElement("div", { className: "online" })
+                ) : ""
+              );
             }
           })
         );
@@ -554,7 +575,7 @@ TableHeader.defaultProps = {
 };
 
 var _initialiseProps = function _initialiseProps() {
-  var _this8 = this;
+  var _this7 = this;
 
   this.getOnLineObject = function (_element) {
     var type = _element.getAttribute('data-type'),
@@ -571,28 +592,29 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onTrMouseDown = function (e) {
-    var eventNoStop = _this8.props.eventNoStop;
+    var eventNoStop = _this7.props.eventNoStop;
 
     !eventNoStop && _utils.Event.stopPropagation(e);
     var event = _utils.Event.getEvent(e),
         targetEvent = _utils.Event.getTarget(event);
-    var _props3 = _this8.props,
+    var _props3 = _this7.props,
         clsPrefix = _props3.clsPrefix,
         contentTable = _props3.contentTable,
         lastShowIndex = _props3.lastShowIndex,
         columnsChildrenList = _props3.columnsChildrenList;
     // let currentElement = this.getOnLineObject(targetEvent);
 
-    var currentElement = _this8.getTargetToType(targetEvent);
+    var currentElement = _this7.getTargetToType(targetEvent);
     if (!currentElement) return;
     var type = currentElement.getAttribute('data-type');
-    if (!_this8.props.dragborder && !_this8.props.draggable) return;
-    if (type == 'online' && _this8.props.dragborder) {
+    var fixedType = currentElement.getAttribute('data-th-fixed');
+    if (!_this7.props.dragborder && !_this7.props.draggable) return;
+    if (type == 'online' && _this7.props.dragborder) {
       // if(!this.props.dragborder)return;
       targetEvent.setAttribute('draggable', false); //添加交换列效果
       var currentIndex = -1;
       var defaultWidth = currentElement.getAttribute("data-th-width");
-      _this8.drag.option = "border"; //拖拽操作
+      _this7.drag.option = "border"; //拖拽操作
       if (columnsChildrenList) {
         var columnKey = currentElement.getAttribute("data-line-key");
         if (columnKey) {
@@ -605,27 +627,44 @@ var _initialiseProps = function _initialiseProps() {
         console.log('Key must be set for column!');
         return;
       }
-      var currentObj = _this8.table.cols[currentIndex];
-      _this8.drag.currIndex = currentIndex;
-      _this8.drag.oldLeft = event.clientX;
-      _this8.drag.oldWidth = parseInt(currentObj.style.width);
-      _this8.drag.minWidth = currentObj.style.minWidth != "" ? parseInt(currentObj.style.minWidth) : defaultWidth;
-      _this8.drag.tableWidth = parseInt(_this8.table.table.style.width ? _this8.table.table.style.width : _this8.table.table.scrollWidth);
-      if (!_this8.tableOldWidth) {
-        _this8.tableOldWidth = _this8.drag.tableWidth; //this.getTableWidth();
+      var currentObj = _this7.table.cols[currentIndex];
+      _this7.drag.currIndex = currentIndex;
+      _this7.drag.oldLeft = event.clientX;
+      _this7.drag.oldWidth = parseInt(currentObj.style.width);
+      _this7.drag.minWidth = currentObj.style.minWidth != "" ? parseInt(currentObj.style.minWidth) : defaultWidth;
+      _this7.drag.tableWidth = parseInt(_this7.table.table.style.width ? _this7.table.table.style.width : _this7.table.table.scrollWidth);
+      if (!_this7.tableOldWidth) {
+        _this7.tableOldWidth = _this7.drag.tableWidth; //this.getTableWidth();
       }
-      if (!_this8.lastColumWidth) {
-        _this8.lastColumWidth = parseInt(_this8.table.cols[lastShowIndex].style.width);
+
+      // if(!this.lastColumWidth){
+      var contentT = _this7.table.tableHeaderCols || _this7.table.cols;
+      _this7.lastColumWidth = parseInt(contentT[lastShowIndex].style.width);
+      // console.log('begin--lastColumnWidth',this.lastColumWidth);
+      // }
+      _this7.drag.contentTableCWidth = _this7.table.contentTableHeader.clientWidth;
+      _this7.drag.contentTableSWidth = _this7.table.contentTableHeader.scrollWidth;
+      if (fixedType) {
+        var contentTablePar = _this7.table.contentTableHeader.parentNode;
+
+        if (contentTablePar) {
+          var originL = parseInt(contentTablePar.style.marginLeft);
+          var originR = parseInt(contentTablePar.style.marginRight);
+          // 内容区表格marginLef
+          _this7.drag.contentTableML = originL;
+          _this7.drag.contentTableMR = originR;
+        }
       }
-    } else if (type != 'online' && _this8.props.draggable) {
+      _this7.drag.fixedType = fixedType;
+    } else if (type != 'online' && _this7.props.draggable) {
       // if (!this.props.draggable || targetEvent.nodeName.toUpperCase() != "TH") return;
-      if (!_this8.props.draggable) return;
-      var th = _this8.getTargetToType(targetEvent);
+      if (!_this7.props.draggable) return;
+      var th = _this7.getTargetToType(targetEvent);
       th.setAttribute('draggable', true); //添加交换列效果
-      _this8.drag.option = 'dragAble';
-      _this8.currentDome = th;
+      _this7.drag.option = 'dragAble';
+      _this7.currentDome = th;
       var _currentIndex = parseInt(th.getAttribute("data-line-index"));
-      _this8.drag.currIndex = _currentIndex;
+      _this7.drag.currIndex = _currentIndex;
     } else {
       // console.log("onTrMouseDown dragborder or draggable is all false !");
       return;
@@ -635,8 +674,8 @@ var _initialiseProps = function _initialiseProps() {
   this.getTableWidth = function () {
     var tableWidth = 0,
         offWidth = 0; //this.table.cols.length;
-    for (var index = 0; index < _this8.table.cols.length; index++) {
-      var da = _this8.table.cols[index];
+    for (var index = 0; index < _this7.table.cols.length; index++) {
+      var da = _this7.table.cols[index];
       tableWidth += parseInt(da.style.width);
     }
     return tableWidth - offWidth;
@@ -645,7 +684,7 @@ var _initialiseProps = function _initialiseProps() {
   this.getTargetToType = function (targetEvent) {
     var tag = targetEvent;
     if (targetEvent && !targetEvent.getAttribute("data-type")) {
-      tag = _this8.getTargetToType(targetEvent.parentElement);
+      tag = _this7.getTargetToType(targetEvent.parentElement);
     }
     return tag;
   };
@@ -653,15 +692,15 @@ var _initialiseProps = function _initialiseProps() {
   this.getTargetToTh = function (targetEvent) {
     var th = targetEvent;
     if (targetEvent.nodeName.toUpperCase() != "TH") {
-      th = _this8.getThDome(targetEvent);
+      th = _this7.getThDome(targetEvent);
     }
     // console.log(" getTargetToTh: ", th);
     return th;
   };
 
   this.onTrMouseMove = function (e) {
-    if (!_this8.props.dragborder && !_this8.props.draggable) return;
-    var _props4 = _this8.props,
+    if (!_this7.props.dragborder && !_this7.props.draggable) return;
+    var _props4 = _this7.props,
         clsPrefix = _props4.clsPrefix,
         dragborder = _props4.dragborder,
         contentDomWidth = _props4.contentDomWidth,
@@ -677,20 +716,20 @@ var _initialiseProps = function _initialiseProps() {
 
     !eventNoStop && _utils.Event.stopPropagation(e);
     var event = _utils.Event.getEvent(e);
-    if (_this8.props.dragborder && _this8.drag.option == "border") {
+    if (_this7.props.dragborder && _this7.drag.option == "border") {
       //移动改变宽度
-      var currentCols = _this8.table.cols[_this8.drag.currIndex];
-      var diff = event.clientX - _this8.drag.oldLeft;
-      var newWidth = _this8.drag.oldWidth + diff;
-      _this8.drag.newWidth = newWidth > 0 ? newWidth : _this8.minWidth;
-      if (newWidth > _this8.minWidth) {
+      var currentCols = _this7.table.cols[_this7.drag.currIndex];
+      var diff = event.clientX - _this7.drag.oldLeft;
+      var newWidth = _this7.drag.oldWidth + diff;
+      _this7.drag.newWidth = newWidth > 0 ? newWidth : _this7.minWidth;
+      if (newWidth > _this7.minWidth) {
         currentCols.style.width = newWidth + 'px';
 
         // displayinrow 判断、 固定行高判断 
         if (!bodyDisplayInRow) {
-          _this8.table.bodyRows.forEach(function (row, index) {
-            var leftRow = _this8.table.fixedLeftBodyRows[index];
-            var rightRow = _this8.table.fixedRightBodyRows[index];
+          _this7.table.bodyRows.forEach(function (row, index) {
+            var leftRow = _this7.table.fixedLeftBodyRows[index];
+            var rightRow = _this7.table.fixedRightBodyRows[index];
             if (leftRow || rightRow) {
               var height = row.getBoundingClientRect().height;
               leftRow && (leftRow.style.height = height + "px");
@@ -700,74 +739,113 @@ var _initialiseProps = function _initialiseProps() {
         }
 
         //hao 支持固定表头拖拽 修改表体的width
-        if (_this8.fixedTable.cols) {
-          _this8.fixedTable.cols[_this8.drag.currIndex].style.width = newWidth + "px";
+        if (_this7.fixedTable.cols) {
+          _this7.fixedTable.cols[_this7.drag.currIndex].style.width = newWidth + "px";
         }
 
-        var newDiff = parseInt(currentCols.style.minWidth) - parseInt(currentCols.style.width);
-        if (newDiff > 0) {
-          //缩小
-          var lastWidth = _this8.lastColumWidth + newDiff;
-          _this8.table.cols[lastShowIndex].style.width = lastWidth + "px"; //同步表头
-          _this8.table.tableBodyCols[lastShowIndex].style.width = lastWidth + "px"; //同步表体
+        var contentTableSWidth = _this7.drag.contentTableSWidth - _this7.drag.contentTableCWidth;
+        // console.log('contentTableSWidth+diff',contentTableSWidth+diff,'diff',diff);
+        if (diff < 0 && contentTableSWidth + diff < 0) {
+          var headerCols = _this7.table.tableHeaderCols || _this7.table.cols;
+          var lastWidth = _this7.lastColumWidth - (contentTableSWidth + diff);
+          // console.log('lastWidth',lastWidth,'lastShowIndex',lastShowIndex);
+          headerCols[lastShowIndex].style.width = lastWidth + "px"; //同步表头
+          _this7.table.tableBodyCols[lastShowIndex].style.width = lastWidth + "px"; //同步表体
         }
-        var showScroll = contentDomWidth - (leftFixedWidth + rightFixedWidth) - (_this8.drag.tableWidth + diff) - scrollbarWidth;
-        //表头滚动条处理
-        if (headerScroll) {
-          if (showScroll < 0) {
-            //小于 0 出现滚动条
-            //找到固定列表格，设置表头的marginBottom值为scrollbarWidth;
-            _this8.table.contentTableHeader.style.overflowX = 'scroll';
-            _this8.optTableMargin(_this8.table.fixedLeftHeaderTable, scrollbarWidth);
-            _this8.optTableMargin(_this8.table.fixedRighHeadertTable, scrollbarWidth);
+        // 内容区非固定列场景拖拽
+        if (!_this7.drag.fixedType) {
+
+          // let newDiff = (parseInt(currentCols.style.minWidth) - parseInt(currentCols.style.width));
+          // if(newDiff > 0){//缩小
+          //   let lastWidth = this.lastColumWidth + newDiff;
+          //   this.table.cols[lastShowIndex].style.width = lastWidth +"px";//同步表头
+          //   this.table.tableBodyCols[lastShowIndex].style.width = lastWidth + "px";//同步表体
+
+          // }
+
+          var showScroll = contentDomWidth - (leftFixedWidth + rightFixedWidth) - (_this7.drag.tableWidth + diff) - scrollbarWidth;
+
+          //表头滚动条处理
+          if (headerScroll) {
+            if (showScroll < 0) {
+              //小于 0 出现滚动条
+              //找到固定列表格，设置表头的marginBottom值为scrollbarWidth;
+              _this7.table.contentTableHeader.style.overflowX = 'scroll';
+              _this7.optTableMargin(_this7.table.fixedLeftHeaderTable, scrollbarWidth);
+              _this7.optTableMargin(_this7.table.fixedRighHeadertTable, scrollbarWidth);
+            } else {
+              //大于 0 不显示滚动条
+              _this7.table.contentTableHeader.style.overflowX = 'hidden';
+              _this7.optTableMargin(_this7.table.fixedLeftHeaderTable, 0);
+              _this7.optTableMargin(_this7.table.fixedRighHeadertTable, 0);
+            }
           } else {
-            //大于 0 不显示滚动条
-            _this8.table.contentTableHeader.style.overflowX = 'hidden';
-            _this8.optTableMargin(_this8.table.fixedLeftHeaderTable, 0);
-            _this8.optTableMargin(_this8.table.fixedRighHeadertTable, 0);
+            if (showScroll < 0) {
+              _this7.table.tableBody.style.overflowX = 'auto';
+              _this7.optTableMargin(_this7.table.fixedLeftBodyTable, '-' + scrollbarWidth);
+              _this7.optTableMargin(_this7.table.fixedRightBodyTable, '-' + scrollbarWidth);
+              _this7.optTableScroll(_this7.table.fixedLeftBodyTable, { x: 'scroll' });
+              _this7.optTableScroll(_this7.table.fixedRightBodyTable, { x: 'scroll' });
+            } else {
+              _this7.table.tableBody.style.overflowX = 'hidden';
+              _this7.optTableMargin(_this7.table.fixedLeftBodyTable, 0);
+              _this7.optTableMargin(_this7.table.fixedRightBodyTable, 0);
+              _this7.optTableScroll(_this7.table.fixedLeftBodyTable, { x: 'auto' });
+              _this7.optTableScroll(_this7.table.fixedRightBodyTable, { x: 'auto' });
+            }
           }
-        } else {
-          if (showScroll < 0) {
-            _this8.table.tableBody.style.overflowX = 'auto';
-            _this8.optTableMargin(_this8.table.fixedLeftBodyTable, '-' + scrollbarWidth);
-            _this8.optTableMargin(_this8.table.fixedRightBodyTable, '-' + scrollbarWidth);
-            _this8.optTableScroll(_this8.table.fixedLeftBodyTable, { x: 'scroll' });
-            _this8.optTableScroll(_this8.table.fixedRightBodyTable, { x: 'scroll' });
+        } else if (_this7.drag.fixedType) {
+          if (_this7.table.ths[_this7.drag.currIndex]) {
+            _this7.table.ths[_this7.drag.currIndex].width = newWidth;
+          }
+          // console.log('this.drag.contentTableML',this.drag.contentTableML,'diff',diff);
+          // debugger
+
+          var contentTablePar = _this7.table.contentTableHeader.parentNode;
+          // left、right缩小的内容，在没有滚动条时，需要将宽度同步到到最后一列
+          // diff<0 往里拖，
+          // const  contentTableSWidth = this.drag.contentTableSWidth - this.drag.contentTableCWidth;
+          // console.log('contentTableSWidth+diff',contentTableSWidth+diff,'diff',diff);
+          // if(diff<0 && contentTableSWidth+diff < 0) {
+          //   const headerCols = this.table.tableHeaderCols || this.table.cols;
+          //   const lastWidth =this.lastColumWidth - (contentTableSWidth+diff);
+          //   console.log('lastWidth',lastWidth,'lastShowIndex',lastShowIndex);
+          //   headerCols[lastShowIndex].style.width = lastWidth +"px";//同步表头
+          //   this.table.tableBodyCols[lastShowIndex].style.width = lastWidth + "px";//同步表体
+          // }
+          if (_this7.drag.fixedType == 'left') {
+            contentTablePar.style.marginLeft = _this7.drag.contentTableML + diff + 'px';
           } else {
-            _this8.table.tableBody.style.overflowX = 'hidden';
-            _this8.optTableMargin(_this8.table.fixedLeftBodyTable, 0);
-            _this8.optTableMargin(_this8.table.fixedRightBodyTable, 0);
-            _this8.optTableScroll(_this8.table.fixedLeftBodyTable, { x: 'auto' });
-            _this8.optTableScroll(_this8.table.fixedRightBodyTable, { x: 'auto' });
+            contentTablePar.style.marginRight = _this7.drag.contentTableMR + diff + 'px';
           }
         }
       } else {
-        _this8.drag.newWidth = _this8.minWidth;
+        _this7.drag.newWidth = _this7.minWidth;
       }
     }
     // 增加拖拽列宽动作的回调函数
-    _this8.drag.newWidth && onDraggingBorder && onDraggingBorder(event, _this8.drag.newWidth);
+    _this7.drag.newWidth && onDraggingBorder && onDraggingBorder(event, _this7.drag.newWidth);
   };
 
   this.onTrMouseUp = function (e) {
     var event = _utils.Event.getEvent(e);
-    var width = _this8.drag.newWidth;
-    var opt = _this8.drag.option;
-    _this8.mouseClear();
+    var width = _this7.drag.newWidth;
+    var opt = _this7.drag.option;
+    _this7.mouseClear();
     if (opt !== "border") return; // fix:点击表头会触发onDropBorder事件的问题
-    _this8.props.onDropBorder && _this8.props.onDropBorder(event, width);
+    _this7.props.onDropBorder && _this7.props.onDropBorder(event, width);
   };
 
   this.clearThsDr = function () {
-    var ths = _this8.table.ths;
+    var ths = _this7.table.ths;
     for (var index = 0; index < ths.length; index++) {
       ths[index].setAttribute('draggable', false); //去掉交换列效果
     }
   };
 
   this.bodyonLineMouseUp = function (events, type) {
-    if (!_this8.drag || !_this8.drag.option) return;
-    _this8.mouseClear();
+    if (!_this7.drag || !_this7.drag.option) return;
+    _this7.mouseClear();
   };
 
   this.optTableMargin = function (table, scrollbarWidth) {
@@ -790,31 +868,31 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onDragStart = function (e) {
-    if (!_this8.props.draggable) return;
-    if (_this8.drag && _this8.drag.option != 'dragAble') {
+    if (!_this7.props.draggable) return;
+    if (_this7.drag && _this7.drag.option != 'dragAble') {
       return;
     }
     var event = _utils.Event.getEvent(e),
 
     // target = Event.getTarget(event);
-    target = _this8.getTargetToTh(_utils.Event.getTarget(event));
+    target = _this7.getTargetToTh(_utils.Event.getTarget(event));
     var currentIndex = parseInt(target.getAttribute("data-line-index"));
     var currentKey = target.getAttribute('data-line-key');
 
     if (event.dataTransfer.setDragImage) {
       var crt = target.cloneNode(true);
       crt.style.backgroundColor = "#ebecf0";
-      crt.style.width = _this8.table.cols[currentIndex].style.width; //拖动后再交换列的时候，阴影效果可同步
+      crt.style.width = _this7.table.cols[currentIndex].style.width; //拖动后再交换列的时候，阴影效果可同步
       crt.style.height = "40px";
       // crt.style['line-height'] = "40px";
       // document.body.appendChild(crt);
-      document.getElementById(_this8._table_none_cont_id).appendChild(crt);
+      document.getElementById(_this7._table_none_cont_id).appendChild(crt);
       event.dataTransfer.setDragImage(crt, 0, 0);
     }
 
     event.dataTransfer.effectAllowed = "move";
     event.dataTransfer.setData("Text", currentKey);
-    _this8.currentObj = _this8.props.rows[0][currentIndex];
+    _this7.currentObj = _this7.props.rows[0][currentIndex];
   };
 
   this.onDragOver = function (e) {
@@ -823,34 +901,34 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onDrop = function (e) {
-    if (!_this8.props.draggable) return;
-    var props = _this8.getCurrentEventData(_this8._dragCurrent);
+    if (!_this7.props.draggable) return;
+    var props = _this7.getCurrentEventData(_this7._dragCurrent);
     e.column = { props: props };
-    if (_this8.drag && _this8.drag.option != 'dragAble') {
-      _this8.props.onDrop(e);
+    if (_this7.drag && _this7.drag.option != 'dragAble') {
+      _this7.props.onDrop(e);
       return;
     }
     var event = _utils.Event.getEvent(e),
         target = _utils.Event.getTarget(event);
     event.preventDefault();
     event.stopPropagation();
-    _this8.currentDome.setAttribute('draggable', false); //添加交换列效果
+    _this7.currentDome.setAttribute('draggable', false); //添加交换列效果
     // let data = this.getCurrentEventData(this._dragCurrent);
     // if(!data){
     //   this.props.onDrop(e);
     //   return;
     // }
-    if (!_this8.props.onDrop) return;
+    if (!_this7.props.onDrop) return;
     // this.props.onDrop(event,target);
-    _this8.props.onDrop(event, { dragSource: _this8.currentObj, dragTarg: e.column });
+    _this7.props.onDrop(event, { dragSource: _this7.currentObj, dragTarg: e.column });
   };
 
   this.onDragEnter = function (e) {
     var event = _utils.Event.getEvent(e),
         target = _utils.Event.getTarget(event);
-    _this8._dragCurrent = target;
+    _this7._dragCurrent = target;
     var currentIndex = target.getAttribute("data-line-index");
-    if (!currentIndex || parseInt(currentIndex) === _this8.drag.currIndex) return;
+    if (!currentIndex || parseInt(currentIndex) === _this7.drag.currIndex) return;
     if (target.nodeName.toUpperCase() === "TH") {
       // target.style.border = "2px dashed rgba(5,0,0,0.25)";
       target.setAttribute("style", "border-right:2px dashed rgb(30, 136, 229)");
@@ -861,24 +939,24 @@ var _initialiseProps = function _initialiseProps() {
   this.onDragEnd = function (e) {
     var event = _utils.Event.getEvent(e),
         target = _utils.Event.getTarget(event);
-    _this8._dragCurrent.setAttribute("style", "");
+    _this7._dragCurrent.setAttribute("style", "");
     event.preventDefault();
     event.stopPropagation();
     // this._dragCurrent.style = "";
-    document.getElementById(_this8._table_none_cont_id).innerHTML = "";
+    document.getElementById(_this7._table_none_cont_id).innerHTML = "";
 
-    var data = _this8.getCurrentEventData(_this8._dragCurrent);
+    var data = _this7.getCurrentEventData(_this7._dragCurrent);
     if (!data) return;
-    if (!_this8.currentObj || _this8.currentObj.key == data.key) return;
-    if (!_this8.props.onDragEnd) return;
-    _this8.props.onDragEnd(event, { dragSource: _this8.currentObj, dragTarg: data });
+    if (!_this7.currentObj || _this7.currentObj.key == data.key) return;
+    if (!_this7.props.onDragEnd) return;
+    _this7.props.onDragEnd(event, { dragSource: _this7.currentObj, dragTarg: data });
   };
 
   this.onDragLeave = function (e) {
     var event = _utils.Event.getEvent(e),
         target = _utils.Event.getTarget(event);
     var currentIndex = target.getAttribute("data-line-index");
-    if (!currentIndex || parseInt(currentIndex) === _this8.drag.currIndex) return;
+    if (!currentIndex || parseInt(currentIndex) === _this7.drag.currIndex) return;
     if (target.nodeName.toUpperCase() === "TH") {
       target.setAttribute("style", "");
       // this._dragCurrent.style = "";
@@ -886,7 +964,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.handlerFilterChange = function (key, value, condition) {
-    var onFilterChange = _this8.props.onFilterChange;
+    var onFilterChange = _this7.props.onFilterChange;
 
     if (onFilterChange) {
       onFilterChange(key, value, condition);
@@ -894,7 +972,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.handlerFilterClear = function (field) {
-    var onFilterClear = _this8.props.onFilterClear;
+    var onFilterClear = _this7.props.onFilterClear;
 
     if (onFilterClear) {
       onFilterClear(field);
@@ -902,7 +980,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.filterRenderType = function (type, dataIndex, index) {
-    var _props5 = _this8.props,
+    var _props5 = _this7.props,
         clsPrefix = _props5.clsPrefix,
         rows = _props5.rows,
         filterDelay = _props5.filterDelay,
@@ -917,8 +995,8 @@ var _initialiseProps = function _initialiseProps() {
           , clsPrefix: clsPrefix //css前缀
           , className: clsPrefix + " filter-text",
           dataIndex: dataIndex //字段
-          , onFilterChange: (0, _throttleDebounce.debounce)(filterDelay || 300, _this8.handlerFilterChange) //输入框回调
-          , onFilterClear: _this8.handlerFilterClear //清除回调
+          , onFilterChange: (0, _throttleDebounce.debounce)(filterDelay || 300, _this7.handlerFilterChange) //输入框回调
+          , onFilterClear: _this7.handlerFilterClear //清除回调
           , filterDropdown: rows[1][index]["filterdropdown"] //是否显示下拉条件
           , filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
           , filterDropdownIncludeKeys: rows[1][index]["filterdropdownincludekeys"] //下拉条件按照指定的keys去显示
@@ -931,8 +1009,8 @@ var _initialiseProps = function _initialiseProps() {
           clsPrefix: clsPrefix,
           className: clsPrefix + " filter-text",
           dataIndex: dataIndex //字段
-          , onFilterChange: (0, _throttleDebounce.debounce)(filterDelay || 300, _this8.handlerFilterChange) //输入框回调并且函数防抖动
-          , onFilterClear: _this8.handlerFilterClear //清除回调
+          , onFilterChange: (0, _throttleDebounce.debounce)(filterDelay || 300, _this7.handlerFilterChange) //输入框回调并且函数防抖动
+          , onFilterClear: _this7.handlerFilterClear //清除回调
           , filterDropdown: rows[1][index]["filterdropdown"],
           filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
           , filterDropdownIncludeKeys: rows[1][index]["filterdropdownincludekeys"] //下拉条件按照指定的keys去显示
@@ -966,8 +1044,8 @@ var _initialiseProps = function _initialiseProps() {
           data: selectDataSource,
           notFoundContent: "Loading" //没有数据显示的默认字
           , dataIndex: dataIndex //字段
-          , onFilterChange: _this8.handlerFilterChange //输入框回调
-          , onFilterClear: _this8.handlerFilterClear //清除回调
+          , onFilterChange: _this7.handlerFilterChange //输入框回调
+          , onFilterClear: _this7.handlerFilterClear //清除回调
           , filterDropdown: rows[1][index]["filterdropdown"],
           onFocus: rows[1][index]["filterdropdownfocus"],
           filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
@@ -982,8 +1060,8 @@ var _initialiseProps = function _initialiseProps() {
           onClick: function onClick() {},
           format: rows[1][index]["format"] || "YYYY-MM-DD",
           dataIndex: dataIndex //字段
-          , onFilterChange: _this8.handlerFilterChange //输入框回调
-          , onFilterClear: _this8.handlerFilterClear //清除回调
+          , onFilterChange: _this7.handlerFilterChange //输入框回调
+          , onFilterClear: _this7.handlerFilterClear //清除回调
           , filterDropdown: rows[1][index]["filterdropdown"],
           filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
           , filterDropdownIncludeKeys: rows[1][index]["filterdropdownincludekeys"] //下拉条件按照指定的keys去显示
@@ -997,8 +1075,8 @@ var _initialiseProps = function _initialiseProps() {
           onClick: function onClick() {},
           format: rows[1][index]["format"] || "YYYY",
           dataIndex: dataIndex //字段
-          , onFilterChange: _this8.handlerFilterChange //输入框回调
-          , onFilterClear: _this8.handlerFilterClear //清除回调
+          , onFilterChange: _this7.handlerFilterChange //输入框回调
+          , onFilterClear: _this7.handlerFilterClear //清除回调
           , filterDropdown: rows[1][index]["filterdropdown"],
           filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
           , filterDropdownIncludeKeys: rows[1][index]["filterdropdownincludekeys"] //下拉条件按照指定的keys去显示
@@ -1012,8 +1090,8 @@ var _initialiseProps = function _initialiseProps() {
           onClick: function onClick() {},
           format: rows[1][index]["format"] || "YYYY-MM",
           dataIndex: dataIndex //字段
-          , onFilterChange: _this8.handlerFilterChange //输入框回调
-          , onFilterClear: _this8.handlerFilterClear //清除回调
+          , onFilterChange: _this7.handlerFilterChange //输入框回调
+          , onFilterClear: _this7.handlerFilterClear //清除回调
           , filterDropdown: rows[1][index]["filterdropdown"],
           filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
           , filterDropdownIncludeKeys: rows[1][index]["filterdropdownincludekeys"] //下拉条件按照指定的keys去显示
@@ -1027,8 +1105,8 @@ var _initialiseProps = function _initialiseProps() {
           onClick: function onClick() {},
           format: rows[1][index]["format"] || "YYYY-Wo",
           dataIndex: dataIndex //字段
-          , onFilterChange: _this8.handlerFilterChange //输入框回调
-          , onFilterClear: _this8.handlerFilterClear //清除回调
+          , onFilterChange: _this7.handlerFilterChange //输入框回调
+          , onFilterClear: _this7.handlerFilterClear //清除回调
           , filterDropdown: rows[1][index]["filterdropdown"],
           filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
           , filterDropdownIncludeKeys: rows[1][index]["filterdropdownincludekeys"] //下拉条件按照指定的keys去显示
@@ -1042,8 +1120,8 @@ var _initialiseProps = function _initialiseProps() {
           onClick: function onClick() {},
           format: rows[1][index]["format"] || "YYYY-MM-DD",
           dataIndex: dataIndex //字段
-          , onFilterChange: _this8.handlerFilterChange //输入框回调
-          , onFilterClear: _this8.handlerFilterClear //清除回调
+          , onFilterChange: _this7.handlerFilterChange //输入框回调
+          , onFilterClear: _this7.handlerFilterClear //清除回调
           , filterDropdown: rows[1][index]["filterdropdown"],
           filterDropdownType: rows[1][index]["filterdropdowntype"] //下拉的条件类型为string,number
           , filterDropdownIncludeKeys: rows[1][index]["filterdropdownincludekeys"] //下拉条件按照指定的keys去显示
@@ -1055,8 +1133,8 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onCopy = function (data, index, event) {
-    if (_this8.props.onCopy) {
-      _this8.props.onCopy(_extends(data, { col: index }), event);
+    if (_this7.props.onCopy) {
+      _this7.props.onCopy(_extends(data, { col: index }), event);
     }
   };
 };
