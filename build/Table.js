@@ -1288,6 +1288,12 @@ var Table = function (_Component) {
             } else {
               if (this.computeWidth > this.contentDomWidth) {
                 bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
+                var userAgent = navigator.userAgent; // 火狐浏览器，固定表格跟随resize事件产生的滚动条隐藏
+                var isFF = userAgent.indexOf("Firefox") > -1;
+                if (isFF) {
+                  // innerBodyStyle.overflowX = 'hidden';
+                  delete innerBodyStyle.overflowX;
+                }
               }
             }
           } else {
