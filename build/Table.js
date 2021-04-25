@@ -58,6 +58,10 @@ var _i18n2 = _interopRequireDefault(_i18n);
 
 var _tool = require('bee-locale/build/tool');
 
+var _resizeObserverPolyfill = require('resize-observer-polyfill');
+
+var _resizeObserverPolyfill2 = _interopRequireDefault(_resizeObserverPolyfill);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
@@ -410,6 +414,8 @@ var Table = function (_Component) {
   };
 
   Table.prototype.componentDidMount = function componentDidMount() {
+    var _this2 = this;
+
     this.getTableUID();
     _utils.EventUtil.addHandler(this.contentTable, 'keydown', this.onKeyDown);
     _utils.EventUtil.addHandler(this.contentTable, 'focus', this.onFocus);
@@ -424,7 +430,14 @@ var Table = function (_Component) {
     }
     if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
-      this.resizeEvent = (0, _addEventListener2["default"])(window, 'resize', this.resize);
+
+      var targetNode = this.contentTable;
+      if (targetNode) {
+        this.resizeObserver = new _resizeObserverPolyfill2["default"](function () {
+          _this2.resize();
+        });
+        this.resizeObserver.observe(targetNode);
+      }
     }
   };
 
@@ -559,8 +572,8 @@ var Table = function (_Component) {
     this.contentTable = null;
     _utils.EventUtil.removeHandler(this.contentTable, 'keydown', this.onKeyDown);
     _utils.EventUtil.removeHandler(this.contentTable, 'focus', this.onFocus);
-    if (this.resizeEvent) {
-      this.resizeEvent.remove();
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
     }
   };
 
@@ -776,7 +789,7 @@ var Table = function (_Component) {
   };
 
   Table.prototype.getHeaderRows = function getHeaderRows(columns) {
-    var _this2 = this;
+    var _this3 = this;
 
     var currentRow = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
     var rows = arguments[2];
@@ -801,8 +814,8 @@ var Table = function (_Component) {
         }
       }
       var width = column.width;
-      if (typeof width == 'string' && width.indexOf('%') > -1 && _this2.contentWidth) {
-        width = parseInt(_this2.contentWidth * parseInt(width) / 100);
+      if (typeof width == 'string' && width.indexOf('%') > -1 && _this3.contentWidth) {
+        width = parseInt(_this3.contentWidth * parseInt(width) / 100);
       } else if (width) {
         width = parseInt(width);
       }
@@ -825,9 +838,9 @@ var Table = function (_Component) {
         cell.onClick = column.onHeadCellClick;
       }
       if (column.children) {
-        _this2.getHeaderRows(column.children, currentRow + 1, rows);
+        _this3.getHeaderRows(column.children, currentRow + 1, rows);
       } else {
-        _this2.columnsChildrenList.push(column); //复杂表头拖拽，所有叶子节点
+        _this3.columnsChildrenList.push(column); //复杂表头拖拽，所有叶子节点
       }
       if ('colSpan' in column) {
         cell.colSpan = column.colSpan;
@@ -839,7 +852,7 @@ var Table = function (_Component) {
         rows[currentRow].push(cell);
       }
       //判断是否启用过滤
-      if (_this2.props.filterable) {
+      if (_this3.props.filterable) {
         //组装Filter需要的Col
         filterCol.push({
           key: column.key,
@@ -847,7 +860,7 @@ var Table = function (_Component) {
           width: column.width,
           filtertype: column.filterType, //下拉的类型 包括['text','dropdown','date','daterange','number']
           dataindex: column.dataIndex, //field
-          datasource: _this2.props.data, //需要单独拿到数据处理
+          datasource: _this3.props.data, //需要单独拿到数据处理
           format: column.format, //设置日期的格式
           filterdropdown: column.filterDropdown, //是否显示 show hide
           filterdropdownauto: column.filterDropdownAuto, //是否自定义数据
@@ -1138,7 +1151,7 @@ var Table = function (_Component) {
   };
 
   Table.prototype.getColGroup = function getColGroup(columns, fixed) {
-    var _this3 = this;
+    var _this4 = this;
 
     var cols = [];
     var self = this;
@@ -1177,7 +1190,7 @@ var Table = function (_Component) {
         width = width + contentWidthDiff;
       }
       if (!fixed && c.fixed) {
-        fixedClass = ' ' + _this3.props.clsPrefix + '-row-fixed-columns-in-body';
+        fixedClass = ' ' + _this4.props.clsPrefix + '-row-fixed-columns-in-body';
       }
       return _react2["default"].createElement('col', { key: c.key, style: { width: width, minWidth: c.width }, className: fixedClass });
     }));
@@ -1203,7 +1216,7 @@ var Table = function (_Component) {
   };
 
   Table.prototype.getTable = function getTable() {
-    var _this4 = this;
+    var _this5 = this;
 
     var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var columns = options.columns,
@@ -1323,27 +1336,27 @@ var Table = function (_Component) {
         if (scroll.x === true) {
           tableStyle.tableLayout = 'fixed';
         } else {
-          tableStyle.width = _this4.contentWidth - _this4.columnManager.getLeftColumnsWidth(_this4.contentWidth) - _this4.columnManager.getRightColumnsWidth(_this4.contentWidth);
+          tableStyle.width = _this5.contentWidth - _this5.columnManager.getLeftColumnsWidth(_this5.contentWidth) - _this5.columnManager.getRightColumnsWidth(_this5.contentWidth);
         }
       }
       // 自动出现滚动条
-      if (!fixed && _this4.contentDomWidth < _this4.contentWidth) {
-        tableStyle.width = _this4.contentWidth - _this4.columnManager.getLeftColumnsWidth(_this4.contentWidth) - _this4.columnManager.getRightColumnsWidth(_this4.contentWidth);
+      if (!fixed && _this5.contentDomWidth < _this5.contentWidth) {
+        tableStyle.width = _this5.contentWidth - _this5.columnManager.getLeftColumnsWidth(_this5.contentWidth) - _this5.columnManager.getRightColumnsWidth(_this5.contentWidth);
       }
-      if (_this4.bodyTable && !fixed && _this4.contentDomWidth === _this4.contentWidth) {
-        tableStyle.width = _this4.bodyTable.clientWidth;
+      if (_this5.bodyTable && !fixed && _this5.contentDomWidth === _this5.contentWidth) {
+        tableStyle.width = _this5.bodyTable.clientWidth;
       }
       var tableBody = hasBody ? getBodyWrapper(_react2["default"].createElement(
         'tbody',
-        { className: clsPrefix + '-tbody', onMouseLeave: _this4.onBodyMouseLeave },
-        _this4.getRows(columns, fixed)
+        { className: clsPrefix + '-tbody', onMouseLeave: _this5.onBodyMouseLeave },
+        _this5.getRows(columns, fixed)
       )) : null;
-      var _drag_class = _this4.props.dragborder ? "table-drag-bordered" : "";
+      var _drag_class = _this5.props.dragborder ? "table-drag-bordered" : "";
       return _react2["default"].createElement(
         'table',
         { className: ' ' + tableClassName + '  table-bordered ' + _drag_class + ' ', style: tableStyle },
-        _this4.getColGroup(columns, fixed),
-        hasHead ? _this4.getHeader(columns, fixed, leftFixedWidth, rightFixedWidth) : null,
+        _this5.getColGroup(columns, fixed),
+        hasHead ? _this5.getHeader(columns, fixed, leftFixedWidth, rightFixedWidth) : null,
         tableBody
       );
     };
@@ -1355,7 +1368,7 @@ var Table = function (_Component) {
         {
           className: clsPrefix + '-header',
           ref: function ref(el) {
-            fixed ? _this4.fixedHeadTable = el : _this4.headTable = el;
+            fixed ? _this5.fixedHeadTable = el : _this5.headTable = el;
           },
           style: headStyle,
           onMouseOver: this.detectScrollTarget,
@@ -1373,7 +1386,7 @@ var Table = function (_Component) {
         onMouseOver: this.detectScrollTarget,
         onTouchStart: this.detectScrollTarget,
         ref: function ref(el) {
-          _this4.bodyTableOuter = el;
+          _this5.bodyTableOuter = el;
         },
         onMouseLeave: this.onBodyMouseLeave
       },
@@ -1381,7 +1394,7 @@ var Table = function (_Component) {
       _react2["default"].createElement(
         'div',
         { className: 'scroll-container', onScroll: this.handleBodyScroll, ref: function ref(el) {
-            _this4.bodyTable = el;
+            _this5.bodyTable = el;
           }, style: _extends({}, bodyStyle) },
         renderTable(!useFixedHeader)
       )
@@ -1408,7 +1421,7 @@ var Table = function (_Component) {
             style: _extends({}, innerBodyStyle),
             className: clsPrefix + '-body-inner',
             ref: function ref(el) {
-              return _this4[refName + 'Outer'] = el;
+              return _this5[refName + 'Outer'] = el;
             },
             onMouseOver: this.detectScrollTarget,
             onTouchStart: this.detectScrollTarget
@@ -1610,10 +1623,10 @@ var Table = function (_Component) {
   };
 
   Table.prototype.findExpandedRow = function findExpandedRow(record, index) {
-    var _this5 = this;
+    var _this6 = this;
 
     var rows = this.getExpandedRows().filter(function (i) {
-      return i === _this5.getRowKey(record, index);
+      return i === _this6.getRowKey(record, index);
     });
     return rows[0];
   };
@@ -1757,7 +1770,7 @@ var Table = function (_Component) {
   };
 
   Table.prototype.render = function render() {
-    var _this6 = this;
+    var _this7 = this;
 
     var _state3 = this.state,
         currentHoverRecord = _state3.currentHoverRecord,
@@ -1811,7 +1824,7 @@ var Table = function (_Component) {
     return _react2["default"].createElement(
       'div',
       { className: className, style: props.style, ref: function ref(el) {
-          return _this6.contentTable = el;
+          return _this7.contentTable = el;
         },
         tabIndex: props.focusable && (props.tabIndex ? props.tabIndex : '0') },
       this.getTitle(),
@@ -1843,7 +1856,7 @@ var Table = function (_Component) {
         'div',
         { className: 'u-row-hover',
           onMouseEnter: this.onRowHoverMouseEnter, onMouseLeave: this.onRowHoverMouseLeave, ref: function ref(el) {
-            return _this6.hoverDom = el;
+            return _this7.hoverDom = el;
           } },
         props.hoverContent(currentHoverRecord, currentHoverIndex)
       )

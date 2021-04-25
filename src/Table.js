@@ -13,6 +13,7 @@ import Icon from 'bee-icon';
 import { Event,EventUtil,closest} from "./lib/utils";
 import i18n from "./lib/i18n";
 import { getComponentLocale } from "bee-locale/build/tool";
+import ResizeObserver from 'resize-observer-polyfill';
 
 const propTypes = {
   data: PropTypes.array,
@@ -202,9 +203,14 @@ class Table extends Component {
     }
     if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
-      this.resizeEvent = addEventListener(
-        window, 'resize', this.resize
-      );
+
+      const targetNode = this.contentTable
+      if (targetNode) {
+        this.resizeObserver = new ResizeObserver(() => {
+          this.resize()
+        });
+        this.resizeObserver.observe(targetNode)
+      }
     }
 
   }
@@ -331,8 +337,8 @@ class Table extends Component {
     this.contentTable = null;
     EventUtil.removeHandler(this.contentTable,'keydown',this.onKeyDown);
     EventUtil.removeHandler(this.contentTable,'focus',this.onFocus);
-    if (this.resizeEvent) {
-      this.resizeEvent.remove();
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect()
     }
   }
 
