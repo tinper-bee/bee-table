@@ -128,6 +128,7 @@ class Table extends Component {
     this.columnManager = new ColumnManager(props.columns, props.children, props.originWidth, showDragHandle, props.showRowNum); // 加入props.showRowNum参数
     this.store = createStore({ currentHoverKey: null });
     this.firstDid = true;
+    this.scrollYChanged = false;
     if (props.defaultExpandAllRows) {
       for (let i = 0; i < rows.length; i++) {
         const row = rows[i];
@@ -286,6 +287,7 @@ class Table extends Component {
       this.bodyTable.scrollTop = 0
     } else if (this.props.ignoreScrollYChange && currentScrollY && prevScrollY) {
       if (prevScrollY !== currentScrollY) {
+        this.scrollYChanged = true
         const bodyScrollTop = this.bodyTable.scrollTop
         if (bodyScrollTop === 0) { // 在顶部的时候，滚动条不用动
           this.bodyTable.scrollTop = 0;
@@ -303,8 +305,9 @@ class Table extends Component {
             }
           }
         }
-      } else {
+      } else if (this.scrollYChanged) {
         this.bodyTable.scrollTop += 1
+        this.scrollYChanged = false
       }
     }
     // 是否传入 scroll中的y属性，如果传入判断是否是整数，如果是则进行比较 。bodyTable 的clientHeight进行判断
@@ -1490,10 +1493,10 @@ class Table extends Component {
 
   handleRowHover(isHover, key,event,currentIndex, propsRecord) {
     //增加新的API，设置是否同步Hover状态，提高性能，避免无关的渲染
-    let { syncHover,onRowHover,data } = this.props;
+    let { syncHover,onRowHover,data, lazyLoad } = this.props;
     //fix:树形表，onRowHover返回参数异常
     let { isTreeType } = this;
-    const record = isTreeType ? propsRecord : data[currentIndex];
+    const record = isTreeType ? propsRecord : lazyLoad ? data.find(item => item.originIndex === currentIndex) : data[currentIndex];
     // 固定列、或者含有hoverdom时情况下同步hover状态
     if(this.columnManager.isAnyColumnsFixed() && syncHover ){
       this.hoverKey = key;
@@ -1604,7 +1607,6 @@ class Table extends Component {
     if(hasFixedLeft){
       className += ` has-fixed-left`;
     }
-
     return (
       <div className={className} style={props.style} ref={el => this.contentTable = el}
       tabIndex={props.focusable && (props.tabIndex?props.tabIndex:'0')} >
@@ -1630,7 +1632,7 @@ class Table extends Component {
           container={this}
           {...loading} />
         { props.hoverContent && <div className="u-row-hover"
-                                     onMouseEnter={this.onRowHoverMouseEnter} onMouseLeave={this.onRowHoverMouseLeave} ref={el=> this.hoverDom = el }>{props.hoverContent(currentHoverRecord, currentHoverIndex)}</div>}
+                                     onMouseEnter={this.onRowHoverMouseEnter} onMouseLeave={this.onRowHoverMouseLeave} ref={el=> this.hoverDom = el }>{currentHoverRecord ? props.hoverContent(currentHoverRecord, currentHoverIndex) : null}</div>}
       </div>
     );
   }

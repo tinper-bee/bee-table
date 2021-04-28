@@ -77,9 +77,9 @@ function bigData(Table) {
     BigData.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
       var props = this.props;
       var currentIndex = nextProps.currentIndex,
-          newData = nextProps.data,
           newExpandedKeys = nextProps.expandedRowKeys;
 
+      var newData = this.modifyNewData(nextProps.data);
       var _this = this,
           dataLen = newData.length;
       if (nextProps.scroll.y !== props.scroll.y) {
@@ -386,6 +386,14 @@ function bigData(Table) {
     loadBuffer: _propTypes2["default"].number
   }, _initialiseProps = function _initialiseProps() {
     var _this5 = this;
+
+    this.modifyNewData = function (data) {
+      if (!data && !data.length) return data;
+      return data.map(function (item, index) {
+        item.originIndex = index;
+        return item;
+      });
+    };
 
     this.getTreeData = function (expandedKeys, newData) {
       var startIndex = _this5.startIndex,

@@ -351,6 +351,7 @@ var Table = function (_Component) {
     _this.columnManager = new _ColumnManager2["default"](props.columns, props.children, props.originWidth, showDragHandle, props.showRowNum); // 加入props.showRowNum参数
     _this.store = (0, _createStore2["default"])({ currentHoverKey: null });
     _this.firstDid = true;
+    _this.scrollYChanged = false;
     if (props.defaultExpandAllRows) {
       for (var i = 0; i < rows.length; i++) {
         var row = rows[i];
@@ -515,6 +516,7 @@ var Table = function (_Component) {
       this.bodyTable.scrollTop = 0;
     } else if (this.props.ignoreScrollYChange && currentScrollY && prevScrollY) {
       if (prevScrollY !== currentScrollY) {
+        this.scrollYChanged = true;
         var bodyScrollTop = this.bodyTable.scrollTop;
         if (bodyScrollTop === 0) {
           // 在顶部的时候，滚动条不用动
@@ -537,8 +539,9 @@ var Table = function (_Component) {
             }
           }
         }
-      } else {
+      } else if (this.scrollYChanged) {
         this.bodyTable.scrollTop += 1;
+        this.scrollYChanged = false;
       }
     }
     // 是否传入 scroll中的y属性，如果传入判断是否是整数，如果是则进行比较 。bodyTable 的clientHeight进行判断
@@ -1731,12 +1734,15 @@ var Table = function (_Component) {
     var _props11 = this.props,
         syncHover = _props11.syncHover,
         onRowHover = _props11.onRowHover,
-        data = _props11.data;
+        data = _props11.data,
+        lazyLoad = _props11.lazyLoad;
     //fix:树形表，onRowHover返回参数异常
 
     var isTreeType = this.isTreeType;
 
-    var record = isTreeType ? propsRecord : data[currentIndex];
+    var record = isTreeType ? propsRecord : lazyLoad ? data.find(function (item) {
+      return item.originIndex === currentIndex;
+    }) : data[currentIndex];
     // 固定列、或者含有hoverdom时情况下同步hover状态
     if (this.columnManager.isAnyColumnsFixed() && syncHover) {
       this.hoverKey = key;
@@ -1820,7 +1826,6 @@ var Table = function (_Component) {
     if (hasFixedLeft) {
       className += ' has-fixed-left';
     }
-
     return _react2["default"].createElement(
       'div',
       { className: className, style: props.style, ref: function ref(el) {
@@ -1858,7 +1863,7 @@ var Table = function (_Component) {
           onMouseEnter: this.onRowHoverMouseEnter, onMouseLeave: this.onRowHoverMouseLeave, ref: function ref(el) {
             return _this7.hoverDom = el;
           } },
-        props.hoverContent(currentHoverRecord, currentHoverIndex)
+        currentHoverRecord ? props.hoverContent(currentHoverRecord, currentHoverIndex) : null
       )
     );
   };
