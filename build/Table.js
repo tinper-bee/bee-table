@@ -548,15 +548,20 @@ var Table = function (_Component) {
     this.isShowScrollY();
     if (this.bodyTable) {
       var currentOverflowX = window.getComputedStyle(this.bodyTable).overflowX;
-      if (!this.props.scroll.x && currentOverflowX === 'scroll') {
-        this.bodyTable.style.overflowX = 'hidden';
-      }
       if (this.props.scroll.x && currentOverflowX !== 'scroll') {
         // 此处应该对比一下实际的
         if (this.computeWidth > this.contentDomWidth) {
           this.bodyTable.style.overflowX = 'scroll';
         }
       }
+    }
+    var scrollContainerWidth = window.getComputedStyle(this.bodyTableOuter.querySelector('.scroll-container')).width; // scroll-container层元素的宽度
+    var scrollContainerTableWidth = this.bodyTableOuter.querySelector('.table-bordered').style.width; // scroll-container内层table元素的宽度
+    // 有左右固定列时，scroll-container因为有竖直滚动条，使得scroll-container实际宽度（不包括滚动条的宽度）小于内部table宽度出现水平方向滚动条，导致滚动到底部不对齐
+    if (parseFloat(scrollContainerWidth) >= parseFloat(scrollContainerTableWidth) && (this.columnManager.leftLeafColumns().length > 0 || this.columnManager.rightLeafColumns().length > 0)) {
+      this.bodyTable.style.overflowX = 'hidden';
+    } else {
+      this.bodyTable.style.overflowX = 'auto';
     }
     if (this.bodyTableOuter) {
       // 隐藏几个不需要真正滚动的父元素的滚动条
@@ -1304,9 +1309,10 @@ var Table = function (_Component) {
             } else {
               if (this.computeWidth > this.contentDomWidth) {
                 bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
-                var userAgent = navigator.userAgent; // 火狐浏览器，固定表格跟随resize事件产生的滚动条隐藏
+                var userAgent = navigator.userAgent; // 火狐，IE浏览器，固定表格跟随resize事件产生的滚动条隐藏
                 var isFF = userAgent.indexOf("Firefox") > -1;
-                if (isFF) {
+                var isIE = !!window.ActiveXObject || "ActiveXObject" in window;
+                if (isFF || isIE) {
                   // innerBodyStyle.overflowX = 'hidden';
                   delete innerBodyStyle.overflowX;
                 }
