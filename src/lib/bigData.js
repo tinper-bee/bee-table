@@ -51,7 +51,7 @@ export default function bigData(Table) {
     componentWillReceiveProps(nextProps) {
       const props = this.props;
       const {currentIndex, expandedRowKeys:newExpandedKeys} = nextProps;
-      const newData = this.modifyNewData(nextProps.data)
+      const newData = nextProps.data
       const _this = this,dataLen = newData.length;
       if (nextProps.scroll.y !== props.scroll.y) {
         const rowHeight = nextProps.height ? nextProps.height : defaultHeight;
@@ -106,14 +106,6 @@ export default function bigData(Table) {
         this.treeType = isTreeType;
         this.getTreeData();
       } 
-    }
-
-    modifyNewData = data => {
-      if (!data && !data.length) return data
-      return data.map((item, index) => {
-        item.originIndex = index
-        return item
-      })
     }
 
     /**

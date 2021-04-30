@@ -1747,7 +1747,7 @@ var Table = function (_Component) {
     var isTreeType = this.isTreeType;
 
     var record = isTreeType ? propsRecord : lazyLoad ? data.find(function (item) {
-      return item.originIndex === currentIndex;
+      return item.key === key;
     }) : data[currentIndex];
     // 固定列、或者含有hoverdom时情况下同步hover状态
     if (this.columnManager.isAnyColumnsFixed() && syncHover) {
@@ -1777,7 +1777,6 @@ var Table = function (_Component) {
         });
       }
     }
-
     onRowHover && onRowHover(currentIndex, record);
   };
 

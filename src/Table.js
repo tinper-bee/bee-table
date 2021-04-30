@@ -1502,7 +1502,7 @@ class Table extends Component {
     let { syncHover,onRowHover,data, lazyLoad } = this.props;
     //fix:树形表，onRowHover返回参数异常
     let { isTreeType } = this;
-    const record = isTreeType ? propsRecord : lazyLoad ? data.find(item => item.originIndex === currentIndex) : data[currentIndex];
+    const record = isTreeType ? propsRecord : lazyLoad ? data.find(item => item.key === key) : data[currentIndex];
     // 固定列、或者含有hoverdom时情况下同步hover状态
     if(this.columnManager.isAnyColumnsFixed() && syncHover ){
       this.hoverKey = key;
@@ -1531,7 +1531,6 @@ class Table extends Component {
         })
       }
     }
-
     onRowHover && onRowHover(currentIndex,record);
 
   }
