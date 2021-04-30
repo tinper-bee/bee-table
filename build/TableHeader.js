@@ -785,8 +785,8 @@ var _initialiseProps = function _initialiseProps() {
 
           // }
 
-          var showScroll = contentDomWidth - (leftFixedWidth + rightFixedWidth) - (_this7.drag.tableWidth + diff) - scrollbarWidth;
-
+          var dargTableWidth = parseFloat(window.getComputedStyle(_this7.table.table).width);
+          var showScroll = contentDomWidth - (leftFixedWidth + rightFixedWidth) - (dargTableWidth + diff) - scrollbarWidth;
           //表头滚动条处理
           if (headerScroll) {
             if (showScroll < 0) {

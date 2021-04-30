@@ -432,8 +432,8 @@ class TableHeader extends Component {
             
           // }
          
-         let showScroll =  contentDomWidth - (leftFixedWidth + rightFixedWidth) - (this.drag.tableWidth + diff) - scrollbarWidth ;
-
+         let dargTableWidth = parseFloat(window.getComputedStyle(this.table.table).width)
+         let showScroll =  contentDomWidth - (leftFixedWidth + rightFixedWidth) - (dargTableWidth + diff) - scrollbarWidth;
           //表头滚动条处理
           if(headerScroll){
             if(showScroll < 0){ //小于 0 出现滚动条
