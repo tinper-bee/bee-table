@@ -1736,6 +1736,8 @@ var Table = function (_Component) {
   };
 
   Table.prototype.handleRowHover = function handleRowHover(isHover, key, event, currentIndex, propsRecord) {
+    var _this7 = this;
+
     //增加新的API，设置是否同步Hover状态，提高性能，避免无关的渲染
     var _props11 = this.props,
         syncHover = _props11.syncHover,
@@ -1746,8 +1748,9 @@ var Table = function (_Component) {
 
     var isTreeType = this.isTreeType;
 
-    var record = isTreeType ? propsRecord : lazyLoad ? data.find(function (item) {
-      return item.key === key;
+    var record = isTreeType ? propsRecord : lazyLoad ? data.find(function (item, index) {
+      var rowKey = item.key ? item.key : _this7.getRowKey(item, index);
+      return rowKey === key;
     }) : data[currentIndex];
     // 固定列、或者含有hoverdom时情况下同步hover状态
     if (this.columnManager.isAnyColumnsFixed() && syncHover) {
@@ -1781,7 +1784,7 @@ var Table = function (_Component) {
   };
 
   Table.prototype.render = function render() {
-    var _this7 = this;
+    var _this8 = this;
 
     var _state3 = this.state,
         currentHoverRecord = _state3.currentHoverRecord,
@@ -1834,7 +1837,7 @@ var Table = function (_Component) {
     return _react2["default"].createElement(
       'div',
       { className: className, style: props.style, ref: function ref(el) {
-          return _this7.contentTable = el;
+          return _this8.contentTable = el;
         },
         tabIndex: props.focusable && (props.tabIndex ? props.tabIndex : '0') },
       this.getTitle(),
@@ -1866,7 +1869,7 @@ var Table = function (_Component) {
         'div',
         { className: 'u-row-hover',
           onMouseEnter: this.onRowHoverMouseEnter, onMouseLeave: this.onRowHoverMouseLeave, ref: function ref(el) {
-            return _this7.hoverDom = el;
+            return _this8.hoverDom = el;
           } },
         currentHoverRecord ? props.hoverContent(currentHoverRecord, currentHoverIndex) : null
       )
