@@ -334,7 +334,7 @@ class TableRow extends Component{
     let dragEnterIndex = target.getAttribute("data-row-index");
     if(!currentIndex || currentIndex === this.currentIndex)return;
     const dragType = parseInt(dragEnterIndex) > parseInt(contentTable.startI)  ? 'down' : 'top'
-    
+
     contentTable.dragType = dragType;
     if(target.nodeName.toUpperCase() === "TR"){
       this.synchronizeTableTr(currentIndex,dragType);
@@ -467,24 +467,26 @@ class TableRow extends Component{
     this.element = el
   }
 
-  getLoadingStyle = (isPre, isSuf) => {
-    if (isPre) {
-      return this.element && this.element.nextSibling ? this.element.nextSibling .getBoundingClientRect() : {}
-    }
-    if (isSuf) {
-      return this.element && this.element.previousSibling ? this.element.previousSibling.getBoundingClientRect() : {}
-    }
-  }
+  // 滚动加载数据时的loading，暂时不用
+  // getLoadingStyle = (isPre, isSuf) => {
+  //   if (isPre) {
+  //     return this.element && this.element.nextSibling ? this.element.nextSibling .getBoundingClientRect() : {}
+  //   }
+  //   if (isSuf) {
+  //     return this.element && this.element.previousSibling ? this.element.previousSibling.getBoundingClientRect() : {}
+  //   }
+  // }
 
   render() {
     const {
-      clsPrefix, columns, record, height, visible, index,onPaste, isPre, isSuf, containerWidth,
+      clsPrefix, columns, record, height, visible, index,onPaste,
+        // isPre, isSuf, containerWidth, //暂时不用 滚动loading相关
       expandIconColumnIndex, expandIconAsCell, expanded, useDragHandle,rowDraggAble,
       expandable, onExpand, needIndentSpaced, indent, indentSize,isHiddenExpandIcon,fixed,bodyDisplayInRow
       ,expandedIcon,collapsedIcon, hoverKey,lazyStartIndex,lazyEndIndex, expandIconCellWidth, getCellClassName
     } = this.props;
     const {notRowDrag} = this.state;
-    const isEmptyTr = isPre || isSuf
+    // const isEmptyTr = isPre || isSuf//暂时不用 滚动loading相关
     let showSum = false;
     let { className } = this.props;
     if (this.state.hovered) {
@@ -530,8 +532,10 @@ class TableRow extends Component{
         );
       }
       // bugfix 设置expandRowByClick，无法显示箭头，去掉 expandRowByClick 判断
-      const isColumnHaveExpandIcon = (expandIconAsCell || showSum) 
+      const isColumnHaveExpandIcon = (expandIconAsCell || showSum)
         ? false : (i === expandIndexInThisTable);
+      //注意：中间表格区域不需要渲染出固定列的单元格，以节省多余的性能消耗
+      if(!fixed&&columns[i].fixed)continue;
       cells.push(
         <TableCell
           clsPrefix={clsPrefix}
@@ -565,7 +569,7 @@ class TableRow extends Component{
     if(rowDraggAble && !useDragHandle && !notRowDrag) {
       className += ' row-dragg-able'
     }
-    const tdStyle = !isEmptyTr ? {} : this.getLoadingStyle(isPre, isSuf)
+    // const tdStyle = !isEmptyTr ? {} : this.getLoadingStyle(isPre, isSuf)//暂时不用 滚动loading相关
     return (
       <tr
         draggable={rowDraggAble && !useDragHandle && !notRowDrag}
@@ -580,10 +584,11 @@ class TableRow extends Component{
         // key={hoverKey}
         ref={this.bindElement}
       >
-        {cells.length > 0 ? cells : isEmptyTr ? // loading暂时去掉
-        <td style={{width: 0,padding: 0}}>
-        </td> : <td style={{width: 0,padding: 0}}>
-        </td>}
+        {cells.length>0?cells:<td style={{width:0,padding:0}}></td>}
+          {/*{cells.length > 0 ? cells : isEmptyTr ? // loading暂时去掉，还原*/}
+          {/*    <td style={{width: 0,padding: 0}}>*/}
+          {/*    </td> : <td style={{width: 0,padding: 0}}>*/}
+          {/*    </td>}*/}
       </tr>
     );
   }

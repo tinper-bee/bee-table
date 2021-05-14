@@ -172,7 +172,6 @@ var defaultProps = {
   setRowParentIndex: function setRowParentIndex() {},
   tabIndex: '0',
   heightConsistent: false,
-  syncFixedRowHeight: false,
   size: 'md',
   rowDraggAble: false,
   hideDragHandle: false,
@@ -182,7 +181,8 @@ var defaultProps = {
   bodyDisplayInRow: true,
   headerDisplayInRow: true,
   showRowNum: false,
-  onPaste: function onPaste() {}
+  onPaste: function onPaste() {},
+  originWidth: null //做什么用??
 };
 
 var expandIconCellWidth = Number(43);
@@ -212,6 +212,57 @@ var Table = function (_Component) {
       div.className = "u-table-drag-hidden-cont";
       div.id = uid;
       _this.contentTable.appendChild(div);
+    };
+
+    _this.syncFixedTableScrollWidth = function () {
+      var clsPrefix = _this.props.clsPrefix;
+
+      var tableDom = _this.contentTable;
+      var tableContentDom = tableDom.querySelector('.' + clsPrefix + '-content');
+      var tableFixedRight = tableDom.querySelector('.' + clsPrefix + '-fixed-right');
+      var centerBodyDom = tableDom.querySelector('.' + clsPrefix + '-scroll .' + clsPrefix + '-body');
+      var centerHeadTableDom = tableDom.querySelector('.' + clsPrefix + '-scroll .' + clsPrefix + '-header table');
+      var bodyInnerDoms = tableDom.querySelectorAll('.' + clsPrefix + '-body-outer .' + clsPrefix + '-body-inner');
+      if (!_this.scrollbarWidth) _this.scrollbarWidth = (0, _utils.measureScrollbar)();
+      var scrollbarWidth = _this.scrollbarWidth;
+      var hasCenterScrollY = !!(centerBodyDom.scrollHeight > centerBodyDom.clientHeight); //中间区域是否存在垂直滚动条
+      var hasCenterScrollX = !!(centerBodyDom.scrollWidth > centerBodyDom.clientWidth); //中间区域存在水平滚动条
+      //解决存在右侧固定列,中间区域垂直滚动条需要隐藏显示的问题
+      if (hasCenterScrollY && _this.columnManager.isAnyColumnsRightFixed()) {
+        centerBodyDom.style.marginRight = scrollbarWidth ? '-' + scrollbarWidth + 'px' : 8;
+      } else {
+        centerBodyDom.style.marginRight = 0;
+      }
+      //解决中间区域存在水平滚动条，左右固定区域无法跟其对齐的问题
+      if (bodyInnerDoms && bodyInnerDoms.length) {
+        [].forEach.call(bodyInnerDoms, function (bodyInnerDom) {
+          if (hasCenterScrollX) {
+            bodyInnerDom.style.paddingBottom = scrollbarWidth + 'px';
+          } else {
+            bodyInnerDom.style.paddingBottom = 0;
+          }
+        });
+      }
+      //解决中间存在水平滚动条头部区域无法对齐的问题
+      if (centerHeadTableDom) {
+        var paddingWidth = 0;
+        if (hasCenterScrollY && hasCenterScrollX || hasCenterScrollY && !tableFixedRight) paddingWidth = paddingWidth + scrollbarWidth;
+        centerHeadTableDom.style.paddingRight = paddingWidth + 'px';
+      }
+      //为表格追加是否存在滚动条的样式标识
+      if (tableContentDom) {
+        if (hasCenterScrollX) {
+          if (!tableContentDom.classList.contains('has-scroll-x')) tableContentDom.classList.add('has-scroll-x');
+        } else {
+          tableContentDom.classList.remove('has-scroll-x');
+        }
+        if (hasCenterScrollY) {
+          if (_this.headTable) _this.headTable.style.overflowY = 'scroll'; //中间区域有垂直滚动条，则头部也需要显示头部滚动条
+          if (!tableContentDom.classList.contains('has-scroll-y')) tableContentDom.classList.add('has-scroll-y');
+        } else {
+          tableContentDom.classList.remove('has-scroll-y');
+        }
+      }
     };
 
     _this.onDragRowStart = function (currentKey) {
@@ -271,41 +322,9 @@ var Table = function (_Component) {
       return arr;
     };
 
-    _this.renderDragHideTable = function () {
-      var _this$props = _this.props,
-          columns = _this$props.columns,
-          dragborder = _this$props.dragborder,
-          dragborderKey = _this$props.dragborderKey;
-
-      if (!dragborder) return null;
-      var sum = 0;
-      return _react2["default"].createElement(
-        'div',
-        { id: 'u-table-drag-hide-table-' + dragborderKey, className: _this.props.clsPrefix + '-hiden-drag' },
-        columns.map(function (da, i) {
-          sum += da.width ? da.width : 0;
-          return _react2["default"].createElement('div', { className: _this.props.clsPrefix + '-hiden-drag-li', key: da + "_hiden_" + i, style: { left: sum + "px" } });
-        })
-      );
-    };
-
-    _this.getTdPadding = function (td) {
-      var tdPaddingTop = _this.getStyle(td, 'paddingTop'),
-          tdPaddingBottom = _this.getStyle(td, 'paddingBottom'),
-          tdBorderTop = _this.getStyle(td, 'borderTopWidth'),
-          tdBorderBottom = _this.getStyle(td, 'borderBottomWidth');
-      return Number(tdPaddingTop.replace('px', '')) + Number(tdPaddingBottom.replace('px', '')) + Number(tdBorderTop.replace('px', '')) + Number(tdBorderBottom.replace('px', ''));
-    };
-
-    _this.getFlatRecords = function (data) {
-      var result = [];
-      for (var i = 0; i < data.length; i++) {
-        result.push(data[i]);
-        if ((data[i].children || []).length) {
-          result = result.concat(_this.getFlatRecords(data[i].children));
-        }
-      }
-      return result;
+    _this.manualSyncFixedTableRowHeight = function () {
+      _this.dataChanged = true;
+      _this.syncFixedTableRowHeight();
     };
 
     _this.clearBodyMouseLeaveTimer = function () {
@@ -320,7 +339,7 @@ var Table = function (_Component) {
       _this.store.setState({
         currentHoverKey: _this.currentHoverKey
       });
-      _this.hoverDom.style.display = 'block';
+      if (_this.hoverDom) _this.hoverDom.style.display = 'block';
       _this.clearBodyMouseLeaveTimer();
     };
 
@@ -390,7 +409,6 @@ var Table = function (_Component) {
     _this.getFooter = _this.getFooter.bind(_this);
     _this.getEmptyText = _this.getEmptyText.bind(_this);
     _this.getHeaderRowStyle = _this.getHeaderRowStyle.bind(_this);
-    _this.manualSyncFixedTableRowHeight = _this.manualSyncFixedTableRowHeight.bind(_this);
     _this.syncFixedTableRowHeight = _this.syncFixedTableRowHeight.bind(_this);
     _this.resetScrollX = _this.resetScrollX.bind(_this);
     _this.findExpandedRow = _this.findExpandedRow.bind(_this);
@@ -403,8 +421,7 @@ var Table = function (_Component) {
     _this.tableUid = null;
     _this.contentTable = null;
     _this.leftColumnsLength; //左侧固定列的长度
-    _this.centerColumnsLength; //非固定列的长度
-    _this.columnsChildrenList = []; //复杂表头、所有叶子节点
+    // this.centerColumnsLength  //非固定列的长度// this.columnsChildrenList = [];//复杂表头、所有叶子节点
     _this.dataChanged = false; // 数据是否改变
     return _this;
   }
@@ -423,15 +440,15 @@ var Table = function (_Component) {
     setTimeout(this.resetScrollX, 300);
     //含有纵向滚动条
     // if(this.props.scroll.y){
-    this.scrollbarWidth = (0, _utils.measureScrollbar)();
+    //    this.scrollbarWidth = measureScrollbar(`.u-table`);
     // }
     //后续也放在recevice里面
     if (!this.props.originWidth) {
       this.computeTableWidth();
     }
     if (this.columnManager.isAnyColumnsFixed()) {
-      this.syncFixedTableRowHeight();
-
+      this.syncFixedTableRowHeight(); //同步固定列的内容行高度
+      this.syncFixedTableScrollWidth(); //同步固定列的滚动宽度
       var targetNode = this.contentTable;
       if (targetNode) {
         this.resizeObserver = new _resizeObserverPolyfill2["default"](function () {
@@ -446,7 +463,8 @@ var Table = function (_Component) {
     var _props = this.props,
         hideDragHandle = _props.hideDragHandle,
         rowDraggAble = _props.rowDraggAble,
-        showRowNum = _props.showRowNum;
+        showRowNum = _props.showRowNum,
+        clsPrefix = _props.clsPrefix;
 
     if ('data' in nextProps) {
       this.setState({
@@ -460,7 +478,7 @@ var Table = function (_Component) {
     }
     if (nextProps.columns && nextProps.columns !== this.props.columns) {
       this.columnManager.reset(nextProps.columns, null, showRowNum, !hideDragHandle && rowDraggAble); // 加入this.props.showRowNum参数
-      if (nextProps.columns.length !== this.props.columns.length && this.refs && this.bodyTable) {
+      if (nextProps.columns.length !== this.props.columns.length && this.bodyTable) {
         this.scrollTop = this.bodyTable.scrollTop;
       }
     } else if (nextProps.children !== this.props.children) {
@@ -474,7 +492,7 @@ var Table = function (_Component) {
     // fix:模态框中使用table，计算的滚动条宽度为0的bug
     // fix:表格首次渲染时 display:none，再显示时，未重新计算，导致表行出现错位的bug
     if (this.scrollbarWidth <= 0 && this.props.scroll.y) {
-      this.scrollbarWidth = (0, _utils.measureScrollbar)();
+      this.scrollbarWidth = (0, _utils.measureScrollbar)('.' + clsPrefix);
     }
     if (!nextProps.originWidth) {
       this.computeTableWidth();
@@ -491,7 +509,8 @@ var Table = function (_Component) {
     // todo: IE 大数据渲染，行高不固定，且设置了 heightConsistent={true} 时，滚动加载操作会导致 ie11 浏览器崩溃
     // https://github.com/tinper-bee/bee-table/commit/bd2092cdbaad236ff89477304e58dea93325bf09
     if (this.columnManager.isAnyColumnsFixed()) {
-      this.syncFixedTableRowHeight();
+      (0, _utils.debounce)(this.syncFixedTableRowHeight(), 200); //同步固定列内容行的高度
+      (0, _utils.debounce)(this.syncFixedTableScrollWidth(), 200); //同步固定列的滚动宽度
     }
 
     //适应模态框中表格、以及父容器宽度变化的情况
@@ -500,8 +519,8 @@ var Table = function (_Component) {
       this.firstDid = false; //避免重复update
     }
     if (this.scrollTop > -1) {
-      this.refs.fixedColumnsBodyLeft && (this.refs.fixedColumnsBodyLeft.scrollTop = this.scrollTop);
-      this.refs.fixedColumnsBodyRight && (this.refs.fixedColumnsBodyRight.scrollTop = this.scrollTop);
+      this.fixedLeftBodyInner && (this.fixedLeftBodyInner.scrollTop = this.scrollTop);
+      this.fixedRightBodyInner && (this.fixedRightBodyInner.scrollTop = this.scrollTop);
       this.bodyTable.scrollTop = this.scrollTop;
       this.scrollTop = -1;
     }
@@ -545,34 +564,34 @@ var Table = function (_Component) {
       }
     }
     // 是否传入 scroll中的y属性，如果传入判断是否是整数，如果是则进行比较 。bodyTable 的clientHeight进行判断
-    this.isShowScrollY();
-    if (this.bodyTable) {
-      var currentOverflowX = window.getComputedStyle(this.bodyTable).overflowX;
-      if (this.props.scroll.x && currentOverflowX !== 'scroll') {
-        // 此处应该对比一下实际的
-        if (this.computeWidth > this.contentDomWidth) {
-          this.bodyTable.style.overflowX = 'scroll';
-        }
-      }
-    }
-    var scrollContainerWidth = window.getComputedStyle(this.bodyTableOuter.querySelector('.scroll-container')).width; // scroll-container层元素的宽度
-    var scrollContainerTableWidth = this.bodyTableOuter.querySelector('.table-bordered').style.width; // scroll-container内层table元素的宽度
-    // 有左右固定列时，scroll-container因为有竖直滚动条，使得scroll-container实际宽度（不包括滚动条的宽度）小于内部table宽度出现水平方向滚动条，导致滚动到底部不对齐
-    if (parseFloat(scrollContainerWidth) >= parseFloat(scrollContainerTableWidth) && (this.columnManager.leftLeafColumns().length > 0 || this.columnManager.rightLeafColumns().length > 0)) {
-      this.bodyTable.style.overflowX = 'hidden';
-    } else {
-      this.bodyTable.style.overflowX = 'auto';
-    }
-    if (this.bodyTableOuter) {
-      // 隐藏几个不需要真正滚动的父元素的滚动条
-      this.bodyTableOuter.style.overflowY = 'hidden';
-    }
-    if (this.fixedColumnsBodyLeftOuter) {
-      this.fixedColumnsBodyLeftOuter.style.overflowY = 'hidden';
-    }
-    if (this.fixedColumnsBodyRightOuter) {
-      this.fixedColumnsBodyRightOuter.style.overflowY = 'hidden';
-    }
+    // this.isShowScrollY();
+    // gx为了解决底部滚动条显示的问题
+    // if (this.bodyTable) {
+    //   const currentOverflowX = window.getComputedStyle(this.bodyTable).overflowX;
+    //   if (this.props.scroll.x && currentOverflowX !== 'scroll') {
+    //     // 此处应该对比一下实际的
+    //     if (this.computeWidth > this.contentDomWidth) {
+    //       this.bodyTable.style.overflowX = 'scroll';
+    //     }
+    //   }
+    // }
+    // let scrollContainerWidth = window.getComputedStyle(this.bodyTableOuter.querySelector('.scroll-container')).width; // scroll-container层元素的宽度
+    // let scrollContainerTableWidth =  this.bodyTableOuter.querySelector('.table-bordered').style.width; // scroll-container内层table元素的宽度
+    // // 有左右固定列时，scroll-container因为有竖直滚动条，使得scroll-container实际宽度（不包括滚动条的宽度）小于内部table宽度出现水平方向滚动条，导致滚动到底部不对齐
+    // if ((parseFloat(scrollContainerWidth) >= parseFloat(scrollContainerTableWidth)) && (this.columnManager.leftLeafColumns().length > 0 || this.columnManager.rightLeafColumns().length > 0)) {
+    //   this.bodyTable.style.overflowX = 'hidden';
+    // } else {
+    //   this.bodyTable.style.overflowX = 'auto';
+    // }
+    // if (this.bodyTableOuter) { // 隐藏几个不需要真正滚动的父元素的滚动条
+    //   this.bodyTableOuter.style.overflowY = 'hidden'
+    // }
+    // if (this.fixedColumnsBodyLeftOuter) {
+    //   this.fixedColumnsBodyLeftOuter.style.overflowY = 'hidden'
+    // }
+    // if (this.fixedColumnsBodyRightOuter) {
+    //   this.fixedColumnsBodyRightOuter.style.overflowY = 'hidden'
+    // }
   };
 
   Table.prototype.componentWillUnmount = function componentWillUnmount() {
@@ -585,6 +604,7 @@ var Table = function (_Component) {
     }
   };
 
+  //计算表格宽度 --- 这块有必要？待确认 待废除 zzj
   Table.prototype.computeTableWidth = function computeTableWidth() {
     var expandIconAsCell = this.props.expandIconAsCell;
     //如果用户传了scroll.x按用户传的为主
@@ -633,22 +653,17 @@ var Table = function (_Component) {
     if (y) {
       var bodyH = this.bodyTable.clientHeight;
       var bodyContentH = this.bodyTable.querySelector('table').clientHeight;
-      var rightBodyTable = this.refs.fixedColumnsBodyRight;
-      // const leftBodyTable = this.refs.fixedColumnsBodyLeft;
+      var rightBodyTable = this.fixedRightBodyInner;
+      // const leftBodyTable = this.fixedLeftBodyInner;
       var overflowy = bodyContentH <= bodyH ? 'auto' : 'scroll';
       this.bodyTable.style.overflowY = overflowy;
 
       this.headTable.style.overflowY = overflowy;
       rightBodyTable && (rightBodyTable.style.overflowY = overflowy);
-      // 没有纵向滚动条时，表头横向滚动条根据内容动态显示 待验证
-      // if(overflowy == 'auto'){
-      //   this.fixedHeadTable && (this.fixedHeadTable.style.overflowX = 'auto');
-      //   rightBodyTable && (rightBodyTable.style.overflowX = 'auto');
-      //   leftBodyTable && (leftBodyTable.style.overflowX = 'auto');
-      // }
-
     }
   };
+  //同步固定列情况下部分区域滚动条出现引起的错位问题
+
 
   Table.prototype.onExpandedRowsChange = function onExpandedRowsChange(expandedRowKeys) {
     if (!this.props.expandedRowKeys) {
@@ -712,7 +727,7 @@ var Table = function (_Component) {
   };
 
   Table.prototype.getHeader = function getHeader(columns, fixed, leftFixedWidth, rightFixedWidth) {
-    var lastShowIndex = this.state.lastShowIndex;
+    // const { lastShowIndex } = this.state;
     var _props2 = this.props,
         filterDelay = _props2.filterDelay,
         onFilterChange = _props2.onFilterChange,
@@ -744,8 +759,8 @@ var Table = function (_Component) {
         headerEventNoStop = _props2.headerEventNoStop,
         onCopy = _props2.onCopy;
 
-    this.columnsChildrenList = []; //复杂表头拖拽，重新render表头前，将其置空
-    var rows = this.getHeaderRows(columns);
+    var columnsChildrenList = []; //复杂表头拖拽，重新render表头前，将其置空
+    var rows = this.getHeaderRows({ columns: columns, columnsChildrenList: columnsChildrenList });
     if (expandIconAsCell && fixed !== 'right') {
       rows[0].unshift({
         key: 'u-table-expandIconAsCell',
@@ -754,27 +769,35 @@ var Table = function (_Component) {
         rowSpan: rows.length,
         width: expandIconCellWidth
       });
-      this.columnsChildrenList.unshift({
+      columnsChildrenList.unshift({
         className: "u-table-expand-icon-column",
         key: "expand-icon"
       });
     }
+    if (fixed) {
+      columnsChildrenList = columnsChildrenList.filter(function (col) {
+        return col.fixed == fixed;
+      }); //只获取对应的固定列
+    } else {
+      columnsChildrenList = columnsChildrenList.filter(function (col) {
+        return !col.fixed;
+      }); //只获取非固定的列
+    }
     var trStyle = headerHeight && !fixed ? { height: headerHeight } : fixed ? this.getHeaderRowStyle(columns, rows) : null;
     var drop = draggable ? { onDragStart: onDragStart, onDragOver: onDragOver, onDrop: onDrop, onDragEnd: onDragEnd, onDragEnter: onDragEnter, draggable: draggable } : {};
     var dragBorder = dragborder ? { onMouseDown: onMouseDown, onMouseMove: onMouseMove, onMouseUp: onMouseUp, dragborder: dragborder, onThMouseMove: onThMouseMove, dragborderKey: dragborderKey, onDropBorder: onDropBorder, onDraggingBorder: onDraggingBorder } : {};
-    var contentWidthDiff = 0;
-    //非固定表格,宽度不够时自动扩充
-    if (!fixed) {
-      contentWidthDiff = this.state.contentWidthDiff;
-    }
+    // let contentWidthDiff = 0;
+    // //非固定表格,宽度不够时自动扩充
+    // if (!fixed) {
+    //   contentWidthDiff = this.state.contentWidthDiff
+    // }
     return showHeader ? _react2["default"].createElement(_TableHeader2["default"], _extends({}, drop, dragBorder, {
-      columnsChildrenList: this.columnsChildrenList,
+      columnsChildrenList: columnsChildrenList,
       locale: this.props.locale,
-      minColumnWidth: minColumnWidth,
-      contentWidthDiff: contentWidthDiff,
-      contentWidth: this.contentWidth,
-      lastShowIndex: expandIconAsCell ? parseInt(lastShowIndex) + 1 : lastShowIndex,
-      clsPrefix: clsPrefix,
+      minColumnWidth: minColumnWidth
+      // contentWidthDiff={contentWidthDiff}
+      // contentWidth={this.contentWidth}
+      , clsPrefix: clsPrefix,
       rows: rows,
       contentTable: this.contentTable,
       rowStyle: trStyle,
@@ -796,11 +819,14 @@ var Table = function (_Component) {
     })) : null;
   };
 
-  Table.prototype.getHeaderRows = function getHeaderRows(columns) {
+  Table.prototype.getHeaderRows = function getHeaderRows(options) {
     var _this3 = this;
 
-    var currentRow = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-    var rows = arguments[2];
+    var columns = options.columns,
+        _options$currentRow = options.currentRow,
+        currentRow = _options$currentRow === undefined ? 0 : _options$currentRow,
+        rows = options.rows,
+        columnsChildrenList = options.columnsChildrenList;
     var columnKey = this.props.columnKey;
     var _state = this.state,
         _state$contentWidthDi = _state.contentWidthDiff,
@@ -846,9 +872,9 @@ var Table = function (_Component) {
         cell.onClick = column.onHeadCellClick;
       }
       if (column.children) {
-        _this3.getHeaderRows(column.children, currentRow + 1, rows);
+        _this3.getHeaderRows({ columns: column.children, currentRow: currentRow + 1, rows: rows, columnsChildrenList: columnsChildrenList });
       } else {
-        _this3.columnsChildrenList.push(column); //复杂表头拖拽，所有叶子节点
+        columnsChildrenList && columnsChildrenList.push(column); //复杂表头拖拽，所有叶子节点
       }
       if ('colSpan' in column) {
         cell.colSpan = column.colSpan;
@@ -992,6 +1018,7 @@ var Table = function (_Component) {
     var expandedRowRender = props.expandedRowRender;
     var expandRowByClick = props.expandRowByClick;
     var onPaste = props.onPaste;
+    var anyColumnsFixed = this.columnManager.isAnyColumnsFixed();
     var fixedColumnsBodyRowsHeight = this.state.fixedColumnsBodyRowsHeight;
 
     var rst = [];
@@ -1008,7 +1035,15 @@ var Table = function (_Component) {
     var expandIconAsCell = fixed !== 'right' ? props.expandIconAsCell : false;
     var expandIconColumnIndex = props.expandIconColumnIndex;
     if (props.lazyLoad && props.lazyLoad.preHeight && indent == 0) {
-      rst.push(_react2["default"].createElement(_TableRow2["default"], { onPaste: onPaste, containerWidth: this.contentDomWidth, isPre: true, height: props.lazyLoad.preHeight, columns: [], className: '', key: 'table_row_first', store: this.store, visible: true }));
+      rst.push(_react2["default"].createElement(_TableRow2["default"], { onPaste: onPaste, height: props.lazyLoad.preHeight, columns: [], className: '', key: 'table_row_first', store: this.store, visible: true }));
+    }
+    var leafColumns = void 0;
+    if (fixed === 'left') {
+      leafColumns = this.columnManager.leftLeafColumns();
+    } else if (fixed === 'right') {
+      leafColumns = this.columnManager.rightLeafColumns();
+    } else {
+      leafColumns = this.columnManager.leafColumns();
     }
     var lazyCurrentIndex = props.lazyLoad && props.lazyLoad.startIndex ? props.lazyLoad.startIndex : 0;
     var lazyParentIndex = props.lazyLoad && props.lazyLoad.startParentIndex ? props.lazyLoad.startParentIndex : 0;
@@ -1018,7 +1053,7 @@ var Table = function (_Component) {
       var record = data[i];
       var key = this.getRowKey(record, i);
       // 兼容 NCC 以前的业务逻辑，支持外部通过 record 中的 isleaf 字段，判断是否为叶子节点
-      typeof record['isleaf'] === 'boolean' && (record['_isLeaf'] = record['isleaf']);
+      record['_isLeaf'] = typeof record['isleaf'] === 'boolean' ? record['isleaf'] : record['_isLeaf'];
       // _isLeaf 字段是在 bigData 里添加的，只有层级树大数据场景需要该字段
       // _isLeaf 有三种取值情况：true / false / null。（Table内部字段）
       var _isLeaf = typeof record['_isLeaf'] === 'boolean' ? record['_isLeaf'] : null;
@@ -1041,24 +1076,31 @@ var Table = function (_Component) {
         isHiddenExpandIcon = props.haveExpandIcon(record, i);
       }
 
-      var onHoverProps = {};
-
-      onHoverProps.onHover = this.handleRowHover;
-
-      if (props.bodyDisplayInRow && props.height) {
-        height = props.height;
-      } else if (fixed || props.heightConsistent) {
-        height = fixedColumnsBodyRowsHeight[fixedIndex];
-      }
-
-      var leafColumns = void 0;
-      if (fixed === 'left') {
-        leafColumns = this.columnManager.leftLeafColumns();
-      } else if (fixed === 'right') {
-        leafColumns = this.columnManager.rightLeafColumns();
+      if (props.bodyDisplayInRow) {
+        //内容显示不换行，即显示为"..."
+        if (anyColumnsFixed) {
+          //存在固定列则强制同步行高度，以确保行不会错位
+          height = fixedColumnsBodyRowsHeight[fixedIndex];
+        } else {
+          //不存在固定列，则按指定高度呈现行
+          height = props.height || 40;
+        }
       } else {
-        leafColumns = this.columnManager.leafColumns();
+        //内容自适应行高
+        if (anyColumnsFixed) {
+          //存在固定列则强制同步行高度，以确保行不会错位
+          height = fixedColumnsBodyRowsHeight[fixedIndex];
+        } else {
+          //不存在固定列，则按内容高度自行呈现
+        }
       }
+
+      // if (props.bodyDisplayInRow && props.height) {
+      //   height = props.height
+      // } else if(fixed || props.heightConsistent) {
+      //   height = fixedColumnsBodyRowsHeight[fixedIndex];
+      // }
+
       var className = rowClassName(record, fixedIndex + lazyCurrentIndex, indent);
 
       //合计代码如果是最后一行并且有合计功能时，最后一行为合计列
@@ -1075,7 +1117,7 @@ var Table = function (_Component) {
       if (rootIndex == -1) {
         index = i + lazyParentIndex;
       }
-      rst.push(_react2["default"].createElement(_TableRow2["default"], _extends({
+      rst.push(_react2["default"].createElement(_TableRow2["default"], {
         onPaste: onPaste,
         indent: indent,
         indentSize: props.indentSize,
@@ -1097,8 +1139,8 @@ var Table = function (_Component) {
         onRowClick: onRowClick,
         onRowDoubleClick: onRowDoubleClick,
         height: height,
-        isHiddenExpandIcon: isHiddenExpandIcon
-      }, onHoverProps, {
+        isHiddenExpandIcon: isHiddenExpandIcon,
+        onHover: this.handleRowHover,
         key: "table_row_" + key + "_" + index,
         hoverKey: key,
         ref: rowRef,
@@ -1126,7 +1168,7 @@ var Table = function (_Component) {
         leftColumnsLength: this.leftColumnsLength,
         expandIconCellWidth: expandIconCellWidth,
         getCellClassName: props.getCellClassName
-      })));
+      }));
       this.treeRowIndex++;
       var subVisible = visible && isRowExpanded;
 
@@ -1141,7 +1183,8 @@ var Table = function (_Component) {
     }
 
     if (props.lazyLoad && props.lazyLoad.sufHeight && indent == 0) {
-      rst.push(_react2["default"].createElement(_TableRow2["default"], { onPaste: onPaste, containerWidth: this.contentDomWidth, isSuf: true, height: props.lazyLoad.sufHeight, key: 'table_row_end', columns: [], className: '', store: this.store, visible: true }));
+      rst.push(_react2["default"].createElement(_TableRow2["default"], { onPaste: onPaste //containerWidth={this.contentDomWidth} isSuf //滚动loading相关的暂时不用
+        , height: props.lazyLoad.sufHeight, key: 'table_row_end', columns: [], className: '', store: this.store, visible: true }));
     }
     if (!this.isTreeType) {
       this.treeType = false;
@@ -1184,7 +1227,7 @@ var Table = function (_Component) {
       contentWidthDiff = 0;
       leafColumns = this.columnManager.rightLeafColumns();
     } else {
-      leafColumns = this.columnManager.leafColumns();
+      leafColumns = this.columnManager.centerLeafColumns();
     }
     cols = cols.concat(leafColumns.map(function (c, i, arr) {
       var fixedClass = '';
@@ -1200,14 +1243,28 @@ var Table = function (_Component) {
       if (!fixed && c.fixed) {
         fixedClass = ' ' + _this4.props.clsPrefix + '-row-fixed-columns-in-body';
       }
-      return _react2["default"].createElement('col', { key: c.key, style: { width: width, minWidth: c.width }, className: fixedClass });
+      return _react2["default"].createElement('col', { key: c.key, style: { width: width, minWidth: c.width }, className: fixedClass || null });
     }));
     return _react2["default"].createElement(
       'colgroup',
-      { id: 'bee-table-colgroup' },
+      { className: 'u-table-colgroup' },
       cols
     );
   };
+
+  // renderDragHideTable = () => {
+  //   const { columns,clsPrefix, dragborder, dragborderKey } = this.props;
+  //   if (!dragborder) return null;
+  //   let sum = 0;
+  //   return (<div id={`u-table-drag-hide-table-${dragborderKey}`} className={`${clsPrefix}-hiden-drag`} >
+  //     {
+  //       columns.map((da, i) => {
+  //         sum += da.width ? parseInt(da.width) : 0;
+  //         return (<div className={`${clsPrefix}-hiden-drag-li`} key={da + "_hiden_" + i} style={{ left: sum + "px" }}></div>);
+  //       })
+  //     }
+  //   </div>);
+  // }
 
   Table.prototype.getLeftFixedTable = function getLeftFixedTable() {
     return this.getTable({
@@ -1231,6 +1288,7 @@ var Table = function (_Component) {
         fixed = options.fixed;
     var _props4 = this.props,
         clsPrefix = _props4.clsPrefix,
+        data = _props4.data,
         _props4$scroll = _props4.scroll,
         scroll = _props4$scroll === undefined ? {} : _props4$scroll,
         getBodyWrapper = _props4.getBodyWrapper,
@@ -1239,122 +1297,164 @@ var Table = function (_Component) {
         _props4$hideHeaderScr = _props4.hideHeaderScroll,
         hideHeaderScroll = _props4$hideHeaderScr === undefined ? false : _props4$hideHeaderScr,
         expandIconAsCell = _props4.expandIconAsCell;
-    var _props5 = this.props,
-        useFixedHeader = _props5.useFixedHeader,
-        data = _props5.data;
 
-    var bodyStyle = _extends({}, this.props.bodyStyle); // 这里为什么不写在上面?
+    var useFixedHeader = this.props.useFixedHeader; // let变量声明
+    var bodyStyle = _extends({}, this.props.bodyStyle); // 克隆一份
     var headStyle = {};
     var innerBodyStyle = {};
     var leftFixedWidth = this.columnManager.getLeftColumnsWidth(this.contentWidth);
     var rightFixedWidth = this.columnManager.getRightColumnsWidth(this.contentWidth);
 
-    var tableClassName = '';
-    //表格元素的宽度大于容器的宽度也显示滚动条
-    if (scroll.x || fixed || this.contentDomWidth < this.contentWidth) {
-      tableClassName = clsPrefix + '-fixed';
-      //没有数据并且含有顶部菜单时
-      if (this.props.data.length == 0 && this.props.headerScroll) {
-        bodyStyle.overflowX = 'hidden';
+    var tableClassName = fixed ? clsPrefix + '-fixed' : '';
+
+    if (scroll.x || fixed //|| this.contentDomWidth < this.contentWidth  //表格元素的宽度大于容器的宽度也显示滚动条
+    ) {
+
+        //没有数据并且含有顶部菜单时
+        if (data.length == 0 && this.props.headerScroll) {
+          bodyStyle.overflowX = 'hidden';
+        }
+        if (!footerScroll) {
+          bodyStyle.overflowX = bodyStyle.overflowX || 'auto';
+        }
       }
-      if (!footerScroll && this.computeWidth > this.contentDomWidth) {
-        bodyStyle.overflowX = bodyStyle.overflowX || 'auto';
-      }
-    }
 
     if (scroll.y) {
       // maxHeight will make fixed-Table scrolling not working
       // so we only set maxHeight to body-Table here
       if (fixed) {
+        //固定表格
         // bodyStyle.height = bodyStyle.height || scroll.y;
         innerBodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
-        innerBodyStyle.overflowY = bodyStyle.overflowY || 'scroll';
-        if (this.computeWidth > this.contentDomWidth) {
-          innerBodyStyle.overflowX = 'scroll';
-        } else if (this.contentWidth === this.contentDomWidth) {
-          innerBodyStyle.overflowX = 'hidden';
-        }
+        innerBodyStyle.overflowY = bodyStyle.overflowY || 'auto';
+        // gx解决底部滚动条的显示问题
+        // if (this.computeWidth > this.contentDomWidth) {
+        //   innerBodyStyle.overflowX = 'scroll';
+        // } else if (this.contentWidth === this.contentDomWidth) {
+        //   innerBodyStyle.overflowX = 'hidden';
+        // }
       } else {
         bodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
       }
-      bodyStyle.overflowY = bodyStyle.overflowY || 'scroll';
+      bodyStyle.overflowY = bodyStyle.overflowY || 'auto';
       useFixedHeader = true;
 
       // Add negative margin bottom for scroll bar overflow bug
-      var scrollbarWidth = this.scrollbarWidth;
-      if (scrollbarWidth >= 0) {
-        (fixed ? bodyStyle : headStyle).paddingBottom = '0px';
-        //显示表头滚动条
-        if (headerScroll) {
-          if (fixed) {
-
-            if (this.domWidthDiff <= 0) {
-              headStyle.marginBottom = scrollbarWidth + 'px';
-              bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
-            } else {
-              innerBodyStyle.overflowX = 'auto';
-            }
-          } else {
-            //内容少，不用显示滚动条
-            if (this.domWidthDiff > 0) {
-              headStyle.overflowX = 'hidden';
-            }
-            headStyle.marginBottom = '0px';
-          }
-        } else {
-          if (fixed) {
-            if (this.domWidthDiff > 0) {
-              headStyle.overflow = 'hidden';
-              innerBodyStyle.overflowX = 'auto'; //兼容expand场景、子表格含有固定列的场景
-            } else {
-              if (this.computeWidth > this.contentDomWidth) {
-                bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
-                var userAgent = navigator.userAgent; // 火狐，IE浏览器，固定表格跟随resize事件产生的滚动条隐藏
-                var isFF = userAgent.indexOf("Firefox") > -1;
-                var isIE = !!window.ActiveXObject || "ActiveXObject" in window;
-                if (isFF || isIE) {
-                  // innerBodyStyle.overflowX = 'hidden';
-                  delete innerBodyStyle.overflowX;
-                }
-              }
-            }
-          } else {
-            // 没有数据时，表头滚动条隐藏问题
-            if (data.length == 0 && this.domWidthDiff < 0) {
-              headStyle.marginBottom = '0px';
-            } else {
-              headStyle.marginBottom = '-' + scrollbarWidth + 'px';
-            }
-          }
-        }
-      }
+      // const scrollbarWidth = this.scrollbarWidth;
+      // if (scrollbarWidth >= 0) {
+      //   (fixed ? bodyStyle : headStyle).paddingBottom = '0px';
+      //   //显示表头滚动条
+      //   if(headerScroll){
+      //     if(fixed){
+      //
+      //      if(this.domWidthDiff <= 0){
+      //         headStyle.marginBottom = `${scrollbarWidth}px`;
+      //         bodyStyle.marginBottom = `-${scrollbarWidth}px`;
+      //       }else{
+      //         innerBodyStyle.overflowX = 'auto';
+      //       }
+      //     }else{
+      //          //内容少，不用显示滚动条
+      //          if(this.domWidthDiff > 0){
+      //           headStyle.overflowX = 'hidden';
+      //         }
+      //       headStyle.marginBottom = `0px`;
+      //     }
+      //   }else{
+      //     if(fixed){
+      //       if(this.domWidthDiff > 0){
+      //         headStyle.overflow = 'hidden';
+      //         innerBodyStyle.overflowX = 'auto'; //兼容expand场景、子表格含有固定列的场景
+      //       }else{
+      //         // 海龙为了解决固定右侧滚动条Firefox下的现象问题，解决方案不合适，暂时不用，还原
+      //         // if (this.computeWidth > this.contentDomWidth) {
+      //         //   bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
+      //         //   const userAgent = navigator.userAgent; // 火狐，IE浏览器，固定表格跟随resize事件产生的滚动条隐藏
+      //         //   const isFF = userAgent.indexOf("Firefox") > -1;
+      //         //   const isIE = !!window.ActiveXObject || "ActiveXObject" in window
+      //         //   if (isFF || isIE) {
+      //         //     // innerBodyStyle.overflowX = 'hidden';
+      //         //     delete innerBodyStyle.overflowX
+      //         //   }
+      //         // }
+      //         bodyStyle.marginBottom = `-${scrollbarWidth}px`;
+      //       }
+      //
+      //     }else{
+      //         // // 没有数据时，表头滚动条隐藏问题
+      //         // if(data.length == 0 && this.domWidthDiff < 0){
+      //         //   headStyle.marginBottom = '0px';
+      //         // }else{
+      //         //   headStyle.marginBottom = `-${scrollbarWidth}px`;
+      //         // }
+      //
+      //     }
+      //
+      //   }
+      // }
     }
 
-    if (data.length == 0 && hideHeaderScroll) {
-      //支持 NCC 需求:表格无数据时，去掉表头滚动条 (https://github.com/iuap-design/tinper-bee/issues/207)
-      headStyle.marginBottom = '-' + this.scrollbarWidth + 'px';
+    // if(data.length == 0 && hideHeaderScroll){
+    //   //支持 NCC 需求:表格无数据时，去掉表头滚动条 (https://github.com/iuap-design/tinper-bee/issues/207)
+    //   headStyle.marginBottom = `-${this.scrollbarWidth}px`;
+    // }
+
+    //----------------水平滚动条的显示处理-------------
+    //没有数据时
+    if (data.length == 0) {
+      if (fixed) {
+        //固定列头部滚水平动条隐藏
+        headStyle.overflowX = 'hidden';
+      } else {
+        //中间列头部水平滚动条自动显示
+        headStyle.overflowX = 'auto';
+      }
+    } else {
+      //有数据时，头部水平滚动条隐藏
+      headStyle.overflowX = 'hidden';
+    }
+    //强制固定列和中间列隐藏头部水平滚动条，
+    if (hideHeaderScroll) {
+      headStyle.overflowX = 'hidden';
+    }
+
+    //---------------垂直滚动条的显示处理---------------
+    if (data.length == 0) {
+      bodyStyle.overflowY = 'hidden';
+      innerBodyStyle.overflowY = 'hidden';
+      headStyle.overflowY = 'hidden';
+    } else {
+      bodyStyle.overflowY = bodyStyle.overflowY || 'auto';
+      innerBodyStyle.overflowY = bodyStyle.overflowY;
+      headStyle.overflowY = innerBodyStyle.overflowY;
     }
 
     var renderTable = function renderTable() {
       var hasHead = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
       var hasBody = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+      var options = arguments[2];
+      var columns = options.columns,
+          fixed = options.fixed;
 
       var tableStyle = {};
       if (!fixed && scroll.x) {
+        //非固定列的中间表格
         // not set width, then use content fixed width
         if (scroll.x === true) {
           tableStyle.tableLayout = 'fixed';
         } else {
-          tableStyle.width = _this5.contentWidth - _this5.columnManager.getLeftColumnsWidth(_this5.contentWidth) - _this5.columnManager.getRightColumnsWidth(_this5.contentWidth);
+          // tableStyle.width = this.contentWidth - this.columnManager.getLeftColumnsWidth(this.contentWidth) - this.columnManager.getRightColumnsWidth(this.contentWidth);
+          tableStyle.width = scroll.x;
         }
       }
-      // 自动出现滚动条
-      if (!fixed && _this5.contentDomWidth < _this5.contentWidth) {
-        tableStyle.width = _this5.contentWidth - _this5.columnManager.getLeftColumnsWidth(_this5.contentWidth) - _this5.columnManager.getRightColumnsWidth(_this5.contentWidth);
-      }
-      if (_this5.bodyTable && !fixed && _this5.contentDomWidth === _this5.contentWidth) {
-        tableStyle.width = _this5.bodyTable.clientWidth;
-      }
+      // // 自动出现滚动条
+      // if ( !fixed && this.contentDomWidth < this.contentWidth) {
+      //   tableStyle.width = this.contentWidth - this.columnManager.getLeftColumnsWidth(this.contentWidth) - this.columnManager.getRightColumnsWidth(this.contentWidth);
+      // }
+      // by gx
+      // if (this.bodyTable && !fixed && this.contentDomWidth === this.contentWidth) {
+      //   tableStyle.width = this.bodyTable.clientWidth
+      // }
       var tableBody = hasBody ? getBodyWrapper(_react2["default"].createElement(
         'tbody',
         { className: clsPrefix + '-tbody', onMouseLeave: _this5.onBodyMouseLeave },
@@ -1371,6 +1471,7 @@ var Table = function (_Component) {
     };
 
     var headTable = void 0;
+
     if (useFixedHeader) {
       headTable = _react2["default"].createElement(
         'div',
@@ -1384,38 +1485,28 @@ var Table = function (_Component) {
           onTouchStart: this.detectScrollTarget,
           onScroll: this.handleBodyScroll
         },
-        renderTable(true, false)
+        renderTable(true, false, options)
       );
     }
-    var BodyTable = _react2["default"].createElement(
+    var BodyTable = //中间表格的body
+    _react2["default"].createElement(
       'div',
       {
         className: clsPrefix + '-body',
         style: bodyStyle,
+        ref: function ref(el) {
+          _this5.bodyTable = el;
+        },
         onMouseOver: this.detectScrollTarget,
         onTouchStart: this.detectScrollTarget,
-        ref: function ref(el) {
-          _this5.bodyTableOuter = el;
-        },
+        onScroll: this.handleBodyScroll,
         onMouseLeave: this.onBodyMouseLeave
       },
-      this.renderDragHideTable(),
-      _react2["default"].createElement(
-        'div',
-        { className: 'scroll-container', onScroll: this.handleBodyScroll, ref: function ref(el) {
-            _this5.bodyTable = el;
-          }, style: _extends({}, bodyStyle) },
-        renderTable(!useFixedHeader)
-      )
+      renderTable(!useFixedHeader, true, options)
     );
 
     if (fixed && columns.length) {
-      var refName = void 0;
-      if (columns[0].fixed === 'left' || columns[0].fixed === true) {
-        refName = 'fixedColumnsBodyLeft';
-      } else if (columns[0].fixed === 'right') {
-        refName = 'fixedColumnsBodyRight';
-      }
+      //固定表格的body
       delete bodyStyle.overflowX;
       delete bodyStyle.overflowY;
       BodyTable = _react2["default"].createElement(
@@ -1429,17 +1520,19 @@ var Table = function (_Component) {
           {
             style: _extends({}, innerBodyStyle),
             className: clsPrefix + '-body-inner',
-            ref: function ref(el) {
-              return _this5[refName + 'Outer'] = el;
+            ref: function ref(_ref) {
+              switch (fixed) {
+                case "left":
+                  _this5.fixedLeftBodyInner = _ref;break;
+                case "right":
+                  _this5.fixedRightBodyInner = _ref;break;
+              }
             },
             onMouseOver: this.detectScrollTarget,
-            onTouchStart: this.detectScrollTarget
+            onTouchStart: this.detectScrollTarget,
+            onScroll: this.handleBodyScroll
           },
-          _react2["default"].createElement(
-            'div',
-            { className: 'fixed-scroll-container', ref: refName, style: _extends({}, innerBodyStyle), onScroll: this.handleBodyScroll },
-            renderTable(!useFixedHeader)
-          )
+          renderTable(!useFixedHeader, true, options)
         )
       );
     }
@@ -1459,9 +1552,9 @@ var Table = function (_Component) {
   };
 
   Table.prototype.getTitle = function getTitle() {
-    var _props6 = this.props,
-        title = _props6.title,
-        clsPrefix = _props6.clsPrefix;
+    var _props5 = this.props,
+        title = _props5.title,
+        clsPrefix = _props5.clsPrefix;
 
     return title ? _react2["default"].createElement(
       'div',
@@ -1471,9 +1564,9 @@ var Table = function (_Component) {
   };
 
   Table.prototype.getFooter = function getFooter() {
-    var _props7 = this.props,
-        footer = _props7.footer,
-        clsPrefix = _props7.clsPrefix;
+    var _props6 = this.props,
+        footer = _props6.footer,
+        clsPrefix = _props6.clsPrefix;
 
     return footer ? _react2["default"].createElement(
       'div',
@@ -1483,10 +1576,10 @@ var Table = function (_Component) {
   };
 
   Table.prototype.getEmptyText = function getEmptyText() {
-    var _props8 = this.props,
-        defaultEmptyText = _props8.emptyText,
-        clsPrefix = _props8.clsPrefix,
-        data = _props8.data;
+    var _props7 = this.props,
+        defaultEmptyText = _props7.emptyText,
+        clsPrefix = _props7.clsPrefix,
+        data = _props7.data;
 
     var locale = (0, _tool.getComponentLocale)(this.props, this.context, 'Table', function () {
       return _i18n2["default"];
@@ -1524,37 +1617,53 @@ var Table = function (_Component) {
     }
     return null;
   };
+  // getStyle(obj,attr){
+  //   if(obj.currentStyle){
+  //       return obj.currentStyle[attr];
+  //   }
+  //   else{
+  //       return document.defaultView.getComputedStyle(obj,null)[attr];
+  //   }
+  // }
+  // getTdPadding=(td)=>{
+  //   let tdPaddingTop = this.getStyle(td,'paddingTop'),tdPaddingBottom = this.getStyle(td,'paddingBottom'),
+  //   tdBorderTop = this.getStyle(td,'borderTopWidth'),tdBorderBottom = this.getStyle(td,'borderBottomWidth');
+  //   return Number(tdPaddingTop.replace('px',''))+Number(tdPaddingBottom.replace('px',''))+Number(tdBorderTop.replace('px',''))+Number(tdBorderBottom.replace('px',''))
+  //
+  // }
 
-  Table.prototype.getStyle = function getStyle(obj, attr) {
-    if (obj.currentStyle) {
-      return obj.currentStyle[attr];
-    } else {
-      return document.defaultView.getComputedStyle(obj, null)[attr];
-    }
-  };
+  // getFlatRecords = data => {
+  //   var result = []
+  //   for (var i = 0; i < data.length; i++) {
+  //     result.push(data[i])
+  //     if ((data[i].children || []).length) {
+  //       result = result.concat(this.getFlatRecords(data[i].children))
+  //     }
+  //   }
+  //   return result
+  // };
+  //add by gx 供外部数据变更时调用此方法同步内容行高度
 
-  Table.prototype.manualSyncFixedTableRowHeight = function manualSyncFixedTableRowHeight() {
-    this.dataChanged = true;
-    this.syncFixedTableRowHeight();
-  };
 
   Table.prototype.syncFixedTableRowHeight = function syncFixedTableRowHeight() {
+    var _this6 = this;
+
     //this.props.height、headerHeight分别为用户传入的行高和表头高度，如果有值，所有行的高度都是固定的，主要为了避免在千行数据中有固定列时获取行高度有问题
-    var _props9 = this.props,
-        clsPrefix = _props9.clsPrefix,
-        height = _props9.height,
-        headerHeight = _props9.headerHeight,
-        columns = _props9.columns,
-        heightConsistent = _props9.heightConsistent,
-        bodyDisplayInRow = _props9.bodyDisplayInRow,
-        lazyLoad = _props9.lazyLoad,
-        syncFixedRowHeight = _props9.syncFixedRowHeight;
+    var _props8 = this.props,
+        clsPrefix = _props8.clsPrefix,
+        height = _props8.height,
+        headerHeight = _props8.headerHeight,
+        columns = _props8.columns,
+        heightConsistent = _props8.heightConsistent,
+        bodyDisplayInRow = _props8.bodyDisplayInRow,
+        lazyLoad = _props8.lazyLoad,
+        syncFixedRowHeight = _props8.syncFixedRowHeight;
 
     var headRows = this.headTable ? this.headTable.querySelectorAll('thead') : this.bodyTable.querySelectorAll('thead');
     var expandedRows = this.bodyTable.querySelectorAll('.' + clsPrefix + '-expanded-row') || [];
     var bodyRows = this.bodyTable.querySelectorAll('.' + clsPrefix + '-row') || [];
-    var leftBodyRows = !this.dataChanged && this.refs.fixedColumnsBodyLeft && this.refs.fixedColumnsBodyLeft.querySelectorAll('.' + clsPrefix + '-row') || [];
-    var rightBodyRows = !this.dataChanged && this.refs.fixedColumnsBodyRight && this.refs.fixedColumnsBodyRight.querySelectorAll('.' + clsPrefix + '-row') || [];
+    var leftBodyRows = !this.dataChanged && this.fixedLeftBodyInner && this.fixedLeftBodyInner.querySelectorAll('.' + clsPrefix + '-row') || [];
+    var rightBodyRows = !this.dataChanged && this.fixedRightBodyInner && this.fixedRightBodyInner.querySelectorAll('.' + clsPrefix + '-row') || [];
     this.dataChanged = false;
     var fixedColumnsHeadRowsHeight = [].map.call(headRows, function (row) {
       var height = headerHeight;
@@ -1563,38 +1672,44 @@ var Table = function (_Component) {
       }
       return headerHeight ? height : parseInt(row.getBoundingClientRect().height) || 'auto';
     });
-    var flatRecords = this.getFlatRecords(this.props.data || []);
-    var fixedColumnsBodyRowsHeight = [].map.call(bodyRows, function (row, index) {
-      var rsHeight = height;
-      if (bodyDisplayInRow && rsHeight) {
-        return rsHeight;
-      } else {
-        var rowKey = row.getAttribute('data-row-key');
-        var record = flatRecords.find(function (record) {
-          return record.key === rowKey;
-        }) || {};
-        var leafKey = 'isleaf' in record ? 'isleaf' : '_isLeaf' in record ? '_isLeaf' : null; // ncc传递这俩属性区分是否是子节点
-        var isLeaf = leafKey && record[leafKey] === true;
-        if (isLeaf) {
-          return Number(Number(row.getBoundingClientRect().height).toFixed(2)) || 'auto';
-        }
-        // 为了提高性能，默认获取主表的高度，但是有的场景中固定列的高度比主表的高度高，所以提供此属性，会统计所有列的高度取最大的，设置
-        // 内容折行显示，并又设置了 height 的情况下，也要获取主表高度
-        if (heightConsistent || !bodyDisplayInRow && rsHeight && syncFixedRowHeight) {
-          var leftHeight = void 0,
-              rightHeight = void 0,
-              currentHeight = void 0,
-              maxHeight = void 0;
-          leftHeight = leftBodyRows[index] ? Number(leftBodyRows[index].getBoundingClientRect().height).toFixed(2) : 0; // 有些浏览器中，取到的高度是小数，直接parseInt有问题，保留两位小数处理
-          rightHeight = rightBodyRows[index] ? Number(rightBodyRows[index].getBoundingClientRect().height).toFixed(2) : 0;
-          currentHeight = Number(row.getBoundingClientRect().height).toFixed(2);
-          maxHeight = Math.max(leftHeight, rightHeight, currentHeight);
-          return maxHeight || 'auto';
-        } else {
-          return Number(Number(row.getBoundingClientRect().height).toFixed(2)) || 'auto';
-        }
-      }
+    // const flatRecords = this.getFlatRecords(this.props.data || [])
+    // const fixedColumnsBodyRowsHeight = [].map.call(
+    //   bodyRows, (row,index) =>{
+    //     let rsHeight = height;
+    //     if(bodyDisplayInRow && rsHeight){
+    //       return rsHeight;
+    //     }else{
+    //       const rowKey = row.getAttribute('data-row-key')
+    //       const record = flatRecords.find(record => record.key === rowKey) || {}
+    //       const leafKey = 'isleaf' in record ? 'isleaf' : '_isLeaf' in record ? '_isLeaf' : null // ncc传递这俩属性区分是否是子节点
+    //       const isLeaf = leafKey && record[leafKey] === true
+    //       if (isLeaf) {
+    //         return Number((Number(row.getBoundingClientRect().height)).toFixed(2)) || 'auto';
+    //       }
+    //       // 为了提高性能，默认获取主表的高度，但是有的场景中固定列的高度比主表的高度高，所以提供此属性，会统计所有列的高度取最大的，设置
+    //       // 内容折行显示，并又设置了 height 的情况下，也要获取主表高度
+    //       if(heightConsistent || (!bodyDisplayInRow && rsHeight && syncFixedRowHeight)){
+    //         let leftHeight,rightHeight,currentHeight,maxHeight;
+    //         leftHeight = leftBodyRows[index]?Number(leftBodyRows[index].getBoundingClientRect().height).toFixed(2):0; // 有些浏览器中，取到的高度是小数，直接parseInt有问题，保留两位小数处理
+    //         rightHeight = rightBodyRows[index]?Number(rightBodyRows[index].getBoundingClientRect().height).toFixed(2):0;
+    //         currentHeight = Number(row.getBoundingClientRect().height).toFixed(2)
+    //         maxHeight = Math.max(leftHeight,rightHeight,currentHeight);
+    //         return maxHeight || 'auto'
+    //       }else{
+    //         return Number((Number(row.getBoundingClientRect().height)).toFixed(2)) || 'auto';
+    //       }
+    //     }
+    //   }
+    // );
+    //add by zzj
+    var getMax = function getMax(a, b, c) {
+      //求三个数的最大值
+      return a > b ? a > c ? a : c : b > c ? b : c;
+    };
+    var fixedColumnsBodyRowsHeight = [].map.call(bodyRows, function (row, i) {
+      return getMax(leftBodyRows.length ? parseInt(leftBodyRows[i].getBoundingClientRect().height) : 0, rightBodyRows.length ? parseInt(rightBodyRows[i].getBoundingClientRect().height) : 0, parseInt(row.getBoundingClientRect().height));
     });
+    // console.log("AAA--->fixedColumnsBodyRowsHeight->"+fixedColumnsBodyRowsHeight)
     var fixedColumnsExpandedRowsHeight = {};
     // expandedRows为NodeList  Array.prototype.forEach ie 下报错 对象不支持 “forEach” 方法
     expandedRows.length > 0 && Array.prototype.forEach.call(expandedRows, function (row) {
@@ -1607,19 +1722,38 @@ var Table = function (_Component) {
       //   let trueheight = parseInt(row.querySelectorAll('.u-table')[0].getBoundingClientRect().height);
       //   exHeight = trueheight+tdPadding;
       // } catch (error) {
-
       // }
       fixedColumnsExpandedRowsHeight[parentRowKey] = parseInt(exHeight);
     });
     if ((0, _shallowequal2["default"])(this.state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) && (0, _shallowequal2["default"])(this.state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight) && (0, _shallowequal2["default"])(this.state.fixedColumnsExpandedRowsHeight, fixedColumnsExpandedRowsHeight)) {
       return;
     }
-
-    this.setState({
-      fixedColumnsHeadRowsHeight: fixedColumnsHeadRowsHeight,
-      fixedColumnsBodyRowsHeight: fixedColumnsBodyRowsHeight,
-      fixedColumnsExpandedRowsHeight: fixedColumnsExpandedRowsHeight
-    });
+    //add by zzj
+    clearTimeout(this.timer);
+    this.timer = setTimeout(function () {
+      _this6.setState({
+        fixedColumnsHeadRowsHeight: fixedColumnsHeadRowsHeight,
+        fixedColumnsBodyRowsHeight: fixedColumnsBodyRowsHeight,
+        fixedColumnsExpandedRowsHeight: fixedColumnsExpandedRowsHeight
+      }, function () {
+        var center = _this6.bodyTable;
+        var left = _this6.fixedLeftBodyInner;
+        var right = _this6.fixedRightBodyInner;
+        //滚动条在最底部并且表格行高变化时，inner部分scrollTop数值不一致造成的表格没对齐。
+        if (_this6.columnManager.isAnyColumnsRightFixed()) {
+          if (center && right && center.scrollTop !== right.scrollTop) {
+            center.scrollTop = right.scrollTop;
+          }
+          if (center && left && left.scrollTop !== right.scrollTop) {
+            left.scrollTop = right.scrollTop;
+          }
+        } else {
+          if (center && left && center.scrollTop !== left.scrollTop) {
+            left.scrollTop = center.scrollTop;
+          }
+        }
+      });
+    }, 10);
   };
 
   Table.prototype.resetScrollX = function resetScrollX() {
@@ -1632,10 +1766,10 @@ var Table = function (_Component) {
   };
 
   Table.prototype.findExpandedRow = function findExpandedRow(record, index) {
-    var _this6 = this;
+    var _this7 = this;
 
     var rows = this.getExpandedRows().filter(function (i) {
-      return i === _this6.getRowKey(record, index);
+      return i === _this7.getRowKey(record, index);
     });
     return rows[0];
   };
@@ -1662,6 +1796,8 @@ var Table = function (_Component) {
       this.scrollTarget = e.currentTarget;
     }
   };
+  //隐藏行上悬浮的自定义dom
+
 
   Table.prototype.hideHoverDom = function hideHoverDom(e) {
     if (this.hoverDom) {
@@ -1669,96 +1805,108 @@ var Table = function (_Component) {
     }
   };
 
+  //处理表格体内滚动
+
+
   Table.prototype.handleBodyScroll = function handleBodyScroll(e) {
-    var headTable = this.headTable;
-    var _props10 = this.props,
-        _props10$scroll = _props10.scroll,
-        scroll = _props10$scroll === undefined ? {} : _props10$scroll,
-        clsPrefix = _props10.clsPrefix,
-        handleScrollY = _props10.handleScrollY,
-        handleScrollX = _props10.handleScrollX,
-        onBodyScroll = _props10.onBodyScroll;
-    var _refs = this.refs,
-        fixedColumnsBodyLeft = _refs.fixedColumnsBodyLeft,
-        fixedColumnsBodyRight = _refs.fixedColumnsBodyRight;
+    var _this8 = this;
+
+    var _props9 = this.props,
+        _props9$scroll = _props9.scroll,
+        scroll = _props9$scroll === undefined ? {} : _props9$scroll,
+        clsPrefix = _props9.clsPrefix,
+        handleScrollY = _props9.handleScrollY,
+        handleScrollX = _props9.handleScrollX,
+        onBodyScroll = _props9.onBodyScroll;
+    var headTable = this.headTable,
+        bodyTable = this.bodyTable,
+        bottomTable = this.bottomTable,
+        fixedLeftBodyInner = this.fixedLeftBodyInner,
+        fixedRightBodyInner = this.fixedRightBodyInner;
     // Prevent scrollTop setter trigger onScroll event
     // http://stackoverflow.com/q/1386696
 
-    if (e.currentTarget !== e.target) {
+    if (this.scrollTarget && e.target !== this.scrollTarget && e.target !== headTable) {
+      //仅body区域滚动生效，头部区域滚动无需处理
       return;
     }
+    //水平滚动的逻辑处理
     if (e.target.scrollLeft !== this.lastScrollLeft) {
-      var position = '';
-      if (e.target === this.bodyTable && headTable) {
-        headTable.scrollLeft = e.target.scrollLeft;
-      } else if (e.target === headTable && this.bodyTable) {
-        this.bodyTable.scrollLeft = e.target.scrollLeft;
+      if (e.target === bodyTable) {
+        //中间内容中的水平滚动
+        if (headTable) headTable.scrollLeft = e.target.scrollLeft;
+        if (bottomTable) bottomTable.scrollLeft = e.target.scrollLeft;
+      } else if (e.target === headTable && bodyTable) {
+        bodyTable.scrollLeft = e.target.scrollLeft;
       }
       if (e.target.scrollLeft === 0) {
-        position = 'left';
+        this.setState({ scrollPosition: 'left' });
       } else if (e.target.scrollLeft + 1 >= e.target.querySelector('table').getBoundingClientRect().width - e.target.getBoundingClientRect().width) {
-        position = 'right';
+        this.setState({ scrollPosition: 'right' });
       } else if (this.state.scrollPosition !== 'middle') {
-        position = 'middle';
-      }
-      if (position) {
-        (0, _componentClasses2["default"])(this.contentTable).remove(new RegExp('^' + clsPrefix + '-scroll-position-.+$')).add(clsPrefix + '-scroll-position-' + position);
+        this.setState({ scrollPosition: 'middle' });
       }
       if (handleScrollX) {
+        //触发props.handleScrollX
         (0, _utils.debounce)(handleScrollX(e.target.scrollLeft, this.treeType), 300);
       }
+      this.lastScrollLeft = e.target.scrollLeft; //记录最后一次水平滚动位置
     }
-    // console.log('lastScrollTop--'+this.lastScrollTop+'--eventScrollTop--'+ e.target.scrollTop);
-    if (scroll.y && this.lastScrollTop != e.target.scrollTop && e.target !== headTable) {
-      if (fixedColumnsBodyLeft && e.target !== fixedColumnsBodyLeft) {
-        fixedColumnsBodyLeft.scrollTop = e.target.scrollTop;
+    //垂直滚动的逻辑处理
+    if (this.lastScrollTop !== e.target.scrollTop) {
+      if (fixedLeftBodyInner && e.target !== fixedLeftBodyInner) {
+        fixedLeftBodyInner.scrollTop = e.target.scrollTop;
       }
-      if (fixedColumnsBodyRight && e.target !== fixedColumnsBodyRight) {
-        fixedColumnsBodyRight.scrollTop = e.target.scrollTop;
+      if (fixedRightBodyInner && e.target !== fixedRightBodyInner) {
+        fixedRightBodyInner.scrollTop = e.target.scrollTop;
       }
-      if (this.bodyTable && e.target !== this.bodyTable) {
-        this.bodyTable.scrollTop = e.target.scrollTop;
+      if (bodyTable && e.target !== bodyTable) {
+        bodyTable.scrollTop = e.target.scrollTop;
       }
-      if (this.hoverDom) {
-        this.hoverDom.style.display = 'none';
+      //注意快速滚动时将行的hover效果隐藏，timeout之后还原，以解决固定列情况下表格滚动时hover效果错位的问题。
+      if (!this.state.currentHoverKey) {
+        this.store.setState({ currentHoverKey: null });
+        clearTimeout(this.scrollHoverKeyTimer);
+        this.scrollHoverKeyTimer = setTimeout(function () {
+          _this8.store.setState({ currentHoverKey: _this8.hoverKey });
+        }, 100);
       }
-      this.lastScrollTop = e.target.scrollTop;
+      this.hideHoverDom(e); //隐藏外部自定义悬浮dom
+      this.lastScrollTop = e.target.scrollTop; //记录最后一次垂直滚动位置
       if (handleScrollY) {
+        //触发props.handleScrollY
         (0, _utils.debounce)(handleScrollY(this.lastScrollTop, this.treeType, onBodyScroll), 300);
       } else {
-        //滚动回调
-        onBodyScroll(this.lastScrollTop);
+        onBodyScroll(this.lastScrollTop); //触发props.onBodyScroll滚动回调
       }
     }
-
-    // Remember last scrollLeft for scroll direction detecting.
-    this.lastScrollLeft = e.target.scrollLeft;
   };
 
   Table.prototype.handleRowHover = function handleRowHover(isHover, key, event, currentIndex, propsRecord) {
-    var _this7 = this;
+    var _this9 = this;
 
     //增加新的API，设置是否同步Hover状态，提高性能，避免无关的渲染
-    var _props11 = this.props,
-        syncHover = _props11.syncHover,
-        onRowHover = _props11.onRowHover,
-        data = _props11.data,
-        lazyLoad = _props11.lazyLoad;
+    var _props10 = this.props,
+        syncHover = _props10.syncHover,
+        onRowHover = _props10.onRowHover,
+        data = _props10.data,
+        lazyLoad = _props10.lazyLoad;
     //fix:树形表，onRowHover返回参数异常
 
     var isTreeType = this.isTreeType;
 
     var record = isTreeType ? propsRecord : lazyLoad ? data.find(function (item, index) {
-      var rowKey = item.key ? item.key : _this7.getRowKey(item, index);
+      var rowKey = item.key ? item.key : _this9.getRowKey(item, index);
       return rowKey === key;
     }) : data[currentIndex];
+    this.hoverKey = key;
     // 固定列、或者含有hoverdom时情况下同步hover状态
     if (this.columnManager.isAnyColumnsFixed() && syncHover) {
-      this.hoverKey = key;
       this.store.setState({
         currentHoverKey: isHover ? key : null
       });
     }
+
     if (this.hoverDom) {
       if (isHover) {
         this.currentHoverKey = key;
@@ -1784,7 +1932,7 @@ var Table = function (_Component) {
   };
 
   Table.prototype.render = function render() {
-    var _this8 = this;
+    var _this10 = this;
 
     var _state3 = this.state,
         currentHoverRecord = _state3.currentHoverRecord,
@@ -1793,6 +1941,7 @@ var Table = function (_Component) {
     var props = this.props;
     var clsPrefix = props.clsPrefix;
     var hasFixedLeft = this.columnManager.isAnyColumnsLeftFixed();
+    var hasFixedRight = this.columnManager.isAnyColumnsRightFixed();
     var className = props.clsPrefix;
     if (props.className) {
       className += ' ' + props.className;
@@ -1834,10 +1983,13 @@ var Table = function (_Component) {
     if (hasFixedLeft) {
       className += ' has-fixed-left';
     }
+    if (hasFixedRight) {
+      className += ' has-fixed-right';
+    }
     return _react2["default"].createElement(
       'div',
       { className: className, style: props.style, ref: function ref(el) {
-          return _this8.contentTable = el;
+          return _this10.contentTable = el;
         },
         tabIndex: props.focusable && (props.tabIndex ? props.tabIndex : '0') },
       this.getTitle(),
@@ -1869,7 +2021,7 @@ var Table = function (_Component) {
         'div',
         { className: 'u-row-hover',
           onMouseEnter: this.onRowHoverMouseEnter, onMouseLeave: this.onRowHoverMouseLeave, ref: function ref(el) {
-            return _this8.hoverDom = el;
+            return _this10.hoverDom = el;
           } },
         currentHoverRecord ? props.hoverContent(currentHoverRecord, currentHoverIndex) : null
       )

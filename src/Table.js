@@ -104,7 +104,6 @@ const defaultProps = {
   setRowParentIndex:()=>{},
   tabIndex:'0',
   heightConsistent:false,
-  syncFixedRowHeight: false,
   size: 'md',
   rowDraggAble:false,
   hideDragHandle:false,
@@ -114,7 +113,8 @@ const defaultProps = {
   bodyDisplayInRow: true,
   headerDisplayInRow: true,
   showRowNum: false,
-  onPaste:()=>{}
+  onPaste:()=>{},
+  originWidth:null//做什么用??
 };
 
 const expandIconCellWidth = Number(43);
@@ -167,7 +167,6 @@ class Table extends Component {
     this.getFooter = this.getFooter.bind(this);
     this.getEmptyText = this.getEmptyText.bind(this);
     this.getHeaderRowStyle = this.getHeaderRowStyle.bind(this);
-    this.manualSyncFixedTableRowHeight = this.manualSyncFixedTableRowHeight.bind(this)
     this.syncFixedTableRowHeight = this.syncFixedTableRowHeight.bind(this);
     this.resetScrollX = this.resetScrollX.bind(this);
     this.findExpandedRow = this.findExpandedRow.bind(this);
@@ -180,8 +179,7 @@ class Table extends Component {
     this.tableUid = null;
     this.contentTable = null;
     this.leftColumnsLength  //左侧固定列的长度
-    this.centerColumnsLength  //非固定列的长度
-    this.columnsChildrenList = [];//复杂表头、所有叶子节点
+    // this.centerColumnsLength  //非固定列的长度// this.columnsChildrenList = [];//复杂表头、所有叶子节点
     this.dataChanged = false; // 数据是否改变
   }
   componentWillMount() {
@@ -196,15 +194,15 @@ class Table extends Component {
     setTimeout(this.resetScrollX, 300);
     //含有纵向滚动条
     // if(this.props.scroll.y){
-       this.scrollbarWidth = measureScrollbar();
+    //    this.scrollbarWidth = measureScrollbar(`.u-table`);
     // }
     //后续也放在recevice里面
     if (!this.props.originWidth) {
       this.computeTableWidth();
     }
     if (this.columnManager.isAnyColumnsFixed()) {
-      this.syncFixedTableRowHeight();
-
+      this.syncFixedTableRowHeight();//同步固定列的内容行高度
+      this.syncFixedTableScrollWidth();//同步固定列的滚动宽度
       const targetNode = this.contentTable
       if (targetNode) {
         this.resizeObserver = new ResizeObserver(() => {
@@ -213,11 +211,10 @@ class Table extends Component {
         this.resizeObserver.observe(targetNode)
       }
     }
-
   }
 
   componentWillReceiveProps(nextProps) {
-    let { hideDragHandle, rowDraggAble, showRowNum } = this.props;
+    let { hideDragHandle, rowDraggAble, showRowNum ,clsPrefix} = this.props;
     if ('data' in nextProps) {
       this.setState({
         data: nextProps.data,
@@ -230,7 +227,7 @@ class Table extends Component {
     }
     if (nextProps.columns && nextProps.columns !== this.props.columns) {
       this.columnManager.reset(nextProps.columns, null, showRowNum, !hideDragHandle && rowDraggAble); // 加入this.props.showRowNum参数
-      if(nextProps.columns.length !== this.props.columns.length && this.refs && this.bodyTable){
+      if(nextProps.columns.length !== this.props.columns.length && this.bodyTable){
          this.scrollTop = this.bodyTable.scrollTop;
       }
     } else if (nextProps.children !== this.props.children) {
@@ -244,7 +241,7 @@ class Table extends Component {
     // fix:模态框中使用table，计算的滚动条宽度为0的bug
     // fix:表格首次渲染时 display:none，再显示时，未重新计算，导致表行出现错位的bug
     if(this.scrollbarWidth<=0 && this.props.scroll.y){
-      this.scrollbarWidth = measureScrollbar();
+      this.scrollbarWidth = measureScrollbar(`.${clsPrefix}`);
     }
     if (!nextProps.originWidth) {
       this.computeTableWidth();
@@ -262,7 +259,8 @@ class Table extends Component {
     // todo: IE 大数据渲染，行高不固定，且设置了 heightConsistent={true} 时，滚动加载操作会导致 ie11 浏览器崩溃
     // https://github.com/tinper-bee/bee-table/commit/bd2092cdbaad236ff89477304e58dea93325bf09
     if(this.columnManager.isAnyColumnsFixed()) {
-      this.syncFixedTableRowHeight();
+      debounce(this.syncFixedTableRowHeight(),200);//同步固定列内容行的高度
+      debounce(this.syncFixedTableScrollWidth(),200);//同步固定列的滚动宽度
     }
 
     //适应模态框中表格、以及父容器宽度变化的情况
@@ -271,8 +269,8 @@ class Table extends Component {
       this.firstDid = false;//避免重复update
     }
     if(this.scrollTop > -1){
-      this.refs.fixedColumnsBodyLeft && ( this.refs.fixedColumnsBodyLeft.scrollTop = this.scrollTop);
-      this.refs.fixedColumnsBodyRight && ( this.refs.fixedColumnsBodyRight.scrollTop = this.scrollTop);
+      this.fixedLeftBodyInner && ( this.fixedLeftBodyInner.scrollTop = this.scrollTop);
+      this.fixedRightBodyInner && ( this.fixedRightBodyInner.scrollTop = this.scrollTop);
       this.bodyTable.scrollTop = this.scrollTop;
       this.scrollTop = -1;
     }
@@ -311,33 +309,34 @@ class Table extends Component {
       }
     }
     // 是否传入 scroll中的y属性，如果传入判断是否是整数，如果是则进行比较 。bodyTable 的clientHeight进行判断
-    this.isShowScrollY();
-    if (this.bodyTable) {
-      const currentOverflowX = window.getComputedStyle(this.bodyTable).overflowX;
-      if (this.props.scroll.x && currentOverflowX !== 'scroll') {
-        // 此处应该对比一下实际的
-        if (this.computeWidth > this.contentDomWidth) {
-          this.bodyTable.style.overflowX = 'scroll';
-        }
-      }
-    }
-    let scrollContainerWidth = window.getComputedStyle(this.bodyTableOuter.querySelector('.scroll-container')).width; // scroll-container层元素的宽度
-    let scrollContainerTableWidth =  this.bodyTableOuter.querySelector('.table-bordered').style.width; // scroll-container内层table元素的宽度
-    // 有左右固定列时，scroll-container因为有竖直滚动条，使得scroll-container实际宽度（不包括滚动条的宽度）小于内部table宽度出现水平方向滚动条，导致滚动到底部不对齐
-    if ((parseFloat(scrollContainerWidth) >= parseFloat(scrollContainerTableWidth)) && (this.columnManager.leftLeafColumns().length > 0 || this.columnManager.rightLeafColumns().length > 0)) {
-      this.bodyTable.style.overflowX = 'hidden';
-    } else {
-      this.bodyTable.style.overflowX = 'auto';
-    }
-    if (this.bodyTableOuter) { // 隐藏几个不需要真正滚动的父元素的滚动条
-      this.bodyTableOuter.style.overflowY = 'hidden'
-    }
-    if (this.fixedColumnsBodyLeftOuter) {
-      this.fixedColumnsBodyLeftOuter.style.overflowY = 'hidden'
-    }
-    if (this.fixedColumnsBodyRightOuter) {
-      this.fixedColumnsBodyRightOuter.style.overflowY = 'hidden'
-    }
+    // this.isShowScrollY();
+    // gx为了解决底部滚动条显示的问题
+    // if (this.bodyTable) {
+    //   const currentOverflowX = window.getComputedStyle(this.bodyTable).overflowX;
+    //   if (this.props.scroll.x && currentOverflowX !== 'scroll') {
+    //     // 此处应该对比一下实际的
+    //     if (this.computeWidth > this.contentDomWidth) {
+    //       this.bodyTable.style.overflowX = 'scroll';
+    //     }
+    //   }
+    // }
+    // let scrollContainerWidth = window.getComputedStyle(this.bodyTableOuter.querySelector('.scroll-container')).width; // scroll-container层元素的宽度
+    // let scrollContainerTableWidth =  this.bodyTableOuter.querySelector('.table-bordered').style.width; // scroll-container内层table元素的宽度
+    // // 有左右固定列时，scroll-container因为有竖直滚动条，使得scroll-container实际宽度（不包括滚动条的宽度）小于内部table宽度出现水平方向滚动条，导致滚动到底部不对齐
+    // if ((parseFloat(scrollContainerWidth) >= parseFloat(scrollContainerTableWidth)) && (this.columnManager.leftLeafColumns().length > 0 || this.columnManager.rightLeafColumns().length > 0)) {
+    //   this.bodyTable.style.overflowX = 'hidden';
+    // } else {
+    //   this.bodyTable.style.overflowX = 'auto';
+    // }
+    // if (this.bodyTableOuter) { // 隐藏几个不需要真正滚动的父元素的滚动条
+    //   this.bodyTableOuter.style.overflowY = 'hidden'
+    // }
+    // if (this.fixedColumnsBodyLeftOuter) {
+    //   this.fixedColumnsBodyLeftOuter.style.overflowY = 'hidden'
+    // }
+    // if (this.fixedColumnsBodyRightOuter) {
+    //   this.fixedColumnsBodyRightOuter.style.overflowY = 'hidden'
+    // }
   }
 
   componentWillUnmount() {
@@ -368,7 +367,7 @@ class Table extends Component {
     div.id = uid;
     this.contentTable.appendChild(div);
   }
-
+  //计算表格宽度 --- 这块有必要？待确认 待废除 zzj
   computeTableWidth() {
     let {expandIconAsCell} = this.props;
     //如果用户传了scroll.x按用户传的为主
@@ -415,23 +414,67 @@ class Table extends Component {
     if(y){
       const bodyH = this.bodyTable.clientHeight;
       const bodyContentH = this.bodyTable.querySelector('table').clientHeight;
-      const rightBodyTable = this.refs.fixedColumnsBodyRight;
-      // const leftBodyTable = this.refs.fixedColumnsBodyLeft;
+      const rightBodyTable = this.fixedRightBodyInner;
+      // const leftBodyTable = this.fixedLeftBodyInner;
       const overflowy = bodyContentH <= bodyH ? 'auto':'scroll';
       this.bodyTable.style.overflowY = overflowy;
 
       this.headTable.style.overflowY = overflowy;
       rightBodyTable && (rightBodyTable.style.overflowY = overflowy);
-      // 没有纵向滚动条时，表头横向滚动条根据内容动态显示 待验证
-      // if(overflowy == 'auto'){
-      //   this.fixedHeadTable && (this.fixedHeadTable.style.overflowX = 'auto');
-      //   rightBodyTable && (rightBodyTable.style.overflowX = 'auto');
-      //   leftBodyTable && (leftBodyTable.style.overflowX = 'auto');
-      // }
-
 
     }
   }
+  //同步固定列情况下部分区域滚动条出现引起的错位问题
+  syncFixedTableScrollWidth = ()=>{
+    const {clsPrefix} = this.props;
+    let tableDom = this.contentTable;
+    let tableContentDom = tableDom.querySelector(`.${clsPrefix}-content`);
+    let tableFixedRight = tableDom.querySelector(`.${clsPrefix}-fixed-right`);
+    let centerBodyDom = tableDom.querySelector(`.${clsPrefix}-scroll .${clsPrefix}-body`);
+    let centerHeadTableDom = tableDom.querySelector(`.${clsPrefix}-scroll .${clsPrefix}-header table`);
+    let bodyInnerDoms = tableDom.querySelectorAll(`.${clsPrefix}-body-outer .${clsPrefix}-body-inner`);
+    if(!this.scrollbarWidth)this.scrollbarWidth=measureScrollbar();
+    let scrollbarWidth = this.scrollbarWidth;
+    let hasCenterScrollY = !!(centerBodyDom.scrollHeight>centerBodyDom.clientHeight);//中间区域是否存在垂直滚动条
+    let hasCenterScrollX = !!(centerBodyDom.scrollWidth>centerBodyDom.clientWidth);//中间区域存在水平滚动条
+    //解决存在右侧固定列,中间区域垂直滚动条需要隐藏显示的问题
+    if(hasCenterScrollY&&this.columnManager.isAnyColumnsRightFixed()){
+      centerBodyDom.style.marginRight = scrollbarWidth?`-${scrollbarWidth}px`:8;
+    }else{
+      centerBodyDom.style.marginRight = 0;
+    }
+    //解决中间区域存在水平滚动条，左右固定区域无法跟其对齐的问题
+    if(bodyInnerDoms&&bodyInnerDoms.length){
+      [].forEach.call(bodyInnerDoms,(bodyInnerDom)=>{
+        if(hasCenterScrollX) {
+          bodyInnerDom.style.paddingBottom = `${scrollbarWidth}px`;
+        }else {
+          bodyInnerDom.style.paddingBottom = 0;
+        }
+      });
+    }
+    //解决中间存在水平滚动条头部区域无法对齐的问题
+    if(centerHeadTableDom){
+      let paddingWidth = 0;
+      if(hasCenterScrollY && hasCenterScrollX || hasCenterScrollY && !tableFixedRight)paddingWidth=paddingWidth+scrollbarWidth;
+      centerHeadTableDom.style.paddingRight=`${paddingWidth}px`;
+    }
+    //为表格追加是否存在滚动条的样式标识
+    if(tableContentDom){
+      if(hasCenterScrollX){
+        if(!tableContentDom.classList.contains('has-scroll-x'))tableContentDom.classList.add('has-scroll-x');
+      }else{
+        tableContentDom.classList.remove('has-scroll-x');
+      }
+      if(hasCenterScrollY){
+        if(this.headTable)this.headTable.style.overflowY='scroll';//中间区域有垂直滚动条，则头部也需要显示头部滚动条
+        if(!tableContentDom.classList.contains('has-scroll-y'))tableContentDom.classList.add('has-scroll-y');
+      }else{
+        tableContentDom.classList.remove('has-scroll-y');
+      }
+    }
+  }
+
   onExpandedRowsChange(expandedRowKeys) {
     if (!this.props.expandedRowKeys) {
       this.setState({ expandedRowKeys });
@@ -501,11 +544,11 @@ class Table extends Component {
   }
 
   getHeader(columns, fixed, leftFixedWidth, rightFixedWidth) {
-    const { lastShowIndex } = this.state;
+    // const { lastShowIndex } = this.state;
     const { filterDelay, onFilterChange, onFilterClear, filterable, showHeader, expandIconAsCell, clsPrefix, onDragStart, onDragEnter, onDragOver, onDrop,onDragEnd, draggable,
       onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey, minColumnWidth, headerHeight,afterDragColWidth,headerScroll ,bordered,onDropBorder,onDraggingBorder, bodyDisplayInRow, headerEventNoStop, onCopy} = this.props;
-    this.columnsChildrenList = []; //复杂表头拖拽，重新render表头前，将其置空
-    const rows = this.getHeaderRows(columns);
+    let columnsChildrenList = []; //复杂表头拖拽，重新render表头前，将其置空
+    const rows = this.getHeaderRows({columns,columnsChildrenList});
     if (expandIconAsCell && fixed !== 'right') {
       rows[0].unshift({
         key: 'u-table-expandIconAsCell',
@@ -514,29 +557,33 @@ class Table extends Component {
         rowSpan: rows.length,
         width: expandIconCellWidth
       });
-      this.columnsChildrenList.unshift({
+      columnsChildrenList.unshift({
         className: "u-table-expand-icon-column",
         key: "expand-icon"
       })
     }
+    if(fixed){
+      columnsChildrenList = columnsChildrenList.filter((col)=>col.fixed==fixed);//只获取对应的固定列
+    }else{
+      columnsChildrenList = columnsChildrenList.filter((col)=>!col.fixed);//只获取非固定的列
+    }
     const trStyle = headerHeight&&!fixed ? { height: headerHeight } : (fixed ? this.getHeaderRowStyle(columns, rows) : null);
     let drop = draggable ? { onDragStart, onDragOver, onDrop,onDragEnd, onDragEnter, draggable } : {};
     let dragBorder = dragborder ? { onMouseDown, onMouseMove, onMouseUp, dragborder, onThMouseMove, dragborderKey,onDropBorder,onDraggingBorder } : {};
-    let contentWidthDiff = 0;
-    //非固定表格,宽度不够时自动扩充
-    if (!fixed) {
-      contentWidthDiff = this.state.contentWidthDiff
-    }
+    // let contentWidthDiff = 0;
+    // //非固定表格,宽度不够时自动扩充
+    // if (!fixed) {
+    //   contentWidthDiff = this.state.contentWidthDiff
+    // }
     return showHeader ? (
       <TableHeader
         {...drop}
         {...dragBorder}
-        columnsChildrenList={this.columnsChildrenList}
+        columnsChildrenList={columnsChildrenList}
         locale={this.props.locale}
         minColumnWidth={minColumnWidth}
-        contentWidthDiff={contentWidthDiff}
-        contentWidth={this.contentWidth}
-        lastShowIndex={expandIconAsCell ? parseInt(lastShowIndex) + 1 : lastShowIndex}
+        // contentWidthDiff={contentWidthDiff}
+        // contentWidth={this.contentWidth}
         clsPrefix={clsPrefix}
         rows={rows}
         contentTable={this.contentTable}
@@ -560,7 +607,8 @@ class Table extends Component {
     ) : null;
   }
 
-  getHeaderRows(columns, currentRow = 0, rows) {
+  getHeaderRows(options) {
+    let {columns, currentRow = 0, rows,columnsChildrenList} = options;
     const { columnKey } = this.props;
     let { contentWidthDiff = 0, lastShowIndex = -1 } = this.state;
     let filterCol = [];
@@ -601,9 +649,9 @@ class Table extends Component {
         cell.onClick = column.onHeadCellClick;
       }
       if (column.children) {
-        this.getHeaderRows(column.children, currentRow + 1, rows);
+        this.getHeaderRows({columns:column.children,currentRow: currentRow + 1, rows,columnsChildrenList});
       } else {
-        this.columnsChildrenList.push(column); //复杂表头拖拽，所有叶子节点
+        columnsChildrenList&&columnsChildrenList.push(column); //复杂表头拖拽，所有叶子节点
       }
       if ('colSpan' in column) {
         cell.colSpan = column.colSpan;
@@ -785,6 +833,7 @@ class Table extends Component {
     const expandedRowRender = props.expandedRowRender;
     const expandRowByClick = props.expandRowByClick;
     const onPaste = props.onPaste;
+    const anyColumnsFixed = this.columnManager.isAnyColumnsFixed();
     const { fixedColumnsBodyRowsHeight } = this.state;
     let rst = [];
     let height;
@@ -799,8 +848,16 @@ class Table extends Component {
     const expandIconColumnIndex = props.expandIconColumnIndex
     if(props.lazyLoad && props.lazyLoad.preHeight && indent == 0){
       rst.push(
-        <TableRow onPaste={onPaste} containerWidth={this.contentDomWidth} isPre height={props.lazyLoad.preHeight} columns={[]} className='' key={'table_row_first'} store={this.store} visible = {true}/>
+        <TableRow onPaste={onPaste} height={props.lazyLoad.preHeight} columns={[]} className='' key={'table_row_first'} store={this.store} visible = {true}/>
       )
+    }
+    let leafColumns;
+    if (fixed === 'left') {
+      leafColumns = this.columnManager.leftLeafColumns();
+    } else if (fixed === 'right') {
+      leafColumns = this.columnManager.rightLeafColumns();
+    } else {
+      leafColumns = this.columnManager.leafColumns();
     }
     const lazyCurrentIndex =  props.lazyLoad && props.lazyLoad.startIndex ?props.lazyLoad.startIndex :0;
     const lazyParentIndex = props.lazyLoad && props.lazyLoad.startParentIndex ?props.lazyLoad.startParentIndex :0;
@@ -810,7 +867,7 @@ class Table extends Component {
       const record = data[i];
       const key = this.getRowKey(record, i);
       // 兼容 NCC 以前的业务逻辑，支持外部通过 record 中的 isleaf 字段，判断是否为叶子节点
-      typeof record['isleaf'] === 'boolean' && (record['_isLeaf'] = record['isleaf']);
+      record['_isLeaf'] = typeof record['isleaf'] === 'boolean' ? record['isleaf'] : record['_isLeaf'];
       // _isLeaf 字段是在 bigData 里添加的，只有层级树大数据场景需要该字段
       // _isLeaf 有三种取值情况：true / false / null。（Table内部字段）
       const _isLeaf = typeof record['_isLeaf'] === 'boolean' ? record['_isLeaf'] : null;
@@ -833,26 +890,26 @@ class Table extends Component {
         isHiddenExpandIcon = props.haveExpandIcon(record, i);
       }
 
-
-      const onHoverProps = {};
-
-      onHoverProps.onHover = this.handleRowHover;
-
-
-      if (props.bodyDisplayInRow && props.height) {
-        height = props.height
-      } else if(fixed || props.heightConsistent) {
-        height = fixedColumnsBodyRowsHeight[fixedIndex];
+      if(props.bodyDisplayInRow){//内容显示不换行，即显示为"..."
+        if(anyColumnsFixed){//存在固定列则强制同步行高度，以确保行不会错位
+          height = fixedColumnsBodyRowsHeight[fixedIndex];
+        }else{ //不存在固定列，则按指定高度呈现行
+          height = props.height || 40;
+        }
+      }else{//内容自适应行高
+        if(anyColumnsFixed){//存在固定列则强制同步行高度，以确保行不会错位
+          height = fixedColumnsBodyRowsHeight[fixedIndex];
+        }else{
+          //不存在固定列，则按内容高度自行呈现
+        }
       }
 
-      let leafColumns;
-      if (fixed === 'left') {
-        leafColumns = this.columnManager.leftLeafColumns();
-      } else if (fixed === 'right') {
-        leafColumns = this.columnManager.rightLeafColumns();
-      } else {
-        leafColumns = this.columnManager.leafColumns();
-      }
+      // if (props.bodyDisplayInRow && props.height) {
+      //   height = props.height
+      // } else if(fixed || props.heightConsistent) {
+      //   height = fixedColumnsBodyRowsHeight[fixedIndex];
+      // }
+
       let className = rowClassName(record, fixedIndex+lazyCurrentIndex, indent);
 
       //合计代码如果是最后一行并且有合计功能时，最后一行为合计列
@@ -893,7 +950,7 @@ class Table extends Component {
           onRowDoubleClick={onRowDoubleClick}
           height={height}
           isHiddenExpandIcon={isHiddenExpandIcon}
-          {...onHoverProps}
+          onHover={this.handleRowHover}
           key={"table_row_"+key+"_"+index}
           hoverKey={key}
           ref={rowRef}
@@ -942,7 +999,8 @@ class Table extends Component {
 
     if(props.lazyLoad && props.lazyLoad.sufHeight && indent == 0){
       rst.push(
-        <TableRow onPaste={onPaste} containerWidth={this.contentDomWidth} isSuf height={props.lazyLoad.sufHeight} key={'table_row_end'} columns={[]} className='' store={this.store} visible = {true}/>
+        <TableRow onPaste={onPaste} //containerWidth={this.contentDomWidth} isSuf //滚动loading相关的暂时不用
+                  height={props.lazyLoad.sufHeight} key={'table_row_end'} columns={[]} className='' store={this.store} visible = {true}/>
       )
     }
     if (!this.isTreeType) {
@@ -981,7 +1039,7 @@ class Table extends Component {
       contentWidthDiff = 0;
       leafColumns = this.columnManager.rightLeafColumns();
     } else {
-      leafColumns = this.columnManager.leafColumns();
+      leafColumns = this.columnManager.centerLeafColumns();
     }
     cols = cols.concat(leafColumns.map((c, i, arr) => {
       let fixedClass ='';
@@ -997,24 +1055,24 @@ class Table extends Component {
       if (!fixed && c.fixed) {
         fixedClass = ` ${this.props.clsPrefix}-row-fixed-columns-in-body`;
       }
-      return <col key={c.key} style={{ width: width, minWidth: c.width }} className={fixedClass}/>;
+      return <col key={c.key} style={{ width: width, minWidth: c.width }} className={fixedClass||null}/>;
     }));
-    return <colgroup id="bee-table-colgroup">{cols}</colgroup>;
+    return <colgroup className="u-table-colgroup">{cols}</colgroup>;
   }
 
-  renderDragHideTable = () => {
-    const { columns, dragborder, dragborderKey } = this.props;
-    if (!dragborder) return null;
-    let sum = 0;
-    return (<div id={`u-table-drag-hide-table-${dragborderKey}`} className={`${this.props.clsPrefix}-hiden-drag`} >
-      {
-        columns.map((da, i) => {
-          sum += da.width ? da.width : 0;
-          return (<div className={`${this.props.clsPrefix}-hiden-drag-li`} key={da + "_hiden_" + i} style={{ left: sum + "px" }}></div>);
-        })
-      }
-    </div>);
-  }
+  // renderDragHideTable = () => {
+  //   const { columns,clsPrefix, dragborder, dragborderKey } = this.props;
+  //   if (!dragborder) return null;
+  //   let sum = 0;
+  //   return (<div id={`u-table-drag-hide-table-${dragborderKey}`} className={`${clsPrefix}-hiden-drag`} >
+  //     {
+  //       columns.map((da, i) => {
+  //         sum += da.width ? parseInt(da.width) : 0;
+  //         return (<div className={`${clsPrefix}-hiden-drag-li`} key={da + "_hiden_" + i} style={{ left: sum + "px" }}></div>);
+  //       })
+  //     }
+  //   </div>);
+  // }
 
   getLeftFixedTable() {
     return this.getTable({
@@ -1032,23 +1090,24 @@ class Table extends Component {
 
   getTable(options = {}) {
     const { columns, fixed } = options;
-    const { clsPrefix, scroll = {}, getBodyWrapper, footerScroll,headerScroll,hideHeaderScroll = false,expandIconAsCell } = this.props;
-    let { useFixedHeader,data } = this.props;
-    const bodyStyle = { ...this.props.bodyStyle };  // 这里为什么不写在上面?
+    const { clsPrefix, data, scroll = {},getBodyWrapper, footerScroll,headerScroll,hideHeaderScroll = false,expandIconAsCell } = this.props;
+    let useFixedHeader = this.props.useFixedHeader; // let变量声明
+    let bodyStyle = { ...this.props.bodyStyle };  // 克隆一份
     const headStyle = {};
     const innerBodyStyle = {};
     const leftFixedWidth = this.columnManager.getLeftColumnsWidth(this.contentWidth);
     const rightFixedWidth = this.columnManager.getRightColumnsWidth(this.contentWidth);
 
-    let tableClassName = '';
-    //表格元素的宽度大于容器的宽度也显示滚动条
-    if (scroll.x || fixed || this.contentDomWidth < this.contentWidth) {
-      tableClassName = `${clsPrefix}-fixed`;
+    let tableClassName = fixed?`${clsPrefix}-fixed`:'';
+
+    if (scroll.x || fixed //|| this.contentDomWidth < this.contentWidth  //表格元素的宽度大于容器的宽度也显示滚动条
+    ) {
+
       //没有数据并且含有顶部菜单时
-      if(this.props.data.length == 0 && this.props.headerScroll ){
+      if(data.length == 0 && this.props.headerScroll ){
         bodyStyle.overflowX = 'hidden';
       }
-      if (!footerScroll && this.computeWidth > this.contentDomWidth) {
+      if (!footerScroll) {
         bodyStyle.overflowX = bodyStyle.overflowX || 'auto';
       }
     }
@@ -1056,96 +1115,130 @@ class Table extends Component {
     if (scroll.y) {
       // maxHeight will make fixed-Table scrolling not working
       // so we only set maxHeight to body-Table here
-      if (fixed) {
+      if (fixed) {//固定表格
         // bodyStyle.height = bodyStyle.height || scroll.y;
         innerBodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
-        innerBodyStyle.overflowY = bodyStyle.overflowY || 'scroll';
-        if (this.computeWidth > this.contentDomWidth) {
-          innerBodyStyle.overflowX = 'scroll';
-        } else if (this.contentWidth === this.contentDomWidth) {
-          innerBodyStyle.overflowX = 'hidden';
-        }
+        innerBodyStyle.overflowY = bodyStyle.overflowY || 'auto';
+        // gx解决底部滚动条的显示问题
+        // if (this.computeWidth > this.contentDomWidth) {
+        //   innerBodyStyle.overflowX = 'scroll';
+        // } else if (this.contentWidth === this.contentDomWidth) {
+        //   innerBodyStyle.overflowX = 'hidden';
+        // }
       } else {
         bodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
       }
-      bodyStyle.overflowY = bodyStyle.overflowY || 'scroll';
+      bodyStyle.overflowY = bodyStyle.overflowY || 'auto';
       useFixedHeader = true;
 
       // Add negative margin bottom for scroll bar overflow bug
-      const scrollbarWidth = this.scrollbarWidth;
-      if (scrollbarWidth >= 0) {
-        (fixed ? bodyStyle : headStyle).paddingBottom = '0px';
-        //显示表头滚动条
-        if(headerScroll){
-          if(fixed){
+      // const scrollbarWidth = this.scrollbarWidth;
+      // if (scrollbarWidth >= 0) {
+      //   (fixed ? bodyStyle : headStyle).paddingBottom = '0px';
+      //   //显示表头滚动条
+      //   if(headerScroll){
+      //     if(fixed){
+      //
+      //      if(this.domWidthDiff <= 0){
+      //         headStyle.marginBottom = `${scrollbarWidth}px`;
+      //         bodyStyle.marginBottom = `-${scrollbarWidth}px`;
+      //       }else{
+      //         innerBodyStyle.overflowX = 'auto';
+      //       }
+      //     }else{
+      //          //内容少，不用显示滚动条
+      //          if(this.domWidthDiff > 0){
+      //           headStyle.overflowX = 'hidden';
+      //         }
+      //       headStyle.marginBottom = `0px`;
+      //     }
+      //   }else{
+      //     if(fixed){
+      //       if(this.domWidthDiff > 0){
+      //         headStyle.overflow = 'hidden';
+      //         innerBodyStyle.overflowX = 'auto'; //兼容expand场景、子表格含有固定列的场景
+      //       }else{
+      //         // 海龙为了解决固定右侧滚动条Firefox下的现象问题，解决方案不合适，暂时不用，还原
+      //         // if (this.computeWidth > this.contentDomWidth) {
+      //         //   bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
+      //         //   const userAgent = navigator.userAgent; // 火狐，IE浏览器，固定表格跟随resize事件产生的滚动条隐藏
+      //         //   const isFF = userAgent.indexOf("Firefox") > -1;
+      //         //   const isIE = !!window.ActiveXObject || "ActiveXObject" in window
+      //         //   if (isFF || isIE) {
+      //         //     // innerBodyStyle.overflowX = 'hidden';
+      //         //     delete innerBodyStyle.overflowX
+      //         //   }
+      //         // }
+      //         bodyStyle.marginBottom = `-${scrollbarWidth}px`;
+      //       }
+      //
+      //     }else{
+      //         // // 没有数据时，表头滚动条隐藏问题
+      //         // if(data.length == 0 && this.domWidthDiff < 0){
+      //         //   headStyle.marginBottom = '0px';
+      //         // }else{
+      //         //   headStyle.marginBottom = `-${scrollbarWidth}px`;
+      //         // }
+      //
+      //     }
+      //
+      //   }
+      // }
+    }
 
-           if(this.domWidthDiff <= 0){
-              headStyle.marginBottom = `${scrollbarWidth}px`;
-              bodyStyle.marginBottom = `-${scrollbarWidth}px`;
-            }else{
-              innerBodyStyle.overflowX = 'auto';
-            }
-          }else{
-               //内容少，不用显示滚动条
-               if(this.domWidthDiff > 0){
-                headStyle.overflowX = 'hidden';
-              }
-            headStyle.marginBottom = `0px`;
-          }
-        }else{
-          if(fixed){
-            if(this.domWidthDiff > 0){
-              headStyle.overflow = 'hidden';
-              innerBodyStyle.overflowX = 'auto'; //兼容expand场景、子表格含有固定列的场景
-            }else{
-              if (this.computeWidth > this.contentDomWidth) {
-                bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
-                const userAgent = navigator.userAgent; // 火狐，IE浏览器，固定表格跟随resize事件产生的滚动条隐藏
-                const isFF = userAgent.indexOf("Firefox") > -1;
-                const isIE = !!window.ActiveXObject || "ActiveXObject" in window
-                if (isFF || isIE) {
-                  // innerBodyStyle.overflowX = 'hidden';
-                  delete innerBodyStyle.overflowX
-                }
-              }
-            }
+    // if(data.length == 0 && hideHeaderScroll){
+    //   //支持 NCC 需求:表格无数据时，去掉表头滚动条 (https://github.com/iuap-design/tinper-bee/issues/207)
+    //   headStyle.marginBottom = `-${this.scrollbarWidth}px`;
+    // }
 
-          }else{
-              // 没有数据时，表头滚动条隐藏问题
-              if(data.length == 0 && this.domWidthDiff < 0){
-                headStyle.marginBottom = '0px';
-              }else{
-                headStyle.marginBottom = `-${scrollbarWidth}px`;
-              }
-
-          }
-
-        }
+    //----------------水平滚动条的显示处理-------------
+    //没有数据时
+    if(data.length == 0 ){
+      if(fixed){//固定列头部滚水平动条隐藏
+        headStyle.overflowX = 'hidden';
+      }else{//中间列头部水平滚动条自动显示
+        headStyle.overflowX = 'auto';
       }
+    }else{//有数据时，头部水平滚动条隐藏
+      headStyle.overflowX = 'hidden';
+    }
+    //强制固定列和中间列隐藏头部水平滚动条，
+    if(hideHeaderScroll){
+      headStyle.overflowX = 'hidden'
     }
 
-    if(data.length == 0 && hideHeaderScroll){
-      //支持 NCC 需求:表格无数据时，去掉表头滚动条 (https://github.com/iuap-design/tinper-bee/issues/207)
-      headStyle.marginBottom = `-${this.scrollbarWidth}px`;
+    //---------------垂直滚动条的显示处理---------------
+    if(data.length == 0 ){
+      bodyStyle.overflowY = 'hidden';
+      innerBodyStyle.overflowY = 'hidden';
+      headStyle.overflowY = 'hidden';
+    }else{
+      bodyStyle.overflowY = bodyStyle.overflowY || 'auto';
+      innerBodyStyle.overflowY = bodyStyle.overflowY;
+      headStyle.overflowY = innerBodyStyle.overflowY;
     }
 
-    const renderTable = (hasHead = true, hasBody = true) => {
+
+    const renderTable = (hasHead = true, hasBody = true,options) => {
+      const {columns,fixed} = options;
       const tableStyle = {};
-      if (!fixed && scroll.x) {
+      if (!fixed && scroll.x) {//非固定列的中间表格
         // not set width, then use content fixed width
         if (scroll.x === true) {
           tableStyle.tableLayout = 'fixed';
         } else {
-          tableStyle.width = this.contentWidth - this.columnManager.getLeftColumnsWidth(this.contentWidth) - this.columnManager.getRightColumnsWidth(this.contentWidth);
+          // tableStyle.width = this.contentWidth - this.columnManager.getLeftColumnsWidth(this.contentWidth) - this.columnManager.getRightColumnsWidth(this.contentWidth);
+          tableStyle.width = scroll.x;
         }
       }
-      // 自动出现滚动条
-      if ( !fixed && this.contentDomWidth < this.contentWidth) {
-        tableStyle.width = this.contentWidth - this.columnManager.getLeftColumnsWidth(this.contentWidth) - this.columnManager.getRightColumnsWidth(this.contentWidth);
-      }
-      if (this.bodyTable && !fixed && this.contentDomWidth === this.contentWidth) {
-        tableStyle.width = this.bodyTable.clientWidth
-      }
+      // // 自动出现滚动条
+      // if ( !fixed && this.contentDomWidth < this.contentWidth) {
+      //   tableStyle.width = this.contentWidth - this.columnManager.getLeftColumnsWidth(this.contentWidth) - this.columnManager.getRightColumnsWidth(this.contentWidth);
+      // }
+      // by gx
+      // if (this.bodyTable && !fixed && this.contentDomWidth === this.contentWidth) {
+      //   tableStyle.width = this.bodyTable.clientWidth
+      // }
       const tableBody = hasBody ? getBodyWrapper(
         <tbody className={`${clsPrefix}-tbody`} onMouseLeave={this.onBodyMouseLeave}>
           {this.getRows(columns, fixed)}
@@ -1163,6 +1256,7 @@ class Table extends Component {
     };
 
     let headTable;
+
     if (useFixedHeader) {
       headTable = (
         <div
@@ -1173,33 +1267,26 @@ class Table extends Component {
           onTouchStart={this.detectScrollTarget}
           onScroll={this.handleBodyScroll}
         >
-          {renderTable(true, false)}
+          {renderTable(true, false,options)}
         </div>
       );
     }
-    let BodyTable = (
+    let BodyTable = ( //中间表格的body
       <div
         className={`${clsPrefix}-body`}
         style={bodyStyle}
+        ref={(el)=>{this.bodyTable = el}}
         onMouseOver={this.detectScrollTarget}
         onTouchStart={this.detectScrollTarget}
-        ref={(el)=>{this.bodyTableOuter = el}}
+        onScroll={this.handleBodyScroll}
         onMouseLeave={this.onBodyMouseLeave}
       >
-        {this.renderDragHideTable()}
-        <div className="scroll-container" onScroll={this.handleBodyScroll} ref={(el)=>{this.bodyTable = el}} style={{...bodyStyle}}>
-          {renderTable(!useFixedHeader)}
-        </div>
+        {/*{this.renderDragHideTable()}*/}
+        {renderTable(!useFixedHeader,true,options)}
       </div>
     );
 
-    if (fixed && columns.length) {
-      let refName;
-      if (columns[0].fixed === 'left' || columns[0].fixed === true) {
-        refName = 'fixedColumnsBodyLeft';
-      } else if (columns[0].fixed === 'right') {
-        refName = 'fixedColumnsBodyRight';
-      }
+    if (fixed && columns.length) {//固定表格的body
       delete bodyStyle.overflowX;
       delete bodyStyle.overflowY;
       BodyTable = (
@@ -1210,13 +1297,17 @@ class Table extends Component {
           <div
             style={{...innerBodyStyle}}
             className={`${clsPrefix}-body-inner`}
-            ref={el => this[`${refName}Outer`] = el}
+            ref={(ref)=>{
+                switch(fixed){
+                  case "left":this.fixedLeftBodyInner = ref;break;
+                  case "right":this.fixedRightBodyInner = ref;break;
+                }
+            }}
             onMouseOver={this.detectScrollTarget}
             onTouchStart={this.detectScrollTarget}
+            onScroll={this.handleBodyScroll}
           >
-            <div className="fixed-scroll-container" ref={refName} style={{...innerBodyStyle}} onScroll={this.handleBodyScroll}>
-              {renderTable(!useFixedHeader)}
-            </div>
+            {renderTable(!useFixedHeader,true,options)}
           </div>
         </div>
       );
@@ -1273,33 +1364,33 @@ class Table extends Component {
     }
     return null;
   }
-  getStyle(obj,attr){
-    if(obj.currentStyle){
-        return obj.currentStyle[attr];
-    }
-    else{
-        return document.defaultView.getComputedStyle(obj,null)[attr];
-    }
-  }
-  getTdPadding=(td)=>{
-    let tdPaddingTop = this.getStyle(td,'paddingTop'),tdPaddingBottom = this.getStyle(td,'paddingBottom'),
-    tdBorderTop = this.getStyle(td,'borderTopWidth'),tdBorderBottom = this.getStyle(td,'borderBottomWidth');
-    return Number(tdPaddingTop.replace('px',''))+Number(tdPaddingBottom.replace('px',''))+Number(tdBorderTop.replace('px',''))+Number(tdBorderBottom.replace('px',''))
+  // getStyle(obj,attr){
+  //   if(obj.currentStyle){
+  //       return obj.currentStyle[attr];
+  //   }
+  //   else{
+  //       return document.defaultView.getComputedStyle(obj,null)[attr];
+  //   }
+  // }
+  // getTdPadding=(td)=>{
+  //   let tdPaddingTop = this.getStyle(td,'paddingTop'),tdPaddingBottom = this.getStyle(td,'paddingBottom'),
+  //   tdBorderTop = this.getStyle(td,'borderTopWidth'),tdBorderBottom = this.getStyle(td,'borderBottomWidth');
+  //   return Number(tdPaddingTop.replace('px',''))+Number(tdPaddingBottom.replace('px',''))+Number(tdBorderTop.replace('px',''))+Number(tdBorderBottom.replace('px',''))
+  //
+  // }
 
-  }
-
-  getFlatRecords = data => {
-    var result = []
-    for (var i = 0; i < data.length; i++) {
-      result.push(data[i])
-      if ((data[i].children || []).length) {
-        result = result.concat(this.getFlatRecords(data[i].children))
-      }
-    }
-    return result
-  };
-
-  manualSyncFixedTableRowHeight() {
+  // getFlatRecords = data => {
+  //   var result = []
+  //   for (var i = 0; i < data.length; i++) {
+  //     result.push(data[i])
+  //     if ((data[i].children || []).length) {
+  //       result = result.concat(this.getFlatRecords(data[i].children))
+  //     }
+  //   }
+  //   return result
+  // };
+  //add by gx 供外部数据变更时调用此方法同步内容行高度
+  manualSyncFixedTableRowHeight = () => {
     this.dataChanged = true
     this.syncFixedTableRowHeight()
   }
@@ -1312,8 +1403,8 @@ class Table extends Component {
       this.bodyTable.querySelectorAll('thead');
     const expandedRows = this.bodyTable.querySelectorAll(`.${clsPrefix}-expanded-row`) || [];
     const bodyRows = this.bodyTable.querySelectorAll(`.${clsPrefix}-row`) || [];
-    const leftBodyRows = !this.dataChanged && this.refs.fixedColumnsBodyLeft && this.refs.fixedColumnsBodyLeft.querySelectorAll(`.${clsPrefix}-row`) || [];
-    const rightBodyRows = !this.dataChanged && this.refs.fixedColumnsBodyRight && this.refs.fixedColumnsBodyRight.querySelectorAll(`.${clsPrefix}-row`) || [];
+    const leftBodyRows = !this.dataChanged && this.fixedLeftBodyInner && this.fixedLeftBodyInner.querySelectorAll(`.${clsPrefix}-row`) || [];
+    const rightBodyRows = !this.dataChanged && this.fixedRightBodyInner && this.fixedRightBodyInner.querySelectorAll(`.${clsPrefix}-row`) || [];
     this.dataChanged = false
     const fixedColumnsHeadRowsHeight = [].map.call(
       headRows, row =>{
@@ -1323,35 +1414,47 @@ class Table extends Component {
         }
         return headerHeight ? height : (parseInt(row.getBoundingClientRect().height) || 'auto')}
     );
-    const flatRecords = this.getFlatRecords(this.props.data || [])
+    // const flatRecords = this.getFlatRecords(this.props.data || [])
+    // const fixedColumnsBodyRowsHeight = [].map.call(
+    //   bodyRows, (row,index) =>{
+    //     let rsHeight = height;
+    //     if(bodyDisplayInRow && rsHeight){
+    //       return rsHeight;
+    //     }else{
+    //       const rowKey = row.getAttribute('data-row-key')
+    //       const record = flatRecords.find(record => record.key === rowKey) || {}
+    //       const leafKey = 'isleaf' in record ? 'isleaf' : '_isLeaf' in record ? '_isLeaf' : null // ncc传递这俩属性区分是否是子节点
+    //       const isLeaf = leafKey && record[leafKey] === true
+    //       if (isLeaf) {
+    //         return Number((Number(row.getBoundingClientRect().height)).toFixed(2)) || 'auto';
+    //       }
+    //       // 为了提高性能，默认获取主表的高度，但是有的场景中固定列的高度比主表的高度高，所以提供此属性，会统计所有列的高度取最大的，设置
+    //       // 内容折行显示，并又设置了 height 的情况下，也要获取主表高度
+    //       if(heightConsistent || (!bodyDisplayInRow && rsHeight && syncFixedRowHeight)){
+    //         let leftHeight,rightHeight,currentHeight,maxHeight;
+    //         leftHeight = leftBodyRows[index]?Number(leftBodyRows[index].getBoundingClientRect().height).toFixed(2):0; // 有些浏览器中，取到的高度是小数，直接parseInt有问题，保留两位小数处理
+    //         rightHeight = rightBodyRows[index]?Number(rightBodyRows[index].getBoundingClientRect().height).toFixed(2):0;
+    //         currentHeight = Number(row.getBoundingClientRect().height).toFixed(2)
+    //         maxHeight = Math.max(leftHeight,rightHeight,currentHeight);
+    //         return maxHeight || 'auto'
+    //       }else{
+    //         return Number((Number(row.getBoundingClientRect().height)).toFixed(2)) || 'auto';
+    //       }
+    //     }
+    //   }
+    // );
+    //add by zzj
+    const getMax= function(a, b, c) {//求三个数的最大值
+      return a > b ? (a > c ? a : c) : (b > c ? b : c);
+    }
     const fixedColumnsBodyRowsHeight = [].map.call(
-      bodyRows, (row,index) =>{
-        let rsHeight = height;
-        if(bodyDisplayInRow && rsHeight){
-          return rsHeight;
-        }else{
-          const rowKey = row.getAttribute('data-row-key')
-          const record = flatRecords.find(record => record.key === rowKey) || {}
-          const leafKey = 'isleaf' in record ? 'isleaf' : '_isLeaf' in record ? '_isLeaf' : null // ncc传递这俩属性区分是否是子节点
-          const isLeaf = leafKey && record[leafKey] === true
-          if (isLeaf) {
-            return Number((Number(row.getBoundingClientRect().height)).toFixed(2)) || 'auto';
-          }
-          // 为了提高性能，默认获取主表的高度，但是有的场景中固定列的高度比主表的高度高，所以提供此属性，会统计所有列的高度取最大的，设置
-          // 内容折行显示，并又设置了 height 的情况下，也要获取主表高度
-          if(heightConsistent || (!bodyDisplayInRow && rsHeight && syncFixedRowHeight)){
-            let leftHeight,rightHeight,currentHeight,maxHeight;
-            leftHeight = leftBodyRows[index]?Number(leftBodyRows[index].getBoundingClientRect().height).toFixed(2):0; // 有些浏览器中，取到的高度是小数，直接parseInt有问题，保留两位小数处理
-            rightHeight = rightBodyRows[index]?Number(rightBodyRows[index].getBoundingClientRect().height).toFixed(2):0;
-            currentHeight = Number(row.getBoundingClientRect().height).toFixed(2)
-            maxHeight = Math.max(leftHeight,rightHeight,currentHeight);
-            return maxHeight || 'auto'
-          }else{
-            return Number((Number(row.getBoundingClientRect().height)).toFixed(2)) || 'auto';
-          }
-        }
-      }
+        bodyRows, (row, i) => getMax(
+            leftBodyRows.length ? parseInt(leftBodyRows[i].getBoundingClientRect().height) : 0,
+            rightBodyRows.length ? parseInt(rightBodyRows[i].getBoundingClientRect().height) : 0,
+            parseInt(row.getBoundingClientRect().height)
+        )
     );
+      // console.log("AAA--->fixedColumnsBodyRowsHeight->"+fixedColumnsBodyRowsHeight)
     const fixedColumnsExpandedRowsHeight = {};
     // expandedRows为NodeList  Array.prototype.forEach ie 下报错 对象不支持 “forEach” 方法
     expandedRows.length > 0 && Array.prototype.forEach.call(expandedRows,row => {
@@ -1364,7 +1467,6 @@ class Table extends Component {
         //   let trueheight = parseInt(row.querySelectorAll('.u-table')[0].getBoundingClientRect().height);
         //   exHeight = trueheight+tdPadding;
         // } catch (error) {
-
         // }
       fixedColumnsExpandedRowsHeight[parentRowKey] = parseInt(exHeight);
     })
@@ -1373,12 +1475,32 @@ class Table extends Component {
       shallowequal(this.state.fixedColumnsExpandedRowsHeight, fixedColumnsExpandedRowsHeight)) {
       return;
     }
-  
-    this.setState({
-      fixedColumnsHeadRowsHeight,
-      fixedColumnsBodyRowsHeight,
-      fixedColumnsExpandedRowsHeight,
-    });
+    //add by zzj
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => {
+      this.setState({
+        fixedColumnsHeadRowsHeight,
+        fixedColumnsBodyRowsHeight,
+        fixedColumnsExpandedRowsHeight,
+      },  ()=> {
+        let center = this.bodyTable;
+        let left = this.fixedLeftBodyInner;
+        let right = this.fixedRightBodyInner;
+        //滚动条在最底部并且表格行高变化时，inner部分scrollTop数值不一致造成的表格没对齐。
+        if (this.columnManager.isAnyColumnsRightFixed()) {
+          if (center && right && center.scrollTop !== right.scrollTop){
+            center.scrollTop = right.scrollTop;
+          }
+          if (center && left && left.scrollTop !== right.scrollTop){
+            left.scrollTop = right.scrollTop;
+          }
+        } else {
+          if (center && left && center.scrollTop !== left.scrollTop){
+            left.scrollTop = center.scrollTop;
+          }
+        }
+      });
+    },10);
   }
 
   resetScrollX() {
@@ -1423,78 +1545,76 @@ class Table extends Component {
       this.scrollTarget = e.currentTarget;
     }
   }
-
+  //隐藏行上悬浮的自定义dom
   hideHoverDom(e){
     if(this.hoverDom){
       this.hoverDom.style.display = 'none';
     }
   }
 
-
+  //处理表格体内滚动
   handleBodyScroll(e) {
-    const headTable = this.headTable;
     const { scroll = {},clsPrefix,handleScrollY, handleScrollX, onBodyScroll} = this.props;
-    const {fixedColumnsBodyLeft, fixedColumnsBodyRight } = this.refs;
+    const {headTable,bodyTable,bottomTable,fixedLeftBodyInner, fixedRightBodyInner } = this;
     // Prevent scrollTop setter trigger onScroll event
     // http://stackoverflow.com/q/1386696
-    if (e.currentTarget !== e.target) {
+    if (this.scrollTarget && e.target !== this.scrollTarget && e.target !== headTable) {//仅body区域滚动生效，头部区域滚动无需处理
       return;
     }
+    //水平滚动的逻辑处理
     if (e.target.scrollLeft !== this.lastScrollLeft) {
-      let position = '';
-      if (e.target === this.bodyTable && headTable) {
-        headTable.scrollLeft = e.target.scrollLeft;
-      } else if (e.target === headTable && this.bodyTable) {
-        this.bodyTable.scrollLeft = e.target.scrollLeft;
+      if (e.target === bodyTable) {//中间内容中的水平滚动
+        if(headTable)
+          headTable.scrollLeft = e.target.scrollLeft;
+        if(bottomTable)
+          bottomTable.scrollLeft = e.target.scrollLeft;
+      } else if (e.target === headTable && bodyTable) {
+        bodyTable.scrollLeft = e.target.scrollLeft;
       }
       if (e.target.scrollLeft === 0) {
-        position='left';
+        this.setState({ scrollPosition: 'left' });
       } else if (e.target.scrollLeft + 1 >=
         e.target.querySelector('table').getBoundingClientRect().width -
         e.target.getBoundingClientRect().width) {
-          position='right';
+        this.setState({ scrollPosition: 'right' });
       } else if (this.state.scrollPosition !== 'middle') {
-        position='middle';
+        this.setState({ scrollPosition: 'middle' });
       }
-      if(position){
-        classes(this.contentTable)
-        .remove(new RegExp(`^${clsPrefix}-scroll-position-.+$`))
-        .add(`${clsPrefix}-scroll-position-${position}`);
-      }
-      if(handleScrollX){
+      if(handleScrollX){//触发props.handleScrollX
         debounce(
           handleScrollX(e.target.scrollLeft,this.treeType),
         300)
       }
+      this.lastScrollLeft = e.target.scrollLeft;//记录最后一次水平滚动位置
     }
-    // console.log('lastScrollTop--'+this.lastScrollTop+'--eventScrollTop--'+ e.target.scrollTop);
-    if (scroll.y && this.lastScrollTop != e.target.scrollTop && e.target !== headTable) {
-      if (fixedColumnsBodyLeft && e.target !== fixedColumnsBodyLeft) {
-        fixedColumnsBodyLeft.scrollTop = e.target.scrollTop;
+    //垂直滚动的逻辑处理
+    if (this.lastScrollTop !== e.target.scrollTop ) {
+      if (fixedLeftBodyInner && e.target !== fixedLeftBodyInner) {
+        fixedLeftBodyInner.scrollTop = e.target.scrollTop;
       }
-      if (fixedColumnsBodyRight && e.target !== fixedColumnsBodyRight) {
-        fixedColumnsBodyRight.scrollTop = e.target.scrollTop;
+      if (fixedRightBodyInner && e.target !== fixedRightBodyInner) {
+        fixedRightBodyInner.scrollTop = e.target.scrollTop;
       }
-      if (this.bodyTable && e.target !== this.bodyTable) {
-        this.bodyTable.scrollTop = e.target.scrollTop;
+      if (bodyTable && e.target !== bodyTable) {
+        bodyTable.scrollTop = e.target.scrollTop;
       }
-      if(this.hoverDom){
-        this.hoverDom.style.display = 'none'
+      //注意快速滚动时将行的hover效果隐藏，timeout之后还原，以解决固定列情况下表格滚动时hover效果错位的问题。
+      if(!this.state.currentHoverKey){
+        this.store.setState({currentHoverKey: null});
+        clearTimeout(this.scrollHoverKeyTimer);
+        this.scrollHoverKeyTimer = setTimeout(()=>{this.store.setState({currentHoverKey: this.hoverKey})},100)
       }
-      this.lastScrollTop = e.target.scrollTop;
-      if(handleScrollY){
+      this.hideHoverDom(e);//隐藏外部自定义悬浮dom
+      this.lastScrollTop = e.target.scrollTop;//记录最后一次垂直滚动位置
+      if(handleScrollY){//触发props.handleScrollY
         debounce(
           handleScrollY(this.lastScrollTop,this.treeType,onBodyScroll),
         300)
       }else{
-        //滚动回调
-        onBodyScroll(this.lastScrollTop)
+        onBodyScroll(this.lastScrollTop)//触发props.onBodyScroll滚动回调
       }
 
     }
-
-    // Remember last scrollLeft for scroll direction detecting.
-    this.lastScrollLeft = e.target.scrollLeft;
   }
 
   handleRowHover(isHover, key, event, currentIndex, propsRecord) {
@@ -1506,13 +1626,14 @@ class Table extends Component {
       const rowKey = item.key ? item.key : this.getRowKey(item, index);
       return rowKey === key
     }) : data[currentIndex];
+    this.hoverKey = key;
     // 固定列、或者含有hoverdom时情况下同步hover状态
     if(this.columnManager.isAnyColumnsFixed() && syncHover ){
-      this.hoverKey = key;
       this.store.setState({
         currentHoverKey: isHover ? key : null,
       });
     }
+
     if(this.hoverDom){
       if(isHover){
         this.currentHoverKey = key;
@@ -1543,7 +1664,7 @@ class Table extends Component {
     this.store.setState({
       currentHoverKey: this.currentHoverKey,
     });
-    this.hoverDom.style.display = 'block';
+    if(this.hoverDom) this.hoverDom.style.display = 'block';
     this.clearBodyMouseLeaveTimer();
 
   }
@@ -1572,6 +1693,7 @@ class Table extends Component {
     const props = this.props;
     const clsPrefix = props.clsPrefix;
     const hasFixedLeft = this.columnManager.isAnyColumnsLeftFixed();
+    const hasFixedRight = this.columnManager.isAnyColumnsRightFixed();
     let className = props.clsPrefix;
     if (props.className) {
       className += ` ${props.className}`;
@@ -1614,6 +1736,9 @@ class Table extends Component {
     }
     if(hasFixedLeft){
       className += ` has-fixed-left`;
+    }
+    if(hasFixedRight){
+      className += ` has-fixed-right`;
     }
     return (
       <div className={className} style={props.style} ref={el => this.contentTable = el}

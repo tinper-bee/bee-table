@@ -35,9 +35,9 @@ class TableHeader extends Component {
     this.fixedTable = {};
   }
 
-  static defaultProps = {
-    contentWidthDiff: 0
-  };
+  // static defaultProps = {
+  //   contentWidthDiff: 0
+  // };
 
   componentWillReceiveProps(nextProps) {
     // 表格column改变时，要重新绑定拖拽事件，否则拖拽不生效
@@ -47,7 +47,7 @@ class TableHeader extends Component {
       if(newCols.length !== oldCols.length){
         this.event = false;
         return;
-      } 
+      }
       oldCols.some((item, index) => {
         if (newCols[index] && newCols[index].dataIndex !== item.dataIndex) {
           this.event = false;
@@ -79,7 +79,7 @@ class TableHeader extends Component {
       this.removeDragBorderEvent();
     }
     this.doEventList(this.table.tr,(tr)=>{
-      this.eventListen([{key:'mousedown',fun:this.onTrMouseDown}],'remove',tr);  
+      this.eventListen([{key:'mousedown',fun:this.onTrMouseDown}],'remove',tr);
     })
     // this.eventListen([{key:'mousedown',fun:this.onTrMouseDown}],'remove',this.table.tr[0]);
     this.eventListen([{key:'mouseup',fun:this.bodyonLineMouseUp}],'remove',document.body);
@@ -104,7 +104,7 @@ class TableHeader extends Component {
       table.tableBody = contentTable.querySelector('.u-table-scroll .u-table-body') && contentTable.querySelector('.u-table-scroll .u-table-body');
       table.tableBodyCols = contentTable.querySelector('.u-table-scroll .u-table-body') && contentTable.querySelector('.u-table-scroll .u-table-body').getElementsByTagName("col");
       table.bodyRows = table.tableBody && table.tableBody.querySelectorAll('tr') || [];
-   
+
       table.fixedLeftHeaderTable = contentTable.querySelector('.u-table-fixed-left .u-table-header') ;
       table.fixedRightHeaderTable = contentTable.querySelector('.u-table-fixed-right .u-table-header');
       table.contentTableHeader  = contentTable.querySelector('.u-table-scroll .u-table-header');
@@ -113,7 +113,7 @@ class TableHeader extends Component {
         const leftBodyTableIndex =  table.fixedLeftBodyTable.length-1 < 0 ? 0 : table.fixedLeftBodyTable.length-1
         table.fixedLeftBodyTable = table.fixedLeftBodyTable[leftBodyTableIndex]
       }
-     
+
       table.fixedRightBodyTable = contentTable.querySelectorAll('.u-table-fixed-right .u-table-body-outer') ;
       if (table.fixedRightBodyTable) {
         const rightBodyTableIndex = table.fixedRightBodyTable.length-1 < 0 ? 0 : table.fixedRightBodyTable.length-1
@@ -129,7 +129,7 @@ class TableHeader extends Component {
       table.fixedRightBodyRows = table.fixedRightBodyTable && table.fixedRightBodyTable.querySelectorAll('tr') || [];
     }
 
-   
+    //维护表格全部的dom元素
     this.table = table;
 
     if(!this.props.dragborder)return;
@@ -139,7 +139,7 @@ class TableHeader extends Component {
       let siblingDom = _fixedParentContext.parentNode.nextElementSibling;
       if (siblingDom) {
         let fixedTable = siblingDom.querySelector("table");
-        this.fixedTable.table = fixedTable
+        // this.fixedTable.table = fixedTable //没有用到
         this.fixedTable.cols = fixedTable.getElementsByTagName("col");
         // this.fixedTable.ths = fixedTable.tableDome.getElementsByTagName("th");
       }
@@ -189,7 +189,7 @@ class TableHeader extends Component {
     if(!this.props.dragborder )return;
     this.eventListen([{key:'mouseup', fun:this.onTrMouseUp}],'',document.body);
     this.eventListen([{key:'mousemove', fun:this.onTrMouseMove}],'',document.body);
-    
+
     // let  events = [
     //   {key:'mouseup', fun:this.onTrMouseUp},
     //   {key:'mousemove', fun:this.onTrMouseMove},
@@ -223,7 +223,6 @@ class TableHeader extends Component {
       console.log("Please set the attributes of column !");
       return;
     }
-    let {tr} = this.table;
     for (let i = 0; i < events.length; i++) {
       const _event = events[i];
       if(type === "remove"){
@@ -266,13 +265,13 @@ class TableHeader extends Component {
     let currentElement = this.getTargetToType(targetEvent);
     if(!currentElement)return;
     let type = currentElement.getAttribute('data-type');
-    const fixedType = currentElement.getAttribute('data-th-fixed'); 
+    const fixedType = currentElement.getAttribute('data-th-fixed');
     if(!this.props.dragborder && !this.props.draggable)return;
     if(type == 'online' && this.props.dragborder){
       // if(!this.props.dragborder)return;
       targetEvent.setAttribute('draggable',false);//添加交换列效果
       let currentIndex = -1;
-      let defaultWidth = currentElement.getAttribute("data-th-width"); 
+      let defaultWidth = currentElement.getAttribute("data-th-width");
       this.drag.option = "border";//拖拽操作
       if(columnsChildrenList){
         let columnKey = currentElement.getAttribute("data-line-key");
@@ -297,14 +296,14 @@ class TableHeader extends Component {
 
       // if(!this.lastColumWidth){
         const contentT = this.table.tableHeaderCols || this.table.cols ;
-        this.lastColumWidth = parseInt(contentT[lastShowIndex].style.width);
+        this.lastColumWidth = parseInt(contentT[contentT.length-1].style.width);
         // console.log('begin--lastColumnWidth',this.lastColumWidth);
       // }
       this.drag.contentTableCWidth = this.table.contentTableHeader.clientWidth;
       this.drag.contentTableSWidth = this.table.contentTableHeader.scrollWidth;
       if(fixedType) {
           const contentTablePar = this.table.contentTableHeader.parentNode;
-         
+
           if(contentTablePar) {
             const originL = parseInt(contentTablePar.style.marginLeft);
             const originR = parseInt(contentTablePar.style.marginRight);
@@ -314,11 +313,12 @@ class TableHeader extends Component {
           }
       }
       this.drag.fixedType = fixedType;
-      if (fixedType === 'left' && this.table.fixedRightBodyTable) {
-        this.drag.fixedRightBodyTableLeft = this.table.fixedRightBodyTable.getBoundingClientRect().left
-      } else {
-        this.drag.fixedRightBodyTableLeft = null
-      }
+      // add by gx
+      // if (fixedType === 'left' && this.table.fixedRightBodyTable) {
+      //   this.drag.fixedRightBodyTableLeft = this.table.fixedRightBodyTable.getBoundingClientRect().left
+      // } else {
+      //   this.drag.fixedRightBodyTableLeft = null
+      // }
     }else if(type != 'online' &&  this.props.draggable){
         // if (!this.props.draggable || targetEvent.nodeName.toUpperCase() != "TH") return;
         if (!this.props.draggable) return;
@@ -417,58 +417,62 @@ class TableHeader extends Component {
           if(diff<0 && contentTableSWidth+diff < 0) {
             const headerCols = this.table.tableHeaderCols || this.table.cols;
             const lastWidth =this.lastColumWidth - (contentTableSWidth+diff);
-            // console.log('lastWidth',lastWidth,'lastShowIndex',lastShowIndex);
-            headerCols[lastShowIndex].style.width = lastWidth +"px";//同步表头
-            this.table.tableBodyCols[lastShowIndex].style.width = lastWidth + "px";//同步表体
+            headerCols[headerCols.length-1].style.width = lastWidth +"px";//同步表头
+            this.table.tableBodyCols[headerCols.length-1].style.width = lastWidth + "px";//同步表体
           }
         // 内容区非固定列场景拖拽
         if(!this.drag.fixedType) {
-          
+
           // let newDiff = (parseInt(currentCols.style.minWidth) - parseInt(currentCols.style.width));
           // if(newDiff > 0){//缩小
           //   let lastWidth = this.lastColumWidth + newDiff;
           //   this.table.cols[lastShowIndex].style.width = lastWidth +"px";//同步表头
           //   this.table.tableBodyCols[lastShowIndex].style.width = lastWidth + "px";//同步表体
-            
+
           // }
-         
-         let dargTableWidth = parseFloat(window.getComputedStyle(this.table.table).width)
-         let showScroll =  contentDomWidth - (leftFixedWidth + rightFixedWidth) - (dargTableWidth + diff) - scrollbarWidth;
-          //表头滚动条处理
-          if(headerScroll){
-            if(showScroll < 0){ //小于 0 出现滚动条
-                //找到固定列表格，设置表头的marginBottom值为scrollbarWidth;
-                this.table.contentTableHeader.style.overflowX = 'scroll';
-                this.optTableMargin( this.table.fixedLeftHeaderTable,scrollbarWidth);
-                this.optTableMargin( this.table.fixedRightHeaderTable,scrollbarWidth);
-              }else{ //大于 0 不显示滚动条
-                this.table.contentTableHeader.style.overflowX = 'hidden';
-                this.optTableMargin( this.table.fixedLeftHeaderTable,0);
-                this.optTableMargin( this.table.fixedRightHeaderTable,0);
-            }
-          }else{
-          const scrollContainers = this.table.tableBody.querySelectorAll('.scroll-container') || []
-          if(showScroll < 0){
-                scrollContainers[0] ? scrollContainers[0].style.overflowX = 'auto' : null
-                this.optTableMargin( this.table.fixedLeftBodyTable,'-'+scrollbarWidth);
-                this.optTableMargin( this.table.fixedRightBodyTable,'-'+scrollbarWidth);
-                this.optTableScroll( this.table.fixedLeftBodyTable,{x:'scroll'});
-                this.optTableScroll( this.table.fixedRightBodyTable,{x:'scroll'});
-          }else{
-            scrollContainers[0] ? scrollContainers[0].style.overflowX = 'hidden' : null
-            this.optTableMargin( this.table.fixedLeftBodyTable,0);
-            this.optTableMargin( this.table.fixedRightBodyTable,0);
-            this.optTableScroll( this.table.fixedLeftBodyTable,{x:'auto'});
-                this.optTableScroll( this.table.fixedRightBodyTable,{x:'auto'});
-          }
-          }
+
+
+         // let dargTableWidth = parseFloat(window.getComputedStyle(this.table.table).width)
+         // let showScroll =  contentDomWidth - (leftFixedWidth + rightFixedWidth) - (dargTableWidth + diff) - scrollbarWidth;
+         // //let showScroll =  contentDomWidth - (leftFixedWidth + rightFixedWidth) - (this.drag.tableWidth + diff) - scrollbarWidth ;
+         //
+         //  //表头滚动条处理
+         //  if(headerScroll){
+         //    if(showScroll < 0){ //小于 0 出现滚动条
+         //        //找到固定列表格，设置表头的marginBottom值为scrollbarWidth;
+         //        this.table.contentTableHeader.style.overflowX = 'scroll';
+         //        this.optTableMargin( this.table.fixedLeftHeaderTable,scrollbarWidth);
+         //        this.optTableMargin( this.table.fixedRightHeaderTable,scrollbarWidth);
+         //      }else{ //大于 0 不显示滚动条
+         //        this.table.contentTableHeader.style.overflowX = 'hidden';
+         //        this.optTableMargin( this.table.fixedLeftHeaderTable,0);
+         //        this.optTableMargin( this.table.fixedRightHeaderTable,0);
+         //    }
+         //  }else{
+         //  // const scrollContainers = this.table.tableBody.querySelectorAll('.scroll-container') || []
+         //  if(showScroll < 0){
+         //    // scrollContainers[0] ? scrollContainers[0].style.overflowX = 'auto' : null//暂时注释，还原原来逻辑
+         //        this.table.tableBody.style.overflowX = 'auto';
+         //        this.optTableMargin( this.table.fixedLeftBodyTable,'-'+scrollbarWidth);
+         //        this.optTableMargin( this.table.fixedRightBodyTable,'-'+scrollbarWidth);
+         //        this.optTableScroll( this.table.fixedLeftBodyTable,{x:'scroll'});
+         //        this.optTableScroll( this.table.fixedRightBodyTable,{x:'scroll'});
+         //  }else{
+         //    // scrollContainers[0] ? scrollContainers[0].style.overflowX = 'hidden' : null
+         //    this.table.tableBody.style.overflowX = 'hidden';//暂时注释，还原原来逻辑
+         //    this.optTableMargin( this.table.fixedLeftBodyTable,0);
+         //    this.optTableMargin( this.table.fixedRightBodyTable,0);
+         //    this.optTableScroll( this.table.fixedLeftBodyTable,{x:'auto'});
+         //    this.optTableScroll( this.table.fixedRightBodyTable,{x:'auto'});
+         //  }
+         //  }
         }else if(this.drag.fixedType) {
           if(this.table.ths[this.drag.currIndex]) {
             this.table.ths[this.drag.currIndex].width = newWidth
           }
           // console.log('this.drag.contentTableML',this.drag.contentTableML,'diff',diff);
           // debugger
-          this.syncFixedBodyTableWidth() // 同步body中table的宽度
+          // this.syncFixedBodyTableWidth() // 同步body中table的宽度 以移到Table.syncFixedBodyTableWidth
           const contentTablePar = this.table.contentTableHeader.parentNode;
           // left、right缩小的内容，在没有滚动条时，需要将宽度同步到到最后一列
           // diff<0 往里拖，
@@ -486,24 +490,25 @@ class TableHeader extends Component {
           }else {
             contentTablePar.style.marginRight = this.drag.contentTableMR + diff + 'px'
           }
-          const containerWidth = contentTablePar.getBoundingClientRect().width
-          const tableWidth = this.table.innerTableBody.getBoundingClientRect().width
-          const scrollContainers = this.table.tableBody.querySelectorAll('.scroll-container') || []
-          if (tableWidth > containerWidth) {
-            scrollContainers[0] ? scrollContainers[0].style.overflowX = 'auto' : null
-            this.optTableMargin( this.table.fixedLeftBodyTable,'-'+scrollbarWidth);
-            this.optTableMargin( this.table.fixedRightBodyTable,'-'+scrollbarWidth);
-            this.optTableScroll( this.table.fixedLeftBodyTable,{x:'scroll'});
-            this.optTableScroll( this.table.fixedRightBodyTable,{x:'scroll'});
-          } else {
-            scrollContainers[0] ? scrollContainers[0].style.overflowX = 'hidden' : null
-            this.optTableMargin( this.table.fixedLeftBodyTable,0);
-            this.optTableMargin( this.table.fixedRightBodyTable,0);
-            this.optTableScroll( this.table.fixedLeftBodyTable,{x:'auto'});
-            this.optTableScroll( this.table.fixedRightBodyTable,{x:'auto'});
-          }
+          //暂时注释，还原
+          // const containerWidth = contentTablePar.getBoundingClientRect().width
+          // const tableWidth = this.table.innerTableBody.getBoundingClientRect().width
+          // const scrollContainers = this.table.tableBody.querySelectorAll('.scroll-container') || []
+          // if (tableWidth > containerWidth) {
+          //   scrollContainers[0] ? scrollContainers[0].style.overflowX = 'auto' : null
+          //   this.optTableMargin( this.table.fixedLeftBodyTable,'-'+scrollbarWidth);
+          //   this.optTableMargin( this.table.fixedRightBodyTable,'-'+scrollbarWidth);
+          //   this.optTableScroll( this.table.fixedLeftBodyTable,{x:'scroll'});
+          //   this.optTableScroll( this.table.fixedRightBodyTable,{x:'scroll'});
+          // } else {
+          //   scrollContainers[0] ? scrollContainers[0].style.overflowX = 'hidden' : null
+          //   this.optTableMargin( this.table.fixedLeftBodyTable,0);
+          //   this.optTableMargin( this.table.fixedRightBodyTable,0);
+          //   this.optTableScroll( this.table.fixedLeftBodyTable,{x:'auto'});
+          //   this.optTableScroll( this.table.fixedRightBodyTable,{x:'auto'});
+          // }
         }
-       
+
       }else {
         this.drag.newWidth = this.minWidth;
       }
@@ -581,15 +586,16 @@ class TableHeader extends Component {
     if(table){
       const innerTable = table.querySelector('.u-table-body-inner');
       if(innerTable){
-        //fixbug: 拖拽列宽后，滚动条滚到表格底部，会导致固定列和非固定列错行
-        if (overflow.x) {
-          const fixedScrollContainers = innerTable.querySelectorAll('.fixed-scroll-container')
-          if (fixedScrollContainers && fixedScrollContainers.length) {
-            fixedScrollContainers[0] && (fixedScrollContainers[0].style.overflowX = overflow.x);
-            fixedScrollContainers[1] && (fixedScrollContainers[1].style.overflowX = overflow.x);
-          }
-        }
+        //fixbug: 拖拽列宽后，滚动条滚到表格底部，会导致固定列和非固定列错行，//暂时注释，还原
+        // if (overflow.x) {
+        //   const fixedScrollContainers = innerTable.querySelectorAll('.fixed-scroll-container')
+        //   if (fixedScrollContainers && fixedScrollContainers.length) {
+        //     fixedScrollContainers[0] && (fixedScrollContainers[0].style.overflowX = overflow.x);
+        //     fixedScrollContainers[1] && (fixedScrollContainers[1].style.overflowX = overflow.x);
+        //   }
+        // }
         overflow.y && (innerTable.style.overflowY = overflow.y);
+        // overflow.x && (innerTable.style.overflowX = overflow.x);
       }
 
     }
@@ -967,7 +973,7 @@ class TableHeader extends Component {
 
   render() {
     const { clsPrefix, rowStyle,draggable,
-        dragborder, rows,filterable,fixed,lastShowIndex,columnsChildrenList
+        dragborder, rows,filterable,fixed,columnsChildrenList
     } = this.props;
     let attr = dragborder ? { id: `u-table-drag-thead-${this.theadKey}` } : {};
     let lastObj = columnsChildrenList[columnsChildrenList.length-1];
@@ -989,9 +995,9 @@ class TableHeader extends Component {
                 fixedStyle = ` ${clsPrefix}-row-fixed-columns-in-body`;
               }
 
-              if (lastShowIndex == columIndex) {
-                canDotDrag = "th-can-not-drag";
-              }
+              // if (columnsChildrenList.length-1 == columIndex) {
+              //   canDotDrag = "th-can-not-drag";
+              // }
               let thClassName = `${da.className}`?`${da.className}`:'';
               if(da.titleAlign){
                 thClassName += ` text-${da.titleAlign} `;
@@ -999,7 +1005,7 @@ class TableHeader extends Component {
               else if(da.textAlign){
                 thClassName += ` text-${da.textAlign} `;
               }
-              
+
               delete da.textAlign;
               delete da.titleAlign;
               const keyTemp = {};
@@ -1029,8 +1035,8 @@ class TableHeader extends Component {
                 thClassName += ` ${clsPrefix}-thead-th ${canDotDrag}`;
               }
               thClassName += ` ${fixedStyle}`;
-              if(!da.fixed ){
-                  return (<th {...da}  {...keyTemp} className={thClassName} data-th-fixed={da.fixed} data-line-key={da.key}
+              if(!da.fixed && !fixed){ //非固定表头
+                  return (<th {...da}  {...keyTemp} width={null} className={thClassName} data-th-fixed={da.fixed} data-line-key={da.key}
                   data-line-index={columIndex} data-th-width={da.width} data-type="draggable" onCopy={(event) => {this.onCopy(da,columIndex,event)}}>
                       {da.children}
                       {
@@ -1041,13 +1047,14 @@ class TableHeader extends Component {
                         <div className='online' /></div>:""
                       }
                 </th>)
-              }else{
+              }else{ //固定表头
+                if(!fixed)return ;//当前不是固定表格，则不需要渲染固定表头
                 thDefaultObj = {
                   ...da,
                   className:`${thClassName} ${fixedStyle}`,
                 };
                 da.onClick ?thDefaultObj.onClick = (e)=>{da.onClick(da, e)}:"";
-                return (<th {...thDefaultObj} {...keyTemp}  data-th-fixed={da.fixed} style={{maxWidth: da.width}} onCopy={this.onCopy}>
+                return (<th {...thDefaultObj} {...keyTemp} width={null} data-th-fixed={da.fixed} style={{maxWidth: da.width}} onCopy={this.onCopy}>
                    {da.children}
                       {
                         // && columIndex != _rowLeng

@@ -345,15 +345,6 @@ var TableRow = function (_Component) {
       _this.element = el;
     };
 
-    _this.getLoadingStyle = function (isPre, isSuf) {
-      if (isPre) {
-        return _this.element && _this.element.nextSibling ? _this.element.nextSibling.getBoundingClientRect() : {};
-      }
-      if (isSuf) {
-        return _this.element && _this.element.previousSibling ? _this.element.previousSibling.getBoundingClientRect() : {};
-      }
-    };
-
     _this._timeout = null;
     _this.state = {
       hovered: false
@@ -583,6 +574,16 @@ var TableRow = function (_Component) {
     onHover(false, hoverKey, e, fixedIndex, record);
   };
 
+  // 滚动加载数据时的loading，暂时不用
+  // getLoadingStyle = (isPre, isSuf) => {
+  //   if (isPre) {
+  //     return this.element && this.element.nextSibling ? this.element.nextSibling .getBoundingClientRect() : {}
+  //   }
+  //   if (isSuf) {
+  //     return this.element && this.element.previousSibling ? this.element.previousSibling.getBoundingClientRect() : {}
+  //   }
+  // }
+
   TableRow.prototype.render = function render() {
     var _props10 = this.props,
         clsPrefix = _props10.clsPrefix,
@@ -592,9 +593,6 @@ var TableRow = function (_Component) {
         visible = _props10.visible,
         index = _props10.index,
         onPaste = _props10.onPaste,
-        isPre = _props10.isPre,
-        isSuf = _props10.isSuf,
-        containerWidth = _props10.containerWidth,
         expandIconColumnIndex = _props10.expandIconColumnIndex,
         expandIconAsCell = _props10.expandIconAsCell,
         expanded = _props10.expanded,
@@ -616,8 +614,8 @@ var TableRow = function (_Component) {
         expandIconCellWidth = _props10.expandIconCellWidth,
         getCellClassName = _props10.getCellClassName;
     var notRowDrag = this.state.notRowDrag;
+    // const isEmptyTr = isPre || isSuf//暂时不用 滚动loading相关
 
-    var isEmptyTr = isPre || isSuf;
     var showSum = false;
     var className = this.props.className;
 
@@ -662,6 +660,8 @@ var TableRow = function (_Component) {
       }
       // bugfix 设置expandRowByClick，无法显示箭头，去掉 expandRowByClick 判断
       var isColumnHaveExpandIcon = expandIconAsCell || showSum ? false : i === expandIndexInThisTable;
+      //注意：中间表格区域不需要渲染出固定列的单元格，以节省多余的性能消耗
+      if (!fixed && columns[i].fixed) continue;
       cells.push(_react2["default"].createElement(_TableCell2["default"], {
         clsPrefix: clsPrefix,
         record: record,
@@ -693,7 +693,7 @@ var TableRow = function (_Component) {
     if (rowDraggAble && !useDragHandle && !notRowDrag) {
       className += ' row-dragg-able';
     }
-    var tdStyle = !isEmptyTr ? {} : this.getLoadingStyle(isPre, isSuf);
+    // const tdStyle = !isEmptyTr ? {} : this.getLoadingStyle(isPre, isSuf)//暂时不用 滚动loading相关
     return _react2["default"].createElement(
       'tr',
       {
@@ -709,8 +709,7 @@ var TableRow = function (_Component) {
         // key={hoverKey}
         , ref: this.bindElement
       },
-      cells.length > 0 ? cells : isEmptyTr ? // loading暂时去掉
-      _react2["default"].createElement('td', { style: { width: 0, padding: 0 } }) : _react2["default"].createElement('td', { style: { width: 0, padding: 0 } })
+      cells.length > 0 ? cells : _react2["default"].createElement('td', { style: { width: 0, padding: 0 } })
     );
   };
 

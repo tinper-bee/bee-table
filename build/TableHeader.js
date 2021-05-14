@@ -73,6 +73,10 @@ var TableHeader = function (_Component) {
     return _this;
   }
 
+  // static defaultProps = {
+  //   contentWidthDiff: 0
+  // };
+
   TableHeader.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
     var _this2 = this;
 
@@ -171,6 +175,7 @@ var TableHeader = function (_Component) {
       table.fixedRightBodyRows = table.fixedRightBodyTable && table.fixedRightBodyTable.querySelectorAll('tr') || [];
     }
 
+    //维护表格全部的dom元素
     this.table = table;
 
     if (!this.props.dragborder) return;
@@ -180,7 +185,7 @@ var TableHeader = function (_Component) {
       var siblingDom = _fixedParentContext.parentNode.nextElementSibling;
       if (siblingDom) {
         var fixedTable = siblingDom.querySelector("table");
-        this.fixedTable.table = fixedTable;
+        // this.fixedTable.table = fixedTable //没有用到
         this.fixedTable.cols = fixedTable.getElementsByTagName("col");
         // this.fixedTable.ths = fixedTable.tableDome.getElementsByTagName("th");
       }
@@ -275,8 +280,6 @@ var TableHeader = function (_Component) {
       console.log("Please set the attributes of column !");
       return;
     }
-    var tr = this.table.tr;
-
     for (var i = 0; i < events.length; i++) {
       var _event = events[i];
       if (type === "remove") {
@@ -455,7 +458,6 @@ var TableHeader = function (_Component) {
         rows = _props2.rows,
         filterable = _props2.filterable,
         fixed = _props2.fixed,
-        lastShowIndex = _props2.lastShowIndex,
         columnsChildrenList = _props2.columnsChildrenList;
 
     var attr = dragborder ? { id: "u-table-drag-thead-" + this.theadKey } : {};
@@ -490,9 +492,9 @@ var TableHeader = function (_Component) {
               fixedStyle = " " + clsPrefix + "-row-fixed-columns-in-body";
             }
 
-            if (lastShowIndex == columIndex) {
-              canDotDrag = "th-can-not-drag";
-            }
+            // if (columnsChildrenList.length-1 == columIndex) {
+            //   canDotDrag = "th-can-not-drag";
+            // }
             var thClassName = "" + da.className ? "" + da.className : '';
             if (da.titleAlign) {
               thClassName += " text-" + da.titleAlign + " ";
@@ -525,10 +527,11 @@ var TableHeader = function (_Component) {
               thClassName += " " + clsPrefix + "-thead-th " + canDotDrag;
             }
             thClassName += " " + fixedStyle;
-            if (!da.fixed) {
+            if (!da.fixed && !fixed) {
+              //非固定表头
               return _react2["default"].createElement(
                 "th",
-                _extends({}, da, keyTemp, { className: thClassName, "data-th-fixed": da.fixed, "data-line-key": da.key,
+                _extends({}, da, keyTemp, { width: null, className: thClassName, "data-th-fixed": da.fixed, "data-line-key": da.key,
                   "data-line-index": columIndex, "data-th-width": da.width, "data-type": "draggable", onCopy: function onCopy(event) {
                     _this6.onCopy(da, columIndex, event);
                   } }),
@@ -546,6 +549,8 @@ var TableHeader = function (_Component) {
                 ) : ""
               );
             } else {
+              //固定表头
+              if (!fixed) return; //当前不是固定表格，则不需要渲染固定表头
               thDefaultObj = _extends({}, da, {
                 className: thClassName + " " + fixedStyle
               });
@@ -554,7 +559,7 @@ var TableHeader = function (_Component) {
               } : "";
               return _react2["default"].createElement(
                 "th",
-                _extends({}, thDefaultObj, keyTemp, { "data-th-fixed": da.fixed, style: { maxWidth: da.width }, onCopy: _this6.onCopy }),
+                _extends({}, thDefaultObj, keyTemp, { width: null, "data-th-fixed": da.fixed, style: { maxWidth: da.width }, onCopy: _this6.onCopy }),
                 da.children,
 
                 // && columIndex != _rowLeng
@@ -577,10 +582,6 @@ var TableHeader = function (_Component) {
 
   return TableHeader;
 }(_react.Component);
-
-TableHeader.defaultProps = {
-  contentWidthDiff: 0
-};
 
 var _initialiseProps = function _initialiseProps() {
   var _this7 = this;
@@ -648,7 +649,7 @@ var _initialiseProps = function _initialiseProps() {
 
       // if(!this.lastColumWidth){
       var contentT = _this7.table.tableHeaderCols || _this7.table.cols;
-      _this7.lastColumWidth = parseInt(contentT[lastShowIndex].style.width);
+      _this7.lastColumWidth = parseInt(contentT[contentT.length - 1].style.width);
       // console.log('begin--lastColumnWidth',this.lastColumWidth);
       // }
       _this7.drag.contentTableCWidth = _this7.table.contentTableHeader.clientWidth;
@@ -665,11 +666,12 @@ var _initialiseProps = function _initialiseProps() {
         }
       }
       _this7.drag.fixedType = fixedType;
-      if (fixedType === 'left' && _this7.table.fixedRightBodyTable) {
-        _this7.drag.fixedRightBodyTableLeft = _this7.table.fixedRightBodyTable.getBoundingClientRect().left;
-      } else {
-        _this7.drag.fixedRightBodyTableLeft = null;
-      }
+      // add by gx
+      // if (fixedType === 'left' && this.table.fixedRightBodyTable) {
+      //   this.drag.fixedRightBodyTableLeft = this.table.fixedRightBodyTable.getBoundingClientRect().left
+      // } else {
+      //   this.drag.fixedRightBodyTableLeft = null
+      // }
     } else if (type != 'online' && _this7.props.draggable) {
       // if (!this.props.draggable || targetEvent.nodeName.toUpperCase() != "TH") return;
       if (!_this7.props.draggable) return;
@@ -770,9 +772,8 @@ var _initialiseProps = function _initialiseProps() {
         if (diff < 0 && contentTableSWidth + diff < 0) {
           var headerCols = _this7.table.tableHeaderCols || _this7.table.cols;
           var lastWidth = _this7.lastColumWidth - (contentTableSWidth + diff);
-          // console.log('lastWidth',lastWidth,'lastShowIndex',lastShowIndex);
-          headerCols[lastShowIndex].style.width = lastWidth + "px"; //同步表头
-          _this7.table.tableBodyCols[lastShowIndex].style.width = lastWidth + "px"; //同步表体
+          headerCols[headerCols.length - 1].style.width = lastWidth + "px"; //同步表头
+          _this7.table.tableBodyCols[headerCols.length - 1].style.width = lastWidth + "px"; //同步表体
         }
         // 内容区非固定列场景拖拽
         if (!_this7.drag.fixedType) {
@@ -785,45 +786,48 @@ var _initialiseProps = function _initialiseProps() {
 
           // }
 
-          var dargTableWidth = parseFloat(window.getComputedStyle(_this7.table.table).width);
-          var showScroll = contentDomWidth - (leftFixedWidth + rightFixedWidth) - (dargTableWidth + diff) - scrollbarWidth;
-          //表头滚动条处理
-          if (headerScroll) {
-            if (showScroll < 0) {
-              //小于 0 出现滚动条
-              //找到固定列表格，设置表头的marginBottom值为scrollbarWidth;
-              _this7.table.contentTableHeader.style.overflowX = 'scroll';
-              _this7.optTableMargin(_this7.table.fixedLeftHeaderTable, scrollbarWidth);
-              _this7.optTableMargin(_this7.table.fixedRightHeaderTable, scrollbarWidth);
-            } else {
-              //大于 0 不显示滚动条
-              _this7.table.contentTableHeader.style.overflowX = 'hidden';
-              _this7.optTableMargin(_this7.table.fixedLeftHeaderTable, 0);
-              _this7.optTableMargin(_this7.table.fixedRightHeaderTable, 0);
-            }
-          } else {
-            var scrollContainers = _this7.table.tableBody.querySelectorAll('.scroll-container') || [];
-            if (showScroll < 0) {
-              scrollContainers[0] ? scrollContainers[0].style.overflowX = 'auto' : null;
-              _this7.optTableMargin(_this7.table.fixedLeftBodyTable, '-' + scrollbarWidth);
-              _this7.optTableMargin(_this7.table.fixedRightBodyTable, '-' + scrollbarWidth);
-              _this7.optTableScroll(_this7.table.fixedLeftBodyTable, { x: 'scroll' });
-              _this7.optTableScroll(_this7.table.fixedRightBodyTable, { x: 'scroll' });
-            } else {
-              scrollContainers[0] ? scrollContainers[0].style.overflowX = 'hidden' : null;
-              _this7.optTableMargin(_this7.table.fixedLeftBodyTable, 0);
-              _this7.optTableMargin(_this7.table.fixedRightBodyTable, 0);
-              _this7.optTableScroll(_this7.table.fixedLeftBodyTable, { x: 'auto' });
-              _this7.optTableScroll(_this7.table.fixedRightBodyTable, { x: 'auto' });
-            }
-          }
+
+          // let dargTableWidth = parseFloat(window.getComputedStyle(this.table.table).width)
+          // let showScroll =  contentDomWidth - (leftFixedWidth + rightFixedWidth) - (dargTableWidth + diff) - scrollbarWidth;
+          // //let showScroll =  contentDomWidth - (leftFixedWidth + rightFixedWidth) - (this.drag.tableWidth + diff) - scrollbarWidth ;
+          //
+          //  //表头滚动条处理
+          //  if(headerScroll){
+          //    if(showScroll < 0){ //小于 0 出现滚动条
+          //        //找到固定列表格，设置表头的marginBottom值为scrollbarWidth;
+          //        this.table.contentTableHeader.style.overflowX = 'scroll';
+          //        this.optTableMargin( this.table.fixedLeftHeaderTable,scrollbarWidth);
+          //        this.optTableMargin( this.table.fixedRightHeaderTable,scrollbarWidth);
+          //      }else{ //大于 0 不显示滚动条
+          //        this.table.contentTableHeader.style.overflowX = 'hidden';
+          //        this.optTableMargin( this.table.fixedLeftHeaderTable,0);
+          //        this.optTableMargin( this.table.fixedRightHeaderTable,0);
+          //    }
+          //  }else{
+          //  // const scrollContainers = this.table.tableBody.querySelectorAll('.scroll-container') || []
+          //  if(showScroll < 0){
+          //    // scrollContainers[0] ? scrollContainers[0].style.overflowX = 'auto' : null//暂时注释，还原原来逻辑
+          //        this.table.tableBody.style.overflowX = 'auto';
+          //        this.optTableMargin( this.table.fixedLeftBodyTable,'-'+scrollbarWidth);
+          //        this.optTableMargin( this.table.fixedRightBodyTable,'-'+scrollbarWidth);
+          //        this.optTableScroll( this.table.fixedLeftBodyTable,{x:'scroll'});
+          //        this.optTableScroll( this.table.fixedRightBodyTable,{x:'scroll'});
+          //  }else{
+          //    // scrollContainers[0] ? scrollContainers[0].style.overflowX = 'hidden' : null
+          //    this.table.tableBody.style.overflowX = 'hidden';//暂时注释，还原原来逻辑
+          //    this.optTableMargin( this.table.fixedLeftBodyTable,0);
+          //    this.optTableMargin( this.table.fixedRightBodyTable,0);
+          //    this.optTableScroll( this.table.fixedLeftBodyTable,{x:'auto'});
+          //    this.optTableScroll( this.table.fixedRightBodyTable,{x:'auto'});
+          //  }
+          //  }
         } else if (_this7.drag.fixedType) {
           if (_this7.table.ths[_this7.drag.currIndex]) {
             _this7.table.ths[_this7.drag.currIndex].width = newWidth;
           }
           // console.log('this.drag.contentTableML',this.drag.contentTableML,'diff',diff);
           // debugger
-          _this7.syncFixedBodyTableWidth(); // 同步body中table的宽度
+          // this.syncFixedBodyTableWidth() // 同步body中table的宽度 以移到Table.syncFixedBodyTableWidth
           var contentTablePar = _this7.table.contentTableHeader.parentNode;
           // left、right缩小的内容，在没有滚动条时，需要将宽度同步到到最后一列
           // diff<0 往里拖，
@@ -841,22 +845,23 @@ var _initialiseProps = function _initialiseProps() {
           } else {
             contentTablePar.style.marginRight = _this7.drag.contentTableMR + diff + 'px';
           }
-          var containerWidth = contentTablePar.getBoundingClientRect().width;
-          var tableWidth = _this7.table.innerTableBody.getBoundingClientRect().width;
-          var _scrollContainers = _this7.table.tableBody.querySelectorAll('.scroll-container') || [];
-          if (tableWidth > containerWidth) {
-            _scrollContainers[0] ? _scrollContainers[0].style.overflowX = 'auto' : null;
-            _this7.optTableMargin(_this7.table.fixedLeftBodyTable, '-' + scrollbarWidth);
-            _this7.optTableMargin(_this7.table.fixedRightBodyTable, '-' + scrollbarWidth);
-            _this7.optTableScroll(_this7.table.fixedLeftBodyTable, { x: 'scroll' });
-            _this7.optTableScroll(_this7.table.fixedRightBodyTable, { x: 'scroll' });
-          } else {
-            _scrollContainers[0] ? _scrollContainers[0].style.overflowX = 'hidden' : null;
-            _this7.optTableMargin(_this7.table.fixedLeftBodyTable, 0);
-            _this7.optTableMargin(_this7.table.fixedRightBodyTable, 0);
-            _this7.optTableScroll(_this7.table.fixedLeftBodyTable, { x: 'auto' });
-            _this7.optTableScroll(_this7.table.fixedRightBodyTable, { x: 'auto' });
-          }
+          //暂时注释，还原
+          // const containerWidth = contentTablePar.getBoundingClientRect().width
+          // const tableWidth = this.table.innerTableBody.getBoundingClientRect().width
+          // const scrollContainers = this.table.tableBody.querySelectorAll('.scroll-container') || []
+          // if (tableWidth > containerWidth) {
+          //   scrollContainers[0] ? scrollContainers[0].style.overflowX = 'auto' : null
+          //   this.optTableMargin( this.table.fixedLeftBodyTable,'-'+scrollbarWidth);
+          //   this.optTableMargin( this.table.fixedRightBodyTable,'-'+scrollbarWidth);
+          //   this.optTableScroll( this.table.fixedLeftBodyTable,{x:'scroll'});
+          //   this.optTableScroll( this.table.fixedRightBodyTable,{x:'scroll'});
+          // } else {
+          //   scrollContainers[0] ? scrollContainers[0].style.overflowX = 'hidden' : null
+          //   this.optTableMargin( this.table.fixedLeftBodyTable,0);
+          //   this.optTableMargin( this.table.fixedRightBodyTable,0);
+          //   this.optTableScroll( this.table.fixedLeftBodyTable,{x:'auto'});
+          //   this.optTableScroll( this.table.fixedRightBodyTable,{x:'auto'});
+          // }
         }
       } else {
         _this7.drag.newWidth = _this7.minWidth;
@@ -914,15 +919,16 @@ var _initialiseProps = function _initialiseProps() {
     if (table) {
       var innerTable = table.querySelector('.u-table-body-inner');
       if (innerTable) {
-        //fixbug: 拖拽列宽后，滚动条滚到表格底部，会导致固定列和非固定列错行
-        if (overflow.x) {
-          var fixedScrollContainers = innerTable.querySelectorAll('.fixed-scroll-container');
-          if (fixedScrollContainers && fixedScrollContainers.length) {
-            fixedScrollContainers[0] && (fixedScrollContainers[0].style.overflowX = overflow.x);
-            fixedScrollContainers[1] && (fixedScrollContainers[1].style.overflowX = overflow.x);
-          }
-        }
+        //fixbug: 拖拽列宽后，滚动条滚到表格底部，会导致固定列和非固定列错行，//暂时注释，还原
+        // if (overflow.x) {
+        //   const fixedScrollContainers = innerTable.querySelectorAll('.fixed-scroll-container')
+        //   if (fixedScrollContainers && fixedScrollContainers.length) {
+        //     fixedScrollContainers[0] && (fixedScrollContainers[0].style.overflowX = overflow.x);
+        //     fixedScrollContainers[1] && (fixedScrollContainers[1].style.overflowX = overflow.x);
+        //   }
+        // }
         overflow.y && (innerTable.style.overflowY = overflow.y);
+        // overflow.x && (innerTable.style.overflowX = overflow.x);
       }
     }
   };

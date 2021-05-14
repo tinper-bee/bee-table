@@ -20,7 +20,7 @@ export default function sort(Table, Icon) {
       'order':'descend',
     }
   ]
-   
+
   return class SortTable extends Component {
     constructor(props) {
       super(props);
@@ -30,7 +30,7 @@ export default function sort(Table, Icon) {
       this._initSort();
     }
     static defaultProps = { sort: { mode: "single", backSource: false } }; //默认是前端排序，值为true为后端排序
-    
+
     componentWillReceiveProps(nextProps) {
 
       if (nextProps.columns !== this.props.columns) {
@@ -38,7 +38,7 @@ export default function sort(Table, Icon) {
         this._toFlatColumn(nextProps.columns,-1,flatColumns);
         this.setState({ columns: nextProps.columns ,flatColumns});
       }
-     
+
       if (nextProps.data !== this.props.data) {
         this.setState({
           data: nextProps.data,
@@ -46,9 +46,9 @@ export default function sort(Table, Icon) {
         }, function(){
           this._initSort(); // 数据更新后需要重新排序
         });
-        
+
       }
-      
+
     }
 
     _initSort = () => {
@@ -155,7 +155,7 @@ export default function sort(Table, Icon) {
       }
       if (currentCol.order == "ascend") {
        return colSortFun(pre,after);
-      } else { 
+      } else {
         return -colSortFun(pre,after);
       }
     };
@@ -210,7 +210,7 @@ export default function sort(Table, Icon) {
         if (sort.backSource && typeof sort.sortFun === "function") {
           //获取排序的字段和方式
           sort.sortFun(sortCol);
-          
+
         } else {
           if (order === "ascend") {
             data = data.sort(function(a, b) {
@@ -330,7 +330,7 @@ export default function sort(Table, Icon) {
     // 中文比较函数，按拼音排序
     chineseSortFn = (key) => (a, b)=>{
       return a[key].localeCompare(b[key], 'zh-Hans-CN',{sensitivity: 'accent'});
-    } 
+    }
 
     _flatToColumn(flatColumns){
       const colLen = flatColumns.length;

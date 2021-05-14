@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import {compare,ObjectAssign} from './util'; 
+import {compare,ObjectAssign} from './util';
 /**
  * 参数: 列拖拽
  * @param {*} Table
  */
- 
+
 export default function dragColumn(Table) {
 
   return class DragColumn extends Component {
@@ -23,13 +23,13 @@ export default function dragColumn(Table) {
         })
       }
     }
- 
+
     setColumOrderByIndex = (_column)=>{
       _column.forEach((da,i) => {
           da.dragIndex = i;
           da.drgHover = false;
       });
-      return _column; 
+      return _column;
     }
 
     recursion(obj, data={}){
@@ -45,9 +45,9 @@ export default function dragColumn(Table) {
 
     onDragEnd=(event,data)=>{
       let {dragSource,dragTarg} = data;
-      let {columns} = this.state; 
+      let {columns} = this.state;
       let sourceIndex = -1,targetIndex = -1;
-       
+
       sourceIndex =  columns.findIndex((da,i)=>da.key == dragSource.key);
       targetIndex = columns.findIndex((da,i)=>da.key == dragTarg.key);
       // 向前移动
@@ -72,7 +72,7 @@ export default function dragColumn(Table) {
         this.props.onDragEnd(event,data,columns);
       }
     }
- 
+
     getTarget=(evt)=>{
         return evt.target || evt.srcElement;
     }

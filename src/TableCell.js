@@ -215,8 +215,8 @@ class TableCell extends Component{
           text = text.children;
         }
       }
-  
-     
+
+
       // 根据 fieldType 来渲染数据
       if(!render){
         switch(column.fieldType){
@@ -264,7 +264,7 @@ class TableCell extends Component{
         }
       }
     }
-    
+
 
     if (this.isInvalidRenderCellText(text)) {
       text = null;
@@ -284,10 +284,8 @@ class TableCell extends Component{
       rowSpan = tdProps.mergeEndIndex - index;
       text = ''
     }
-    //不是固定表格并且当前列是固定，则隐藏当前列
-    if(column.fixed && !fixed){
-      className = className+` ${clsPrefix}-fixed-columns-in-body`;
-    }
+    //注意：中间表格区域不需要渲染出固定列的单元格，以节省多余的性能消耗
+    if(!fixed&&column.fixed)return null;
     if(column.contentAlign){
       className =  className+` text-${column.contentAlign}`;
     }

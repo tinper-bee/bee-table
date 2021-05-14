@@ -175,7 +175,7 @@
   font-size: 12px;
   color: #212121;
   position: relative;
-  line-height: 1.33;
+  line-height: 12px;
   overflow: hidden; }
   .u-table.copy .u-table-thead th {
     user-select: unset; }
@@ -200,11 +200,11 @@
     line-height: 16px; }
     .u-table th[colspan] {
       text-align: center; }
-    .u-table th ::last-child {
+    .u-table th:last-child {
       overflow: hidden; }
   .u-table td {
     border-bottom: 1px solid rgb(193, 199, 208);
-    line-height: 1.33; }
+    line-height: 12px; }
     .u-table td a {
       color: #2196F3; }
       .u-table td a:hover {
@@ -332,10 +332,10 @@
     height: 100%;
     overflow: scroll; }
   .u-table-fixed-header .u-table-scroll .u-table-header {
-    overflow-x: scroll;
-    padding-bottom: 20px;
-    margin-bottom: -20px;
-    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    overflow-y: hidden;
     box-sizing: border-box; }
   .u-table-title {
     padding: 12px 8px;
@@ -457,11 +457,11 @@
     background: rgb(241, 242, 245);
     color: rgb(33, 33, 33);
     background-clip: padding-box;
-    -moz-user-select: -moz-none;
+    -moz-user-select: none;
     -khtml-user-select: none;
     -webkit-user-select: none;
     /*
-        Introduced in IE 10. 
+        Introduced in IE 10.
       */
     -ms-user-select: none;
     user-select: none; }
@@ -846,10 +846,6 @@
   justify-content: center;
   background: transparent; }
 
-.u-row-hover2 {
-  position: absolute;
-  left: 100; }
-
 .header-dispaly-in-row.u-table table {
   table-layout: fixed; }
 
@@ -902,17 +898,3 @@
   line-height: 30px; }
   .u-dropdown ul.u-table-inline-op-dropdowm li.u-dropdown-menu-item i.uf {
     font-size: 12px; }
-
-.loading-td {
-  position: relative !important;
-  display: block !important; }
-  .loading-td.pre-td {
-    bottom: 0; }
-
-.loading-div {
-  position: absolute;
-  border: none !important; }
-  .loading-div.pre {
-    bottom: 0; }
-  .loading-div.suf {
-    top: 0; }

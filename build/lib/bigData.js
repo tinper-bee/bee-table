@@ -146,7 +146,7 @@ function bigData(Table) {
 
     /**
      * 深度遍历树形 data，把数据拍平，变为一维数组
-     * @param {*} data 
+     * @param {*} data
      * @param {*} parentKey 标识父节点
      */
 

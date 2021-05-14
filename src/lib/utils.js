@@ -12,53 +12,83 @@ const scrollbarMeasure = {
   height: '50px',
   overflow: 'scroll',
 };
-
-export function measureScrollbar(direction = 'vertical') {
-  
+//注意需要处理各系统及各浏览器的兼容性
+export function measureScrollbar(selectors,direction = 'vertical') {
   if (typeof document === 'undefined' || typeof window === 'undefined') {
     return 0;
   }
-  const tableDom =document.querySelector('.u-table');
-  let currentDom = tableDom?tableDom:document.body;
-
-  if (scrollbarSize) {
+  if (scrollbarSize) {//计算一次即可
     return scrollbarSize;
   }
-  const scrollDiv = document.createElement('div');
-  Object.keys(scrollbarMeasure).forEach(scrollProp => {
-    scrollDiv.style[scrollProp] = scrollbarMeasure[scrollProp];
-  });
-  currentDom.appendChild(scrollDiv);
-  let size = 0;
-  if (direction === 'vertical') {
-    size = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-  } else if (direction === 'horizontal') {
-    size = scrollDiv.offsetHeight - scrollDiv.clientHeight;
+  let brow = myBrowser();
+  //window系统下firefox的offsetWidth同clientWidth一致，所以通过父子容器间带滚动条的墨盒尺寸计算出滚动条宽度
+  if(['IE','FF'].includes(brow.browserType) && brow.osType == 'Win'){
+    let scrollDivParent = document.createElement('div');
+    scrollDivParent.setAttribute("id",'measureScrollbar_temp');
+    scrollDivParent.style.position = 'absolute';
+    scrollDivParent.style.top = '-9999px';
+    scrollDivParent.style.overflow = 'scroll';
+    // scrollDivParent.style.background = 'red';
+    scrollDivParent.style.width = '50px';
+    scrollDivParent.style.height = '100px';
+    let scrollDivChild = document.createElement('div');
+    // scrollDivChild.style.background = 'green';
+    scrollDivChild.style.height = '200px';
+    scrollDivChild.style.flex = "1";
+    scrollDivParent.appendChild(scrollDivChild);
+    let a = document.getElementById('measureScrollbar_temp');
+    if(a){
+        document.body.replaceChild(scrollDivParent,a);
+    }else{
+        document.body.appendChild(scrollDivParent);
+    }
+    let scrollbarSize = scrollDivParent.getBoundingClientRect().width-scrollDivChild.getBoundingClientRect().width;
+    document.body.removeChild(scrollDivParent);
+    scrollDivParent = null;
+    scrollDivChild = null;
+    return scrollbarSize
+  }else if('FF' == brow.browserType && brow.osType == 'Mac'){
+    return 8;//Mac系统的Firefox无法正常计算出滚动条宽度，所以推荐返回默认宽度
+  }else{
+      const tableDom =document.querySelector(selectors);
+      let currentDom = tableDom?tableDom:document.body;
+      const scrollDiv = document.createElement('div');
+      Object.keys(scrollbarMeasure).forEach(scrollProp => {
+        scrollDiv.style[scrollProp] = scrollbarMeasure[scrollProp];
+      });
+      currentDom.appendChild(scrollDiv);
+      scrollbarSize = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+      currentDom.removeChild(scrollDiv);
+      currentDom = null;
+      return scrollbarSize;
   }
-
-  currentDom.removeChild(scrollDiv);
-  scrollbarSize = size;
-  return scrollbarSize;
 }
 
 export function myBrowser() {
   var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
-  var isOpera = userAgent.indexOf("Opera") > -1;
-  if (isOpera) { //判断是否Opera浏览器
-      return "Opera"
-  }
+  var browserType = '',osType = '';
+
+  if (userAgent.indexOf("Opera") > -1) { //判断是否Opera浏览器
+      browserType = "Opera"
+  }else
   if (userAgent.indexOf("Firefox") > -1) { //判断是否Firefox浏览器
-      return "FF";
-  }
+      browserType = "FF";
+  }else
   if (userAgent.indexOf("Chrome") > -1) {
-      return "Chrome";
-  }
+      browserType = "Chrome";
+  }else
   if (userAgent.indexOf("Safari") > -1) { //判断是否Safari浏览器
-      return "Safari";
+      browserType = "Safari";
+  }else
+  if (userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 ) { //判断是否IE浏览器
+      browserType = "IE";
   }
-  if (userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera) { //判断是否IE浏览器
-      return "IE";
+  if(userAgent.indexOf("Win")>-1){
+      osType = 'Win';
+  }else if(userAgent.indexOf("Mac")>-1){
+      osType = 'Mac';
   }
+  return {browserType,osType}
 }
 
 export function debounce(func, wait, immediate) {
@@ -153,7 +183,7 @@ export function removeClass(elm, className) {
 
 /**
  * 简单数组数据对象拷贝
- * @param {*} obj 要拷贝的对象 
+ * @param {*} obj 要拷贝的对象
  */
 export function ObjectAssign(obj){
   let b = obj instanceof Array;
@@ -199,7 +229,7 @@ export function getMaxColChildrenLength(columns){
   })
   var max = Math.max.apply(null,arr);
   return max;
-} 
+}
 
 export function getColChildrenLength(columns,chilrenLen){
   columns.forEach((item,index)=>{
@@ -263,6 +293,7 @@ function stopPropagation(event){
 //用事件冒泡方式，如果想兼容事件捕获只需要添加个bool参数
 export const EventUtil = {
   addHandler: function(element,type,handler) {
+      if (!element)return;
       if (element.addEventListener) {
           element.addEventListener(type,handler,false);
       }

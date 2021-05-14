@@ -63,7 +63,7 @@ export default function bigData(Table) {
           _this.currentIndex = 0;
           _this.startIndex = _this.currentIndex; //数据开始位置
           _this.endIndex = _this.currentIndex + _this.loadCount; //数据结束位置
-        
+
       }
       if('data' in nextProps){
         const isTreeType = nextProps.isTree ? true : _this.checkIsTreeType(newData);
@@ -77,9 +77,9 @@ export default function bigData(Table) {
           if(_this.scrollTop <= 0) { // 增加scrollTop 判断，ncc场景下滚动条不在最上层， 会出现空白，因为重置了currentIndex没有重置滚动条
             _this.currentIndex = 0;
             _this.startIndex = _this.currentIndex; //数据开始位置
-            _this.endIndex = _this.currentIndex + _this.loadCount; 
+            _this.endIndex = _this.currentIndex + _this.loadCount;
           }
-          
+
         }
         _this.treeData = [];
         _this.flatTreeData = [];
@@ -105,7 +105,7 @@ export default function bigData(Table) {
       if(isTreeType){
         this.treeType = isTreeType;
         this.getTreeData();
-      } 
+      }
     }
 
     /**
@@ -114,7 +114,7 @@ export default function bigData(Table) {
      * @param newData: nextProps 中传入的新 data 属性值
      */
     getTreeData = (expandedKeys, newData) => {
-      let { startIndex, endIndex } = this; 
+      let { startIndex, endIndex } = this;
       const data = newData ? newData : this.props.data;
       this.cacheExpandedKeys = expandedKeys && new Set(expandedKeys);
       // 深递归 data，截取可视区 data 数组，再将扁平结构转换成嵌套结构
@@ -129,7 +129,7 @@ export default function bigData(Table) {
 
     /**
      * 深度遍历树形 data，把数据拍平，变为一维数组
-     * @param {*} data 
+     * @param {*} data
      * @param {*} parentKey 标识父节点
      */
     deepTraversal = (treeData, parentKey=null) => {
@@ -234,7 +234,7 @@ export default function bigData(Table) {
       //重新设定scrollTop值
       _this.scrollTop = _this.getSumHeight(0, _this.startIndex);
       }
-     
+
     }
 
     getRowKey(record, index) {
@@ -493,7 +493,7 @@ export default function bigData(Table) {
             record.children.forEach((item, index) => {
               _this.expandChildRowKeys.push(rowKey);
             });
-  
+
         } else {
           // 收起
             record.children.forEach((item, index) => {
@@ -524,7 +524,7 @@ export default function bigData(Table) {
            }
         }
       }
-      
+
       // expandState为true时，记录下
       _this.props.onExpand(expandState, record);
 
@@ -540,7 +540,7 @@ export default function bigData(Table) {
       }
     };
 
-    
+
     render() {
       const { data } = this.props;
       const { scrollTop } = this;
