@@ -33,6 +33,7 @@ class TableHeader extends Component {
     this.event = false;//避免多次绑定问题
     this.lastColumWidth = null;//非固定列最后一列的初始化宽度
     this.fixedTable = {};
+    this.isIE = !!window.ActiveXObject || "ActiveXObject" in window
   }
 
   static defaultProps = {
@@ -176,6 +177,7 @@ class TableHeader extends Component {
 
   doEventList(trs,action){
     if (trs && HTMLCollection.prototype.isPrototypeOf(trs) && action) {
+      if (this.isIE && !trs[0]) return
       for (let index = 0; index < trs.length; index++) {
         action(trs[index]);
       }

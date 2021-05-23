@@ -70,6 +70,7 @@ var TableHeader = function (_Component) {
     _this.event = false; //避免多次绑定问题
     _this.lastColumWidth = null; //非固定列最后一列的初始化宽度
     _this.fixedTable = {};
+    _this.isIE = !!window.ActiveXObject || "ActiveXObject" in window;
     return _this;
   }
 
@@ -225,6 +226,7 @@ var TableHeader = function (_Component) {
 
   TableHeader.prototype.doEventList = function doEventList(trs, action) {
     if (trs && HTMLCollection.prototype.isPrototypeOf(trs) && action) {
+      if (this.isIE && !trs[0]) return;
       for (var index = 0; index < trs.length; index++) {
         action(trs[index]);
       }
