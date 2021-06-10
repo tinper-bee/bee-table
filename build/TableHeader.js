@@ -670,7 +670,6 @@ var _initialiseProps = function _initialiseProps() {
             _this7.optTableMargin(_this7.table.fixedRighHeadertTable, 0);
           }
         } else {
-          l;
           if (showScroll < 0) {
             _this7.table.tableBody.style.overflowX = 'auto';
             _this7.optTableMargin(_this7.table.fixedLeftBodyTable, '-' + scrollbarWidth);

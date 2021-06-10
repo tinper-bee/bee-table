@@ -337,7 +337,7 @@ class TableHeader extends Component {
                 this.optTableMargin( this.table.fixedLeftHeaderTable,0);
                 this.optTableMargin( this.table.fixedRighHeadertTable,0);
             }
-        }else{l
+        }else{
           if(showScroll < 0){
                 this.table.tableBody.style.overflowX = 'auto';
                 this.optTableMargin( this.table.fixedLeftBodyTable,'-'+scrollbarWidth);
