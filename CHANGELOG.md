@@ -1,3 +1,12 @@
+## [2.3.15](https://github.com/tinper-bee/bee-table/compare/v2.3.14...v2.3.15) (2021-09-26)
+
+
+### Bug Fixes
+
+* 排序问题修改 ([9f7d9c8](https://github.com/tinper-bee/bee-table/commit/9f7d9c86d342a7d7b92e12a268ec178e29520ad2))
+
+
+
 ## [2.3.14](https://github.com/tinper-bee/bee-table/compare/v2.3.13...v2.3.14) (2021-02-21)
 
 
