@@ -53,6 +53,7 @@ export default function sort(Table, Icon) {
 
     _initSort = () => {
       const {flatColumns} = this.state;
+      const {sort} = this.props;
       let needSort = false;
       flatColumns.forEach(item => {
         if(item.order == 'descend' || item.order == 'ascend') {
@@ -61,10 +62,12 @@ export default function sort(Table, Icon) {
         }
       })
       if(needSort) {
-        const data = this.multiSort(flatColumns)
-        this.setState({
-          data
-        })
+        if (sort && !sort.backSource && sort.mode !== "single") {//多列排序情况下数据排序
+          let data = this.multiSort(flatColumns)
+          this.setState({data})
+        }else{
+          //单列排序情况下如果data受控会出现死循环，需要重新考虑
+        }
       }
     }
 
