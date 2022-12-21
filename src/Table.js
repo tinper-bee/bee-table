@@ -276,18 +276,33 @@ class Table extends Component {
     if (prevScrollY && currentScrollY && (prevScrollY !== currentScrollY) && this.props.lazyLoad && !this.props.ignoreScrollYChange) {
       this.bodyTable.scrollTop = 0
     } else if (this.props.ignoreScrollYChange && currentScrollY && prevScrollY && (prevScrollY !== currentScrollY)) {
-      const distance = this.bodyTable.scrollTop + (currentScrollY - prevScrollY)
-      if (distance < 0) {
-        this.bodyTable.scrollTop = 0
+      const bodyScrollTop = this.bodyTable.scrollTop
+      if (bodyScrollTop === 0) { // 在顶部的时候，滚动条不用动
+        this.bodyTable.scrollTop = 0;
       } else {
-        this.bodyTable.scrollTop = distance
+        const distance = bodyScrollTop + currentScrollY - prevScrollY;
+        if (distance < 0) {
+          this.bodyTable.scrollTop = 0;
+        } else {
+          const { scrollHeight, scrollTop } = this.bodyTable
+          const bottomDistance = Math.abs(scrollHeight - scrollTop - prevScrollY) // 在最底部的时候也不用滚动滚动条
+          if (bottomDistance < 5) { // 有些dom计算不是十分精确，设置一个值来缓冲一下
+            this.bodyTable.scrollTop = scrollTop + prevScrollY - currentScrollY
+          } else {
+            this.bodyTable.scrollTop = distance;
+          }
+        }
       }
     }
     // 是否传入 scroll中的y属性，如果传入判断是否是整数，如果是则进行比较 。bodyTable 的clientHeight进行判断
     this.isShowScrollY();
     if (this.bodyTable) {
-      if (!this.props.scroll.x && window.getComputedStyle(this.bodyTable).overflowX !== 'hidden') {
-        this.bodyTable.style.overflowX = 'hidden'
+      const currentOverflowX = window.getComputedStyle(this.bodyTable).overflowX
+      if (!this.props.scroll.x && currentOverflowX === 'scroll') {
+        this.bodyTable.style.overflowX = 'hidden';
+      }
+      if (this.props.scroll.x && currentOverflowX !== 'scroll') {
+        this.bodyTable.style.overflowX = 'scroll';
       }
     }
     if (this.bodyTableOuter) { // 隐藏几个不需要真正滚动的父元素的滚动条
@@ -1021,6 +1036,9 @@ class Table extends Component {
         // bodyStyle.height = bodyStyle.height || scroll.y;
         innerBodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
         innerBodyStyle.overflowY = bodyStyle.overflowY || 'scroll';
+        if (scroll.x) {
+          innerBodyStyle.overflowX = 'scroll';
+        }
       } else {
         bodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
       }
